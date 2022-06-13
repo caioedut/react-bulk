@@ -1,16 +1,16 @@
 import React, { forwardRef } from 'react';
 
 import { createButton } from '@react-bulk/core';
+import { ButtonProps } from '@react-bulk/core/types';
 
 import map from '../../map';
 
-export type ButtonProps = {
-  autoFocus: boolean;
-  disabled: boolean;
-  children: React.ReactNode;
-};
+const Button = forwardRef(({ ...props }: ButtonProps, ref) => {
+  if (props.onClick) {
+    props.onPress = props.onClick;
+    delete props.onClick;
+  }
 
-const Button = forwardRef((props: ButtonProps, ref) => {
   return createButton(props, ref, map);
 });
 

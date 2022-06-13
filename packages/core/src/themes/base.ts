@@ -1,0 +1,58 @@
+const base = {
+  shape: {
+    borderRadius: 4,
+    spacing: 4,
+  },
+
+  typography: {
+    fontSize: 16,
+    iconSize: 24,
+  },
+
+  colors: {
+    common: {
+      trans: 'transparent',
+      black: '#000000',
+      white: '#ffffff',
+    },
+
+    info: {
+      main: '#2196f3',
+      light: '#6ec6ff',
+      dark: '#0069c0',
+    },
+
+    success: {
+      main: '#4caf50',
+      light: '#80e27e',
+      dark: '#087f23',
+    },
+
+    warning: {
+      main: '#ff9800',
+      light: '#ffc947',
+      dark: '#c66900',
+    },
+
+    error: {
+      main: '#f44336',
+      light: '#ff7961',
+      dark: '#ba000d',
+    },
+  },
+
+  rem(multiplier = 1) {
+    return this.typography.fontSize * multiplier;
+  },
+
+  spacing(multiplier = 1) {
+    return this.shape.spacing * multiplier;
+  },
+
+  hex2rgba(hex: string, alpha = 1) {
+    const [r, g, b] = hex.match(/\w\w/g)?.map((x) => parseInt(x, 16)) || [];
+    return `rgba(${r || 0},${g || 0},${b || 0},${alpha})`;
+  },
+};
+
+export default base;

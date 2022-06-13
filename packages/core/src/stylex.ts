@@ -2,7 +2,7 @@ import mergeStyles from './mergeStyles';
 
 export const spacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
 
-export default function style(...styles: Object[]) {
+export default function stylex(...styles: Object[]) {
   const merged = mergeStyles(styles);
 
   for (const attr of Object.keys(merged)) {
