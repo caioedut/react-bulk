@@ -1,11 +1,8 @@
 import React from 'react';
 
-export default function createComponent(Component : any, props : any, ref : any) {
-  const { children, ...rest } = props || {};
+import parseStyle from './style';
 
-  return typeof Component === 'string' ? ( //
-    React.createElement(Component, rest, children)
-  ) : (
-    <Component {...props} ref={ref} />
-  );
+export default function createComponent({ component, style, ...rest }: any, ref: any, defaultComponent: any = null) {
+  const Component = component || defaultComponent;
+  return <Component {...rest} ref={ref} style={parseStyle(style)} />;
 }

@@ -3,8 +3,8 @@ import { View } from 'react-native';
 
 import { createComponent } from '@react-bulk/core';
 
-const Box = forwardRef((props: any, ref: any) => {
-  return createComponent(View, props, ref);
+const Box = forwardRef((props: Object, ref: any) => {
+  return createComponent(props, ref, View);
 });
 
 export default Box;

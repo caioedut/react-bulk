@@ -15,9 +15,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
-function createComponent(Component, props, ref) {
-    const _a = props || {}, { children } = _a, rest = __rest(_a, ["children"]);
-    return typeof Component === 'string' ? ( //
-    react_1.default.createElement(Component, rest, children)) : (<Component {...props} ref={ref}/>);
+const style_1 = __importDefault(require("./style"));
+function createComponent(_a, ref, defaultComponent) {
+    var { component, style } = _a, rest = __rest(_a, ["component", "style"]);
+    if (defaultComponent === void 0) { defaultComponent = null; }
+    const Component = component || defaultComponent;
+    return <Component {...rest} ref={ref} style={(0, style_1.default)(style)}/>;
 }
 exports.default = createComponent;
