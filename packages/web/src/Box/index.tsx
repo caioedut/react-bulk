@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 import { createComponent } from '@react-bulk/core';
 
-const Box = forwardRef((props: any, ref: any) => {
+const Box = forwardRef((props, ref) => {
   return createComponent(props, ref, 'div');
 });
 
