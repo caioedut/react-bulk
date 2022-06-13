@@ -12,12 +12,22 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 function createButton(_a, ref, map) {
-    var { children } = _a, rest = __rest(_a, ["children"]);
+    var { children, style } = _a, rest = __rest(_a, ["children", "style"]);
     const { Box, Text, Button } = map;
     if (typeof children === 'string') {
         children = <Text>{children}</Text>;
     }
-    return (<Box component={Button} {...rest}>
+    const styleX = [
+        {
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        style,
+    ];
+    return (<Box component={Button} {...rest} style={styleX}>
       {children}
     </Box>);
 }
