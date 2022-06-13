@@ -1,12 +1,12 @@
 {
   "name": "@react-bulk/core",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "description": "React Bulk Core",
   "author": "CaioEduT <caioedut@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest"
+    "build": "tsc --build --force"
   },
   "dependencies": {},
   "devDependencies": {},

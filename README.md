@@ -5,10 +5,10 @@ UI for React JS and React Native
 
 ### React JS
 ```shell
-yarn install @react-bulk/core @react-bulk/web
+yarn add @react-bulk/core @react-bulk/web
 ```
 
 ### React Native
 ```shell
-yarn install @react-bulk/core @react-bulk/native
+yarn add @react-bulk/core @react-bulk/native
 ```
