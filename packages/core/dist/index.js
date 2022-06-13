@@ -3,9 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.style = exports.mergeStyles = exports.createComponent = void 0;
-var createComponent_1 = require("./src/createComponent");
-Object.defineProperty(exports, "createComponent", { enumerable: true, get: function () { return __importDefault(createComponent_1).default; } });
+exports.style = exports.mergeStyles = exports.createButton = exports.createBox = void 0;
+var createBox_1 = require("./src/createBox");
+Object.defineProperty(exports, "createBox", { enumerable: true, get: function () { return __importDefault(createBox_1).default; } });
+var createButton_1 = require("./src/createButton");
+Object.defineProperty(exports, "createButton", { enumerable: true, get: function () { return __importDefault(createButton_1).default; } });
 var mergeStyles_1 = require("./src/mergeStyles");
 Object.defineProperty(exports, "mergeStyles", { enumerable: true, get: function () { return __importDefault(mergeStyles_1).default; } });
 var style_1 = require("./src/style");
