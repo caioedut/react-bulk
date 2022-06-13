@@ -3,10 +3,11 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 import createTheme from './createTheme';
 import light from './themes/light';
 
-const ThemeContext = createContext(light);
+const defaultTheme = createTheme(light);
+const ThemeContext = createContext(defaultTheme);
 
 export function useTheme() {
-  return useContext(ThemeContext) || light;
+  return useContext(ThemeContext) || defaultTheme;
 }
 
 function ThemeProvider({ theme, children }: any) {

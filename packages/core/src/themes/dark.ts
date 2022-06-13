@@ -1,6 +1,4 @@
-import createTheme from '../createTheme';
-
-const dark = createTheme({
+const dark = {
   colors: {
     text: {
       primary: '#D8D8D8',
@@ -26,6 +24,6 @@ const dark = createTheme({
       dark: '#00675b',
     },
   },
-});
+};
 
 export default dark;
