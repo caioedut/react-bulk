@@ -7,7 +7,7 @@ const defaultTheme = createTheme(light);
 const ThemeContext = createContext(defaultTheme);
 
 export function useTheme() {
-  return useContext(ThemeContext) || defaultTheme;
+  return (useContext(ThemeContext) || defaultTheme) as any;
 }
 
 function ThemeProvider({ theme, children }: any) {

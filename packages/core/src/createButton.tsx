@@ -1,4 +1,7 @@
+import { useTheme } from './ThemeProvider';
+
 export default function createButton({ children, style, ...rest }: any, ref: any, map: any) {
+  const theme = useTheme();
   const { Box, Text, Button } = map;
 
   if (typeof children === 'string') {
@@ -12,6 +15,9 @@ export default function createButton({ children, style, ...rest }: any, ref: any
       flexWrap: 'nowrap',
       alignItems: 'center',
       justifyContent: 'center',
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: theme.colors.primary.main,
     },
     style,
   ];
