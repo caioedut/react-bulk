@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const jsx_runtime_1 = require("react/jsx-runtime");
 const ThemeProvider_1 = require("./ThemeProvider");
 const getStyle_1 = __importDefault(require("./getStyle"));
 function createButton(_a, ref, map) {
@@ -52,8 +51,12 @@ function createButton(_a, ref, map) {
     const textColor = (0, getStyle_1.default)(styleX, 'color');
     const fontSize = (0, getStyle_1.default)(styleX, 'fontSize');
     if (typeof children === 'string') {
-        children = ((0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Text, style: { color: textColor, fontSize } }, { children: children })));
+        children = (<Box component={Text} style={{ color: textColor, fontSize }}>
+        {children}
+      </Box>);
     }
-    return ((0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Button }, rest, { style: styleX }, { children: children })));
+    return (<Box component={Button} {...rest} style={styleX}>
+      {children}
+    </Box>);
 }
 exports.default = createButton;

@@ -9,6 +9,9 @@
     ]
   },
   "scripts": {
+    "dev": "concurrently \"npm:dev:*\"",
+    "dev:web": "yarn --cwd ./test/web/ dev",
+    "dev:native": "yarn --cwd ./test/native/ dev",
     "build": "yarn build:core && yarn build:web && yarn build:native",
     "build:core": "yarn workspace @react-bulk/core build",
     "build:web": "yarn workspace @react-bulk/web build",
@@ -22,6 +25,7 @@
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/react": ">=16.4.7",
     "@types/react-native": ">=0.61.0",
+    "concurrently": ">=7.0.0",
     "prettier": "^2.6.2",
     "react": ">=16.8.0",
     "react-native": ">=0.61.0",

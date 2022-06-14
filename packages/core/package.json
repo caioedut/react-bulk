@@ -6,7 +6,8 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc --build --force"
+    "prebuild": "tsc --build --clean",
+    "build": "tsc --build"
   },
   "dependencies": {
     "deepmerge": ">=3.0.0"
