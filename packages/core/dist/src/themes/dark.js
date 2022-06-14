@@ -1,10 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const createTheme_1 = __importDefault(require("../createTheme"));
-const dark = (0, createTheme_1.default)({
+const dark = {
     colors: {
         text: {
             primary: '#D8D8D8',
@@ -27,5 +23,5 @@ const dark = (0, createTheme_1.default)({
             dark: '#00675b',
         },
     },
-});
+};
 exports.default = dark;

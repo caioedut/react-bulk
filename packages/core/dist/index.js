@@ -26,13 +26,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stylex = exports.mergeStyles = exports.createTheme = exports.createButton = exports.createBox = exports.ThemeProvider = exports.useTheme = exports.themes = void 0;
-const ThemeProvider_1 = require("./src/ThemeProvider");
+exports.stylex = exports.mergeStyles = exports.createTheme = exports.createButton = exports.createBox = exports.useTheme = exports.ThemeProvider = exports.themes = void 0;
+const ThemeProvider_1 = __importStar(require("./src/ThemeProvider"));
+exports.ThemeProvider = ThemeProvider_1.default;
 Object.defineProperty(exports, "useTheme", { enumerable: true, get: function () { return ThemeProvider_1.useTheme; } });
 const themes = __importStar(require("./src/themes"));
 exports.themes = themes;
-var ThemeProvider_2 = require("./src/ThemeProvider");
-Object.defineProperty(exports, "ThemeProvider", { enumerable: true, get: function () { return __importDefault(ThemeProvider_2).default; } });
 var createBox_1 = require("./src/createBox");
 Object.defineProperty(exports, "createBox", { enumerable: true, get: function () { return __importDefault(createBox_1).default; } });
 var createButton_1 = require("./src/createButton");

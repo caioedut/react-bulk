@@ -7,9 +7,10 @@ exports.useTheme = void 0;
 const react_1 = require("react");
 const createTheme_1 = __importDefault(require("./createTheme"));
 const light_1 = __importDefault(require("./themes/light"));
-const ThemeContext = (0, react_1.createContext)(light_1.default);
+const defaultTheme = (0, createTheme_1.default)(light_1.default);
+const ThemeContext = (0, react_1.createContext)(defaultTheme);
 function useTheme() {
-    return (0, react_1.useContext)(ThemeContext) || light_1.default;
+    return ((0, react_1.useContext)(ThemeContext) || defaultTheme);
 }
 exports.useTheme = useTheme;
 function ThemeProvider({ theme, children }) {

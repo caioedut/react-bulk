@@ -11,8 +11,10 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const ThemeProvider_1 = require("./ThemeProvider");
 function createButton(_a, ref, map) {
     var { children, style } = _a, rest = __rest(_a, ["children", "style"]);
+    const theme = (0, ThemeProvider_1.useTheme)();
     const { Box, Text, Button } = map;
     if (typeof children === 'string') {
         children = <Text>{children}</Text>;
@@ -24,6 +26,9 @@ function createButton(_a, ref, map) {
             flexWrap: 'nowrap',
             alignItems: 'center',
             justifyContent: 'center',
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor: theme.colors.primary.main,
         },
         style,
     ];
