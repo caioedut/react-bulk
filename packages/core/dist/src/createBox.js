@@ -15,11 +15,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
-const stylex_1 = __importDefault(require("./stylex"));
-function createBox(_a, ref, defaultComponent) {
+const createStyle_1 = __importDefault(require("./createStyle"));
+const jss_1 = __importDefault(require("./styles/jss"));
+function createBox(_a, ref, map, defaultComponent) {
     var { component, style } = _a, rest = __rest(_a, ["component", "style"]);
     if (defaultComponent === void 0) { defaultComponent = null; }
+    const styleProp = {};
+    const styleX = (0, createStyle_1.default)({ style: (0, jss_1.default)(style) });
+    if (styleX) {
+        if (typeof styleX === 'string') {
+            styleProp.className = `${styleX || ''} ${rest.className || ''}`.trim();
+        }
+        if (typeof styleX === 'object') {
+            styleProp.style = styleX;
+        }
+    }
     const Component = component || defaultComponent;
-    return (0, jsx_runtime_1.jsx)(Component, Object.assign({}, rest, { ref: ref, style: (0, stylex_1.default)(style) }));
+    return (0, jsx_runtime_1.jsx)(Component, Object.assign({}, rest, { ref: ref }, styleProp));
 }
 exports.default = createBox;

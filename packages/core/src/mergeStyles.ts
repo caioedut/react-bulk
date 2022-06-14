@@ -1,5 +1,5 @@
 export default function mergeStyles(...styles: Object[]) {
-  let result = {};
+  let result: any = {};
 
   for (const style of styles) {
     if (style) {

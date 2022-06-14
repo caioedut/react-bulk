@@ -1,10 +1,11 @@
 import React from 'react';
 
 export type ButtonProps = {
+  children: React.ReactNode;
+
   autoFocus?: Boolean;
   disabled?: Boolean;
   style?: any;
-  children?: React.ReactNode;
 
   onPress?: Function;
   onPressIn?: Function;
@@ -21,10 +22,11 @@ export type ButtonProps = {
   onMouseUp?: Function;
 
   // Custom
-  variant?: 'solid' | 'outline' | 'text';
-  size?: 'small' | 'medium' | 'large';
+  variant?: 'solid' | 'outline' | 'text' | string;
+  size?: 'small' | 'medium' | 'large' | string;
   block?: Boolean;
   loading?: Boolean;
+  elevation?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
 };

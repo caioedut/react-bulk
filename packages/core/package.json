@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "tsc --build --clean",
-    "build": "tsc --build"
+    "build": "tsc --build --force"
   },
   "dependencies": {
     "deepmerge": ">=3.0.0"

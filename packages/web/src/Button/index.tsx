@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { createButton } from '@react-bulk/core';
+import { createButton, useTheme } from '@react-bulk/core';
 import { ButtonProps } from '@react-bulk/core/types';
 
 import map from '../../map';
@@ -9,7 +9,11 @@ type ButtonPropsWeb = ButtonProps & {
   type?: 'button' | 'reset' | 'submit';
 };
 
-const Button = forwardRef(({ ...props }: ButtonPropsWeb, ref) => {
+const Button = forwardRef(({ elevation, ...props }: ButtonPropsWeb, ref) => {
+  const theme = useTheme();
+
+  props.style = [props.style];
+
   if (props.onPress) {
     props.onClick = props.onPress;
     delete props.onPress;
@@ -25,7 +29,11 @@ const Button = forwardRef(({ ...props }: ButtonPropsWeb, ref) => {
     delete props.onPressOut;
   }
 
-  props.type = props.type || 'button';
+  if (elevation) {
+    props.style.unshift({
+      boxShadow: theme.mixins.shadows[elevation],
+    });
+  }
 
   return createButton(props, ref, map);
 });

@@ -18,7 +18,7 @@ export default function createButton({ variant, size, block, loading, style, chi
       justifyContent: 'center',
 
       fontSize: theme.rem(1),
-      lineHeight: 1.15,
+      lineHeight: 1.25,
 
       backgroundColor: color,
       color: theme.colors.common.white,
@@ -46,6 +46,7 @@ export default function createButton({ variant, size, block, loading, style, chi
     (variant === 'outline' || variant === 'text') && { backgroundColor: theme.colors.common.trans, color },
 
     size === 'small' && {
+      fontSize: theme.rem(0.875),
       paddingTop: theme.rem(0.25),
       paddingBottom: theme.rem(0.25),
       paddingLeft: theme.rem(0.5),
@@ -53,10 +54,11 @@ export default function createButton({ variant, size, block, loading, style, chi
     },
 
     size === 'large' && {
-      paddingTop: theme.rem(1),
-      paddingBottom: theme.rem(1),
-      paddingLeft: theme.rem(2),
-      paddingRight: theme.rem(2),
+      fontSize: theme.rem(1.25),
+      paddingTop: theme.rem(0.75),
+      paddingBottom: theme.rem(0.75),
+      paddingLeft: theme.rem(1.25),
+      paddingRight: theme.rem(1.25),
     },
 
     style,

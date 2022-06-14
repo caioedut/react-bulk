@@ -2,7 +2,7 @@ import Box from './src/Box';
 
 const map = {
   web: true,
-  Box: Box,
+  Box,
   View: 'div',
   Text: 'span',
   Button: 'button',

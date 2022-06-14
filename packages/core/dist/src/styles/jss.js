@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.spacings = void 0;
-const Platform_1 = __importDefault(require("./Platform"));
-const mergeStyles_1 = __importDefault(require("./mergeStyles"));
+const Platform_1 = __importDefault(require("../Platform"));
+const mergeStyles_1 = __importDefault(require("../mergeStyles"));
 exports.spacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
-function stylex(...styles) {
+function jss(...styles) {
     const merged = (0, mergeStyles_1.default)(styles);
     // Web specific
     if (merged.web && Platform_1.default.web) {
@@ -51,4 +51,4 @@ function stylex(...styles) {
     }
     return merged;
 }
-exports.default = stylex;
+exports.default = jss;

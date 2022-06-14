@@ -4,7 +4,7 @@ module.exports = {
   arrowParens: 'always',
   trailingComma: 'all',
   endOfLine: 'auto',
-  importOrder: ['^react(-native)?$', '<THIRD_PARTY_MODULES>', '(.*).css$', '^[./]'],
+  importOrder: ['^react(-native)?$', '<THIRD_PARTY_MODULES>', '^[./]'],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
   importOrderParserPlugins: ['classProperties', 'jsx', 'typescript'],

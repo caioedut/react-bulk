@@ -1,14 +1,24 @@
-import mergeStyles from './mergeStyles';
+import Platform from '../Platform';
+import mergeStyles from '../mergeStyles';
 
 export const spacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
 
-export default function stylex(...styles: Object[]) {
+export default function jss(...styles: Object[]) {
   const merged = mergeStyles(styles);
+
+  // Web specific
+  if (merged.web && Platform.web) {
+    Object.assign(merged, merged.web);
+  }
+
+  // Native specific
+  if (merged.native && Platform.native) {
+    Object.assign(merged, merged.native);
+  }
 
   for (const attr of Object.keys(merged)) {
     let prop = attr;
 
-    // @ts-ignore
     let value = merged[attr];
 
     if (spacings.includes(attr)) {
@@ -26,7 +36,6 @@ export default function stylex(...styles: Object[]) {
         .replace(/^l$/, 'left')
         .replace(/^r$/, 'right');
 
-      // @ts-ignore
       delete merged[attr];
     }
 
@@ -35,13 +44,20 @@ export default function stylex(...styles: Object[]) {
     // if (attr === 'border') {}
 
     if (attr === 'bg') {
-      // @ts-ignore
       delete merged[attr];
       prop = 'backgroundColor';
     }
 
     // @ts-ignore
     merged[prop] = value;
+  }
+
+  const hasFlex = Object.keys(merged).some((prop) =>
+    ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'alignContent', 'alignItems'].includes(prop),
+  );
+
+  if (hasFlex && !merged.display) {
+    merged.display = 'flex';
   }
 
   return merged;
