@@ -20,5 +20,7 @@ export type ButtonProps = {
   onMouseUp?: Function;
 
   // Custom
-  loading: Boolean;
+  loading?: Boolean;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
 };
