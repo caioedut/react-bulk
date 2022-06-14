@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 import createTheme from './createTheme';
 import light from './themes/light';
@@ -13,16 +13,13 @@ export function useTheme() {
 function ThemeProvider({ theme, children }: any) {
   const [themeState, setThemeState] = useState(createTheme(theme));
 
-  const setTheme = useCallback(
-    (theme: Object) => {
-      setThemeState(createTheme(theme));
-    },
-    [theme],
-  );
+  const setTheme = (theme: Object) => {
+    setThemeState(createTheme(theme));
+  };
 
   useEffect(() => {
-    setTheme(theme);
-  }, [theme, setTheme]);
+    setThemeState(createTheme(theme));
+  }, [theme]);
 
   return (
     <ThemeContext.Provider //

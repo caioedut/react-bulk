@@ -1,4 +1,5 @@
 const light = {
+  mode: 'light',
   colors: {
     text: {
       primary: '#333333',

@@ -1,4 +1,5 @@
 const dark = {
+  mode: 'dark',
   colors: {
     text: {
       primary: '#D8D8D8',
