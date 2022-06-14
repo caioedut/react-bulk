@@ -32,6 +32,8 @@ function stylex(...styles) {
         // if (attr.toLowerCase().includes('color')) {}
         // if (attr === 'border') {}
         if (attr === 'bg') {
+            // @ts-ignore
+            delete merged[attr];
             prop = 'backgroundColor';
         }
         // @ts-ignore

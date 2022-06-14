@@ -22,6 +22,8 @@ export type ButtonProps = {
 
   // Custom
   variant?: 'solid' | 'outline' | 'text';
+  size?: 'small' | 'medium' | 'large';
+  block?: Boolean;
   loading?: Boolean;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;

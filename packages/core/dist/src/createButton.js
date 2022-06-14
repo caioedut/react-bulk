@@ -18,11 +18,11 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const ThemeProvider_1 = require("./ThemeProvider");
 const getStyle_1 = __importDefault(require("./getStyle"));
 function createButton(_a, ref, map) {
-    var { variant, style, children } = _a, rest = __rest(_a, ["variant", "style", "children"]);
+    var { variant, size, block, loading, style, children } = _a, rest = __rest(_a, ["variant", "size", "block", "loading", "style", "children"]);
     const theme = (0, ThemeProvider_1.useTheme)();
     const { Box, Text, Button } = map;
     const { disabled } = rest;
-    const color = theme.colors.secondary.main;
+    const color = theme.colors.primary.main;
     const styleX = [
         {
             display: 'flex',
@@ -45,15 +45,41 @@ function createButton(_a, ref, map) {
             paddingRight: theme.rem(1),
         },
         map.web && { fontFamily: 'inherit' },
+        block && { width: '100%' },
+        disabled && { opacity: 0.75 },
         variant === 'text' && { borderColor: theme.colors.common.trans },
         (variant === 'outline' || variant === 'text') && { backgroundColor: theme.colors.common.trans, color },
+        size === 'small' && {
+            paddingTop: theme.rem(0.25),
+            paddingBottom: theme.rem(0.25),
+            paddingLeft: theme.rem(0.5),
+            paddingRight: theme.rem(0.5),
+        },
+        size === 'large' && {
+            paddingTop: theme.rem(1),
+            paddingBottom: theme.rem(1),
+            paddingLeft: theme.rem(2),
+            paddingRight: theme.rem(2),
+        },
         style,
     ];
-    const textColor = (0, getStyle_1.default)(styleX, 'color');
-    const fontSize = (0, getStyle_1.default)(styleX, 'fontSize');
+    const textStyleX = {
+        color: (0, getStyle_1.default)(styleX, 'color'),
+        fontSize: (0, getStyle_1.default)(styleX, 'fontSize'),
+    };
     if (typeof children === 'string') {
-        children = ((0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Text, style: { color: textColor, fontSize } }, { children: children })));
+        children = ((0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Text, style: [textStyleX, disabled && { opacity: 0.75 }, loading && { opacity: 0 }] }, { children: children })));
     }
-    return ((0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Button }, rest, { style: styleX }, { children: children })));
+    return ((0, jsx_runtime_1.jsxs)(Box, Object.assign({ component: Button }, rest, { style: styleX }, { children: [children, loading && ((0, jsx_runtime_1.jsx)(Box, Object.assign({ style: {
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    bg: theme.hex2rgba(theme.colors.background.primary, 0.1),
+                } }, { children: (0, jsx_runtime_1.jsx)(Text, Object.assign({ style: textStyleX }, { children: "..." })) })))] })));
 }
 exports.default = createButton;

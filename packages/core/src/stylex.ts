@@ -35,6 +35,8 @@ export default function stylex(...styles: Object[]) {
     // if (attr === 'border') {}
 
     if (attr === 'bg') {
+      // @ts-ignore
+      delete merged[attr];
       prop = 'backgroundColor';
     }
 
