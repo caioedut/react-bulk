@@ -5,7 +5,11 @@ import { ButtonProps } from '@react-bulk/core/types';
 
 import map from '../../map';
 
-const Button = forwardRef(({ ...props }: ButtonProps, ref) => {
+type ButtonPropsWeb = ButtonProps & {
+  type?: 'button' | 'reset' | 'submit';
+};
+
+const Button = forwardRef(({ ...props }: ButtonPropsWeb, ref) => {
   if (props.onPress) {
     props.onClick = props.onPress;
     delete props.onPress;
@@ -20,6 +24,8 @@ const Button = forwardRef(({ ...props }: ButtonProps, ref) => {
     props.onMouseUp = props.onPressOut;
     delete props.onPressOut;
   }
+
+  props.type = props.type || 'button';
 
   return createButton(props, ref, map);
 });

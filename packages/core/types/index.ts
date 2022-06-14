@@ -3,6 +3,7 @@ import React from 'react';
 export type ButtonProps = {
   autoFocus?: Boolean;
   disabled?: Boolean;
+  style?: any;
   children?: React.ReactNode;
 
   onPress?: Function;
@@ -20,6 +21,7 @@ export type ButtonProps = {
   onMouseUp?: Function;
 
   // Custom
+  variant?: 'solid' | 'outline' | 'text';
   loading?: Boolean;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
