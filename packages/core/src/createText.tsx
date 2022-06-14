@@ -1,8 +1,15 @@
+import { TextProps } from '../types';
+import Platform from './Platform';
 import { useTheme } from './ThemeProvider';
 
-export default function createText({ style, ...rest }: any, ref: any, map: any) {
+export default function createText(
+  { size, bold, italic, oblique, smallCaps, invisible, numberOfLines, style, ...rest }: TextProps,
+  ref: any,
+  map: any,
+) {
   const theme = useTheme();
 
+  const { native } = Platform;
   const { Box, Text } = map;
 
   const styleX = [
@@ -10,8 +17,28 @@ export default function createText({ style, ...rest }: any, ref: any, map: any) 
       color: theme.colors.text.primary,
       fontSize: theme.rem(1),
     },
+    size && { fontSize: size },
+    bold && { fontWeight: 'bold' },
+    italic && { fontStyle: 'italic' },
+    oblique && { fontStyle: 'oblique' },
+    smallCaps && { fontVariant: 'small-caps' },
+    invisible && { opacity: 0 },
+    // @ts-ignore
+    numberOfLines > 0 && {
+      web: {
+        display: '-webkit-box',
+        '-webkit-line-clamp': `${numberOfLines}`,
+        '-webkit-box-orient': 'vertical',
+        overflow: 'hidden',
+      },
+    },
     style,
   ];
 
-  return <Box component={Text} {...rest} style={styleX} />;
+  const props: any = {};
+  if (native && numberOfLines) {
+    props.numberOfLines = numberOfLines;
+  }
+
+  return <Box component={Text} {...rest} style={styleX} {...props} />;
 }

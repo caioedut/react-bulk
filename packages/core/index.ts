@@ -1,11 +1,13 @@
 import ThemeProvider, { useTheme } from './src/ThemeProvider';
-import * as styles from './src/styles';
-import * as themes from './src/themes';
-import * as utils from './src/utils';
 
-export { styles, themes, utils, ThemeProvider, useTheme };
+export { ThemeProvider, useTheme };
 
 export { default as Platform } from './src/Platform';
+export { default as md5 } from './src/utils/md5';
+export { default as uuid } from './src/utils/uuid';
+
+export { default as jss } from './src/styles/jss';
+export { default as css } from './src/styles/css';
 
 export { default as createBox } from './src/createBox';
 export { default as createButton } from './src/createButton';

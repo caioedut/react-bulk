@@ -16,6 +16,9 @@ export default function jss(...styles: Object[]) {
     Object.assign(merged, merged.native);
   }
 
+  delete merged.web;
+  delete merged.native;
+
   for (const attr of Object.keys(merged)) {
     let prop = attr;
 

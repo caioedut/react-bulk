@@ -30,3 +30,17 @@ export type ButtonProps = {
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
 };
+
+export type TextProps = {
+  children: React.ReactNode;
+  style?: any;
+
+  size?: number;
+  bold?: boolean;
+  italic?: boolean;
+  oblique?: boolean;
+  smallCaps?: boolean;
+  invisible?: boolean;
+
+  numberOfLines?: number;
+};

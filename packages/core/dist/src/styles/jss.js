@@ -17,6 +17,8 @@ function jss(...styles) {
     if (merged.native && Platform_1.default.native) {
         Object.assign(merged, merged.native);
     }
+    delete merged.web;
+    delete merged.native;
     for (const attr of Object.keys(merged)) {
         let prop = attr;
         let value = merged[attr];
