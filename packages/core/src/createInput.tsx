@@ -17,21 +17,15 @@ export default function createText({ label, size, disabled, style, ...rest }: an
       backgroundColor: theme.colors.background.primary,
       color: theme.colors.text.primary,
 
-      borderWidth: 2,
+      borderWidth: 1,
       borderStyle: 'solid',
       borderColor: theme.colors.primary.main,
       borderRadius: theme.shape.borderRadius,
 
-      paddingTop: theme.rem(0.5),
-      paddingBottom: theme.rem(0.5),
-      paddingLeft: theme.rem(0.75),
-      paddingRight: theme.rem(0.75),
-
       margin: 0,
+      padding: theme.rem(0.5),
       width: '100%',
     },
-
-    web && { fontFamily: 'inherit' },
 
     disabled && {
       cursor: 'not-allowed',
@@ -40,18 +34,24 @@ export default function createText({ label, size, disabled, style, ...rest }: an
 
     size === 'small' && {
       fontSize: theme.rem(0.875),
-      paddingTop: theme.rem(0.5, theme.rem(0.875)),
-      paddingBottom: theme.rem(0.5, theme.rem(0.875)),
-      paddingLeft: theme.rem(0.75, theme.rem(0.875)),
-      paddingRight: theme.rem(0.75, theme.rem(0.875)),
+      padding: theme.rem(0.5, theme.rem(0.875)),
     },
 
     size === 'large' && {
       fontSize: theme.rem(1.25),
-      paddingTop: theme.rem(0.5, theme.rem(1.25)),
-      paddingBottom: theme.rem(0.5, theme.rem(1.25)),
-      paddingLeft: theme.rem(0.75, theme.rem(1.25)),
-      paddingRight: theme.rem(0.75, theme.rem(1.25)),
+      padding: theme.rem(0.5, theme.rem(1.25)),
+    },
+
+    web && {
+      fontFamily: 'inherit',
+      transitionProperty: 'background-color, box-shadow',
+      transitionDuration: '0.2s',
+      transitionTimingFunction: 'ease',
+
+      '&:focus': {
+        outline: 0,
+        boxShadow: `0 0 0 0.2rem ${theme.hex2rgba(theme.colors.primary.main, 0.4)}`,
+      },
     },
 
     style,

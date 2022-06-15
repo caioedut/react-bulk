@@ -46,12 +46,7 @@ function createButton(_a, ref, map) {
             paddingBottom: theme.rem(0.5),
             paddingLeft: theme.rem(1),
             paddingRight: theme.rem(1),
-            transitionProperty: 'background-color, box-shadow',
-            transitionDuration: '0.2s',
-            transitionTimingFunction: 'ease',
-            '&:hover,:focus': {
-                backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.9),
-            },
+            '&:hover': { backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.9) },
         },
         block && { width: '100%' },
         disabled && {
@@ -62,9 +57,7 @@ function createButton(_a, ref, map) {
         (variant === 'outline' || variant === 'text') && {
             backgroundColor: theme.colors.common.trans,
             color: theme.colors.primary.main,
-            '&:hover,:focus': {
-                backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.1),
-            },
+            '&:hover': { backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.1) },
         },
         size === 'small' && {
             fontSize: theme.rem(0.875),
@@ -82,9 +75,12 @@ function createButton(_a, ref, map) {
         },
         web && {
             fontFamily: 'inherit',
+            transitionProperty: 'background-color, box-shadow',
+            transitionDuration: '0.2s',
+            transitionTimingFunction: 'ease',
             '&:focus': {
                 outline: 0,
-                boxShadow: `0 0 0 0.2rem ${theme.hex2rgba(theme.colors.primary.main, 0.5)}`,
+                boxShadow: `0 0 0 0.2rem ${theme.hex2rgba(theme.colors.primary.main, 0.4)}`,
             },
         },
         style,

@@ -37,13 +37,7 @@ export default function createButton({ variant, size, block, loading, style, chi
       paddingLeft: theme.rem(1),
       paddingRight: theme.rem(1),
 
-      transitionProperty: 'background-color, box-shadow',
-      transitionDuration: '0.2s',
-      transitionTimingFunction: 'ease',
-
-      '&:hover,:focus': {
-        backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.9),
-      },
+      '&:hover': { backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.9) },
     },
 
     block && { width: '100%' },
@@ -59,9 +53,7 @@ export default function createButton({ variant, size, block, loading, style, chi
       backgroundColor: theme.colors.common.trans,
       color: theme.colors.primary.main,
 
-      '&:hover,:focus': {
-        backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.1),
-      },
+      '&:hover': { backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.1) },
     },
 
     size === 'small' && {
@@ -82,9 +74,13 @@ export default function createButton({ variant, size, block, loading, style, chi
 
     web && {
       fontFamily: 'inherit',
+      transitionProperty: 'background-color, box-shadow',
+      transitionDuration: '0.2s',
+      transitionTimingFunction: 'ease',
+
       '&:focus': {
         outline: 0,
-        boxShadow: `0 0 0 0.2rem ${theme.hex2rgba(theme.colors.primary.main, 0.5)}`,
+        boxShadow: `0 0 0 0.2rem ${theme.hex2rgba(theme.colors.primary.main, 0.4)}`,
       },
     },
 
