@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { BoxProps } from '../types';
 import createStyle from './createStyle';
 import bindings from './props/bindings';
 import jss from './styles/jss';
@@ -26,7 +27,7 @@ export default function createBox(
     justify,
     style,
     ...rest
-  }: any,
+  }: BoxProps | any,
   ref: any,
   map: any,
   defaultComponent: any = null,

@@ -1,9 +1,10 @@
+import { InputProps } from '../types';
 import Platform from './Platform';
 import { useTheme } from './ReactBulk';
 import getStyle from './getStyle';
 import jss from './styles/jss';
 
-export default function createText({ label, size, style, ...rest }: any, ref: any, map: any) {
+export default function createText({ label, size, style, ...rest }: InputProps | any, ref: any, map: any) {
   const theme = useTheme();
 
   const { web, native } = Platform;

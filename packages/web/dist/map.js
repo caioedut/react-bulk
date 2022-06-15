@@ -9,6 +9,7 @@ const map = {
     android: false,
     Box: Box_1.default,
     View: 'div',
+    ScrollView: 'div',
     Text: 'span',
     Label: 'label',
     Button: 'button',

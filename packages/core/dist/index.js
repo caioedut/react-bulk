@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStyle = exports.mergeStyles = exports.createStyle = exports.BaseStyleNative = exports.BaseStyleWeb = exports.createTheme = exports.createText = exports.createInput = exports.createCard = exports.createButton = exports.createBox = exports.css = exports.jss = exports.clsx = exports.uuid = exports.md5 = exports.Platform = exports.useTheme = exports.ReactBulk = void 0;
+exports.getStyle = exports.mergeStyles = exports.createStyle = exports.BaseStyleNative = exports.BaseStyleWeb = exports.createTheme = exports.createText = exports.createScrollable = exports.createInput = exports.createCard = exports.createButton = exports.createBox = exports.css = exports.jss = exports.clsx = exports.uuid = exports.md5 = exports.Platform = exports.useTheme = exports.ReactBulk = void 0;
 const ReactBulk_1 = __importStar(require("./src/ReactBulk"));
 exports.ReactBulk = ReactBulk_1.default;
 Object.defineProperty(exports, "useTheme", { enumerable: true, get: function () { return ReactBulk_1.useTheme; } });
@@ -50,6 +50,8 @@ var createCard_1 = require("./src/createCard");
 Object.defineProperty(exports, "createCard", { enumerable: true, get: function () { return __importDefault(createCard_1).default; } });
 var createInput_1 = require("./src/createInput");
 Object.defineProperty(exports, "createInput", { enumerable: true, get: function () { return __importDefault(createInput_1).default; } });
+var createScrollable_1 = require("./src/createScrollable");
+Object.defineProperty(exports, "createScrollable", { enumerable: true, get: function () { return __importDefault(createScrollable_1).default; } });
 var createText_1 = require("./src/createText");
 Object.defineProperty(exports, "createText", { enumerable: true, get: function () { return __importDefault(createText_1).default; } });
 var createTheme_1 = require("./src/createTheme");

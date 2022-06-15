@@ -1,8 +1,9 @@
+import { ButtonProps } from '../types';
 import Platform from './Platform';
 import { useTheme } from './ReactBulk';
 import getStyle from './getStyle';
 
-export default function createButton({ variant, size, block, loading, style, children, ...rest }: any, ref: any, map: any) {
+export default function createButton({ variant, size, block, loading, style, children, ...rest }: ButtonProps | any, ref: any, map: any) {
   const theme = useTheme();
 
   const { web } = Platform;

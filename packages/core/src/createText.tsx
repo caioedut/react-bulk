@@ -3,7 +3,7 @@ import Platform from './Platform';
 import { useTheme } from './ReactBulk';
 
 export default function createText(
-  { size, bold, italic, oblique, smallCaps, invisible, transform, numberOfLines, style, ...rest }: TextProps,
+  { size, bold, italic, oblique, smallCaps, invisible, transform, numberOfLines, style, ...rest }: TextProps | any,
   ref: any,
   map: any,
 ) {

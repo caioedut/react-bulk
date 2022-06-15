@@ -10,6 +10,7 @@ const map = {
     android: react_native_1.Platform.OS === 'android',
     Box: Box_1.default,
     View: react_native_1.View,
+    ScrollView: react_native_1.ScrollView,
     Text: react_native_1.Text,
     Label: react_native_1.Text,
     Button: react_native_1.TouchableOpacity,

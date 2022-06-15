@@ -88,3 +88,5 @@ export type InputProps = BoxProps & {
 };
 
 export type CardProps = BoxProps & {};
+
+export type ScrollableProps = BoxProps & {};
