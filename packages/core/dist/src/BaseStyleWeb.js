@@ -1,8 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = require("react");
 const core_1 = require("@react-bulk/core");
 function BaseStyleWeb() {
     const theme = (0, core_1.useTheme)();
+    (0, react_1.useEffect)(() => {
+        (0, core_1.createMeta)('[charset]', { charset: 'UTF-8' }, false);
+        (0, core_1.createMeta)('[name="viewport"]', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }, false);
+    }, []);
+    (0, react_1.useEffect)(() => {
+        (0, core_1.createMeta)('[name="theme-color"]', {
+            name: 'theme-color',
+            media: `(prefers-color-scheme: ${theme.mode})`,
+            content: theme.colors.primary.main,
+        }, true);
+    }, [theme]);
     const style = `
     *, *:before, *:after {
       box-sizing: border-box;

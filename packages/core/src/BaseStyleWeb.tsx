@@ -1,7 +1,26 @@
-import { createStyle, useTheme } from '@react-bulk/core';
+import { useEffect } from 'react';
+
+import { createMeta, createStyle, useTheme } from '@react-bulk/core';
 
 export default function BaseStyleWeb() {
   const theme = useTheme();
+
+  useEffect(() => {
+    createMeta('[charset]', { charset: 'UTF-8' }, false);
+    createMeta('[name="viewport"]', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }, false);
+  }, []);
+
+  useEffect(() => {
+    createMeta(
+      '[name="theme-color"]',
+      {
+        name: 'theme-color',
+        media: `(prefers-color-scheme: ${theme.mode})`,
+        content: theme.colors.primary.main,
+      },
+      true,
+    );
+  }, [theme]);
 
   const style = `
     *, *:before, *:after {
