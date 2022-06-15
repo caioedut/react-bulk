@@ -6,7 +6,27 @@ import jss from './styles/jss';
 import clsx from './utils/clsx';
 
 export default function createBox(
-  { component, className, flexbox, direction, wrap, flow, justify, align, alignContent, flex, style, ...rest }: any,
+  {
+    component,
+    className,
+    flexbox,
+    direction,
+    wrap,
+    flow,
+    justifyContent,
+    alignContent,
+    justifyItems,
+    alignItems,
+    flex,
+    order,
+    grow,
+    shrink,
+    basis,
+    align,
+    justify,
+    style,
+    ...rest
+  }: any,
   ref: any,
   map: any,
   defaultComponent: any = null,
@@ -15,14 +35,25 @@ export default function createBox(
 
   const styleX = createStyle({
     style: jss([
+      // Flex Container
       flexbox && { display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}` },
       direction && { flexDirection: direction },
       wrap && { flexWrap: wrap },
       flow && { flexFlow: flow },
-      justify && { justifyContent: justify },
-      align && { alignItems: align },
+      justifyContent && { justifyContent },
+      justifyItems && { alignItems },
       alignContent && { alignContent },
+      alignItems && { alignItems },
+
+      // Flex Item
       flex && { flex: 1 },
+      order && { order },
+      grow && { grow },
+      shrink && { shrink },
+      basis && { basis },
+      align && { alignSelf: align },
+      justify && { justifySelf: justify },
+
       style,
     ]),
   });

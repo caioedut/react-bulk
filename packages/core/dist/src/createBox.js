@@ -20,19 +20,28 @@ const bindings_1 = __importDefault(require("./props/bindings"));
 const jss_1 = __importDefault(require("./styles/jss"));
 const clsx_1 = __importDefault(require("./utils/clsx"));
 function createBox(_a, ref, map, defaultComponent) {
-    var { component, className, flexbox, direction, wrap, flow, justify, align, alignContent, flex, style } = _a, rest = __rest(_a, ["component", "className", "flexbox", "direction", "wrap", "flow", "justify", "align", "alignContent", "flex", "style"]);
+    var { component, className, flexbox, direction, wrap, flow, justifyContent, alignContent, justifyItems, alignItems, flex, order, grow, shrink, basis, align, justify, style } = _a, rest = __rest(_a, ["component", "className", "flexbox", "direction", "wrap", "flow", "justifyContent", "alignContent", "justifyItems", "alignItems", "flex", "order", "grow", "shrink", "basis", "align", "justify", "style"]);
     if (defaultComponent === void 0) { defaultComponent = null; }
     const styleProp = {};
     const styleX = (0, createStyle_1.default)({
         style: (0, jss_1.default)([
+            // Flex Container
             flexbox && { display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}` },
             direction && { flexDirection: direction },
             wrap && { flexWrap: wrap },
             flow && { flexFlow: flow },
-            justify && { justifyContent: justify },
-            align && { alignItems: align },
+            justifyContent && { justifyContent },
+            justifyItems && { alignItems },
             alignContent && { alignContent },
+            alignItems && { alignItems },
+            // Flex Item
             flex && { flex: 1 },
+            order && { order },
+            grow && { grow },
+            shrink && { shrink },
+            basis && { basis },
+            align && { alignSelf: align },
+            justify && { justifySelf: justify },
             style,
         ]),
     });

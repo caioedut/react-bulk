@@ -26,7 +26,7 @@ export default function css(style: any, selector?: string | null) {
       if (attr.startsWith('&')) return;
 
       let suffix = '';
-      if (val && typeof val === 'number' && !['opacity', 'lineHeight'].includes(attr)) {
+      if (val && typeof val === 'number' && !notPx.includes(attr)) {
         suffix = 'px';
       }
 
@@ -59,3 +59,5 @@ export default function css(style: any, selector?: string | null) {
     .replace(/}\s?/g, '} ')
     .trim();
 }
+
+const notPx = ['lineHeight', 'opacity', 'order'];

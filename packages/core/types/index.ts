@@ -16,21 +16,32 @@ export type Bindings = {
   onMouseUp?: Function;
 };
 
+export type FlexAlign = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
+
 export type BoxProps = Bindings & {
   component?: any;
   className?: any;
   children?: React.ReactNode;
   style?: any;
 
-  // Flexbox
-  flexbox?: boolean | 'flex' | 'inline';
+  // Flexbox container
+  flexbox?: boolean | 'flex' | 'flex-inline';
   direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   wrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
   flow?: string;
-  justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
-  align?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
-  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
+  justifyContent?: FlexAlign;
+  alignContent?: FlexAlign;
+  justifyItems?: FlexAlign;
+  alignItems?: FlexAlign;
+
+  // Flexbox item
   flex?: boolean;
+  order?: number;
+  grow?: number;
+  shrink?: number;
+  basis?: 'auto' | number | string;
+  align?: FlexAlign;
+  justify?: FlexAlign;
 };
 
 export type TextProps = BoxProps & {
