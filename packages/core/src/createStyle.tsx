@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import Platform from './Platform';
 import css from './styles/css';
@@ -6,37 +6,48 @@ import jss from './styles/jss';
 import md5 from './utils/md5';
 import uuid from './utils/uuid';
 
-export default function createStyle({ style }: any) {
+export type createStyle = {
+  style: any;
+  className?: string;
+  global?: boolean;
+};
+
+export default function createStyle({ style, className, global }: createStyle) {
   const { web, native } = Platform;
 
   const isObject = style && typeof style === 'object';
   const styleX = isObject ? jss(style) : style;
 
-  const hash = md5(
-    isObject
-      ? Object.entries(styleX)
-          .map(([attr, val]) => `${attr}${val}`)
-          .sort()
-          .join('')
-      : uuid(),
+  const { current: id } = useRef(uuid());
+
+  const hash = useMemo(
+    () =>
+      md5(
+        isObject
+          ? Object.entries(styleX)
+              .map(([attr, val]) => `${attr}${val}`)
+              .sort()
+              .join('')
+          : id,
+      ),
+    [styleX],
   );
 
-  const { current: id } = useRef(`css-${hash}`);
+  className = global ? 'global' : className || `css-${hash}`;
 
   useEffect(() => {
     if (!web) return;
 
-    const element = document?.getElementById(id) || document?.createElement('style') || {};
-    const cssStyle = typeof styleX === 'string' ? styleX : `.${id}{${css(styleX)}}`;
+    const element = document?.getElementById(hash) || document?.createElement('style') || {};
+    const cssStyle = typeof styleX === 'string' ? styleX : css(styleX, `.${className}`);
 
-    element.id = id;
-    element.textContent = cssStyle
-      .replace(/[\n\r]|\s{2,}/g, '')
-      .replace(/\s?{/g, '{')
-      .replace(/}\s?/g, '} ');
+    if (element) {
+      element.id = hash;
+      element.textContent = cssStyle;
+    }
 
     document?.head?.appendChild(element);
   }, [styleX]);
 
-  return native ? styleX : id;
+  return native ? styleX : className;
 }

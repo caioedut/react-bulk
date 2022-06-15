@@ -9,30 +9,30 @@ const css_1 = __importDefault(require("./styles/css"));
 const jss_1 = __importDefault(require("./styles/jss"));
 const md5_1 = __importDefault(require("./utils/md5"));
 const uuid_1 = __importDefault(require("./utils/uuid"));
-function createStyle({ style }) {
+function createStyle({ style, className, global }) {
     const { web, native } = Platform_1.default;
     const isObject = style && typeof style === 'object';
     const styleX = isObject ? (0, jss_1.default)(style) : style;
-    const hash = (0, md5_1.default)(isObject
+    const { current: id } = (0, react_1.useRef)((0, uuid_1.default)());
+    const hash = (0, react_1.useMemo)(() => (0, md5_1.default)(isObject
         ? Object.entries(styleX)
             .map(([attr, val]) => `${attr}${val}`)
             .sort()
             .join('')
-        : (0, uuid_1.default)());
-    const { current: id } = (0, react_1.useRef)(`css-${hash}`);
+        : id), [styleX]);
+    className = global ? 'global' : className || `css-${hash}`;
     (0, react_1.useEffect)(() => {
         var _a;
         if (!web)
             return;
-        const element = (document === null || document === void 0 ? void 0 : document.getElementById(id)) || (document === null || document === void 0 ? void 0 : document.createElement('style')) || {};
-        const cssStyle = typeof styleX === 'string' ? styleX : `.${id}{${(0, css_1.default)(styleX)}}`;
-        element.id = id;
-        element.textContent = cssStyle
-            .replace(/[\n\r]|\s{2,}/g, '')
-            .replace(/\s?{/g, '{')
-            .replace(/}\s?/g, '} ');
+        const element = (document === null || document === void 0 ? void 0 : document.getElementById(hash)) || (document === null || document === void 0 ? void 0 : document.createElement('style')) || {};
+        const cssStyle = typeof styleX === 'string' ? styleX : (0, css_1.default)(styleX, `.${className}`);
+        if (element) {
+            element.id = hash;
+            element.textContent = cssStyle;
+        }
         (_a = document === null || document === void 0 ? void 0 : document.head) === null || _a === void 0 ? void 0 : _a.appendChild(element);
     }, [styleX]);
-    return native ? styleX : id;
+    return native ? styleX : className;
 }
 exports.default = createStyle;

@@ -5,6 +5,7 @@ export { ThemeProvider, useTheme };
 export { default as Platform } from './src/Platform';
 export { default as md5 } from './src/utils/md5';
 export { default as uuid } from './src/utils/uuid';
+export { default as clsx } from './src/utils/clsx';
 
 export { default as jss } from './src/styles/jss';
 export { default as css } from './src/styles/css';

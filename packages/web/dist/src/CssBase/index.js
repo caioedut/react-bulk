@@ -40,7 +40,7 @@ function CssBase() {
       color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)}
     }
   `;
-    (0, core_1.createStyle)({ style });
+    (0, core_1.createStyle)({ style, global: true });
     return null;
 }
 exports.default = CssBase;

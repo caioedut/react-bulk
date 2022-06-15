@@ -18,20 +18,24 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const createStyle_1 = __importDefault(require("./createStyle"));
 const bindings_1 = __importDefault(require("./props/bindings"));
 const jss_1 = __importDefault(require("./styles/jss"));
+const clsx_1 = __importDefault(require("./utils/clsx"));
 function createBox(_a, ref, map, defaultComponent) {
-    var { component, style } = _a, rest = __rest(_a, ["component", "style"]);
+    var { component, className, style } = _a, rest = __rest(_a, ["component", "className", "style"]);
     if (defaultComponent === void 0) { defaultComponent = null; }
     const styleProp = {};
     const styleX = (0, createStyle_1.default)({ style: (0, jss_1.default)(style) });
     if (styleX) {
         if (typeof styleX === 'string') {
-            styleProp.className = `${styleX || ''} ${rest.className || ''}`.trim();
+            className = (0, clsx_1.default)(styleX, className);
         }
         if (typeof styleX === 'object') {
             styleProp.style = styleX;
         }
     }
     const props = (0, bindings_1.default)(rest);
+    if (className) {
+        props.className = (0, clsx_1.default)(className);
+    }
     const Component = component || defaultComponent;
     return (0, jsx_runtime_1.jsx)(Component, Object.assign({}, props, { ref: ref }, styleProp));
 }

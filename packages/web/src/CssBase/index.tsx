@@ -41,7 +41,7 @@ function CssBase() {
     }
   `;
 
-  createStyle({ style });
+  createStyle({ style, global: true });
 
   return null;
 }

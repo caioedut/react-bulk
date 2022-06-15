@@ -11,6 +11,8 @@ export default function createButton({ variant, size, block, loading, style, chi
 
   const styleX = [
     {
+      position: 'relative',
+
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'nowrap',
@@ -29,15 +31,20 @@ export default function createButton({ variant, size, block, loading, style, chi
       borderColor: theme.colors.primary.main,
       borderRadius: theme.shape.borderRadius,
 
+      margin: 0,
       paddingTop: theme.rem(0.5),
       paddingBottom: theme.rem(0.5),
       paddingLeft: theme.rem(1),
       paddingRight: theme.rem(1),
 
-      margin: 0,
-    },
+      transitionProperty: 'background-color, box-shadow',
+      transitionDuration: '0.2s',
+      transitionTimingFunction: 'ease',
 
-    web && { fontFamily: 'inherit' },
+      '&:hover,:focus': {
+        backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.9),
+      },
+    },
 
     block && { width: '100%' },
 
@@ -51,6 +58,10 @@ export default function createButton({ variant, size, block, loading, style, chi
     (variant === 'outline' || variant === 'text') && {
       backgroundColor: theme.colors.common.trans,
       color: theme.colors.primary.main,
+
+      '&:hover,:focus': {
+        backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.1),
+      },
     },
 
     size === 'small' && {
@@ -67,6 +78,14 @@ export default function createButton({ variant, size, block, loading, style, chi
       paddingBottom: theme.rem(0.5, theme.rem(1.25)),
       paddingLeft: theme.rem(0.75, theme.rem(1.25)),
       paddingRight: theme.rem(0.75, theme.rem(1.25)),
+    },
+
+    web && {
+      fontFamily: 'inherit',
+      '&:focus': {
+        outline: 0,
+        boxShadow: `0 0 0 0.2rem ${theme.hex2rgba(theme.colors.primary.main, 0.5)}`,
+      },
     },
 
     style,

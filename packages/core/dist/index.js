@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStyle = exports.mergeStyles = exports.createStyle = exports.createTheme = exports.createText = exports.createInput = exports.createButton = exports.createBox = exports.css = exports.jss = exports.uuid = exports.md5 = exports.Platform = exports.useTheme = exports.ThemeProvider = void 0;
+exports.getStyle = exports.mergeStyles = exports.createStyle = exports.createTheme = exports.createText = exports.createInput = exports.createButton = exports.createBox = exports.css = exports.jss = exports.clsx = exports.uuid = exports.md5 = exports.Platform = exports.useTheme = exports.ThemeProvider = void 0;
 const ThemeProvider_1 = __importStar(require("./src/ThemeProvider"));
 exports.ThemeProvider = ThemeProvider_1.default;
 Object.defineProperty(exports, "useTheme", { enumerable: true, get: function () { return ThemeProvider_1.useTheme; } });
@@ -36,6 +36,8 @@ var md5_1 = require("./src/utils/md5");
 Object.defineProperty(exports, "md5", { enumerable: true, get: function () { return __importDefault(md5_1).default; } });
 var uuid_1 = require("./src/utils/uuid");
 Object.defineProperty(exports, "uuid", { enumerable: true, get: function () { return __importDefault(uuid_1).default; } });
+var clsx_1 = require("./src/utils/clsx");
+Object.defineProperty(exports, "clsx", { enumerable: true, get: function () { return __importDefault(clsx_1).default; } });
 var jss_1 = require("./src/styles/jss");
 Object.defineProperty(exports, "jss", { enumerable: true, get: function () { return __importDefault(jss_1).default; } });
 var css_1 = require("./src/styles/css");
