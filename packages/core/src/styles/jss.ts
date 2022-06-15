@@ -65,12 +65,21 @@ export default function jss(...styles: Object[]) {
 
       delete merged[attr];
       Object.assign(merged, { borderWidth, borderStyle, borderColor });
+
+      continue;
     }
 
     if (attr === 'shadow' || attr === 'boxShadow') {
-      const split = value.split(' ').filter((item: any) => item.trim() && !item.includes('inset'));
+      const colorIndex = value.search(/(\w+\(|#).+/g);
 
-      const color = split.pop();
+      let color = 'rgba(0, 0, 0, 0)';
+
+      if (colorIndex >= 0) {
+        color = value.substring(colorIndex);
+        value = value.substring(0, colorIndex);
+      }
+
+      const split = value.split(' ').filter((item: any) => item.trim() && !item.includes('inset'));
       const [width, height, shadowRadius] = split.map((item: string) => Number(item.replace(/\D/g, '') || 0));
 
       let elevation;
@@ -131,8 +140,9 @@ export default function jss(...styles: Object[]) {
         shadowOpacity: 0.18,
         shadowRadius,
         shadowOffset: { height, width },
-        elevation,
       });
+
+      continue;
     }
 
     // @ts-ignore

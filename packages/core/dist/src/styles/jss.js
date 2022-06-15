@@ -54,10 +54,16 @@ function jss(...styles) {
             const borderColor = split.shift() || '#000000';
             delete merged[attr];
             Object.assign(merged, { borderWidth, borderStyle, borderColor });
+            continue;
         }
         if (attr === 'shadow' || attr === 'boxShadow') {
+            const colorIndex = value.search(/(\w+\(|#).+/g);
+            let color = 'rgba(0, 0, 0, 0)';
+            if (colorIndex >= 0) {
+                color = value.substring(colorIndex);
+                value = value.substring(0, colorIndex);
+            }
             const split = value.split(' ').filter((item) => item.trim() && !item.includes('inset'));
-            const color = split.pop();
             const [width, height, shadowRadius] = split.map((item) => Number(item.replace(/\D/g, '') || 0));
             let elevation;
             if (height >= 12 && shadowRadius >= 16) {
@@ -138,8 +144,8 @@ function jss(...styles) {
                 shadowOpacity: 0.18,
                 shadowRadius,
                 shadowOffset: { height, width },
-                elevation,
             });
+            continue;
         }
         // @ts-ignore
         merged[prop] = value;
