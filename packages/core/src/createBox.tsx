@@ -1,6 +1,7 @@
 import React from 'react';
 
 import createStyle from './createStyle';
+import bindings from './props/bindings';
 import jss from './styles/jss';
 
 export default function createBox({ component, style, ...rest }: any, ref: any, map: any, defaultComponent: any = null) {
@@ -17,6 +18,8 @@ export default function createBox({ component, style, ...rest }: any, ref: any, 
     }
   }
 
+  const props = bindings(rest);
+
   const Component = component || defaultComponent;
-  return <Component {...rest} ref={ref} {...styleProp} />;
+  return <Component {...props} ref={ref} {...styleProp} />;
 }

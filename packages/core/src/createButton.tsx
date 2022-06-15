@@ -1,13 +1,13 @@
+import Platform from './Platform';
 import { useTheme } from './ThemeProvider';
 import getStyle from './getStyle';
 
 export default function createButton({ variant, size, block, loading, style, children, ...rest }: any, ref: any, map: any) {
   const theme = useTheme();
 
+  const { web } = Platform;
   const { Box, Text, Button } = map;
   const { disabled } = rest;
-
-  const color = theme.colors.primary.main;
 
   const styleX = [
     {
@@ -20,45 +20,53 @@ export default function createButton({ variant, size, block, loading, style, chi
       fontSize: theme.rem(1),
       lineHeight: 1.25,
 
-      backgroundColor: color,
+      backgroundColor: theme.colors.primary.main,
       color: theme.colors.common.white,
-      cursor: disabled ? 'not-allowed' : 'pointer',
+      cursor: 'pointer',
 
       borderWidth: 1,
       borderStyle: 'solid',
-      borderColor: color,
+      borderColor: theme.colors.primary.main,
       borderRadius: theme.shape.borderRadius,
 
       paddingTop: theme.rem(0.5),
       paddingBottom: theme.rem(0.5),
       paddingLeft: theme.rem(1),
       paddingRight: theme.rem(1),
+
+      margin: 0,
     },
 
-    map.web && { fontFamily: 'inherit' },
+    web && { fontFamily: 'inherit' },
 
     block && { width: '100%' },
 
-    disabled && { opacity: 0.75 },
+    disabled && {
+      cursor: 'not-allowed',
+      opacity: 0.75,
+    },
 
     variant === 'text' && { borderColor: theme.colors.common.trans },
 
-    (variant === 'outline' || variant === 'text') && { backgroundColor: theme.colors.common.trans, color },
+    (variant === 'outline' || variant === 'text') && {
+      backgroundColor: theme.colors.common.trans,
+      color: theme.colors.primary.main,
+    },
 
     size === 'small' && {
       fontSize: theme.rem(0.875),
-      paddingTop: theme.rem(0.25),
-      paddingBottom: theme.rem(0.25),
-      paddingLeft: theme.rem(0.5),
-      paddingRight: theme.rem(0.5),
+      paddingTop: theme.rem(0.5, theme.rem(0.875)),
+      paddingBottom: theme.rem(0.5, theme.rem(0.875)),
+      paddingLeft: theme.rem(0.75, theme.rem(0.875)),
+      paddingRight: theme.rem(0.75, theme.rem(0.875)),
     },
 
     size === 'large' && {
       fontSize: theme.rem(1.25),
-      paddingTop: theme.rem(0.75),
-      paddingBottom: theme.rem(0.75),
-      paddingLeft: theme.rem(1.25),
-      paddingRight: theme.rem(1.25),
+      paddingTop: theme.rem(0.5, theme.rem(1.25)),
+      paddingBottom: theme.rem(0.5, theme.rem(1.25)),
+      paddingLeft: theme.rem(0.75, theme.rem(1.25)),
+      paddingRight: theme.rem(0.75, theme.rem(1.25)),
     },
 
     style,

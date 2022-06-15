@@ -15,14 +15,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
+const Platform_1 = __importDefault(require("./Platform"));
 const ThemeProvider_1 = require("./ThemeProvider");
 const getStyle_1 = __importDefault(require("./getStyle"));
 function createButton(_a, ref, map) {
     var { variant, size, block, loading, style, children } = _a, rest = __rest(_a, ["variant", "size", "block", "loading", "style", "children"]);
     const theme = (0, ThemeProvider_1.useTheme)();
+    const { web } = Platform_1.default;
     const { Box, Text, Button } = map;
     const { disabled } = rest;
-    const color = theme.colors.primary.main;
     const styleX = [
         {
             display: 'flex',
@@ -32,36 +33,43 @@ function createButton(_a, ref, map) {
             justifyContent: 'center',
             fontSize: theme.rem(1),
             lineHeight: 1.25,
-            backgroundColor: color,
+            backgroundColor: theme.colors.primary.main,
             color: theme.colors.common.white,
-            cursor: disabled ? 'not-allowed' : 'pointer',
+            cursor: 'pointer',
             borderWidth: 1,
             borderStyle: 'solid',
-            borderColor: color,
+            borderColor: theme.colors.primary.main,
             borderRadius: theme.shape.borderRadius,
             paddingTop: theme.rem(0.5),
             paddingBottom: theme.rem(0.5),
             paddingLeft: theme.rem(1),
             paddingRight: theme.rem(1),
+            margin: 0,
         },
-        map.web && { fontFamily: 'inherit' },
+        web && { fontFamily: 'inherit' },
         block && { width: '100%' },
-        disabled && { opacity: 0.75 },
+        disabled && {
+            cursor: 'not-allowed',
+            opacity: 0.75,
+        },
         variant === 'text' && { borderColor: theme.colors.common.trans },
-        (variant === 'outline' || variant === 'text') && { backgroundColor: theme.colors.common.trans, color },
+        (variant === 'outline' || variant === 'text') && {
+            backgroundColor: theme.colors.common.trans,
+            color: theme.colors.primary.main,
+        },
         size === 'small' && {
             fontSize: theme.rem(0.875),
-            paddingTop: theme.rem(0.25),
-            paddingBottom: theme.rem(0.25),
-            paddingLeft: theme.rem(0.5),
-            paddingRight: theme.rem(0.5),
+            paddingTop: theme.rem(0.5, theme.rem(0.875)),
+            paddingBottom: theme.rem(0.5, theme.rem(0.875)),
+            paddingLeft: theme.rem(0.75, theme.rem(0.875)),
+            paddingRight: theme.rem(0.75, theme.rem(0.875)),
         },
         size === 'large' && {
             fontSize: theme.rem(1.25),
-            paddingTop: theme.rem(0.75),
-            paddingBottom: theme.rem(0.75),
-            paddingLeft: theme.rem(1.25),
-            paddingRight: theme.rem(1.25),
+            paddingTop: theme.rem(0.5, theme.rem(1.25)),
+            paddingBottom: theme.rem(0.5, theme.rem(1.25)),
+            paddingLeft: theme.rem(0.75, theme.rem(1.25)),
+            paddingRight: theme.rem(0.75, theme.rem(1.25)),
         },
         style,
     ];

@@ -1,11 +1,14 @@
 import Box from './src/Box';
 
 const map = {
-  web: true,
+  ios: false,
+  android: false,
   Box,
   View: 'div',
   Text: 'span',
+  Label: 'label',
   Button: 'button',
+  Input: 'input',
 };
 
 export default map;

@@ -14,21 +14,6 @@ const Button = forwardRef(({ elevation, ...props }: ButtonPropsWeb, ref) => {
 
   props.style = [props.style];
 
-  if (props.onPress) {
-    props.onClick = props.onPress;
-    delete props.onPress;
-  }
-
-  if (props.onPressIn) {
-    props.onMouseDown = props.onPressIn;
-    delete props.onPressIn;
-  }
-
-  if (props.onPressOut) {
-    props.onMouseUp = props.onPressOut;
-    delete props.onPressOut;
-  }
-
   if (elevation) {
     props.style.unshift({
       boxShadow: theme.mixins.shadows[elevation],

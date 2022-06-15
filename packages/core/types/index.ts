@@ -1,5 +1,19 @@
 import React from 'react';
 
+export type TextProps = {
+  children: React.ReactNode;
+  style?: any;
+
+  size?: number;
+  bold?: boolean;
+  italic?: boolean;
+  oblique?: boolean;
+  smallCaps?: boolean;
+  invisible?: boolean;
+
+  numberOfLines?: number;
+};
+
 export type ButtonProps = {
   children: React.ReactNode;
 
@@ -31,16 +45,12 @@ export type ButtonProps = {
   endIcon?: React.ReactNode;
 };
 
-export type TextProps = {
-  children: React.ReactNode;
+export type InputProps = {
+  autoFocus?: Boolean;
+  readOnly?: Boolean;
+  disabled?: Boolean;
   style?: any;
 
-  size?: number;
-  bold?: boolean;
-  italic?: boolean;
-  oblique?: boolean;
-  smallCaps?: boolean;
-  invisible?: boolean;
-
-  numberOfLines?: number;
+  onFocus?: Function;
+  onBlur?: Function;
 };

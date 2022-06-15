@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@react-bulk/core");
 function CssBase() {
+    const theme = (0, core_1.useTheme)();
     const style = `
     *, *:before, *:after {
       box-sizing: border-box;
@@ -25,6 +26,18 @@ function CssBase() {
       flex: 1;
       display: flex;
       flex-direction: column;
+    }
+
+    ::placeholder {
+      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)}
+    }
+
+    :-ms-input-placeholder {
+      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)}
+    }
+
+    ::-ms-input-placeholder {
+      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)}
     }
   `;
     (0, core_1.createStyle)({ style });

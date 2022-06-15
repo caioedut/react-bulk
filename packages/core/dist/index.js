@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStyle = exports.mergeStyles = exports.createStyle = exports.createTheme = exports.createText = exports.createButton = exports.createBox = exports.css = exports.jss = exports.uuid = exports.md5 = exports.Platform = exports.useTheme = exports.ThemeProvider = void 0;
+exports.getStyle = exports.mergeStyles = exports.createStyle = exports.createTheme = exports.createText = exports.createInput = exports.createButton = exports.createBox = exports.css = exports.jss = exports.uuid = exports.md5 = exports.Platform = exports.useTheme = exports.ThemeProvider = void 0;
 const ThemeProvider_1 = __importStar(require("./src/ThemeProvider"));
 exports.ThemeProvider = ThemeProvider_1.default;
 Object.defineProperty(exports, "useTheme", { enumerable: true, get: function () { return ThemeProvider_1.useTheme; } });
@@ -44,6 +44,8 @@ var createBox_1 = require("./src/createBox");
 Object.defineProperty(exports, "createBox", { enumerable: true, get: function () { return __importDefault(createBox_1).default; } });
 var createButton_1 = require("./src/createButton");
 Object.defineProperty(exports, "createButton", { enumerable: true, get: function () { return __importDefault(createButton_1).default; } });
+var createInput_1 = require("./src/createInput");
+Object.defineProperty(exports, "createInput", { enumerable: true, get: function () { return __importDefault(createInput_1).default; } });
 var createText_1 = require("./src/createText");
 Object.defineProperty(exports, "createText", { enumerable: true, get: function () { return __importDefault(createText_1).default; } });
 var createTheme_1 = require("./src/createTheme");

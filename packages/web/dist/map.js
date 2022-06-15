@@ -5,10 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Box_1 = __importDefault(require("./src/Box"));
 const map = {
-    web: true,
+    ios: false,
+    android: false,
     Box: Box_1.default,
     View: 'div',
     Text: 'span',
+    Label: 'label',
     Button: 'button',
+    Input: 'input',
 };
 exports.default = map;

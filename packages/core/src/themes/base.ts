@@ -41,8 +41,8 @@ const base = {
     },
   },
 
-  rem(multiplier = 1) {
-    return this.typography.fontSize * multiplier;
+  rem(multiplier = 1, base = null) {
+    return (base || this.typography.fontSize) * multiplier;
   },
 
   spacing(multiplier = 1) {

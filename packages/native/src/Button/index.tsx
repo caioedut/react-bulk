@@ -5,12 +5,7 @@ import { ButtonProps } from '@react-bulk/core/types';
 
 import map from '../../map';
 
-const Button = forwardRef(({ ...props }: ButtonProps, ref) => {
-  if (props.onClick) {
-    props.onPress = props.onClick;
-    delete props.onClick;
-  }
-
+const Button = forwardRef((props: ButtonProps, ref) => {
   return createButton(props, ref, map);
 });
 

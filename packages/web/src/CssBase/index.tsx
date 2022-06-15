@@ -1,6 +1,8 @@
-import { createStyle } from '@react-bulk/core';
+import { createStyle, useTheme } from '@react-bulk/core';
 
 function CssBase() {
+  const theme = useTheme();
+
   const style = `
     *, *:before, *:after {
       box-sizing: border-box;
@@ -24,6 +26,18 @@ function CssBase() {
       flex: 1;
       display: flex;
       flex-direction: column;
+    }
+
+    ::placeholder {
+      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)}
+    }
+
+    :-ms-input-placeholder {
+      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)}
+    }
+
+    ::-ms-input-placeholder {
+      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)}
     }
   `;
 

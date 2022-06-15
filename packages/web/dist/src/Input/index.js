@@ -17,15 +17,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const core_1 = require("@react-bulk/core");
 const map_1 = __importDefault(require("../../map"));
-const Button = (0, react_1.forwardRef)((_a, ref) => {
-    var { elevation } = _a, props = __rest(_a, ["elevation"]);
-    const theme = (0, core_1.useTheme)();
-    props.style = [props.style];
-    if (elevation) {
-        props.style.unshift({
-            boxShadow: theme.mixins.shadows[elevation],
-        });
-    }
-    return (0, core_1.createButton)(props, ref, map_1.default);
+const Input = (0, react_1.forwardRef)((_a, ref) => {
+    var props = __rest(_a, []);
+    return (0, core_1.createInput)(props, ref, map_1.default);
 });
-exports.default = Button;
+exports.default = Input;
