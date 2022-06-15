@@ -36,7 +36,11 @@ function default_1(_a) {
         if (props.onClick) {
             props.onPress = props.onClick;
         }
+        if (props.onChange) {
+            props.onChangeText = props.onChange;
+        }
         delete props.onClick;
+        delete props.onChange;
     }
     return props;
 }

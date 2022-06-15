@@ -1,23 +1,36 @@
 import React, { forwardRef } from 'react';
 
 import { createInput, useTheme } from '@react-bulk/core';
+import { InputProps } from '@react-bulk/core/types';
 
 import map from '../../map';
 
-const Input = forwardRef(({ ...rest }: any, ref) => {
+type InputPropsNative = InputProps & {
+  keyboardAppearance?: 'light' | 'dark';
+  selectionColor?: string;
+  underlineColorAndroid?: string;
+  secureTextEntry?: boolean;
+};
+
+const Input = forwardRef(({ ...rest }: InputPropsNative, ref) => {
   const theme = useTheme();
 
   const props: any = {
     keyboardAppearance: theme.mode,
     selectionColor: theme.colors.primary.main,
     underlineColorAndroid: 'transparent',
+    ...rest,
   };
 
-  if (rest.placeholder) {
+  if (props.placeholder) {
     props.placeholderTextColor = theme.hex2rgba(theme.colors.text.primary, 0.4);
   }
 
-  return createInput({ ...props, ...rest }, ref, map);
+  if (props.secure) {
+    props.secureTextEntry = true;
+  }
+
+  return createInput(props, ref, map);
 });
 
 export default Input;

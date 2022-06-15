@@ -1,26 +1,6 @@
 import React from 'react';
 
-export type TextProps = {
-  children: React.ReactNode;
-  style?: any;
-
-  size?: number;
-  bold?: boolean;
-  italic?: boolean;
-  oblique?: boolean;
-  smallCaps?: boolean;
-  invisible?: boolean;
-
-  numberOfLines?: number;
-};
-
-export type ButtonProps = {
-  children: React.ReactNode;
-
-  autoFocus?: Boolean;
-  disabled?: Boolean;
-  style?: any;
-
+export type Binding = {
   onPress?: Function;
   onPressIn?: Function;
   onPressOut?: Function;
@@ -34,8 +14,29 @@ export type ButtonProps = {
   onMouseDown?: Function;
   /** @deprecated use onPressOut instead */
   onMouseUp?: Function;
+};
 
-  // Custom
+export type TextProps = Binding & {
+  children: React.ReactNode;
+  style?: any;
+
+  size?: number;
+  bold?: boolean;
+  italic?: boolean;
+  oblique?: boolean;
+  smallCaps?: boolean;
+  invisible?: boolean;
+
+  numberOfLines?: number;
+};
+
+export type ButtonProps = Binding & {
+  children: React.ReactNode;
+
+  autoFocus?: Boolean;
+  disabled?: Boolean;
+  style?: any;
+
   variant?: 'solid' | 'outline' | 'text' | string;
   size?: 'small' | 'medium' | 'large' | string;
   block?: Boolean;
@@ -45,12 +46,19 @@ export type ButtonProps = {
   endIcon?: React.ReactNode;
 };
 
-export type InputProps = {
+export type InputProps = Binding & {
   autoFocus?: Boolean;
   readOnly?: Boolean;
   disabled?: Boolean;
   style?: any;
 
-  onFocus?: Function;
-  onBlur?: Function;
+  size?: 'small' | 'medium' | 'large' | string;
+  label?: string;
+  placeholder?: string;
+  secure: boolean;
+
+  onChange?: Function;
+
+  /** @deprecated use onPress instead */
+  onChangeText?: Function;
 };

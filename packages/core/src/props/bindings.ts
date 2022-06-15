@@ -26,7 +26,12 @@ export default function ({ ...props }: any) {
       props.onPress = props.onClick;
     }
 
+    if (props.onChange) {
+      props.onChangeText = props.onChange;
+    }
+
     delete props.onClick;
+    delete props.onChange;
   }
 
   return props;

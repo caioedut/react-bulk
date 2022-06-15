@@ -19,6 +19,12 @@ const core_1 = require("@react-bulk/core");
 const map_1 = __importDefault(require("../../map"));
 const Input = (0, react_1.forwardRef)((_a, ref) => {
     var props = __rest(_a, []);
+    if (!props.type) {
+        props.type = 'text';
+    }
+    if (props.secure) {
+        props.type = 'password';
+    }
     return (0, core_1.createInput)(props, ref, map_1.default);
 });
 exports.default = Input;

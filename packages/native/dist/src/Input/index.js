@@ -20,14 +20,13 @@ const map_1 = __importDefault(require("../../map"));
 const Input = (0, react_1.forwardRef)((_a, ref) => {
     var rest = __rest(_a, []);
     const theme = (0, core_1.useTheme)();
-    const props = {
-        keyboardAppearance: theme.mode,
-        selectionColor: theme.colors.primary.main,
-        underlineColorAndroid: 'transparent',
-    };
-    if (rest.placeholder) {
+    const props = Object.assign({ keyboardAppearance: theme.mode, selectionColor: theme.colors.primary.main, underlineColorAndroid: 'transparent' }, rest);
+    if (props.placeholder) {
         props.placeholderTextColor = theme.hex2rgba(theme.colors.text.primary, 0.4);
     }
-    return (0, core_1.createInput)(Object.assign(Object.assign({}, props), rest), ref, map_1.default);
+    if (props.secure) {
+        props.secureTextEntry = true;
+    }
+    return (0, core_1.createInput)(props, ref, map_1.default);
 });
 exports.default = Input;
