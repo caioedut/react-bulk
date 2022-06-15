@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { createButton, useTheme } from '@react-bulk/core';
+import { createButton } from '@react-bulk/core';
 import { ButtonProps } from '@react-bulk/core/types';
 
 import map from '../../map';
@@ -9,16 +9,8 @@ type ButtonPropsWeb = ButtonProps & {
   type?: 'button' | 'reset' | 'submit';
 };
 
-const Button = forwardRef(({ elevation, ...props }: ButtonPropsWeb, ref) => {
-  const theme = useTheme();
-
+const Button = forwardRef(({ ...props }: ButtonPropsWeb, ref) => {
   props.style = [props.style];
-
-  if (elevation) {
-    props.style.unshift({
-      boxShadow: theme.mixins.shadows[elevation],
-    });
-  }
 
   if (!props.type) {
     props.type = 'button';

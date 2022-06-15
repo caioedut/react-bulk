@@ -18,14 +18,8 @@ const react_1 = require("react");
 const core_1 = require("@react-bulk/core");
 const map_1 = __importDefault(require("../../map"));
 const Button = (0, react_1.forwardRef)((_a, ref) => {
-    var { elevation } = _a, props = __rest(_a, ["elevation"]);
-    const theme = (0, core_1.useTheme)();
+    var props = __rest(_a, []);
     props.style = [props.style];
-    if (elevation) {
-        props.style.unshift({
-            boxShadow: theme.mixins.shadows[elevation],
-        });
-    }
     if (!props.type) {
         props.type = 'button';
     }

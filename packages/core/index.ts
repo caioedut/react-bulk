@@ -12,6 +12,7 @@ export { default as css } from './src/styles/css';
 
 export { default as createBox } from './src/createBox';
 export { default as createButton } from './src/createButton';
+export { default as createCard } from './src/createCard';
 export { default as createInput } from './src/createInput';
 export { default as createText } from './src/createText';
 export { default as createTheme } from './src/createTheme';

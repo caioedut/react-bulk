@@ -65,7 +65,6 @@ export type ButtonProps = BoxProps & {
   size?: 'small' | 'medium' | 'large' | string;
   block?: Boolean;
   loading?: Boolean;
-  elevation?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
 };
@@ -87,3 +86,5 @@ export type InputProps = BoxProps & {
   /** @deprecated use onPress instead */
   onChangeText?: Function;
 };
+
+export type CardProps = BoxProps & {};

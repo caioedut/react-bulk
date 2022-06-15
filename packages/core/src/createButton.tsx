@@ -14,7 +14,7 @@ export default function createButton({ variant, size, block, loading, style, chi
     {
       position: 'relative',
 
-      display: 'flex',
+      display: web ? 'inline-flex' : 'flex',
       flexDirection: 'row',
       flexWrap: 'nowrap',
       alignItems: 'center',

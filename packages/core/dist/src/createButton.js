@@ -27,7 +27,7 @@ function createButton(_a, ref, map) {
     const styleX = [
         {
             position: 'relative',
-            display: 'flex',
+            display: web ? 'inline-flex' : 'flex',
             flexDirection: 'row',
             flexWrap: 'nowrap',
             alignItems: 'center',
