@@ -25,6 +25,6 @@ function createCard(_a, ref, map) {
         },
         style,
     ];
-    return (0, jsx_runtime_1.jsx)(Box, Object.assign({}, rest, { style: styleX }));
+    return (0, jsx_runtime_1.jsx)(Box, Object.assign({ ref: ref }, rest, { style: styleX }));
 }
 exports.default = createCard;

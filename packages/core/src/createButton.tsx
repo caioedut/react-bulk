@@ -101,7 +101,7 @@ export default function createButton({ variant, size, block, loading, style, chi
   }
 
   return (
-    <Box component={Button} {...rest} style={styleX}>
+    <Box ref={ref} component={Button} {...rest} style={styleX}>
       {children}
       {loading && (
         <Box

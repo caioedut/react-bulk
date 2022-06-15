@@ -82,6 +82,6 @@ function createText(_a, ref, map) {
             delete styleX.lineHeight;
         }
     }
-    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [Boolean(label) && (0, jsx_runtime_1.jsx)(Text, { children: label }), (0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Input }, rest, { style: styleX }))] }));
+    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [Boolean(label) && (0, jsx_runtime_1.jsx)(Text, { children: label }), (0, jsx_runtime_1.jsx)(Box, Object.assign({ ref: ref, component: Input }, rest, { style: styleX }))] }));
 }
 exports.default = createText;

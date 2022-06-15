@@ -41,5 +41,5 @@ export default function createText(
     props.numberOfLines = numberOfLines;
   }
 
-  return <Box component={Text} {...rest} style={styleX} {...props} />;
+  return <Box ref={ref} component={Text} {...rest} style={styleX} {...props} />;
 }

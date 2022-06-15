@@ -15,5 +15,5 @@ export default function createCard({ style, ...rest }: any, ref: any, map: any) 
     style,
   ];
 
-  return <Box {...rest} style={styleX} />;
+  return <Box ref={ref} {...rest} style={styleX} />;
 }

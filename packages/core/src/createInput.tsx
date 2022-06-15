@@ -83,7 +83,7 @@ export default function createText({ label, size, style, ...rest }: any, ref: an
   return (
     <>
       {Boolean(label) && <Text>{label}</Text>}
-      <Box component={Input} {...rest} style={styleX} />
+      <Box ref={ref} component={Input} {...rest} style={styleX} />
     </>
   );
 }

@@ -49,6 +49,6 @@ function createText(_a, ref, map) {
     if (native && numberOfLines) {
         props.numberOfLines = numberOfLines;
     }
-    return (0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Text }, rest, { style: styleX }, props));
+    return (0, jsx_runtime_1.jsx)(Box, Object.assign({ ref: ref, component: Text }, rest, { style: styleX }, props));
 }
 exports.default = createText;

@@ -90,7 +90,7 @@ function createButton(_a, ref, map) {
     if (typeof children === 'string') {
         children = ((0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Text, style: [textStyleX, disabled && { opacity: 0.75 }, loading && { opacity: 0 }] }, { children: children })));
     }
-    return ((0, jsx_runtime_1.jsxs)(Box, Object.assign({ component: Button }, rest, { style: styleX }, { children: [children, loading && ((0, jsx_runtime_1.jsx)(Box, Object.assign({ style: {
+    return ((0, jsx_runtime_1.jsxs)(Box, Object.assign({ ref: ref, component: Button }, rest, { style: styleX }, { children: [children, loading && ((0, jsx_runtime_1.jsx)(Box, Object.assign({ style: {
                     position: 'absolute',
                     top: 0,
                     left: 0,
