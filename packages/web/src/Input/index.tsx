@@ -6,7 +6,7 @@ import { InputProps } from '@react-bulk/core/types';
 import map from '../../map';
 
 type InputPropsWeb = InputProps & {
-  type:
+  type?:
     | 'color'
     | 'date'
     | 'datetime-local'

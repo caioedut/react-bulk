@@ -46,6 +46,8 @@ export type ButtonProps = Binding & {
   endIcon?: React.ReactNode;
 };
 
+export type ChangeCallback = (value: string, e: any) => any;
+
 export type InputProps = Binding & {
   autoFocus?: Boolean;
   readOnly?: Boolean;
@@ -55,9 +57,9 @@ export type InputProps = Binding & {
   size?: 'small' | 'medium' | 'large' | string;
   label?: string;
   placeholder?: string;
-  secure: boolean;
+  secure?: boolean;
 
-  onChange?: Function;
+  onChange?: ChangeCallback;
 
   /** @deprecated use onPress instead */
   onChangeText?: Function;
