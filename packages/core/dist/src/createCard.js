@@ -12,10 +12,10 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
-const ThemeProvider_1 = require("./ThemeProvider");
+const ReactBulk_1 = require("./ReactBulk");
 function createCard(_a, ref, map) {
     var { style } = _a, rest = __rest(_a, ["style"]);
-    const theme = (0, ThemeProvider_1.useTheme)();
+    const theme = (0, ReactBulk_1.useTheme)();
     const { Box } = map;
     const styleX = [
         {

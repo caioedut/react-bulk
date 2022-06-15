@@ -16,13 +16,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const Platform_1 = __importDefault(require("./Platform"));
-const ThemeProvider_1 = require("./ThemeProvider");
+const ReactBulk_1 = require("./ReactBulk");
 const getStyle_1 = __importDefault(require("./getStyle"));
 const jss_1 = __importDefault(require("./styles/jss"));
 function createText(_a, ref, map) {
     var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
     var { label, size, style } = _a, rest = __rest(_a, ["label", "size", "style"]);
-    const theme = (0, ThemeProvider_1.useTheme)();
+    const theme = (0, ReactBulk_1.useTheme)();
     const { web, native } = Platform_1.default;
     const { Box, Text, Input, ios } = map;
     const { disabled } = rest;

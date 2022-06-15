@@ -1,6 +1,6 @@
 import { createStyle, useTheme } from '@react-bulk/core';
 
-function CssBase() {
+export default function BaseStyleWeb() {
   const theme = useTheme();
 
   const style = `
@@ -46,5 +46,3 @@ function CssBase() {
 
   return null;
 }
-
-export default CssBase;

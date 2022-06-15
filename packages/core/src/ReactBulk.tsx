@@ -1,16 +1,21 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
+import BaseStyleNative from './BaseStyleNative';
+import BaseStyleWeb from './BaseStyleWeb';
+import Platform from './Platform';
 import createTheme from './createTheme';
 import light from './themes/light';
 
 const defaultTheme = createTheme(light);
-const ThemeContext = createContext(defaultTheme);
+const Context = createContext(defaultTheme);
 
 export function useTheme() {
-  return (useContext(ThemeContext) || defaultTheme) as any;
+  return (useContext(Context) || defaultTheme) as any;
 }
 
-function ThemeProvider({ theme, children }: any) {
+function ReactBulk({ theme, children }: any) {
+  const { web, native } = Platform;
+
   const [themeState, setThemeState] = useState(createTheme(theme));
 
   const setTheme = (theme: Object) => {
@@ -22,12 +27,12 @@ function ThemeProvider({ theme, children }: any) {
   }, [theme]);
 
   return (
-    <ThemeContext.Provider //
-      value={{ ...themeState, setTheme }}
-    >
+    <Context.Provider value={{ ...themeState, setTheme }}>
+      {web && <BaseStyleWeb />}
+      {native && <BaseStyleNative />}
       {children}
-    </ThemeContext.Provider>
+    </Context.Provider>
   );
 }
 
-export default ThemeProvider;
+export default ReactBulk;

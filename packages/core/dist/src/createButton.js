@@ -16,11 +16,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const Platform_1 = __importDefault(require("./Platform"));
-const ThemeProvider_1 = require("./ThemeProvider");
+const ReactBulk_1 = require("./ReactBulk");
 const getStyle_1 = __importDefault(require("./getStyle"));
 function createButton(_a, ref, map) {
     var { variant, size, block, loading, style, children } = _a, rest = __rest(_a, ["variant", "size", "block", "loading", "style", "children"]);
-    const theme = (0, ThemeProvider_1.useTheme)();
+    const theme = (0, ReactBulk_1.useTheme)();
     const { web } = Platform_1.default;
     const { Box, Text, Button } = map;
     const disabled = rest.disabled || loading;

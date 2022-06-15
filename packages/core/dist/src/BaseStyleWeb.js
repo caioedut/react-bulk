@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@react-bulk/core");
-function CssBase() {
+function BaseStyleWeb() {
     const theme = (0, core_1.useTheme)();
     const style = `
     *, *:before, *:after {
@@ -44,4 +44,4 @@ function CssBase() {
     (0, core_1.createStyle)({ style, global: true });
     return null;
 }
-exports.default = CssBase;
+exports.default = BaseStyleWeb;

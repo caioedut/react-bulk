@@ -1,5 +1,5 @@
 import Platform from './Platform';
-import { useTheme } from './ThemeProvider';
+import { useTheme } from './ReactBulk';
 import getStyle from './getStyle';
 import jss from './styles/jss';
 

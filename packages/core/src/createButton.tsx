@@ -1,5 +1,5 @@
 import Platform from './Platform';
-import { useTheme } from './ThemeProvider';
+import { useTheme } from './ReactBulk';
 import getStyle from './getStyle';
 
 export default function createButton({ variant, size, block, loading, style, children, ...rest }: any, ref: any, map: any) {

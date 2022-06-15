@@ -1,6 +1,6 @@
-import ThemeProvider, { useTheme } from './src/ThemeProvider';
+import ReactBulk, { useTheme } from './src/ReactBulk';
 
-export { ThemeProvider, useTheme };
+export { ReactBulk, useTheme };
 
 export { default as Platform } from './src/Platform';
 export { default as md5 } from './src/utils/md5';
@@ -17,6 +17,11 @@ export { default as createInput } from './src/createInput';
 export { default as createText } from './src/createText';
 export { default as createTheme } from './src/createTheme';
 
+export { default as BaseStyleWeb } from './src/BaseStyleWeb';
+export { default as BaseStyleNative } from './src/BaseStyleNative';
+
 export { default as createStyle } from './src/createStyle';
 export { default as mergeStyles } from './src/mergeStyles';
 export { default as getStyle } from './src/getStyle';
+
+export default ReactBulk;
