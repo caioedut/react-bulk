@@ -8,6 +8,7 @@ const Platform_1 = __importDefault(require("../Platform"));
 const mergeStyles_1 = __importDefault(require("../mergeStyles"));
 exports.spacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
 function jss(...styles) {
+    const { web, native } = Platform_1.default;
     const merged = (0, mergeStyles_1.default)(styles);
     // Web specific
     if (merged.web && Platform_1.default.web) {
@@ -22,6 +23,7 @@ function jss(...styles) {
     for (const attr of Object.keys(merged)) {
         let prop = attr;
         let value = merged[attr];
+        delete merged[attr];
         if (exports.spacings.includes(attr)) {
             prop = attr
                 .replace(/^(.)t$/, '$1Top')
@@ -36,15 +38,14 @@ function jss(...styles) {
                 .replace(/^b$/, 'bottom')
                 .replace(/^l$/, 'left')
                 .replace(/^r$/, 'right');
-            delete merged[attr];
         }
         // if (attr.toLowerCase().includes('color')) {}
         // if (attr === 'border') {}
         if (attr === 'bg') {
-            delete merged[attr];
             prop = 'backgroundColor';
         }
         if (attr === 'border') {
+            prop = null;
             const types = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset', 'initial', 'inherit'];
             const split = value.split(/\s/g).filter((item) => item.trim());
             const sizeIndex = split.findIndex((item) => /^\d\w*$/.test(item));
@@ -52,103 +53,115 @@ function jss(...styles) {
             const styleIndex = split.findIndex((item) => types.includes(item));
             const borderStyle = styleIndex >= 0 ? split.splice(styleIndex, 1).shift() : 'solid';
             const borderColor = split.shift() || '#000000';
-            delete merged[attr];
             Object.assign(merged, { borderWidth, borderStyle, borderColor });
-            continue;
         }
-        if (attr === 'shadow' || attr === 'boxShadow') {
-            const colorIndex = value.search(/(\w+\(|#).+/g);
-            let color = 'rgba(0, 0, 0, 0)';
-            if (colorIndex >= 0) {
-                color = value.substring(colorIndex);
-                value = value.substring(0, colorIndex);
+        if (web) {
+            if (attr === 'paddingVertical') {
+                prop = null;
+                merged.paddingTop = value;
+                merged.paddingBottom = value;
             }
-            const split = value.split(' ').filter((item) => item.trim() && !item.includes('inset'));
-            const [width, height, shadowRadius] = split.map((item) => Number(item.replace(/\D/g, '') || 0));
-            let elevation;
-            if (height >= 12 && shadowRadius >= 16) {
-                elevation = 24;
+            if (attr === 'paddingHorizontal') {
+                prop = null;
+                merged.paddingLeft = value;
+                merged.paddingRight = value;
             }
-            else if (height >= 11 && shadowRadius >= 15.19) {
-                elevation = 23;
-            }
-            else if (height >= 11 && shadowRadius >= 14.78) {
-                elevation = 22;
-            }
-            else if (height >= 10 && shadowRadius >= 13.97) {
-                elevation = 21;
-            }
-            else if (height >= 10 && shadowRadius >= 13.16) {
-                elevation = 20;
-            }
-            else if (height >= 9 && shadowRadius >= 12.35) {
-                elevation = 19;
-            }
-            else if (height >= 9 && shadowRadius >= 11.95) {
-                elevation = 18;
-            }
-            else if (height >= 8 && shadowRadius >= 11.14) {
-                elevation = 17;
-            }
-            else if (height >= 8 && shadowRadius >= 10.32) {
-                elevation = 16;
-            }
-            else if (height >= 7 && shadowRadius >= 9.51) {
-                elevation = 18;
-            }
-            else if (height >= 7 && shadowRadius >= 9.11) {
-                elevation = 14;
-            }
-            else if (height >= 6 && shadowRadius >= 8.3) {
-                elevation = 13;
-            }
-            else if (height >= 6 && shadowRadius >= 7.49) {
-                elevation = 12;
-            }
-            else if (height >= 5 && shadowRadius >= 6.68) {
-                elevation = 11;
-            }
-            else if (height >= 5 && shadowRadius >= 6.27) {
-                elevation = 10;
-            }
-            else if (height >= 4 && shadowRadius >= 5.46) {
-                elevation = 9;
-            }
-            else if (height >= 4 && shadowRadius >= 4.65) {
-                elevation = 8;
-            }
-            else if (height >= 3 && shadowRadius >= 4.65) {
-                elevation = 7;
-            }
-            else if (height >= 3 && shadowRadius >= 4.25) {
-                elevation = 6;
-            }
-            else if (height >= 2 && shadowRadius >= 3.84) {
-                elevation = 5;
-            }
-            else if (height >= 2 && shadowRadius >= 2.62) {
-                elevation = 4;
-            }
-            else if (height >= 1 && shadowRadius >= 2.22) {
-                elevation = 3;
-            }
-            else if (height >= 1 && shadowRadius >= 1.41) {
-                elevation = 2;
-            }
-            else {
-                elevation = 1;
-            }
-            delete merged[attr];
-            Object.assign(merged, {
-                shadowColor: color,
-                shadowOpacity: 0.18,
-                shadowRadius,
-                shadowOffset: { height, width },
-            });
-            continue;
         }
-        // @ts-ignore
-        merged[prop] = value;
+        if (native) {
+            if (attr === 'shadow' || attr === 'boxShadow') {
+                prop = null;
+                const colorIndex = value.search(/(\w+\(|#).+/g);
+                let color = 'rgba(0, 0, 0, 0)';
+                if (colorIndex >= 0) {
+                    color = value.substring(colorIndex);
+                    value = value.substring(0, colorIndex);
+                }
+                const split = value.split(' ').filter((item) => item.trim() && !item.includes('inset'));
+                const [width, height, shadowRadius] = split.map((item) => Number(item.replace(/\D/g, '') || 0));
+                let elevation;
+                if (height >= 12 && shadowRadius >= 16) {
+                    elevation = 24;
+                }
+                else if (height >= 11 && shadowRadius >= 15.19) {
+                    elevation = 23;
+                }
+                else if (height >= 11 && shadowRadius >= 14.78) {
+                    elevation = 22;
+                }
+                else if (height >= 10 && shadowRadius >= 13.97) {
+                    elevation = 21;
+                }
+                else if (height >= 10 && shadowRadius >= 13.16) {
+                    elevation = 20;
+                }
+                else if (height >= 9 && shadowRadius >= 12.35) {
+                    elevation = 19;
+                }
+                else if (height >= 9 && shadowRadius >= 11.95) {
+                    elevation = 18;
+                }
+                else if (height >= 8 && shadowRadius >= 11.14) {
+                    elevation = 17;
+                }
+                else if (height >= 8 && shadowRadius >= 10.32) {
+                    elevation = 16;
+                }
+                else if (height >= 7 && shadowRadius >= 9.51) {
+                    elevation = 18;
+                }
+                else if (height >= 7 && shadowRadius >= 9.11) {
+                    elevation = 14;
+                }
+                else if (height >= 6 && shadowRadius >= 8.3) {
+                    elevation = 13;
+                }
+                else if (height >= 6 && shadowRadius >= 7.49) {
+                    elevation = 12;
+                }
+                else if (height >= 5 && shadowRadius >= 6.68) {
+                    elevation = 11;
+                }
+                else if (height >= 5 && shadowRadius >= 6.27) {
+                    elevation = 10;
+                }
+                else if (height >= 4 && shadowRadius >= 5.46) {
+                    elevation = 9;
+                }
+                else if (height >= 4 && shadowRadius >= 4.65) {
+                    elevation = 8;
+                }
+                else if (height >= 3 && shadowRadius >= 4.65) {
+                    elevation = 7;
+                }
+                else if (height >= 3 && shadowRadius >= 4.25) {
+                    elevation = 6;
+                }
+                else if (height >= 2 && shadowRadius >= 3.84) {
+                    elevation = 5;
+                }
+                else if (height >= 2 && shadowRadius >= 2.62) {
+                    elevation = 4;
+                }
+                else if (height >= 1 && shadowRadius >= 2.22) {
+                    elevation = 3;
+                }
+                else if (height >= 1 && shadowRadius >= 1.41) {
+                    elevation = 2;
+                }
+                else {
+                    elevation = 1;
+                }
+                Object.assign(merged, {
+                    shadowColor: color,
+                    shadowOpacity: 0.18,
+                    shadowRadius,
+                    shadowOffset: { height, width },
+                });
+            }
+        }
+        if (prop) {
+            merged[prop] = value;
+        }
     }
     const hasFlex = Object.keys(merged).some((prop) => ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'alignContent', 'alignItems'].includes(prop));
     if (hasFlex && !merged.display) {

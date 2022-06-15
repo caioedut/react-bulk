@@ -30,6 +30,14 @@ const Input = forwardRef(({ ...rest }: InputPropsNative, ref) => {
     props.secureTextEntry = true;
   }
 
+  if ('readOnly' in props) {
+    props.editable = Boolean(props.readOnly);
+  }
+
+  if ('disabled' in props) {
+    props.editable = !props.disabled;
+  }
+
   return createInput(props, ref, map);
 });
 

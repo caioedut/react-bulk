@@ -32,6 +32,7 @@ const Input = forwardRef(({ ...props }: InputPropsWeb, ref) => {
   }
 
   if (props.secure) {
+    delete props.secure;
     props.type = 'password';
   }
 

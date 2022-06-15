@@ -26,6 +26,9 @@ const Button = (0, react_1.forwardRef)((_a, ref) => {
             boxShadow: theme.mixins.shadows[elevation],
         });
     }
+    if (!props.type) {
+        props.type = 'button';
+    }
     return (0, core_1.createButton)(props, ref, map_1.default);
 });
 exports.default = Button;

@@ -26,7 +26,7 @@ function css(style, selector) {
             if (attr.startsWith('&'))
                 return;
             let suffix = '';
-            if (val && typeof val === 'number' && attr !== 'lineHeight') {
+            if (val && typeof val === 'number' && !['opacity', 'lineHeight'].includes(attr)) {
                 suffix = 'px';
             }
             if (attr === 'content') {

@@ -23,6 +23,7 @@ const Input = (0, react_1.forwardRef)((_a, ref) => {
         props.type = 'text';
     }
     if (props.secure) {
+        delete props.secure;
         props.type = 'password';
     }
     return (0, core_1.createInput)(props, ref, map_1.default);

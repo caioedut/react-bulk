@@ -20,6 +20,7 @@ function CssBase() {
       flex-direction: column;
       min-height: 100vh;
       min-width: 100vw;
+      background-color: ${theme.colors.background.secondary};
     }
 
     body > #root {

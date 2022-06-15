@@ -23,7 +23,7 @@ function createButton(_a, ref, map) {
     const theme = (0, ThemeProvider_1.useTheme)();
     const { web } = Platform_1.default;
     const { Box, Text, Button } = map;
-    const { disabled } = rest;
+    const disabled = rest.disabled || loading;
     const styleX = [
         {
             position: 'relative',
@@ -48,11 +48,6 @@ function createButton(_a, ref, map) {
             paddingRight: theme.rem(1),
             '&:hover': { backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.9) },
         },
-        block && { width: '100%' },
-        disabled && {
-            cursor: 'not-allowed',
-            opacity: 0.75,
-        },
         variant === 'text' && { borderColor: theme.colors.common.trans },
         (variant === 'outline' || variant === 'text') && {
             backgroundColor: theme.colors.common.trans,
@@ -70,9 +65,12 @@ function createButton(_a, ref, map) {
             fontSize: theme.rem(1.25),
             paddingTop: theme.rem(0.5, theme.rem(1.25)),
             paddingBottom: theme.rem(0.5, theme.rem(1.25)),
-            paddingLeft: theme.rem(0.75, theme.rem(1.25)),
-            paddingRight: theme.rem(0.75, theme.rem(1.25)),
+            paddingLeft: theme.rem(1, theme.rem(1.25)),
+            paddingRight: theme.rem(1, theme.rem(1.25)),
         },
+        block && { width: '100%' },
+        disabled && { opacity: 0.75 },
+        web && disabled && { cursor: 'not-allowed' },
         web && {
             fontFamily: 'inherit',
             transitionProperty: 'background-color, box-shadow',

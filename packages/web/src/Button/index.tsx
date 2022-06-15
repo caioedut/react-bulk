@@ -20,6 +20,10 @@ const Button = forwardRef(({ elevation, ...props }: ButtonPropsWeb, ref) => {
     });
   }
 
+  if (!props.type) {
+    props.type = 'button';
+  }
+
   return createButton(props, ref, map);
 });
 

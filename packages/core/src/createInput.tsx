@@ -3,11 +3,12 @@ import { useTheme } from './ThemeProvider';
 import getStyle from './getStyle';
 import jss from './styles/jss';
 
-export default function createText({ label, size, disabled, style, ...rest }: any, ref: any, map: any) {
+export default function createText({ label, size, style, ...rest }: any, ref: any, map: any) {
   const theme = useTheme();
 
   const { web, native } = Platform;
   const { Box, Text, Input, ios } = map;
+  const { disabled } = rest;
 
   const styleX = jss([
     {
@@ -22,29 +23,36 @@ export default function createText({ label, size, disabled, style, ...rest }: an
       borderColor: theme.colors.primary.main,
       borderRadius: theme.shape.borderRadius,
 
-      margin: 0,
-      padding: theme.rem(0.5),
-      width: '100%',
-    },
+      paddingVertical: theme.rem(0.5),
+      paddingHorizontal: theme.rem(0.6),
 
-    disabled && {
-      cursor: 'not-allowed',
-      opacity: 0.75,
+      margin: 0,
+      width: '100%',
     },
 
     size === 'small' && {
       fontSize: theme.rem(0.875),
-      padding: theme.rem(0.5, theme.rem(0.875)),
+      paddingVertical: theme.rem(0.5, theme.rem(0.875)),
+      paddingHorizontal: theme.rem(0.6, theme.rem(0.875)),
     },
 
     size === 'large' && {
       fontSize: theme.rem(1.25),
-      padding: theme.rem(0.5, theme.rem(1.25)),
+      paddingVertical: theme.rem(0.5, theme.rem(1.25)),
+      paddingHorizontal: theme.rem(0.6, theme.rem(1.25)),
     },
+
+    disabled && {
+      backgroundColor: theme.colors.background.secondary,
+      borderColor: theme.colors.background.disabled,
+      opacity: 0.75,
+    },
+
+    web && disabled && { cursor: 'not-allowed' },
 
     web && {
       fontFamily: 'inherit',
-      transitionProperty: 'background-color, box-shadow',
+      transitionProperty: 'box-shadow',
       transitionDuration: '0.2s',
       transitionTimingFunction: 'ease',
 

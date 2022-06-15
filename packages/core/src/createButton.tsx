@@ -7,7 +7,8 @@ export default function createButton({ variant, size, block, loading, style, chi
 
   const { web } = Platform;
   const { Box, Text, Button } = map;
-  const { disabled } = rest;
+
+  const disabled = rest.disabled || loading;
 
   const styleX = [
     {
@@ -40,13 +41,6 @@ export default function createButton({ variant, size, block, loading, style, chi
       '&:hover': { backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.9) },
     },
 
-    block && { width: '100%' },
-
-    disabled && {
-      cursor: 'not-allowed',
-      opacity: 0.75,
-    },
-
     variant === 'text' && { borderColor: theme.colors.common.trans },
 
     (variant === 'outline' || variant === 'text') && {
@@ -68,9 +62,15 @@ export default function createButton({ variant, size, block, loading, style, chi
       fontSize: theme.rem(1.25),
       paddingTop: theme.rem(0.5, theme.rem(1.25)),
       paddingBottom: theme.rem(0.5, theme.rem(1.25)),
-      paddingLeft: theme.rem(0.75, theme.rem(1.25)),
-      paddingRight: theme.rem(0.75, theme.rem(1.25)),
+      paddingLeft: theme.rem(1, theme.rem(1.25)),
+      paddingRight: theme.rem(1, theme.rem(1.25)),
     },
+
+    block && { width: '100%' },
+
+    disabled && { opacity: 0.75 },
+
+    web && disabled && { cursor: 'not-allowed' },
 
     web && {
       fontFamily: 'inherit',

@@ -21,10 +21,11 @@ const getStyle_1 = __importDefault(require("./getStyle"));
 const jss_1 = __importDefault(require("./styles/jss"));
 function createText(_a, ref, map) {
     var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
-    var { label, size, disabled, style } = _a, rest = __rest(_a, ["label", "size", "disabled", "style"]);
+    var { label, size, style } = _a, rest = __rest(_a, ["label", "size", "style"]);
     const theme = (0, ThemeProvider_1.useTheme)();
     const { web, native } = Platform_1.default;
     const { Box, Text, Input, ios } = map;
+    const { disabled } = rest;
     const styleX = (0, jss_1.default)([
         {
             fontSize: theme.rem(1),
@@ -35,25 +36,30 @@ function createText(_a, ref, map) {
             borderStyle: 'solid',
             borderColor: theme.colors.primary.main,
             borderRadius: theme.shape.borderRadius,
+            paddingVertical: theme.rem(0.5),
+            paddingHorizontal: theme.rem(0.6),
             margin: 0,
-            padding: theme.rem(0.5),
             width: '100%',
-        },
-        disabled && {
-            cursor: 'not-allowed',
-            opacity: 0.75,
         },
         size === 'small' && {
             fontSize: theme.rem(0.875),
-            padding: theme.rem(0.5, theme.rem(0.875)),
+            paddingVertical: theme.rem(0.5, theme.rem(0.875)),
+            paddingHorizontal: theme.rem(0.6, theme.rem(0.875)),
         },
         size === 'large' && {
             fontSize: theme.rem(1.25),
-            padding: theme.rem(0.5, theme.rem(1.25)),
+            paddingVertical: theme.rem(0.5, theme.rem(1.25)),
+            paddingHorizontal: theme.rem(0.6, theme.rem(1.25)),
         },
+        disabled && {
+            backgroundColor: theme.colors.background.secondary,
+            borderColor: theme.colors.background.disabled,
+            opacity: 0.75,
+        },
+        web && disabled && { cursor: 'not-allowed' },
         web && {
             fontFamily: 'inherit',
-            transitionProperty: 'background-color, box-shadow',
+            transitionProperty: 'box-shadow',
             transitionDuration: '0.2s',
             transitionTimingFunction: 'ease',
             '&:focus': {

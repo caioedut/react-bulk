@@ -27,6 +27,12 @@ const Input = (0, react_1.forwardRef)((_a, ref) => {
     if (props.secure) {
         props.secureTextEntry = true;
     }
+    if ('readOnly' in props) {
+        props.editable = Boolean(props.readOnly);
+    }
+    if ('disabled' in props) {
+        props.editable = !props.disabled;
+    }
     return (0, core_1.createInput)(props, ref, map_1.default);
 });
 exports.default = Input;

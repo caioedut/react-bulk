@@ -26,7 +26,7 @@ export default function css(style: any, selector?: string | null) {
       if (attr.startsWith('&')) return;
 
       let suffix = '';
-      if (val && typeof val === 'number' && attr !== 'lineHeight') {
+      if (val && typeof val === 'number' && !['opacity', 'lineHeight'].includes(attr)) {
         suffix = 'px';
       }
 

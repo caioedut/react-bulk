@@ -3,7 +3,7 @@ import Platform from './Platform';
 import { useTheme } from './ThemeProvider';
 
 export default function createText(
-  { size, bold, italic, oblique, smallCaps, invisible, numberOfLines, style, ...rest }: TextProps,
+  { size, bold, italic, oblique, smallCaps, invisible, transform, numberOfLines, style, ...rest }: TextProps,
   ref: any,
   map: any,
 ) {
@@ -23,6 +23,7 @@ export default function createText(
     oblique && { fontStyle: 'oblique' },
     smallCaps && { fontVariant: 'small-caps' },
     invisible && { opacity: 0 },
+    transform && { textTransform: transform },
     // @ts-ignore
     numberOfLines > 0 && {
       web: {

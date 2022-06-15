@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type Binding = {
+export type Bindings = {
   onPress?: Function;
   onPressIn?: Function;
   onPressOut?: Function;
@@ -16,23 +16,36 @@ export type Binding = {
   onMouseUp?: Function;
 };
 
-export type TextProps = Binding & {
-  children: React.ReactNode;
+export type BoxProps = Bindings & {
+  component?: any;
+  className?: any;
+  children?: React.ReactNode;
   style?: any;
 
+  // Flexbox
+  flexbox?: boolean | 'flex' | 'inline';
+  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+  wrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
+  flow?: string;
+  justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
+  align?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
+  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
+  flex?: boolean;
+};
+
+export type TextProps = BoxProps & {
   size?: number;
   bold?: boolean;
   italic?: boolean;
   oblique?: boolean;
   smallCaps?: boolean;
   invisible?: boolean;
+  transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
 
   numberOfLines?: number;
 };
 
-export type ButtonProps = Binding & {
-  children: React.ReactNode;
-
+export type ButtonProps = BoxProps & {
   autoFocus?: Boolean;
   disabled?: Boolean;
   style?: any;
@@ -48,11 +61,10 @@ export type ButtonProps = Binding & {
 
 export type ChangeCallback = (value: string, e: any) => any;
 
-export type InputProps = Binding & {
+export type InputProps = BoxProps & {
   autoFocus?: Boolean;
   readOnly?: Boolean;
   disabled?: Boolean;
-  style?: any;
 
   size?: 'small' | 'medium' | 'large' | string;
   label?: string;
