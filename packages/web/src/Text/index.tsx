@@ -1,11 +1,13 @@
-import React, { forwardRef } from 'react';
+import React, { ComponentPropsWithRef, forwardRef } from 'react';
 
 import { createText } from '@react-bulk/core';
 import { TextProps } from '@react-bulk/core/types';
 
 import map from '../../map';
 
-const Text = forwardRef((props: TextProps, ref) => {
+type TextPropsWeb = ComponentPropsWithRef<'span'> & TextProps;
+
+const Text = forwardRef(({ ...props }: TextPropsWeb, ref) => {
   return createText(props, ref, map);
 });
 

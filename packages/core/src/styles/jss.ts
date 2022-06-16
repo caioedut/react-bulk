@@ -164,7 +164,7 @@ export default function jss(...styles: Object[]) {
   }
 
   const hasFlex = Object.keys(merged).some((prop) =>
-    ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'alignContent', 'alignItems'].includes(prop),
+    ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'JustifyItems', 'alignContent', 'alignItems'].includes(prop),
   );
 
   if (hasFlex && !merged.display) {

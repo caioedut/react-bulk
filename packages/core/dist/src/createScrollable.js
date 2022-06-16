@@ -16,23 +16,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const Platform_1 = __importDefault(require("./Platform"));
-const ReactBulk_1 = require("./ReactBulk");
 function createScrollable(_a, ref, map) {
     var { horizontal, style } = _a, props = __rest(_a, ["horizontal", "style"]);
-    const theme = (0, ReactBulk_1.useTheme)();
     const { web, native } = Platform_1.default;
     const { Box, ScrollView } = map;
     const styleX = [
-        {
-            flex: 1,
-        },
+        { flex: 1 },
         web && horizontal && { overflowX: 'auto' },
         web && !horizontal && { overflowY: 'auto' },
         web && { scrollBehavior: 'smooth' },
         style,
     ];
     if (native) {
-        props = Object.assign({ indicatorStyle: theme.mode === 'dark' ? 'white' : 'black', keyboardDismissMode: 'on-drag', keyboardShouldPersistTaps: 'always', nestedScrollEnabled: true, pinchGestureEnabled: false, scrollIndicatorInsets: horizontal ? { bottom: 1, left: 1 } : { top: 1, right: 1 } }, props);
+        props.horizontal = horizontal;
     }
     return (0, jsx_runtime_1.jsx)(Box, Object.assign({ ref: ref, component: ScrollView }, props, { style: styleX }));
 }

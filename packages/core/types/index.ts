@@ -87,6 +87,8 @@ export type InputProps = BoxProps & {
   onChangeText?: Function;
 };
 
-export type CardProps = BoxProps & {};
+export type CardProps = BoxProps;
 
-export type ScrollableProps = BoxProps & {};
+export type ScrollableProps = BoxProps & {
+  horizontal?: boolean;
+};

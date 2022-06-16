@@ -1,9 +1,11 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { ComponentPropsWithRef, forwardRef, useEffect, useState } from 'react';
 
 import { createBox } from '@react-bulk/core';
 import { BoxProps } from '@react-bulk/core/types';
 
-const Box = forwardRef((props: BoxProps, ref) => {
+type BoxPropsWeb = ComponentPropsWithRef<'div'> & BoxProps;
+
+const Box = forwardRef(({ ...props }: BoxPropsWeb, ref) => {
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,

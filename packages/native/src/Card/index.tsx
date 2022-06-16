@@ -1,11 +1,14 @@
 import React, { forwardRef } from 'react';
+import { ViewProps } from 'react-native';
 
 import { createCard } from '@react-bulk/core';
 import { CardProps } from '@react-bulk/core/types';
 
 import map from '../../map';
 
-const Card = forwardRef((props: CardProps, ref) => {
+type CardPropsNative = ViewProps & CardProps;
+
+const Card = forwardRef(({ ...props }: CardPropsNative, ref) => {
   return createCard(props, ref, map);
 });
 

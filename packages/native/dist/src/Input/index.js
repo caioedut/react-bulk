@@ -18,9 +18,9 @@ const react_1 = require("react");
 const core_1 = require("@react-bulk/core");
 const map_1 = __importDefault(require("../../map"));
 const Input = (0, react_1.forwardRef)((_a, ref) => {
-    var rest = __rest(_a, []);
+    var props = __rest(_a, []);
     const theme = (0, core_1.useTheme)();
-    const props = Object.assign({ keyboardAppearance: theme.mode, selectionColor: theme.colors.primary.main, underlineColorAndroid: 'transparent' }, rest);
+    props = Object.assign({ keyboardAppearance: theme.mode, selectionColor: theme.colors.primary.main, underlineColorAndroid: 'transparent' }, props);
     if (props.placeholder) {
         props.placeholderTextColor = theme.hex2rgba(theme.colors.text.primary, 0.4);
     }

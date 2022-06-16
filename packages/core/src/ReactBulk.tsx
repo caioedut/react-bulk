@@ -23,7 +23,7 @@ function ReactBulk({ theme, children }: any) {
   };
 
   useEffect(() => {
-    setThemeState(createTheme(theme));
+    setTheme(theme);
   }, [theme]);
 
   return (
