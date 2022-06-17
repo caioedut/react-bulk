@@ -16,7 +16,7 @@ export default function BaseStyleWeb() {
       {
         name: 'theme-color',
         media: `(prefers-color-scheme: ${theme.mode})`,
-        content: theme.colors.primary.main,
+        content: getComputedStyle(document.body).backgroundColor,
       },
       true,
     );

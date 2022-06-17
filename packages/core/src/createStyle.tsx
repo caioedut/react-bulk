@@ -38,15 +38,17 @@ export default function createStyle({ style, className, global }: createStyle) {
   useEffect(() => {
     if (!web) return;
 
-    const element = document?.getElementById(hash) || document?.createElement('style') || {};
+    const element = document?.getElementById(hash) || document?.createElement('style');
     const cssStyle = typeof styleX === 'string' ? styleX : css(styleX, `.${className}`);
 
-    if (element) {
-      element.id = hash;
+    if (element.textContent !== cssStyle) {
       element.textContent = cssStyle;
     }
 
-    document?.head?.appendChild(element);
+    if (element.id !== hash) {
+      element.id = hash;
+      document?.head?.appendChild(element);
+    }
   }, [styleX]);
 
   return native ? styleX : className;

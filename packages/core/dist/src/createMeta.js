@@ -6,7 +6,7 @@ function createMeta(selector, props, overwrite = true) {
     if (!meta || overwrite) {
         meta = meta || document.createElement('meta');
         Object.entries(props).forEach(([attr, val]) => meta.setAttribute(attr, val));
-        document.head.appendChild(meta);
+        document.head.prepend(meta);
     }
     return meta;
 }

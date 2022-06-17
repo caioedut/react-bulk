@@ -30,13 +30,15 @@ function createStyle({ style, className, global }) {
         var _a;
         if (!web)
             return;
-        const element = (document === null || document === void 0 ? void 0 : document.getElementById(hash)) || (document === null || document === void 0 ? void 0 : document.createElement('style')) || {};
+        const element = (document === null || document === void 0 ? void 0 : document.getElementById(hash)) || (document === null || document === void 0 ? void 0 : document.createElement('style'));
         const cssStyle = typeof styleX === 'string' ? styleX : (0, css_1.default)(styleX, `.${className}`);
-        if (element) {
-            element.id = hash;
+        if (element.textContent !== cssStyle) {
             element.textContent = cssStyle;
         }
-        (_a = document === null || document === void 0 ? void 0 : document.head) === null || _a === void 0 ? void 0 : _a.appendChild(element);
+        if (element.id !== hash) {
+            element.id = hash;
+            (_a = document === null || document === void 0 ? void 0 : document.head) === null || _a === void 0 ? void 0 : _a.appendChild(element);
+        }
     }, [styleX]);
     return native ? styleX : className;
 }

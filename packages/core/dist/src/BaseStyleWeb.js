@@ -12,7 +12,7 @@ function BaseStyleWeb() {
         (0, core_1.createMeta)('[name="theme-color"]', {
             name: 'theme-color',
             media: `(prefers-color-scheme: ${theme.mode})`,
-            content: theme.colors.primary.main,
+            content: getComputedStyle(document.body).backgroundColor,
         }, true);
     }, [theme]);
     const style = `
