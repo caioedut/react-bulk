@@ -23,7 +23,7 @@ function createButton(_a, ref, map) {
     const theme = (0, ReactBulk_1.useTheme)();
     const { web } = Platform_1.default;
     const { Box, Text, Button } = map;
-    const disabled = rest.disabled || loading;
+    const { disabled } = rest;
     const styleX = [
         {
             position: 'relative',
@@ -69,13 +69,16 @@ function createButton(_a, ref, map) {
             paddingRight: theme.rem(1, theme.rem(1.25)),
         },
         block && { width: '100%' },
-        disabled && { opacity: 0.75 },
+        (disabled || loading) && { opacity: 0.75 },
         web && disabled && { cursor: 'not-allowed' },
         web && {
             fontFamily: 'inherit',
             transitionProperty: 'background-color, box-shadow',
             transitionDuration: '0.2s',
             transitionTimingFunction: 'ease',
+            '-webkit-user-select': 'none',
+            '-ms-user-select': 'none',
+            'user-select': 'none',
             '&:focus': {
                 outline: 0,
                 boxShadow: `0 0 0 0.2rem ${theme.hex2rgba(theme.colors.primary.main, 0.4)}`,
@@ -88,7 +91,7 @@ function createButton(_a, ref, map) {
         fontSize: (0, get_1.default)('fontSize', styleX),
     };
     if (typeof children === 'string') {
-        children = ((0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Text, style: [textStyleX, disabled && { opacity: 0.75 }, loading && { opacity: 0 }] }, { children: children })));
+        children = ((0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Text, style: [textStyleX, loading && { opacity: 0 }] }, { children: children })));
     }
     return ((0, jsx_runtime_1.jsxs)(Box, Object.assign({ ref: ref, component: Button }, rest, { style: styleX }, { children: [children, loading && ((0, jsx_runtime_1.jsx)(Box, Object.assign({ style: {
                     position: 'absolute',

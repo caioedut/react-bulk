@@ -17,6 +17,6 @@ const core_1 = require("@react-bulk/core");
 const Box = (0, react_1.forwardRef)((_a, ref) => {
     var props = __rest(_a, []);
     const dimensions = (0, react_native_1.useWindowDimensions)();
-    return (0, core_1.createBox)(props, ref, { native: true, dimensions }, react_native_1.View);
+    return (0, core_1.createBox)(props, ref, { native: true, Text: react_native_1.Text, dimensions }, react_native_1.View);
 });
 exports.default = Box;

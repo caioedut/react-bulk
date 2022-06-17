@@ -26,7 +26,7 @@ function createBox(_a, ref, map, defaultComponent) {
     var { component, className, flexbox, direction, wrap, flow, justifyContent, alignContent, justifyItems, alignItems, center, gap, flex, order, grow, shrink, basis, align, justify, style, children } = _a, props = __rest(_a, ["component", "className", "flexbox", "direction", "wrap", "flow", "justifyContent", "alignContent", "justifyItems", "alignItems", "center", "gap", "flex", "order", "grow", "shrink", "basis", "align", "justify", "style", "children"]);
     if (defaultComponent === void 0) { defaultComponent = null; }
     const theme = (0, ReactBulk_1.useTheme)();
-    const { web, native, dimensions } = map;
+    const { web, native, dimensions, Text } = map;
     style = [
         // Flex Container
         flexbox && {
@@ -93,6 +93,12 @@ function createBox(_a, ref, map, defaultComponent) {
     if (native && gap && Array.isArray(children) && (children === null || children === void 0 ? void 0 : children.length)) {
         return ((0, jsx_runtime_1.jsx)(Component, Object.assign({}, props, { ref: ref }, { children: children.map((child, key) => ((0, jsx_runtime_1.jsxs)(react_1.default.Fragment, { children: [key > 0 &&
                         createBox({ style: { width: theme.spacing(Number(gap)), height: theme.spacing(Number(gap)) } }, null, map, defaultComponent), child] }, key))) })));
+    }
+    if ([undefined, null, false, 0, NaN].includes(children)) {
+        children = null;
+    }
+    if (native && typeof children === 'string') {
+        children = (0, jsx_runtime_1.jsx)(Text, { children: children });
     }
     return ((0, jsx_runtime_1.jsx)(Component, Object.assign({}, props, { ref: ref }, { children: children })));
 }

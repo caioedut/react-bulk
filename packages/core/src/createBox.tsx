@@ -39,7 +39,7 @@ export default function createBox(
 ) {
   const theme = useTheme();
 
-  const { web, native, dimensions } = map;
+  const { web, native, dimensions, Text } = map;
 
   style = [
     // Flex Container
@@ -131,6 +131,14 @@ export default function createBox(
         ))}
       </Component>
     );
+  }
+
+  if ([undefined, null, false, 0, NaN].includes(children)) {
+    children = null;
+  }
+
+  if (native && typeof children === 'string') {
+    children = <Text>{children}</Text>;
   }
 
   return (

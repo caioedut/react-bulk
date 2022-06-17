@@ -78,18 +78,21 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     if (attr === 'border') {
       prop = null;
 
-      const types = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset', 'initial', 'inherit'];
-      const split = value.split(/\s/g).filter((item: string) => item.trim());
+      if (value) {
+        const types = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset', 'initial', 'inherit'];
+        const split = `${value}`.split(/\s/g).filter((item: string) => item.trim());
 
-      const sizeIndex = split.findIndex((item: string) => /^\d\w*$/.test(item));
-      const borderWidth = sizeIndex >= 0 ? +split.splice(sizeIndex, 1).shift().replace(/\D/g, '') : 1;
+        const sizeIndex = split.findIndex((item: string) => /^\d\w*$/.test(item));
+        // @ts-ignore
+        const borderWidth = sizeIndex >= 0 ? +split.splice(sizeIndex, 1).shift().replace(/\D/g, '') : 1;
 
-      const styleIndex = split.findIndex((item: string) => types.includes(item));
-      const borderStyle = styleIndex >= 0 ? split.splice(styleIndex, 1).shift() : 'solid';
+        const styleIndex = split.findIndex((item: string) => types.includes(item));
+        const borderStyle = styleIndex >= 0 ? split.splice(styleIndex, 1).shift() : 'solid';
 
-      const borderColor = split.shift() || '#000000';
+        const borderColor = split.shift() || '#000000';
 
-      Object.assign(styles, { borderWidth, borderStyle, borderColor });
+        Object.assign(styles, { borderWidth, borderStyle, borderColor });
+      }
     }
 
     if (web) {

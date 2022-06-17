@@ -17,7 +17,7 @@ const Box = forwardRef(({ ...props }: BoxPropsWeb, ref) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return createBox(props, ref, { web: true, dimensions }, 'div');
+  return createBox(props, ref, { web: true, Text: 'span', dimensions }, 'div');
 });
 
 export default Box;

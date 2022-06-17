@@ -4,7 +4,7 @@ import Platform from './Platform';
 import { useTheme } from './ReactBulk';
 import css from './styles/css';
 import jss from './styles/jss';
-import md5 from './utils/md5';
+import crypt from './utils/crypt';
 import uuid from './utils/uuid';
 
 export type createStyle = {
@@ -22,20 +22,18 @@ export default function createStyle({ style, className, global }: createStyle) {
 
   const { current: id } = useRef(uuid());
 
-  const hash = useMemo(
-    () =>
-      md5(
-        isObject
-          ? Object.entries(styleX)
-              .map(([attr, val]) => `${attr}${val}`)
-              .sort()
-              .join('')
-          : id,
-      ),
-    [styleX],
-  );
+  const hash = useMemo(() => {
+    const uid = isObject
+      ? Object.entries(styleX)
+          .map(([attr, val]) => `${attr}${val}`)
+          .sort()
+          .join('')
+      : id;
 
-  className = global ? 'global' : className || `css-${hash}`;
+    return 'css-' + crypt(uid);
+  }, [styleX]);
+
+  className = global ? 'global' : className || hash;
 
   useEffect(() => {
     if (!web) return;

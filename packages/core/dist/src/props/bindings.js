@@ -44,6 +44,10 @@ function default_1(_a) {
         // }
         delete props.onClick;
     }
+    if (props.disabled) {
+        delete props.onClick;
+        delete props.onPress;
+    }
     return props;
 }
 exports.default = default_1;

@@ -37,5 +37,10 @@ export default function ({ ...props }: any) {
     delete props.onClick;
   }
 
+  if (props.disabled) {
+    delete props.onClick;
+    delete props.onPress;
+  }
+
   return props;
 }

@@ -11,7 +11,7 @@ export { default as remove } from './src/props/remove';
 export { default as Platform } from './src/Platform';
 export { default as clone } from './src/utils/clone';
 export { default as clsx } from './src/utils/clsx';
-export { default as md5 } from './src/utils/md5';
+export { default as crypt } from './src/utils/crypt';
 export { default as uuid } from './src/utils/uuid';
 
 export { default as jss } from './src/styles/jss';

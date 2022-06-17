@@ -9,7 +9,7 @@ export default function createButton({ variant, size, block, loading, style, chi
   const { web } = Platform;
   const { Box, Text, Button } = map;
 
-  const disabled = rest.disabled || loading;
+  const { disabled } = rest;
 
   const styleX = [
     {
@@ -69,7 +69,7 @@ export default function createButton({ variant, size, block, loading, style, chi
 
     block && { width: '100%' },
 
-    disabled && { opacity: 0.75 },
+    (disabled || loading) && { opacity: 0.75 },
 
     web && disabled && { cursor: 'not-allowed' },
 
@@ -78,6 +78,10 @@ export default function createButton({ variant, size, block, loading, style, chi
       transitionProperty: 'background-color, box-shadow',
       transitionDuration: '0.2s',
       transitionTimingFunction: 'ease',
+
+      '-webkit-user-select': 'none',
+      '-ms-user-select': 'none',
+      'user-select': 'none',
 
       '&:focus': {
         outline: 0,
@@ -95,7 +99,7 @@ export default function createButton({ variant, size, block, loading, style, chi
 
   if (typeof children === 'string') {
     children = (
-      <Box component={Text} style={[textStyleX, disabled && { opacity: 0.75 }, loading && { opacity: 0 }]}>
+      <Box component={Text} style={[textStyleX, loading && { opacity: 0 }]}>
         {children}
       </Box>
     );

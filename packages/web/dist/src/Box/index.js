@@ -24,6 +24,6 @@ const Box = (0, react_1.forwardRef)((_a, ref) => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-    return (0, core_1.createBox)(props, ref, { web: true, dimensions }, 'div');
+    return (0, core_1.createBox)(props, ref, { web: true, Text: 'span', dimensions }, 'div');
 });
 exports.default = Box;
