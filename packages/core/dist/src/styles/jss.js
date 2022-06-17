@@ -171,7 +171,7 @@ function jss(...mixin) {
                 });
             }
         }
-        if ((theme === null || theme === void 0 ? void 0 : theme.colors) && attr.toLowerCase().includes('color')) {
+        if ((theme === null || theme === void 0 ? void 0 : theme.colors) && (prop || attr).toLowerCase().includes('color')) {
             const colors = Object.keys(theme.colors);
             const [color, variation = 'main'] = `${value || ''}`.split('.');
             if (colors.includes(color)) {
