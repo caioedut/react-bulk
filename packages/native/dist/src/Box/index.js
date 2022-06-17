@@ -14,6 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const react_native_1 = require("react-native");
 const core_1 = require("@react-bulk/core");
+// @ts-ignore
 const Box = (0, react_1.forwardRef)((_a, ref) => {
     var props = __rest(_a, []);
     const dimensions = (0, react_native_1.useWindowDimensions)();

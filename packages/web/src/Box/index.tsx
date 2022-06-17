@@ -5,6 +5,7 @@ import { BoxProps } from '@react-bulk/core/types';
 
 type BoxPropsWeb = ComponentPropsWithRef<'div'> & BoxProps;
 
+// @ts-ignore
 const Box = forwardRef(({ ...props }: BoxPropsWeb, ref) => {
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,

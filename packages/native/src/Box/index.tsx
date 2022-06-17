@@ -6,6 +6,7 @@ import { BoxProps } from '@react-bulk/core/types';
 
 type BoxPropsNative = ViewProps & BoxProps;
 
+// @ts-ignore
 const Box = forwardRef(({ ...props }: BoxPropsNative, ref) => {
   const dimensions = useWindowDimensions();
   return createBox(props, ref, { native: true, dimensions }, View);

@@ -13,6 +13,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const core_1 = require("@react-bulk/core");
+// @ts-ignore
 const Box = (0, react_1.forwardRef)((_a, ref) => {
     var props = __rest(_a, []);
     const [dimensions, setDimensions] = (0, react_1.useState)({

@@ -19,6 +19,8 @@ export default function createBox(
     alignContent,
     justifyItems,
     alignItems,
+    center,
+    gap,
     flex,
     order,
     grow,
@@ -27,6 +29,7 @@ export default function createBox(
     align,
     justify,
     style,
+    children,
     ...props
   }: BoxProps | any,
   ref: any,
@@ -35,7 +38,7 @@ export default function createBox(
 ) {
   const theme = useTheme();
 
-  const { dimensions } = map;
+  const { web, native, dimensions } = map;
 
   style = [
     // Flex Container
@@ -43,6 +46,7 @@ export default function createBox(
       display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}`,
       flexDirection: 'row',
     },
+
     direction && { flexDirection: direction },
     wrap && { flexWrap: typeof wrap === 'boolean' ? (wrap ? 'wrap' : 'nowrap') : wrap },
     flow && { flexFlow: flow },
@@ -50,6 +54,15 @@ export default function createBox(
     justifyItems && { alignItems },
     alignContent && { alignContent },
     alignItems && { alignItems },
+
+    center && {
+      justifyContent: 'center',
+      justifyItems: 'center',
+      alignContent: 'center',
+      alignItems: 'center',
+    },
+
+    web && gap && { gap: theme.spacing(Number(gap)) },
 
     // Flex Item
     flex && { flex: 1 },
@@ -94,5 +107,26 @@ export default function createBox(
   props = bindings(props);
 
   const Component = component || defaultComponent;
-  return <Component {...props} ref={ref} />;
+
+  // TODO: recursive children
+  // Gap simulation
+  if (native && gap && Array.isArray(children) && children?.length) {
+    return (
+      <Component {...props} ref={ref}>
+        {children.map((child: any, key: number) => (
+          <React.Fragment key={key}>
+            {key > 0 &&
+              createBox({ style: { width: theme.spacing(Number(gap)), height: theme.spacing(Number(gap)) } }, null, map, defaultComponent)}
+            {child}
+          </React.Fragment>
+        ))}
+      </Component>
+    );
+  }
+
+  return (
+    <Component {...props} ref={ref}>
+      {children}
+    </Component>
+  );
 }

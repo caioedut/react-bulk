@@ -76,6 +76,8 @@ export type BoxProps = Bindings & {
   alignContent?: FlexAlign;
   justifyItems?: FlexAlign;
   alignItems?: FlexAlign;
+  center?: boolean;
+  gap?: boolean | number;
 
   // Flexbox item
   flex?: boolean;

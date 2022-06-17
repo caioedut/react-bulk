@@ -15,16 +15,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
+const react_1 = __importDefault(require("react"));
 const ReactBulk_1 = require("./ReactBulk");
 const createStyle_1 = __importDefault(require("./createStyle"));
 const bindings_1 = __importDefault(require("./props/bindings"));
 const get_1 = __importDefault(require("./props/get"));
 const clsx_1 = __importDefault(require("./utils/clsx"));
 function createBox(_a, ref, map, defaultComponent) {
-    var { component, className, flexbox, direction, wrap, flow, justifyContent, alignContent, justifyItems, alignItems, flex, order, grow, shrink, basis, align, justify, style } = _a, props = __rest(_a, ["component", "className", "flexbox", "direction", "wrap", "flow", "justifyContent", "alignContent", "justifyItems", "alignItems", "flex", "order", "grow", "shrink", "basis", "align", "justify", "style"]);
+    var { component, className, flexbox, direction, wrap, flow, justifyContent, alignContent, justifyItems, alignItems, center, gap, flex, order, grow, shrink, basis, align, justify, style, children } = _a, props = __rest(_a, ["component", "className", "flexbox", "direction", "wrap", "flow", "justifyContent", "alignContent", "justifyItems", "alignItems", "center", "gap", "flex", "order", "grow", "shrink", "basis", "align", "justify", "style", "children"]);
     if (defaultComponent === void 0) { defaultComponent = null; }
     const theme = (0, ReactBulk_1.useTheme)();
-    const { dimensions } = map;
+    const { web, native, dimensions } = map;
     style = [
         // Flex Container
         flexbox && {
@@ -38,6 +39,13 @@ function createBox(_a, ref, map, defaultComponent) {
         justifyItems && { alignItems },
         alignContent && { alignContent },
         alignItems && { alignItems },
+        center && {
+            justifyContent: 'center',
+            justifyItems: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+        },
+        web && gap && { gap: theme.spacing(Number(gap)) },
         // Flex Item
         flex && { flex: 1 },
         order && { order },
@@ -72,6 +80,12 @@ function createBox(_a, ref, map, defaultComponent) {
     }
     props = (0, bindings_1.default)(props);
     const Component = component || defaultComponent;
-    return (0, jsx_runtime_1.jsx)(Component, Object.assign({}, props, { ref: ref }));
+    // TODO: recursive children
+    // Gap simulation
+    if (native && gap && Array.isArray(children) && (children === null || children === void 0 ? void 0 : children.length)) {
+        return ((0, jsx_runtime_1.jsx)(Component, Object.assign({}, props, { ref: ref }, { children: children.map((child, key) => ((0, jsx_runtime_1.jsxs)(react_1.default.Fragment, { children: [key > 0 &&
+                        createBox({ style: { width: theme.spacing(Number(gap)), height: theme.spacing(Number(gap)) } }, null, map, defaultComponent), child] }, key))) })));
+    }
+    return ((0, jsx_runtime_1.jsx)(Component, Object.assign({}, props, { ref: ref }, { children: children })));
 }
 exports.default = createBox;
