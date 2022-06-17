@@ -1,8 +1,8 @@
 import { InputProps } from '../types';
 import Platform from './Platform';
 import { useTheme } from './ReactBulk';
-import getStyle from './getStyle';
-import jss from './styles/jss';
+import get from './props/get';
+import remove from './props/remove';
 
 export default function createText({ label, size, style, ...rest }: InputProps | any, ref: any, map: any) {
   const theme = useTheme();
@@ -11,7 +11,7 @@ export default function createText({ label, size, style, ...rest }: InputProps |
   const { Box, Text, Input, ios } = map;
   const { disabled } = rest;
 
-  const styleX = jss([
+  style = [
     {
       fontSize: theme.rem(1),
       lineHeight: 1.25,
@@ -64,27 +64,28 @@ export default function createText({ label, size, style, ...rest }: InputProps |
     },
 
     style,
-  ]);
+  ];
 
   if (native) {
     // Calculate full height (for iOS)
-    const pt = getStyle(styleX, 'paddingTop') ?? getStyle(styleX, 'paddingVertical') ?? getStyle(styleX, 'padding') ?? 0;
-    const pb = getStyle(styleX, 'paddingBottom') ?? getStyle(styleX, 'paddingVertical') ?? getStyle(styleX, 'padding') ?? 0;
-    const bt = getStyle(styleX, 'borderTopWidth') ?? getStyle(styleX, 'borderWidth') ?? 0;
-    const bb = getStyle(styleX, 'borderBottomWidth') ?? getStyle(styleX, 'borderWidth') ?? 0;
-    const fs = getStyle(styleX, 'fontSize');
-    const lh = getStyle(styleX, 'lineHeight');
-    styleX.height = styleX.height ?? pt + pb + bt + bb + fs * lh;
+    const pt = get('paddingTop', style) ?? get('paddingVertical', style) ?? get('padding', style) ?? 0;
+    const pb = get('paddingBottom', style) ?? get('paddingVertical', style) ?? get('padding', style) ?? 0;
+    const bt = get('borderTopWidth', style) ?? get('borderWidth', style) ?? 0;
+    const bb = get('borderBottomWidth', style) ?? get('borderWidth', style) ?? 0;
+    const fs = get('fontSize', style);
+    const lh = get('lineHeight', style);
+
+    style.height = get('height', style) ?? pt + pb + bt + bb + fs * lh;
 
     if (ios) {
-      delete styleX.lineHeight;
+      remove('lineHeight', style);
     }
   }
 
   return (
     <>
       {Boolean(label) && <Text>{label}</Text>}
-      <Box ref={ref} component={Input} {...rest} style={styleX} />
+      <Box ref={ref} component={Input} {...rest} style={style} />
     </>
   );
 }

@@ -11,7 +11,7 @@ const base = {
 
   colors: {
     common: {
-      trans: 'transparent',
+      trans: 'rgba(0, 0, 0, 0)',
       black: '#000000',
       white: '#ffffff',
     },

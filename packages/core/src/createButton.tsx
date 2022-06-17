@@ -1,7 +1,7 @@
 import { ButtonProps } from '../types';
 import Platform from './Platform';
 import { useTheme } from './ReactBulk';
-import getStyle from './getStyle';
+import get from './props/get';
 
 export default function createButton({ variant, size, block, loading, style, children, ...rest }: ButtonProps | any, ref: any, map: any) {
   const theme = useTheme();
@@ -89,8 +89,8 @@ export default function createButton({ variant, size, block, loading, style, chi
   ];
 
   const textStyleX = {
-    color: getStyle(styleX, 'color'),
-    fontSize: getStyle(styleX, 'fontSize'),
+    color: get('color', styleX),
+    fontSize: get('fontSize', styleX),
   };
 
   if (typeof children === 'string') {

@@ -24,7 +24,7 @@ function ReactBulk({ theme, children }) {
         setThemeState((0, createTheme_1.default)(theme));
     };
     (0, react_1.useEffect)(() => {
-        setThemeState((0, createTheme_1.default)(theme));
+        setTheme(theme);
     }, [theme]);
     return ((0, jsx_runtime_1.jsxs)(Context.Provider, Object.assign({ value: Object.assign(Object.assign({}, themeState), { setTheme }) }, { children: [web && (0, jsx_runtime_1.jsx)(BaseStyleWeb_1.default, {}), native && (0, jsx_runtime_1.jsx)(BaseStyleNative_1.default, {}), children] })));
 }

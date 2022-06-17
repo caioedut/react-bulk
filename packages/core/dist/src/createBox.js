@@ -18,18 +18,21 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const ReactBulk_1 = require("./ReactBulk");
 const createStyle_1 = __importDefault(require("./createStyle"));
 const bindings_1 = __importDefault(require("./props/bindings"));
-const jss_1 = __importDefault(require("./styles/jss"));
+const get_1 = __importDefault(require("./props/get"));
 const clsx_1 = __importDefault(require("./utils/clsx"));
 function createBox(_a, ref, map, defaultComponent) {
     var { component, className, flexbox, direction, wrap, flow, justifyContent, alignContent, justifyItems, alignItems, flex, order, grow, shrink, basis, align, justify, style } = _a, props = __rest(_a, ["component", "className", "flexbox", "direction", "wrap", "flow", "justifyContent", "alignContent", "justifyItems", "alignItems", "flex", "order", "grow", "shrink", "basis", "align", "justify", "style"]);
     if (defaultComponent === void 0) { defaultComponent = null; }
     const theme = (0, ReactBulk_1.useTheme)();
     const { dimensions } = map;
-    const styleX = (0, jss_1.default)([
+    style = [
         // Flex Container
-        flexbox && { display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}` },
+        flexbox && {
+            display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}`,
+            flexDirection: 'row',
+        },
         direction && { flexDirection: direction },
-        wrap && { flexWrap: wrap },
+        wrap && { flexWrap: typeof wrap === 'boolean' ? (wrap ? 'wrap' : 'nowrap') : wrap },
         flow && { flexFlow: flow },
         justifyContent && { justifyContent },
         justifyItems && { alignItems },
@@ -44,22 +47,22 @@ function createBox(_a, ref, map, defaultComponent) {
         align && { alignSelf: align },
         justify && { justifySelf: justify },
         style,
-    ]);
-    let pointFound = false;
-    const breakpoints = Object.entries(theme.breakpoints).reverse();
-    for (const [name, bkpt] of breakpoints) {
-        if (!pointFound && styleX[name] && dimensions.width >= bkpt) {
-            Object.assign(styleX, (0, jss_1.default)(styleX[name]));
-            pointFound = true;
-            break;
+    ];
+    // Apply responsive styles
+    for (const breakpoint of Object.entries(theme.breakpoints)) {
+        const [name, minWidth] = breakpoint;
+        const ptStyle = (0, get_1.default)(name, style);
+        if (ptStyle && dimensions.width >= minWidth) {
+            style.push(ptStyle);
         }
-        delete styleX[name];
     }
-    const processed = (0, createStyle_1.default)({ style: styleX });
+    const processed = (0, createStyle_1.default)({ style: style });
     if (processed) {
+        // Web: CSS Class Name
         if (typeof processed === 'string') {
             className = (0, clsx_1.default)(processed, className);
         }
+        // Native: Style Object
         if (typeof processed === 'object') {
             props.style = processed;
         }

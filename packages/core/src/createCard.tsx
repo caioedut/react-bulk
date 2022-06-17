@@ -6,14 +6,14 @@ export default function createCard({ style, ...rest }: CardProps | any, ref: any
 
   const { Box } = map;
 
-  const styleX = [
+  style = [
     {
       backgroundColor: theme.colors.background.primary,
       borderRadius: theme.shape.borderRadius,
-      padding: theme.rem(0.75),
+      p: 3,
     },
     style,
   ];
 
-  return <Box ref={ref} {...rest} style={styleX} />;
+  return <Box ref={ref} {...rest} style={style} />;
 }

@@ -4,7 +4,7 @@ import { BoxProps } from '../types';
 import { useTheme } from './ReactBulk';
 import createStyle from './createStyle';
 import bindings from './props/bindings';
-import jss from './styles/jss';
+import get from './props/get';
 import clsx from './utils/clsx';
 
 export default function createBox(
@@ -37,11 +37,14 @@ export default function createBox(
 
   const { dimensions } = map;
 
-  const styleX = jss([
+  style = [
     // Flex Container
-    flexbox && { display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}` },
+    flexbox && {
+      display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}`,
+      flexDirection: 'row',
+    },
     direction && { flexDirection: direction },
-    wrap && { flexWrap: wrap },
+    wrap && { flexWrap: typeof wrap === 'boolean' ? (wrap ? 'wrap' : 'nowrap') : wrap },
     flow && { flexFlow: flow },
     justifyContent && { justifyContent },
     justifyItems && { alignItems },
@@ -58,28 +61,27 @@ export default function createBox(
     justify && { justifySelf: justify },
 
     style,
-  ]);
+  ];
 
-  let pointFound = false;
-  const breakpoints: any = Object.entries(theme.breakpoints).reverse();
+  // Apply responsive styles
+  for (const breakpoint of Object.entries(theme.breakpoints)) {
+    const [name, minWidth]: any = breakpoint;
+    const ptStyle = get(name, style);
 
-  for (const [name, bkpt] of breakpoints) {
-    if (!pointFound && styleX[name] && dimensions.width >= bkpt) {
-      Object.assign(styleX, jss(styleX[name]));
-      pointFound = true;
-      break;
+    if (ptStyle && dimensions.width >= minWidth) {
+      style.push(ptStyle);
     }
-
-    delete styleX[name];
   }
 
-  const processed = createStyle({ style: styleX });
+  const processed = createStyle({ style: style });
 
   if (processed) {
+    // Web: CSS Class Name
     if (typeof processed === 'string') {
       className = clsx(processed, className);
     }
 
+    // Native: Style Object
     if (typeof processed === 'object') {
       props.style = processed;
     }

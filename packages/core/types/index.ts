@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 export type Bindings = {
   onPress?: Function;
@@ -16,18 +16,61 @@ export type Bindings = {
   onMouseUp?: Function;
 };
 
+export type ThemeColorsProps = {
+  main?: string;
+  light?: string;
+  dark?: string;
+};
+
+export type ThemeProps = {
+  mode: 'light' | 'dark' | string;
+  spacing?: Function;
+  colors?: {
+    common?: {
+      trans: 'rgba(0, 0, 0, 0)' | string;
+      black: '#000000' | string;
+      white: '#ffffff' | string;
+    };
+    text?: {
+      primary?: string;
+      secondary?: string;
+      disabled?: string;
+    };
+    background?: {
+      primary?: string;
+      secondary?: string;
+      disabled?: string;
+    };
+    primary?: ThemeColorsProps;
+    secondary?: ThemeColorsProps;
+    info?: ThemeColorsProps;
+    success?: ThemeColorsProps;
+    warning?: ThemeColorsProps;
+    error?: ThemeColorsProps;
+    [key: string]: ThemeColorsProps | any;
+  };
+  breakpoints?: {
+    xs?: number;
+    sm?: number;
+    md?: number;
+    lg?: number;
+    xl?: number;
+    xxl?: number;
+  };
+};
+
 export type FlexAlign = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
 
 export type BoxProps = Bindings & {
   component?: any;
   className?: any;
   children?: React.ReactNode;
-  style?: any;
+  style?: CSSProperties;
 
   // Flexbox container
   flexbox?: boolean | 'flex' | 'flex-inline';
   direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
-  wrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
+  wrap?: boolean | 'nowrap' | 'wrap' | 'wrap-reverse';
   flow?: string;
   justifyContent?: FlexAlign;
   alignContent?: FlexAlign;

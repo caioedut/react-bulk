@@ -25,6 +25,7 @@ function createText(_a, ref, map) {
     const styleX = [
         {
             color: theme.colors.text.primary,
+            display: 'inline-block',
             fontSize: theme.rem(1),
         },
         size && { fontSize: size },
@@ -34,7 +35,6 @@ function createText(_a, ref, map) {
         smallCaps && { fontVariant: 'small-caps' },
         invisible && { opacity: 0 },
         transform && { textTransform: transform },
-        // @ts-ignore
         numberOfLines > 0 && {
             web: {
                 display: '-webkit-box',

@@ -1,31 +1,44 @@
+import { ThemeProps } from '../../types';
 import Platform from '../Platform';
-import mergeStyles from '../mergeStyles';
+import get from '../props/get';
+import merge from '../props/merge';
+import remove from '../props/remove';
+import clone from '../utils/clone';
 
 export const spacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
 
-export default function jss(...styles: Object[]) {
+export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   const { web, native } = Platform;
 
-  const merged = mergeStyles(styles);
+  const args = clone(mixin);
+
+  const theme: ThemeProps = get('theme', args);
+  const webStyle = get('web', args);
+  const nativeStyle = get('native', args);
+
+  remove(['theme', 'web', 'native'], args);
+
+  if (theme?.breakpoints) {
+    remove(Object.keys(theme.breakpoints), args);
+  }
+
+  const styles = merge(args);
 
   // Web specific
-  if (merged.web && Platform.web) {
-    Object.assign(merged, merged.web);
+  if (webStyle && Platform.web) {
+    Object.assign(styles, webStyle);
   }
 
   // Native specific
-  if (merged.native && Platform.native) {
-    Object.assign(merged, merged.native);
+  if (nativeStyle && Platform.native) {
+    Object.assign(styles, nativeStyle);
   }
 
-  delete merged.web;
-  delete merged.native;
-
-  for (const attr of Object.keys(merged)) {
+  for (const attr of Object.keys(styles)) {
     let prop: any = attr;
-    let value = merged[attr];
+    let value = styles[attr];
 
-    delete merged[attr];
+    delete styles[attr];
 
     if (spacings.includes(attr)) {
       prop = attr
@@ -41,11 +54,12 @@ export default function jss(...styles: Object[]) {
         .replace(/^b$/, 'bottom')
         .replace(/^l$/, 'left')
         .replace(/^r$/, 'right');
+
+      // Theme multiplier
+      if (theme?.spacing && typeof value === 'number') {
+        value = theme.spacing(value);
+      }
     }
-
-    // if (attr.toLowerCase().includes('color')) {}
-
-    // if (attr === 'border') {}
 
     if (attr === 'bg') {
       prop = 'backgroundColor';
@@ -65,20 +79,20 @@ export default function jss(...styles: Object[]) {
 
       const borderColor = split.shift() || '#000000';
 
-      Object.assign(merged, { borderWidth, borderStyle, borderColor });
+      Object.assign(styles, { borderWidth, borderStyle, borderColor });
     }
 
     if (web) {
       if (attr === 'paddingVertical') {
         prop = null;
-        merged.paddingTop = value;
-        merged.paddingBottom = value;
+        styles.paddingTop = value;
+        styles.paddingBottom = value;
       }
 
       if (attr === 'paddingHorizontal') {
         prop = null;
-        merged.paddingLeft = value;
-        merged.paddingRight = value;
+        styles.paddingLeft = value;
+        styles.paddingRight = value;
       }
     }
 
@@ -149,7 +163,7 @@ export default function jss(...styles: Object[]) {
           elevation = 1;
         }
 
-        Object.assign(merged, {
+        Object.assign(styles, {
           shadowColor: color,
           shadowOpacity: 0.18,
           shadowRadius,
@@ -158,18 +172,27 @@ export default function jss(...styles: Object[]) {
       }
     }
 
+    if (theme?.colors && attr.toLowerCase().includes('color')) {
+      const colors = Object.keys(theme.colors);
+      const [color, variation = 'main'] = value.split('.');
+
+      if (colors.includes(color)) {
+        value = theme.colors[color]?.[variation] || theme.colors[color]?.primary || theme.colors[color] || value;
+      }
+    }
+
     if (prop) {
-      merged[prop] = value;
+      styles[prop] = value;
     }
   }
 
-  const hasFlex = Object.keys(merged).some((prop) =>
-    ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'JustifyItems', 'alignContent', 'alignItems'].includes(prop),
+  const hasFlex = Object.keys(styles).some((prop) =>
+    ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'justifyItems', 'alignContent', 'alignItems'].includes(prop),
   );
 
-  if (hasFlex && !merged.display) {
-    merged.display = 'flex';
+  if (hasFlex && !styles.display) {
+    styles.display = 'flex';
   }
 
-  return merged;
+  return styles;
 }

@@ -21,6 +21,7 @@ const core_1 = require("@react-bulk/core");
 const map_1 = __importDefault(require("../../map"));
 const Scrollable = (0, react_1.forwardRef)((_a, ref) => {
     var { refreshing, onRefresh, refreshControl } = _a, props = __rest(_a, ["refreshing", "onRefresh", "refreshControl"]);
+    const theme = (0, core_1.useTheme)();
     if (!refreshControl && (onRefresh || refreshing)) {
         refreshControl = (0, jsx_runtime_1.jsx)(react_native_1.RefreshControl, { refreshing: refreshing, onRefresh: onRefresh });
     }
@@ -28,6 +29,7 @@ const Scrollable = (0, react_1.forwardRef)((_a, ref) => {
         // @ts-ignore
         props.refreshControl = refreshControl;
     }
+    props = Object.assign({ contentInsetAdjustmentBehavior: 'scrollableAxes', indicatorStyle: theme.mode === 'dark' ? 'white' : 'black', keyboardDismissMode: 'on-drag', keyboardShouldPersistTaps: 'always', nestedScrollEnabled: true, pinchGestureEnabled: false, scrollIndicatorInsets: props.horizontal ? { bottom: 1, left: 1 } : { top: 1, right: 1 } }, props);
     return (0, core_1.createScrollable)(props, ref, map_1.default);
 });
 exports.default = Scrollable;

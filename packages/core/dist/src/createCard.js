@@ -17,14 +17,14 @@ function createCard(_a, ref, map) {
     var { style } = _a, rest = __rest(_a, ["style"]);
     const theme = (0, ReactBulk_1.useTheme)();
     const { Box } = map;
-    const styleX = [
+    style = [
         {
             backgroundColor: theme.colors.background.primary,
             borderRadius: theme.shape.borderRadius,
-            padding: theme.rem(0.75),
+            p: 3,
         },
         style,
     ];
-    return (0, jsx_runtime_1.jsx)(Box, Object.assign({ ref: ref }, rest, { style: styleX }));
+    return (0, jsx_runtime_1.jsx)(Box, Object.assign({ ref: ref }, rest, { style: style }));
 }
 exports.default = createCard;

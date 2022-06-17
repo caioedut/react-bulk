@@ -17,7 +17,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const Platform_1 = __importDefault(require("./Platform"));
 const ReactBulk_1 = require("./ReactBulk");
-const getStyle_1 = __importDefault(require("./getStyle"));
+const get_1 = __importDefault(require("./props/get"));
 function createButton(_a, ref, map) {
     var { variant, size, block, loading, style, children } = _a, rest = __rest(_a, ["variant", "size", "block", "loading", "style", "children"]);
     const theme = (0, ReactBulk_1.useTheme)();
@@ -84,8 +84,8 @@ function createButton(_a, ref, map) {
         style,
     ];
     const textStyleX = {
-        color: (0, getStyle_1.default)(styleX, 'color'),
-        fontSize: (0, getStyle_1.default)(styleX, 'fontSize'),
+        color: (0, get_1.default)('color', styleX),
+        fontSize: (0, get_1.default)('fontSize', styleX),
     };
     if (typeof children === 'string') {
         children = ((0, jsx_runtime_1.jsx)(Box, Object.assign({ component: Text, style: [textStyleX, disabled && { opacity: 0.75 }, loading && { opacity: 0 }] }, { children: children })));

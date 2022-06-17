@@ -5,25 +5,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.spacings = void 0;
 const Platform_1 = __importDefault(require("../Platform"));
-const mergeStyles_1 = __importDefault(require("../mergeStyles"));
+const get_1 = __importDefault(require("../props/get"));
+const merge_1 = __importDefault(require("../props/merge"));
+const remove_1 = __importDefault(require("../props/remove"));
+const clone_1 = __importDefault(require("../utils/clone"));
 exports.spacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
-function jss(...styles) {
+function jss(...mixin) {
+    var _a, _b;
     const { web, native } = Platform_1.default;
-    const merged = (0, mergeStyles_1.default)(styles);
+    const args = (0, clone_1.default)(mixin);
+    const theme = (0, get_1.default)('theme', args);
+    const webStyle = (0, get_1.default)('web', args);
+    const nativeStyle = (0, get_1.default)('native', args);
+    (0, remove_1.default)(['theme', 'web', 'native'], args);
+    if (theme === null || theme === void 0 ? void 0 : theme.breakpoints) {
+        (0, remove_1.default)(Object.keys(theme.breakpoints), args);
+    }
+    const styles = (0, merge_1.default)(args);
     // Web specific
-    if (merged.web && Platform_1.default.web) {
-        Object.assign(merged, merged.web);
+    if (webStyle && Platform_1.default.web) {
+        Object.assign(styles, webStyle);
     }
     // Native specific
-    if (merged.native && Platform_1.default.native) {
-        Object.assign(merged, merged.native);
+    if (nativeStyle && Platform_1.default.native) {
+        Object.assign(styles, nativeStyle);
     }
-    delete merged.web;
-    delete merged.native;
-    for (const attr of Object.keys(merged)) {
+    for (const attr of Object.keys(styles)) {
         let prop = attr;
-        let value = merged[attr];
-        delete merged[attr];
+        let value = styles[attr];
+        delete styles[attr];
         if (exports.spacings.includes(attr)) {
             prop = attr
                 .replace(/^(.)t$/, '$1Top')
@@ -38,9 +48,11 @@ function jss(...styles) {
                 .replace(/^b$/, 'bottom')
                 .replace(/^l$/, 'left')
                 .replace(/^r$/, 'right');
+            // Theme multiplier
+            if ((theme === null || theme === void 0 ? void 0 : theme.spacing) && typeof value === 'number') {
+                value = theme.spacing(value);
+            }
         }
-        // if (attr.toLowerCase().includes('color')) {}
-        // if (attr === 'border') {}
         if (attr === 'bg') {
             prop = 'backgroundColor';
         }
@@ -53,18 +65,18 @@ function jss(...styles) {
             const styleIndex = split.findIndex((item) => types.includes(item));
             const borderStyle = styleIndex >= 0 ? split.splice(styleIndex, 1).shift() : 'solid';
             const borderColor = split.shift() || '#000000';
-            Object.assign(merged, { borderWidth, borderStyle, borderColor });
+            Object.assign(styles, { borderWidth, borderStyle, borderColor });
         }
         if (web) {
             if (attr === 'paddingVertical') {
                 prop = null;
-                merged.paddingTop = value;
-                merged.paddingBottom = value;
+                styles.paddingTop = value;
+                styles.paddingBottom = value;
             }
             if (attr === 'paddingHorizontal') {
                 prop = null;
-                merged.paddingLeft = value;
-                merged.paddingRight = value;
+                styles.paddingLeft = value;
+                styles.paddingRight = value;
             }
         }
         if (native) {
@@ -151,7 +163,7 @@ function jss(...styles) {
                 else {
                     elevation = 1;
                 }
-                Object.assign(merged, {
+                Object.assign(styles, {
                     shadowColor: color,
                     shadowOpacity: 0.18,
                     shadowRadius,
@@ -159,14 +171,21 @@ function jss(...styles) {
                 });
             }
         }
+        if ((theme === null || theme === void 0 ? void 0 : theme.colors) && attr.toLowerCase().includes('color')) {
+            const colors = Object.keys(theme.colors);
+            const [color, variation = 'main'] = value.split('.');
+            if (colors.includes(color)) {
+                value = ((_a = theme.colors[color]) === null || _a === void 0 ? void 0 : _a[variation]) || ((_b = theme.colors[color]) === null || _b === void 0 ? void 0 : _b.primary) || theme.colors[color] || value;
+            }
+        }
         if (prop) {
-            merged[prop] = value;
+            styles[prop] = value;
         }
     }
-    const hasFlex = Object.keys(merged).some((prop) => ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'alignContent', 'alignItems'].includes(prop));
-    if (hasFlex && !merged.display) {
-        merged.display = 'flex';
+    const hasFlex = Object.keys(styles).some((prop) => ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'justifyItems', 'alignContent', 'alignItems'].includes(prop));
+    if (hasFlex && !styles.display) {
+        styles.display = 'flex';
     }
-    return merged;
+    return styles;
 }
 exports.default = jss;

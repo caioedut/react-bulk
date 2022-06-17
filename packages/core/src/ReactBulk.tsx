@@ -1,12 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
+import { ThemeProps } from '../types';
 import BaseStyleNative from './BaseStyleNative';
 import BaseStyleWeb from './BaseStyleWeb';
 import Platform from './Platform';
 import createTheme from './createTheme';
 import light from './themes/light';
 
-const defaultTheme = createTheme(light);
+type ThemeContextValue = ThemeProps & {
+  setTheme?: Function;
+};
+
+const defaultTheme: ThemeContextValue = createTheme(light);
 const Context = createContext(defaultTheme);
 
 export function useTheme() {
@@ -18,7 +23,7 @@ function ReactBulk({ theme, children }: any) {
 
   const [themeState, setThemeState] = useState(createTheme(theme));
 
-  const setTheme = (theme: Object) => {
+  const setTheme = (theme: ThemeProps) => {
     setThemeState(createTheme(theme));
   };
 

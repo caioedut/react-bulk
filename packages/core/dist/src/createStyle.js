@@ -5,14 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const Platform_1 = __importDefault(require("./Platform"));
+const ReactBulk_1 = require("./ReactBulk");
 const css_1 = __importDefault(require("./styles/css"));
 const jss_1 = __importDefault(require("./styles/jss"));
 const md5_1 = __importDefault(require("./utils/md5"));
 const uuid_1 = __importDefault(require("./utils/uuid"));
 function createStyle({ style, className, global }) {
+    const theme = (0, ReactBulk_1.useTheme)();
     const { web, native } = Platform_1.default;
     const isObject = style && typeof style === 'object';
-    const styleX = isObject ? (0, jss_1.default)(style) : style;
+    const styleX = isObject ? (0, jss_1.default)({ theme }, style) : style;
     const { current: id } = (0, react_1.useRef)((0, uuid_1.default)());
     const hash = (0, react_1.useMemo)(() => (0, md5_1.default)(isObject
         ? Object.entries(styleX)

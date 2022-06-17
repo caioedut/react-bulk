@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 
 import Platform from './Platform';
+import { useTheme } from './ReactBulk';
 import css from './styles/css';
 import jss from './styles/jss';
 import md5 from './utils/md5';
@@ -13,10 +14,11 @@ export type createStyle = {
 };
 
 export default function createStyle({ style, className, global }: createStyle) {
+  const theme = useTheme();
   const { web, native } = Platform;
 
   const isObject = style && typeof style === 'object';
-  const styleX = isObject ? jss(style) : style;
+  const styleX = isObject ? jss({ theme }, style) : style;
 
   const { current: id } = useRef(uuid());
 

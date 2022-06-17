@@ -15,6 +15,7 @@ export default function createText(
   const styleX = [
     {
       color: theme.colors.text.primary,
+      display: 'inline-block',
       fontSize: theme.rem(1),
     },
     size && { fontSize: size },
@@ -24,7 +25,6 @@ export default function createText(
     smallCaps && { fontVariant: 'small-caps' },
     invisible && { opacity: 0 },
     transform && { textTransform: transform },
-    // @ts-ignore
     numberOfLines > 0 && {
       web: {
         display: '-webkit-box',
