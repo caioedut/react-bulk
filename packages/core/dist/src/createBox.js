@@ -20,6 +20,7 @@ const ReactBulk_1 = require("./ReactBulk");
 const createStyle_1 = __importDefault(require("./createStyle"));
 const bindings_1 = __importDefault(require("./props/bindings"));
 const get_1 = __importDefault(require("./props/get"));
+const jss_1 = require("./styles/jss");
 const clsx_1 = __importDefault(require("./utils/clsx"));
 function createBox(_a, ref, map, defaultComponent) {
     var { component, className, flexbox, direction, wrap, flow, justifyContent, alignContent, justifyItems, alignItems, center, gap, flex, order, grow, shrink, basis, align, justify, style, children } = _a, props = __rest(_a, ["component", "className", "flexbox", "direction", "wrap", "flow", "justifyContent", "alignContent", "justifyItems", "alignItems", "center", "gap", "flex", "order", "grow", "shrink", "basis", "align", "justify", "style", "children"]);
@@ -56,6 +57,13 @@ function createBox(_a, ref, map, defaultComponent) {
         justify && { justifySelf: justify },
         style,
     ];
+    // Custom style props
+    for (const prop of jss_1.customStyleProps) {
+        if (prop in props) {
+            style.push({ [prop]: props[prop] });
+            delete props[prop];
+        }
+    }
     // Apply responsive styles
     for (const breakpoint of Object.entries(theme.breakpoints)) {
         const [name, minWidth] = breakpoint;

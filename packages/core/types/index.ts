@@ -61,33 +61,62 @@ export type ThemeProps = {
 
 export type FlexAlign = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
 
-export type BoxProps = Bindings & {
-  component?: any;
-  className?: any;
-  children?: React.ReactNode;
-  style?: CSSProperties;
+export type CustomStyles = {
+  h: number | string;
+  w: number | string;
 
-  // Flexbox container
-  flexbox?: boolean | 'flex' | 'flex-inline';
-  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
-  wrap?: boolean | 'nowrap' | 'wrap' | 'wrap-reverse';
-  flow?: string;
-  justifyContent?: FlexAlign;
-  alignContent?: FlexAlign;
-  justifyItems?: FlexAlign;
-  alignItems?: FlexAlign;
-  center?: boolean;
-  gap?: boolean | number;
+  bg: string;
+  border: string;
+  shadow: string;
 
-  // Flexbox item
-  flex?: boolean;
-  order?: number;
-  grow?: number;
-  shrink?: number;
-  basis?: 'auto' | number | string;
-  align?: FlexAlign;
-  justify?: FlexAlign;
+  t: number | string;
+  b: number | string;
+  l: number | string;
+  r: number | string;
+  m: number | string;
+  mt: number | string;
+  mb: number | string;
+  ml: number | string;
+  mr: number | string;
+  mx: number | string;
+  my: number | string;
+  p: number | string;
+  pt: number | string;
+  pb: number | string;
+  pl: number | string;
+  pr: number | string;
+  px: number | string;
+  py: number | string;
 };
+
+export type BoxProps = Bindings &
+  CustomStyles & {
+    component?: any;
+    className?: any;
+    children?: React.ReactNode;
+    style?: CSSProperties & CustomStyles;
+
+    // Flexbox container
+    flexbox?: boolean | 'flex' | 'flex-inline';
+    direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+    wrap?: boolean | 'nowrap' | 'wrap' | 'wrap-reverse';
+    flow?: string;
+    justifyContent?: FlexAlign;
+    alignContent?: FlexAlign;
+    justifyItems?: FlexAlign;
+    alignItems?: FlexAlign;
+    center?: boolean;
+    gap?: boolean | number;
+
+    // Flexbox item
+    flex?: boolean;
+    order?: number;
+    grow?: number;
+    shrink?: number;
+    basis?: 'auto' | number | string;
+    align?: FlexAlign;
+    justify?: FlexAlign;
+  };
 
 export type TextProps = BoxProps & {
   size?: number;

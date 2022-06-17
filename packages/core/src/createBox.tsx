@@ -5,6 +5,7 @@ import { useTheme } from './ReactBulk';
 import createStyle from './createStyle';
 import bindings from './props/bindings';
 import get from './props/get';
+import { customStyleProps } from './styles/jss';
 import clsx from './utils/clsx';
 
 export default function createBox(
@@ -75,6 +76,14 @@ export default function createBox(
 
     style,
   ];
+
+  // Custom style props
+  for (const prop of customStyleProps) {
+    if (prop in props) {
+      style.push({ [prop]: props[prop] });
+      delete props[prop];
+    }
+  }
 
   // Apply responsive styles
   for (const breakpoint of Object.entries(theme.breakpoints)) {

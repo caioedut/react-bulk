@@ -3,13 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.spacings = void 0;
+exports.customStyleProps = exports.spacings = void 0;
 const Platform_1 = __importDefault(require("../Platform"));
 const get_1 = __importDefault(require("../props/get"));
 const merge_1 = __importDefault(require("../props/merge"));
 const remove_1 = __importDefault(require("../props/remove"));
 const clone_1 = __importDefault(require("../utils/clone"));
 exports.spacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
+exports.customStyleProps = ['w', 'h', 'bg', 'border', 'shadow', ...exports.spacings];
 function jss(...mixin) {
     var _a, _b;
     const { web, native } = Platform_1.default;
@@ -52,6 +53,12 @@ function jss(...mixin) {
             if ((theme === null || theme === void 0 ? void 0 : theme.spacing) && typeof value === 'number') {
                 value = theme.spacing(value);
             }
+        }
+        if (attr === 'h') {
+            prop = 'height';
+        }
+        if (attr === 'w') {
+            prop = 'width';
         }
         if (attr === 'bg') {
             prop = 'backgroundColor';

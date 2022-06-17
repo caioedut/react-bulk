@@ -7,6 +7,8 @@ import clone from '../utils/clone';
 
 export const spacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
 
+export const customStyleProps = ['w', 'h', 'bg', 'border', 'shadow', ...spacings];
+
 export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   const { web, native } = Platform;
 
@@ -59,6 +61,14 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       if (theme?.spacing && typeof value === 'number') {
         value = theme.spacing(value);
       }
+    }
+
+    if (attr === 'h') {
+      prop = 'height';
+    }
+
+    if (attr === 'w') {
+      prop = 'width';
     }
 
     if (attr === 'bg') {
