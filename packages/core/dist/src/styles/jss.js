@@ -173,7 +173,7 @@ function jss(...mixin) {
         }
         if ((theme === null || theme === void 0 ? void 0 : theme.colors) && attr.toLowerCase().includes('color')) {
             const colors = Object.keys(theme.colors);
-            const [color, variation = 'main'] = value.split('.');
+            const [color, variation = 'main'] = `${value || ''}`.split('.');
             if (colors.includes(color)) {
                 value = ((_a = theme.colors[color]) === null || _a === void 0 ? void 0 : _a[variation]) || ((_b = theme.colors[color]) === null || _b === void 0 ? void 0 : _b.primary) || theme.colors[color] || value;
             }

@@ -174,7 +174,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
     if (theme?.colors && attr.toLowerCase().includes('color')) {
       const colors = Object.keys(theme.colors);
-      const [color, variation = 'main'] = value.split('.');
+      const [color, variation = 'main'] = `${value || ''}`.split('.');
 
       if (colors.includes(color)) {
         value = theme.colors[color]?.[variation] || theme.colors[color]?.primary || theme.colors[color] || value;

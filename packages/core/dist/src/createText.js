@@ -20,12 +20,11 @@ const ReactBulk_1 = require("./ReactBulk");
 function createText(_a, ref, map) {
     var { size, bold, italic, oblique, smallCaps, invisible, transform, numberOfLines, style } = _a, rest = __rest(_a, ["size", "bold", "italic", "oblique", "smallCaps", "invisible", "transform", "numberOfLines", "style"]);
     const theme = (0, ReactBulk_1.useTheme)();
-    const { native } = Platform_1.default;
+    const { web, native } = Platform_1.default;
     const { Box, Text } = map;
     const styleX = [
         {
             color: theme.colors.text.primary,
-            display: 'inline-block',
             fontSize: theme.rem(1),
         },
         size && { fontSize: size },
@@ -43,6 +42,7 @@ function createText(_a, ref, map) {
                 overflow: 'hidden',
             },
         },
+        web && { display: 'inline-block' },
         style,
     ];
     const props = {};

@@ -9,15 +9,15 @@ export default function createText(
 ) {
   const theme = useTheme();
 
-  const { native } = Platform;
+  const { web, native } = Platform;
   const { Box, Text } = map;
 
   const styleX = [
     {
       color: theme.colors.text.primary,
-      display: 'inline-block',
       fontSize: theme.rem(1),
     },
+
     size && { fontSize: size },
     bold && { fontWeight: 'bold' },
     italic && { fontStyle: 'italic' },
@@ -33,6 +33,9 @@ export default function createText(
         overflow: 'hidden',
       },
     },
+
+    web && { display: 'inline-block' },
+
     style,
   ];
 
