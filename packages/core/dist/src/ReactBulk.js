@@ -21,7 +21,7 @@ function ReactBulk({ theme, children }) {
     const { web, native } = Platform_1.default;
     const [themeState, setThemeState] = (0, react_1.useState)((0, createTheme_1.default)(theme));
     const setTheme = (theme) => {
-        setThemeState((0, createTheme_1.default)(theme));
+        setThemeState((current) => (0, createTheme_1.default)(theme, current));
     };
     (0, react_1.useEffect)(() => {
         setTheme(theme);

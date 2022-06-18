@@ -120,6 +120,8 @@ export type BoxProps = Bindings &
 
 export type TextProps = BoxProps & {
   size?: number;
+  color?: string;
+  center?: boolean;
   bold?: boolean;
   italic?: boolean;
   oblique?: boolean;

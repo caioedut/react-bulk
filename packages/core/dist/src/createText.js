@@ -18,16 +18,17 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const Platform_1 = __importDefault(require("./Platform"));
 const ReactBulk_1 = require("./ReactBulk");
 function createText(_a, ref, map) {
-    var { size, bold, italic, oblique, smallCaps, invisible, transform, numberOfLines, style } = _a, rest = __rest(_a, ["size", "bold", "italic", "oblique", "smallCaps", "invisible", "transform", "numberOfLines", "style"]);
+    var { size, color, center, bold, italic, oblique, smallCaps, invisible, transform, numberOfLines, style } = _a, rest = __rest(_a, ["size", "color", "center", "bold", "italic", "oblique", "smallCaps", "invisible", "transform", "numberOfLines", "style"]);
     const theme = (0, ReactBulk_1.useTheme)();
     const { web, native } = Platform_1.default;
     const { Box, Text } = map;
     const styleX = [
         {
-            color: theme.colors.text.primary,
+            color: color !== null && color !== void 0 ? color : theme.colors.text.primary,
             fontSize: theme.rem(1),
         },
-        size && { fontSize: size },
+        size && { fontSize: theme.rem(size) },
+        center && { textAlign: 'center' },
         bold && { fontWeight: 'bold' },
         italic && { fontStyle: 'italic' },
         oblique && { fontStyle: 'oblique' },

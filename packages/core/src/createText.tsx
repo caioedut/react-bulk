@@ -3,7 +3,7 @@ import Platform from './Platform';
 import { useTheme } from './ReactBulk';
 
 export default function createText(
-  { size, bold, italic, oblique, smallCaps, invisible, transform, numberOfLines, style, ...rest }: TextProps | any,
+  { size, color, center, bold, italic, oblique, smallCaps, invisible, transform, numberOfLines, style, ...rest }: TextProps | any,
   ref: any,
   map: any,
 ) {
@@ -14,11 +14,12 @@ export default function createText(
 
   const styleX = [
     {
-      color: theme.colors.text.primary,
+      color: color ?? theme.colors.text.primary,
       fontSize: theme.rem(1),
     },
 
-    size && { fontSize: size },
+    size && { fontSize: theme.rem(size) },
+    center && { textAlign: 'center' },
     bold && { fontWeight: 'bold' },
     italic && { fontStyle: 'italic' },
     oblique && { fontStyle: 'oblique' },

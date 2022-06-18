@@ -21,10 +21,10 @@ export function useTheme() {
 function ReactBulk({ theme, children }: any) {
   const { web, native } = Platform;
 
-  const [themeState, setThemeState] = useState(createTheme(theme));
+  const [themeState, setThemeState] = useState<ThemeProps>(createTheme(theme));
 
   const setTheme = (theme: ThemeProps) => {
-    setThemeState(createTheme(theme));
+    setThemeState((current) => createTheme(theme, current));
   };
 
   useEffect(() => {
