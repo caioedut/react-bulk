@@ -51,10 +51,6 @@ export default function createBox(
     direction && { flexDirection: direction },
     wrap && { flexWrap: typeof wrap === 'boolean' ? (wrap ? 'wrap' : 'nowrap') : wrap },
     flow && { flexFlow: flow },
-    justifyContent && { justifyContent },
-    justifyItems && { alignItems },
-    alignContent && { alignContent },
-    alignItems && { alignItems },
 
     center && {
       justifyContent: 'center',
@@ -62,6 +58,11 @@ export default function createBox(
       alignContent: 'center',
       alignItems: 'center',
     },
+
+    justifyContent && { justifyContent },
+    justifyItems && { alignItems },
+    alignContent && { alignContent },
+    alignItems && { alignItems },
 
     web && gap && { gap: theme.spacing(Number(gap)) },
 
