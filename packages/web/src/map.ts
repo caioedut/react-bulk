@@ -1,4 +1,4 @@
-import Box from './src/Box';
+import Box from './Box';
 
 const map = {
   ios: false,

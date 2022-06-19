@@ -4,7 +4,7 @@ import { TextInputProps } from 'react-native';
 import { createInput, useTheme } from '@react-bulk/core';
 import { InputProps } from '@react-bulk/core/src/types';
 
-import map from '../../map';
+import map from '../map';
 
 type InputPropsNative = TextInputProps & InputProps;
 

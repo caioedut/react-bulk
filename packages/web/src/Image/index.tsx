@@ -3,7 +3,7 @@ import { ComponentPropsWithRef, forwardRef, useMemo } from 'react';
 import { createImage } from '@react-bulk/core';
 import { ImageProps } from '@react-bulk/core/src/types';
 
-import map from '../../map';
+import map from '../map';
 
 type ImagePropsWeb = ComponentPropsWithRef<'img'> & ImageProps;
 

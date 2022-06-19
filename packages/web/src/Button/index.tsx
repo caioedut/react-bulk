@@ -3,7 +3,7 @@ import { ComponentPropsWithRef, forwardRef } from 'react';
 import { createButton } from '@react-bulk/core';
 import { ButtonProps } from '@react-bulk/core/src/types';
 
-import map from '../../map';
+import map from '../map';
 
 type ButtonPropsWeb = ComponentPropsWithRef<'button'> &
   ButtonProps & {

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Platform from '../Platform';
 
 export default function ({ ...props }: any) {

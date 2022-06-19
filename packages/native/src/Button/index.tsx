@@ -4,7 +4,7 @@ import { TouchableOpacityProps } from 'react-native';
 import { createButton } from '@react-bulk/core';
 import { ButtonProps } from '@react-bulk/core/src/types';
 
-import map from '../../map';
+import map from '../map';
 
 type ButtonPropsNative = TouchableOpacityProps & ButtonProps;
 

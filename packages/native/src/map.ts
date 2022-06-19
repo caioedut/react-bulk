@@ -1,6 +1,6 @@
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-import Box from './src/Box';
+import Box from './Box';
 
 const map = {
   ios: Platform.OS === 'ios',

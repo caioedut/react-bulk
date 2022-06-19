@@ -21,7 +21,6 @@
   "dependencies": {
     "deepmerge": ">=3.0.0"
   },
-  "devDependencies": {},
   "peerDependencies": {
     "react": ">=16.8.0"
   }

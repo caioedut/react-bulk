@@ -4,7 +4,7 @@ import { TextProps as RNTextProps } from 'react-native';
 import { createText } from '@react-bulk/core';
 import { TextProps } from '@react-bulk/core/src/types';
 
-import map from '../../map';
+import map from '../map';
 
 type TextPropsNative = RNTextProps & TextProps;
 

@@ -4,7 +4,7 @@ import { Image as RNImage, ImageProps as RNImageProps } from 'react-native';
 import { createImage } from '@react-bulk/core';
 import { ImageProps } from '@react-bulk/core/src/types';
 
-import map from '../../map';
+import map from '../map';
 
 type ImagePropsNative = RNImageProps & ImageProps;
 

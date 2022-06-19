@@ -4,7 +4,7 @@ import { RefreshControl, RefreshControlProps, ScrollViewProps } from 'react-nati
 import { createScrollable, useTheme } from '@react-bulk/core';
 import { ScrollableProps } from '@react-bulk/core/src/types';
 
-import map from '../../map';
+import map from '../map';
 
 type ScrollablePropsNative = ScrollViewProps &
   RefreshControlProps &

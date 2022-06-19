@@ -13,10 +13,15 @@
 .eslintcache
 .expo/
 
+# production
+build/
+dist/
+
 # dependencies
 node_modules/
 .pnp
 .pnp.js
+
 
 # testing
 coverage/

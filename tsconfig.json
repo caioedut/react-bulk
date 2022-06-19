@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
+    "strict": true,
     "noEmit": true,
-    "module": "commonjs",
-    "target": "es5",
-    "lib": ["es6"],
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
     "sourceMap": true,
     "allowJs": false,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "declaration": true,
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
@@ -23,7 +23,9 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
-      "@react-bulk/core": ["packages/core/src"]
+      "@react-bulk/core": ["packages/core/src"],
+      "@react-bulk/web": ["packages/web/src"],
+      "@react-bulk/native": ["packages/native/src"]
     }
   },
   "include": [

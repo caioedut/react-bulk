@@ -4,7 +4,7 @@ import { ViewProps } from 'react-native';
 import { createCard } from '@react-bulk/core';
 import { CardProps } from '@react-bulk/core/src/types';
 
-import map from '../../map';
+import map from '../map';
 
 type CardPropsNative = ViewProps & CardProps;
 
