@@ -12,10 +12,10 @@
   "scripts": {
     "prebuild": "lerna exec --parallel -- rimraf dist typings",
     "build": "lerna exec --parallel -- rollup -c ../../rollup.config.js",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "yarn build",
     "publish:canary": "lerna version prerelease --no-changelog --preid next",
     "publish:stable": "lerna version --no-changelog",
-    "predeploy": "yarn build",
+    "predeploy": "yarn publish:stable && yarn build",
     "deploy": "yarn deploy:core && yarn deploy:web && yarn deploy:native",
     "deploy:core": "yarn workspace @react-bulk/core publish --access public",
     "deploy:web": "yarn workspace @react-bulk/web publish --access public",
