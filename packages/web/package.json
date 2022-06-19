@@ -6,6 +6,7 @@
   "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/index.es.js",
   "types": "typings/web/src/index.d.ts",
   "files": [
     "dist",
