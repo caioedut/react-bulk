@@ -1,6 +1,6 @@
 {
   "name": "@react-bulk/web",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "description": "React Bulk for React JS",
   "author": "CaioEduT <caioedut@gmail.com>",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "build": "tsc --build --force"
   },
   "dependencies": {
-    "@react-bulk/core": "0.0.44"
+    "@react-bulk/core": "0.0.45"
   },
   "devDependencies": {},
   "peerDependencies": {

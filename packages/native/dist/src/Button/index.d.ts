@@ -1,0 +1,36 @@
+import React from 'react';
+import { TouchableOpacityProps } from 'react-native';
+declare const Button: React.ForwardRefExoticComponent<TouchableOpacityProps & import("@react-bulk/core/types").Bindings & import("@react-bulk/core/types").CustomStyles & {
+    component?: any;
+    className?: any;
+    children?: React.ReactNode;
+    style?: (React.CSSProperties & import("@react-bulk/core/types").CustomStyles) | undefined;
+    flexbox?: boolean | "flex" | "flex-inline" | undefined;
+    direction?: "row" | "row-reverse" | "column" | "column-reverse" | undefined;
+    wrap?: boolean | "nowrap" | "wrap" | "wrap-reverse" | undefined;
+    flow?: string | undefined;
+    justifyContent?: import("@react-bulk/core/types").FlexAlign | undefined;
+    alignContent?: import("@react-bulk/core/types").FlexAlign | undefined;
+    justifyItems?: import("@react-bulk/core/types").FlexAlign | undefined;
+    alignItems?: import("@react-bulk/core/types").FlexAlign | undefined;
+    center?: boolean | undefined;
+    gap?: number | boolean | undefined;
+    flex?: boolean | undefined;
+    order?: number | undefined;
+    grow?: number | undefined;
+    shrink?: number | undefined;
+    basis?: string | number | undefined;
+    align?: import("@react-bulk/core/types").FlexAlign | undefined;
+    justify?: import("@react-bulk/core/types").FlexAlign | undefined;
+} & {
+    autoFocus?: Boolean | undefined;
+    disabled?: Boolean | undefined;
+    style?: any;
+    variant?: string | undefined;
+    size?: string | undefined;
+    block?: Boolean | undefined;
+    loading?: Boolean | undefined;
+    startIcon?: React.ReactNode;
+    endIcon?: React.ReactNode;
+} & React.RefAttributes<unknown>>;
+export default Button;
