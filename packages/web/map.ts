@@ -11,6 +11,7 @@ const map = {
   Label: 'label',
   Button: 'button',
   Input: 'input',
+  Image: 'img',
 };
 
 export default map;

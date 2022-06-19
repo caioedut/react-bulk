@@ -62,31 +62,31 @@ export type ThemeProps = {
 export type FlexAlign = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
 
 export type CustomStyles = {
-  h: number | string;
-  w: number | string;
+  h?: number | string;
+  w?: number | string;
 
-  bg: string;
-  border: string;
-  shadow: string;
+  bg?: string;
+  border?: string;
+  shadow?: string;
 
-  t: number | string;
-  b: number | string;
-  l: number | string;
-  r: number | string;
-  m: number | string;
-  mt: number | string;
-  mb: number | string;
-  ml: number | string;
-  mr: number | string;
-  mx: number | string;
-  my: number | string;
-  p: number | string;
-  pt: number | string;
-  pb: number | string;
-  pl: number | string;
-  pr: number | string;
-  px: number | string;
-  py: number | string;
+  t?: number | string;
+  b?: number | string;
+  l?: number | string;
+  r?: number | string;
+  m?: number | string;
+  mt?: number | string;
+  mb?: number | string;
+  ml?: number | string;
+  mr?: number | string;
+  mx?: number | string;
+  my?: number | string;
+  p?: number | string;
+  pt?: number | string;
+  pb?: number | string;
+  pl?: number | string;
+  pr?: number | string;
+  px?: number | string;
+  py?: number | string;
 };
 
 export type BoxProps = Bindings &
@@ -167,4 +167,11 @@ export type CardProps = BoxProps;
 
 export type ScrollableProps = BoxProps & {
   horizontal?: boolean;
+};
+
+export type ImageProps = BoxProps & {
+  source: { uri: string } | string | number;
+  mode?: 'cover' | 'contain' | 'fill';
+  width?: number | string;
+  height?: number | string;
 };

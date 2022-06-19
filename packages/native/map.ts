@@ -1,4 +1,4 @@
-import { Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import Box from './src/Box';
 
@@ -13,6 +13,7 @@ const map = {
   Label: Text,
   Button: TouchableOpacity,
   Input: TextInput,
+  Image: Image,
 };
 
 export default map;
