@@ -16,6 +16,18 @@ const base = {
       white: '#ffffff',
     },
 
+    primary: {
+      main: '#673ab7',
+      light: '#9a67ea',
+      dark: '#320b86',
+    },
+
+    secondary: {
+      main: '#009688',
+      light: '#52c7b8',
+      dark: '#00675b',
+    },
+
     info: {
       main: '#2196f3',
       light: '#6ec6ff',

@@ -12,18 +12,6 @@ const light = {
       secondary: '#CFCFCF',
       disabled: '#616161',
     },
-
-    primary: {
-      main: '#673ab7',
-      light: '#9a67ea',
-      dark: '#320b86',
-    },
-
-    secondary: {
-      main: '#009688',
-      light: '#52c7b8',
-      dark: '#00675b',
-    },
   },
 };
 
