@@ -11,7 +11,11 @@
   },
   "scripts": {
     "prebuild": "lerna exec --parallel -- rimraf dist typings",
-    "build": "lerna run --parallel --scope \"@react-bulk/*\" build"
+    "build": "lerna run --parallel --scope \"@react-bulk/*\" build",
+    "deploy": "yarn deploy:core && yarn deploy:web && yarn deploy:native",
+    "deploy:core": "yarn workspace @react-bulk/core publish --access public",
+    "deploy:web": "yarn workspace @react-bulk/web publish --access public",
+    "deploy:native": "yarn workspace @react-bulk/native publish --access public"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
