@@ -30,6 +30,7 @@ export default function BaseStyleWeb() {
     html {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
       font-size: 16px;
+      height: 100%;
     }
 
     body {
@@ -37,8 +38,7 @@ export default function BaseStyleWeb() {
       padding: 0;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
-      min-width: 100vw;
+      min-height: 100%;
       background-color: ${theme.colors.background.secondary};
     }
 
