@@ -1,7 +1,7 @@
-import React, { ComponentPropsWithRef, forwardRef } from 'react';
+import { ComponentPropsWithRef, forwardRef } from 'react';
 
 import { createInput } from '@react-bulk/core';
-import { InputProps } from '@react-bulk/core/types';
+import { InputProps } from '@react-bulk/core/src/types';
 
 import map from '../../map';
 

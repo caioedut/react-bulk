@@ -1,7 +1,7 @@
-import React, { ComponentPropsWithRef, forwardRef } from 'react';
+import { ComponentPropsWithRef, forwardRef } from 'react';
 
 import { createCard } from '@react-bulk/core';
-import { CardProps } from '@react-bulk/core/types';
+import { CardProps } from '@react-bulk/core/src/types';
 
 import map from '../../map';
 

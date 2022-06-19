@@ -1,7 +1,7 @@
-import React, { ComponentPropsWithRef, forwardRef } from 'react';
+import { ComponentPropsWithRef, forwardRef } from 'react';
 
 import { createButton } from '@react-bulk/core';
-import { ButtonProps } from '@react-bulk/core/types';
+import { ButtonProps } from '@react-bulk/core/src/types';
 
 import map from '../../map';
 

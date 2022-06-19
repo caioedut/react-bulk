@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { Text, View, ViewProps, useWindowDimensions } from 'react-native';
 
 import { createBox } from '@react-bulk/core';
-import { BoxProps } from '@react-bulk/core/types';
+import { BoxProps } from '@react-bulk/core/src/types';
 
 type BoxPropsNative = ViewProps & BoxProps;
 

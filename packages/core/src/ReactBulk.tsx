@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import { ThemeProps } from '../types';
 import BaseStyleNative from './BaseStyleNative';
 import BaseStyleWeb from './BaseStyleWeb';
 import Platform from './Platform';
 import createTheme from './createTheme';
 import light from './themes/light';
+import { ThemeProps } from './types';
 
 type ThemeContextValue = ThemeProps & {
   setTheme?: Function;

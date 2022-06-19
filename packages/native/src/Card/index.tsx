@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { ViewProps } from 'react-native';
 
 import { createCard } from '@react-bulk/core';
-import { CardProps } from '@react-bulk/core/types';
+import { CardProps } from '@react-bulk/core/src/types';
 
 import map from '../../map';
 

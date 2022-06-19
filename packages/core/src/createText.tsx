@@ -1,6 +1,6 @@
-import { TextProps } from '../types';
 import Platform from './Platform';
 import { useTheme } from './ReactBulk';
+import { TextProps } from './types';
 
 export default function createText(
   { size, color, center, bold, italic, oblique, smallCaps, invisible, transform, numberOfLines, style, ...rest }: TextProps | any,

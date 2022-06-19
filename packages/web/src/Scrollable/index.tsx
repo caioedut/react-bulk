@@ -1,7 +1,7 @@
-import React, { ComponentPropsWithRef, forwardRef } from 'react';
+import { ComponentPropsWithRef, forwardRef } from 'react';
 
 import { createScrollable } from '@react-bulk/core';
-import { ScrollableProps } from '@react-bulk/core/types';
+import { ScrollableProps } from '@react-bulk/core/src/types';
 
 import map from '../../map';
 

@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { TextProps as RNTextProps } from 'react-native';
 
 import { createText } from '@react-bulk/core';
-import { TextProps } from '@react-bulk/core/types';
+import { TextProps } from '@react-bulk/core/src/types';
 
 import map from '../../map';
 

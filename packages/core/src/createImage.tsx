@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
-import { ImageProps } from '../types';
 import Platform from './Platform';
+import { ImageProps } from './types';
 
 export default function createImage({ width, height, mode = 'cover', style, ...rest }: ImageProps | any, ref: any, map: any) {
   const { web, native } = Platform;

@@ -1,8 +1,8 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { Image as RNImage, ImageProps as RNImageProps } from 'react-native';
 
 import { createImage } from '@react-bulk/core';
-import { ImageProps } from '@react-bulk/core/types';
+import { ImageProps } from '@react-bulk/core/src/types';
 
 import map from '../../map';
 

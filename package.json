@@ -2,6 +2,8 @@
   "name": "root",
   "version": "0.0.45",
   "private": true,
+  "author": "CaioEduT <caioedut@gmail.com>",
+  "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
   "workspaces": {
     "packages": [
@@ -9,26 +11,18 @@
     ]
   },
   "scripts": {
-    "dev": "concurrently \"npm:dev:*\"",
-    "dev:web": "yarn --cwd C:/Development/react-bulk-web dev",
-    "dev:native": "yarn --cwd C:/Development/react-bulk-native dev",
-    "build": "yarn build:core && yarn build:web && yarn build:native",
-    "build:core": "yarn workspace @react-bulk/core build",
-    "build:web": "yarn workspace @react-bulk/web build",
-    "build:native": "yarn workspace @react-bulk/native build",
-    "deploy": "yarn deploy:core && yarn deploy:web && yarn deploy:native",
-    "deploy:core": "yarn workspace @react-bulk/core publish --access public",
-    "deploy:web": "yarn workspace @react-bulk/web publish --access public",
-    "deploy:native": "yarn workspace @react-bulk/native publish --access public"
+    "prebuild": "rimraf dist typings",
+    "build": "tsc"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/react": ">=16.4.7",
     "@types/react-native": ">=0.61.0",
     "concurrently": ">=7.0.0",
-    "prettier": "^2.6.2",
+    "prettier": ">=2.6.2",
     "react": ">=16.8.0",
     "react-native": ">=0.61.0",
+    "rimraf": ">=3.0.0",
     "typescript": ">=4.0.0"
   }
 }

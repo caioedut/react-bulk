@@ -1,5 +1,5 @@
-import { CardProps } from '../types';
 import { useTheme } from './ReactBulk';
+import { CardProps } from './types';
 
 export default function createCard({ style, ...rest }: CardProps | any, ref: any, map: any) {
   const theme = useTheme();

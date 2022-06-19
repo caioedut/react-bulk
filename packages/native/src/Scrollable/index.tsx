@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { RefreshControl, RefreshControlProps, ScrollViewProps } from 'react-native';
 
 import { createScrollable, useTheme } from '@react-bulk/core';
-import { ScrollableProps } from '@react-bulk/core/types';
+import { ScrollableProps } from '@react-bulk/core/src/types';
 
 import map from '../../map';
 

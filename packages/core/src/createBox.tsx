@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { BoxProps } from '../types';
 import { useTheme } from './ReactBulk';
 import createStyle from './createStyle';
 import bindings from './props/bindings';
 import get from './props/get';
 import { customStyleProps } from './styles/jss';
+import { BoxProps } from './types';
 import clsx from './utils/clsx';
 
 export default function createBox(

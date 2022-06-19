@@ -1,7 +1,7 @@
-import React, { ComponentPropsWithRef, forwardRef, useMemo } from 'react';
+import { ComponentPropsWithRef, forwardRef, useMemo } from 'react';
 
 import { createImage } from '@react-bulk/core';
-import { ImageProps } from '@react-bulk/core/types';
+import { ImageProps } from '@react-bulk/core/src/types';
 
 import map from '../../map';
 

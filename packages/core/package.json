@@ -3,11 +3,20 @@
   "version": "0.0.45",
   "description": "React Bulk Core",
   "author": "CaioEduT <caioedut@gmail.com>",
+  "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "typings/index.d.ts",
+  "files": [
+    "dist",
+    "typings"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caioedut/react-bulk.git"
+  },
   "scripts": {
-    "prebuild": "tsc --build --clean",
-    "build": "tsc --build --force"
+    "test": "jest"
   },
   "dependencies": {
     "deepmerge": ">=3.0.0"

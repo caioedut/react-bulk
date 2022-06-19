@@ -1,7 +1,7 @@
 import { ComponentPropsWithRef, forwardRef, useEffect, useState } from 'react';
 
 import { createBox } from '@react-bulk/core';
-import { BoxProps } from '@react-bulk/core/types';
+import { BoxProps } from '@react-bulk/core/src/types';
 
 type BoxPropsWeb = ComponentPropsWithRef<'div'> & BoxProps;
 

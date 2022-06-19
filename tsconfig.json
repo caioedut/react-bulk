@@ -1,12 +1,36 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "esModuleInterop": true,
+    "noEmit": true,
     "module": "commonjs",
+    "target": "es5",
+    "lib": ["es6"],
+    "sourceMap": true,
+    "allowJs": false,
     "jsx": "react-jsx",
+    "declaration": true,
+    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
-    "declaration": true
-  }
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "paths": {
+      "@react-bulk/core": ["packages/core/src"]
+    }
+  },
+  "include": [
+    "packages/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
