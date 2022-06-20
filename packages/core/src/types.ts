@@ -99,6 +99,9 @@ export type BoxProps = Bindings &
     // Flexbox container
     flexbox?: boolean | 'flex' | 'flex-inline';
     direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+    row: boolean;
+    column: boolean;
+    reverse: boolean;
     wrap?: boolean | 'nowrap' | 'wrap' | 'wrap-reverse';
     flow?: string;
     justifyContent?: FlexAlign;
@@ -174,4 +177,11 @@ export type ImageProps = BoxProps & {
   mode?: 'cover' | 'contain' | 'fill';
   width?: number | string;
   height?: number | string;
+};
+
+export type DividerProps = BoxProps & {
+  color?: string;
+  size?: number | string;
+  opacity?: number;
+  vertical?: boolean;
 };

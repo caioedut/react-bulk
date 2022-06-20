@@ -14,6 +14,9 @@ export default function createBox(
     className,
     flexbox,
     direction,
+    row,
+    column,
+    reverse,
     wrap,
     flow,
     justifyContent,
@@ -49,6 +52,8 @@ export default function createBox(
     },
 
     direction && { flexDirection: direction },
+    row && { flexDirection: reverse ? 'row-reverse' : 'row' },
+    column && { flexDirection: reverse ? 'column-reverse' : 'column' },
     wrap && { flexWrap: typeof wrap === 'boolean' ? (wrap ? 'wrap' : 'nowrap') : wrap },
     flow && { flexFlow: flow },
 
@@ -117,24 +122,9 @@ export default function createBox(
   props = bindings(props);
 
   const Component = component || defaultComponent;
+  const buildGap = native && gap && Array.isArray(children) && children?.length;
 
-  // TODO: recursive children
-  // Gap simulation
-  if (native && gap && Array.isArray(children) && children?.length) {
-    return (
-      <Component {...props} ref={ref}>
-        {children.map((child: any, key: number) => (
-          <React.Fragment key={key}>
-            {key > 0 &&
-              createBox({ style: { width: theme.spacing(Number(gap)), height: theme.spacing(Number(gap)) } }, null, map, defaultComponent)}
-            {child}
-          </React.Fragment>
-        ))}
-      </Component>
-    );
-  }
-
-  if ([undefined, null, false, 0, NaN].includes(children)) {
+  if ([undefined, null, false, NaN].includes(children)) {
     children = null;
   }
 
@@ -144,7 +134,20 @@ export default function createBox(
 
   return (
     <Component {...props} ref={ref}>
-      {children}
+      {!buildGap
+        ? children
+        : children.filter(Boolean).map((child: any, key: number) => (
+            <React.Fragment key={key}>
+              {key > 0 &&
+                createBox(
+                  { style: { width: theme.spacing(Number(gap)), height: theme.spacing(Number(gap)) } },
+                  null,
+                  map,
+                  defaultComponent,
+                )}
+              {child}
+            </React.Fragment>
+          ))}
     </Component>
   );
 }

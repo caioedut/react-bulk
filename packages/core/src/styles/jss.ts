@@ -75,7 +75,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       prop = 'backgroundColor';
     }
 
-    if (attr === 'border') {
+    if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(attr)) {
       prop = null;
 
       if (value) {

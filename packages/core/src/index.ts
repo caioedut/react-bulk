@@ -22,6 +22,7 @@ export { default as createMeta } from './createMeta';
 export { default as createBox } from './createBox';
 export { default as createButton } from './createButton';
 export { default as createCard } from './createCard';
+export { default as createDivider } from './createDivider';
 export { default as createInput } from './createInput';
 export { default as createImage } from './createImage';
 export { default as createScrollable } from './createScrollable';

@@ -15,5 +15,5 @@ export default function createCard({ style, ...rest }: CardProps | any, ref: any
     style,
   ];
 
-  return <Box ref={ref} {...rest} style={style} />;
+  return <Box {...rest} ref={ref} style={style} />;
 }
