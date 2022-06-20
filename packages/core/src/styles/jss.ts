@@ -7,7 +7,7 @@ import clone from '../utils/clone';
 
 export const spacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
 
-export const customStyleProps = ['w', 'h', 'bg', 'border', 'shadow', ...spacings];
+export const customStyleProps = ['w', 'h', 'mw', 'mh', 'bg', 'border', 'shadow', ...spacings];
 
 export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   const { web, native } = Platform;
@@ -63,12 +63,20 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       }
     }
 
+    if (prop === 'w') {
+      prop = 'width';
+    }
+
     if (prop === 'h') {
       prop = 'height';
     }
 
-    if (prop === 'w') {
-      prop = 'width';
+    if (prop === 'mw') {
+      prop = 'maxWidth';
+    }
+
+    if (prop === 'mh') {
+      prop = 'maxHeight';
     }
 
     if (prop === 'bg') {

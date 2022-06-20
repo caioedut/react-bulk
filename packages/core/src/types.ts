@@ -185,3 +185,9 @@ export type DividerProps = BoxProps & {
   opacity?: number;
   vertical?: boolean;
 };
+
+export type ModalProps = BoxProps & {
+  visible?: boolean;
+  align?: 'center' | 'top' | 'bottom';
+  onBackdropPress?: Function;
+};

@@ -13,7 +13,7 @@ const map = {
   Label: Text,
   Button: TouchableOpacity,
   Input: TextInput,
-  Image: Image,
+  Image,
 };
 
 export default map;

@@ -4,5 +4,6 @@ export { default as Card } from './Card';
 export { default as Divider } from './Divider';
 export { default as Input } from './Input';
 export { default as Image } from './Image';
+export { default as Modal } from './Modal';
 export { default as Scrollable } from './Scrollable';
 export { default as Text } from './Text';

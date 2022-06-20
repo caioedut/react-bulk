@@ -60,4 +60,4 @@ export default function css(style: any, selector?: string | null) {
     .trim();
 }
 
-const notPx = ['lineHeight', 'opacity', 'order'];
+const notPx = ['lineHeight', 'opacity', 'order', 'zIndex'];

@@ -53,9 +53,7 @@ export default function createText({ label, size, style, ...rest }: InputProps |
 
     web && {
       fontFamily: 'inherit',
-      transitionProperty: 'box-shadow',
-      transitionDuration: '0.2s',
-      transitionTimingFunction: 'ease',
+      transition: 'box-shadow 0.2s ease',
 
       '&:focus': {
         outline: 0,
