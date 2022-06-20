@@ -10,6 +10,9 @@
     ]
   },
   "scripts": {
+    "dev": "concurrently \"npm:dev:*\"",
+    "dev:web": "yarn --cwd C:/Development/react-bulk-web dev",
+    "dev:native": "yarn --cwd C:/Development/react-bulk-native dev",
     "prebuild": "lerna exec --parallel -- rimraf dist typings",
     "build": "lerna exec --parallel -- rollup -c ../../rollup.config.js",
     "prepublishOnly": "yarn build",

@@ -42,7 +42,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
     delete styles[attr];
 
-    if (spacings.includes(attr)) {
+    if (spacings.includes(prop)) {
       prop = attr
         .replace(/^(.)t$/, '$1Top')
         .replace(/^(.)b$/, '$1Bottom')
@@ -63,19 +63,19 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       }
     }
 
-    if (attr === 'h') {
+    if (prop === 'h') {
       prop = 'height';
     }
 
-    if (attr === 'w') {
+    if (prop === 'w') {
       prop = 'width';
     }
 
-    if (attr === 'bg') {
+    if (prop === 'bg') {
       prop = 'backgroundColor';
     }
 
-    if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(attr)) {
+    if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(prop)) {
       prop = null;
 
       if (value) {
@@ -96,21 +96,33 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     }
 
     if (web) {
-      if (attr === 'paddingVertical') {
+      if (prop === 'paddingVertical') {
         prop = null;
         styles.paddingTop = value;
         styles.paddingBottom = value;
       }
 
-      if (attr === 'paddingHorizontal') {
+      if (prop === 'paddingHorizontal') {
         prop = null;
         styles.paddingLeft = value;
         styles.paddingRight = value;
       }
+
+      if (prop === 'marginVertical') {
+        prop = null;
+        styles.marginTop = value;
+        styles.marginBottom = value;
+      }
+
+      if (prop === 'marginHorizontal') {
+        prop = null;
+        styles.marginLeft = value;
+        styles.marginRight = value;
+      }
     }
 
     if (native) {
-      if (attr === 'shadow' || attr === 'boxShadow') {
+      if (prop === 'shadow' || prop === 'boxShadow') {
         prop = null;
 
         const colorIndex = value.search(/(\w+\(|#).+/g);
@@ -134,7 +146,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       }
     }
 
-    if (theme?.colors && (prop || attr).toLowerCase().includes('color')) {
+    if (theme?.colors && `${prop || ''}`.toLowerCase().includes('color')) {
       const colors = Object.keys(theme.colors);
       const [color, variation = 'main'] = `${value || ''}`.split('.');
 

@@ -9,10 +9,10 @@ export default function createDivider({ color, size, opacity, vertical, style, .
   style = [
     {
       backgroundColor: color ?? theme.colors.text.secondary,
-      opacity: opacity ?? 0.4,
+      opacity: opacity ?? 0.25,
     },
 
-    vertical && { width: size ?? 1 },
+    vertical && { width: size ?? 1, height: '100%' },
 
     !vertical && { height: size ?? 1 },
 

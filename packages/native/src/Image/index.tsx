@@ -72,6 +72,7 @@ const Image = forwardRef(({ source, width, height, onLayout, style, ...props }: 
   props = { ...props, width: finalWidth, height: finalHeight, source };
 
   return (
+    // @ts-ignore
     <Box onLayout={handleLayout} style={styleX}>
       {createImage(props, ref, map)}
     </Box>
