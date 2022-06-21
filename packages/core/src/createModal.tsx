@@ -37,9 +37,16 @@ export default function createModal({ visible, align, onBackdropPress, children,
     style,
   ];
 
+  const containerProps: any = {};
+
+  if (native) {
+    containerProps.onStartShouldSetResponder = () => true;
+    containerProps.onTouchEnd = (e) => e.stopPropagation();
+  }
+
   return (
     <Box flexbox center {...rest} ref={ref} style={style} onPress={onBackdropPress}>
-      <Box onPress={native ? () => null : undefined}>{children}</Box>
+      <Box {...containerProps}>{children}</Box>
     </Box>
   );
 }
