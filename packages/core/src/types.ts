@@ -65,6 +65,12 @@ export type CustomStyles = {
   h?: number | string;
   w?: number | string;
 
+  minw?: number | string;
+  maxw?: number | string;
+
+  minh?: number | string;
+  maxh?: number | string;
+
   bg?: string;
   border?: string;
   shadow?: string;
