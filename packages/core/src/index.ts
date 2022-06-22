@@ -13,6 +13,7 @@ export { default as Platform } from './Platform';
 export { default as clone } from './utils/clone';
 export { default as clsx } from './utils/clsx';
 export { default as crypt } from './utils/crypt';
+export { default as sleep } from './utils/sleep';
 export { default as uuid } from './utils/uuid';
 
 // Style
