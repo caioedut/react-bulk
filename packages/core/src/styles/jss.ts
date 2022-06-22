@@ -176,13 +176,5 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     }
   }
 
-  const hasFlex = Object.keys(styles).some((prop) =>
-    ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'justifyItems', 'alignContent', 'alignItems'].includes(prop),
-  );
-
-  if (hasFlex && !styles.display) {
-    styles.display = 'flex';
-  }
-
   return styles;
 }

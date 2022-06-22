@@ -7,6 +7,7 @@ const base = {
   typography: {
     fontSize: 16,
     iconSize: 24,
+    lineHeight: 1.15,
   },
 
   colors: {

@@ -49,6 +49,7 @@ export default function createBox(
     flexbox && {
       display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}`,
       flexDirection: 'row',
+      flexWrap: 'wrap',
     },
 
     direction && { flexDirection: direction },
@@ -82,6 +83,26 @@ export default function createBox(
 
     style,
   ];
+
+  const hasFlex = ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'justifyItems', 'alignContent', 'alignItems'].some((prop) =>
+    get(prop, style),
+  );
+
+  if (hasFlex) {
+    if (!get('display', style)) {
+      style.push({ display: 'flex' });
+    }
+
+    if (!get('flexFlow', style)) {
+      if (!get('flexDirection', style)) {
+        style.push({ flexDirection: 'row' });
+      }
+
+      if (!get('flexWrap', style)) {
+        style.push({ flexWrap: 'wrap' });
+      }
+    }
+  }
 
   // Custom style props
   for (const prop of customStyleProps) {

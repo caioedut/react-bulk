@@ -46,6 +46,7 @@ export default function BaseStyleWeb() {
       flex: 1;
       display: flex;
       flex-direction: column;
+      line-height: 1.15;
     }
 
     ::placeholder {

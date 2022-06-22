@@ -21,7 +21,7 @@ const Modal = forwardRef(({ visible, onBackdropPress, ...props }: ModalProps, re
     <RNModal //
       transparent
       statusBarTranslucent
-      visible={visible}
+      visible={Boolean(visible)}
       animationType="fade"
       presentationStyle="overFullScreen"
     >
