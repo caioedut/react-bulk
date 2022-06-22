@@ -100,14 +100,14 @@ export type BoxProps = Bindings &
     component?: any;
     className?: any;
     children?: React.ReactNode;
-    style?: CSSProperties & CustomStyles;
+    style?: (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
 
     // Flexbox container
     flexbox?: boolean | 'flex' | 'flex-inline';
     direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
-    row: boolean;
-    column: boolean;
-    reverse: boolean;
+    row?: boolean;
+    column?: boolean;
+    reverse?: boolean;
     wrap?: boolean | 'nowrap' | 'wrap' | 'wrap-reverse';
     flow?: string;
     justifyContent?: FlexAlign;
@@ -196,4 +196,8 @@ export type ModalProps = BoxProps & {
   visible?: boolean;
   align?: 'center' | 'top' | 'bottom';
   onBackdropPress?: Function;
+};
+
+export type CollapseProps = BoxProps & {
+  in?: boolean;
 };
