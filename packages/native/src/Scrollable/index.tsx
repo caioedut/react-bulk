@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { RefreshControl, RefreshControlProps, ScrollViewProps } from 'react-native';
+import { RefreshControl, ScrollViewProps } from 'react-native';
 
 import { createScrollable, useTheme } from '@react-bulk/core';
 import { ScrollableProps } from '@react-bulk/core/src/types';
@@ -7,8 +7,8 @@ import { ScrollableProps } from '@react-bulk/core/src/types';
 import map from '../map';
 
 type ScrollablePropsNative = ScrollViewProps &
-  RefreshControlProps &
   ScrollableProps & {
+    onRefresh?: Function;
     refreshing?: boolean;
     refreshControl?: any;
   };

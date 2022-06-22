@@ -21,7 +21,7 @@ export default function createModal({ visible, align, onBackdropPress, children,
     align === 'bottom' && { alignItems: 'flex-end' },
 
     web && {
-      transition: 'opacity 0.2s ease',
+      transition: 'all 0.4s ease',
       opacity: 0,
       visibility: 'hidden',
       zIndex: -1,
