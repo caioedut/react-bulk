@@ -8,7 +8,7 @@ import map from '../map';
 
 type ScrollablePropsNative = ScrollViewProps &
   ScrollableProps & {
-    onRefresh?: Function;
+    onRefresh?: Function | any;
     refreshing?: boolean;
     refreshControl?: any;
   };

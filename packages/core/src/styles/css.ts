@@ -53,11 +53,7 @@ export default function css(style: any, selector?: string | null) {
     }
   }
 
-  return (result || '')
-    .replace(/[\n\r]|\s{2,}/g, '')
-    .replace(/\s?{/g, '{')
-    .replace(/}\s?/g, '} ')
-    .trim();
+  return result || '';
 }
 
 const notPx = ['lineHeight', 'opacity', 'order', 'zIndex'];

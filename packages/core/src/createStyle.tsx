@@ -39,7 +39,11 @@ export default function createStyle({ style, className, global }: createStyle) {
     if (!web) return;
 
     const element = document?.getElementById(hash) || document?.createElement('style');
-    const cssStyle = typeof styleX === 'string' ? styleX : css(styleX, `.${className}`);
+    const cssStyle = (typeof styleX === 'string' ? styleX : css(styleX, `.${className}`))
+      .replace(/[\n\r]|\s{2,}/g, '')
+      .replace(/\s?{/g, '{')
+      .replace(/}\s?/g, '} ')
+      .trim();
 
     if (element.textContent !== cssStyle) {
       element.textContent = cssStyle;
