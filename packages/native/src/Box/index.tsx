@@ -1,14 +1,14 @@
 import { forwardRef } from 'react';
 import { Text, View, ViewProps, useWindowDimensions } from 'react-native';
 
-import { createBox } from '@react-bulk/core';
+import BoxFactory from '@react-bulk/core/src/factory/BoxFactory';
 import { BoxProps } from '@react-bulk/core/src/types';
 
-type BoxPropsNative = ViewProps & BoxProps;
+export type BoxPropsNative = ViewProps & BoxProps;
 
-const Box = forwardRef(({ ...props }: BoxPropsNative, ref) => {
+function Box({ ...props }: BoxPropsNative, ref) {
   const dimensions = useWindowDimensions();
-  return createBox(props, ref, { native: true, Text, dimensions }, View);
-});
+  return <BoxFactory ref={ref} {...props} map={{ native: true, dimensions, Text, View }} />;
+}
 
-export default Box;
+export default forwardRef(Box);

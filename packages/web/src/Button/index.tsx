@@ -1,23 +1,23 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import { createButton } from '@react-bulk/core';
+import ButtonFactory from '@react-bulk/core/src/factory/ButtonFactory';
 import { ButtonProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type ButtonPropsWeb = ComponentPropsWithRef<'button'> &
+export type ButtonPropsWeb = ComponentPropsWithRef<'button'> &
   ButtonProps & {
     type?: 'button' | 'reset' | 'submit';
   };
 
-const Button = forwardRef(({ ...props }: ButtonPropsWeb, ref) => {
+function Button({ ...props }: ButtonPropsWeb, ref) {
   props.style = [props.style];
 
   if (!props.type) {
     props.type = 'button';
   }
 
-  return createButton(props, ref, map);
-});
+  return <ButtonFactory map={map} ref={ref} {...props} />;
+}
 
-export default Button;
+export default forwardRef(Button);

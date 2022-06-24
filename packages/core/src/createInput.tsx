@@ -4,7 +4,7 @@ import get from './props/get';
 import remove from './props/remove';
 import { InputProps } from './types';
 
-export default function createText({ label, size, style, ...rest }: InputProps | any, ref: any, map: any) {
+export default function createInput({ label, size, style, ...rest }: InputProps | any, ref: any, map: any) {
   const theme = useTheme();
 
   const { web, native } = Platform;

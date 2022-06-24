@@ -1,11 +1,11 @@
 import { ComponentPropsWithRef, forwardRef, useEffect, useState } from 'react';
 
-import { createBox } from '@react-bulk/core';
+import BoxFactory from '@react-bulk/core/src/factory/BoxFactory';
 import { BoxProps } from '@react-bulk/core/src/types';
 
 type BoxPropsWeb = ComponentPropsWithRef<'div'> & BoxProps;
 
-const Box = forwardRef(({ ...props }: BoxPropsWeb, ref) => {
+function Box({ ...props }: BoxPropsWeb, ref) {
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
     width: window.innerWidth,
@@ -17,7 +17,7 @@ const Box = forwardRef(({ ...props }: BoxPropsWeb, ref) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return createBox(props, ref, { web: true, Text: 'span', dimensions }, 'div');
-});
+  return <BoxFactory ref={ref} {...props} map={{ web: true, dimensions, Text: 'span', View: 'div' }} />;
+}
 
-export default Box;
+export default forwardRef(Box);

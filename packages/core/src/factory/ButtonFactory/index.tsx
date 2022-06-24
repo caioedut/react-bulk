@@ -1,13 +1,17 @@
-import Platform from './Platform';
-import { useTheme } from './ReactBulk';
-import get from './props/get';
-import { ButtonProps } from './types';
+import React from 'react';
 
-export default function createButton({ variant, size, block, loading, style, children, ...rest }: ButtonProps | any, ref: any, map: any) {
+import Platform from '../../Platform';
+import { useTheme } from '../../ReactBulk';
+import get from '../../props/get';
+import { ButtonProps } from '../../types';
+import BoxFactory from '../BoxFactory';
+import TextFactory from '../TextFactory';
+
+function ButtonFactory({ variant, size, block, loading, style, children, map, ...rest }: ButtonProps | any, ref) {
   const theme = useTheme();
 
   const { web } = Platform;
-  const { Box, Text, Button } = map;
+  const { Button } = map;
 
   const { disabled } = rest;
 
@@ -99,17 +103,18 @@ export default function createButton({ variant, size, block, loading, style, chi
 
   if (typeof children === 'string') {
     children = (
-      <Box component={Text} style={[textStyleX, loading && { opacity: 0 }]}>
+      <TextFactory map={map} style={[textStyleX, loading && { opacity: 0 }]}>
         {children}
-      </Box>
+      </TextFactory>
     );
   }
 
   return (
-    <Box ref={ref} component={Button} {...rest} style={styleX}>
+    <BoxFactory map={map} ref={ref} component={Button} {...rest} style={styleX}>
       {children}
       {loading && (
-        <Box
+        <BoxFactory
+          map={map}
           style={{
             position: 'absolute',
             top: 0,
@@ -122,9 +127,13 @@ export default function createButton({ variant, size, block, loading, style, chi
             bg: theme.hex2rgba(theme.colors.background.primary, 0.1),
           }}
         >
-          <Text style={textStyleX}>...</Text>
-        </Box>
+          <TextFactory map={map} style={textStyleX}>
+            ...
+          </TextFactory>
+        </BoxFactory>
       )}
-    </Box>
+    </BoxFactory>
   );
 }
+
+export default React.forwardRef(ButtonFactory);

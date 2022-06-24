@@ -1,5 +1,9 @@
 import { CSSProperties } from 'react';
 
+export type FactoryProps = {
+  map?: any;
+};
+
 export type Bindings = {
   onPress?: Function;
   onPressIn?: Function;

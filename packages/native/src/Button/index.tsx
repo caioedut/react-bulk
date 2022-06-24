@@ -1,15 +1,15 @@
 import { forwardRef } from 'react';
 import { TouchableOpacityProps } from 'react-native';
 
-import { createButton } from '@react-bulk/core';
+import ButtonFactory from '@react-bulk/core/src/factory/ButtonFactory';
 import { ButtonProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type ButtonPropsNative = TouchableOpacityProps & ButtonProps;
+export type ButtonPropsNative = TouchableOpacityProps & ButtonProps;
 
-const Button = forwardRef(({ ...props }: ButtonPropsNative, ref) => {
-  return createButton(props, ref, map);
-});
+function Button({ ...props }: ButtonPropsNative, ref) {
+  return <ButtonFactory map={map} ref={ref} {...props} />;
+}
 
-export default Button;
+export default forwardRef(Button);

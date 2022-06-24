@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { useTheme } from './ReactBulk';
-import createStyle from './createStyle';
-import bindings from './props/bindings';
-import get from './props/get';
-import { customStyleProps } from './styles/jss';
-import { BoxProps } from './types';
-import clsx from './utils/clsx';
+import { useTheme } from '../../ReactBulk';
+import createStyle from '../../createStyle';
+import bindings from '../../props/bindings';
+import get from '../../props/get';
+import { customStyleProps } from '../../styles/jss';
+import { BoxProps } from '../../types';
+import clsx from '../../utils/clsx';
 
-export default function createBox(
+function BoxFactory(
   {
     component,
     className,
@@ -34,15 +34,14 @@ export default function createBox(
     justify,
     style,
     children,
+    map,
     ...props
   }: BoxProps | any,
-  ref: any,
-  map: any,
-  defaultComponent: any = null,
+  ref,
 ) {
   const theme = useTheme();
 
-  const { web, native, dimensions, Text } = map;
+  const { web, native, dimensions, View, Text } = map;
 
   style = [
     // Flex Container
@@ -142,7 +141,7 @@ export default function createBox(
 
   props = bindings(props);
 
-  const Component = component || defaultComponent;
+  const Component = component || View;
   const buildGap = native && gap && Array.isArray(children) && children?.length;
 
   if ([undefined, null, false, NaN].includes(children)) {
@@ -154,21 +153,20 @@ export default function createBox(
   }
 
   return (
-    <Component {...props} ref={ref}>
+    <Component ref={ref} {...props}>
       {!buildGap
         ? children
         : children.filter(Boolean).map((child: any, key: number) => (
             <React.Fragment key={key}>
-              {key > 0 &&
-                createBox(
-                  { style: { width: theme.spacing(Number(gap)), height: theme.spacing(Number(gap)) } },
-                  null,
-                  map,
-                  defaultComponent,
-                )}
-              {child}
+              {key > 0 && (
+                <BoxFactory map={map} style={{ width: theme.spacing(Number(gap)), height: theme.spacing(Number(gap)) }}>
+                  {child}
+                </BoxFactory>
+              )}
             </React.Fragment>
           ))}
     </Component>
   );
 }
+
+export default React.forwardRef(BoxFactory);

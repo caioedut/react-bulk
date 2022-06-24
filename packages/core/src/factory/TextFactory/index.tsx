@@ -1,16 +1,33 @@
-import Platform from './Platform';
-import { useTheme } from './ReactBulk';
-import { TextProps } from './types';
+import React from 'react';
 
-export default function createText(
-  { variant, size, color, center, bold, italic, oblique, smallCaps, invisible, transform, numberOfLines, style, ...rest }: TextProps | any,
-  ref: any,
-  map: any,
+import Platform from '../../Platform';
+import { useTheme } from '../../ReactBulk';
+import { TextProps } from '../../types';
+import BoxFactory from '../BoxFactory';
+
+function TextFactory(
+  {
+    variant,
+    size,
+    color,
+    center,
+    bold,
+    italic,
+    oblique,
+    smallCaps,
+    invisible,
+    transform,
+    numberOfLines,
+    style,
+    map,
+    ...rest
+  }: TextProps | any,
+  ref,
 ) {
   const theme = useTheme();
 
   const { web, native } = Platform;
-  const { Box, Text } = map;
+  const { Text } = map;
 
   const styleX = [
     {
@@ -52,10 +69,11 @@ export default function createText(
     style,
   ];
 
-  const props: any = {};
   if (native && numberOfLines) {
-    props.numberOfLines = numberOfLines;
+    rest.numberOfLines = numberOfLines;
   }
 
-  return <Box ref={ref} component={Text} {...rest} style={styleX} {...props} />;
+  return <BoxFactory map={map} component={Text} {...rest} ref={ref} style={styleX} />;
 }
+
+export default React.forwardRef(TextFactory);

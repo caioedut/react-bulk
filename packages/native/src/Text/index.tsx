@@ -1,15 +1,15 @@
 import { forwardRef } from 'react';
 import { TextProps as RNTextProps } from 'react-native';
 
-import { createText } from '@react-bulk/core';
+import TextFactory from '@react-bulk/core/src/factory/TextFactory';
 import { TextProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type TextPropsNative = RNTextProps & TextProps;
+export type TextPropsNative = RNTextProps & TextProps;
 
-const Text = forwardRef(({ ...props }: TextPropsNative, ref) => {
-  return createText(props, ref, map);
-});
+function Text({ ...props }: TextPropsNative, ref) {
+  return <TextFactory ref={ref} {...props} map={map} />;
+}
 
-export default Text;
+export default forwardRef(Text);
