@@ -1,21 +1,21 @@
 import { forwardRef } from 'react';
 import { ViewProps } from 'react-native';
 
-import { createCard } from '@react-bulk/core';
+import CardFactory from '@react-bulk/core/src/factory/CardFactory';
 import { CardProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type CardPropsNative = ViewProps & CardProps;
+export type CardPropsNative = ViewProps & CardProps;
 
-const Card = forwardRef(({ ...props }: CardPropsNative, ref) => {
+function Card({ ...props }: CardPropsNative, ref) {
   const { Button } = map;
 
   if (!props.component && (props.onPress || props.onClick)) {
     props.component = Button;
   }
 
-  return createCard(props, ref, map);
-});
+  return <CardFactory ref={ref} {...props} map={map} />;
+}
 
-export default Card;
+export default forwardRef(Card);

@@ -9,7 +9,7 @@ import map from '../map';
 export type ButtonPropsNative = TouchableOpacityProps & ButtonProps;
 
 function Button({ ...props }: ButtonPropsNative, ref) {
-  return <ButtonFactory map={map} ref={ref} {...props} />;
+  return <ButtonFactory ref={ref} {...props} map={map} />;
 }
 
 export default forwardRef(Button);

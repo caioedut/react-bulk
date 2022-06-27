@@ -1,15 +1,15 @@
 import { forwardRef } from 'react';
 import { ViewProps } from 'react-native';
 
-import { createDivider } from '@react-bulk/core';
+import DividerFactory from '@react-bulk/core/src/factory/DividerFactory';
 import { DividerProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type DividerPropsWeb = ViewProps & DividerProps;
+export type DividerPropsWeb = ViewProps & DividerProps;
 
-const Divider = forwardRef(({ ...props }: DividerPropsWeb, ref) => {
-  return createDivider(props, ref, map);
-});
+function Divider({ ...props }: DividerPropsWeb, ref) {
+  return <DividerFactory ref={ref} {...props} map={map} />;
+}
 
-export default Divider;
+export default forwardRef(Divider);
