@@ -1,11 +1,11 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import { createInput } from '@react-bulk/core';
+import InputFactory from '@react-bulk/core/src/factory/InputFactory';
 import { InputProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type InputPropsWeb = ComponentPropsWithRef<'input'> &
+export type InputPropsWeb = ComponentPropsWithRef<'input'> &
   InputProps & {
     type?:
       | 'color'
@@ -27,7 +27,7 @@ type InputPropsWeb = ComponentPropsWithRef<'input'> &
       | 'url';
   };
 
-const Input = forwardRef(({ ...props }: InputPropsWeb, ref) => {
+function Input({ ...props }: InputPropsWeb, ref) {
   if (!props.type) {
     props.type = 'text';
   }
@@ -37,7 +37,7 @@ const Input = forwardRef(({ ...props }: InputPropsWeb, ref) => {
     props.type = 'password';
   }
 
-  return createInput(props, ref, map);
-});
+  return <InputFactory ref={ref} {...props} map={map} />;
+}
 
-export default Input;
+export default forwardRef(Input);

@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 
 export type FactoryProps = {
-  map?: any;
+  map: any;
 };
 
 export type Bindings = {

@@ -1,14 +1,14 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import { createScrollable } from '@react-bulk/core';
+import ScrollableFactory from '@react-bulk/core/src/factory/ScrollableFactory';
 import { ScrollableProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type ScrollablePropsWeb = ComponentPropsWithRef<'div'> & ScrollableProps;
+export type ScrollablePropsWeb = ComponentPropsWithRef<'div'> & ScrollableProps;
 
-const Scrollable = forwardRef(({ ...props }: ScrollablePropsWeb, ref) => {
-  return createScrollable(props, ref, map);
-});
+function Scrollable({ ...props }: ScrollablePropsWeb, ref) {
+  return <ScrollableFactory ref={ref} {...props} map={map} />;
+}
 
-export default Scrollable;
+export default forwardRef(Scrollable);

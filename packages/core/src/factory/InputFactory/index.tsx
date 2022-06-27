@@ -1,14 +1,18 @@
-import Platform from './Platform';
-import { useTheme } from './ReactBulk';
-import get from './props/get';
-import remove from './props/remove';
-import { InputProps } from './types';
+import React from 'react';
 
-export default function createInput({ label, size, style, ...rest }: InputProps | any, ref: any, map: any) {
+import Platform from '../../Platform';
+import { useTheme } from '../../ReactBulk';
+import get from '../../props/get';
+import remove from '../../props/remove';
+import { InputProps } from '../../types';
+import BoxFactory from '../BoxFactory';
+import TextFactory from '../TextFactory';
+
+function InputFactory({ label, size, style, map, ...rest }: InputProps | any, ref: any) {
   const theme = useTheme();
 
   const { web, native } = Platform;
-  const { Box, Text, Input, ios } = map;
+  const { Input, ios } = map;
   const { disabled } = rest;
 
   style = [
@@ -82,8 +86,10 @@ export default function createInput({ label, size, style, ...rest }: InputProps 
 
   return (
     <>
-      {Boolean(label) && <Text>{label}</Text>}
-      <Box ref={ref} component={Input} {...rest} style={style} />
+      {Boolean(label) && <TextFactory map={map}>{label}</TextFactory>}
+      <BoxFactory map={map} ref={ref} component={Input} {...rest} style={style} />
     </>
   );
 }
+
+export default React.forwardRef(InputFactory);

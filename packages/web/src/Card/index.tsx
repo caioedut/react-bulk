@@ -1,14 +1,14 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import { createCard } from '@react-bulk/core';
+import CardFactory from '@react-bulk/core/src/factory/CardFactory';
 import { CardProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type CardPropsWeb = ComponentPropsWithRef<'div'> & CardProps;
+export type CardPropsWeb = ComponentPropsWithRef<'div'> & CardProps;
 
-const Card = forwardRef(({ ...props }: CardPropsWeb, ref) => {
-  return createCard(props, ref, map);
-});
+function Card({ ...props }: CardPropsWeb, ref) {
+  return <CardFactory ref={ref} {...props} map={map} />;
+}
 
-export default Card;
+export default forwardRef(Card);

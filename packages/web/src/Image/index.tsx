@@ -1,17 +1,17 @@
 import { ComponentPropsWithRef, forwardRef, useMemo } from 'react';
 
-import { createImage } from '@react-bulk/core';
+import ImageFactory from '@react-bulk/core/src/factory/ImageFactory';
 import { ImageProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type ImagePropsWeb = ComponentPropsWithRef<'img'> & ImageProps;
+export type ImagePropsWeb = ComponentPropsWithRef<'img'> & ImageProps;
 
-const Image = forwardRef(({ source, ...props }: ImagePropsWeb, ref) => {
+function Image({ source, ...props }: ImagePropsWeb, ref) {
   // @ts-ignore
   props.src = useMemo(() => source?.uri ?? source, [source]);
 
-  return createImage(props, ref, map);
-});
+  return <ImageFactory ref={ref} {...props} map={map} />;
+}
 
-export default Image;
+export default forwardRef(Image);

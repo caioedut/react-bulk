@@ -1,11 +1,14 @@
 import { forwardRef } from 'react';
-import { Modal as RNModal, TouchableOpacity } from 'react-native';
+import { Modal as RNModal, TouchableOpacity, ViewProps } from 'react-native';
 
-import { ModalProps, createModal } from '@react-bulk/core';
+import { ModalProps } from '@react-bulk/core';
+import ModalFactory from '@react-bulk/core/src/factory/ModalFactory';
 
 import map from '../map';
 
-const Modal = forwardRef(({ visible, onBackdropPress, ...props }: ModalProps, ref) => {
+export type ModalPropsNative = ViewProps & ModalProps;
+
+function Modal({ visible, onBackdropPress, ...props }: ModalPropsNative, ref) {
   if (onBackdropPress) {
     // @ts-ignore
     props.onBackdropPress = onBackdropPress;
@@ -25,9 +28,9 @@ const Modal = forwardRef(({ visible, onBackdropPress, ...props }: ModalProps, re
       animationType="fade"
       presentationStyle="overFullScreen"
     >
-      {createModal(props, ref, map)}
+      <ModalFactory ref={ref} {...props} map={map} />
     </RNModal>
   );
-});
+}
 
-export default Modal;
+export default forwardRef(Modal);

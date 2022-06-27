@@ -1,9 +1,11 @@
-import Platform from './Platform';
-import { ModalProps } from './types';
+import React from 'react';
 
-export default function createModal({ visible, align, onBackdropPress, children, style, ...rest }: ModalProps | any, ref: any, map: any) {
+import Platform from '../../Platform';
+import { ModalProps } from '../../types';
+import BoxFactory from '../BoxFactory';
+
+function ModalFactory({ visible, align, onBackdropPress, children, style, map, ...rest }: ModalProps | any, ref: any) {
   const { web, native } = Platform;
-  const { Box } = map;
 
   style = [
     {
@@ -45,8 +47,12 @@ export default function createModal({ visible, align, onBackdropPress, children,
   }
 
   return (
-    <Box flexbox center {...rest} ref={ref} style={style} onPress={onBackdropPress}>
-      <Box {...containerProps}>{children}</Box>
-    </Box>
+    <BoxFactory map={map} ref={ref} flexbox center {...rest} style={style} onPress={onBackdropPress}>
+      <BoxFactory map={map} {...containerProps}>
+        {children}
+      </BoxFactory>
+    </BoxFactory>
   );
 }
+
+export default React.forwardRef(ModalFactory);

@@ -1,16 +1,15 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { Image as RNImage, ImageProps as RNImageProps } from 'react-native';
 
-import { createImage } from '@react-bulk/core';
+import BoxFactory from '@react-bulk/core/src/factory/BoxFactory';
+import ImageFactory from '@react-bulk/core/src/factory/ImageFactory';
 import { ImageProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type ImagePropsNative = RNImageProps & ImageProps;
+export type ImagePropsNative = RNImageProps & ImageProps;
 
-const Image = forwardRef(({ source, width, height, onLayout, style, ...props }: ImagePropsNative, ref) => {
-  const { Box } = map;
-
+function Image({ source, width, height, onLayout, style, ...props }: ImagePropsNative, ref) {
   const [imgWidth, setImgWidth] = useState<number | null>(null);
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
 
@@ -73,10 +72,10 @@ const Image = forwardRef(({ source, width, height, onLayout, style, ...props }: 
 
   return (
     // @ts-ignore
-    <Box onLayout={handleLayout} style={styleX}>
-      {createImage(props, ref, map)}
-    </Box>
+    <BoxFactory onLayout={handleLayout} style={styleX} map={map}>
+      <ImageFactory ref={ref} {...props} map={map} />
+    </BoxFactory>
   );
-});
+}
 
-export default Image;
+export default forwardRef(Image);

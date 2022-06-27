@@ -17,7 +17,7 @@ function Button({ ...props }: ButtonPropsWeb, ref) {
     props.type = 'button';
   }
 
-  return <ButtonFactory map={map} ref={ref} {...props} />;
+  return <ButtonFactory ref={ref} {...props} map={map} />;
 }
 
 export default forwardRef(Button);

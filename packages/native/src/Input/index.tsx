@@ -1,14 +1,15 @@
 import { forwardRef } from 'react';
 import { TextInputProps } from 'react-native';
 
-import { createInput, useTheme } from '@react-bulk/core';
+import { useTheme } from '@react-bulk/core';
+import InputFactory from '@react-bulk/core/src/factory/InputFactory';
 import { InputProps } from '@react-bulk/core/src/types';
 
 import map from '../map';
 
-type InputPropsNative = TextInputProps & InputProps;
+export type InputPropsNative = TextInputProps & InputProps;
 
-const Input = forwardRef(({ ...props }: InputPropsNative, ref) => {
+function Input({ ...props }: InputPropsNative, ref) {
   const theme = useTheme();
 
   props = {
@@ -34,7 +35,7 @@ const Input = forwardRef(({ ...props }: InputPropsNative, ref) => {
     props.editable = !props.disabled;
   }
 
-  return createInput(props, ref, map);
-});
+  return <InputFactory ref={ref} {...props} map={map} />;
+}
 
-export default Input;
+export default forwardRef(Input);

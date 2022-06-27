@@ -3,7 +3,7 @@ import { ComponentPropsWithRef, forwardRef, useEffect, useState } from 'react';
 import BoxFactory from '@react-bulk/core/src/factory/BoxFactory';
 import { BoxProps } from '@react-bulk/core/src/types';
 
-type BoxPropsWeb = ComponentPropsWithRef<'div'> & BoxProps;
+export type BoxPropsWeb = ComponentPropsWithRef<'div'> & BoxProps;
 
 function Box({ ...props }: BoxPropsWeb, ref) {
   const [dimensions, setDimensions] = useState({

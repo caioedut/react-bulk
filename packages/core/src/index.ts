@@ -20,17 +20,10 @@ export { default as uuid } from './utils/uuid';
 export { default as jss } from './styles/jss';
 export { default as css } from './styles/css';
 
-// Factory
+// Builder
 export { default as createTheme } from './createTheme';
 export { default as createStyle } from './createStyle';
 export { default as createMeta } from './createMeta';
-export { default as createCard } from './createCard';
-export { default as createCollapse } from './createCollapse';
-export { default as createDivider } from './createDivider';
-export { default as createInput } from './createInput';
-export { default as createImage } from './createImage';
-export { default as createModal } from './createModal';
-export { default as createScrollable } from './createScrollable';
 
 // Base
 export { default as BaseStyleWeb } from './BaseStyleWeb';

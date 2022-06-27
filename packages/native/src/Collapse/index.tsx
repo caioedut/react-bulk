@@ -1,11 +1,14 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import { Animated } from 'react-native';
+import { Animated, ViewProps } from 'react-native';
 
-import { CollapseProps, createCollapse, sleep } from '@react-bulk/core';
+import { CollapseProps, sleep } from '@react-bulk/core';
+import CollapseFactory from '@react-bulk/core/src/factory/CollapseFactory';
 
 import map from '../map';
 
-const Collapse = forwardRef(({ in: shown, ...props }: CollapseProps, ref) => {
+export type CollapsePropsNative = ViewProps & CollapseProps;
+
+function Collapse({ in: shown, ...props }: CollapsePropsNative, ref) {
   const readyRef = useRef(false);
   const containerRef = useRef<any>(null);
   const heightAnim = useRef(new Animated.Value(0)).current;
@@ -55,9 +58,9 @@ const Collapse = forwardRef(({ in: shown, ...props }: CollapseProps, ref) => {
 
   return (
     <Animated.View ref={containerRef} style={animate ? { height: heightAnim } : {}}>
-      {createCollapse(props, ref, map)}
+      <CollapseFactory ref={ref} {...props} map={map} />
     </Animated.View>
   );
-});
+}
 
-export default Collapse;
+export default forwardRef(Collapse);
