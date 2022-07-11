@@ -211,3 +211,7 @@ export type ModalProps = BoxProps & {
 export type CollapseProps = BoxProps & {
   in?: boolean;
 };
+
+export type DropdownProps = BoxProps & {
+  visible?: boolean;
+};

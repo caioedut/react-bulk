@@ -67,7 +67,12 @@ const base = {
     return `rgba(${r || 0},${g || 0},${b || 0},${alpha})`;
   },
 
-  mixins: {},
+  mixins: {
+    zIndex: {
+      modal: 900,
+      dropdown: 901,
+    },
+  },
 
   breakpoints: {
     xs: 0,

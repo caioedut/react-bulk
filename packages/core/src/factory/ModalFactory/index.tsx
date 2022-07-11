@@ -1,11 +1,14 @@
 import React from 'react';
 
+import { useTheme } from '@react-bulk/core';
+
 import Platform from '../../Platform';
 import { ModalProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
 function ModalFactory({ visible, align, onBackdropPress, children, style, map, ...rest }: ModalProps | any, ref: any) {
   const { web, native } = Platform;
+  const theme = useTheme();
 
   style = [
     {
@@ -33,7 +36,7 @@ function ModalFactory({ visible, align, onBackdropPress, children, style, map, .
       visible && {
         opacity: 1,
         visibility: 'visible',
-        zIndex: 900,
+        zIndex: theme.mixins.zIndex.modal,
       },
 
     style,
