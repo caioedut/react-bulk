@@ -1,7 +1,6 @@
 import { ComponentPropsWithRef, forwardRef, useRef } from 'react';
 
-import { ModalProps } from '@react-bulk/core';
-import ModalFactory from '@react-bulk/core/src/factory/ModalFactory';
+import { ModalFactory, ModalProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 

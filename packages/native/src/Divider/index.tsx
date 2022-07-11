@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { ViewProps } from 'react-native';
 
-import DividerFactory from '@react-bulk/core/src/factory/DividerFactory';
+import { DividerFactory } from '@react-bulk/core';
 import { DividerProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';

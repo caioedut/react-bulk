@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import SelectFactory from '@react-bulk/core/src/factory/SelectFactory';
+import { SelectFactory } from '@react-bulk/core';
 import { SelectProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';

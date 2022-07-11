@@ -1,8 +1,6 @@
 import { ComponentPropsWithRef, forwardRef, useEffect, useRef, useState } from 'react';
 
-import { CollapseProps } from '@react-bulk/core';
-import BoxFactory from '@react-bulk/core/src/factory/BoxFactory';
-import CollapseFactory from '@react-bulk/core/src/factory/CollapseFactory';
+import { BoxFactory, CollapseFactory, CollapseProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 

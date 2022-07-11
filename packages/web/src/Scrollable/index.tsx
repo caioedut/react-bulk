@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import ScrollableFactory from '@react-bulk/core/src/factory/ScrollableFactory';
+import { ScrollableFactory } from '@react-bulk/core';
 import { ScrollableProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';
