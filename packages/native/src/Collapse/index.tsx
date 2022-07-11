@@ -4,11 +4,13 @@ import { Animated, ViewProps } from 'react-native';
 import { CollapseProps, sleep } from '@react-bulk/core';
 import CollapseFactory from '@react-bulk/core/src/factory/CollapseFactory';
 
-import map from '../map';
+import useMap from '../useMap';
 
 export type CollapsePropsNative = ViewProps & CollapseProps;
 
 function Collapse({ in: shown, ...props }: CollapsePropsNative, ref) {
+  const map = useMap();
+
   const readyRef = useRef(false);
   const containerRef = useRef<any>(null);
   const heightAnim = useRef(new Animated.Value(0)).current;

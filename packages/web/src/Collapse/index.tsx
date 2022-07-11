@@ -1,14 +1,15 @@
 import { ComponentPropsWithRef, forwardRef, useEffect, useRef, useState } from 'react';
 
 import { CollapseProps } from '@react-bulk/core';
+import BoxFactory from '@react-bulk/core/src/factory/BoxFactory';
 import CollapseFactory from '@react-bulk/core/src/factory/CollapseFactory';
 
-import map from '../map';
+import useMap from '../useMap';
 
 export type CollapsePropsWeb = ComponentPropsWithRef<'div'> & CollapseProps;
 
 function Collapse({ in: shown, ...props }: CollapsePropsWeb, ref) {
-  const { Box } = map;
+  const map = useMap();
 
   const readyRef = useRef(false);
   const containerRef = useRef<HTMLElement>(null);
@@ -72,9 +73,9 @@ function Collapse({ in: shown, ...props }: CollapsePropsWeb, ref) {
   ];
 
   return (
-    <Box ref={containerRef} style={constainerStyle}>
+    <BoxFactory ref={containerRef} style={constainerStyle} map={map}>
       <CollapseFactory ref={ref} {...props} map={map} />
-    </Box>
+    </BoxFactory>
   );
 }
 

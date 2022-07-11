@@ -4,11 +4,12 @@ import { Modal as RNModal, TouchableOpacity, ViewProps } from 'react-native';
 import { ModalProps } from '@react-bulk/core';
 import ModalFactory from '@react-bulk/core/src/factory/ModalFactory';
 
-import map from '../map';
+import useMap from '../useMap';
 
 export type ModalPropsNative = ViewProps & ModalProps;
 
 function Modal({ visible, onBackdropPress, ...props }: ModalPropsNative, ref) {
+  const map = useMap();
   if (onBackdropPress) {
     // @ts-ignore
     props.onBackdropPress = onBackdropPress;

@@ -3,7 +3,7 @@ import { ComponentPropsWithRef, forwardRef } from 'react';
 import ButtonFactory from '@react-bulk/core/src/factory/ButtonFactory';
 import { ButtonProps } from '@react-bulk/core/src/types';
 
-import map from '../map';
+import useMap from '../useMap';
 
 export type ButtonPropsWeb = ComponentPropsWithRef<'button'> &
   ButtonProps & {
@@ -11,6 +11,8 @@ export type ButtonPropsWeb = ComponentPropsWithRef<'button'> &
   };
 
 function Button({ ...props }: ButtonPropsWeb, ref) {
+  const map = useMap();
+
   props.style = [props.style];
 
   if (!props.type) {

@@ -3,7 +3,7 @@ import { ComponentPropsWithRef, forwardRef } from 'react';
 import InputFactory from '@react-bulk/core/src/factory/InputFactory';
 import { InputProps } from '@react-bulk/core/src/types';
 
-import map from '../map';
+import useMap from '../useMap';
 
 export type InputPropsWeb = ComponentPropsWithRef<'input'> &
   InputProps & {
@@ -28,6 +28,8 @@ export type InputPropsWeb = ComponentPropsWithRef<'input'> &
   };
 
 function Input({ ...props }: InputPropsWeb, ref) {
+  const map = useMap();
+
   if (!props.type) {
     props.type = 'text';
   }
