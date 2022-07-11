@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
-import { ImageProps } from '../../../typings';
 import Platform from '../../Platform';
+import { ImageProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
 function ImageFactory({ width, height, mode = 'cover', style, map, ...rest }: ImageProps | any, ref: any) {

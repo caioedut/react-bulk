@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { ViewProps } from 'react-native';
 
-import DropdownFactory from '@react-bulk/core/src/factory/DropdownFactory';
+import { DropdownFactory } from '@react-bulk/core';
 import { DropdownProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';

@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef, forwardRef, useMemo } from 'react';
 
-import ImageFactory from '@react-bulk/core/src/factory/ImageFactory';
+import { ImageFactory } from '@react-bulk/core';
 import { ImageProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';

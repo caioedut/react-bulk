@@ -1,8 +1,7 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { Image as RNImage, ImageProps as RNImageProps } from 'react-native';
 
-import BoxFactory from '@react-bulk/core/src/factory/BoxFactory';
-import ImageFactory from '@react-bulk/core/src/factory/ImageFactory';
+import { BoxFactory, ImageFactory } from '@react-bulk/core';
 import { ImageProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';

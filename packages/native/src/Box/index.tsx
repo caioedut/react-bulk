@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { ViewProps } from 'react-native';
 
-import BoxFactory from '@react-bulk/core/src/factory/BoxFactory';
+import { BoxFactory } from '@react-bulk/core';
 import { BoxProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';

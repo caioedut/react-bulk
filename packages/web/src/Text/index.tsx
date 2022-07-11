@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import TextFactory from '@react-bulk/core/src/factory/TextFactory';
+import { TextFactory } from '@react-bulk/core';
 import { TextProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';

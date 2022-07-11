@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import { Animated, ViewProps } from 'react-native';
 
 import { CollapseProps, sleep } from '@react-bulk/core';
-import CollapseFactory from '@react-bulk/core/src/factory/CollapseFactory';
+import CollapseFactory from '@react-bulk/core';
 
 import useMap from '../useMap';
 

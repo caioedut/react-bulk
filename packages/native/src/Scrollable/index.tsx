@@ -1,8 +1,7 @@
 import { forwardRef } from 'react';
 import { RefreshControl, ScrollViewProps } from 'react-native';
 
-import { useTheme } from '@react-bulk/core';
-import ScrollableFactory from '@react-bulk/core/src/factory/ScrollableFactory';
+import { ScrollableFactory, useTheme } from '@react-bulk/core';
 import { ScrollableProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';
