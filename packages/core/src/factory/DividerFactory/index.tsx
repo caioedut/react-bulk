@@ -1,7 +1,8 @@
 import React from 'react';
 
+import { useTheme } from '@react-bulk/core';
+
 import { DividerProps } from '../../../typings';
-import { useTheme } from '../../ReactBulk';
 import BoxFactory from '../BoxFactory';
 
 function DividerFactory({ color, size, opacity, vertical, style, map, ...rest }: DividerProps | any, ref: any) {

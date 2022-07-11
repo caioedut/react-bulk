@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import { useTheme } from '@react-bulk/core';
+
 import { CardProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
