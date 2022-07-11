@@ -136,11 +136,15 @@ export type TextProps = BoxProps & {
   size?: number;
   color?: string;
   center?: boolean;
+  left?: boolean;
+  right?: boolean;
+  justify?: boolean;
   bold?: boolean;
   italic?: boolean;
   oblique?: boolean;
   smallCaps?: boolean;
   invisible?: boolean;
+  weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
   transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
 
   numberOfLines?: number;
