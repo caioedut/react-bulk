@@ -43,7 +43,7 @@ function BoxFactory(
 ) {
   const theme = useTheme();
 
-  const { web, native, dimensions, View } = map;
+  const { web, native, dimensions, Text, View } = map;
 
   style = [
     // Flex Container
@@ -151,7 +151,7 @@ function BoxFactory(
   }
 
   if (native && typeof children === 'string') {
-    children = <TextFactory map={map}>{children}</TextFactory>;
+    children = <Text>{children}</Text>;
   }
 
   return (
