@@ -25,7 +25,6 @@ function BoxFactory(
     justifyItems,
     alignItems,
     center,
-    gap,
     flex,
     order,
     grow,
@@ -42,7 +41,7 @@ function BoxFactory(
 ) {
   const theme = useTheme();
 
-  const { web, native, dimensions, Text, View } = map;
+  const { native, dimensions, Text, View } = map;
 
   style = [
     // Flex Container
@@ -69,8 +68,6 @@ function BoxFactory(
     justifyItems && { alignItems },
     alignContent && { alignContent },
     alignItems && { alignItems },
-
-    web && gap && { gap: theme.spacing(Number(gap)) },
 
     // Flex Item
     flex && { flex: 1 },
@@ -143,7 +140,6 @@ function BoxFactory(
   props = bindings(props);
 
   const Component = component || View;
-  const buildGap = native && gap && Array.isArray(children) && children?.length;
 
   if ([undefined, null, false, NaN].includes(children)) {
     children = null;
@@ -155,17 +151,7 @@ function BoxFactory(
 
   return (
     <Component ref={ref} {...props}>
-      {!buildGap
-        ? children
-        : children.filter(Boolean).map((child: any, key: number) => (
-            <React.Fragment key={key}>
-              {key > 0 && (
-                <BoxFactory map={map} style={{ width: theme.spacing(Number(gap)), height: theme.spacing(Number(gap)) }}>
-                  {child}
-                </BoxFactory>
-              )}
-            </React.Fragment>
-          ))}
+      {children}
     </Component>
   );
 }

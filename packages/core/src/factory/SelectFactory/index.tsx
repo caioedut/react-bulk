@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Platform from '../../Platform';
 import { spacings } from '../../styles/jss';
 import { SelectProps } from '../../types';
 import BoxFactory from '../BoxFactory';
@@ -12,6 +13,8 @@ function SelectFactory(
   { options, placeholder, label, name, value, onChange, style, containerStyle, map, ...rest }: SelectProps | any,
   ref: any,
 ) {
+  const { web } = Platform;
+
   const [visible, setVisible] = useState(false);
   const selected = options.find((option) => option.value == value);
 
@@ -47,6 +50,7 @@ function SelectFactory(
         </TextFactory>
       )}
       <ButtonFactory
+        ref={web ? null : ref}
         map={map}
         {...rest}
         block
@@ -63,7 +67,7 @@ function SelectFactory(
           {visible ? '▲' : '▼'}
         </TextFactory>
       </ButtonFactory>
-      <InputFactory map={map} ref={ref} type="hidden" name={name} value={value ?? ''} onChange={handleChange} />
+      {web && <InputFactory map={map} ref={ref} type="hidden" name={name} value={value ?? ''} onChange={handleChange} />}
       <DropdownFactory map={map} visible={visible} p={1} mt={0.5} w="100%">
         {options?.map((option) => (
           <ButtonFactory
