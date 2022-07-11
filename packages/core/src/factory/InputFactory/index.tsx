@@ -41,23 +41,19 @@ function InputFactory({ label, size, style, containerStyle, map, ...rest }: Inpu
       borderColor: theme.colors.primary.main,
       borderRadius: theme.shape.borderRadius,
 
-      paddingVertical: theme.rem(0.5),
-      paddingHorizontal: theme.rem(0.6),
-
       margin: 0,
+      padding: theme.rem(0.5),
       width: '100%',
     },
 
     size === 'small' && {
       fontSize: theme.rem(0.875),
-      paddingVertical: theme.rem(0.5, theme.rem(0.875)),
-      paddingHorizontal: theme.rem(0.6, theme.rem(0.875)),
+      padding: theme.rem(0.5, theme.rem(0.875)),
     },
 
     size === 'large' && {
       fontSize: theme.rem(1.25),
-      paddingVertical: theme.rem(0.5, theme.rem(1.25)),
-      paddingHorizontal: theme.rem(0.6, theme.rem(1.25)),
+      padding: theme.rem(0.5, theme.rem(1.25)),
     },
 
     disabled && {

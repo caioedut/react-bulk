@@ -39,10 +39,7 @@ function ButtonFactory({ variant, size, block, loading, style, children, map, ..
       borderRadius: theme.shape.borderRadius,
 
       margin: 0,
-      paddingTop: theme.rem(0.5),
-      paddingBottom: theme.rem(0.5),
-      paddingLeft: theme.rem(1),
-      paddingRight: theme.rem(1),
+      padding: theme.rem(0.5),
 
       '&:hover': { backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.9) },
     },
@@ -58,18 +55,12 @@ function ButtonFactory({ variant, size, block, loading, style, children, map, ..
 
     size === 'small' && {
       fontSize: theme.rem(0.875),
-      paddingTop: theme.rem(0.5, theme.rem(0.875)),
-      paddingBottom: theme.rem(0.5, theme.rem(0.875)),
-      paddingLeft: theme.rem(0.75, theme.rem(0.875)),
-      paddingRight: theme.rem(0.75, theme.rem(0.875)),
+      padding: theme.rem(0.5, theme.rem(0.875)),
     },
 
     size === 'large' && {
       fontSize: theme.rem(1.25),
-      paddingTop: theme.rem(0.5, theme.rem(1.25)),
-      paddingBottom: theme.rem(0.5, theme.rem(1.25)),
-      paddingLeft: theme.rem(1, theme.rem(1.25)),
-      paddingRight: theme.rem(1, theme.rem(1.25)),
+      padding: theme.rem(0.5, theme.rem(1.25)),
     },
 
     block && { width: '100%' },
