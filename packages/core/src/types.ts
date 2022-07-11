@@ -177,6 +177,11 @@ export type InputProps = BoxProps & {
   onChangeText?: Function;
 };
 
+export type SelectProps = BoxProps &
+  InputProps & {
+    options: { label: string; value: string }[];
+  };
+
 export type CardProps = BoxProps;
 
 export type ScrollableProps = BoxProps & {

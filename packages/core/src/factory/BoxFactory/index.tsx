@@ -7,6 +7,7 @@ import get from '../../props/get';
 import { customStyleProps } from '../../styles/jss';
 import { BoxProps } from '../../types';
 import clsx from '../../utils/clsx';
+import TextFactory from '../TextFactory';
 
 function BoxFactory(
   {
@@ -41,7 +42,7 @@ function BoxFactory(
 ) {
   const theme = useTheme();
 
-  const { web, native, dimensions, View, Text } = map;
+  const { web, native, dimensions, View } = map;
 
   style = [
     // Flex Container
@@ -149,11 +150,11 @@ function BoxFactory(
   }
 
   if (native && typeof children === 'string') {
-    children = <Text>{children}</Text>;
+    children = <TextFactory map={map}>{children}</TextFactory>;
   }
 
   return (
-    <Component ref={ref} {...props}>
+    <Component ref={ref} {...props} map={map}>
       {!buildGap
         ? children
         : children.filter(Boolean).map((child: any, key: number) => (

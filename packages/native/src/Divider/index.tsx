@@ -4,11 +4,13 @@ import { ViewProps } from 'react-native';
 import DividerFactory from '@react-bulk/core/src/factory/DividerFactory';
 import { DividerProps } from '@react-bulk/core/src/types';
 
-import map from '../map';
+import useMap from '../useMap';
 
 export type DividerPropsWeb = ViewProps & DividerProps;
 
 function Divider({ ...props }: DividerPropsWeb, ref) {
+  const map = useMap();
+
   return <DividerFactory ref={ref} {...props} map={map} />;
 }
 

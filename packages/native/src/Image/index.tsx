@@ -5,11 +5,13 @@ import BoxFactory from '@react-bulk/core/src/factory/BoxFactory';
 import ImageFactory from '@react-bulk/core/src/factory/ImageFactory';
 import { ImageProps } from '@react-bulk/core/src/types';
 
-import map from '../map';
+import useMap from '../useMap';
 
 export type ImagePropsNative = RNImageProps & ImageProps;
 
 function Image({ source, width, height, onLayout, style, ...props }: ImagePropsNative, ref) {
+  const map = useMap();
+
   const [imgWidth, setImgWidth] = useState<number | null>(null);
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
 

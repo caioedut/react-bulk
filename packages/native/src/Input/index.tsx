@@ -5,11 +5,12 @@ import { useTheme } from '@react-bulk/core';
 import InputFactory from '@react-bulk/core/src/factory/InputFactory';
 import { InputProps } from '@react-bulk/core/src/types';
 
-import map from '../map';
+import useMap from '../useMap';
 
 export type InputPropsNative = TextInputProps & InputProps;
 
 function Input({ ...props }: InputPropsNative, ref) {
+  const map = useMap();
   const theme = useTheme();
 
   props = {

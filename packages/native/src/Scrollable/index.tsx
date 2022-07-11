@@ -5,7 +5,7 @@ import { useTheme } from '@react-bulk/core';
 import ScrollableFactory from '@react-bulk/core/src/factory/ScrollableFactory';
 import { ScrollableProps } from '@react-bulk/core/src/types';
 
-import map from '../map';
+import useMap from '../useMap';
 
 export type ScrollablePropsNative = ScrollViewProps &
   ScrollableProps & {
@@ -15,6 +15,7 @@ export type ScrollablePropsNative = ScrollViewProps &
   };
 
 function Scrollable({ refreshing, onRefresh, refreshControl, ...props }: ScrollablePropsNative, ref) {
+  const map = useMap();
   const theme = useTheme();
 
   if (!refreshControl && (onRefresh || refreshing)) {

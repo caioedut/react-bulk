@@ -73,7 +73,7 @@ function TextFactory(
     rest.numberOfLines = numberOfLines;
   }
 
-  return <BoxFactory map={map} component={Text} {...rest} ref={ref} style={styleX} />;
+  return <BoxFactory ref={ref} component={Text} {...rest} style={styleX} map={map} />;
 }
 
 export default React.forwardRef(TextFactory);
