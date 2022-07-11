@@ -8,7 +8,6 @@ import get from '../../props/get';
 import { customStyleProps } from '../../styles/jss';
 import { BoxProps } from '../../types';
 import clsx from '../../utils/clsx';
-import TextFactory from '../TextFactory';
 
 function BoxFactory(
   {
