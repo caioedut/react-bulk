@@ -154,7 +154,7 @@ function BoxFactory(
   }
 
   return (
-    <Component ref={ref} {...props} map={map}>
+    <Component ref={ref} {...props}>
       {!buildGap
         ? children
         : children.filter(Boolean).map((child: any, key: number) => (
