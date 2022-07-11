@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 
-import { createMeta, createStyle, useTheme } from '@react-bulk/core';
+import { useTheme } from './ReactBulk';
+import createMeta from './createMeta';
+import createStyle from './createStyle';
 
 export default function BaseStyleWeb() {
   const theme = useTheme();
