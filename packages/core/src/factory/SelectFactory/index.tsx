@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import { spacings } from '../../styles/jss';
 import { SelectProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
@@ -8,13 +8,23 @@ import DropdownFactory from '../DropdownFactory';
 import InputFactory from '../InputFactory';
 import TextFactory from '../TextFactory';
 
-function SelectFactory({ options, placeholder, label, size, name, value, onChange, style, map, ...rest }: SelectProps | any, ref: any) {
-  const theme = useTheme();
-
+function SelectFactory(
+  { options, placeholder, label, name, value, onChange, style, containerStyle, map, ...rest }: SelectProps | any,
+  ref: any,
+) {
   const [visible, setVisible] = useState(false);
   const selected = options.find((option) => option.value == value);
 
-  style = [{ justifyContent: 'space-between' }, style];
+  containerStyle = [
+    ...spacings
+      .filter((attr) => attr in rest)
+      .map((attr) => {
+        const val = rest[attr];
+        delete rest[attr];
+        return { [attr]: val };
+      }),
+    containerStyle,
+  ];
 
   const handlePressOption = (e, option) => {
     setVisible(false);
@@ -30,35 +40,54 @@ function SelectFactory({ options, placeholder, label, size, name, value, onChang
   };
 
   return (
-    <>
-      <ButtonFactory {...rest} block variant="outline" map={map} style={style} onPress={() => setVisible((current) => !current)}>
-        <TextFactory map={map}>{selected?.label ?? selected?.value ?? placeholder}</TextFactory>
+    <BoxFactory map={map} style={containerStyle}>
+      {Boolean(label) && (
+        <TextFactory map={map} mb={1} numberOfLines={1}>
+          {label}
+        </TextFactory>
+      )}
+      <ButtonFactory
+        map={map}
+        {...rest}
+        block
+        wrap={false}
+        type="button"
+        variant="outline"
+        style={style}
+        onPress={() => setVisible((current) => !current)}
+      >
+        <TextFactory map={map} flex style={{ textAlign: 'left' }}>
+          {selected?.label ?? selected?.value ?? placeholder ?? ''}
+        </TextFactory>
         <TextFactory map={map} size={0.625} color="primary">
           {visible ? '▲' : '▼'}
         </TextFactory>
       </ButtonFactory>
-      <InputFactory ref={ref} type="hidden" name={name} value={value ?? ''} map={map} onChange={handleChange} />
-      <DropdownFactory map={map} visible={visible} p={0} py={1} mt={0.5} w="100%">
+      <InputFactory map={map} ref={ref} type="hidden" name={name} value={value ?? ''} onChange={handleChange} />
+      <DropdownFactory map={map} visible={visible} p={1} mt={0.5} w="100%">
         {options?.map((option) => (
-          <BoxFactory
+          <ButtonFactory
             key={option.value}
             map={map}
-            px={3}
-            py={2}
+            block
+            wrap={false}
+            type="button"
+            variant="text"
+            disabled={option.disabled}
             onPress={(e) => handlePressOption(e, option)}
-            style={{
-              cursor: 'pointer',
-              transition: `all ${theme.mixins.transition}`,
-              '&:hover': {
-                backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.1),
-              },
-            }}
           >
-            <TextFactory map={map}>{option.label}</TextFactory>
-          </BoxFactory>
+            <TextFactory map={map} flex style={{ textAlign: 'left' }}>
+              {option.label}
+            </TextFactory>
+            {option.value == selected?.value && (
+              <TextFactory map={map} color="primary">
+                ✓
+              </TextFactory>
+            )}
+          </ButtonFactory>
         ))}
       </DropdownFactory>
-    </>
+    </BoxFactory>
   );
 }
 

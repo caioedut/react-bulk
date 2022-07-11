@@ -165,6 +165,7 @@ export type InputProps = BoxProps & {
   autoFocus?: Boolean;
   readOnly?: Boolean;
   disabled?: Boolean;
+  containerStyle?: (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
 
   size?: 'small' | 'medium' | 'large' | string;
   label?: string;
@@ -179,7 +180,11 @@ export type InputProps = BoxProps & {
 
 export type SelectProps = BoxProps &
   InputProps & {
-    options: { label: string; value: string }[];
+    options: {
+      label: string;
+      value: string;
+      disabled?: boolean;
+    }[];
   };
 
 export type CardProps = BoxProps;

@@ -4,16 +4,28 @@ import Platform from '../../Platform';
 import { useTheme } from '../../ReactBulk';
 import get from '../../props/get';
 import remove from '../../props/remove';
+import { spacings } from '../../styles/jss';
 import { InputProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function InputFactory({ label, size, style, map, ...rest }: InputProps | any, ref: any) {
+function InputFactory({ label, size, style, containerStyle, map, ...rest }: InputProps | any, ref: any) {
   const theme = useTheme();
 
   const { web, native } = Platform;
   const { Input, ios } = map;
   const { disabled } = rest;
+
+  containerStyle = [
+    ...spacings
+      .filter((attr) => attr in rest)
+      .map((attr) => {
+        const val = rest[attr];
+        delete rest[attr];
+        return { [attr]: val };
+      }),
+    containerStyle,
+  ];
 
   style = [
     {
@@ -85,10 +97,14 @@ function InputFactory({ label, size, style, map, ...rest }: InputProps | any, re
   }
 
   return (
-    <>
-      {Boolean(label) && <TextFactory map={map}>{label}</TextFactory>}
+    <BoxFactory map={map} style={containerStyle}>
+      {Boolean(label) && (
+        <TextFactory mb={1} numberOfLines={1} map={map}>
+          {label}
+        </TextFactory>
+      )}
       <BoxFactory map={map} ref={ref} component={Input} {...rest} style={style} />
-    </>
+    </BoxFactory>
   );
 }
 
