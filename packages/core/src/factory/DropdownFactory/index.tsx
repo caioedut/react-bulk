@@ -8,7 +8,7 @@ import BoxFactory from '../BoxFactory';
 import CardFactory from '../CardFactory';
 
 function DropdownFactory({ visible, children, style, map, ...rest }: DropdownProps | any, ref: any) {
-  const { web } = Platform;
+  const { web, native } = Platform;
   const theme = useTheme();
 
   // useEffect(() => {
@@ -29,6 +29,11 @@ function DropdownFactory({ visible, children, style, map, ...rest }: DropdownPro
       position: 'absolute',
       maxWidth: '100%',
       border: `1px solid ${theme.colors.background.secondary}`,
+      zIndex: -1,
+    },
+
+    visible && {
+      zIndex: theme.mixins.zIndex.dropdown,
     },
 
     web && {
@@ -36,14 +41,17 @@ function DropdownFactory({ visible, children, style, map, ...rest }: DropdownPro
       transition: `all ${theme.mixins.transition}`,
       opacity: 0,
       visibility: 'hidden',
-      zIndex: -1,
     },
 
     web &&
       visible && {
         opacity: 1,
         visibility: 'visible',
-        zIndex: theme.mixins.zIndex.dropdown,
+      },
+
+    native &&
+      !visible && {
+        display: 'none',
       },
 
     style,
