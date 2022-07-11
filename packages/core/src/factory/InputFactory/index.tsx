@@ -1,7 +1,8 @@
 import React from 'react';
 
+import { useTheme } from '@react-bulk/core';
+
 import Platform from '../../Platform';
-import { useTheme } from '../../ReactBulk';
 import get from '../../props/get';
 import remove from '../../props/remove';
 import { spacings } from '../../styles/jss';
@@ -99,7 +100,7 @@ function InputFactory({ label, size, style, containerStyle, map, ...rest }: Inpu
   return (
     <BoxFactory map={map} style={containerStyle}>
       {Boolean(label) && (
-        <TextFactory mb={1} numberOfLines={1} map={map}>
+        <TextFactory map={map} mb={1} numberOfLines={1}>
           {label}
         </TextFactory>
       )}

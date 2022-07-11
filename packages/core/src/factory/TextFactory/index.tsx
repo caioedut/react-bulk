@@ -1,7 +1,8 @@
 import React from 'react';
 
+import { useTheme } from '@react-bulk/core';
+
 import Platform from '../../Platform';
-import { useTheme } from '../../ReactBulk';
 import { TextProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
