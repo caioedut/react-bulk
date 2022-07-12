@@ -1,6 +1,6 @@
 {
   "name": "@react-bulk/native",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "description": "React Bulk for React Native",
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
@@ -20,7 +20,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-bulk/core": "^0.0.54"
+    "@react-bulk/core": "^0.0.55"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
