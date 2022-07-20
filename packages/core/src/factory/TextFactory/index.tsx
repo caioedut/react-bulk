@@ -39,6 +39,7 @@ function TextFactory(
       color: color ?? theme.colors.text.primary,
       fontSize: theme.rem(1),
       lineHeight: theme.shape.lineHeight,
+      textDecoration: 'none',
     },
 
     variant === 'h1' && { fontSize: theme.rem(2.5) },

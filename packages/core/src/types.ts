@@ -105,6 +105,7 @@ export type BoxProps = Bindings &
     className?: any;
     children?: React.ReactNode;
     style?: (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
+    block?: boolean;
 
     // Flexbox container
     flexbox?: boolean | 'flex' | 'flex-inline';

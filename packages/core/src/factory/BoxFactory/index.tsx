@@ -13,6 +13,7 @@ function BoxFactory(
   {
     component,
     className,
+    block,
     flexbox,
     direction,
     row,
@@ -41,9 +42,17 @@ function BoxFactory(
 ) {
   const theme = useTheme();
 
-  const { native, dimensions, Text, View } = map;
+  const { web, native, dimensions, Text, View } = map;
 
   style = [
+    block && {
+      marginLeft: 0,
+      marginRight: 0,
+      width: '100%',
+    },
+
+    web && block && { display: 'block' },
+
     // Flex Container
     flexbox && {
       display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}`,
