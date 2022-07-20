@@ -7,6 +7,7 @@ It is the primary component, factory for everything.
 ```jsx
 <Box
   component={"div" | CustomComponent}
+  block={boolean}
 
   // Flexbox container
   flexbox={boolean | 'flex' | 'flex-inline'}

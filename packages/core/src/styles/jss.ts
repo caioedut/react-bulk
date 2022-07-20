@@ -88,7 +88,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     }
 
     if (prop === 'bg') {
-      prop = 'backgroundColor';
+      prop = 'background';
     }
 
     if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(prop)) {
