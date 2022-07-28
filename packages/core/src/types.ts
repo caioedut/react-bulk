@@ -179,7 +179,7 @@ export type InputProps = BoxProps & {
 
   onChange?: ChangeCallback;
 
-  /** @deprecated use onPress instead */
+  /** @deprecated use onChange instead */
   onChangeText?: Function;
 };
 

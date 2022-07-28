@@ -8,7 +8,10 @@ import { ButtonProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function ButtonFactory({ variant, size, color, block, loading, style, children, map, ...rest }: ButtonProps | any, ref) {
+function ButtonFactory(
+  { variant, size, color, block, loading, startIcon, endIcon, style, children, map, ...rest }: ButtonProps | any,
+  ref,
+) {
   const theme = useTheme();
 
   const { web } = Platform;
@@ -108,7 +111,17 @@ function ButtonFactory({ variant, size, color, block, loading, style, children, 
 
   return (
     <BoxFactory map={map} ref={ref} component={Button} {...rest} style={styleX}>
+      {Boolean(startIcon) && (
+        <BoxFactory map={map} mr={1}>
+          {startIcon}
+        </BoxFactory>
+      )}
       {children}
+      {Boolean(endIcon) && (
+        <BoxFactory map={map} ml={1}>
+          {endIcon}
+        </BoxFactory>
+      )}
       {loading && (
         <BoxFactory
           map={map}
