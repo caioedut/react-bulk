@@ -19,7 +19,7 @@ export default function ({ ...props }: any) {
 
     if (props.onChange) {
       const onChangeProp = props.onChange;
-      props.onChange = (e: any) => onChangeProp(e.target.value, e);
+      props.onChange = (e: any) => onChangeProp(e, e?.target?.value ?? e?.target?.checked);
     }
 
     delete props.onPress;
@@ -34,7 +34,7 @@ export default function ({ ...props }: any) {
 
     if (props.onChange) {
       const onChangeProp = props.onChange;
-      props.onChange = (e: any) => onChangeProp(e.nativeEvent.text, e);
+      props.onChange = (e: any) => onChangeProp(e, e?.nativeEvent?.text);
     }
 
     delete props.onClick;
