@@ -66,7 +66,10 @@ function TextFactory(
     invisible && { opacity: 0 },
     transform && { textTransform: transform },
 
-    web && { display: 'inline-block' },
+    web && {
+      display: 'inline-block',
+      '& span': { display: 'inline' },
+    },
 
     web &&
       numberOfLines > 0 && {

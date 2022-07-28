@@ -8,13 +8,15 @@ import { ButtonProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function ButtonFactory({ variant, size, block, loading, style, children, map, ...rest }: ButtonProps | any, ref) {
+function ButtonFactory({ variant, size, color, block, loading, style, children, map, ...rest }: ButtonProps | any, ref) {
   const theme = useTheme();
 
   const { web } = Platform;
   const { Button } = map;
 
   const { disabled } = rest;
+
+  color = color ?? theme.colors.primary.main;
 
   const styleX = [
     {
@@ -29,7 +31,7 @@ function ButtonFactory({ variant, size, block, loading, style, children, map, ..
       fontSize: theme.rem(1),
       lineHeight: 1.25,
 
-      backgroundColor: theme.colors.primary.main,
+      backgroundColor: color,
       color: theme.colors.common.white,
       cursor: 'pointer',
 
@@ -44,13 +46,16 @@ function ButtonFactory({ variant, size, block, loading, style, children, map, ..
       '&:hover': { backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.9) },
     },
 
-    variant === 'text' && { borderColor: theme.colors.common.trans },
-
     (variant === 'outline' || variant === 'text') && {
       backgroundColor: theme.colors.common.trans,
-      color: theme.colors.primary.main,
+      borderColor: color,
+      color,
 
       '&:hover': { backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.1) },
+    },
+
+    variant === 'text' && {
+      borderColor: theme.colors.common.trans,
     },
 
     size === 'small' && {
