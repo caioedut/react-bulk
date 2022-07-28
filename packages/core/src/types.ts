@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 export type FactoryProps = {
   map: any;
@@ -103,7 +103,7 @@ export type BoxProps = Bindings &
   CustomStyles & {
     component?: any;
     className?: any;
-    children?: React.ReactNode;
+    children?: ReactNode;
     style?: (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
     block?: boolean;
 
@@ -134,7 +134,7 @@ export type BoxProps = Bindings &
 export type TextProps = BoxProps & {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'caption';
   size?: number;
-  color?: string;
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
   center?: boolean;
   left?: boolean;
   right?: boolean;
@@ -157,10 +157,11 @@ export type ButtonProps = BoxProps & {
 
   variant?: 'solid' | 'outline' | 'text' | string;
   size?: 'small' | 'medium' | 'large' | string;
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
   block?: Boolean;
   loading?: Boolean;
-  startIcon?: React.ReactNode;
-  endIcon?: React.ReactNode;
+  startIcon?: ReactNode;
+  endIcon?: ReactNode;
 };
 
 export type ChangeCallback = (value: string, e: any) => any;
