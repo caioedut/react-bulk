@@ -17,9 +17,10 @@ export default function ({ ...props }: any) {
       props.onMouseUp = props.onPressOut;
     }
 
-    // if (props.onChange) {
-    //   props.onChange = (e: any) => props.onChange(e?.target?.value, e);
-    // }
+    if (props.onChange) {
+      const onChangeProp = props.onChange;
+      props.onChange = (e: any) => onChangeProp(e.target.value, e);
+    }
 
     delete props.onPress;
     delete props.onPressIn;
@@ -31,9 +32,10 @@ export default function ({ ...props }: any) {
       props.onPress = props.onClick;
     }
 
-    // if (props.onChange) {
-    //   props.onChange = (e: any) => props.onChange(e.text, e);
-    // }
+    if (props.onChange) {
+      const onChangeProp = props.onChange;
+      props.onChange = (e: any) => onChangeProp(e.nativeEvent.text, e);
+    }
 
     delete props.onClick;
   }
