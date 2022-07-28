@@ -9,7 +9,7 @@ import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
 function ButtonFactory(
-  { variant, size, color, block, loading, startIcon, endIcon, style, children, map, ...rest }: ButtonProps | any,
+  { variant, size, color, block, loading, disabled, startIcon, endIcon, style, children, map, ...rest }: ButtonProps | any,
   ref,
 ) {
   const theme = useTheme();
@@ -17,9 +17,7 @@ function ButtonFactory(
   const { web } = Platform;
   const { Button } = map;
 
-  const { disabled } = rest;
-
-  color = color ?? theme.colors.primary.main;
+  color = color ?? 'primary';
 
   const styleX = [
     {
@@ -110,7 +108,7 @@ function ButtonFactory(
   }
 
   return (
-    <BoxFactory map={map} ref={ref} component={Button} {...rest} style={styleX}>
+    <BoxFactory map={map} ref={ref} component={Button} disabled={disabled} {...rest} style={styleX}>
       {Boolean(startIcon) && (
         <BoxFactory map={map} mr={1}>
           {startIcon}

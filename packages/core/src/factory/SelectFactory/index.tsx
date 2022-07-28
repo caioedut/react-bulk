@@ -10,13 +10,15 @@ import InputFactory from '../InputFactory';
 import TextFactory from '../TextFactory';
 
 function SelectFactory(
-  { options, placeholder, label, error, name, value, onChange, style, containerStyle, map, ...rest }: SelectProps | any,
+  { options, placeholder, label, error, name, value, color, disabled, onChange, style, containerStyle, map, ...rest }: SelectProps | any,
   ref: any,
 ) {
   const { web } = Platform;
 
   const [visible, setVisible] = useState(false);
   const selected = options.find((option) => option.value == value);
+
+  color = color ?? 'primary';
 
   containerStyle = [
     ...spacings
@@ -53,6 +55,8 @@ function SelectFactory(
       <ButtonFactory
         ref={web ? null : ref}
         map={map}
+        color={color}
+        disabled={disabled}
         {...rest}
         block
         wrap={false}
@@ -64,7 +68,7 @@ function SelectFactory(
         <TextFactory map={map} flex style={{ textAlign: 'left' }}>
           {selected?.label ?? selected?.value ?? placeholder ?? ''}
         </TextFactory>
-        <TextFactory map={map} size={0.625} color="primary">
+        <TextFactory map={map} size={0.625} color={color}>
           {visible ? '▲' : '▼'}
         </TextFactory>
       </ButtonFactory>
@@ -93,7 +97,7 @@ function SelectFactory(
               {option.label}
             </TextFactory>
             {option.value == selected?.value && (
-              <TextFactory map={map} color="primary">
+              <TextFactory map={map} color={color}>
                 ✓
               </TextFactory>
             )}
