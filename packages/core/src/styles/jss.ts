@@ -88,7 +88,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     }
 
     if (prop === 'bg') {
-      prop = 'background';
+      prop = native ? 'backgroundColor' : 'background';
     }
 
     if (prop === 'radius') {
