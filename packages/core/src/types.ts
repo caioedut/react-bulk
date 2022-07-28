@@ -172,11 +172,12 @@ export type InputProps = BoxProps & {
   disabled?: Boolean;
   containerStyle?: (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
 
-  size?: 'small' | 'medium' | 'large' | string;
   label?: string;
   error?: string;
   placeholder?: string;
   secure?: boolean;
+  size?: 'small' | 'medium' | 'large' | string;
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
 
   onChange?: ChangeCallback;
 
@@ -184,14 +185,17 @@ export type InputProps = BoxProps & {
   onChangeText?: Function;
 };
 
-export type SelectProps = BoxProps &
-  InputProps & {
-    options: {
-      label: string;
-      value: string;
-      disabled?: boolean;
-    }[];
-  };
+export type SelectProps = InputProps & {
+  options: {
+    label: string;
+    value: string;
+    disabled?: boolean;
+  }[];
+};
+
+export type CheckboxProps = InputProps & {
+  checked?: boolean;
+};
 
 export type CardProps = BoxProps;
 

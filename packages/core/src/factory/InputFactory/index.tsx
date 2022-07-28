@@ -10,12 +10,13 @@ import { InputProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function InputFactory({ label, error, size, style, containerStyle, map, ...rest }: InputProps | any, ref: any) {
+function InputFactory({ label, error, size, color, disabled, style, containerStyle, map, ...rest }: InputProps | any, ref: any) {
   const theme = useTheme();
 
   const { web, native } = Platform;
   const { Input, ios } = map;
-  const { disabled } = rest;
+
+  color = color ?? 'primary';
 
   containerStyle = [
     ...spacings
@@ -33,12 +34,12 @@ function InputFactory({ label, error, size, style, containerStyle, map, ...rest 
       fontSize: theme.rem(1),
       lineHeight: 1.25,
 
-      backgroundColor: theme.colors.background.primary,
+      backgroundColor: color,
       color: theme.colors.text.primary,
 
       borderWidth: 1,
       borderStyle: 'solid',
-      borderColor: theme.colors.primary.main,
+      borderColor: color,
       borderRadius: theme.shape.borderRadius,
 
       margin: 0,
@@ -100,7 +101,7 @@ function InputFactory({ label, error, size, style, containerStyle, map, ...rest 
           {label}
         </TextFactory>
       )}
-      <BoxFactory map={map} ref={ref} component={Input} {...rest} style={style} />
+      <BoxFactory map={map} ref={ref} component={Input} disabled={disabled} {...rest} style={style} />
       {Boolean(error) && (
         <TextFactory map={map} mt={1} ml={1} numberOfLines={1} size={0.8} color="error">
           {error}
