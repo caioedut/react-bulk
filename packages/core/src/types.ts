@@ -174,6 +174,7 @@ export type InputProps = BoxProps & {
 
   size?: 'small' | 'medium' | 'large' | string;
   label?: string;
+  error?: string;
   placeholder?: string;
   secure?: boolean;
 

@@ -10,7 +10,7 @@ import InputFactory from '../InputFactory';
 import TextFactory from '../TextFactory';
 
 function SelectFactory(
-  { options, placeholder, label, name, value, onChange, style, containerStyle, map, ...rest }: SelectProps | any,
+  { options, placeholder, label, error, name, value, onChange, style, containerStyle, map, ...rest }: SelectProps | any,
   ref: any,
 ) {
   const { web } = Platform;
@@ -49,6 +49,7 @@ function SelectFactory(
           {label}
         </TextFactory>
       )}
+
       <ButtonFactory
         ref={web ? null : ref}
         map={map}
@@ -67,7 +68,15 @@ function SelectFactory(
           {visible ? '▲' : '▼'}
         </TextFactory>
       </ButtonFactory>
+
+      {Boolean(error) && (
+        <TextFactory map={map} mt={1} ml={1} numberOfLines={1} size={0.8} color="error">
+          {error}
+        </TextFactory>
+      )}
+
       {web && <InputFactory map={map} ref={ref} type="hidden" name={name} value={value ?? ''} onChange={handleChange} />}
+
       <DropdownFactory map={map} visible={visible} p={1} mt={0.5} w="100%">
         {options?.map((option) => (
           <ButtonFactory

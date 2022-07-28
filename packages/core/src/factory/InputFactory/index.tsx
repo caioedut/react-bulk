@@ -10,7 +10,7 @@ import { InputProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function InputFactory({ label, size, style, containerStyle, map, ...rest }: InputProps | any, ref: any) {
+function InputFactory({ label, error, size, style, containerStyle, map, ...rest }: InputProps | any, ref: any) {
   const theme = useTheme();
 
   const { web, native } = Platform;
@@ -101,6 +101,11 @@ function InputFactory({ label, size, style, containerStyle, map, ...rest }: Inpu
         </TextFactory>
       )}
       <BoxFactory map={map} ref={ref} component={Input} {...rest} style={style} />
+      {Boolean(error) && (
+        <TextFactory map={map} mt={1} ml={1} numberOfLines={1} size={0.8} color="error">
+          {error}
+        </TextFactory>
+      )}
     </BoxFactory>
   );
 }
