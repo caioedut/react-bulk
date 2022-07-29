@@ -34,7 +34,7 @@ function InputFactory({ label, error, size, color, disabled, style, containerSty
       fontSize: theme.rem(1),
       lineHeight: 1.25,
 
-      backgroundColor: color,
+      backgroundColor: theme.colors.background.primary,
       color: theme.colors.text.primary,
 
       borderWidth: 1,
