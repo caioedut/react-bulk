@@ -9,6 +9,7 @@ export type ModalPropsNative = ViewProps & ModalProps;
 
 function Modal({ visible, onBackdropPress, ...props }: ModalPropsNative, ref) {
   const map = useMap();
+
   if (onBackdropPress) {
     // @ts-ignore
     props.onBackdropPress = onBackdropPress;

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { useTheme } from '@react-bulk/core';
+
 import Platform from '../../Platform';
 import { spacings } from '../../styles/jss';
 import { SelectProps } from '../../types';
@@ -10,17 +12,34 @@ import InputFactory from '../InputFactory';
 import TextFactory from '../TextFactory';
 
 function SelectFactory(
-  { options, placeholder, label, error, name, value, color, disabled, onChange, style, containerStyle, map, ...rest }: SelectProps | any,
+  {
+    options,
+    placeholder,
+    label,
+    error,
+    name,
+    value,
+    color,
+    disabled,
+    onChange,
+    style,
+    inputStyle,
+    labelStyle,
+    map,
+    ...rest
+  }: SelectProps | any,
   ref: any,
 ) {
+  const theme = useTheme();
   const { web } = Platform;
+  const { Label } = map;
 
   const [visible, setVisible] = useState(false);
   const selected = options.find((option) => option.value == value);
 
-  color = color ?? 'primary';
+  color = color ?? theme.colors.primary.main;
 
-  containerStyle = [
+  style = [
     ...spacings
       .filter((attr) => attr in rest)
       .map((attr) => {
@@ -28,8 +47,10 @@ function SelectFactory(
         delete rest[attr];
         return { [attr]: val };
       }),
-    containerStyle,
+    style,
   ];
+
+  labelStyle = [{ mb: 1 }, labelStyle];
 
   const handlePressOption = (e, option) => {
     setVisible(false);
@@ -45,9 +66,9 @@ function SelectFactory(
   };
 
   return (
-    <BoxFactory map={map} style={containerStyle}>
+    <BoxFactory map={map} style={style}>
       {Boolean(label) && (
-        <TextFactory map={map} mb={1} numberOfLines={1}>
+        <TextFactory map={map} component={Label} numberOfLines={1} style={labelStyle}>
           {label}
         </TextFactory>
       )}
@@ -62,7 +83,7 @@ function SelectFactory(
         wrap={false}
         type="button"
         variant="outline"
-        style={style}
+        style={inputStyle}
         onPress={() => setVisible((current) => !current)}
       >
         <TextFactory map={map} flex style={{ textAlign: 'left' }}>

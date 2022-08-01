@@ -42,6 +42,7 @@ export default function BaseStyleWeb() {
       flex-direction: column;
       min-height: 100%;
       background-color: ${theme.colors.background.secondary};
+      color: ${theme.colors.text.primary};
     }
 
     body > #root {

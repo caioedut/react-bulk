@@ -10,15 +10,15 @@ import { InputProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function InputFactory({ label, error, size, color, disabled, style, containerStyle, map, ...rest }: InputProps | any, ref: any) {
+function InputFactory({ label, error, size, color, disabled, style, inputStyle, labelStyle, map, ...rest }: InputProps | any, ref: any) {
   const theme = useTheme();
 
   const { web, native } = Platform;
-  const { Input, ios } = map;
+  const { Input, Label, ios } = map;
 
-  color = color ?? 'primary';
+  color = color ?? theme.colors.primary.main;
 
-  containerStyle = [
+  style = [
     ...spacings
       .filter((attr) => attr in rest)
       .map((attr) => {
@@ -26,10 +26,10 @@ function InputFactory({ label, error, size, color, disabled, style, containerSty
         delete rest[attr];
         return { [attr]: val };
       }),
-    containerStyle,
+    style,
   ];
 
-  style = [
+  inputStyle = [
     {
       fontSize: theme.rem(1),
       lineHeight: 1.25,
@@ -75,33 +75,37 @@ function InputFactory({ label, error, size, color, disabled, style, containerSty
       },
     },
 
-    style,
+    inputStyle,
   ];
+
+  labelStyle = [{ mb: 1 }, labelStyle];
 
   if (native) {
     // Calculate full height (for iOS)
-    const pt = get('paddingTop', style) ?? get('paddingVertical', style) ?? get('padding', style) ?? 0;
-    const pb = get('paddingBottom', style) ?? get('paddingVertical', style) ?? get('padding', style) ?? 0;
-    const bt = get('borderTopWidth', style) ?? get('borderWidth', style) ?? 0;
-    const bb = get('borderBottomWidth', style) ?? get('borderWidth', style) ?? 0;
-    const fs = get('fontSize', style);
-    const lh = get('lineHeight', style);
+    const pt = get('paddingTop', inputStyle) ?? get('paddingVertical', inputStyle) ?? get('padding', inputStyle) ?? 0;
+    const pb = get('paddingBottom', inputStyle) ?? get('paddingVertical', inputStyle) ?? get('padding', inputStyle) ?? 0;
+    const bt = get('borderTopWidth', inputStyle) ?? get('borderWidth', inputStyle) ?? 0;
+    const bb = get('borderBottomWidth', inputStyle) ?? get('borderWidth', inputStyle) ?? 0;
+    const fs = get('fontSize', inputStyle);
+    const lh = get('lineHeight', inputStyle);
 
-    style.height = get('height', style) ?? pt + pb + bt + bb + fs * lh;
+    inputStyle.push({
+      height: get('height', inputStyle) ?? pt + pb + bt + bb + fs * lh,
+    });
 
     if (ios) {
-      remove('lineHeight', style);
+      remove('lineHeight', inputStyle);
     }
   }
 
   return (
-    <BoxFactory map={map} style={containerStyle}>
+    <BoxFactory map={map} style={style}>
       {Boolean(label) && (
-        <TextFactory map={map} mb={1} numberOfLines={1}>
+        <TextFactory map={map} component={Label} numberOfLines={1} style={labelStyle}>
           {label}
         </TextFactory>
       )}
-      <BoxFactory map={map} ref={ref} component={Input} disabled={disabled} {...rest} style={style} />
+      <BoxFactory map={map} ref={ref} component={Input} disabled={disabled} {...rest} style={inputStyle} />
       {Boolean(error) && (
         <TextFactory map={map} mt={1} ml={1} numberOfLines={1} size={0.8} color="error">
           {error}

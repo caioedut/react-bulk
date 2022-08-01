@@ -25,7 +25,8 @@ function CheckboxFactory(
     color,
     onChange,
     style,
-    containerStyle,
+    inputStyle,
+    labelStyle,
     map,
     ...rest
   }: CheckboxProps | any,
@@ -33,10 +34,11 @@ function CheckboxFactory(
 ) {
   const theme = useTheme();
   const { web } = Platform;
+  const { Label } = map;
 
-  color = color ?? 'primary';
+  color = color ?? theme.colors.primary.main;
 
-  containerStyle = [
+  style = [
     ...spacings
       .filter((attr) => attr in rest)
       .map((attr) => {
@@ -44,10 +46,10 @@ function CheckboxFactory(
         delete rest[attr];
         return { [attr]: val };
       }),
-    containerStyle,
+    style,
   ];
 
-  style = [
+  inputStyle = [
     {
       color,
       fontSize: theme.rem(1),
@@ -80,11 +82,21 @@ function CheckboxFactory(
       },
     },
 
-    style,
+    inputStyle,
   ];
 
-  const fontSize = get('fontSize', style);
+  const fontSize = get('fontSize', inputStyle) ?? get('fontSize', style);
   const iconSize = fontSize * theme.typography.lineHeight;
+
+  labelStyle = [
+    {
+      fontSize,
+      flex: 1,
+      ml: 1.5,
+    },
+
+    labelStyle,
+  ];
 
   const handlePress = (e) => {
     if (typeof onChange === 'function') {
@@ -93,7 +105,7 @@ function CheckboxFactory(
   };
 
   return (
-    <BoxFactory map={map} style={containerStyle}>
+    <BoxFactory map={map} style={style}>
       <BoxFactory map={map} flexbox wrap={false} alignItems="center" disabled={disabled}>
         <ButtonFactory
           map={map}
@@ -105,7 +117,7 @@ function CheckboxFactory(
           color={color}
           disabled={disabled}
           {...rest}
-          style={style}
+          style={inputStyle}
           onPress={handlePress}
         >
           {Boolean(checked) && (
@@ -115,7 +127,7 @@ function CheckboxFactory(
           )}
         </ButtonFactory>
         {Boolean(label) && (
-          <TextFactory map={map} flex ml={1.5} style={{ fontSize }}>
+          <TextFactory map={map} component={Label} style={labelStyle}>
             {label}
           </TextFactory>
         )}
