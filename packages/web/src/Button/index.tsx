@@ -13,12 +13,6 @@ export type ButtonPropsWeb = ComponentPropsWithRef<'button'> &
 function Button({ ...props }: ButtonPropsWeb, ref) {
   const map = useMap();
 
-  props.style = [props.style];
-
-  if (!props.type) {
-    props.type = 'button';
-  }
-
   return <ButtonFactory ref={ref} {...props} map={map} />;
 }
 

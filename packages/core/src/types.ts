@@ -99,13 +99,15 @@ export type CustomStyles = {
   py?: number | string;
 };
 
+export type JssStyles = (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
+
 export type BoxProps = Bindings &
   CustomStyles & {
     component?: any;
     className?: any;
     children?: ReactNode;
-    style?: (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
-    block?: boolean;
+    style?: JssStyles;
+    block?: JssStyles;
 
     // Flexbox container
     flexbox?: boolean | 'flex' | 'flex-inline';
@@ -170,7 +172,8 @@ export type InputProps = BoxProps & {
   autoFocus?: Boolean;
   readOnly?: Boolean;
   disabled?: Boolean;
-  containerStyle?: (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
+  inputStyle?: JssStyles;
+  labelStyle?: JssStyles;
 
   label?: string;
   error?: string;

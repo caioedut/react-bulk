@@ -19,6 +19,10 @@ function ButtonFactory(
 
   color = color ?? 'primary';
 
+  if (web && !rest.type) {
+    rest.type = 'button';
+  }
+
   const styleX = [
     {
       position: 'relative',
@@ -114,12 +118,15 @@ function ButtonFactory(
           {startIcon}
         </BoxFactory>
       )}
+
       {children}
+
       {Boolean(endIcon) && (
         <BoxFactory map={map} ml={1}>
           {endIcon}
         </BoxFactory>
       )}
+
       {loading && (
         <BoxFactory
           map={map}
