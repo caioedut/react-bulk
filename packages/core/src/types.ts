@@ -207,10 +207,12 @@ export type ScrollableProps = BoxProps & {
 };
 
 export type ImageProps = BoxProps & {
-  source: { uri: string } | string | number;
+  source: { uri?: string } | string | number;
   mode?: 'cover' | 'contain' | 'fill';
   width?: number | string;
   height?: number | string;
+  corners?: number;
+  rounded?: boolean;
 };
 
 export type DividerProps = BoxProps & {

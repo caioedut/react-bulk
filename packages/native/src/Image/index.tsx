@@ -25,6 +25,8 @@ function Image({ source, width, height, onLayout, style, ...props }: ImagePropsN
   }
 
   useEffect(() => {
+    if (!source) return;
+
     if (typeof source === 'number') {
       const image = RNImage.resolveAssetSource(source as any);
       setImgWidth(image.width);
