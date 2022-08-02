@@ -29,6 +29,10 @@ export type ThemeColorsProps = {
 export type ThemeProps = {
   mode: 'light' | 'dark' | string;
   spacing?: Function;
+  shape?: {
+    borderRadius?: number;
+    spacing?: number;
+  };
   colors?: {
     common?: {
       trans: 'rgba(0, 0, 0, 0)' | string;
@@ -78,6 +82,8 @@ export type CustomStyles = {
   bg?: string;
   border?: string;
   shadow?: string;
+
+  corners?: number;
 
   t?: number | string;
   b?: number | string;
@@ -212,7 +218,6 @@ export type ImageProps = BoxProps & {
   mode?: 'cover' | 'contain' | 'fill';
   width?: number | string;
   height?: number | string;
-  corners?: number;
   rounded?: boolean;
 };
 
