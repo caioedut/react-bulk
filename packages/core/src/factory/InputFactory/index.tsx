@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTheme } from '@react-bulk/core';
+import { crypt, useTheme, uuid } from '@react-bulk/core';
 
 import Platform from '../../Platform';
 import get from '../../props/get';
@@ -10,12 +10,16 @@ import { InputProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function InputFactory({ label, error, size, color, disabled, style, inputStyle, labelStyle, map, ...rest }: InputProps | any, ref: any) {
+function InputFactory(
+  { id, label, error, size, color, disabled, style, inputStyle, labelStyle, map, ...rest }: InputProps | any,
+  ref: any,
+) {
   const theme = useTheme();
 
   const { web, native } = Platform;
   const { Input, Label, ios } = map;
 
+  id = id ?? `rbk-${crypt(uuid())}`;
   color = color ?? theme.colors.primary.main;
 
   style = [
@@ -101,11 +105,13 @@ function InputFactory({ label, error, size, color, disabled, style, inputStyle, 
   return (
     <BoxFactory map={map} style={style}>
       {Boolean(label) && (
-        <TextFactory map={map} component={Label} numberOfLines={1} style={labelStyle}>
+        <TextFactory map={map} component={Label} htmlFor={id} numberOfLines={1} style={labelStyle}>
           {label}
         </TextFactory>
       )}
-      <BoxFactory map={map} ref={ref} component={Input} disabled={disabled} {...rest} style={inputStyle} />
+
+      <BoxFactory map={map} ref={ref} component={Input} id={id} disabled={disabled} {...rest} style={inputStyle} />
+
       {Boolean(error) && (
         <TextFactory map={map} mt={1} ml={1} numberOfLines={1} size={0.8} color="error">
           {error}
