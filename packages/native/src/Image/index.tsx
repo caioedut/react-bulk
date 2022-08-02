@@ -1,15 +1,16 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { Image as RNImage, ImageProps as RNImageProps } from 'react-native';
 
-import { BoxFactory, ImageFactory } from '@react-bulk/core';
+import { BoxFactory, ImageFactory, useTheme } from '@react-bulk/core';
 import { ImageProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';
 
 export type ImagePropsNative = RNImageProps & ImageProps;
 
-function Image({ source, width, height, onLayout, style, ...props }: ImagePropsNative, ref) {
+function Image({ source, width, height, corners, rounded, onLayout, style, ...props }: ImagePropsNative, ref) {
   const map = useMap();
+  const theme = useTheme();
 
   const [imgWidth, setImgWidth] = useState<number | null>(null);
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
@@ -68,14 +69,29 @@ function Image({ source, width, height, onLayout, style, ...props }: ImagePropsN
     onLayout?.(e);
   };
 
-  const styleX: any = [style, width && { width }, height && { height }];
+  style = [
+    { overflow: 'hidden' },
+
+    corners && {
+      borderRadius: corners * theme.shape.borderRadius,
+    },
+
+    rounded && {
+      borderRadius: Math.min(finalWidth as number, finalHeight as number) / 2,
+    },
+
+    style,
+
+    width && { width },
+
+    height && { height },
+  ];
 
   // @ts-ignore
   props = { ...props, width: finalWidth, height: finalHeight, source };
 
   return (
-    // @ts-ignore
-    <BoxFactory onLayout={handleLayout} style={styleX} map={map}>
+    <BoxFactory onLayout={handleLayout} style={style} map={map}>
       <ImageFactory ref={ref} {...props} map={map} />
     </BoxFactory>
   );

@@ -1,13 +1,10 @@
 import React, { useRef } from 'react';
 
-import { useTheme } from '@react-bulk/core';
-
 import Platform from '../../Platform';
 import { ImageProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
-function ImageFactory({ width, height, mode, corners, rounded, style, map, ...rest }: ImageProps | any, ref: any) {
-  const theme = useTheme();
+function ImageFactory({ width, height, mode, style, map, ...rest }: ImageProps | any, ref: any) {
   const { web, native } = Platform;
   const { Image } = map;
 
@@ -17,17 +14,9 @@ function ImageFactory({ width, height, mode, corners, rounded, style, map, ...re
   mode = mode ?? 'cover';
 
   style = [
-    web && { display: 'block', objectFit: mode },
+    web && { display: 'inline-block', objectFit: mode },
 
     native && { resizeMode: mode === 'fill' ? 'stretch' : mode },
-
-    corners && {
-      borderRadius: corners * theme.shape.borderRadius,
-    },
-
-    rounded && {
-      borderRadius: Math.min(height, width) / 2,
-    },
 
     style,
 
