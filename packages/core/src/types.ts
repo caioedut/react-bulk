@@ -169,6 +169,7 @@ export type ButtonProps = BoxProps & {
 export type ChangeCallback = (value: string, e: any) => any;
 
 export type InputProps = BoxProps & {
+  value?: any;
   autoFocus?: Boolean;
   readOnly?: Boolean;
   disabled?: Boolean;
