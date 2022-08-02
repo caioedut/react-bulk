@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useTheme } from '@react-bulk/core';
+import { crypt, useTheme, uuid } from '@react-bulk/core';
 
 import Platform from '../../Platform';
 import { spacings } from '../../styles/jss';
@@ -13,6 +13,7 @@ import TextFactory from '../TextFactory';
 
 function SelectFactory(
   {
+    id,
     options,
     placeholder,
     label,
@@ -37,6 +38,7 @@ function SelectFactory(
   const [visible, setVisible] = useState(false);
   const selected = options.find((option) => option.value == value);
 
+  id = id ?? `rbk-${crypt(uuid())}`;
   color = color ?? theme.colors.primary.main;
 
   style = [
@@ -68,7 +70,7 @@ function SelectFactory(
   return (
     <BoxFactory map={map} style={style}>
       {Boolean(label) && (
-        <TextFactory map={map} component={Label} numberOfLines={1} style={labelStyle}>
+        <TextFactory map={map} component={Label} htmlFor={id} numberOfLines={1} style={labelStyle}>
           {label}
         </TextFactory>
       )}
@@ -76,6 +78,7 @@ function SelectFactory(
       <ButtonFactory
         ref={web ? null : ref}
         map={map}
+        id={id}
         color={color}
         disabled={disabled}
         {...rest}
@@ -102,7 +105,15 @@ function SelectFactory(
 
       {web && <InputFactory map={map} ref={ref} type="hidden" name={name} value={value ?? ''} onChange={handleChange} />}
 
-      <DropdownFactory map={map} visible={visible} p={1} mt={0.5} w="100%">
+      <DropdownFactory
+        map={map}
+        visible={visible}
+        style={{
+          mt: 0.5,
+          p: 1,
+          w: '100%',
+        }}
+      >
         {options?.map((option) => (
           <ButtonFactory
             key={option.value}

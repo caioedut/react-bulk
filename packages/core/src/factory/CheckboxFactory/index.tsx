@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTheme } from '@react-bulk/core';
+import { crypt, useTheme, uuid } from '@react-bulk/core';
 
 import Platform from '../../Platform';
 import get from '../../props/get';
@@ -13,7 +13,7 @@ import TextFactory from '../TextFactory';
 
 function CheckboxFactory(
   {
-    options,
+    id,
     placeholder,
     label,
     error,
@@ -36,6 +36,7 @@ function CheckboxFactory(
   const { web } = Platform;
   const { Label } = map;
 
+  id = id ?? `rbk-${crypt(uuid())}`;
   color = color ?? theme.colors.primary.main;
 
   style = [
@@ -68,6 +69,10 @@ function CheckboxFactory(
     disabled && {
       color: theme.colors.background.disabled,
       opacity: 0.75,
+    },
+
+    checked && {
+      backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.15),
     },
 
     web && disabled && { cursor: 'not-allowed' },
@@ -110,6 +115,7 @@ function CheckboxFactory(
         <ButtonFactory
           map={map}
           ref={web ? null : ref}
+          id={id}
           variant="outline"
           p={0}
           h={iconSize}
@@ -121,13 +127,13 @@ function CheckboxFactory(
           onPress={handlePress}
         >
           {Boolean(checked) && (
-            <TextFactory map={map} color={color} style={{ fontSize }}>
+            <TextFactory map={map} color={color} style={{ fontSize, fontWeight: 'bold' }}>
               ✓
             </TextFactory>
           )}
         </ButtonFactory>
         {Boolean(label) && (
-          <TextFactory map={map} component={Label} style={labelStyle}>
+          <TextFactory map={map} component={Label} htmlFor={id} style={labelStyle}>
             {label}
           </TextFactory>
         )}

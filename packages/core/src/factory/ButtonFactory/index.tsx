@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTheme } from '@react-bulk/core';
+import { crypt, useTheme, uuid } from '@react-bulk/core';
 
 import Platform from '../../Platform';
 import get from '../../props/get';
@@ -9,7 +9,7 @@ import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
 function ButtonFactory(
-  { variant, size, color, block, loading, disabled, startIcon, endIcon, style, children, map, ...rest }: ButtonProps | any,
+  { id, variant, size, color, block, loading, disabled, startIcon, endIcon, style, children, map, ...rest }: ButtonProps | any,
   ref,
 ) {
   const theme = useTheme();
@@ -17,6 +17,7 @@ function ButtonFactory(
   const { web } = Platform;
   const { Button } = map;
 
+  id = id ?? `rbk-${crypt(uuid())}`;
   color = color ?? 'primary';
 
   if (web && !rest.type) {
@@ -112,7 +113,7 @@ function ButtonFactory(
   }
 
   return (
-    <BoxFactory map={map} ref={ref} component={Button} disabled={disabled} {...rest} style={styleX}>
+    <BoxFactory map={map} ref={ref} component={Button} id={id} disabled={disabled} {...rest} style={styleX}>
       {Boolean(startIcon) && (
         <BoxFactory map={map} mr={1}>
           {startIcon}
