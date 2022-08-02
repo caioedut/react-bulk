@@ -72,7 +72,7 @@ function Image({ source, width, height, corners, rounded, onLayout, style, ...pr
     { overflow: 'hidden' },
 
     rounded && {
-      borderRadius: Math.min(finalWidth as number, finalHeight as number) / 2,
+      borderRadius: Math.min((width ?? finalWidth) as number, (height ?? finalHeight) as number) / 2,
     },
 
     style,
