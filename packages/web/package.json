@@ -20,7 +20,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-bulk/core": "^0.0.57"
+    "@react-bulk/core": "^0.0.57",
+    "phosphor-react": "^1.4.1"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

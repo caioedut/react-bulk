@@ -88,7 +88,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     }
 
     if (prop === 'bg') {
-      prop = native ? 'backgroundColor' : 'background';
+      prop = 'backgroundColor';
     }
 
     if (prop === 'corners') {
@@ -110,7 +110,8 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         const styleIndex = split.findIndex((item: string) => types.includes(item));
         const borderStyle = styleIndex >= 0 ? split.splice(styleIndex, 1).shift() : 'solid';
 
-        const borderColor = split.shift() || '#000000';
+        // @ts-ignore
+        const borderColor = theme.color(split.shift() || '#000000');
 
         Object.assign(styles, { borderWidth, borderStyle, borderColor });
       }
@@ -168,12 +169,8 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     }
 
     if (theme?.colors && `${prop || ''}`.toLowerCase().includes('color')) {
-      const colors = Object.keys(theme.colors);
-      const [color, variation = 'main'] = `${value || ''}`.split('.');
-
-      if (colors.includes(color)) {
-        value = theme.colors[color]?.[variation] || theme.colors[color]?.primary || theme.colors[color] || value;
-      }
+      // @ts-ignore
+      value = theme.color(value);
     }
 
     if (prop) {

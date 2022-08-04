@@ -6,8 +6,13 @@ const base = {
 
   typography: {
     fontSize: 16,
-    iconSize: 24,
+    iconSize: 20,
     lineHeight: 1.15,
+  },
+
+  color(mixin) {
+    const [color, variation = 'main'] = `${mixin || ''}`.split('.');
+    return this?.colors[color]?.[variation] ?? this?.colors[color]?.primary ?? this?.colors[color] ?? mixin ?? 'transparent';
   },
 
   colors: {

@@ -6,8 +6,10 @@ import Platform from '../../Platform';
 import get from '../../props/get';
 import { spacings } from '../../styles/jss';
 import { CheckboxProps } from '../../types';
+import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
+import IconFactory from '../IconFactory';
 import InputFactory from '../InputFactory';
 import TextFactory from '../TextFactory';
 
@@ -21,9 +23,11 @@ function CheckboxFactory(
     value,
     checked,
     disabled,
+    unique,
     size,
     color,
     onChange,
+    className,
     style,
     inputStyle,
     labelStyle,
@@ -54,25 +58,16 @@ function CheckboxFactory(
     {
       color,
       fontSize: theme.rem(1),
+      p: 0,
     },
 
-    size === 'small' && {
-      fontSize: theme.rem(0.875),
-      padding: theme.rem(0.5, theme.rem(0.875)),
-    },
+    size === 'small' && { fontSize: theme.rem(0.875) },
 
-    size === 'large' && {
-      fontSize: theme.rem(1.25),
-      padding: theme.rem(0.5, theme.rem(1.25)),
-    },
+    size === 'large' && { fontSize: theme.rem(1.25) },
 
     disabled && {
       color: theme.colors.background.disabled,
       opacity: 0.75,
-    },
-
-    checked && {
-      backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.15),
     },
 
     web && disabled && { cursor: 'not-allowed' },
@@ -91,13 +86,17 @@ function CheckboxFactory(
   ];
 
   const fontSize = get('fontSize', inputStyle) ?? get('fontSize', style);
-  const iconSize = fontSize * theme.typography.lineHeight;
+  const iconSize = fontSize * 1.25;
+
+  if (unique) {
+    inputStyle.unshift({ borderRadius: iconSize / 2 });
+  }
 
   labelStyle = [
     {
       fontSize,
       flex: 1,
-      ml: 1.5,
+      ml: 1,
     },
 
     labelStyle,
@@ -110,26 +109,25 @@ function CheckboxFactory(
   };
 
   return (
-    <BoxFactory map={map} style={style}>
+    <BoxFactory map={map} style={style} className={clsx('rbk-checkbox', className)}>
       <BoxFactory map={map} flexbox wrap={false} alignItems="center" disabled={disabled}>
         <ButtonFactory
           map={map}
           ref={web ? null : ref}
           id={id}
-          variant="outline"
-          p={0}
-          h={iconSize}
-          w={iconSize}
+          variant="text"
           color={color}
           disabled={disabled}
+          h={iconSize}
+          w={iconSize}
           {...rest}
           style={inputStyle}
           onPress={handlePress}
         >
-          {Boolean(checked) && (
-            <TextFactory map={map} color={color} style={{ fontSize, fontWeight: 'bold' }}>
-              ✓
-            </TextFactory>
+          {unique ? (
+            <IconFactory map={map} name={checked ? 'CheckCircle' : 'Circle'} size={iconSize} />
+          ) : (
+            <IconFactory map={map} name={checked ? 'CheckSquare' : 'Square'} size={iconSize} />
           )}
         </ButtonFactory>
         {Boolean(label) && (

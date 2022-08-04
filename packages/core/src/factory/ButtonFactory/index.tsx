@@ -5,15 +5,33 @@ import { crypt, useTheme, uuid } from '@react-bulk/core';
 import Platform from '../../Platform';
 import get from '../../props/get';
 import { ButtonProps } from '../../types';
+import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
+import IconFactory from '../IconFactory';
+import LoadingFactory from '../LoadingFactory';
 import TextFactory from '../TextFactory';
 
 function ButtonFactory(
-  { id, variant, size, color, block, loading, disabled, startIcon, endIcon, style, children, map, ...rest }: ButtonProps | any,
+  {
+    id,
+    variant,
+    size,
+    color,
+    block,
+    loading,
+    disabled,
+    startIcon,
+    endIcon,
+    className,
+    style,
+    labelStyle,
+    children,
+    map,
+    ...rest
+  }: ButtonProps | any,
   ref,
 ) {
   const theme = useTheme();
-
   const { web } = Platform;
   const { Button } = map;
 
@@ -24,7 +42,7 @@ function ButtonFactory(
     rest.type = 'button';
   }
 
-  const styleX = [
+  style = [
     {
       position: 'relative',
 
@@ -99,24 +117,37 @@ function ButtonFactory(
     style,
   ];
 
-  const textStyleX = {
-    color: get('color', styleX),
-    fontSize: get('fontSize', styleX),
-  };
+  labelStyle = [
+    {
+      color: get('color', style),
+      fontSize: get('fontSize', style),
+    },
+
+    labelStyle,
+  ];
 
   if (typeof children === 'string') {
     children = (
-      <TextFactory map={map} style={[textStyleX, loading && { opacity: 0 }]}>
+      <TextFactory map={map} style={[...labelStyle, loading && { opacity: 0 }]}>
         {children}
       </TextFactory>
     );
   }
 
   return (
-    <BoxFactory map={map} ref={ref} component={Button} id={id} disabled={disabled} {...rest} style={styleX}>
+    <BoxFactory
+      map={map}
+      ref={ref}
+      component={Button}
+      id={id}
+      disabled={disabled}
+      {...rest}
+      style={style}
+      className={clsx('rbk-button', className)}
+    >
       {Boolean(startIcon) && (
         <BoxFactory map={map} mr={1}>
-          {startIcon}
+          {typeof startIcon === 'string' ? <IconFactory name={startIcon} /> : startIcon}
         </BoxFactory>
       )}
 
@@ -124,7 +155,7 @@ function ButtonFactory(
 
       {Boolean(endIcon) && (
         <BoxFactory map={map} ml={1}>
-          {endIcon}
+          {typeof endIcon === 'string' ? <IconFactory name={endIcon} /> : endIcon}
         </BoxFactory>
       )}
 
@@ -140,12 +171,11 @@ function ButtonFactory(
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            bg: theme.hex2rgba(theme.colors.background.primary, 0.1),
+            bg: theme.colors.background.secondary,
+            borderRadius: get('borderRadius', style),
           }}
         >
-          <TextFactory map={map} style={textStyleX}>
-            ...
-          </TextFactory>
+          <LoadingFactory map={map} />
         </BoxFactory>
       )}
     </BoxFactory>

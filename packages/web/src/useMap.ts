@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import * as Icons from 'phosphor-react';
+
 export default function useMap() {
   const [dimensions, setDimensions] = useState({
     height: window.innerHeight,
@@ -19,6 +21,7 @@ export default function useMap() {
     android: false,
 
     dimensions,
+    Icons,
 
     Button: 'button',
     Image: 'img',

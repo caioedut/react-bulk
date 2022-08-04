@@ -1,5 +1,7 @@
 import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
+import * as Icons from 'phosphor-react-native';
+
 export default function useMap() {
   const dimensions = useWindowDimensions();
 
@@ -10,6 +12,7 @@ export default function useMap() {
     android: Platform.OS === 'android',
 
     dimensions,
+    Icons,
 
     Button: TouchableOpacity,
     Image,
