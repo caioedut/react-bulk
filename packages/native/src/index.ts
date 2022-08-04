@@ -5,6 +5,7 @@ export { default as Checkbox } from './Checkbox';
 export { default as Collapse } from './Collapse';
 export { default as Divider } from './Divider';
 export { default as Dropdown } from './Dropdown';
+export { default as Icon } from './Icon';
 export { default as Input } from './Input';
 export { default as Image } from './Image';
 export { default as Modal } from './Modal';

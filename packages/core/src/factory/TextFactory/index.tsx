@@ -4,6 +4,7 @@ import { useTheme } from '@react-bulk/core';
 
 import Platform from '../../Platform';
 import { TextProps } from '../../types';
+import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
 function TextFactory(
@@ -23,6 +24,7 @@ function TextFactory(
     invisible,
     transform,
     numberOfLines,
+    className,
     style,
     map,
     ...rest
@@ -34,7 +36,7 @@ function TextFactory(
   const { web, native } = Platform;
   const { Text } = map;
 
-  const styleX = [
+  style = [
     {
       color: color ?? theme.colors.text.primary,
       fontSize: theme.rem(1),
@@ -67,8 +69,8 @@ function TextFactory(
     transform && { textTransform: transform },
 
     web && {
-      display: 'inline-block',
-      '& span': { display: 'inline' },
+      display: 'block',
+      '& .rbk-text': { display: 'inline' },
     },
 
     web &&
@@ -86,7 +88,7 @@ function TextFactory(
     rest.numberOfLines = numberOfLines;
   }
 
-  return <BoxFactory ref={ref} component={Text} {...rest} style={styleX} map={map} />;
+  return <BoxFactory ref={ref} component={Text} {...rest} className={clsx('rbk-text', className)} style={style} map={map} />;
 }
 
 export default React.forwardRef(TextFactory);

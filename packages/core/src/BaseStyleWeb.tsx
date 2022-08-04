@@ -65,7 +65,15 @@ export default function BaseStyleWeb() {
     }
   `;
 
+  const animations = `
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(359deg); }
+    }
+  `;
+
   createStyle({ style, global: true });
+  createStyle({ style: animations, global: true });
 
   return null;
 }

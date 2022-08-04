@@ -29,6 +29,7 @@ export type ThemeColorsProps = {
 export type ThemeProps = {
   mode: 'light' | 'dark' | string;
   spacing?: Function;
+  color?: Function;
   shape?: {
     borderRadius?: number;
     spacing?: number;
@@ -161,15 +162,15 @@ export type TextProps = BoxProps & {
 export type ButtonProps = BoxProps & {
   autoFocus?: Boolean;
   disabled?: Boolean;
-  style?: any;
+  labelStyle?: JssStyles;
 
   variant?: 'solid' | 'outline' | 'text' | string;
   size?: 'small' | 'medium' | 'large' | string;
   color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
   block?: Boolean;
   loading?: Boolean;
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
+  startIcon?: string | ReactNode;
+  endIcon?: string | ReactNode;
 };
 
 export type ChangeCallback = (value: string, e: any) => any;
@@ -205,6 +206,7 @@ export type SelectProps = InputProps & {
 
 export type CheckboxProps = InputProps & {
   checked?: boolean;
+  unique?: boolean;
 };
 
 export type CardProps = BoxProps;
@@ -240,4 +242,16 @@ export type CollapseProps = BoxProps & {
 
 export type DropdownProps = BoxProps & {
   visible?: boolean;
+};
+
+export type IconProps = BoxProps & {
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
+  size?: number;
+  weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
+  mirrored?: boolean;
+  alt?: string;
+};
+
+export type LoadingProps = BoxProps & {
+  speed: string;
 };
