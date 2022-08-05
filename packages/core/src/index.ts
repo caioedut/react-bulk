@@ -32,6 +32,7 @@ export { default as BaseStyleNative } from './BaseStyleNative';
 // Factory
 export { default as BoxFactory } from './factory/BoxFactory';
 export { default as ButtonFactory } from './factory/ButtonFactory';
+export { default as ButtonGroupFactory } from './factory/ButtonGroupFactory';
 export { default as CardFactory } from './factory/CardFactory';
 export { default as CheckboxFactory } from './factory/CheckboxFactory';
 export { default as CollapseFactory } from './factory/CollapseFactory';

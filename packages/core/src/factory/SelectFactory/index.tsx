@@ -8,6 +8,7 @@ import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import DropdownFactory from '../DropdownFactory';
+import IconFactory from '../IconFactory';
 import InputFactory from '../InputFactory';
 import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
@@ -93,9 +94,7 @@ function SelectFactory(
         <TextFactory map={map} flex style={{ textAlign: 'left' }}>
           {selected?.label ?? selected?.value ?? placeholder ?? ''}
         </TextFactory>
-        <TextFactory map={map} size={0.625} color={color}>
-          {visible ? '▲' : '▼'}
-        </TextFactory>
+        <IconFactory map={map} name={visible ? 'CaretUp' : 'CaretDown'} size={theme.typography.fontSize} />
       </ButtonFactory>
 
       {Boolean(error) && (

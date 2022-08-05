@@ -36,9 +36,8 @@ function ButtonFactory(
   id = id ?? `rbk-${crypt(uuid())}`;
   color = color ?? 'primary';
 
-  if (web && !rest.type) {
-    rest.type = 'button';
-  }
+  const fontSize = size === 'small' ? theme.rem(0.75) : size === 'large' ? theme.rem(1.25) : theme.rem();
+  const iconSize = fontSize * 1.25;
 
   style = [
     {
@@ -50,7 +49,7 @@ function ButtonFactory(
       alignItems: 'center',
       justifyContent: 'center',
 
-      fontSize: theme.rem(1),
+      fontSize,
       lineHeight: 1.25,
 
       backgroundColor: color,
@@ -63,7 +62,7 @@ function ButtonFactory(
       borderRadius: theme.shape.borderRadius,
 
       margin: 0,
-      padding: theme.rem(0.5),
+      padding: theme.rem(0.5, fontSize),
 
       '&:hover': { backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.9) },
     },
@@ -78,16 +77,6 @@ function ButtonFactory(
 
     variant === 'text' && {
       borderColor: theme.colors.common.trans,
-    },
-
-    size === 'small' && {
-      fontSize: theme.rem(0.75),
-      padding: theme.rem(0.5, theme.rem(0.75)),
-    },
-
-    size === 'large' && {
-      fontSize: theme.rem(1.25),
-      padding: theme.rem(0.5, theme.rem(1.25)),
     },
 
     block && { width: '100%' },
@@ -118,14 +107,17 @@ function ButtonFactory(
   labelStyle = [
     {
       color: get('color', style),
-      fontSize: get('fontSize', style),
+      fontSize,
     },
 
     labelStyle,
   ];
 
   const iconColor = get('color', labelStyle);
-  const iconSize = get('fontSize', labelStyle, style) * 1.25;
+
+  if (web && !rest.type) {
+    rest.type = 'button';
+  }
 
   if (typeof children === 'string') {
     children = (

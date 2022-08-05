@@ -22,6 +22,9 @@ function InputFactory(
   id = id ?? `rbk-${crypt(uuid())}`;
   color = color ?? theme.colors.primary.main;
 
+  const fontSize = size === 'small' ? theme.rem(0.75) : size === 'large' ? theme.rem(1.25) : theme.rem();
+  const iconSize = fontSize * 1.25;
+
   style = [
     ...spacings
       .filter((attr) => attr in rest)
@@ -35,7 +38,7 @@ function InputFactory(
 
   inputStyle = [
     {
-      fontSize: theme.rem(1),
+      fontSize,
       lineHeight: 1.25,
 
       backgroundColor: theme.colors.background.primary,
@@ -48,18 +51,8 @@ function InputFactory(
 
       flex: 1,
       margin: 0,
-      padding: theme.rem(0.5),
+      padding: theme.rem(0.5, fontSize),
       width: '100%',
-    },
-
-    size === 'small' && {
-      fontSize: theme.rem(0.75),
-      padding: theme.rem(0.5, theme.rem(0.75)),
-    },
-
-    size === 'large' && {
-      fontSize: theme.rem(1.25),
-      padding: theme.rem(0.5, theme.rem(1.25)),
     },
 
     disabled && {
@@ -85,9 +78,7 @@ function InputFactory(
 
   labelStyle = [{ mb: 1 }, labelStyle];
 
-  const borderRadius = get('borderRadius', inputStyle) ?? get('corners', inputStyle);
-  const fontSize = get('fontSize', labelStyle, inputStyle, style);
-  const iconSize = fontSize * 1.25;
+  const borderRadius = get('borderRadius', inputStyle);
 
   const iconStyle = {
     backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.1),
