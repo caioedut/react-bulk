@@ -12,7 +12,6 @@ import clsx from '../../utils/clsx';
 function BoxFactory(
   {
     component,
-    className,
     block,
     flexbox,
     direction,
@@ -33,6 +32,7 @@ function BoxFactory(
     basis,
     align,
     justify,
+    className,
     style,
     children,
     map,
@@ -63,8 +63,10 @@ function BoxFactory(
     direction && { flexDirection: direction },
     row && { flexDirection: reverse ? 'row-reverse' : 'row' },
     column && { flexDirection: reverse ? 'column-reverse' : 'column' },
-    wrap && { flexWrap: typeof wrap === 'boolean' ? (wrap ? 'wrap' : 'nowrap') : wrap },
     flow && { flexFlow: flow },
+
+    wrap && typeof wrap !== 'boolean' && { flexWrap: wrap },
+    typeof wrap === 'boolean' && { flexWrap: wrap ? 'wrap' : 'nowrap' },
 
     center && {
       justifyContent: 'center',

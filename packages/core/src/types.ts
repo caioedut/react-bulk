@@ -4,6 +4,8 @@ export type FactoryProps = {
   map: any;
 };
 
+export type ChangeCallback = (value: string, e: any) => any;
+
 export type Bindings = {
   onPress?: Function;
   onPressIn?: Function;
@@ -19,6 +21,46 @@ export type Bindings = {
   /** @deprecated use onPressOut instead */
   onMouseUp?: Function;
 };
+
+export type FlexAlign = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
+
+export type CustomStyles = {
+  h?: number | string;
+  w?: number | string;
+
+  minw?: number | string;
+  maxw?: number | string;
+
+  minh?: number | string;
+  maxh?: number | string;
+
+  bg?: string;
+  border?: string;
+  shadow?: string;
+
+  corners?: number;
+
+  t?: number | string;
+  b?: number | string;
+  l?: number | string;
+  r?: number | string;
+  m?: number | string;
+  mt?: number | string;
+  mb?: number | string;
+  ml?: number | string;
+  mr?: number | string;
+  mx?: number | string;
+  my?: number | string;
+  p?: number | string;
+  pt?: number | string;
+  pb?: number | string;
+  pl?: number | string;
+  pr?: number | string;
+  px?: number | string;
+  py?: number | string;
+};
+
+export type JssStyles = (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
 
 export type ThemeColorsProps = {
   main?: string;
@@ -67,46 +109,6 @@ export type ThemeProps = {
     xxl?: number;
   };
 };
-
-export type FlexAlign = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
-
-export type CustomStyles = {
-  h?: number | string;
-  w?: number | string;
-
-  minw?: number | string;
-  maxw?: number | string;
-
-  minh?: number | string;
-  maxh?: number | string;
-
-  bg?: string;
-  border?: string;
-  shadow?: string;
-
-  corners?: number;
-
-  t?: number | string;
-  b?: number | string;
-  l?: number | string;
-  r?: number | string;
-  m?: number | string;
-  mt?: number | string;
-  mb?: number | string;
-  ml?: number | string;
-  mr?: number | string;
-  mx?: number | string;
-  my?: number | string;
-  p?: number | string;
-  pt?: number | string;
-  pb?: number | string;
-  pl?: number | string;
-  pr?: number | string;
-  px?: number | string;
-  py?: number | string;
-};
-
-export type JssStyles = (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
 
 export type BoxProps = Bindings &
   CustomStyles & {
@@ -159,6 +161,10 @@ export type TextProps = BoxProps & {
   numberOfLines?: number;
 };
 
+export type LabelProps = TextProps & {
+  for?: string;
+};
+
 export type ButtonProps = BoxProps & {
   autoFocus?: Boolean;
   disabled?: Boolean;
@@ -172,8 +178,6 @@ export type ButtonProps = BoxProps & {
   startIcon?: string | ReactNode;
   endIcon?: string | ReactNode;
 };
-
-export type ChangeCallback = (value: string, e: any) => any;
 
 export type InputProps = BoxProps & {
   value?: any;
@@ -189,6 +193,8 @@ export type InputProps = BoxProps & {
   secure?: boolean;
   size?: 'small' | 'medium' | 'large' | string;
   color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
+  startIcon?: string | ReactNode;
+  endIcon?: string | ReactNode;
 
   onChange?: ChangeCallback;
 

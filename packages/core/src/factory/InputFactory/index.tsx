@@ -2,22 +2,22 @@ import React from 'react';
 
 import { crypt, useTheme, uuid } from '@react-bulk/core';
 
-import Platform from '../../Platform';
 import get from '../../props/get';
 import remove from '../../props/remove';
 import { spacings } from '../../styles/jss';
 import { InputProps } from '../../types';
+import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
+import IconFactory from '../IconFactory';
+import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
 function InputFactory(
-  { id, label, error, size, color, disabled, style, inputStyle, labelStyle, map, ...rest }: InputProps | any,
+  { id, label, error, size, color, disabled, startIcon, endIcon, className, style, inputStyle, labelStyle, map, ...rest }: InputProps | any,
   ref: any,
 ) {
   const theme = useTheme();
-
-  const { web, native } = Platform;
-  const { Input, Label, ios } = map;
+  const { Input, web, native, ios } = map;
 
   id = id ?? `rbk-${crypt(uuid())}`;
   color = color ?? theme.colors.primary.main;
@@ -46,14 +46,15 @@ function InputFactory(
       borderColor: color,
       borderRadius: theme.shape.borderRadius,
 
+      flex: 1,
       margin: 0,
       padding: theme.rem(0.5),
       width: '100%',
     },
 
     size === 'small' && {
-      fontSize: theme.rem(0.875),
-      padding: theme.rem(0.5, theme.rem(0.875)),
+      fontSize: theme.rem(0.75),
+      padding: theme.rem(0.5, theme.rem(0.75)),
     },
 
     size === 'large' && {
@@ -84,6 +85,19 @@ function InputFactory(
 
   labelStyle = [{ mb: 1 }, labelStyle];
 
+  const borderRadius = get('borderRadius', inputStyle) ?? get('corners', inputStyle);
+  const fontSize = get('fontSize', labelStyle, inputStyle, style);
+  const iconSize = fontSize * 1.25;
+
+  const iconStyle = {
+    backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.1),
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: color,
+    borderRadius: borderRadius,
+    padding: theme.rem(fontSize, 0.25),
+  };
+
   if (native) {
     // Calculate full height (for iOS)
     const pt = get('paddingTop', inputStyle) ?? get('paddingVertical', inputStyle) ?? get('padding', inputStyle) ?? 0;
@@ -103,14 +117,28 @@ function InputFactory(
   }
 
   return (
-    <BoxFactory map={map} style={style}>
+    <BoxFactory map={map} className={clsx('rbk-input', className)} style={style}>
       {Boolean(label) && (
-        <TextFactory map={map} component={Label} htmlFor={id} numberOfLines={1} style={labelStyle}>
+        <LabelFactory map={map} for={id} numberOfLines={1} style={labelStyle}>
           {label}
-        </TextFactory>
+        </LabelFactory>
       )}
 
-      <BoxFactory map={map} ref={ref} component={Input} id={id} disabled={disabled} {...rest} style={inputStyle} />
+      <BoxFactory map={map} flexbox wrap="nowrap" alignItems="center">
+        {Boolean(startIcon) && (
+          <BoxFactory map={map} style={[iconStyle, { borderRightWidth: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 }]}>
+            {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={color} size={iconSize} /> : startIcon}
+          </BoxFactory>
+        )}
+
+        <BoxFactory map={map} ref={ref} component={Input} id={id} disabled={disabled} {...rest} style={inputStyle} />
+
+        {Boolean(endIcon) && (
+          <BoxFactory map={map} style={[iconStyle, { borderLeftWidth: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }]}>
+            {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={color} size={iconSize} /> : endIcon}
+          </BoxFactory>
+        )}
+      </BoxFactory>
 
       {Boolean(error) && (
         <TextFactory map={map} mt={1} ml={1} numberOfLines={1} size={0.8} color="error">

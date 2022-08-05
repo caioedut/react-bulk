@@ -20,7 +20,7 @@ function IconFactory({ name, color, size, className, style, map, ...rest }: Icon
   const Component = Icons[iconName] ?? Icons.Question;
 
   color = theme.color(color ?? 'primary');
-  size = size ?? theme.typography.iconSize;
+  size = size ?? theme.rem(1.25);
 
   style = [
     web && {

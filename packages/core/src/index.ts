@@ -40,6 +40,7 @@ export { default as DropdownFactory } from './factory/DropdownFactory';
 export { default as IconFactory } from './factory/IconFactory';
 export { default as ImageFactory } from './factory/ImageFactory';
 export { default as InputFactory } from './factory/InputFactory';
+export { default as LabelFactory } from './factory/LabelFactory';
 export { default as LoadingFactory } from './factory/LoadingFactory';
 export { default as ModalFactory } from './factory/ModalFactory';
 export { default as ScrollableFactory } from './factory/ScrollableFactory';
