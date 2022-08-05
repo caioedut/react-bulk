@@ -3,9 +3,10 @@ import React from 'react';
 import { useTheme } from '@react-bulk/core';
 
 import { DividerProps } from '../../types';
+import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
-function DividerFactory({ color, size, opacity, vertical, style, map, ...rest }: DividerProps | any, ref: any) {
+function DividerFactory({ color, size, opacity, vertical, className, style, map, ...rest }: DividerProps | any, ref: any) {
   const theme = useTheme();
 
   style = [
@@ -21,7 +22,7 @@ function DividerFactory({ color, size, opacity, vertical, style, map, ...rest }:
     style,
   ];
 
-  return <BoxFactory map={map} ref={ref} {...rest} style={style} />;
+  return <BoxFactory map={map} ref={ref} {...rest} className={clsx('rbk-divider', className)} style={style} />;
 }
 
 export default React.forwardRef(DividerFactory);

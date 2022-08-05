@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 
 import { crypt, useTheme, uuid } from '@react-bulk/core';
 
-import Platform from '../../Platform';
 import { spacings } from '../../styles/jss';
 import { SelectProps } from '../../types';
+import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import DropdownFactory from '../DropdownFactory';
 import InputFactory from '../InputFactory';
+import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
 function SelectFactory(
@@ -23,6 +24,7 @@ function SelectFactory(
     color,
     disabled,
     onChange,
+    className,
     style,
     inputStyle,
     labelStyle,
@@ -32,8 +34,7 @@ function SelectFactory(
   ref: any,
 ) {
   const theme = useTheme();
-  const { web } = Platform;
-  const { Label } = map;
+  const { web } = map;
 
   const [visible, setVisible] = useState(false);
   const selected = options.find((option) => option.value == value);
@@ -68,11 +69,11 @@ function SelectFactory(
   };
 
   return (
-    <BoxFactory map={map} style={style}>
+    <BoxFactory map={map} className={clsx('rbk-select', className)} style={style}>
       {Boolean(label) && (
-        <TextFactory map={map} component={Label} htmlFor={id} numberOfLines={1} style={labelStyle}>
+        <LabelFactory map={map} for={id} numberOfLines={1} style={labelStyle}>
           {label}
-        </TextFactory>
+        </LabelFactory>
       )}
 
       <ButtonFactory

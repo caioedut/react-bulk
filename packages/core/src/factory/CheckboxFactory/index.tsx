@@ -2,7 +2,6 @@ import React from 'react';
 
 import { crypt, useTheme, uuid } from '@react-bulk/core';
 
-import Platform from '../../Platform';
 import get from '../../props/get';
 import { spacings } from '../../styles/jss';
 import { CheckboxProps } from '../../types';
@@ -11,6 +10,7 @@ import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import IconFactory from '../IconFactory';
 import InputFactory from '../InputFactory';
+import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
 function CheckboxFactory(
@@ -37,8 +37,7 @@ function CheckboxFactory(
   ref: any,
 ) {
   const theme = useTheme();
-  const { web } = Platform;
-  const { Label } = map;
+  const { web } = map;
 
   id = id ?? `rbk-${crypt(uuid())}`;
   color = color ?? theme.colors.primary.main;
@@ -61,7 +60,7 @@ function CheckboxFactory(
       p: 0,
     },
 
-    size === 'small' && { fontSize: theme.rem(0.875) },
+    size === 'small' && { fontSize: theme.rem(0.75) },
 
     size === 'large' && { fontSize: theme.rem(1.25) },
 
@@ -85,7 +84,7 @@ function CheckboxFactory(
     inputStyle,
   ];
 
-  const fontSize = get('fontSize', inputStyle) ?? get('fontSize', style);
+  const fontSize = get('fontSize', inputStyle, style);
   const iconSize = fontSize * 1.25;
 
   if (unique) {
@@ -131,9 +130,9 @@ function CheckboxFactory(
           )}
         </ButtonFactory>
         {Boolean(label) && (
-          <TextFactory map={map} component={Label} htmlFor={id} style={labelStyle}>
+          <LabelFactory map={map} for={id} numberOfLines={1} style={labelStyle}>
             {label}
-          </TextFactory>
+          </LabelFactory>
         )}
       </BoxFactory>
 

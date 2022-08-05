@@ -3,9 +3,10 @@ import React from 'react';
 import { useTheme } from '@react-bulk/core';
 
 import { CardProps } from '../../types';
+import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
-function CardFactory({ style, map, ...rest }: CardProps | any, ref: any) {
+function CardFactory({ className, style, map, ...rest }: CardProps | any, ref: any) {
   const theme = useTheme();
 
   style = [
@@ -17,7 +18,7 @@ function CardFactory({ style, map, ...rest }: CardProps | any, ref: any) {
     style,
   ];
 
-  return <BoxFactory map={map} ref={ref} {...rest} style={style} />;
+  return <BoxFactory map={map} ref={ref} {...rest} className={clsx('rbk-card', className)} style={style} />;
 }
 
 export default React.forwardRef(CardFactory);
