@@ -179,6 +179,14 @@ export type ButtonProps = BoxProps & {
   endIcon?: string | ReactNode;
 };
 
+export type ButtonGroupProps = BoxProps & {
+  disabled?: Boolean;
+  loading?: Boolean;
+  variant?: 'solid' | 'outline' | 'text' | string;
+  size?: 'small' | 'medium' | 'large' | string;
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
+};
+
 export type InputProps = BoxProps & {
   value?: any;
   autoFocus?: Boolean;

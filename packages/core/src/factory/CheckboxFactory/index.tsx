@@ -2,7 +2,6 @@ import React from 'react';
 
 import { crypt, useTheme, uuid } from '@react-bulk/core';
 
-import get from '../../props/get';
 import { spacings } from '../../styles/jss';
 import { CheckboxProps } from '../../types';
 import clsx from '../../utils/clsx';
@@ -42,6 +41,9 @@ function CheckboxFactory(
   id = id ?? `rbk-${crypt(uuid())}`;
   color = color ?? theme.colors.primary.main;
 
+  const fontSize = size === 'small' ? theme.rem(0.75) : size === 'large' ? theme.rem(1.25) : theme.rem();
+  const iconSize = fontSize * 1.25;
+
   style = [
     ...spacings
       .filter((attr) => attr in rest)
@@ -56,13 +58,9 @@ function CheckboxFactory(
   inputStyle = [
     {
       color,
-      fontSize: theme.rem(1),
+      fontSize,
       p: 0,
     },
-
-    size === 'small' && { fontSize: theme.rem(0.75) },
-
-    size === 'large' && { fontSize: theme.rem(1.25) },
 
     disabled && {
       color: theme.colors.background.disabled,
@@ -83,9 +81,6 @@ function CheckboxFactory(
 
     inputStyle,
   ];
-
-  const fontSize = get('fontSize', inputStyle, style);
-  const iconSize = fontSize * 1.25;
 
   if (unique) {
     inputStyle.unshift({ borderRadius: iconSize / 2 });
