@@ -83,8 +83,6 @@ function GroupFactory(
       color: theme.colors.common.white,
 
       fontSize,
-      lineHeight: 1.25,
-
       margin: 0,
       padding: theme.rem(0.5, fontSize),
       textDecorationLine: 'none',

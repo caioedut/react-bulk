@@ -24,17 +24,8 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     remove(Object.keys(theme.breakpoints), args);
   }
 
-  const styles = merge(args);
-
-  // Web specific
-  if (webStyle && Platform.web) {
-    Object.assign(styles, webStyle);
-  }
-
-  // Native specific
-  if (nativeStyle && Platform.native) {
-    Object.assign(styles, nativeStyle);
-  }
+  // Merge styles with platform specific
+  const styles = merge(args, web && webStyle, native && nativeStyle);
 
   for (const attr of Object.keys(styles)) {
     let prop: any = attr;

@@ -6,7 +6,6 @@ const base = {
 
   typography: {
     fontSize: 16,
-    lineHeight: 1.15,
   },
 
   color(mixin) {
@@ -67,7 +66,11 @@ const base = {
   },
 
   hex2rgba(hex: string, alpha = 1) {
-    const [r, g, b] = hex.match(/\w\w/g)?.map((x) => parseInt(x, 16)) || [];
+    const [r, g, b] =
+      this.color(hex)
+        .match(/\w\w/g)
+        ?.map((x) => parseInt(x, 16)) || [];
+
     return `rgba(${r || 0},${g || 0},${b || 0},${alpha})`;
   },
 

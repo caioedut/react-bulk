@@ -14,12 +14,14 @@ function BoxFactory(
   {
     component,
     block,
+    hidden,
     flexbox,
     direction,
     row,
     column,
     reverse,
     wrap,
+    noWrap,
     flow,
     justifyContent,
     alignContent,
@@ -43,8 +45,8 @@ function BoxFactory(
   ref,
 ) {
   const theme = useTheme();
-
   const { web, native, dimensions, Text, View } = map;
+  const classes: any[] = [className];
 
   style = [
     { position: 'relative' },
@@ -62,6 +64,8 @@ function BoxFactory(
       display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}`,
       flexDirection: 'row',
       flexWrap: 'wrap',
+      flexShrink: 1,
+      alignContent: 'stretch',
     },
 
     direction && { flexDirection: direction },
@@ -71,6 +75,7 @@ function BoxFactory(
 
     wrap && typeof wrap !== 'boolean' && { flexWrap: wrap },
     typeof wrap === 'boolean' && { flexWrap: wrap ? 'wrap' : 'nowrap' },
+    noWrap && { flexWrap: 'nowrap' },
 
     center && {
       justifyContent: 'center',
@@ -94,6 +99,8 @@ function BoxFactory(
     justify && { justifySelf: justify },
 
     style,
+
+    hidden && { display: 'none !important' },
   ];
 
   const hasFlex = ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'justifyItems', 'alignContent', 'alignItems'].some((prop) =>
@@ -134,12 +141,12 @@ function BoxFactory(
     }
   }
 
-  const processed = createStyle({ style: style });
+  const processed = createStyle({ style });
 
   if (processed) {
     // Web: CSS Class Name
     if (typeof processed === 'string') {
-      className = clsx(processed, className);
+      classes.push(processed);
     }
 
     // Native: Style Object
@@ -148,8 +155,8 @@ function BoxFactory(
     }
   }
 
-  if (className) {
-    props.className = clsx(className);
+  if (web) {
+    props.className = clsx(classes);
   }
 
   // Platform specific props
@@ -163,15 +170,21 @@ function BoxFactory(
 
   props = bindings(props);
 
-  const Component = component || View;
-
   if ([undefined, null, false, NaN].includes(children)) {
     children = null;
   }
 
-  if (native && typeof children === 'string') {
-    children = <Text>{children}</Text>;
+  if (native && children) {
+    if (typeof children === 'string') {
+      children = <Text>{children}</Text>;
+    }
+
+    if (Array.isArray(children)) {
+      children = children.map((child) => (typeof children === 'string' ? <Text>{child}</Text> : child));
+    }
   }
+
+  const Component = component || View;
 
   return (
     <Component ref={ref} {...props}>
