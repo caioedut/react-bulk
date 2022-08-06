@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { crypt, uuid } from '@react-bulk/core';
-
 import { SelectProps } from '../../types';
 import clsx from '../../utils/clsx';
 import ButtonFactory from '../ButtonFactory';
@@ -10,8 +8,7 @@ import TextFactory from '../TextFactory';
 
 function SelectFactory(
   {
-    // Html
-    id,
+    // Component
     className,
     defaultValue,
     name,
@@ -36,8 +33,6 @@ function SelectFactory(
 
   const [visible, setVisible] = useState(false);
   const [internal, setInternal] = useState(options?.find((item) => item.value == defaultValue));
-
-  id = id ?? `rbk-${crypt(uuid())}`;
 
   useEffect(() => {
     if (typeof value !== 'undefined') {
@@ -82,7 +77,6 @@ function SelectFactory(
       <ButtonFactory
         ref={buttonRef}
         map={map}
-        id={id}
         className={clsx(classes)}
         endIcon={visible ? 'CaretUp' : 'CaretDown'}
         {...rest}

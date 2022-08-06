@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { crypt, useTheme, uuid } from '@react-bulk/core';
+import { useTheme } from '@react-bulk/core';
 
 import get from '../../props/get';
 import { InputProps } from '../../types';
@@ -11,18 +11,23 @@ import GroupFactory from '../GroupFactory';
 
 function InputFactory(
   {
-    // Html
-    id,
+    // Component
     className,
+    autoCapitalize,
+    autoCorrect,
     autoFocus,
+    caretHidden,
     defaultValue,
+    maxLength,
     name,
     placeholder,
     readOnly,
+    returnKeyType,
+    secure,
+    selectionColor,
+    spellCheck,
     type,
     value,
-    // Custom
-    secure,
     // Bindings
     onChange,
     onFocus,
@@ -36,7 +41,7 @@ function InputFactory(
   ref: any,
 ) {
   const theme = useTheme();
-  const { web, Input, Label } = map;
+  const { web, native, Input, Label, View } = map;
   const classes: any[] = ['rbk-input', className];
 
   const defaultRef: any = useRef(null);
@@ -45,7 +50,12 @@ function InputFactory(
   const [focused, setFocused] = useState(false);
   const [internal, setInternal] = useState(`${defaultValue ?? ''}`);
 
-  id = id ?? `rbk-${crypt(uuid())}`;
+  const color = theme.color(rest.color ?? 'primary');
+
+  // Defaults
+  selectionColor = theme.hex2rgba(selectionColor ?? color, 0.75);
+  autoCorrect = autoCorrect ?? true;
+  spellCheck = spellCheck ?? autoCorrect;
 
   useEffect(() => {
     if (typeof value !== 'undefined') {
@@ -90,7 +100,7 @@ function InputFactory(
   };
 
   return (
-    <BoxFactory map={map} component={Label} className={clsx(classes)} htmlFor={id}>
+    <BoxFactory map={map} component={native ? View : Label} className={clsx(classes)}>
       <GroupFactory
         {...rest}
         map={map}
@@ -112,11 +122,11 @@ function InputFactory(
             map={map}
             ref={inputRef}
             component={Input}
-            // Html
-            id={id}
+            // Component
             className={clsx(classes)}
+            autoCapitalize={autoCapitalize}
             autoFocus={autoFocus}
-            disabled={rest.disabled}
+            maxLength={maxLength}
             name={name}
             placeholder={placeholder}
             value={internal}
@@ -130,26 +140,40 @@ function InputFactory(
                 backgroundColor: 'transparent',
                 borderWidth: 0,
                 color: theme.colors.text.primary,
+                flex: 1,
                 fontSize: get('fontSize', style),
                 margin: 0,
                 padding: 0,
                 height: get('fontSize', style) * 1.25,
                 width: '100%',
-              },
 
-              web && {
-                backgroundImage: 'none',
-                boxShadow: 'none',
-                cursor: 'inherit',
-                fontFamily: 'inherit',
-                lineHeight: theme.typography.lineHeight,
-                outline: '0 !important',
+                web: [
+                  {
+                    backgroundImage: 'none',
+                    boxShadow: 'none',
+                    caretColor: caretHidden ? theme.colors.common.trans : selectionColor,
+                    cursor: 'inherit',
+                    fontFamily: 'inherit',
+                    outline: '0 !important',
+                  },
+
+                  caretHidden && { caretColor: 'transparent' },
+
+                  selectionColor && {
+                    '&::-moz-selection': { backgroundColor: selectionColor },
+                    '&::selection': { backgroundColor: selectionColor },
+                  },
+                ],
               },
             ]}
             // Specific
             platform={{
               web: {
+                autoCorrect: autoCorrect ? 'on' : 'off',
+                enterKeyHint: returnKeyType,
+                disabled: rest.disabled,
                 readOnly,
+                spellCheck: `${Boolean(spellCheck)}`,
                 type: pick(secure ? 'secure' : type, 'text', {
                   text: 'text',
                   number: 'number',
@@ -160,11 +184,15 @@ function InputFactory(
                 }),
               },
               native: {
-                editable: !readOnly,
+                autoCorrect,
+                caretHidden,
+                editable: !readOnly || rest.disabled,
                 keyboardAppearance: theme.mode,
                 placeholderTextColor: theme.hex2rgba(theme.colors.text.primary, 0.4),
+                returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
                 secureTextEntry: Boolean(secure),
-                selectionColor: theme.colors.primary.main,
+                selectionColor,
+                spellCheck,
                 underlineColorAndroid: 'transparent',
                 keyboardType: pick(type, 'text', {
                   text: 'default',

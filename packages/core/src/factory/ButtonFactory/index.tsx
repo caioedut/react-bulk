@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { crypt, uuid } from '@react-bulk/core';
-
 import get from '../../props/get';
 import { ButtonProps } from '../../types';
 import clsx from '../../utils/clsx';
@@ -11,8 +9,7 @@ import LabelFactory from '../LabelFactory';
 
 function ButtonFactory(
   {
-    // Html
-    id,
+    // Component
     className,
     autoFocus,
     // Styles
@@ -27,8 +24,6 @@ function ButtonFactory(
 ) {
   const { web, Button, Text } = map;
   const classes: any[] = ['rbk-button', className];
-
-  id = id ?? `rbk-${crypt(uuid())}`;
 
   style = [
     { justifyContent: 'center' },
@@ -54,8 +49,7 @@ function ButtonFactory(
       ref={ref}
       component={Button}
       {...rest}
-      // Html
-      id={id}
+      // Component
       className={clsx(classes)}
       autoFocus={autoFocus}
       // Styles

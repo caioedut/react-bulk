@@ -1,7 +1,5 @@
 import uuid from '../utils/uuid';
 
-const notPx = ['lineHeight', 'opacity', 'order', 'zIndex', 'flex'];
-
 export default function css(style: any, selector?: string | null) {
   let result = style;
 
@@ -57,3 +55,33 @@ export default function css(style: any, selector?: string | null) {
 
   return result || '';
 }
+
+// See https://react-cn.github.io/react/tips/style-props-value-px.html
+const notPx = [
+  'animationIterationCount',
+  'boxFlex',
+  'boxFlexGroup',
+  'boxOrdinalGroup',
+  'columnCount',
+  'fillOpacity',
+  'flex',
+  'flexGrow',
+  'flexPositive',
+  'flexShrink',
+  'flexNegative',
+  'flexOrder',
+  'fontWeight',
+  'lineClamp',
+  'lineHeight',
+  'opacity',
+  'order',
+  'orphans',
+  'stopOpacity',
+  'strokeDashoffset',
+  'strokeOpacity',
+  'strokeWidth',
+  'tabSize',
+  'widows',
+  'zIndex',
+  'zoom',
+];

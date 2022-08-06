@@ -40,7 +40,6 @@ function TextFactory(
     {
       color: color ?? theme.colors.text.primary,
       fontSize: theme.rem(1),
-      lineHeight: theme.typography.lineHeight,
       textDecorationLine: 'none',
     },
 

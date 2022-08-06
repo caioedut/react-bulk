@@ -11,9 +11,7 @@ import LabelFactory from '../LabelFactory';
 
 function CheckboxFactory(
   {
-    // error,
-    unique,
-    // Html
+    // Component
     id,
     className,
     checked,
@@ -23,6 +21,7 @@ function CheckboxFactory(
     readOnly,
     // Custom
     label,
+    unique,
     // Bindings
     onChange,
     // Styles
@@ -90,7 +89,7 @@ function CheckboxFactory(
 
   return (
     <>
-      <BoxFactory map={map} className={clsx(classes)} flexbox wrap={false} alignItems="baseline" style={containerStyle}>
+      <BoxFactory map={map} className={clsx(classes)} flexbox noWrap style={containerStyle}>
         <ButtonFactory
           ref={buttonRef}
           map={map}

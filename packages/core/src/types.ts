@@ -23,7 +23,8 @@ export type Bindings = {
   onMouseUp?: EventCallback;
 };
 
-export type FlexAlign = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
+export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch';
+export type FlexAlignValues = 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
 export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
 export type SizeValues = 'small' | 'medium' | 'large' | 'xlarge';
 
@@ -121,6 +122,7 @@ export type BoxProps = Bindings &
     children?: ReactNode;
     style?: JssStyles;
     block?: JssStyles;
+    hidden?: boolean;
 
     // Flexbox container
     flexbox?: boolean | 'flex' | 'flex-inline';
@@ -129,11 +131,12 @@ export type BoxProps = Bindings &
     column?: boolean;
     reverse?: boolean;
     wrap?: boolean | 'nowrap' | 'wrap' | 'wrap-reverse';
+    noWrap?: boolean;
     flow?: string;
-    justifyContent?: FlexAlign;
-    alignContent?: FlexAlign;
-    justifyItems?: FlexAlign;
-    alignItems?: FlexAlign;
+    justifyContent?: FlexJustifyValues;
+    alignContent?: FlexAlignValues;
+    justifyItems?: FlexJustifyValues;
+    alignItems?: FlexAlignValues | 'baseline';
     center?: boolean;
 
     // Flexbox item
@@ -142,8 +145,8 @@ export type BoxProps = Bindings &
     grow?: number;
     shrink?: number;
     basis?: 'auto' | number | string;
-    align?: FlexAlign;
-    justify?: FlexAlign;
+    align?: FlexAlignValues;
+    justify?: FlexJustifyValues;
   };
 
 export type TextProps = BoxProps & {
@@ -205,10 +208,12 @@ export type ButtonGroupProps = BoxProps & {
 };
 
 export type InputBaseProps = GroupProps & {
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   autoFocus?: boolean;
   defaultValue?: string;
-  readOnly?: boolean;
   name?: string;
+  readOnly?: boolean;
+  returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
   placeholder?: string;
   onChange?: ChangeCallback;
 
@@ -217,8 +222,12 @@ export type InputBaseProps = GroupProps & {
 };
 
 export type InputProps = InputBaseProps & {
-  type?: 'text' | 'number' | 'email' | 'phone' | 'url';
+  autoCorrect?: boolean;
+  caretHidden?: boolean;
+  maxLength?: boolean;
   secure?: boolean;
+  selectionColor?: string;
+  type?: 'text' | 'number' | 'email' | 'phone' | 'url';
 };
 
 export type SelectProps = InputBaseProps & {
