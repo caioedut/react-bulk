@@ -5,6 +5,7 @@ import { useTheme } from '@react-bulk/core';
 import createStyle from '../../createStyle';
 import bindings from '../../props/bindings';
 import get from '../../props/get';
+import merge from '../../props/merge';
 import { customStyleProps } from '../../styles/jss';
 import { BoxProps } from '../../types';
 import clsx from '../../utils/clsx';
@@ -32,8 +33,10 @@ function BoxFactory(
     basis,
     align,
     justify,
+    platform,
     className,
     style,
+    rawStyle,
     children,
     map,
     ...props
@@ -45,6 +48,8 @@ function BoxFactory(
   const { web, native, dimensions, Text, View } = map;
 
   style = [
+    { position: 'relative' },
+
     block && {
       marginLeft: 0,
       marginRight: 0,
@@ -148,6 +153,15 @@ function BoxFactory(
     props.className = clsx(className);
   }
 
+  // Platform specific props
+  if (platform) {
+    Object.keys(platform).forEach((item) => {
+      if (map[item] || item === '*') {
+        Object.assign(props, merge({}, platform[item]));
+      }
+    });
+  }
+
   props = bindings(props);
 
   const Component = component || View;
@@ -161,7 +175,7 @@ function BoxFactory(
   }
 
   return (
-    <Component ref={ref} {...props}>
+    <Component ref={ref} {...props} style={rawStyle}>
       {children}
     </Component>
   );

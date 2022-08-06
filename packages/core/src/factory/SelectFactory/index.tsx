@@ -1,109 +1,111 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { crypt, useTheme, uuid } from '@react-bulk/core';
+import { crypt, uuid } from '@react-bulk/core';
 
-import { spacings } from '../../styles/jss';
 import { SelectProps } from '../../types';
 import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import DropdownFactory from '../DropdownFactory';
-import IconFactory from '../IconFactory';
-import InputFactory from '../InputFactory';
-import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
 function SelectFactory(
   {
+    // Html
     id,
-    options,
-    placeholder,
-    label,
-    error,
-    name,
-    value,
-    color,
-    disabled,
-    onChange,
     className,
-    style,
-    inputStyle,
-    labelStyle,
+    defaultValue,
+    name,
+    placeholder,
+    readOnly,
+    value,
+    // Custom
+    options,
+    // Bindings
+    onChange,
+    // Core
     map,
     ...rest
   }: SelectProps | any,
   ref: any,
 ) {
-  const theme = useTheme();
-  const { web } = map;
+  const { web, Input } = map;
+  const classes: any[] = ['rbk-select', className];
+
+  const defaultRef: any = useRef(null);
+  const buttonRef = ref || defaultRef;
 
   const [visible, setVisible] = useState(false);
-  const selected = options.find((option) => option.value == value);
+  const [internal, setInternal] = useState(options?.find((item) => item.value == defaultValue));
 
   id = id ?? `rbk-${crypt(uuid())}`;
-  color = color ?? theme.colors.primary.main;
 
-  style = [
-    ...spacings
-      .filter((attr) => attr in rest)
-      .map((attr) => {
-        const val = rest[attr];
-        delete rest[attr];
-        return { [attr]: val };
-      }),
-    style,
-  ];
-
-  labelStyle = [{ mb: 1 }, labelStyle];
-
-  const handlePressOption = (e, option) => {
-    setVisible(false);
-
-    if (typeof onChange === 'function') {
-      onChange(e, option.value, option);
+  useEffect(() => {
+    if (typeof value !== 'undefined') {
+      setInternal(options?.find((item) => item.value == value));
     }
+  }, [value]);
+
+  const focus = useCallback(() => {
+    buttonRef?.current?.focus?.();
+  }, [buttonRef]);
+
+  const blur = useCallback(() => {
+    buttonRef?.current?.blur?.();
+  }, [buttonRef]);
+
+  const clear = useCallback(() => {
+    setInternal(options?.find((item) => item.value == defaultValue));
+  }, []);
+
+  const isFocused = useCallback(() => {
+    return buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement;
+  }, [buttonRef]);
+
+  const handleChange = (e, option) => {
+    const target = buttonRef?.current;
+    const nativeEvent = e?.nativeEvent ?? e;
+    const value = option.value;
+
+    setVisible(false);
+    setInternal(options?.find((item) => item.value == value));
+
+    onChange?.({ target, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
   };
 
-  const handleChange = (e) => {
-    const option = options.find((option) => option.value == value);
-    handlePressOption(e, option);
+  const handleChangeNative = (e) => {
+    const option = options.find((item) => item.value == e.target.value);
+    handleChange(e, option);
   };
 
   return (
-    <BoxFactory map={map} className={clsx('rbk-select', className)} style={style}>
-      {Boolean(label) && (
-        <LabelFactory map={map} for={id} numberOfLines={1} style={labelStyle}>
-          {label}
-        </LabelFactory>
-      )}
-
+    <>
       <ButtonFactory
-        ref={web ? null : ref}
+        ref={buttonRef}
         map={map}
         id={id}
-        color={color}
-        disabled={disabled}
+        className={clsx(classes)}
+        endIcon={visible ? 'CaretUp' : 'CaretDown'}
         {...rest}
         block
-        wrap={false}
         type="button"
         variant="outline"
-        style={inputStyle}
-        onPress={() => setVisible((current) => !current)}
+        onPress={() => setVisible((current) => (readOnly ? false : !current))}
       >
         <TextFactory map={map} flex style={{ textAlign: 'left' }}>
-          {selected?.label ?? selected?.value ?? placeholder ?? ''}
+          {internal?.label ?? internal?.value ?? placeholder ?? ''}
         </TextFactory>
-        <IconFactory map={map} name={visible ? 'CaretUp' : 'CaretDown'} size={theme.typography.fontSize} />
       </ButtonFactory>
 
-      {Boolean(error) && (
-        <TextFactory map={map} mt={1} ml={1} numberOfLines={1} size={0.8} color="error">
-          {error}
-        </TextFactory>
+      {web && (
+        <Input //
+          hidden
+          type="text"
+          name={name}
+          readOnly={readOnly}
+          value={`${internal?.value ?? ''}`}
+          onChange={handleChangeNative}
+        />
       )}
-
-      {web && <InputFactory map={map} ref={ref} type="hidden" name={name} value={value ?? ''} onChange={handleChange} />}
 
       <DropdownFactory
         map={map}
@@ -123,20 +125,16 @@ function SelectFactory(
             type="button"
             variant="text"
             disabled={option.disabled}
-            onPress={(e) => handlePressOption(e, option)}
+            endIcon={option.value == internal?.value ? 'Check' : null}
+            onPress={(e) => handleChange(e, option)}
           >
             <TextFactory map={map} flex style={{ textAlign: 'left' }}>
               {option.label}
             </TextFactory>
-            {option.value == selected?.value && (
-              <TextFactory map={map} color={color}>
-                ✓
-              </TextFactory>
-            )}
           </ButtonFactory>
         ))}
       </DropdownFactory>
-    </BoxFactory>
+    </>
   );
 }
 

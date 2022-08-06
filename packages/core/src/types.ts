@@ -4,25 +4,28 @@ export type FactoryProps = {
   map: any;
 };
 
-export type ChangeCallback = (value: string, e: any) => any;
+export type EventCallback = (e: any) => any;
+export type ChangeCallback = (e: any, value: string) => any;
 
 export type Bindings = {
   onPress?: Function;
   onPressIn?: Function;
   onPressOut?: Function;
 
-  onFocus?: Function;
-  onBlur?: Function;
+  onFocus?: EventCallback;
+  onBlur?: EventCallback;
 
   /** @deprecated use onPress instead */
-  onClick?: Function;
+  onClick?: EventCallback;
   /** @deprecated use onPressIn instead */
-  onMouseDown?: Function;
+  onMouseDown?: EventCallback;
   /** @deprecated use onPressOut instead */
-  onMouseUp?: Function;
+  onMouseUp?: EventCallback;
 };
 
 export type FlexAlign = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'baseline';
+export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
+export type SizeValues = 'small' | 'medium' | 'large' | 'xlarge';
 
 export type CustomStyles = {
   h?: number | string;
@@ -114,9 +117,11 @@ export type BoxProps = Bindings &
   CustomStyles & {
     component?: any;
     className?: any;
+    platform?: object;
     children?: ReactNode;
     style?: JssStyles;
     block?: JssStyles;
+    rawStyle?: object;
 
     // Flexbox container
     flexbox?: boolean | 'flex' | 'flex-inline';
@@ -145,7 +150,7 @@ export type BoxProps = Bindings &
 export type TextProps = BoxProps & {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'caption';
   size?: number;
-  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
+  color?: ColorValues;
   center?: boolean;
   left?: boolean;
   right?: boolean;
@@ -165,52 +170,59 @@ export type LabelProps = TextProps & {
   for?: string;
 };
 
-export type ButtonProps = BoxProps & {
-  autoFocus?: Boolean;
-  disabled?: Boolean;
-  labelStyle?: JssStyles;
+export type GroupProps = BoxProps & {
+  id?: string;
+  className?: string;
+  disabled?: boolean;
+  focused?: boolean;
 
-  variant?: 'solid' | 'outline' | 'text' | string;
-  size?: 'small' | 'medium' | 'large' | string;
-  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
-  block?: Boolean;
-  loading?: Boolean;
+  color?: ColorValues;
+  error?: string;
+  label?: string;
+  loading?: boolean;
+  size?: SizeValues;
+  variant?: 'solid' | 'outline' | 'text';
+
   startIcon?: string | ReactNode;
   endIcon?: string | ReactNode;
+  renderChildren?: Function;
+
+  style?: JssStyles;
+  labelStyle?: JssStyles;
+  errorStyle?: JssStyles;
+  containerStyle?: JssStyles;
+};
+
+export type ButtonProps = GroupProps & {
+  autoFocus?: boolean;
 };
 
 export type ButtonGroupProps = BoxProps & {
-  disabled?: Boolean;
-  loading?: Boolean;
+  color?: ColorValues;
+  disabled?: boolean;
+  loading?: boolean;
+  size?: SizeValues;
   variant?: 'solid' | 'outline' | 'text' | string;
-  size?: 'small' | 'medium' | 'large' | string;
-  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
 };
 
-export type InputProps = BoxProps & {
-  value?: any;
-  autoFocus?: Boolean;
-  readOnly?: Boolean;
-  disabled?: Boolean;
-  inputStyle?: JssStyles;
-  labelStyle?: JssStyles;
-
-  label?: string;
-  error?: string;
+export type InputBaseProps = GroupProps & {
+  autoFocus?: boolean;
+  defaultValue?: string;
+  readOnly?: boolean;
+  name?: string;
   placeholder?: string;
-  secure?: boolean;
-  size?: 'small' | 'medium' | 'large' | string;
-  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
-  startIcon?: string | ReactNode;
-  endIcon?: string | ReactNode;
-
   onChange?: ChangeCallback;
 
   /** @deprecated use onChange instead */
   onChangeText?: Function;
 };
 
-export type SelectProps = InputProps & {
+export type InputProps = InputBaseProps & {
+  type?: 'text' | 'number' | 'email' | 'phone' | 'url';
+  secure?: boolean;
+};
+
+export type SelectProps = InputBaseProps & {
   options: {
     label: string;
     value: string;
@@ -218,12 +230,12 @@ export type SelectProps = InputProps & {
   }[];
 };
 
-export type CheckboxProps = InputProps & {
+export type CheckboxProps = InputBaseProps & {
   checked?: boolean;
   unique?: boolean;
 };
 
-export type CardProps = BoxProps;
+export type CardProps = BoxProps & {};
 
 export type ScrollableProps = BoxProps & {
   horizontal?: boolean;
@@ -247,7 +259,7 @@ export type DividerProps = BoxProps & {
 export type ModalProps = BoxProps & {
   visible?: boolean;
   align?: 'center' | 'top' | 'bottom';
-  onBackdropPress?: Function;
+  onBackdropPress?: EventCallback;
 };
 
 export type CollapseProps = BoxProps & {
@@ -259,7 +271,7 @@ export type DropdownProps = BoxProps & {
 };
 
 export type IconProps = BoxProps & {
-  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
+  color?: ColorValues;
   size?: number;
   weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
   mirrored?: boolean;
