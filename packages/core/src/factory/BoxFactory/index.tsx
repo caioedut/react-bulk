@@ -36,7 +36,6 @@ function BoxFactory(
     platform,
     className,
     style,
-    rawStyle,
     children,
     map,
     ...props
@@ -175,7 +174,7 @@ function BoxFactory(
   }
 
   return (
-    <Component ref={ref} {...props} style={rawStyle}>
+    <Component ref={ref} {...props}>
       {children}
     </Component>
   );

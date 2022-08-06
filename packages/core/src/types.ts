@@ -121,7 +121,6 @@ export type BoxProps = Bindings &
     children?: ReactNode;
     style?: JssStyles;
     block?: JssStyles;
-    rawStyle?: object;
 
     // Flexbox container
     flexbox?: boolean | 'flex' | 'flex-inline';
