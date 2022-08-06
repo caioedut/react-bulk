@@ -1,50 +1,83 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { crypt, useTheme, uuid } from '@react-bulk/core';
+import { crypt, uuid } from '@react-bulk/core';
 
 import { spacings } from '../../styles/jss';
 import { CheckboxProps } from '../../types';
 import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
-import IconFactory from '../IconFactory';
-import InputFactory from '../InputFactory';
 import LabelFactory from '../LabelFactory';
-import TextFactory from '../TextFactory';
 
 function CheckboxFactory(
   {
-    id,
-    placeholder,
-    label,
-    error,
-    name,
-    value,
-    checked,
-    disabled,
+    // error,
     unique,
-    size,
-    color,
-    onChange,
+    // Html
+    id,
     className,
+    checked,
+    defaultChecked,
+    name,
+    placeholder,
+    readOnly,
+    // Custom
+    label,
+    // Bindings
+    onChange,
+    // Styles
     style,
-    inputStyle,
     labelStyle,
+    containerStyle,
+    // Core
     map,
     ...rest
   }: CheckboxProps | any,
   ref: any,
 ) {
-  const theme = useTheme();
-  const { web } = map;
+  const { web, Input } = map;
+  const classes: any[] = ['rbk-checkbox', className];
 
   id = id ?? `rbk-${crypt(uuid())}`;
-  color = color ?? theme.colors.primary.main;
 
-  const fontSize = size === 'small' ? theme.rem(0.75) : size === 'large' ? theme.rem(1.25) : theme.rem();
-  const iconSize = fontSize * 1.25;
+  const defaultRef: any = useRef(null);
+  const buttonRef = ref || defaultRef;
 
-  style = [
+  const [internal, setInternal] = useState(Boolean(+defaultChecked));
+
+  useEffect(() => {
+    if (typeof checked !== 'undefined') {
+      setInternal(checked);
+    }
+  }, [checked]);
+
+  const focus = useCallback(() => {
+    buttonRef?.current?.focus?.();
+  }, [buttonRef]);
+
+  const blur = useCallback(() => {
+    buttonRef?.current?.blur?.();
+  }, [buttonRef]);
+
+  const clear = useCallback(() => {
+    setInternal(Boolean(+defaultChecked));
+  }, []);
+
+  const isFocused = useCallback(() => {
+    return buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement;
+  }, [buttonRef]);
+
+  const handleChange = (e) => {
+    const target = buttonRef?.current;
+    const nativeEvent = e?.nativeEvent ?? e;
+    const checked = !internal;
+
+    setInternal(checked);
+
+    onChange?.({ target, checked, focus, blur, clear, isFocused, nativeEvent }, checked);
+  };
+
+  containerStyle = [
     ...spacings
       .filter((attr) => attr in rest)
       .map((attr) => {
@@ -52,105 +85,42 @@ function CheckboxFactory(
         delete rest[attr];
         return { [attr]: val };
       }),
-    style,
+    containerStyle,
   ];
-
-  inputStyle = [
-    {
-      color,
-      fontSize,
-      p: 0,
-    },
-
-    disabled && {
-      color: theme.colors.background.disabled,
-      opacity: 0.75,
-    },
-
-    web && disabled && { cursor: 'not-allowed' },
-
-    web && {
-      cursor: 'pointer',
-      transition: 'box-shadow 0.2s ease',
-
-      '&:focus': {
-        outline: 0,
-        boxShadow: `0 0 0 0.2rem ${theme.hex2rgba(theme.colors.primary.main, 0.4)}`,
-      },
-    },
-
-    inputStyle,
-  ];
-
-  if (unique) {
-    inputStyle.unshift({ borderRadius: iconSize / 2 });
-  }
-
-  labelStyle = [
-    {
-      fontSize,
-      flex: 1,
-      ml: 1,
-    },
-
-    labelStyle,
-  ];
-
-  const handlePress = (e) => {
-    if (typeof onChange === 'function') {
-      onChange(e, !checked);
-    }
-  };
 
   return (
-    <BoxFactory map={map} style={style} className={clsx('rbk-checkbox', className)}>
-      <BoxFactory map={map} flexbox wrap={false} alignItems="center" disabled={disabled}>
+    <>
+      <BoxFactory map={map} className={clsx(classes)} flexbox wrap={false} alignItems="baseline" style={containerStyle}>
         <ButtonFactory
+          ref={buttonRef}
           map={map}
-          ref={web ? null : ref}
           id={id}
           variant="text"
-          color={color}
-          disabled={disabled}
-          h={iconSize}
-          w={iconSize}
           {...rest}
-          style={inputStyle}
-          onPress={handlePress}
-        >
-          {unique ? (
-            <IconFactory map={map} name={checked ? 'CheckCircle' : 'Circle'} size={iconSize} />
-          ) : (
-            <IconFactory map={map} name={checked ? 'CheckSquare' : 'Square'} size={iconSize} />
-          )}
-        </ButtonFactory>
+          startIcon={unique ? (checked ? 'CheckCircle' : 'Circle') : checked ? 'CheckSquare' : 'Square'}
+          onPress={handleChange}
+          style={[{ padding: 0 }, style]}
+        />
+
         {Boolean(label) && (
-          <LabelFactory map={map} for={id} numberOfLines={1} style={labelStyle}>
+          <LabelFactory map={map} numberOfLines={1} for={id} style={[{ ml: 1, flex: 1 }, labelStyle]}>
             {label}
           </LabelFactory>
         )}
       </BoxFactory>
 
-      {Boolean(error) && (
-        <TextFactory map={map} mt={1} ml={1} numberOfLines={1} size={0.8} color="error">
-          {error}
-        </TextFactory>
-      )}
-
       {web && (
-        <InputFactory
-          map={map}
-          ref={ref}
+        <Input //
           hidden
           type="checkbox"
           name={name}
-          value={value}
+          readOnly={readOnly}
+          defaultValue="1"
           checked={checked}
-          disabled={disabled}
-          onChange={handlePress}
+          onChange={handleChange}
         />
       )}
-    </BoxFactory>
+    </>
   );
 }
 

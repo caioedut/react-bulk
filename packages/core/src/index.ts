@@ -38,6 +38,7 @@ export { default as CheckboxFactory } from './factory/CheckboxFactory';
 export { default as CollapseFactory } from './factory/CollapseFactory';
 export { default as DividerFactory } from './factory/DividerFactory';
 export { default as DropdownFactory } from './factory/DropdownFactory';
+export { default as GroupFactory } from './factory/GroupFactory';
 export { default as IconFactory } from './factory/IconFactory';
 export { default as ImageFactory } from './factory/ImageFactory';
 export { default as InputFactory } from './factory/InputFactory';

@@ -1,5 +1,7 @@
 import uuid from '../utils/uuid';
 
+const notPx = ['lineHeight', 'opacity', 'order', 'zIndex', 'flex'];
+
 export default function css(style: any, selector?: string | null) {
   let result = style;
 
@@ -55,5 +57,3 @@ export default function css(style: any, selector?: string | null) {
 
   return result || '';
 }
-
-const notPx = ['lineHeight', 'opacity', 'order', 'zIndex'];

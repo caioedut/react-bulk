@@ -1,141 +1,183 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { crypt, useTheme, uuid } from '@react-bulk/core';
 
 import get from '../../props/get';
-import remove from '../../props/remove';
-import { spacings } from '../../styles/jss';
 import { InputProps } from '../../types';
 import clsx from '../../utils/clsx';
+import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
-import IconFactory from '../IconFactory';
-import LabelFactory from '../LabelFactory';
-import TextFactory from '../TextFactory';
+import GroupFactory from '../GroupFactory';
 
 function InputFactory(
-  { id, label, error, size, color, disabled, startIcon, endIcon, className, style, inputStyle, labelStyle, map, ...rest }: InputProps | any,
+  {
+    // Html
+    id,
+    className,
+    autoFocus,
+    defaultValue,
+    name,
+    placeholder,
+    readOnly,
+    type,
+    value,
+    // Custom
+    secure,
+    // Bindings
+    onChange,
+    onFocus,
+    onBlur,
+    // Styles
+    style,
+    // Core
+    map,
+    ...rest
+  }: InputProps | any,
   ref: any,
 ) {
   const theme = useTheme();
-  const { Input, web, native, ios } = map;
+  const { web, Input, Label } = map;
+  const classes: any[] = ['rbk-input', className];
+
+  const defaultRef: any = useRef(null);
+  const inputRef = ref || defaultRef;
+
+  const [focused, setFocused] = useState(false);
+  const [internal, setInternal] = useState(`${defaultValue ?? ''}`);
 
   id = id ?? `rbk-${crypt(uuid())}`;
-  color = color ?? theme.colors.primary.main;
 
-  const fontSize = size === 'small' ? theme.rem(0.75) : size === 'large' ? theme.rem(1.25) : theme.rem();
-  const iconSize = fontSize * 1.25;
+  useEffect(() => {
+    if (typeof value !== 'undefined') {
+      setInternal(value);
+    }
+  }, [value]);
 
-  style = [
-    ...spacings
-      .filter((attr) => attr in rest)
-      .map((attr) => {
-        const val = rest[attr];
-        delete rest[attr];
-        return { [attr]: val };
-      }),
-    style,
-  ];
+  const focus = useCallback(() => {
+    inputRef?.current?.focus?.();
+  }, [inputRef]);
 
-  inputStyle = [
-    {
-      fontSize,
-      lineHeight: 1.25,
+  const blur = useCallback(() => {
+    inputRef?.current?.blur?.();
+  }, [inputRef]);
 
-      backgroundColor: theme.colors.background.primary,
-      color: theme.colors.text.primary,
+  const clear = useCallback(() => {
+    setInternal(`${defaultValue ?? ''}`);
+  }, []);
 
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: color,
-      borderRadius: theme.shape.borderRadius,
+  const isFocused = useCallback(() => {
+    return inputRef?.current?.isFocused?.() || inputRef?.current === document?.activeElement;
+  }, [inputRef]);
 
-      flex: 1,
-      margin: 0,
-      padding: theme.rem(0.5, fontSize),
-      width: '100%',
-    },
+  const handleChange = (e) => {
+    const target = inputRef?.current;
+    const nativeEvent = e?.nativeEvent ?? e;
+    const value = `${target?.value ?? e?.nativeEvent?.text ?? ''}`;
 
-    disabled && {
-      backgroundColor: theme.colors.background.secondary,
-      borderColor: theme.colors.background.disabled,
-      opacity: 0.75,
-    },
+    setInternal(value);
 
-    web && disabled && { cursor: 'not-allowed' },
-
-    web && {
-      fontFamily: 'inherit',
-      transition: 'box-shadow 0.2s ease',
-
-      '&:focus': {
-        outline: 0,
-        boxShadow: `0 0 0 0.2rem ${theme.hex2rgba(theme.colors.primary.main, 0.4)}`,
-      },
-    },
-
-    inputStyle,
-  ];
-
-  labelStyle = [{ mb: 1 }, labelStyle];
-
-  const borderRadius = get('borderRadius', inputStyle);
-
-  const iconStyle = {
-    backgroundColor: theme.hex2rgba(theme.colors.primary.main, 0.1),
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: color,
-    borderRadius: borderRadius,
-    padding: theme.rem(fontSize, 0.25),
+    onChange?.({ target, value, focus, blur, clear, isFocused, nativeEvent }, value);
   };
 
-  if (native) {
-    // Calculate full height (for iOS)
-    const pt = get('paddingTop', inputStyle) ?? get('paddingVertical', inputStyle) ?? get('padding', inputStyle) ?? 0;
-    const pb = get('paddingBottom', inputStyle) ?? get('paddingVertical', inputStyle) ?? get('padding', inputStyle) ?? 0;
-    const bt = get('borderTopWidth', inputStyle) ?? get('borderWidth', inputStyle) ?? 0;
-    const bb = get('borderBottomWidth', inputStyle) ?? get('borderWidth', inputStyle) ?? 0;
-    const fs = get('fontSize', inputStyle);
-    const lh = get('lineHeight', inputStyle);
+  const handleFocus = (e) => {
+    setFocused(true);
+    onFocus?.(e);
+  };
 
-    inputStyle.push({
-      height: get('height', inputStyle) ?? pt + pb + bt + bb + fs * lh,
-    });
-
-    if (ios) {
-      remove('lineHeight', inputStyle);
-    }
-  }
+  const handleBlur = (e) => {
+    setFocused(false);
+    onBlur?.(e);
+  };
 
   return (
-    <BoxFactory map={map} className={clsx('rbk-input', className)} style={style}>
-      {Boolean(label) && (
-        <LabelFactory map={map} for={id} numberOfLines={1} style={labelStyle}>
-          {label}
-        </LabelFactory>
-      )}
+    <BoxFactory map={map} component={Label} className={clsx(classes)} htmlFor={id}>
+      <GroupFactory
+        {...rest}
+        map={map}
+        variant="outline"
+        focused={focused}
+        style={[
+          rest.disabled && {
+            backgroundColor: theme.colors.background.secondary,
+            borderColor: theme.colors.background.disabled,
+          },
 
-      <BoxFactory map={map} flexbox wrap="nowrap" alignItems="center">
-        {Boolean(startIcon) && (
-          <BoxFactory map={map} style={[iconStyle, { borderRightWidth: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 }]}>
-            {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={color} size={iconSize} /> : startIcon}
-          </BoxFactory>
+          web && { cursor: 'text' },
+
+          style,
+        ]}
+        renderChildren={(style) => (
+          <BoxFactory
+            // Custom
+            map={map}
+            ref={inputRef}
+            component={Input}
+            // Html
+            id={id}
+            className={clsx(classes)}
+            autoFocus={autoFocus}
+            disabled={rest.disabled}
+            name={name}
+            placeholder={placeholder}
+            value={internal}
+            // Bindings
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            // Styles
+            style={[
+              {
+                backgroundColor: 'transparent',
+                borderWidth: 0,
+                color: theme.colors.text.primary,
+                fontSize: get('fontSize', style),
+                margin: 0,
+                padding: 0,
+                height: get('fontSize', style) * 1.25,
+                width: '100%',
+              },
+
+              web && {
+                backgroundImage: 'none',
+                boxShadow: 'none',
+                cursor: 'inherit',
+                fontFamily: 'inherit',
+                lineHeight: theme.typography.lineHeight,
+                outline: '0 !important',
+              },
+            ]}
+            // Specific
+            platform={{
+              web: {
+                readOnly,
+                type: pick(secure ? 'secure' : type, 'text', {
+                  text: 'text',
+                  number: 'number',
+                  email: 'email',
+                  secure: 'password',
+                  phone: 'tel',
+                  url: 'url',
+                }),
+              },
+              native: {
+                editable: !readOnly,
+                keyboardAppearance: theme.mode,
+                placeholderTextColor: theme.hex2rgba(theme.colors.text.primary, 0.4),
+                secureTextEntry: Boolean(secure),
+                selectionColor: theme.colors.primary.main,
+                underlineColorAndroid: 'transparent',
+                keyboardType: pick(type, 'text', {
+                  text: 'default',
+                  number: 'number-pad',
+                  email: 'email-address',
+                  phone: 'phone-pad',
+                  url: 'url',
+                }),
+              },
+            }}
+          />
         )}
-
-        <BoxFactory map={map} ref={ref} component={Input} id={id} disabled={disabled} {...rest} style={inputStyle} />
-
-        {Boolean(endIcon) && (
-          <BoxFactory map={map} style={[iconStyle, { borderLeftWidth: 0, borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }]}>
-            {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={color} size={iconSize} /> : endIcon}
-          </BoxFactory>
-        )}
-      </BoxFactory>
-
-      {Boolean(error) && (
-        <TextFactory map={map} mt={1} ml={1} numberOfLines={1} size={0.8} color="error">
-          {error}
-        </TextFactory>
-      )}
+      />
     </BoxFactory>
   );
 }
