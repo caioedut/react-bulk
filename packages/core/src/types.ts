@@ -24,7 +24,7 @@ export type Bindings = {
 };
 
 export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch';
-export type FlexAlignValues = 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+export type FlexAlignValues = 'flex-start' | 'flex-end' | 'center' | 'stretch';
 export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
 export type SizeValues = 'small' | 'medium' | 'large' | 'xlarge';
 

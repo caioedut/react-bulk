@@ -2,22 +2,24 @@ import React from 'react';
 
 import { useTheme } from '@react-bulk/core';
 
-import Platform from '../../Platform';
 import { ModalProps } from '../../types';
 import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
 function ModalFactory({ visible, align, onBackdropPress, children, className, style, map, ...rest }: ModalProps | any, ref: any) {
-  const { web, native } = Platform;
   const theme = useTheme();
+  const { web, native } = map;
+  const classes: any[] = ['rbk-modal', className];
 
   style = [
     {
-      position: web ? 'fixed' : 'absolute',
+      position: web ? 'fixed' : 'relative',
       top: 0,
       left: 0,
-      right: 0,
-      bottom: 0,
+
+      height: '100%',
+      width: '100%',
+
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -53,7 +55,7 @@ function ModalFactory({ visible, align, onBackdropPress, children, className, st
   }
 
   return (
-    <BoxFactory map={map} ref={ref} flexbox {...rest} className={clsx('rbk-modal', className)} style={style} onPress={onBackdropPress}>
+    <BoxFactory map={map} ref={ref} flexbox {...rest} className={clsx(classes)} style={style} onPress={onBackdropPress}>
       <BoxFactory map={map} {...containerProps}>
         {children}
       </BoxFactory>
