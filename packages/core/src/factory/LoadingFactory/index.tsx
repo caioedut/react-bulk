@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Platform from '../../Platform';
 import { LoadingProps } from '../../types';
 import clsx from '../../utils/clsx';
 import IconFactory from '../IconFactory';
 
 function LoadingFactory({ speed, className, style, map, ...rest }: LoadingProps | any, ref: any) {
-  const { web } = Platform;
+  const { web } = map;
+  const classes: any[] = ['rbk-loading', className];
 
   style = [
     web && {
@@ -16,7 +16,7 @@ function LoadingFactory({ speed, className, style, map, ...rest }: LoadingProps 
     style,
   ];
 
-  return <IconFactory ref={ref} map={map} {...rest} name="Spinner" className={clsx('rbk-loading', className)} style={style} />;
+  return <IconFactory ref={ref} map={map} {...rest} name="Spinner" className={clsx(classes)} style={style} />;
 }
 
 export default React.forwardRef(LoadingFactory);

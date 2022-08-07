@@ -81,7 +81,7 @@ function CheckboxFactory(
 
   return (
     <>
-      <BoxFactory map={map} className={clsx(classes)} flexbox noWrap style={containerStyle}>
+      <BoxFactory map={map} className={clsx(classes)} flexbox noWrap alignItems="center" style={containerStyle}>
         <ButtonFactory
           ref={buttonRef}
           map={map}
