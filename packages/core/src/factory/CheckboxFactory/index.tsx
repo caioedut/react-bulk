@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { crypt, uuid } from '@react-bulk/core';
 
+import extract from '../../props/extract';
 import { spacings } from '../../styles/jss';
 import { CheckboxProps } from '../../types';
 import clsx from '../../utils/clsx';
@@ -76,16 +77,7 @@ function CheckboxFactory(
     onChange?.({ target, checked, focus, blur, clear, isFocused, nativeEvent }, checked);
   };
 
-  containerStyle = [
-    ...spacings
-      .filter((attr) => attr in rest)
-      .map((attr) => {
-        const val = rest[attr];
-        delete rest[attr];
-        return { [attr]: val };
-      }),
-    containerStyle,
-  ];
+  containerStyle = [extract(spacings, rest, style), containerStyle];
 
   return (
     <>

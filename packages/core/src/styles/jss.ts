@@ -5,9 +5,31 @@ import remove from '../props/remove';
 import { ThemeProps } from '../types';
 import clone from '../utils/clone';
 
-export const spacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
+export const customSpacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
 
-export const customStyleProps = ['w', 'h', 'maxw', 'maxh', 'minw', 'minh', 'bg', 'border', 'corners', 'shadow', ...spacings];
+export const customStyleProps = ['w', 'h', 'maxw', 'maxh', 'minw', 'minh', 'bg', 'border', 'corners', 'shadow', ...customSpacings];
+
+export const spacings = [
+  'top',
+  'bottom',
+  'left',
+  'right',
+  'margin',
+  'marginTop',
+  'marginBottom',
+  'marginLeft',
+  'marginRight',
+  'marginHorizontal',
+  'marginVertical',
+  'padding',
+  'paddingTop',
+  'paddingBottom',
+  'paddingLeft',
+  'paddingRight',
+  'paddingHorizontal',
+  'paddingVertical',
+  ...customSpacings,
+];
 
 export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   const { web, native } = Platform;
@@ -33,7 +55,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
     delete styles[attr];
 
-    if (spacings.includes(prop)) {
+    if (customSpacings.includes(prop)) {
       prop = attr
         .replace(/^(.)t$/, '$1Top')
         .replace(/^(.)b$/, '$1Bottom')
