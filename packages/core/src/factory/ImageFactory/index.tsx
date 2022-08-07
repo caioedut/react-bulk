@@ -1,13 +1,12 @@
 import React, { useRef } from 'react';
 
-import Platform from '../../Platform';
 import { ImageProps } from '../../types';
 import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
 function ImageFactory({ width, height, mode, className, style, map, ...rest }: ImageProps | any, ref: any) {
-  const { web, native } = Platform;
-  const { Image } = map;
+  const { web, native, Image } = map;
+  const classes: any[] = ['rbk-image', className];
 
   const defaultRef: any = useRef(null);
   const imageRef = ref || defaultRef;
@@ -24,7 +23,7 @@ function ImageFactory({ width, height, mode, className, style, map, ...rest }: I
     { width, height },
   ];
 
-  return <BoxFactory map={map} ref={imageRef} component={Image} {...rest} className={clsx('rbk-collapse', className)} style={style} />;
+  return <BoxFactory map={map} ref={imageRef} component={Image} {...rest} className={clsx(classes)} style={style} />;
 }
 
 export default React.forwardRef(ImageFactory);

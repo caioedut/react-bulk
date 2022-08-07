@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useTheme } from '@react-bulk/core';
 
+import extract from '../../props/extract';
 import get from '../../props/get';
 import { spacings } from '../../styles/jss';
 import { GroupProps } from '../../types';
@@ -56,16 +57,7 @@ function GroupFactory(
     boxShadow: `0 0 0 0.2rem ${theme.hex2rgba(theme.colors.primary.main, 0.4)}`,
   };
 
-  containerStyle = [
-    ...spacings
-      .filter((attr) => attr in rest)
-      .map((attr) => {
-        const val = rest[attr];
-        delete rest[attr];
-        return { [attr]: val };
-      }),
-    containerStyle,
-  ];
+  containerStyle = [extract(spacings, rest, style), containerStyle];
 
   style = [
     {

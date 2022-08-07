@@ -4,6 +4,8 @@ import ReactBulk, { useTheme } from './ReactBulk';
 export { useTheme };
 
 // Prop
+export { default as bindings } from './props/bindings';
+export { default as extract } from './props/extract';
 export { default as get } from './props/get';
 export { default as merge } from './props/merge';
 export { default as remove } from './props/remove';

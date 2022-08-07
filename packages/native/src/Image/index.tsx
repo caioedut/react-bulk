@@ -1,14 +1,15 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { Image as RNImage, ImageProps as RNImageProps } from 'react-native';
 
-import { BoxFactory, ImageFactory } from '@react-bulk/core';
+import { BoxFactory, ImageFactory, extract } from '@react-bulk/core';
+import { customStyleProps, spacings } from '@react-bulk/core/src/styles/jss';
 import { ImageProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';
 
 export type ImagePropsNative = RNImageProps & ImageProps;
 
-function Image({ source, width, height, corners, rounded, onLayout, style, ...props }: ImagePropsNative, ref) {
+function Image({ source, width, height, w, h, corners, rounded, onLayout, style, ...props }: ImagePropsNative, ref) {
   const map = useMap();
 
   const [imgWidth, setImgWidth] = useState<number | null>(null);
@@ -19,6 +20,10 @@ function Image({ source, width, height, corners, rounded, onLayout, style, ...pr
   const [finalHeight, setFinalHeight] = useState<number | null>(0);
 
   const loading = [aspectRatio, containerWidth].some((item: any) => [undefined, null].includes(item));
+
+  // Defaults
+  width = width ?? w;
+  height = height ?? h;
 
   if (typeof source === 'string') {
     source = { uri: source };
@@ -63,10 +68,7 @@ function Image({ source, width, height, corners, rounded, onLayout, style, ...pr
     setFinalHeight(newHeight);
   }, [loading, width, height, containerWidth, imgWidth, aspectRatio]);
 
-  const handleLayout = (e: any) => {
-    setContainerWidth(e.nativeEvent.layout.width);
-    onLayout?.(e);
-  };
+  const containerProps = extract([...spacings, ...customStyleProps], props, style);
 
   style = [
     { overflow: 'hidden' },
@@ -82,11 +84,16 @@ function Image({ source, width, height, corners, rounded, onLayout, style, ...pr
     height && { height },
   ];
 
+  const handleLayout = (e: any) => {
+    setContainerWidth(e.nativeEvent.layout.width);
+    onLayout?.(e);
+  };
+
   // @ts-ignore
   props = { ...props, width: finalWidth, height: finalHeight, source };
 
   return (
-    <BoxFactory onLayout={handleLayout} style={style} map={map}>
+    <BoxFactory {...containerProps} onLayout={handleLayout} style={style} map={map}>
       <ImageFactory ref={ref} {...props} map={map} />
     </BoxFactory>
   );
