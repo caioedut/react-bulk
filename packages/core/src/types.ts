@@ -121,6 +121,7 @@ export type BoxProps = Bindings &
     platform?: object;
     children?: ReactNode;
     style?: JssStyles;
+    rawStyle?: JssStyles;
     block?: JssStyles;
     hidden?: boolean;
 

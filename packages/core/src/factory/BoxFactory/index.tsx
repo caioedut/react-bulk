@@ -38,6 +38,7 @@ function BoxFactory(
     platform,
     className,
     style,
+    rawStyle,
     children,
     map,
     ...props
@@ -100,6 +101,8 @@ function BoxFactory(
 
     style,
 
+    native && rawStyle,
+
     hidden && { display: 'none !important' },
   ];
 
@@ -157,6 +160,7 @@ function BoxFactory(
 
   if (web) {
     props.className = clsx(classes);
+    props.style = merge(rawStyle);
   }
 
   // Platform specific props
