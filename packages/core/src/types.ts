@@ -290,3 +290,7 @@ export type IconProps = BoxProps & {
 export type LoadingProps = BoxProps & {
   speed: string;
 };
+
+export type GridProps = BoxProps & {
+  size?: number;
+};
