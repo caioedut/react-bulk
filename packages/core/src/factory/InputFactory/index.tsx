@@ -186,7 +186,7 @@ function InputFactory(
               native: {
                 autoCorrect,
                 caretHidden,
-                editable: !readOnly || rest.disabled,
+                editable: rest.disabled ? false : !readOnly,
                 keyboardAppearance: theme.mode,
                 placeholderTextColor: theme.hex2rgba(theme.colors.text.primary, 0.4),
                 returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
