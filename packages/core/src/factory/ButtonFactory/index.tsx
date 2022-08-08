@@ -60,11 +60,14 @@ function ButtonFactory(
           <LabelFactory
             map={map}
             component={Text}
-            style={{
-              color: get('color', style),
-              fontSize: get('fontSize', style),
-              opacity: rest.loading ? 0 : 1,
-            }}
+            style={[
+              {
+                color: get('color', style),
+                fontSize: get('fontSize', style),
+                opacity: rest.loading ? 0 : 1,
+              },
+              labelStyle,
+            ]}
           >
             {children}
           </LabelFactory>
