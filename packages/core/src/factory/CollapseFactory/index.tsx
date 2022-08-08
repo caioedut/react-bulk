@@ -5,7 +5,9 @@ import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
 function CollapseFactory({ className, map, ...rest }: CollapseProps | any, ref: any) {
-  return <BoxFactory map={map} ref={ref} {...rest} className={clsx('rbk-collapse', className)} />;
+  const classes: any[] = ['rbk-collapse', className];
+
+  return <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} />;
 }
 
 export default React.forwardRef(CollapseFactory);
