@@ -1,68 +1,38 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import { Animated, ViewProps } from 'react-native';
+import { Animated, View } from 'react-native';
 
-import { CollapseProps, sleep } from '@react-bulk/core';
-import CollapseFactory from '@react-bulk/core';
+import { CollapseFactory, CollapseProps, merge } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type CollapsePropsNative = ViewProps & CollapseProps;
-
-function Collapse({ in: shown, ...props }: CollapsePropsNative, ref) {
+function Collapse({ in: shown, ...props }: CollapseProps, ref) {
   const map = useMap();
 
-  const readyRef = useRef(false);
   const containerRef = useRef<any>(null);
   const heightAnim = useRef(new Animated.Value(0)).current;
+  const [height, setHeight] = useState(null);
 
-  const [animate, setAnimate] = useState(false);
-  const [height, setHeight] = useState<any>(null);
-
-  async function getHeight(): Promise<number> {
-    return new Promise((resolve) => {
-      // @ts-ignore
-      containerRef.current.measure(async (x: any, y: any, width: any, height: any, px: any, py: any) => resolve(height));
-    });
-  }
+  const isReady = height !== null && height > 0;
 
   useEffect(() => {
-    if (!readyRef.current) {
-      readyRef.current = true;
-      return;
-    }
+    if (height === null) return;
 
-    (async () => {
-      let curHeight = await getHeight();
-      let newHeight = 0;
-
-      setAnimate(false);
-      await sleep(1);
-
-      if (shown) {
-        curHeight = 0;
-        newHeight = await getHeight();
-      }
-
-      heightAnim.setValue(curHeight);
-      setHeight(newHeight);
-
-      setAnimate(true);
-    })();
-  }, [shown]);
-
-  useEffect(() => {
     Animated.timing(heightAnim, {
-      toValue: height as number,
-      duration: 200,
+      toValue: shown ? height : 0,
+      duration: 250,
       useNativeDriver: false,
     }).start();
-  }, [height]);
+  }, [shown, height]);
+
+  const handleLayout = ({ nativeEvent }) => {
+    setHeight((current: any) => Math.max(current, nativeEvent.layout.height) as any);
+  };
 
   return (
-    <Animated.View ref={containerRef} style={animate ? { height: heightAnim } : {}}>
+    <Animated.View ref={containerRef} style={merge(isReady && { height: heightAnim })} onLayout={handleLayout}>
       <CollapseFactory ref={ref} {...props} map={map} />
     </Animated.View>
   );
 }
 
-export default forwardRef(Collapse);
+export default forwardRef<View, CollapseProps>(Collapse);

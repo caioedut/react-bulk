@@ -9,37 +9,9 @@ export type CollapsePropsWeb = ComponentPropsWithRef<'div'> & CollapseProps;
 function Collapse({ in: shown, ...props }: CollapsePropsWeb, ref) {
   const map = useMap();
 
-  const { current: startHidden } = useRef(!shown);
+  const startHidden = useRef(!shown).current;
   const containerRef = useRef<HTMLElement>(null);
   const isShown = containerRef?.current?.style?.height?.replace?.(/\D/g, '') !== '0';
-
-  console.log('startHidden', startHidden);
-
-  // const transition = 'height 0.25s ease';
-
-  // useEffect(() => {
-  //   const $el = containerRef.current;
-  //
-  //   if ($el) {
-  //     $el.style.height = '';
-  //   }
-  // }, [height]);
-
-  useEffect(() => {
-    // const $el = containerRef.current;
-    // if (!$el) return;
-    //
-    // const clear = () => {
-    //   // $el.style.transition = '';
-    //   // if (window.getComputedStyle($el).height.replace(/\D/g, '') !== '0') {
-    //   // $el.style.height = '';
-    //   // }
-    // };
-    //
-    // $el.addEventListener('transitionend', clear);
-    //
-    // return () => $el.removeEventListener('transitionend', clear);
-  }, []);
 
   useEffect(() => {
     shown ? show() : hide();
