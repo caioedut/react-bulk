@@ -16,7 +16,7 @@ function ButtonGroupFactory(
   }
 
   return (
-    <ScrollableFactory map={map} ref={ref} horizontal {...rest} className={clsx(classes)}>
+    <ScrollableFactory ref={ref} map={map} horizontal {...rest} className={clsx(classes)}>
       <BoxFactory
         map={map}
         style={{
