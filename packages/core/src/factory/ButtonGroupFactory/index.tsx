@@ -3,7 +3,6 @@ import React, { cloneElement } from 'react';
 import { ButtonGroupProps } from '../../types';
 import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
-import DividerFactory from '../DividerFactory';
 import ScrollableFactory from '../ScrollableFactory';
 
 function ButtonGroupFactory(
@@ -50,12 +49,7 @@ function ButtonGroupFactory(
             ],
           });
 
-          return (
-            <React.Fragment key={key}>
-              {!isFirst && <DividerFactory map={map} w={1} h="auto" style={{ opacity: 0.5 }} />}
-              {button}
-            </React.Fragment>
-          );
+          return <React.Fragment key={key}>{button}</React.Fragment>;
         })}
       </BoxFactory>
     </ScrollableFactory>
