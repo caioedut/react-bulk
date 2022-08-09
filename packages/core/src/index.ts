@@ -50,6 +50,7 @@ export { default as LoadingFactory } from './factory/LoadingFactory';
 export { default as ModalFactory } from './factory/ModalFactory';
 export { default as ScrollableFactory } from './factory/ScrollableFactory';
 export { default as SelectFactory } from './factory/SelectFactory';
+export { default as TableFactory } from './factory/TableFactory';
 export { default as TextFactory } from './factory/TextFactory';
 
 // Type

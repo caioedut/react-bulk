@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
 
-import { InputFactory } from '@react-bulk/core';
-import { InputProps } from '@react-bulk/core/src/types';
+import { InputFactory, InputProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 

@@ -1,16 +1,13 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import { DividerFactory } from '@react-bulk/core';
-import { DividerProps } from '@react-bulk/core/src/types';
+import { DividerFactory, DividerProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
 export type DividerPropsWeb = ComponentPropsWithRef<'div'> & DividerProps;
 
 function Divider({ ...props }: DividerPropsWeb, ref) {
-  const map = useMap();
-
-  return <DividerFactory ref={ref} {...props} map={map} />;
+  return <DividerFactory ref={ref} {...props} map={useMap()} />;
 }
 
 export default forwardRef(Divider);

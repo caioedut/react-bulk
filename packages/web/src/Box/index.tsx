@@ -1,7 +1,6 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import { BoxFactory } from '@react-bulk/core';
-import { BoxProps } from '@react-bulk/core/src/types';
+import { BoxFactory, BoxProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 

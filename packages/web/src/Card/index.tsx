@@ -1,7 +1,6 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import { CardFactory } from '@react-bulk/core';
-import { CardProps } from '@react-bulk/core/src/types';
+import { CardFactory, CardProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 

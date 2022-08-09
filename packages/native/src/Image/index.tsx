@@ -2,8 +2,8 @@ import { forwardRef, useEffect, useState } from 'react';
 import { Image as RNImage, ImageProps as RNImageProps } from 'react-native';
 
 import { BoxFactory, ImageFactory, extract } from '@react-bulk/core';
+import { ImageProps } from '@react-bulk/core';
 import { customStyleProps, spacings } from '@react-bulk/core/src/styles/jss';
-import { ImageProps } from '@react-bulk/core/src/types';
 
 import useMap from '../useMap';
 
