@@ -4,6 +4,7 @@ export type FactoryProps = {
   map: any;
 };
 
+export type TimeoutType = ReturnType<typeof setInterval> | null;
 export type EventCallback = (e: any) => any;
 export type ChangeCallback = (e: any, value: string) => any;
 
@@ -293,4 +294,13 @@ export type LoadingProps = BoxProps & {
 
 export type GridProps = BoxProps & {
   size?: number;
+};
+
+export type TableProps = BoxProps & {
+  rows: any[];
+  columns: {
+    header?: ReactNode;
+    render?: Function;
+    style?: JssStyles;
+  };
 };

@@ -5,9 +5,7 @@ import { GridFactory, GridProps } from '@react-bulk/core';
 import useMap from '../useMap';
 
 function Grid({ ...props }: GridProps, ref) {
-  const map = useMap();
-
-  return <GridFactory ref={ref} {...props} map={map} />;
+  return <GridFactory ref={ref} {...props} map={useMap()} />;
 }
 
 export default forwardRef(Grid);

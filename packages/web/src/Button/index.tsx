@@ -1,7 +1,6 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import { ButtonFactory } from '@react-bulk/core';
-import { ButtonProps } from '@react-bulk/core/src/types';
+import { ButtonFactory, ButtonProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 

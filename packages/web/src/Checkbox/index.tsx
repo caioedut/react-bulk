@@ -1,7 +1,6 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 
-import { CheckboxFactory } from '@react-bulk/core';
-import { CheckboxProps } from '@react-bulk/core/src/types';
+import { CheckboxFactory, CheckboxProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 

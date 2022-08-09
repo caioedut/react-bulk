@@ -1,17 +1,14 @@
 import { forwardRef } from 'react';
 import { ViewProps } from 'react-native';
 
-import { BoxFactory } from '@react-bulk/core';
-import { BoxProps } from '@react-bulk/core/src/types';
+import { BoxFactory, BoxProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
 export type BoxPropsNative = ViewProps & BoxProps;
 
 function Box({ ...props }: BoxPropsNative, ref) {
-  const map = useMap();
-
-  return <BoxFactory ref={ref} {...props} map={map} />;
+  return <BoxFactory ref={ref} {...props} map={useMap()} />;
 }
 
 export default forwardRef(Box);
