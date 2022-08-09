@@ -65,8 +65,6 @@ function BoxFactory(
       display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}`,
       flexDirection: 'row',
       flexWrap: 'wrap',
-      flexGrow: 0,
-      flexShrink: 1,
       alignContent: 'stretch',
     },
 
