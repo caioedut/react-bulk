@@ -304,3 +304,12 @@ export type TableProps = BoxProps & {
     style?: JssStyles;
   };
 };
+
+export type BadgeProps = TextProps & {
+  size?: SizeValues;
+  dot?: boolean;
+  top?: boolean;
+  bottom?: boolean;
+  left?: boolean;
+  right?: boolean;
+};
