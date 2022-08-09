@@ -32,6 +32,7 @@ export { default as BaseStyleWeb } from './BaseStyleWeb';
 export { default as BaseStyleNative } from './BaseStyleNative';
 
 // Factory
+export { default as BadgeFactory } from './factory/BadgeFactory';
 export { default as BoxFactory } from './factory/BoxFactory';
 export { default as ButtonFactory } from './factory/ButtonFactory';
 export { default as ButtonGroupFactory } from './factory/ButtonGroupFactory';
