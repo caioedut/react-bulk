@@ -1,16 +1,11 @@
 import React from 'react';
 
-import { useTheme } from '@react-bulk/core';
+import { BoxFactory, FactoryProps, IconProps, clsx, useTheme } from '@react-bulk/core';
 
-import Platform from '../../Platform';
-import { IconProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
-
-function IconFactory({ name, color, size, className, style, map, ...rest }: IconProps | any, ref: any) {
+function IconFactory({ name, color, size, className, style, map, ...rest }: FactoryProps & IconProps, ref: any) {
   const theme = useTheme();
-  const { web } = Platform;
-  const { Icons } = map;
+  const { web, Icons } = map;
+  const classes: any[] = ['rbk-icon', className];
 
   const iconName = `${name || ''}`
     .split(/_|-|\s/g)
@@ -31,16 +26,7 @@ function IconFactory({ name, color, size, className, style, map, ...rest }: Icon
   ];
 
   return (
-    <BoxFactory
-      ref={ref}
-      map={map}
-      component={Component}
-      color={color}
-      size={size}
-      {...rest}
-      className={clsx('rbk-icon', className)}
-      style={style}
-    />
+    <BoxFactory ref={ref} map={map} component={Component} color={color} size={size} {...rest} className={clsx(classes)} style={style} />
   );
 }
 

@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { CollapseProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
+import { BoxFactory, CollapseProps, FactoryProps, clsx } from '@react-bulk/core';
 
-function CollapseFactory({ className, map, ...rest }: CollapseProps | any, ref: any) {
+function CollapseFactory({ className, map, ...rest }: FactoryProps & CollapseProps, ref: any) {
   const classes: any[] = ['rbk-collapse', className];
 
   return <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} />;

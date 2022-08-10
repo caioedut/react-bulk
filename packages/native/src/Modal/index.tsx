@@ -1,13 +1,11 @@
 import { forwardRef } from 'react';
-import { Modal as RNModal, TouchableOpacity, ViewProps } from 'react-native';
+import { Modal as RNModal, TouchableOpacity } from 'react-native';
 
 import { ModalFactory, ModalProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type ModalPropsNative = ViewProps & ModalProps;
-
-function Modal({ visible, onBackdropPress, ...props }: ModalPropsNative, ref) {
+function Modal({ visible, onBackdropPress, ...props }: ModalProps, ref) {
   const map = useMap();
 
   if (onBackdropPress) {
@@ -34,4 +32,4 @@ function Modal({ visible, onBackdropPress, ...props }: ModalPropsNative, ref) {
   );
 }
 
-export default forwardRef(Modal);
+export default forwardRef<typeof Modal, ModalProps>(Modal);

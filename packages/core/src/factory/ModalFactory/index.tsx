@@ -1,12 +1,8 @@
 import React from 'react';
 
-import { useTheme } from '@react-bulk/core';
+import { BoxFactory, FactoryProps, ModalProps, clsx, useTheme } from '@react-bulk/core';
 
-import { ModalProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
-
-function ModalFactory({ visible, align, onBackdropPress, children, className, style, map, ...rest }: ModalProps | any, ref: any) {
+function ModalFactory({ visible, align, onBackdropPress, children, className, style, map, ...rest }: FactoryProps & ModalProps, ref: any) {
   const theme = useTheme();
   const { web, native } = map;
   const classes: any[] = ['rbk-modal', className];

@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import { Animated, View } from 'react-native';
+import { Animated } from 'react-native';
 
 import { CollapseFactory, CollapseProps, merge } from '@react-bulk/core';
 
@@ -35,4 +35,4 @@ function Collapse({ in: shown, ...props }: CollapseProps, ref) {
   );
 }
 
-export default forwardRef<View, CollapseProps>(Collapse);
+export default forwardRef<typeof Collapse, CollapseProps>(Collapse);

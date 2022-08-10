@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { ScrollableProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
+import { BoxFactory, FactoryProps, ScrollableProps, clsx } from '@react-bulk/core';
 
-function ScrollableFactory({ horizontal, className, style, map, ...rest }: ScrollableProps | any, ref: any) {
+function ScrollableFactory({ horizontal, className, style, map, ...rest }: FactoryProps & ScrollableProps, ref: any) {
   const { web, ScrollView } = map;
   const classes: any[] = ['rbk-scrollable', className];
 

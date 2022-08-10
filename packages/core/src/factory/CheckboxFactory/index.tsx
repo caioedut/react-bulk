@@ -1,14 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { crypt, uuid } from '@react-bulk/core';
+import { BoxFactory, ButtonFactory, CheckboxProps, FactoryProps, LabelFactory, clsx, crypt, extract, uuid } from '@react-bulk/core';
 
-import extract from '../../props/extract';
 import { spacings } from '../../styles/jss';
-import { CheckboxProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
-import ButtonFactory from '../ButtonFactory';
-import LabelFactory from '../LabelFactory';
 
 function CheckboxFactory(
   {
@@ -32,7 +26,7 @@ function CheckboxFactory(
     // Core
     map,
     ...rest
-  }: CheckboxProps | any,
+  }: FactoryProps & CheckboxProps,
   ref: any,
 ) {
   const { web, Input } = map;

@@ -1,13 +1,10 @@
 import React from 'react';
 
-import { useTheme } from '@react-bulk/core';
+import { BoxFactory, DividerProps, FactoryProps, clsx, useTheme } from '@react-bulk/core';
 
-import { DividerProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
-
-function DividerFactory({ color, size, opacity, vertical, className, style, map, ...rest }: DividerProps | any, ref: any) {
+function DividerFactory({ color, size, opacity, vertical, className, style, map, ...rest }: FactoryProps & DividerProps, ref: any) {
   const theme = useTheme();
+  const classes: any[] = ['rbk-divider', className];
 
   style = [
     {
@@ -22,7 +19,7 @@ function DividerFactory({ color, size, opacity, vertical, className, style, map,
     style,
   ];
 
-  return <BoxFactory map={map} ref={ref} {...rest} className={clsx('rbk-divider', className)} style={style} />;
+  return <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} style={style} />;
 }
 
 export default React.forwardRef(DividerFactory);

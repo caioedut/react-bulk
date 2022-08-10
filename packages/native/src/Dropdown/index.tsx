@@ -1,14 +1,11 @@
 import { forwardRef } from 'react';
-import { ViewProps } from 'react-native';
 
 import { DropdownFactory, DropdownProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type DropdownPropsNative = ViewProps & DropdownProps;
-
-function Dropdown({ ...props }: DropdownPropsNative, ref) {
+function Dropdown({ ...props }: DropdownProps, ref) {
   return <DropdownFactory ref={ref} {...props} map={useMap()} />;
 }
 
-export default forwardRef(Dropdown);
+export default forwardRef<typeof Dropdown, DropdownProps>(Dropdown);

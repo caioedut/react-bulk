@@ -8,4 +8,4 @@ function Input({ ...props }: InputProps, ref) {
   return <InputFactory ref={ref} {...props} map={useMap()} />;
 }
 
-export default forwardRef(Input);
+export default forwardRef<typeof Input, InputProps>(Input);

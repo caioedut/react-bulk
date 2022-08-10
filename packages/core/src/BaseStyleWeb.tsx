@@ -50,6 +50,8 @@ export default function BaseStyleWeb() {
       display: flex;
       flex-direction: column;
       line-height: 1.15;
+      min-height: 100%;
+      min-width: 100%;
     }
 
     ::placeholder {

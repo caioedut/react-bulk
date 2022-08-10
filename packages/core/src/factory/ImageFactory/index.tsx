@@ -1,10 +1,8 @@
 import React, { useRef } from 'react';
 
-import { ImageProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
+import { BoxFactory, FactoryProps, ImageProps, clsx } from '@react-bulk/core';
 
-function ImageFactory({ width, height, mode, className, style, map, ...rest }: ImageProps | any, ref: any) {
+function ImageFactory({ width, height, mode, className, style, map, ...rest }: FactoryProps & ImageProps, ref: any) {
   const { web, native, Image } = map;
   const classes: any[] = ['rbk-image', className];
 

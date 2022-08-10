@@ -1,11 +1,6 @@
 import React from 'react';
 
-import { useTheme } from '@react-bulk/core';
-
-import Platform from '../../Platform';
-import { TextProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
+import { BoxFactory, FactoryProps, TextProps, clsx, useTheme } from '@react-bulk/core';
 
 function TextFactory(
   {
@@ -28,13 +23,12 @@ function TextFactory(
     style,
     map,
     ...rest
-  }: TextProps | any,
+  }: FactoryProps & TextProps,
   ref,
 ) {
   const theme = useTheme();
-
-  const { web, native } = Platform;
-  const { Text } = map;
+  const { web, native, Text } = map;
+  const classes: any[] = ['rbk-text', className];
 
   style = [
     {
@@ -43,12 +37,12 @@ function TextFactory(
       textDecorationLine: 'none',
     },
 
-    variant === 'h1' && { fontSize: theme.rem(2.5) },
-    variant === 'h2' && { fontSize: theme.rem(2.0) },
-    variant === 'h3' && { fontSize: theme.rem(1.6) },
-    variant === 'h4' && { fontSize: theme.rem(1.3) },
-    variant === 'h5' && { fontSize: theme.rem(1.1) },
-    variant === 'h6' && { fontSize: theme.rem(1) },
+    variant === 'h1' && { fontSize: theme.rem(2.6) },
+    variant === 'h2' && { fontSize: theme.rem(2.1) },
+    variant === 'h3' && { fontSize: theme.rem(1.7) },
+    variant === 'h4' && { fontSize: theme.rem(1.4) },
+    variant === 'h5' && { fontSize: theme.rem(1.2) },
+    variant === 'h6' && { fontSize: theme.rem(1.1) },
 
     variant === 'title' && { fontSize: theme.rem(1.25) },
     variant === 'subtitle' && { fontSize: theme.rem(1.125) },
@@ -83,11 +77,16 @@ function TextFactory(
     style,
   ];
 
-  if (native && numberOfLines) {
-    rest.numberOfLines = numberOfLines;
+  if (native) {
+    rest.includeFontPadding = false;
+    rest.textAlignVertical = 'center';
+
+    if (numberOfLines) {
+      rest.numberOfLines = numberOfLines;
+    }
   }
 
-  return <BoxFactory ref={ref} component={Text} {...rest} className={clsx('rbk-text', className)} style={style} map={map} />;
+  return <BoxFactory ref={ref} component={Text} {...rest} className={clsx(classes)} style={style} map={map} />;
 }
 
 export default React.forwardRef(TextFactory);

@@ -1,14 +1,8 @@
 import React from 'react';
 
-import { useTheme } from '@react-bulk/core';
+import { BoxProps, FactoryProps, bindings, clsx, createStyle, get, merge, useTheme } from '@react-bulk/core';
 
-import createStyle from '../../createStyle';
-import bindings from '../../props/bindings';
-import get from '../../props/get';
-import merge from '../../props/merge';
 import { customStyleProps } from '../../styles/jss';
-import { BoxProps } from '../../types';
-import clsx from '../../utils/clsx';
 
 function BoxFactory(
   {
@@ -42,7 +36,7 @@ function BoxFactory(
     children,
     map,
     ...props
-  }: BoxProps | any,
+  }: FactoryProps & BoxProps,
   ref,
 ) {
   const theme = useTheme();
@@ -105,26 +99,6 @@ function BoxFactory(
     hidden && { display: 'none !important' },
   ];
 
-  const hasFlex = ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'justifyItems', 'alignContent', 'alignItems'].some((prop) =>
-    get(prop, style),
-  );
-
-  if (hasFlex) {
-    if (!get('display', style)) {
-      style.push({ display: 'flex' });
-    }
-
-    if (!get('flexFlow', style)) {
-      if (!get('flexDirection', style)) {
-        style.push({ flexDirection: 'row' });
-      }
-
-      if (!get('flexWrap', style)) {
-        style.push({ flexWrap: 'wrap' });
-      }
-    }
-  }
-
   // Custom style props
   for (const prop of customStyleProps) {
     if (prop in props) {
@@ -141,6 +115,30 @@ function BoxFactory(
     if (ptStyle && dimensions.width >= minWidth) {
       style.push(ptStyle);
     }
+  }
+
+  const hasFlex = ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'justifyItems', 'alignContent', 'alignItems'].some((prop) =>
+    get(prop, style),
+  );
+
+  if (hasFlex) {
+    if (!get('display', style)) {
+      style.push({ display: 'flex' });
+    }
+
+    if (!get('flexFlow', style)) {
+      if (!get('flexDirection', style)) {
+        style.push({ flexDirection: 'column' });
+      }
+
+      if (!get('flexWrap', style)) {
+        style.push({ flexWrap: 'wrap' });
+      }
+    }
+
+    // if (!get('alignContent', style)) {
+    //   style.push({ alignContent: 'flex-start' });
+    // }
   }
 
   const processed = createStyle({ style });

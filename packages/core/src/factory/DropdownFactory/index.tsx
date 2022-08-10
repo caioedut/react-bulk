@@ -1,16 +1,11 @@
 import React from 'react';
 
-import { useTheme } from '@react-bulk/core';
+import { BoxFactory, CardFactory, DropdownProps, FactoryProps, clsx, useTheme } from '@react-bulk/core';
 
-import Platform from '../../Platform';
-import { DropdownProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
-import CardFactory from '../CardFactory';
-
-function DropdownFactory({ visible, children, className, style, map, ...rest }: DropdownProps | any, ref: any) {
-  const { web, native } = Platform;
+function DropdownFactory({ visible, children, className, style, map, ...rest }: FactoryProps & DropdownProps, ref: any) {
   const theme = useTheme();
+  const { web, native } = map;
+  const classes: any[] = ['rbk-dropdown', className];
 
   // useEffect(() => {
   //   if (!web) return;
@@ -60,7 +55,7 @@ function DropdownFactory({ visible, children, className, style, map, ...rest }: 
 
   return (
     <BoxFactory map={map} style={{ position: 'relative' }}>
-      <CardFactory ref={ref} {...rest} map={map} className={clsx('rbk-dropdown', className)} style={style}>
+      <CardFactory ref={ref} {...rest} map={map} className={clsx(classes)} style={style}>
         {children}
       </CardFactory>
     </BoxFactory>

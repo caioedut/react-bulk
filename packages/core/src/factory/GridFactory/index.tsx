@@ -1,11 +1,8 @@
 import React from 'react';
 
-import { useTheme } from '../../ReactBulk';
-import { GridProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
+import { BoxFactory, FactoryProps, GridProps, clsx, useTheme } from '@react-bulk/core';
 
-function GridFactory({ size, className, style, children, map, ...rest }: GridProps | any, ref: any) {
+function GridFactory({ size, className, style, children, map, ...rest }: FactoryProps & GridProps, ref: any) {
   const theme = useTheme();
   const classes: any[] = ['rbk-grid', className];
 

@@ -8,4 +8,4 @@ function Table({ ...props }: TableProps, ref) {
   return <TableFactory ref={ref} {...props} map={useMap()} />;
 }
 
-export default forwardRef(Table);
+export default forwardRef<typeof Table, TableProps>(Table);

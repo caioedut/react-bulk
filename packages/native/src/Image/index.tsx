@@ -1,13 +1,13 @@
 import { forwardRef, useEffect, useState } from 'react';
-import { Image as RNImage, ImageProps as RNImageProps } from 'react-native';
+import { Image as RNImage } from 'react-native';
 
-import { BoxFactory, ImageFactory, extract } from '@react-bulk/core';
-import { ImageProps } from '@react-bulk/core';
+import { BoxFactory, ImageFactory, ImageProps, extract } from '@react-bulk/core';
 import { customStyleProps, spacings } from '@react-bulk/core/src/styles/jss';
 
+import { NativeBindingProps } from '../types';
 import useMap from '../useMap';
 
-export type ImagePropsNative = RNImageProps & ImageProps;
+export type ImagePropsNative = NativeBindingProps & ImageProps;
 
 function Image({ source, width, height, w, h, corners, rounded, onLayout, style, ...props }: ImagePropsNative, ref) {
   const map = useMap();
@@ -99,4 +99,4 @@ function Image({ source, width, height, w, h, corners, rounded, onLayout, style,
   );
 }
 
-export default forwardRef(Image);
+export default forwardRef<typeof Image, ImagePropsNative>(Image);
