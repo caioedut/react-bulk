@@ -1,12 +1,8 @@
-import React from 'react';
+import React, { isValidElement } from 'react';
 
-import { TableProps, useTheme } from '@react-bulk/core';
+import { BoxFactory, FactoryProps, TableProps, TextFactory, clsx, useTheme } from '@react-bulk/core';
 
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
-import TextFactory from '../TextFactory';
-
-function TableFactory({ rows, columns, border, className, style, map, ...rest }: TableProps | any, ref: any) {
+function TableFactory({ rows, columns, border, className, style, map, ...rest }: FactoryProps & TableProps, ref: any) {
   const theme = useTheme();
   const classes: any[] = ['rbk-table', className];
 
@@ -26,15 +22,19 @@ function TableFactory({ rows, columns, border, className, style, map, ...rest }:
     flexShrink: 0,
   };
 
-  const renderHeader = (mixed: any, data: any = undefined) => {
-    let child = typeof mixed === 'function' ? mixed(data) : mixed;
+  const renderContent = (child: any, data: any = undefined, bold = false) => {
+    if (child) {
+      if (isValidElement(child)) {
+        return child;
+      }
 
-    if (typeof child === 'string') {
-      child = (
-        <TextFactory map={map} bold>
-          {mixed ?? ''}
-        </TextFactory>
-      );
+      if (typeof child === 'function') {
+        child = child(data);
+      }
+
+      if (['string', 'number'].includes(typeof child)) {
+        child = <TextFactory map={map} bold={bold} children={child} />;
+      }
     }
 
     return child ?? null;
@@ -62,7 +62,7 @@ function TableFactory({ rows, columns, border, className, style, map, ...rest }:
       <BoxFactory map={map} flexbox noWrap>
         {columns?.map((column, index) => (
           <BoxFactory key={index} map={map} style={buildStyle(column, false, index > 0)}>
-            {renderHeader(column.header, column)}
+            {renderContent(column.header, column, true)}
           </BoxFactory>
         ))}
       </BoxFactory>
@@ -70,7 +70,7 @@ function TableFactory({ rows, columns, border, className, style, map, ...rest }:
         <BoxFactory key={rowIndex} map={map} flexbox noWrap>
           {columns.map((column, index) => (
             <BoxFactory key={index} map={map} style={buildStyle(column, true, index > 0)}>
-              {typeof column.content === 'function' ? column.content(row) : column.content}
+              {renderContent(column.content, row)}
             </BoxFactory>
           ))}
         </BoxFactory>

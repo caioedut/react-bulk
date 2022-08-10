@@ -8,4 +8,4 @@ function Badge({ ...props }: BadgeProps, ref) {
   return <BadgeFactory ref={ref} {...props} map={useMap()} />;
 }
 
-export default forwardRef<'span', BadgeProps>(Badge);
+export default forwardRef<typeof Badge, BadgeProps>(Badge);

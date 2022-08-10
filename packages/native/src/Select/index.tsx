@@ -11,4 +11,4 @@ function Select({ ...props }: SelectPropsNative, ref) {
   return <SelectFactory ref={ref} {...props} map={useMap()} />;
 }
 
-export default forwardRef(Select);
+export default forwardRef<typeof Select, SelectProps>(Select);

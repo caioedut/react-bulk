@@ -1,13 +1,10 @@
 import { forwardRef } from 'react';
-import { ViewProps } from 'react-native';
 
 import { CardFactory, CardProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type CardPropsNative = ViewProps & CardProps;
-
-function Card({ ...props }: CardPropsNative, ref) {
+function Card({ ...props }: CardProps, ref) {
   const map = useMap();
   const { Button } = map;
 
@@ -18,4 +15,4 @@ function Card({ ...props }: CardPropsNative, ref) {
   return <CardFactory ref={ref} {...props} map={map} />;
 }
 
-export default forwardRef(Card);
+export default forwardRef<typeof Card, CardProps>(Card);

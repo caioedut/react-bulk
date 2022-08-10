@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { LoadingProps } from '../../types';
-import clsx from '../../utils/clsx';
-import IconFactory from '../IconFactory';
+import { FactoryProps, IconFactory, LoadingProps, clsx } from '@react-bulk/core';
 
-function LoadingFactory({ speed, className, style, map, ...rest }: LoadingProps | any, ref: any) {
+function LoadingFactory({ speed, className, style, map, ...rest }: FactoryProps | LoadingProps, ref: any) {
   const { web } = map;
   const classes: any[] = ['rbk-loading', className];
 

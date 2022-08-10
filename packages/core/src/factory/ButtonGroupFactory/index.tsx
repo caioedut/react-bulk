@@ -1,12 +1,9 @@
 import React, { cloneElement } from 'react';
 
-import { ButtonGroupProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
-import ScrollableFactory from '../ScrollableFactory';
+import { BoxFactory, ButtonGroupProps, FactoryProps, ScrollableFactory, clsx } from '@react-bulk/core';
 
 function ButtonGroupFactory(
-  { disabled, loading, variant, size, color, className, children, map, ...rest }: ButtonGroupProps | any,
+  { disabled, loading, variant, size, color, className, children, map, ...rest }: FactoryProps & ButtonGroupProps,
   ref: any,
 ) {
   const classes: any[] = ['rbk-button-group', className];

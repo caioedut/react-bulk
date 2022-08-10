@@ -1,7 +1,29 @@
 import { CSSProperties, ReactNode } from 'react';
 
-export type FactoryProps = {
-  map: any;
+export type MapType = {
+  web: boolean;
+  native: boolean;
+  ios: boolean;
+  android: boolean;
+
+  dimensions: {
+    height: number;
+    width: number;
+  };
+
+  Icons: any;
+
+  Button: ReactNode | any;
+  Image: ReactNode | any;
+  Input: ReactNode | any;
+  Label: ReactNode | any;
+  ScrollView: ReactNode | any;
+  Text: ReactNode | any;
+  View: ReactNode | any;
+};
+
+export type FactoryProps = any & {
+  map: MapType;
 };
 
 export type TimeoutType = ReturnType<typeof setInterval> | null;
@@ -199,6 +221,7 @@ export type GroupProps = BoxProps & {
 
 export type ButtonProps = GroupProps & {
   autoFocus?: boolean;
+  badge?: number | BadgeProps;
 };
 
 export type ButtonGroupProps = BoxProps & {
@@ -306,6 +329,7 @@ export type TableProps = BoxProps & {
 };
 
 export type BadgeProps = TextProps & {
+  value?: number;
   size?: SizeValues;
   dot?: boolean;
   top?: boolean;

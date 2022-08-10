@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { LabelProps } from '../../types';
-import clsx from '../../utils/clsx';
-import TextFactory from '../TextFactory';
+import { FactoryProps, LabelProps, TextFactory, clsx } from '@react-bulk/core';
 
-function LabelFactory({ for: htmlFor, className, style, map, ...rest }: LabelProps | any, ref: any) {
+function LabelFactory({ for: htmlFor, className, style, map, ...rest }: FactoryProps & LabelProps, ref: any) {
   const { web, Label } = map;
+  const classes: any[] = ['rbk-label', className];
 
   style = [
     web && {
@@ -18,9 +17,7 @@ function LabelFactory({ for: htmlFor, className, style, map, ...rest }: LabelPro
     style,
   ];
 
-  return (
-    <TextFactory map={map} ref={ref} component={Label} {...rest} htmlFor={htmlFor} className={clsx('rbk-label', className)} style={style} />
-  );
+  return <TextFactory map={map} ref={ref} component={Label} {...rest} htmlFor={htmlFor} className={clsx(classes)} style={style} />;
 }
 
 export default React.forwardRef(LabelFactory);

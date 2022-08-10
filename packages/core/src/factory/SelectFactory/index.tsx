@@ -1,10 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { SelectProps } from '../../types';
-import clsx from '../../utils/clsx';
-import ButtonFactory from '../ButtonFactory';
-import DropdownFactory from '../DropdownFactory';
-import TextFactory from '../TextFactory';
+import { ButtonFactory, DropdownFactory, FactoryProps, SelectProps, TextFactory, clsx } from '@react-bulk/core';
 
 function SelectFactory(
   {
@@ -22,7 +18,7 @@ function SelectFactory(
     // Core
     map,
     ...rest
-  }: SelectProps | any,
+  }: FactoryProps & SelectProps,
   ref: any,
 ) {
   const { web, Input } = map;
