@@ -145,7 +145,7 @@ export type BoxProps = Bindings &
     children?: ReactNode;
     style?: JssStyles;
     rawStyle?: JssStyles;
-    block?: JssStyles;
+    block?: boolean;
     hidden?: boolean;
 
     // Flexbox container
