@@ -1,6 +1,6 @@
 # Input
 
-A text field component.
+A extensible text input component.
 
 ## Props
 
@@ -8,9 +8,16 @@ Extends all [`Box`](Box.md) properties.
 
 ### `autoCapitalize`
 
-| Type                                                  | Default       |
-|-------------------------------------------------------|---------------|
-| `enum('none' , 'sentences' , 'words' , 'characters')` | `'sentences'` |
+Automatically capitalize certain characters.
+
+- `none`: don't auto capitalize anything.
+- `sentences`: first letter of each sentence.
+- `words`: first letter of each word.
+- `characters`: all characters.
+
+| Type                                                  | Default        |
+|-------------------------------------------------------|----------------|
+| `enum('none' , 'sentences' , 'words' , 'characters')` | `'sentences'`  |
 
 ---
 
@@ -23,6 +30,8 @@ Extends all [`Box`](Box.md) properties.
 ---
 
 ### `autoFocus`
+
+If `true`, focuses the input on componentDidMount or `useEffect`.
 
 | Type      |
 |-----------|
@@ -48,6 +57,9 @@ Extends all [`Box`](Box.md) properties.
 
 ### `defaultValue`
 
+Provides an initial value that will change when the user starts typing. Useful for use-cases where you do not want to deal with listening to
+events and updating the value prop to keep the controlled state in sync.
+
 | Type     |
 |----------|
 | `string` |
@@ -55,6 +67,8 @@ Extends all [`Box`](Box.md) properties.
 ---
 
 ### `maxLength`
+
+Limits the maximum number of characters that can be entered. Use this instead of implementing the logic in JS to avoid flicker.
 
 | Type     |
 |----------|
@@ -72,6 +86,8 @@ Extends all [`Box`](Box.md) properties.
 
 ### `placeholder`
 
+The string that will be rendered before text input has been entered.
+
 | Type     |
 |----------|
 | `string` |
@@ -79,6 +95,8 @@ Extends all [`Box`](Box.md) properties.
 ---
 
 ### `readOnly`
+
+If `true`, text is not editable.
 
 | Type      |
 |-----------|
@@ -88,6 +106,8 @@ Extends all [`Box`](Box.md) properties.
 
 ### `returnKeyType`
 
+Determines how the return key should look.
+
 | Type                                                      | Default     |
 |-----------------------------------------------------------|-------------|
 | `enum('default', 'done', 'go', 'next', 'search', 'send')` | `'default'` |
@@ -95,6 +115,8 @@ Extends all [`Box`](Box.md) properties.
 ---
 
 ### `secure`
+
+If `true`, the text input obscures the text entered so that sensitive text like passwords stay secure.
 
 | Type      |
 |-----------|
@@ -104,6 +126,8 @@ Extends all [`Box`](Box.md) properties.
 
 ### `selectionColor`
 
+The highlight and cursor color of the text input.
+
 | Type     |
 |----------|
 | `string` |
@@ -111,6 +135,10 @@ Extends all [`Box`](Box.md) properties.
 ---
 
 ### `spellCheck`
+
+For Safari and iOS only.
+<br/>
+If `false`, disables spell-check style (i.e. red underlines).
 
 | Type      | Default |
 |-----------|---------|
@@ -120,6 +148,8 @@ Extends all [`Box`](Box.md) properties.
 
 ### `type`
 
+Determines which keyboard to open.
+
 | Type                                              | Default  |
 |---------------------------------------------------|----------|
 | `enum('text', 'number', 'email', 'phone', 'url')` | `'text'` |
@@ -127,6 +157,8 @@ Extends all [`Box`](Box.md) properties.
 ---
 
 ### `value`
+
+The value to show for the text input.
 
 | Type     |
 |----------|
