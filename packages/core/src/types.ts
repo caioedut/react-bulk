@@ -140,6 +140,7 @@ export type ThemeProps = {
 export type BoxProps = Bindings &
   CustomStyles & {
     component?: any;
+    id?: string;
     className?: any;
     platform?: object;
     children?: ReactNode;
@@ -222,6 +223,7 @@ export type GroupProps = BoxProps & {
 export type ButtonProps = GroupProps & {
   autoFocus?: boolean;
   badge?: number | BadgeProps;
+  href?: string;
 };
 
 export type ButtonGroupProps = BoxProps & {
