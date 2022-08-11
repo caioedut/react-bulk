@@ -8,9 +8,9 @@ It is the primary component, factory for everything.
 
 Defines which element will be rendered.
 
-| Type                   | Web Default | Native Default |
-|------------------------|-------------|----------------|
-| `string`, `ReactNode`  | `'div'`     | `View`         |
+| Type                   | Default (Web) | Default (Native) |
+|------------------------|---------------|------------------|
+| `string`, `ReactNode`  | `'div'`       | `View`           |
 
 ---
 
@@ -18,8 +18,8 @@ Defines which element will be rendered.
 
 For web only.
 
-| Type      |
-|-----------|
-| `string`  |
+| Type     | Default |
+|----------|---------|
+| `string` | `null`  |
 
 ---
