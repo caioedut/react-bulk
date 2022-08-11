@@ -240,6 +240,7 @@ export type InputBaseProps = GroupProps & {
   readOnly?: boolean;
   returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
   placeholder?: string;
+  value?: string;
   onChange?: ChangeCallback;
 
   /** @deprecated use onChange instead */
@@ -249,9 +250,10 @@ export type InputBaseProps = GroupProps & {
 export type InputProps = InputBaseProps & {
   autoCorrect?: boolean;
   caretHidden?: boolean;
-  maxLength?: boolean;
+  maxLength?: number;
   secure?: boolean;
   selectionColor?: string;
+  spellCheck?: boolean;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url';
 };
 

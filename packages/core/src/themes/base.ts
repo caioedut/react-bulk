@@ -91,6 +91,17 @@ const base = {
     xl: 1200,
     xxl: 1400,
   },
+
+  components: {
+    Input: {
+      defaultProps: {
+        autoCapitalize: 'sentences',
+        autoCorrect: true,
+        spellCheck: true,
+        color: 'primary',
+      },
+    },
+  },
 };
 
 export default base;
