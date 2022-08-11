@@ -2,10 +2,15 @@ import React from 'react';
 
 import { BoxFactory, CardFactory, DropdownProps, FactoryProps, clsx, useTheme } from '@react-bulk/core';
 
-function DropdownFactory({ visible, children, className, style, map, ...rest }: FactoryProps & DropdownProps, ref: any) {
+function DropdownFactory({ className, children, map, ...props }: FactoryProps & DropdownProps, ref: any) {
   const theme = useTheme();
   const { web, native } = map;
   const classes: any[] = ['rbk-dropdown', className];
+
+  // Extends from default props
+  props = { ...theme.components.Dropdown.defaultProps, ...props };
+
+  let { visible, style, ...rest } = props;
 
   // useEffect(() => {
   //   if (!web) return;

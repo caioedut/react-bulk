@@ -15,41 +15,33 @@ import {
 
 import { spacings } from '../../styles/jss';
 
-function GroupFactory(
-  {
-    // Html
-    id,
-    className,
-    disabled,
-    focused,
-    // Custom
-    color,
-    error,
-    label,
-    loading,
-    size,
-    variant,
-    // Render
-    startIcon,
-    endIcon,
-    renderChildren,
-    // Styles
-    style,
-    labelStyle,
-    errorStyle,
-    containerStyle,
-    children,
-    // Core
-    map,
-    ...rest
-  }: GroupProps | any,
-  ref: any,
-) {
+function GroupFactory({ className, children, map, ...props }: GroupProps | any, ref: any) {
   const theme = useTheme();
   const { web } = map;
   const classes: any[] = ['rbk-group', className];
 
-  color = color ?? theme.colors.primary.main;
+  // Extends from default props
+  props = { ...theme.components.Group.defaultProps, ...props };
+
+  let {
+    color,
+    disabled,
+    endIcon,
+    error,
+    focused,
+    id,
+    label,
+    loading,
+    renderChildren,
+    size,
+    startIcon,
+    variant,
+    style,
+    labelStyle,
+    errorStyle,
+    containerStyle,
+    ...rest
+  } = props;
 
   const fontSize = size === 'small' ? theme.rem(0.75) : size === 'large' ? theme.rem(1.25) : theme.rem(1);
   const iconSize = fontSize * 1.25;

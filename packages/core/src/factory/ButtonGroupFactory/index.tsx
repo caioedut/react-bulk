@@ -1,12 +1,15 @@
 import React, { cloneElement } from 'react';
 
-import { BoxFactory, ButtonGroupProps, FactoryProps, ScrollableFactory, clsx } from '@react-bulk/core';
+import { BoxFactory, ButtonGroupProps, FactoryProps, ScrollableFactory, clsx, useTheme } from '@react-bulk/core';
 
-function ButtonGroupFactory(
-  { disabled, loading, variant, size, color, className, children, map, ...rest }: FactoryProps & ButtonGroupProps,
-  ref: any,
-) {
+function ButtonGroupFactory({ className, children, map, ...props }: FactoryProps & ButtonGroupProps, ref: any) {
+  const theme = useTheme();
   const classes: any[] = ['rbk-button-group', className];
+
+  // Extends from default props
+  props = { ...theme.components.ButtonGroup.defaultProps, ...props };
+
+  let { color, disabled, loading, size, variant, ...rest } = props;
 
   if (children && !Array.isArray(children)) {
     children = [children];

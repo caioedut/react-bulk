@@ -1,15 +1,19 @@
 import React, { useRef } from 'react';
 
-import { BoxFactory, FactoryProps, ImageProps, clsx } from '@react-bulk/core';
+import { BoxFactory, FactoryProps, ImageProps, clsx, useTheme } from '@react-bulk/core';
 
-function ImageFactory({ width, height, mode, className, style, map, ...rest }: FactoryProps & ImageProps, ref: any) {
+function ImageFactory({ className, map, ...props }: FactoryProps & ImageProps, ref: any) {
+  const theme = useTheme();
   const { web, native, Image } = map;
   const classes: any[] = ['rbk-image', className];
 
+  // Extends from default props
+  props = { ...theme.components.Image.defaultProps, ...props };
+
+  let { mode, height, width, style, ...rest } = props;
+
   const defaultRef: any = useRef(null);
   const imageRef = ref || defaultRef;
-
-  mode = mode ?? 'cover';
 
   style = [
     web && { display: 'inline-block', objectFit: mode },

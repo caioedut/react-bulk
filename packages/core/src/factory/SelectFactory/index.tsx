@@ -1,28 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { ButtonFactory, DropdownFactory, FactoryProps, SelectProps, TextFactory, clsx } from '@react-bulk/core';
+import { ButtonFactory, DropdownFactory, FactoryProps, SelectProps, TextFactory, clsx, useTheme } from '@react-bulk/core';
 
-function SelectFactory(
-  {
-    // Component
-    className,
-    defaultValue,
-    name,
-    placeholder,
-    readOnly,
-    value,
-    // Custom
-    options,
-    // Bindings
-    onChange,
-    // Core
-    map,
-    ...rest
-  }: FactoryProps & SelectProps,
-  ref: any,
-) {
+function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps, ref: any) {
+  const theme = useTheme();
   const { web, Input } = map;
   const classes: any[] = ['rbk-select', className];
+
+  // Extends from default props
+  props = { ...theme.components.Select.defaultProps, ...props };
+
+  let { defaultValue, name, onChange, options, placeholder, readOnly, value, ...rest } = props;
 
   const defaultRef: any = useRef(null);
   const buttonRef = ref || defaultRef;

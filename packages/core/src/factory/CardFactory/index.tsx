@@ -2,9 +2,14 @@ import React from 'react';
 
 import { BoxFactory, CardProps, FactoryProps, clsx, useTheme } from '@react-bulk/core';
 
-function CardFactory({ className, style, map, ...rest }: FactoryProps & CardProps, ref: any) {
+function CardFactory({ className, map, ...props }: FactoryProps & CardProps, ref: any) {
   const theme = useTheme();
   const classes: any[] = ['rbk-card', className];
+
+  // Extends from default props
+  props = { ...theme.components.Card.defaultProps, ...props };
+
+  let { style, ...rest } = props;
 
   style = [
     {

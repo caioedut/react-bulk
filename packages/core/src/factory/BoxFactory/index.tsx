@@ -4,44 +4,52 @@ import { BoxProps, FactoryProps, bindings, clsx, createStyle, get, merge, useThe
 
 import { customStyleProps } from '../../styles/jss';
 
-function BoxFactory(
-  {
-    component,
-    block,
-    hidden,
-    flexbox,
-    direction,
-    row,
-    column,
-    reverse,
-    wrap,
-    noWrap,
-    flow,
-    justifyContent,
-    alignContent,
-    justifyItems,
-    alignItems,
-    center,
-    flex,
-    order,
-    grow,
-    shrink,
-    basis,
-    align,
-    justify,
-    platform,
-    className,
-    style,
-    rawStyle,
-    children,
-    map,
-    ...props
-  }: FactoryProps & BoxProps,
-  ref,
-) {
+function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxProps, ref) {
   const theme = useTheme();
   const { web, native, dimensions, Text, View } = map;
   const classes: any[] = [className];
+
+  // Extends from default props
+  props = { ...theme.components.Box.defaultProps, ...props };
+
+  let {
+    align,
+    alignContent,
+    alignItems,
+    basis,
+    block,
+    center,
+    column,
+    component,
+    direction,
+    flex,
+    flexbox,
+    flow,
+    grow,
+    hidden,
+    justify,
+    justifyContent,
+    justifyItems,
+    noWrap,
+    order,
+    platform,
+    reverse,
+    row,
+    shrink,
+    wrap,
+    style,
+    rawStyle,
+    ...rest
+  } = props;
+
+  // Extract style props
+  const styleProps: any[] = [];
+  for (const prop of customStyleProps) {
+    if (prop in rest) {
+      styleProps.push({ [prop]: rest[prop] });
+      delete rest[prop];
+    }
+  }
 
   style = [
     { position: 'relative' },
@@ -92,20 +100,14 @@ function BoxFactory(
     align && { alignSelf: align },
     justify && { justifySelf: justify },
 
+    styleProps,
+
     style,
 
     native && rawStyle,
 
     hidden && { display: 'none !important' },
   ];
-
-  // Custom style props
-  for (const prop of customStyleProps) {
-    if (prop in props) {
-      style.push({ [prop]: props[prop] });
-      delete props[prop];
-    }
-  }
 
   // Apply responsive styles
   for (const breakpoint of Object.entries(theme.breakpoints)) {
@@ -151,25 +153,25 @@ function BoxFactory(
 
     // Native: Style Object
     if (typeof processed === 'object') {
-      props.style = processed;
+      rest.style = processed;
     }
   }
 
   if (web) {
-    props.className = clsx(classes);
-    props.style = merge(rawStyle);
+    rest.className = clsx(classes);
+    rest.style = merge(rawStyle);
   }
 
   // Platform specific props
   if (platform) {
     Object.keys(platform).forEach((item) => {
       if (map[item] || item === '*') {
-        Object.assign(props, merge({}, platform[item]));
+        Object.assign(rest, merge({}, platform[item]));
       }
     });
   }
 
-  props = bindings(props);
+  rest = bindings(rest);
 
   if ([undefined, null, false, NaN].includes(children)) {
     children = null;
@@ -188,7 +190,7 @@ function BoxFactory(
   const Component = component || View;
 
   return (
-    <Component ref={ref} {...props}>
+    <Component ref={ref} {...rest}>
       {children}
     </Component>
   );

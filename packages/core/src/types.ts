@@ -95,6 +95,10 @@ export type ThemeColorsProps = {
   dark?: string;
 };
 
+export type ThemeComponentProps = {
+  defaultProps: {};
+};
+
 export type ThemeProps = {
   mode: 'light' | 'dark' | string;
   spacing?: Function;
@@ -134,6 +138,29 @@ export type ThemeProps = {
     lg?: number;
     xl?: number;
     xxl?: number;
+  };
+  components: {
+    Badge: ThemeComponentProps;
+    Box: ThemeComponentProps;
+    Button: ThemeComponentProps;
+    ButtonGroup: ThemeComponentProps;
+    Card: ThemeComponentProps;
+    Checkbox: ThemeComponentProps;
+    Collapse: ThemeComponentProps;
+    Divider: ThemeComponentProps;
+    Dropdown: ThemeComponentProps;
+    Grid: ThemeComponentProps;
+    Group: ThemeComponentProps;
+    Icon: ThemeComponentProps;
+    Image: ThemeComponentProps;
+    Input: ThemeComponentProps;
+    Label: ThemeComponentProps;
+    Loading: ThemeComponentProps;
+    Modal: ThemeComponentProps;
+    Scrollable: ThemeComponentProps;
+    Select: ThemeComponentProps;
+    Table: ThemeComponentProps;
+    Text: ThemeComponentProps;
   };
 };
 

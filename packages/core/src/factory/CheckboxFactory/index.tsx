@@ -1,36 +1,30 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { BoxFactory, ButtonFactory, CheckboxProps, FactoryProps, LabelFactory, clsx, crypt, extract, uuid } from '@react-bulk/core';
+import {
+  BoxFactory,
+  ButtonFactory,
+  CheckboxProps,
+  FactoryProps,
+  LabelFactory,
+  clsx,
+  crypt,
+  extract,
+  useTheme,
+  uuid,
+} from '@react-bulk/core';
 
 import { spacings } from '../../styles/jss';
 
-function CheckboxFactory(
-  {
-    // Component
-    id,
-    className,
-    checked,
-    defaultChecked,
-    name,
-    placeholder,
-    readOnly,
-    // Custom
-    label,
-    unique,
-    // Bindings
-    onChange,
-    // Styles
-    style,
-    labelStyle,
-    containerStyle,
-    // Core
-    map,
-    ...rest
-  }: FactoryProps & CheckboxProps,
-  ref: any,
-) {
+function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxProps, ref: any) {
+  const theme = useTheme();
   const { web, Input } = map;
   const classes: any[] = ['rbk-checkbox', className];
+
+  // Extends from default props
+  props = { ...theme.components.Checkbox.defaultProps, ...props };
+
+  let { checked, defaultChecked, id, label, name, onChange, placeholder, readOnly, unique, style, labelStyle, containerStyle, ...rest } =
+    props;
 
   id = id ?? `rbk-${crypt(uuid())}`;
 

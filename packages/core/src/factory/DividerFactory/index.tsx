@@ -2,19 +2,32 @@ import React from 'react';
 
 import { BoxFactory, DividerProps, FactoryProps, clsx, useTheme } from '@react-bulk/core';
 
-function DividerFactory({ color, size, opacity, vertical, className, style, map, ...rest }: FactoryProps & DividerProps, ref: any) {
+function DividerFactory({ className, map, ...props }: FactoryProps & DividerProps, ref: any) {
   const theme = useTheme();
   const classes: any[] = ['rbk-divider', className];
 
+  // Extends from default props
+  props = { ...theme.components.Divider.defaultProps, ...props };
+
+  let {
+    //
+    color,
+    opacity,
+    size,
+    vertical,
+    style,
+    ...rest
+  } = props;
+
   style = [
     {
-      backgroundColor: color ?? theme.colors.text.secondary,
-      opacity: opacity ?? 0.25,
+      backgroundColor: color,
+      opacity,
     },
 
-    vertical && { width: size ?? 1, height: '100%' },
+    vertical && { width: size, height: '100%' },
 
-    !vertical && { height: size ?? 1 },
+    !vertical && { height: size },
 
     style,
   ];

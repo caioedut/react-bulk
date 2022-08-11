@@ -2,15 +2,15 @@ import React from 'react';
 
 import { BadgeProps, FactoryProps, TextFactory, clsx, useTheme } from '@react-bulk/core';
 
-function BadgeFactory(
-  { value, dot, color, size, top, bottom, left, right, className, style, children, map, ...rest }: FactoryProps & BadgeProps,
-  ref: any,
-) {
+function BadgeFactory({ className, children, map, ...props }: FactoryProps & BadgeProps, ref: any) {
   const theme = useTheme();
   const { web, native, Text } = map;
   const classes: any[] = ['rbk-badge', className];
 
-  color = color ?? theme.colors.error.dark;
+  // Extends from default props
+  props = { ...theme.components.Badge.defaultProps, ...props };
+
+  let { bottom, color, dot, left, right, size, top, value, style, ...rest } = props;
 
   const absolute = top || bottom || left || right;
   const baseSize = size === 'small' ? theme.rem(1) : size === 'large' ? theme.rem(1.5) : theme.rem(1.25);

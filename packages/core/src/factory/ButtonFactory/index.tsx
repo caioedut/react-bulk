@@ -1,26 +1,16 @@
 import React from 'react';
 
-import { BadgeFactory, BoxFactory, ButtonProps, FactoryProps, GroupFactory, LabelFactory, clsx, get } from '@react-bulk/core';
+import { BadgeFactory, BoxFactory, ButtonProps, FactoryProps, GroupFactory, LabelFactory, clsx, get, useTheme } from '@react-bulk/core';
 
-function ButtonFactory(
-  {
-    // Component
-    className,
-    autoFocus,
-    //Custom
-    badge,
-    // Styles
-    style,
-    labelStyle,
-    // Core
-    children,
-    map,
-    ...rest
-  }: FactoryProps & ButtonProps,
-  ref,
-) {
+function ButtonFactory({ className, children, map, ...props }: FactoryProps & ButtonProps, ref) {
+  const theme = useTheme();
   const { web, Button, Text } = map;
   const classes: any[] = ['rbk-button', className];
+
+  // Extends from default props
+  props = { ...theme.components.Button.defaultProps, ...props };
+
+  let { autoFocus, badge, style, labelStyle, ...rest } = props;
 
   style = [
     { justifyContent: 'center' },

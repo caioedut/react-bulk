@@ -2,9 +2,14 @@ import React from 'react';
 
 import { BoxFactory, FactoryProps, GridProps, clsx, useTheme } from '@react-bulk/core';
 
-function GridFactory({ size, className, style, children, map, ...rest }: FactoryProps & GridProps, ref: any) {
+function GridFactory({ className, children, map, ...props }: FactoryProps & GridProps, ref: any) {
   const theme = useTheme();
   const classes: any[] = ['rbk-grid', className];
+
+  // Extends from default props
+  props = { ...theme.components.Grid.defaultProps, ...props };
+
+  let { size, style, ...rest } = props;
 
   const breakpoints = Object.keys(theme.breakpoints);
 
