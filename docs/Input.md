@@ -1,3 +1,5 @@
+[‹ Go Back](README.md)
+
 # Input
 
 A extensible text input component.
@@ -31,7 +33,7 @@ Automatically capitalize certain characters.
 
 ### `autoFocus`
 
-If `true`, focuses the input on componentDidMount or `useEffect`.
+If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 | Type      |
 |-----------|
@@ -165,3 +167,5 @@ The value to show for the text input.
 | `string` |
 
 ---
+
+[‹ Go Back](README.md)
