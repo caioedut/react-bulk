@@ -14,18 +14,122 @@ Extends all [`Box`](Box.md) properties.
 
 ---
 
-### `autoFocus`
+### `autoCorrect`
 
 | Type      | Default |
 |-----------|---------|
-| `boolean` | `false` |
+| `boolean` | `true`  |
+
+---
+
+### `autoFocus`
+
+| Type      |
+|-----------|
+| `boolean` |
+
+---
+
+### `caretHidden`
+
+| Type      |
+|-----------|
+| `boolean` |
+
+---
+
+### `color`
+
+| Type     | Default     |
+|----------|-------------|
+| `string` | `'primary'` |
 
 ---
 
 ### `defaultValue`
 
-| Type     | Default |
-|----------|---------|
-| `string` | `null`  |
+| Type     |
+|----------|
+| `string` |
+
+---
+
+### `maxLength`
+
+| Type     |
+|----------|
+| `number` |
+
+---
+
+### `name`
+
+| Type     |
+|----------|
+| `string` |
+
+---
+
+### `placeholder`
+
+| Type     |
+|----------|
+| `string` |
+
+---
+
+### `readOnly`
+
+| Type      |
+|-----------|
+| `boolean` |
+
+---
+
+### `returnKeyType`
+
+| Type                                                      | Default     |
+|-----------------------------------------------------------|-------------|
+| `enum('default', 'done', 'go', 'next', 'search', 'send')` | `'default'` |
+
+---
+
+### `secure`
+
+| Type      |
+|-----------|
+| `boolean` |
+
+---
+
+### `selectionColor`
+
+| Type     |
+|----------|
+| `string` |
+
+---
+
+### `spellCheck`
+
+| Type      | Default |
+|-----------|---------|
+| `boolean` | `true`  |
+
+---
+
+### `type`
+
+| Type                                              | Default  |
+|---------------------------------------------------|----------|
+| `enum('text', 'number', 'email', 'phone', 'url')` | `'text'` |
+
+---
+
+### `value`
+
+| Type     |
+|----------|
+| `string` |
 
 ---
