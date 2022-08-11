@@ -93,12 +93,89 @@ const base = {
   },
 
   components: {
+    Badge: {
+      defaultProps: {
+        color: 'error.dark',
+        size: 'medium',
+      },
+    },
+    Box: {
+      defaultProps: {},
+    },
+    Button: {
+      defaultProps: {},
+    },
+    ButtonGroup: {
+      defaultProps: {},
+    },
+    Card: {
+      defaultProps: {},
+    },
+    Checkbox: {
+      defaultProps: {},
+    },
+    Collapse: {
+      defaultProps: {},
+    },
+    Divider: {
+      defaultProps: {
+        color: 'text.secondary',
+        opacity: 0.25,
+        size: 1,
+      },
+    },
+    Dropdown: {
+      defaultProps: {},
+    },
+    Grid: {
+      defaultProps: {},
+    },
+    Group: {
+      defaultProps: {
+        color: 'primary',
+      },
+    },
+    Icon: {
+      defaultProps: {
+        color: 'primary',
+      },
+    },
+    Image: {
+      defaultProps: {
+        mode: 'cover',
+      },
+    },
     Input: {
       defaultProps: {
         autoCapitalize: 'sentences',
         autoCorrect: true,
         spellCheck: true,
         color: 'primary',
+      },
+    },
+    Label: {
+      defaultProps: {},
+    },
+    Loading: {
+      defaultProps: {
+        speed: '1s',
+      },
+    },
+    Modal: {
+      defaultProps: {},
+    },
+    Scrollable: {
+      defaultProps: {},
+    },
+    Select: {
+      defaultProps: {},
+    },
+    Table: {
+      defaultProps: {},
+    },
+    Text: {
+      defaultProps: {
+        color: 'text',
       },
     },
   },

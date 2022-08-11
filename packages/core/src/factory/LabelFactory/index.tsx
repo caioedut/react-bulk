@@ -1,10 +1,16 @@
 import React from 'react';
 
-import { FactoryProps, LabelProps, TextFactory, clsx } from '@react-bulk/core';
+import { FactoryProps, LabelProps, TextFactory, clsx, useTheme } from '@react-bulk/core';
 
-function LabelFactory({ for: htmlFor, className, style, map, ...rest }: FactoryProps & LabelProps, ref: any) {
+function LabelFactory({ className, map, ...props }: FactoryProps & LabelProps, ref: any) {
+  const theme = useTheme();
   const { web, Label } = map;
   const classes: any[] = ['rbk-label', className];
+
+  // Extends from default props
+  props = { ...theme.components.Label.defaultProps, ...props };
+
+  let { for: htmlFor, style, ...rest } = props;
 
   style = [
     web && {

@@ -2,37 +2,37 @@ import React from 'react';
 
 import { BoxFactory, FactoryProps, TextProps, clsx, useTheme } from '@react-bulk/core';
 
-function TextFactory(
-  {
-    variant,
-    size,
-    color,
-    center,
-    left,
-    right,
-    justify,
-    weight,
-    bold,
-    italic,
-    oblique,
-    smallCaps,
-    invisible,
-    transform,
-    numberOfLines,
-    className,
-    style,
-    map,
-    ...rest
-  }: FactoryProps & TextProps,
-  ref,
-) {
+function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref) {
   const theme = useTheme();
   const { web, native, Text } = map;
   const classes: any[] = ['rbk-text', className];
 
+  // Extends from default props
+  props = { ...theme.components.Text.defaultProps, ...props };
+
+  let {
+    bold,
+    center,
+    color,
+    invisible,
+    italic,
+    justify,
+    left,
+    numberOfLines,
+    oblique,
+    right,
+    size,
+    smallCaps,
+    transform,
+    variant,
+    weight,
+    style,
+    ...rest
+  } = props;
+
   style = [
     {
-      color: color ?? theme.colors.text.primary,
+      color,
       fontSize: theme.rem(1),
       textDecorationLine: 'none',
     },

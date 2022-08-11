@@ -2,10 +2,15 @@ import React from 'react';
 
 import { BoxFactory, FactoryProps, IconProps, clsx, useTheme } from '@react-bulk/core';
 
-function IconFactory({ name, color, size, className, style, map, ...rest }: FactoryProps & IconProps, ref: any) {
+function IconFactory({ className, map, ...props }: FactoryProps & IconProps, ref: any) {
   const theme = useTheme();
   const { web, Icons } = map;
   const classes: any[] = ['rbk-icon', className];
+
+  // Extends from default props
+  props = { ...theme.components.Icon.defaultProps, ...props };
+
+  let { color, name, size, style, ...rest } = props;
 
   const iconName = `${name || ''}`
     .split(/_|-|\s/g)
@@ -14,7 +19,6 @@ function IconFactory({ name, color, size, className, style, map, ...rest }: Fact
 
   const Component = Icons[iconName] ?? Icons.Question;
 
-  color = theme.color(color ?? 'primary');
   size = size ?? theme.rem(1.25);
 
   style = [
@@ -26,7 +30,16 @@ function IconFactory({ name, color, size, className, style, map, ...rest }: Fact
   ];
 
   return (
-    <BoxFactory ref={ref} map={map} component={Component} color={color} size={size} {...rest} className={clsx(classes)} style={style} />
+    <BoxFactory
+      ref={ref}
+      map={map}
+      component={Component}
+      color={theme.color(color)}
+      size={size}
+      {...rest}
+      className={clsx(classes)}
+      style={style}
+    />
   );
 }
 

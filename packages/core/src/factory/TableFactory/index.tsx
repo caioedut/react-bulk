@@ -2,9 +2,14 @@ import React, { isValidElement } from 'react';
 
 import { BoxFactory, FactoryProps, TableProps, TextFactory, clsx, useTheme } from '@react-bulk/core';
 
-function TableFactory({ rows, columns, border, className, style, map, ...rest }: FactoryProps & TableProps, ref: any) {
+function TableFactory({ className, map, ...props }: FactoryProps & TableProps, ref: any) {
   const theme = useTheme();
   const classes: any[] = ['rbk-table', className];
+
+  // Extends from default props
+  props = { ...theme.components.Table.defaultProps, ...props };
+
+  let { border, columns, rows, style, ...rest } = props;
 
   const width = `${100 / columns?.length}%`;
 

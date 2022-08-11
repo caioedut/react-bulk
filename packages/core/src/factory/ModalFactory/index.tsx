@@ -2,10 +2,15 @@ import React from 'react';
 
 import { BoxFactory, FactoryProps, ModalProps, clsx, useTheme } from '@react-bulk/core';
 
-function ModalFactory({ visible, align, onBackdropPress, children, className, style, map, ...rest }: FactoryProps & ModalProps, ref: any) {
+function ModalFactory({ className, children, map, ...props }: FactoryProps & ModalProps, ref: any) {
   const theme = useTheme();
   const { web, native } = map;
   const classes: any[] = ['rbk-modal', className];
+
+  // Extends from default props
+  props = { ...theme.components.Modal.defaultProps, ...props };
+
+  let { align, onBackdropPress, visible, style, ...rest } = props;
 
   style = [
     {

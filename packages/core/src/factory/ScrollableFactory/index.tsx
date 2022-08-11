@@ -1,10 +1,16 @@
 import React from 'react';
 
-import { BoxFactory, FactoryProps, ScrollableProps, clsx } from '@react-bulk/core';
+import { BoxFactory, FactoryProps, ScrollableProps, clsx, useTheme } from '@react-bulk/core';
 
-function ScrollableFactory({ horizontal, className, style, map, ...rest }: FactoryProps & ScrollableProps, ref: any) {
+function ScrollableFactory({ className, map, ...props }: FactoryProps & ScrollableProps, ref: any) {
+  const theme = useTheme();
   const { web, ScrollView } = map;
   const classes: any[] = ['rbk-scrollable', className];
+
+  // Extends from default props
+  props = { ...theme.components.Scrollable.defaultProps, ...props };
+
+  let { horizontal, style, ...rest } = props;
 
   style = [
     { flex: 1 },

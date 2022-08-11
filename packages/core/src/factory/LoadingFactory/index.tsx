@@ -1,14 +1,20 @@
 import React from 'react';
 
-import { FactoryProps, IconFactory, LoadingProps, clsx } from '@react-bulk/core';
+import { FactoryProps, IconFactory, LoadingProps, clsx, useTheme } from '@react-bulk/core';
 
-function LoadingFactory({ speed, className, style, map, ...rest }: FactoryProps | LoadingProps, ref: any) {
+function LoadingFactory({ className, map, ...props }: FactoryProps | LoadingProps, ref: any) {
+  const theme = useTheme();
   const { web } = map;
   const classes: any[] = ['rbk-loading', className];
 
+  // Extends from default props
+  props = { ...theme.components.Loading.defaultProps, ...props };
+
+  let { speed, style, ...rest } = props;
+
   style = [
     web && {
-      animation: `spin ${speed ?? '1s'} linear infinite`,
+      animation: `spin ${speed} linear infinite`,
     },
 
     style,
