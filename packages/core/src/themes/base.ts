@@ -138,6 +138,7 @@ const base = {
     Icon: {
       defaultProps: {
         color: 'primary',
+        weight: 'regular',
       },
     },
     Image: {

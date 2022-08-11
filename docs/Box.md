@@ -28,6 +28,12 @@ Defines the `class` attribute.
 
 ---
 
+### `hidden`
+
+| Type      |
+|-----------|
+| `boolean` |
+
 ---
 
 ### `platform`
@@ -42,9 +48,17 @@ Apply props for a specific platform. For example:
 />
 ```
 
-| Type                                                                |
-|---------------------------------------------------------------------|
-| ```{ web: object, native: object, ios: object, android: object }``` |
+| Type                                                            |
+|-----------------------------------------------------------------|
+| `{ web: object, native: object, ios: object, android: object }` |
+
+---
+
+### `style`
+
+| Type              |
+|-------------------|
+| `object`, `array` |
 
 ---
 
