@@ -4,7 +4,7 @@ A text field component.
 
 ## Props
 
-Extends all [`Box`]() properties.
+Extends all [`Box`](Box.md) properties.
 
 ### `autoCapitalize`
 
