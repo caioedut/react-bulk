@@ -44,7 +44,7 @@ function ButtonFactory(
       // Custom
       map={map}
       ref={ref}
-      component={Button}
+      component={web && rest.href ? 'a' : Button}
       {...rest}
       // Component
       className={clsx(classes)}
