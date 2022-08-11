@@ -2,10 +2,15 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { BoxFactory, FactoryProps, GroupFactory, InputProps, clsx, get, pick, useTheme } from '@react-bulk/core';
 
-function InputFactory(
-  {
-    // Component
-    className,
+function InputFactory({ className, map, ...props }: FactoryProps & InputProps, ref: any) {
+  const theme = useTheme();
+  const { web, native, Input, Label, View } = map;
+  const classes: any[] = ['rbk-input', className];
+
+  // Extends from default props
+  props = { ...theme.components.Input.defaultProps, ...props };
+
+  let {
     autoCapitalize,
     autoCorrect,
     autoFocus,
@@ -27,28 +32,14 @@ function InputFactory(
     onBlur,
     // Styles
     style,
-    // Core
-    map,
     ...rest
-  }: FactoryProps & InputProps,
-  ref: any,
-) {
-  const theme = useTheme();
-  const { web, native, Input, Label, View } = map;
-  const classes: any[] = ['rbk-input', className];
+  } = props;
 
   const defaultRef: any = useRef(null);
   const inputRef = ref || defaultRef;
 
   const [focused, setFocused] = useState(false);
   const [internal, setInternal] = useState(`${defaultValue ?? ''}`);
-
-  const color = theme.color(rest.color ?? 'primary');
-
-  // Defaults
-  selectionColor = theme.hex2rgba(selectionColor ?? color, 0.75);
-  autoCorrect = autoCorrect ?? true;
-  spellCheck = spellCheck ?? autoCorrect;
 
   useEffect(() => {
     if (typeof value !== 'undefined') {
