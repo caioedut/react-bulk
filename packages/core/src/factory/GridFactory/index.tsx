@@ -30,7 +30,7 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
 
   return (
     <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} style={style}>
-      {children.map((child, index) => {
+      {children?.map((child, index) => {
         const props = { ...child.props };
         const childStyle: any[] = [props.style];
 
