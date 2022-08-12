@@ -76,9 +76,13 @@ function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxPr
           id={id}
           variant="text"
           {...rest}
-          startIcon={unique ? (checked ? 'CheckCircle' : 'Circle') : checked ? 'CheckSquare' : 'Square'}
+          startIcon={unique ? (internal ? 'CheckCircle' : 'Circle') : internal ? 'CheckSquare' : 'Square'}
           onPress={handleChange}
           style={[{ padding: 0 }, style]}
+          accessibility={{
+            role: 'checkbox',
+            state: { checked: internal },
+          }}
         />
 
         {Boolean(label) && (
@@ -95,7 +99,7 @@ function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxPr
           name={name}
           readOnly={readOnly}
           defaultValue="1"
-          checked={checked}
+          checked={internal}
           onChange={handleChange}
         />
       )}
