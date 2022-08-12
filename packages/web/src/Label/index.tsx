@@ -1,13 +1,11 @@
-import { ComponentPropsWithRef, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 import { LabelFactory, LabelProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type LabelPropsWeb = ComponentPropsWithRef<'label'> & LabelProps;
-
-function Label({ ...props }: LabelPropsWeb, ref) {
+function Label({ ...props }: LabelProps, ref) {
   return <LabelFactory ref={ref} {...props} map={useMap()} />;
 }
 
-export default forwardRef(Label);
+export default forwardRef<typeof Label, LabelProps>(Label);

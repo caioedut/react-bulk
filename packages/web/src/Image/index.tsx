@@ -1,12 +1,10 @@
-import { ComponentPropsWithRef, forwardRef, useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 
 import { ImageFactory, ImageProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type ImagePropsWeb = ComponentPropsWithRef<'img'> & ImageProps;
-
-function Image({ source, corners, rounded, style, ...props }: ImagePropsWeb, ref) {
+function Image({ source, corners, rounded, style, ...props }: ImageProps, ref) {
   const map = useMap();
 
   style = [
@@ -23,4 +21,4 @@ function Image({ source, corners, rounded, style, ...props }: ImagePropsWeb, ref
   return <ImageFactory ref={ref} {...props} map={map} style={style} />;
 }
 
-export default forwardRef(Image);
+export default forwardRef<typeof Image, ImageProps>(Image);

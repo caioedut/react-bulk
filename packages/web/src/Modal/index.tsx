@@ -1,12 +1,10 @@
-import { ComponentPropsWithRef, forwardRef, useRef } from 'react';
+import { forwardRef, useRef } from 'react';
 
 import { ModalFactory, ModalProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type ModalPropsWeb = ComponentPropsWithRef<'div'> & ModalProps;
-
-function Modal({ onBackdropPress, ...props }: ModalPropsWeb, ref) {
+function Modal({ onBackdropPress, ...props }: ModalProps, ref) {
   const map = useMap();
 
   const defaultRef = useRef(null);
@@ -18,4 +16,4 @@ function Modal({ onBackdropPress, ...props }: ModalPropsWeb, ref) {
   return <ModalFactory ref={ref} {...props} map={map} />;
 }
 
-export default forwardRef(Modal);
+export default forwardRef<typeof Modal, ModalProps>(Modal);

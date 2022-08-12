@@ -1,13 +1,11 @@
-import { ComponentPropsWithRef, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 import { SelectFactory, SelectProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type SelectPropsWeb = ComponentPropsWithRef<'div'> & SelectProps;
-
-function Select({ ...props }: SelectPropsWeb, ref) {
+function Select({ ...props }: SelectProps, ref) {
   return <SelectFactory ref={ref} {...props} map={useMap()} />;
 }
 
-export default forwardRef(Select);
+export default forwardRef<typeof Select, SelectProps>(Select);

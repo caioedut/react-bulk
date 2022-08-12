@@ -1,14 +1,12 @@
 import { forwardRef } from 'react';
 import { RefreshControl } from 'react-native';
 
-import { ScrollableFactory, ScrollableProps, useTheme } from '@react-bulk/core';
+import { ScrollableFactory, useTheme } from '@react-bulk/core';
 
 import { NativeScrollableProps } from '../types';
 import useMap from '../useMap';
 
-export type ScrollablePropsNative = ScrollableProps & NativeScrollableProps;
-
-function Scrollable({ refreshing, onRefresh, refreshControl, ...props }: ScrollablePropsNative, ref) {
+function Scrollable({ refreshing, onRefresh, refreshControl, ...props }: NativeScrollableProps, ref) {
   const map = useMap();
   const theme = useTheme();
 
@@ -36,4 +34,4 @@ function Scrollable({ refreshing, onRefresh, refreshControl, ...props }: Scrolla
   return <ScrollableFactory ref={ref} {...props} map={map} />;
 }
 
-export default forwardRef<typeof Scrollable, ScrollablePropsNative>(Scrollable);
+export default forwardRef<typeof Scrollable, NativeScrollableProps>(Scrollable);
