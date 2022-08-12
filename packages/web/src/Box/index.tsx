@@ -1,15 +1,11 @@
-import { ComponentPropsWithRef, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 import { BoxFactory, BoxProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type BoxPropsWeb = ComponentPropsWithRef<'div'> & BoxProps;
-
-function Box({ ...props }: BoxPropsWeb, ref) {
-  const map = useMap();
-
-  return <BoxFactory ref={ref} {...props} map={map} />;
+function Box({ ...props }: BoxProps, ref) {
+  return <BoxFactory ref={ref} {...props} map={useMap()} />;
 }
 
-export default forwardRef(Box);
+export default forwardRef<typeof Box, BoxProps>(Box);

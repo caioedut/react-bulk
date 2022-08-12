@@ -1,13 +1,11 @@
-import { ComponentPropsWithRef, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 import { DropdownFactory, DropdownProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type DropdownPropsWeb = ComponentPropsWithRef<'div'> & DropdownProps;
-
-function Dropdown({ ...props }: DropdownPropsWeb, ref) {
+function Dropdown({ ...props }: DropdownProps, ref) {
   return <DropdownFactory ref={ref} {...props} map={useMap()} />;
 }
 
-export default forwardRef(Dropdown);
+export default forwardRef<typeof Dropdown, DropdownProps>(Dropdown);

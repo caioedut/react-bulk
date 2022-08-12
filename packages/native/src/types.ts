@@ -1,6 +1,8 @@
 import { ReactElement } from 'react';
 import { AccessibilityActionEvent, GestureResponderEvent, LayoutChangeEvent, RefreshControlProps } from 'react-native';
 
+import { ImageProps, ScrollableProps } from '@react-bulk/core';
+
 export type NativeBindingProps = {
   onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
   onAccessibilityAction?: ((event: AccessibilityActionEvent) => void) | undefined;
@@ -16,8 +18,10 @@ export type NativeBindingProps = {
   onStartShouldSetResponderCapture?: ((event: GestureResponderEvent) => boolean) | undefined;
 };
 
-export type NativeScrollableProps = {
+export type NativeScrollableProps = ScrollableProps & {
   onRefresh?: () => void;
   refreshing?: boolean;
   refreshControl?: ReactElement<RefreshControlProps>;
 };
+
+export type NativeImageProps = NativeBindingProps & ImageProps;

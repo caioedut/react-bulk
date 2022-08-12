@@ -1,12 +1,10 @@
-import { ComponentPropsWithRef, forwardRef, useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 
 import { BoxFactory, CollapseFactory, CollapseProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type CollapsePropsWeb = ComponentPropsWithRef<'div'> & CollapseProps;
-
-function Collapse({ in: shown, ...props }: CollapsePropsWeb, ref) {
+function Collapse({ in: shown, ...props }: CollapseProps, ref) {
   const map = useMap();
 
   const startHidden = useRef(!shown).current;
@@ -70,4 +68,4 @@ function Collapse({ in: shown, ...props }: CollapsePropsWeb, ref) {
   );
 }
 
-export default forwardRef(Collapse);
+export default forwardRef<typeof Collapse, CollapseProps>(Collapse);

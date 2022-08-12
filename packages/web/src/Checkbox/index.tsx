@@ -1,15 +1,11 @@
-import { ComponentPropsWithRef, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 import { CheckboxFactory, CheckboxProps } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-export type CheckboxPropsWeb = ComponentPropsWithRef<'div'> & CheckboxProps;
-
-function Checkbox({ ...props }: CheckboxPropsWeb, ref) {
-  const map = useMap();
-
-  return <CheckboxFactory ref={ref} {...props} map={map} />;
+function Checkbox({ ...props }: CheckboxProps, ref) {
+  return <CheckboxFactory ref={ref} {...props} map={useMap()} />;
 }
 
-export default forwardRef(Checkbox);
+export default forwardRef<typeof Checkbox, CheckboxProps>(Checkbox);
