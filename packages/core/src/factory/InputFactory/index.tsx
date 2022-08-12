@@ -23,7 +23,6 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
     returnKeyType,
     secure,
     selectionColor,
-    spellCheck,
     type,
     value,
     // Bindings
@@ -157,7 +156,6 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
                 enterKeyHint: returnKeyType,
                 disabled: rest.disabled,
                 readOnly,
-                spellCheck: `${Boolean(spellCheck)}`,
                 type: pick(secure ? 'secure' : type, 'text', {
                   text: 'text',
                   number: 'number',
@@ -176,7 +174,6 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
                 returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
                 secureTextEntry: Boolean(secure),
                 selectionColor,
-                spellCheck,
                 underlineColorAndroid: 'transparent',
                 keyboardType: pick(type, 'text', {
                   text: 'default',

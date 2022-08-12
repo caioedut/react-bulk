@@ -13,6 +13,7 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
   props = { ...theme.components.Box.defaultProps, ...props };
 
   let {
+    accessibility,
     align,
     alignContent,
     alignItems,
@@ -160,6 +161,37 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
   if (web) {
     rest.className = clsx(classes);
     rest.style = merge(rawStyle);
+  }
+
+  console.log('accessibility', accessibility);
+
+  // Aria / Acessibility
+  if (accessibility) {
+    if (web) {
+      rest['aria-placeholder'] = accessibility?.hint;
+      rest['aria-label'] = accessibility?.label;
+      rest['role'] = accessibility?.role;
+
+      rest['aria-checked'] = accessibility?.state?.checked;
+      rest['aria-disabled'] = accessibility?.state?.disabled;
+      rest['aria-expanded'] = accessibility?.state?.expanded;
+      rest['aria-selected'] = accessibility?.state?.selected;
+      rest['aria-busy'] = accessibility?.state?.busy;
+
+      rest['aria-valuemax'] = accessibility?.value?.max;
+      rest['aria-valuemin'] = accessibility?.value?.min;
+      rest['aria-valuenow'] = accessibility?.value?.now;
+      rest['aria-valuetext'] = accessibility?.value?.text;
+    }
+
+    if (native) {
+      rest.accessible = true;
+      rest.accessibilityHint = accessibility?.hint;
+      rest.accessibilityLabel = accessibility?.label;
+      rest.accessibilityRole = accessibility?.role;
+      rest.accessibilityState = accessibility?.state;
+      rest.accessibilityValue = accessibility?.value;
+    }
   }
 
   // Platform specific props

@@ -103,7 +103,11 @@ const base = {
       defaultProps: {},
     },
     Button: {
-      defaultProps: {},
+      defaultProps: {
+        accessibility: {
+          role: 'button',
+        },
+      },
     },
     ButtonGroup: {
       defaultProps: {},
@@ -112,7 +116,11 @@ const base = {
       defaultProps: {},
     },
     Checkbox: {
-      defaultProps: {},
+      defaultProps: {
+        accessibility: {
+          role: 'combobox',
+        },
+      },
     },
     Collapse: {
       defaultProps: {},
@@ -125,7 +133,11 @@ const base = {
       },
     },
     Dropdown: {
-      defaultProps: {},
+      defaultProps: {
+        accessibility: {
+          role: 'menu',
+        },
+      },
     },
     Grid: {
       defaultProps: {},
@@ -143,6 +155,9 @@ const base = {
     },
     Image: {
       defaultProps: {
+        accessibility: {
+          role: 'image',
+        },
         mode: 'cover',
       },
     },
@@ -150,7 +165,6 @@ const base = {
       defaultProps: {
         autoCapitalize: 'sentences',
         autoCorrect: true,
-        spellCheck: true,
         color: 'primary',
       },
     },
@@ -159,6 +173,9 @@ const base = {
     },
     Loading: {
       defaultProps: {
+        accessibility: {
+          role: 'progressbar',
+        },
         speed: '1s',
       },
     },
@@ -169,7 +186,11 @@ const base = {
       defaultProps: {},
     },
     Select: {
-      defaultProps: {},
+      defaultProps: {
+        accessibility: {
+          role: 'combobox',
+        },
+      },
     },
     Table: {
       defaultProps: {},

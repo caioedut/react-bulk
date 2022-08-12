@@ -39,6 +39,7 @@ export default function useMap() {
     Image: 'img',
     Input: 'input',
     Label: 'label',
+    Link: 'a',
     ScrollView: 'div',
     Text: 'span',
     View: 'div',
