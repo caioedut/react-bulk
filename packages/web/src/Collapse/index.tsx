@@ -63,7 +63,14 @@ function Collapse({ in: shown, ...props }: CollapseProps, ref) {
       }}
       rawStyle={startHidden && { display: 'none' }}
     >
-      <CollapseFactory ref={ref} {...props} map={map} />
+      <CollapseFactory
+        ref={ref}
+        {...props}
+        accessibility={{
+          state: { expanded: shown },
+        }}
+        map={map}
+      />
     </BoxFactory>
   );
 }

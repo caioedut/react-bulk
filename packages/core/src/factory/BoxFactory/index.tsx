@@ -163,8 +163,6 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     rest.style = merge(rawStyle);
   }
 
-  console.log('accessibility', accessibility);
-
   // Aria / Acessibility
   if (accessibility) {
     if (web) {

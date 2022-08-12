@@ -30,7 +30,14 @@ function Collapse({ in: shown, ...props }: CollapseProps, ref) {
 
   return (
     <Animated.View ref={containerRef} style={merge(isReady && { height: heightAnim })} onLayout={handleLayout}>
-      <CollapseFactory ref={ref} {...props} map={map} />
+      <CollapseFactory
+        ref={ref}
+        {...props}
+        accessibility={{
+          state: { expanded: shown },
+        }}
+        map={map}
+      />
     </Animated.View>
   );
 }
