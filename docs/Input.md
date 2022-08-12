@@ -136,18 +136,6 @@ The highlight and cursor color of the text input.
 
 ---
 
-### `spellCheck`
-
-For Safari and iOS only.
-<br/>
-If `false`, disables spell-check style (i.e. red underlines).
-
-| Type      | Default |
-|-----------|---------|
-| `boolean` | `true`  |
-
----
-
 ### `type`
 
 Determines which keyboard to open.

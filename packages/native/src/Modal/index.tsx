@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { Modal as RNModal, TouchableOpacity } from 'react-native';
+import { Pressable, Modal as RNModal } from 'react-native';
 
 import { ModalFactory, ModalProps } from '@react-bulk/core';
 
@@ -11,12 +11,7 @@ function Modal({ visible, onBackdropPress, ...props }: ModalProps, ref) {
   if (onBackdropPress) {
     // @ts-ignore
     props.onBackdropPress = onBackdropPress;
-
-    if (!props.component) {
-      // @ts-ignore
-      props.activeOpacity = 1;
-      props.component = TouchableOpacity;
-    }
+    props.component = props.component ?? Pressable;
   }
 
   return (

@@ -8,6 +8,14 @@ Incorpored Phosphor Icons. [See more or browse icons repository here](https://ph
 
 Extends all [`Box`](Box.md) properties.
 
+### `alt`
+
+| Type     |
+|----------|
+| `string` |
+
+---
+
 ### `color`
 
 | Type     | Default     |
@@ -16,19 +24,27 @@ Extends all [`Box`](Box.md) properties.
 
 ---
 
+### `mirrored`
+
+| Type      |
+|-----------|
+| `boolean` |
+
+---
+
 ### `name`
 
-| Type     | Default    |
-|----------|------------|
+| Type     | Default      |
+|----------|--------------|
 | `string` | `'Question'` |
 
 ---
 
 ### `size`
 
-| Type     | Default    |
-|----------|------------|
-| `number` | `20` |
+| Type     | Default |
+|----------|---------|
+| `number` | `20`    |
 
 ---
 

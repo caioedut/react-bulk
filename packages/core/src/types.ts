@@ -1,5 +1,9 @@
 import { CSSProperties, ReactNode } from 'react';
 
+export type TimeoutType = ReturnType<typeof setInterval> | null;
+export type EventCallback = (e: any) => any;
+export type ChangeCallback = (e: any, value: string) => any;
+
 export type MapType = {
   web: boolean;
   native: boolean;
@@ -17,6 +21,7 @@ export type MapType = {
   Image: ReactNode | any;
   Input: ReactNode | any;
   Label: ReactNode | any;
+  Link: ReactNode | any;
   ScrollView: ReactNode | any;
   Text: ReactNode | any;
   View: ReactNode | any;
@@ -26,17 +31,51 @@ export type FactoryProps = any & {
   map: MapType;
 };
 
-export type TimeoutType = ReturnType<typeof setInterval> | null;
-export type EventCallback = (e: any) => any;
-export type ChangeCallback = (e: any, value: string) => any;
+export type AccessibilityProps = {
+  accessible?: boolean;
+  hint?: string;
+  label?: string;
+  role?:
+    | 'none'
+    | 'button'
+    | 'link'
+    | 'search'
+    | 'image'
+    | 'alert'
+    | 'checkbox'
+    | 'combobox'
+    | 'menu'
+    | 'menubar'
+    | 'menuitem'
+    | 'progressbar'
+    | 'radio'
+    | 'radiogroup'
+    | 'scrollbar'
+    | 'spinbutton'
+    | 'switch'
+    | 'tab'
+    | 'tablist'
+    | 'timer'
+    | 'toolbar';
+  state?: {
+    checked: boolean | any;
+    disabled: boolean;
+    expanded: boolean;
+    selected: boolean;
+    busy: boolean;
+  };
+  value?: {
+    max: number;
+    min: number;
+    now: number;
+    text: string;
+  };
+};
 
-export type Bindings = {
+export type PressableProps = {
   onPress?: Function;
   onPressIn?: Function;
   onPressOut?: Function;
-
-  onFocus?: EventCallback;
-  onBlur?: EventCallback;
 
   /** @deprecated use onPress instead */
   onClick?: EventCallback;
@@ -44,6 +83,23 @@ export type Bindings = {
   onMouseDown?: EventCallback;
   /** @deprecated use onPressOut instead */
   onMouseUp?: EventCallback;
+};
+
+export type FocusableProps = {
+  autoFocus?: boolean;
+  onFocus?: EventCallback;
+  onBlur?: EventCallback;
+};
+
+export type EditableProps = {
+  defaultValue?: string;
+  value?: string;
+  onChange?: ChangeCallback;
+
+  /** @deprecated use onChange instead */
+  onInput?: Function;
+  /** @deprecated use onChange instead */
+  onChangeText?: Function;
 };
 
 export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch';
@@ -63,9 +119,8 @@ export type CustomStyles = {
 
   bg?: string;
   border?: string;
-  shadow?: string;
-
   corners?: number;
+  shadow?: string;
 
   t?: number | string;
   b?: number | string;
@@ -100,9 +155,11 @@ export type ThemeComponentProps = {
 };
 
 export type ThemeProps = {
-  mode: 'light' | 'dark' | string;
-  spacing?: Function;
-  color?: Function;
+  mode?: 'light' | 'dark' | string;
+  spacing?: Readonly<Function>;
+  color?: Readonly<Function>;
+  rem?: Readonly<Function>;
+  hex2rgba?: Readonly<Function>;
   shape?: {
     borderRadius?: number;
     spacing?: number;
@@ -139,37 +196,38 @@ export type ThemeProps = {
     xl?: number;
     xxl?: number;
   };
-  components: {
-    Badge: ThemeComponentProps;
-    Box: ThemeComponentProps;
-    Button: ThemeComponentProps;
-    ButtonGroup: ThemeComponentProps;
-    Card: ThemeComponentProps;
-    Checkbox: ThemeComponentProps;
-    Collapse: ThemeComponentProps;
-    Divider: ThemeComponentProps;
-    Dropdown: ThemeComponentProps;
-    Grid: ThemeComponentProps;
-    Group: ThemeComponentProps;
-    Icon: ThemeComponentProps;
-    Image: ThemeComponentProps;
-    Input: ThemeComponentProps;
-    Label: ThemeComponentProps;
-    Loading: ThemeComponentProps;
-    Modal: ThemeComponentProps;
-    Scrollable: ThemeComponentProps;
-    Select: ThemeComponentProps;
-    Table: ThemeComponentProps;
-    Text: ThemeComponentProps;
+  components?: {
+    Badge?: ThemeComponentProps;
+    Box?: ThemeComponentProps;
+    Button?: ThemeComponentProps;
+    ButtonGroup?: ThemeComponentProps;
+    Card?: ThemeComponentProps;
+    Checkbox?: ThemeComponentProps;
+    Collapse?: ThemeComponentProps;
+    Divider?: ThemeComponentProps;
+    Dropdown?: ThemeComponentProps;
+    Grid?: ThemeComponentProps;
+    Group?: ThemeComponentProps;
+    Icon?: ThemeComponentProps;
+    Image?: ThemeComponentProps;
+    Input?: ThemeComponentProps;
+    Label?: ThemeComponentProps;
+    Loading?: ThemeComponentProps;
+    Modal?: ThemeComponentProps;
+    Scrollable?: ThemeComponentProps;
+    Select?: ThemeComponentProps;
+    Table?: ThemeComponentProps;
+    Text?: ThemeComponentProps;
   };
 };
 
-export type BoxProps = Bindings &
+export type BoxProps = PressableProps &
   CustomStyles & {
     component?: any;
     id?: string;
     className?: any;
     platform?: object;
+    accessibility?: AccessibilityProps;
     children?: ReactNode;
     style?: JssStyles;
     rawStyle?: JssStyles;
@@ -247,11 +305,11 @@ export type GroupProps = BoxProps & {
   containerStyle?: JssStyles;
 };
 
-export type ButtonProps = GroupProps & {
-  autoFocus?: boolean;
-  badge?: number | BadgeProps;
-  href?: string;
-};
+export type ButtonProps = GroupProps &
+  FocusableProps & {
+    badge?: number | BadgeProps;
+    href?: string;
+  };
 
 export type ButtonGroupProps = BoxProps & {
   color?: ColorValues;
@@ -261,28 +319,22 @@ export type ButtonGroupProps = BoxProps & {
   variant?: 'solid' | 'outline' | 'text' | string;
 };
 
-export type InputBaseProps = GroupProps & {
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
-  autoFocus?: boolean;
-  defaultValue?: string;
-  name?: string;
-  readOnly?: boolean;
-  returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
-  placeholder?: string;
-  value?: string;
-  onChange?: ChangeCallback;
-
-  /** @deprecated use onChange instead */
-  onChangeText?: Function;
-};
+export type InputBaseProps = GroupProps &
+  FocusableProps &
+  EditableProps & {
+    name?: string;
+    readOnly?: boolean;
+    returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
+    placeholder?: string;
+  };
 
 export type InputProps = InputBaseProps & {
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   autoCorrect?: boolean;
   caretHidden?: boolean;
   maxLength?: number;
   secure?: boolean;
   selectionColor?: string;
-  spellCheck?: boolean;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url';
 };
 
@@ -335,15 +387,16 @@ export type DropdownProps = BoxProps & {
 };
 
 export type IconProps = BoxProps & {
+  alt?: string;
   color?: ColorValues;
+  mirrored?: boolean;
+  name: string;
   size?: number;
   weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
-  mirrored?: boolean;
-  alt?: string;
 };
 
 export type LoadingProps = BoxProps & {
-  speed: string;
+  speed?: string;
 };
 
 export type GridProps = BoxProps & {
@@ -352,11 +405,13 @@ export type GridProps = BoxProps & {
 
 export type TableProps = BoxProps & {
   rows: any[];
-  columns: {
-    header?: ReactNode;
-    render?: Function;
-    style?: JssStyles;
-  };
+  columns: [
+    {
+      header?: ReactNode | Function | string;
+      content?: ReactNode | Function | string;
+      style?: JssStyles;
+    },
+  ];
 };
 
 export type BadgeProps = TextProps & {
