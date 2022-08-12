@@ -1,10 +1,10 @@
 // Extract some props from objects returning them and removing it from original
-export default function extract(props: string[], ...mixin: Object[]) {
+export default function extract(props: string | string[], ...mixin: Object[]): any {
   if (!mixin || !props) {
     return;
   }
 
-  const extracted = {};
+  let extracted = {};
 
   if (!Array.isArray(props)) {
     props = [props];
@@ -12,6 +12,11 @@ export default function extract(props: string[], ...mixin: Object[]) {
 
   for (const item of mixin) {
     if (!item) continue;
+
+    if (Array.isArray(item)) {
+      extracted = { ...extracted, ...extract(props, ...item) };
+      continue;
+    }
 
     for (const prop of props) {
       if (!(prop in item)) {

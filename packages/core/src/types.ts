@@ -24,6 +24,7 @@ export type MapType = {
   Link: ReactNode | any;
   ScrollView: ReactNode | any;
   Text: ReactNode | any;
+  TextArea: ReactNode | any;
   View: ReactNode | any;
 };
 
@@ -333,6 +334,7 @@ export type InputProps = InputBaseProps & {
   autoCorrect?: boolean;
   caretHidden?: boolean;
   maxLength?: number;
+  multiline?: boolean;
   secure?: boolean;
   selectionColor?: string;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url';

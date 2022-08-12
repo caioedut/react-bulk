@@ -166,6 +166,9 @@ const base = {
         autoCapitalize: 'sentences',
         autoCorrect: true,
         color: 'primary',
+        get selectionColor() {
+          return this.color;
+        },
       },
     },
     Label: {

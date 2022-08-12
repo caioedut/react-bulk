@@ -21,6 +21,7 @@ export default function useMap() {
     Link: Text,
     ScrollView,
     Text,
+    TextArea: TextInput,
     View,
   };
 }

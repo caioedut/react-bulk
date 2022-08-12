@@ -42,6 +42,7 @@ export default function useMap() {
     Link: 'a',
     ScrollView: 'div',
     Text: 'span',
+    TextArea: 'textarea',
     View: 'div',
   };
 }

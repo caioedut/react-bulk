@@ -1,5 +1,5 @@
 import Platform from '../Platform';
-import get from '../props/get';
+import extract from '../props/extract';
 import merge from '../props/merge';
 import remove from '../props/remove';
 import { ThemeProps } from '../types';
@@ -35,12 +35,23 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   const { web, native } = Platform;
 
   const args = clone(mixin);
+  const theme: ThemeProps = extract('theme', args).theme;
 
-  const theme: ThemeProps = get('theme', args);
-  const webStyle = get('web', args);
-  const nativeStyle = get('native', args);
+  // Extract all web styles
+  let webStyle: any = [];
+  while (true) {
+    const extracted = extract('web', args);
+    if (!extracted?.web) break;
+    webStyle.push(extracted.web);
+  }
 
-  remove(['theme', 'web', 'native'], args);
+  // Extract all native styles
+  let nativeStyle: any = [];
+  while (true) {
+    const extracted = extract('native', args);
+    if (!extracted?.native) break;
+    nativeStyle.push(extracted.native);
+  }
 
   if (theme?.breakpoints) {
     remove(Object.keys(theme.breakpoints), args);

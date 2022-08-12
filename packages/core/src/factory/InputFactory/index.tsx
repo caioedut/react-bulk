@@ -4,7 +4,7 @@ import { BoxFactory, FactoryProps, GroupFactory, InputProps, clsx, get, pick, us
 
 function InputFactory({ className, map, ...props }: FactoryProps & InputProps, ref: any) {
   const theme = useTheme();
-  const { web, native, Input, Label, View } = map;
+  const { web, native, Input, Label, TextArea, View } = map;
   const classes: any[] = ['rbk-input', className];
 
   // Extends from default props
@@ -17,6 +17,7 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
     caretHidden,
     defaultValue,
     maxLength,
+    multiline,
     name,
     placeholder,
     readOnly,
@@ -104,7 +105,7 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
             // Custom
             map={map}
             ref={inputRef}
-            component={Input}
+            component={multiline ? TextArea : Input}
             // Component
             className={clsx(classes)}
             autoCapitalize={autoCapitalize}
@@ -168,6 +169,7 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
               native: {
                 autoCorrect,
                 caretHidden,
+                multiline,
                 editable: rest.disabled ? false : !readOnly,
                 keyboardAppearance: theme.mode,
                 placeholderTextColor: theme.hex2rgba(theme.colors.text.primary, 0.4),
