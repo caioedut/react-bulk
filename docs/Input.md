@@ -68,6 +68,16 @@ events and updating the value prop to keep the controlled state in sync.
 
 ---
 
+### `endIcon`
+
+Shows an icon after the text. See more in [Icon](Icon.md).
+
+| Type                  |
+|-----------------------|
+| `string`, `ReactNode` |
+
+---
+
 ### `maxLength`
 
 Limits the maximum number of characters that can be entered. Use this instead of implementing the logic in JS to avoid flicker.
@@ -136,6 +146,24 @@ The highlight and cursor color of the text input.
 
 ---
 
+### `size`
+
+| Type                               | Default  |
+|------------------------------------|----------|
+| `enum('small', 'medium', 'large')` | `medium` |
+
+---
+
+### `startIcon`
+
+Shows an icon before the text. See more in [Icon](Icon.md).
+
+| Type                  |
+|-----------------------|
+| `string`, `ReactNode` |
+
+---
+
 ### `type`
 
 Determines which keyboard to open.
@@ -153,6 +181,14 @@ The value to show for the text input.
 | Type     |
 |----------|
 | `string` |
+
+---
+
+### `variant`
+
+| Type                               | Default   |
+|------------------------------------|-----------|
+| `enum('solid', 'outline', 'text')` | `'solid'` |
 
 ---
 
