@@ -12,24 +12,27 @@
     "moduleResolution": "node",
     "noEmit": true,
     "noErrorTruncation": false,
+    "noLib": false,
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "./dist",
     "paths": {
       "@react-bulk/core": ["./packages/core/src"],
       "@react-bulk/native": ["./packages/native/src"],
       "@react-bulk/web": ["./packages/web/src"]
     },
+    "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "es5",
-    "types": ["node", "react"],
+    "types": ["node", "react"]
   },
-  "include": ["packages/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }
