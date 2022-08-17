@@ -14,7 +14,7 @@ yarn add @react-bulk/core @react-bulk/native
 ```
 
 ## Usage
-[Read the Docs](/docs)
+[Read the Docs](/docs/README.md)
 
 ```jsx
 import ReactBulk from '@react-bulk/core';
