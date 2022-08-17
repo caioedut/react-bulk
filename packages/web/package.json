@@ -6,11 +6,12 @@
   "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "types": "typings/web/src/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "directories": {
+    "lib": "dist"
+  },
   "files": [
-    "dist",
-    "typings"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -26,5 +27,8 @@
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
