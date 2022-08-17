@@ -7,12 +7,6 @@
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "directories": {
-    "lib": "dist"
-  },
-  "files": [
-    "dist"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/caioedut/react-bulk.git"
