@@ -13,7 +13,6 @@
     "lib": ["esnext", "dom"],
     "module": "esnext",
     "moduleResolution": "node",
-    "noEmit": true,
     "noErrorTruncation": false,
     "noLib": false,
     "noImplicitAny": false,
@@ -21,7 +20,6 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "./dist",
     "paths": {
       "@react-bulk/core": ["./packages/core/src"]
     },
