@@ -10,30 +10,21 @@
     ]
   },
   "scripts": {
-    "dev": "concurrently \"npm:dev:*\"",
-    "dev:web": "yarn --cwd C:/Development/react-bulk-web dev",
-    "dev:native": "yarn --cwd C:/Development/react-bulk-native dev",
-    "prebuild": "lerna exec --parallel -- rimraf dist typings",
-    "build": "lerna exec --parallel -- rollup -c ../../rollup.config.js",
-    "prepublishOnly": "yarn build",
-    "publish:canary": "lerna version prerelease --no-changelog --preid next",
-    "publish:stable": "lerna version --no-changelog",
-    "predeploy": "yarn publish:stable && yarn build",
-    "deploy": "yarn deploy:core && yarn deploy:web && yarn deploy:native",
-    "deploy:core": "yarn workspace @react-bulk/core publish --access public",
-    "deploy:web": "yarn workspace @react-bulk/web publish --access public",
-    "deploy:native": "yarn workspace @react-bulk/native publish --access public"
+    "bootstrap": "lerna bootstrap",
+    "clean": "rimraf dist",
+    "build": "lerna exec tsc",
+    "prepublish": "lerna exec --parallel -- rimraf dist",
+    "publish": "lerna exec tsc && lerna publish"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
-    "@types/react": ">=16.4.7",
-    "@types/react-native": ">=0.61.0",
-    "concurrently": ">=7.0.0",
+    "@types/react": "^17.0.2",
+    "@types/react-native": "^0.62.3",
     "lerna": "^5.1.4",
-    "prettier": ">=2.6.2",
-    "react": ">=16.8.0",
-    "react-native": ">=0.61.0",
-    "rimraf": ">=3.0.0",
+    "prettier": "^2.6.2",
+    "react": "^17.0.2",
+    "react-native": "^0.62.3",
+    "rimraf": "^3.0.0",
     "rollup": "^2.38.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
@@ -41,7 +32,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.29.0",
     "rollup-plugin-url": "^3.0.1",
-    "typescript": ">=4.0.0"
+    "typescript": "^4.7.4"
   },
   "dependencies": {
     "rollup-plugin-babel": "^4.4.0",
