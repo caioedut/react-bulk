@@ -28,7 +28,7 @@
     "strict": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "esnext",
+    "target": "es6",
     "types": ["node", "react"]
   },
   "exclude": [
