@@ -7,3 +7,5 @@
 [Button](Button.md)<br/>
 [Input](Input.md)<br/>
 
+## Other
+[Icon](Icon.md)<br/>
