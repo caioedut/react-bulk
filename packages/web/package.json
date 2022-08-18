@@ -5,8 +5,8 @@
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
-  "main": "src/index.ts",
-  "module": "dist/index.esm.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "directories": {
     "lib": "src"
