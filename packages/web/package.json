@@ -1,18 +1,18 @@
 {
   "name": "@react-bulk/web",
-  "version": "0.0.68",
+  "version": "0.0.69",
   "description": "React Bulk for React Web",
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
   "directories": {
     "lib": "src"
   },
   "files": [
-    "dist/web"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -22,10 +22,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-bulk/core": "^0.0.68",
     "phosphor-react": "^1.4.1"
   },
   "peerDependencies": {
+    "@react-bulk/core": "^0.0.68",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
