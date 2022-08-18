@@ -12,7 +12,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "prebuild": "lerna exec --parallel -- rimraf dist typings",
-    "build": "lerna exec --parallel -- tsc --build",
+    "build": "lerna exec -- bili --config ../../.bilirc.ts",
     "publish:stable": "npm run build && lerna publish"
   },
   "devDependencies": {
@@ -20,13 +20,14 @@
     "@types/node": "^18.7.6",
     "@types/react": "^17.0.2",
     "@types/react-native": "^0.63.4",
+    "bili": "^5.0.5",
     "lerna": "^5.1.4",
     "prettier": "^2.6.2",
     "react": "^17.0.2",
     "react-native": "^0.63.4",
     "rimraf": "^3.0.0",
+    "rollup-plugin-typescript2": "^0.32.1",
     "typescript": "^4.7.4"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
