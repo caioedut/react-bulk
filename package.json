@@ -11,11 +11,9 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "clean": "rimraf dist",
     "prebuild": "lerna exec --parallel -- rimraf dist",
     "build": "lerna exec --parallel -- tsc --build",
-    "prepublish": "lerna exec --parallel -- rimraf dist",
-    "publish": "lerna exec tsc && lerna publish"
+    "publish": "npm run build && lerna publish"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
