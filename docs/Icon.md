@@ -1,6 +1,6 @@
 [‹ Go Back](README.md)
 
-# Input
+# Icon
 
 Incorpored Phosphor Icons. [See more or browse icons repository here](https://phosphoricons.com/).
 
