@@ -25,7 +25,7 @@
     "phosphor-react": "^1.4.1"
   },
   "peerDependencies": {
-    "@react-bulk/core": "^0.0.68",
+    "@react-bulk/core": "^0.0.70",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
