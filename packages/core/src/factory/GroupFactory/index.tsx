@@ -1,19 +1,16 @@
 import React from 'react';
 
-import {
-  BoxFactory,
-  GroupProps,
-  IconFactory,
-  LabelFactory,
-  LoadingFactory,
-  TextFactory,
-  clsx,
-  extract,
-  get,
-  useTheme,
-} from '@react-bulk/core';
-
+import { useTheme } from '../../ReactBulk';
+import extract from '../../props/extract';
+import get from '../../props/get';
 import { spacings } from '../../styles/jss';
+import { GroupProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
+import IconFactory from '../IconFactory';
+import LabelFactory from '../LabelFactory';
+import LoadingFactory from '../LoadingFactory';
+import TextFactory from '../TextFactory';
 
 function GroupFactory({ className, children, map, ...props }: GroupProps | any, ref: any) {
   const theme = useTheme();

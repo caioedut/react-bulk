@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { FactoryProps, LabelProps, TextFactory, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { FactoryProps, LabelProps } from '../../types';
+import clsx from '../../utils/clsx';
+import TextFactory from '../TextFactory';
 
 function LabelFactory({ className, map, ...props }: FactoryProps & LabelProps, ref: any) {
   const theme = useTheme();

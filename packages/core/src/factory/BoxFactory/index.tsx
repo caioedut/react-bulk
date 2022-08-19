@@ -1,8 +1,13 @@
 import React from 'react';
 
-import { BoxProps, FactoryProps, bindings, clsx, createStyle, get, merge, useTheme } from '@react-bulk/core';
-
+import { useTheme } from '../../ReactBulk';
+import createStyle from '../../createStyle';
+import bindings from '../../props/bindings';
+import get from '../../props/get';
+import merge from '../../props/merge';
 import { customStyleProps } from '../../styles/jss';
+import { BoxProps, FactoryProps } from '../../types';
+import clsx from '../../utils/clsx';
 
 function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxProps, ref) {
   const theme = useTheme();
@@ -163,7 +168,7 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     rest.style = merge(rawStyle);
   }
 
-  // Aria / Acessibility
+  // Aria / Accessibility
   if (accessibility) {
     if (web) {
       rest['aria-placeholder'] = accessibility?.hint;

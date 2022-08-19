@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { BoxFactory, FactoryProps, GridProps, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { FactoryProps, GridProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
 
 function GridFactory({ className, children, map, ...props }: FactoryProps & GridProps, ref: any) {
   const theme = useTheme();

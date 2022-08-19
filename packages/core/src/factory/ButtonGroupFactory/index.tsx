@@ -1,6 +1,10 @@
 import React, { cloneElement } from 'react';
 
-import { BoxFactory, ButtonGroupProps, FactoryProps, ScrollableFactory, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { ButtonGroupProps, FactoryProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
+import ScrollableFactory from '../ScrollableFactory';
 
 function ButtonGroupFactory({ className, children, map, ...props }: FactoryProps & ButtonGroupProps, ref: any) {
   const theme = useTheme();

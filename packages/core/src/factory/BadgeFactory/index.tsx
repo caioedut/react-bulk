@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { BadgeProps, FactoryProps, TextFactory, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { BadgeProps, FactoryProps } from '../../types';
+import clsx from '../../utils/clsx';
+import TextFactory from '../TextFactory';
 
 function BadgeFactory({ className, children, map, ...props }: FactoryProps & BadgeProps, ref: any) {
   const theme = useTheme();

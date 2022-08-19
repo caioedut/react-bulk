@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { BoxFactory, FactoryProps, ScrollableProps, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { FactoryProps, ScrollableProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
 
 function ScrollableFactory({ className, map, ...props }: FactoryProps & ScrollableProps, ref: any) {
   const theme = useTheme();

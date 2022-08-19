@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { BoxFactory, FactoryProps, TextProps, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { FactoryProps, TextProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
 
 function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref) {
   const theme = useTheme();

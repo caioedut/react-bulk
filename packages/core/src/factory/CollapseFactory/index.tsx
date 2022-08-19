@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { BoxFactory, CollapseProps, FactoryProps, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { CollapseProps, FactoryProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
 
 function CollapseFactory({ className, map, ...props }: FactoryProps & CollapseProps, ref: any) {
   const theme = useTheme();

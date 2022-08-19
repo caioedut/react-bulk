@@ -1,6 +1,9 @@
 import React, { useRef } from 'react';
 
-import { BoxFactory, FactoryProps, ImageProps, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { FactoryProps, ImageProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
 
 function ImageFactory({ className, map, ...props }: FactoryProps & ImageProps, ref: any) {
   const theme = useTheme();

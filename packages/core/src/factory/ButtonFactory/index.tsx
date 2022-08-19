@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { BadgeFactory, BoxFactory, ButtonProps, FactoryProps, GroupFactory, LabelFactory, clsx, get, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import get from '../../props/get';
+import { ButtonProps, FactoryProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BadgeFactory from '../BadgeFactory';
+import BoxFactory from '../BoxFactory';
+import GroupFactory from '../GroupFactory';
+import LabelFactory from '../LabelFactory';
 
 function ButtonFactory({ className, children, map, ...props }: FactoryProps & ButtonProps, ref) {
   const theme = useTheme();

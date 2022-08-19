@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { BoxFactory, FactoryProps, GroupFactory, InputProps, clsx, get, pick, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import get from '../../props/get';
+import { FactoryProps, InputProps } from '../../types';
+import clsx from '../../utils/clsx';
+import pick from '../../utils/pick';
+import BoxFactory from '../BoxFactory';
+import GroupFactory from '../GroupFactory';
 
 function InputFactory({ className, map, ...props }: FactoryProps & InputProps, ref: any) {
   const theme = useTheme();
