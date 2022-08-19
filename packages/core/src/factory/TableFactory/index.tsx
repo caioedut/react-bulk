@@ -1,6 +1,10 @@
 import React, { isValidElement } from 'react';
 
-import { BoxFactory, FactoryProps, TableProps, TextFactory, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { FactoryProps, TableProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
+import TextFactory from '../TextFactory';
 
 function TableFactory({ className, map, ...props }: FactoryProps & TableProps, ref: any) {
   const theme = useTheme();

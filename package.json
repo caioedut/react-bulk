@@ -12,7 +12,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "prebuild": "lerna exec --parallel -- rimraf dist typings",
-    "build": "lerna exec -- bili --config ../../.bilirc.ts",
+    "build": "lerna exec --parallel -- tsc --build",
     "publish:stable": "npm run build && lerna publish"
   },
   "devDependencies": {

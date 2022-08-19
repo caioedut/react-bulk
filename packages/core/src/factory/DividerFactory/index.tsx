@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { BoxFactory, DividerProps, FactoryProps, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { DividerProps, FactoryProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
 
 function DividerFactory({ className, map, ...props }: FactoryProps & DividerProps, ref: any) {
   const theme = useTheme();

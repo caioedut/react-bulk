@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { BoxFactory, CardProps, FactoryProps, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { CardProps, FactoryProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
 
 function CardFactory({ className, map, ...props }: FactoryProps & CardProps, ref: any) {
   const theme = useTheme();

@@ -1,9 +1,15 @@
 {
-  "version": "0.0.72",
+  "command": {
+    "publish": {
+      "allowBranch": "main"
+    }
+  },
   "npmClient": "yarn",
-  "useWorkspaces": true,
   "packages": [
     "packages/*"
   ],
-  "useNx": false
+  "registry": "https://registry.npmjs.org",
+  "useNx": false,
+  "useWorkspaces": true,
+  "version": "0.0.72"
 }

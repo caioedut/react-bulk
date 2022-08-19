@@ -1,19 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import {
-  BoxFactory,
-  ButtonFactory,
-  CheckboxProps,
-  FactoryProps,
-  LabelFactory,
-  clsx,
-  crypt,
-  extract,
-  useTheme,
-  uuid,
-} from '@react-bulk/core';
-
+import { useTheme } from '../../ReactBulk';
+import extract from '../../props/extract';
 import { spacings } from '../../styles/jss';
+import { CheckboxProps, FactoryProps } from '../../types';
+import clsx from '../../utils/clsx';
+import crypt from '../../utils/crypt';
+import uuid from '../../utils/uuid';
+import BoxFactory from '../BoxFactory';
+import ButtonFactory from '../ButtonFactory';
+import LabelFactory from '../LabelFactory';
 
 function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxProps, ref: any) {
   const theme = useTheme();

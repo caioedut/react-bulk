@@ -6,12 +6,10 @@
   "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/index.js",
+  "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
-  "directories": {
-    "lib": "src"
-  },
   "files": [
+    "src",
     "dist"
   ],
   "repository": {
@@ -19,7 +17,6 @@
     "url": "git+https://github.com/caioedut/react-bulk.git"
   },
   "scripts": {
-    "test": "jest"
   },
   "dependencies": {
     "deepmerge": ">=3.0.0",

@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { ButtonFactory, DropdownFactory, FactoryProps, SelectProps, TextFactory, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { FactoryProps, SelectProps } from '../../types';
+import clsx from '../../utils/clsx';
+import ButtonFactory from '../ButtonFactory';
+import DropdownFactory from '../DropdownFactory';
+import TextFactory from '../TextFactory';
 
 function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps, ref: any) {
   const theme = useTheme();

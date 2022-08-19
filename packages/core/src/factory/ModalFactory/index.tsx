@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { BoxFactory, FactoryProps, ModalProps, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { FactoryProps, ModalProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
 
 function ModalFactory({ className, children, map, ...props }: FactoryProps & ModalProps, ref: any) {
   const theme = useTheme();

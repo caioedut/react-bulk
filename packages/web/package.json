@@ -6,12 +6,10 @@
   "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/index.js",
+  "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
-  "directories": {
-    "lib": "src"
-  },
   "files": [
+    "src",
     "dist"
   ],
   "repository": {
@@ -19,13 +17,12 @@
     "url": "git+https://github.com/caioedut/react-bulk.git"
   },
   "scripts": {
-    "test": "jest"
   },
   "dependencies": {
+    "@react-bulk/core": "^0.0.72",
     "phosphor-react": "^1.4.1"
   },
   "peerDependencies": {
-    "@react-bulk/core": "^0.0.70",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

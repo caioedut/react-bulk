@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { BoxFactory, CardFactory, DropdownProps, FactoryProps, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { DropdownProps, FactoryProps } from '../../types';
+import clsx from '../../utils/clsx';
+import BoxFactory from '../BoxFactory';
+import CardFactory from '../CardFactory';
 
 function DropdownFactory({ className, children, map, ...props }: FactoryProps & DropdownProps, ref: any) {
   const theme = useTheme();

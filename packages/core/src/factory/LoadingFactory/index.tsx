@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { FactoryProps, IconFactory, LoadingProps, clsx, useTheme } from '@react-bulk/core';
+import { useTheme } from '../../ReactBulk';
+import { FactoryProps, LoadingProps } from '../../types';
+import clsx from '../../utils/clsx';
+import IconFactory from '../IconFactory';
 
 function LoadingFactory({ className, map, ...props }: FactoryProps | LoadingProps, ref: any) {
   const theme = useTheme();

@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 
-import { useTheme } from '@react-bulk/core';
-
 import Platform from './Platform';
+import { useTheme } from './ReactBulk';
 import css from './styles/css';
 import jss from './styles/jss';
 import crypt from './utils/crypt';
