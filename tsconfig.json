@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "importHelpers": false,
     "jsx": "react-jsx",
     "lib": ["esnext", "dom"],
     "module": "esnext",
