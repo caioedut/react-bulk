@@ -1,6 +1,6 @@
 {
   "name": "@react-bulk/core",
-  "version": "0.0.72",
+  "version": "0.0.73",
   "description": "React Bulk Core",
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
@@ -14,8 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/caioedut/react-bulk.git"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
     "deepmerge": ">=3.0.0"
   },
