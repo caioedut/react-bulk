@@ -22,7 +22,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "deepmerge": ">=3.0.0"
+    "deepmerge": ">=3.0.0",
+    "tslib": "*"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
