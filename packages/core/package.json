@@ -5,11 +5,9 @@
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "files": [
-    "src",
     "dist"
   ],
   "repository": {
@@ -19,8 +17,7 @@
   "scripts": {
   },
   "dependencies": {
-    "deepmerge": ">=3.0.0",
-    "tslib": "*"
+    "deepmerge": ">=3.0.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
