@@ -110,7 +110,9 @@ const base = {
       },
     },
     ButtonGroup: {
-      defaultProps: {},
+      defaultProps: {
+        color: 'primary',
+      },
     },
     Card: {
       defaultProps: {},
