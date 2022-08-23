@@ -11,7 +11,7 @@ function ButtonGroupFactory({ className, children, map, ...props }: FactoryProps
   const classes: any[] = ['rbk-button-group', className];
 
   // Extends from default props
-  props = { ...theme.components.Button.defaultProps, ...theme.components.ButtonGroup.defaultProps, ...props };
+  props = { ...theme.components.ButtonGroup.defaultProps, ...props };
 
   let { color, disabled, loading, size, variant, ...rest } = props;
 
