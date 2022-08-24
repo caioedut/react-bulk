@@ -20,6 +20,7 @@ export { default as sleep } from './utils/sleep';
 export { default as uuid } from './utils/uuid';
 
 // Style
+export * from './styles/jss';
 export { default as jss } from './styles/jss';
 export { default as css } from './styles/css';
 
