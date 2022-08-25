@@ -40,7 +40,8 @@ function GroupFactory({ className, children, map, ...props }: GroupProps | any, 
     ...rest
   } = props;
 
-  const fontSize = size === 'small' ? theme.rem(0.75) : size === 'large' ? theme.rem(1.25) : theme.rem(1);
+  const fontSize =
+    size === 'small' ? theme.rem(0.75) : size === 'large' ? theme.rem(1.25) : size === 'xlarge' ? theme.rem(1.5) : theme.rem(1);
   const iconSize = fontSize * 1.25;
 
   const focusStyle = {

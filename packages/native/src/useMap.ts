@@ -15,6 +15,7 @@ export default function useMap() {
     Icons,
 
     Button: TouchableOpacity,
+    Form: View,
     Image,
     Input: TextInput,
     Label: Text,

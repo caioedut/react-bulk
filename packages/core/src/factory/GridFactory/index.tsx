@@ -12,9 +12,10 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
   // Extends from default props
   props = { ...theme.components.Grid.defaultProps, ...props };
 
-  let { size, style, ...rest } = props;
+  let { gap, size, style, ...rest } = props;
 
   const breakpoints = Object.keys(theme.breakpoints);
+  const spacing = !gap ? 0 : theme.spacing(gap) / 2;
 
   if (children && !Array.isArray(children)) {
     children = [children];
@@ -26,6 +27,7 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
       flexDirection: 'row',
       flexWrap: 'wrap',
       alignContent: 'stretch',
+      margin: -spacing,
     },
 
     style,
@@ -35,7 +37,7 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
     <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} style={style}>
       {children?.map((child, index) => {
         const props = { ...child.props };
-        const childStyle: any[] = [props.style];
+        const childStyle: any[] = [props.style, { padding: spacing }];
 
         breakpoints.forEach((key: string) => {
           if (key in props) {
@@ -49,9 +51,9 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
                 width: !isFlex ? `${width}%` : undefined,
               },
             });
-
-            delete props[key];
           }
+
+          delete props[key];
         });
 
         return <BoxFactory key={index} map={map} component={child.type} {...props} style={childStyle} />;

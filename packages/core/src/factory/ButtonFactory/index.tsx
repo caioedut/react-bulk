@@ -6,18 +6,21 @@ import { ButtonProps, FactoryProps } from '../../types';
 import clsx from '../../utils/clsx';
 import BadgeFactory from '../BadgeFactory';
 import BoxFactory from '../BoxFactory';
+import { useForm } from '../FormFactory';
 import GroupFactory from '../GroupFactory';
 import LabelFactory from '../LabelFactory';
 
 function ButtonFactory({ className, children, map, ...props }: FactoryProps & ButtonProps, ref) {
   const theme = useTheme();
-  const { web, Button, Text } = map;
+  const { web, native, Button, Text } = map;
   const classes: any[] = ['rbk-button', className];
 
   // Extends from default props
   props = { ...theme.components.Button.defaultProps, ...props };
 
   let { autoFocus, badge, style, labelStyle, ...rest } = props;
+
+  const form = useForm();
 
   style = [
     { justifyContent: 'center' },
@@ -34,6 +37,14 @@ function ButtonFactory({ className, children, map, ...props }: FactoryProps & Bu
 
   if (web && !rest.type) {
     rest.type = 'button';
+  }
+
+  if (form && rest.type === 'submit' && !props.onPress && !props.onClick) {
+    rest.onPress = form.submit;
+  }
+
+  if (native) {
+    delete rest.type;
   }
 
   return (
