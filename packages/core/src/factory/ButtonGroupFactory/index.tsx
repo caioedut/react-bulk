@@ -4,7 +4,6 @@ import { useTheme } from '../../ReactBulk';
 import { ButtonGroupProps, FactoryProps } from '../../types';
 import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
-import ScrollableFactory from '../ScrollableFactory';
 
 function ButtonGroupFactory({ className, children, map, ...props }: FactoryProps & ButtonGroupProps, ref: any) {
   const theme = useTheme();
@@ -20,43 +19,45 @@ function ButtonGroupFactory({ className, children, map, ...props }: FactoryProps
   }
 
   return (
-    <ScrollableFactory ref={ref} map={map} horizontal {...rest} className={clsx(classes)}>
-      <BoxFactory
-        map={map}
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'nowrap',
-          alignItems: 'stretch',
-        }}
-      >
-        {children.map((child, key) => {
-          const isFirst = key === 0;
-          const isLast = key === children.length - 1;
+    <BoxFactory
+      ref={ref}
+      map={map}
+      horizontal
+      {...rest}
+      className={clsx(classes)}
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        alignItems: 'stretch',
+      }}
+    >
+      {children.map((child, key) => {
+        const isFirst = key === 0;
+        const isLast = key === children.length - 1;
 
-          const button = cloneElement(child, {
-            disabled,
-            loading,
-            variant,
-            size,
-            color,
-            ...child.props,
-            mt: 0,
-            mb: 0,
-            ml: 0,
-            mr: 0,
-            style: [
-              child.style,
-              !isFirst && !isLast && { borderRadius: 0 },
-              isFirst && { borderTopRightRadius: 0, borderBottomRightRadius: 0 },
-              isLast && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 },
-            ],
-          });
+        const button = cloneElement(child, {
+          disabled,
+          loading,
+          variant,
+          size,
+          color,
+          ...child.props,
+          mt: 0,
+          mb: 0,
+          ml: 0,
+          mr: 0,
+          style: [
+            child.style,
+            !isFirst && !isLast && { borderRadius: 0 },
+            isFirst && { borderTopRightRadius: 0, borderBottomRightRadius: 0 },
+            isLast && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 },
+          ],
+        });
 
-          return <React.Fragment key={key}>{button}</React.Fragment>;
-        })}
-      </BoxFactory>
-    </ScrollableFactory>
+        return <React.Fragment key={key}>{button}</React.Fragment>;
+      })}
+    </BoxFactory>
   );
 }
 
