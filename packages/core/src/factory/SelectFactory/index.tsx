@@ -5,6 +5,7 @@ import { FactoryProps, SelectProps } from '../../types';
 import clsx from '../../utils/clsx';
 import ButtonFactory from '../ButtonFactory';
 import DropdownFactory from '../DropdownFactory';
+import { useForm } from '../FormFactory';
 import TextFactory from '../TextFactory';
 
 function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps, ref: any) {
@@ -17,6 +18,7 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
 
   let { defaultValue, name, onChange, options, placeholder, readOnly, value, ...rest } = props;
 
+  const form = useForm();
   const defaultRef: any = useRef(null);
   const buttonRef = ref || defaultRef;
 
@@ -28,6 +30,16 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
       setInternal(options?.find((item) => item.value == value));
     }
   }, [value]);
+
+  useEffect(() => {
+    if (!name || !form) return;
+
+    form.setField({
+      name,
+      set: setInternal,
+      get: () => internal,
+    });
+  }, [name, form, internal]);
 
   const focus = useCallback(() => {
     buttonRef?.current?.focus?.();

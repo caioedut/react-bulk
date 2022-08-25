@@ -9,6 +9,7 @@ import crypt from '../../utils/crypt';
 import uuid from '../../utils/uuid';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
+import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
 
 function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxProps, ref: any) {
@@ -24,6 +25,7 @@ function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxPr
 
   id = id ?? `rbk-${crypt(uuid())}`;
 
+  const form = useForm();
   const defaultRef: any = useRef(null);
   const buttonRef = ref || defaultRef;
 
@@ -34,6 +36,16 @@ function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxPr
       setInternal(checked);
     }
   }, [checked]);
+
+  useEffect(() => {
+    if (!name || !form) return;
+
+    form.setField({
+      name,
+      set: setInternal,
+      get: () => internal,
+    });
+  }, [name, form, internal]);
 
   const focus = useCallback(() => {
     buttonRef?.current?.focus?.();
