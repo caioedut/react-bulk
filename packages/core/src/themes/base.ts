@@ -178,6 +178,7 @@ const base = {
     },
     Loading: {
       defaultProps: {
+        color: 'primary',
         accessibility: {
           role: 'progressbar',
         },
