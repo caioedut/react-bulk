@@ -35,7 +35,9 @@ function BadgeFactory({ className, children, map, ...props }: FactoryProps & Bad
 
     absolute && {
       position: 'absolute',
-      border: `1px solid ${theme.colors.background.primary}`,
+      borderWidth: 1,
+      borderColor: theme.colors.background.primary,
+      borderStyle: 'solid',
     },
 
     top && { top: -halfBaseSize },
