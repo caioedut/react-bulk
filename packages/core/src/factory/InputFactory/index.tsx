@@ -62,8 +62,8 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
 
     form.setField({
       name,
+      set: setInternal,
       get: () => internal,
-      set: (value) => setInternal(value),
     });
   }, [name, form, internal]);
 
