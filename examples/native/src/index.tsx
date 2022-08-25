@@ -21,7 +21,7 @@ import {
   Select,
   Table,
   Text,
-} from '@react-bulk/web';
+} from '@react-bulk/native';
 
 function Main() {
   const theme = useTheme();
