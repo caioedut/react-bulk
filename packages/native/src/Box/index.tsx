@@ -8,7 +8,7 @@ import useMap from '../useMap';
 function Box({ ...props }: BoxProps, ref) {
   if ((props.onPress || props.onPressIn || props.onPressOut || props.onClick) && !props.component) {
     // @ts-ignore
-    props.activeOpacity = props.activeOpacity ?? 1;
+    props.activeOpacity = props.activeOpacity ?? 0.75;
     props.component = TouchableOpacity;
   }
 
