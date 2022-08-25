@@ -1,7 +1,9 @@
 import ReactBulk, { useTheme } from './ReactBulk';
+import { useForm } from './factory/FormFactory';
 
 // Hook
 export { useTheme };
+export { useForm };
 
 // Prop
 export { default as bindings } from './props/bindings';
@@ -43,6 +45,7 @@ export { default as CheckboxFactory } from './factory/CheckboxFactory';
 export { default as CollapseFactory } from './factory/CollapseFactory';
 export { default as DividerFactory } from './factory/DividerFactory';
 export { default as DropdownFactory } from './factory/DropdownFactory';
+export { default as FormFactory } from './factory/FormFactory';
 export { default as GridFactory } from './factory/GridFactory';
 export { default as GroupFactory } from './factory/GroupFactory';
 export { default as IconFactory } from './factory/IconFactory';

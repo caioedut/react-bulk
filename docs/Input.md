@@ -148,9 +148,9 @@ The highlight and cursor color of the text input.
 
 ### `size`
 
-| Type                               | Default  |
-|------------------------------------|----------|
-| `enum('small', 'medium', 'large')` | `medium` |
+| Type                                         | Default  |
+|----------------------------------------------|----------|
+| `enum('small', 'medium', 'large', 'xlarge')` | `medium` |
 
 ---
 

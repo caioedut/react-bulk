@@ -35,9 +35,9 @@ Shows an icon after the text. See more in [Icon](Icon.md).
 
 ### `size`
 
-| Type                               | Default    |
-|------------------------------------|------------|
-| `enum('small', 'medium', 'large')` | `'medium'` |
+| Type                                         | Default    |
+|----------------------------------------------|------------|
+| `enum('small', 'medium', 'large', 'xlarge')` | `'medium'` |
 
 ---
 

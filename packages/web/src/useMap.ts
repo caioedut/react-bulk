@@ -36,6 +36,7 @@ export default function useMap() {
     Icons,
 
     Button: 'button',
+    Form: 'form',
     Image: 'img',
     Input: 'input',
     Label: 'label',

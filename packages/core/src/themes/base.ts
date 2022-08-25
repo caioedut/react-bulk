@@ -141,6 +141,9 @@ const base = {
         },
       },
     },
+    Form: {
+      defaultProps: {},
+    },
     Grid: {
       defaultProps: {},
     },

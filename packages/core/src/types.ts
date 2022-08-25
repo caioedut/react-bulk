@@ -1,8 +1,10 @@
 import { CSSProperties, ReactNode } from 'react';
 
 export type TimeoutType = ReturnType<typeof setInterval> | null;
+export type AnyCallback = (mixed: any) => any;
 export type EventCallback = (e: any) => any;
 export type ChangeCallback = (e: any, value: string) => any;
+export type SubmitCallback = (e: any, data: any) => any;
 
 export type MapType = {
   web: boolean;
@@ -119,7 +121,7 @@ export type CustomStyles = {
   maxh?: number | string;
 
   bg?: string;
-  border?: string;
+  border?: string | number;
   corners?: number;
   shadow?: string;
 
@@ -304,12 +306,21 @@ export type GroupProps = BoxProps & {
   labelStyle?: JssStyles;
   errorStyle?: JssStyles;
   containerStyle?: JssStyles;
+
+  // To use only on children of Grid
+  xs?: number | true | 'auto';
+  sm?: number | true | 'auto';
+  md?: number | true | 'auto';
+  lg?: number | true | 'auto';
+  xl?: number | true | 'auto';
+  xxl?: number | true | 'auto';
 };
 
 export type ButtonProps = GroupProps &
   FocusableProps & {
     badge?: number | BadgeProps;
     href?: string;
+    type?: 'button' | 'submit';
   };
 
 export type ButtonGroupProps = BoxProps & {
@@ -405,18 +416,19 @@ export type LoadingProps = BoxProps & {
 };
 
 export type GridProps = BoxProps & {
+  gap?: number;
   size?: number;
 };
 
 export type TableProps = BoxProps & {
-  rows: any[];
   columns: [
     {
-      header?: ReactNode | Function | string;
-      content?: ReactNode | Function | string;
+      header?: ReactNode | AnyCallback | string;
+      content?: ReactNode | AnyCallback | string;
       style?: JssStyles;
     },
   ];
+  rows: any[];
 };
 
 export type BadgeProps = TextProps & {
@@ -427,4 +439,9 @@ export type BadgeProps = TextProps & {
   bottom?: boolean;
   left?: boolean;
   right?: boolean;
+};
+
+export type FormProps = BoxProps & {
+  data?: any;
+  onSubmit?: SubmitCallback;
 };

@@ -106,9 +106,9 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     align && { alignSelf: align },
     justify && { justifySelf: justify },
 
-    styleProps,
-
     style,
+
+    styleProps,
 
     native && rawStyle,
 

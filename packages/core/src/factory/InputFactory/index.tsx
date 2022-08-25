@@ -6,6 +6,7 @@ import { FactoryProps, InputProps } from '../../types';
 import clsx from '../../utils/clsx';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
+import { useForm } from '../FormFactory';
 import GroupFactory from '../GroupFactory';
 
 function InputFactory({ className, map, ...props }: FactoryProps & InputProps, ref: any) {
@@ -41,17 +42,30 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
     ...rest
   } = props;
 
+  const form = useForm();
   const defaultRef: any = useRef(null);
   const inputRef = ref || defaultRef;
 
   const [focused, setFocused] = useState(false);
   const [internal, setInternal] = useState(`${defaultValue ?? ''}`);
 
+  selectionColor = theme.color(selectionColor);
+
   useEffect(() => {
     if (typeof value !== 'undefined') {
       setInternal(value);
     }
   }, [value]);
+
+  useEffect(() => {
+    if (!name || !form) return;
+
+    form.setField({
+      name,
+      get: () => internal,
+      set: (value) => setInternal(value),
+    });
+  }, [name, form, internal]);
 
   const focus = useCallback(() => {
     inputRef?.current?.focus?.();
