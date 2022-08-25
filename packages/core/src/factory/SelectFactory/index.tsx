@@ -37,7 +37,7 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
     form.setField({
       name,
       set: setInternal,
-      get: () => internal,
+      get: () => internal?.value,
     });
   }, [name, form, internal]);
 

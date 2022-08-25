@@ -20,8 +20,22 @@ function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxPr
   // Extends from default props
   props = { ...theme.components.Checkbox.defaultProps, ...props };
 
-  let { checked, defaultChecked, id, label, name, onChange, placeholder, readOnly, unique, style, labelStyle, containerStyle, ...rest } =
-    props;
+  let {
+    checked,
+    defaultChecked,
+    id,
+    label,
+    name,
+    onChange,
+    placeholder,
+    readOnly,
+    unique,
+    value,
+    style,
+    labelStyle,
+    containerStyle,
+    ...rest
+  } = props;
 
   id = id ?? `rbk-${crypt(uuid())}`;
 
@@ -40,12 +54,14 @@ function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxPr
   useEffect(() => {
     if (!name || !form) return;
 
-    form.setField({
-      name,
-      set: setInternal,
-      get: () => internal,
-    });
-  }, [name, form, internal]);
+    if (!unique || internal) {
+      form.setField({
+        name,
+        set: setInternal,
+        get: () => (internal ? value ?? internal : unique ? null : false),
+      });
+    }
+  }, [name, form, internal, value]);
 
   const focus = useCallback(() => {
     buttonRef?.current?.focus?.();
@@ -106,7 +122,7 @@ function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxPr
           type="checkbox"
           name={name}
           readOnly={readOnly}
-          defaultValue="1"
+          value={`${value ?? 1}`}
           checked={internal}
           onChange={handleChange}
         />
