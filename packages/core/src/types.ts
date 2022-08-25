@@ -398,6 +398,9 @@ export type IconProps = BoxProps & {
 };
 
 export type LoadingProps = BoxProps & {
+  color?: ColorValues;
+  label?: string;
+  size?: number;
   speed?: string;
 };
 
