@@ -31,7 +31,7 @@ function LoadingFactory({ className, map, ...props }: FactoryProps | LoadingProp
     <BoxFactory ref={ref} map={map} flexbox center {...rest} className={clsx(classes)} style={style}>
       <IconFactory map={map} name="Spinner" size={size} color={color} />
       {Boolean(label) && (
-        <BoxFactory map={map} ml={size / 2} style={{ fontSize: size / multiplier }}>
+        <BoxFactory map={map} style={{ color, fontSize: size / multiplier, marginLeft: size / 2 }}>
           {label}
         </BoxFactory>
       )}
