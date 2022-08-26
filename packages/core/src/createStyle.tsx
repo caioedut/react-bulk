@@ -23,20 +23,17 @@ export default function createStyle({ style, className, global }: createStyle) {
   const { current: id } = useRef(uuid());
 
   const hash = useMemo(() => {
-    const uid = isObject
-      ? Object.entries(styleX)
-          .map(([attr, val]) => `${attr}${val}`)
-          .sort()
-          .join('')
-      : id;
+    if (!styleX) return '';
+
+    const uid = className ?? (isObject ? JSON.stringify(styleX) : id);
 
     return 'css-' + crypt(uid);
-  }, [styleX]);
+  }, [styleX, className, isObject]);
 
   className = global ? 'global' : className || hash;
 
   useEffect(() => {
-    if (!web) return;
+    if (!web || !styleX) return;
 
     const element = document?.getElementById(hash) || document?.createElement('style');
     const cssStyle = (typeof styleX === 'string' ? styleX : css(styleX, `.${className}`))
@@ -54,6 +51,10 @@ export default function createStyle({ style, className, global }: createStyle) {
       document?.head?.appendChild(element);
     }
   }, [styleX]);
+
+  if (!styleX) {
+    return native ? {} : '';
+  }
 
   return native ? styleX : className;
 }

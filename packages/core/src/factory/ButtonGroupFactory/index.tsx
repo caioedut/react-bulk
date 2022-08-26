@@ -22,7 +22,6 @@ function ButtonGroupFactory({ className, children, map, ...props }: FactoryProps
     <BoxFactory
       ref={ref}
       map={map}
-      horizontal
       {...rest}
       className={clsx(classes)}
       style={{

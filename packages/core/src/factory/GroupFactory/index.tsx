@@ -53,6 +53,7 @@ function GroupFactory({ className, children, map, ...props }: GroupProps | any, 
 
   style = [
     {
+      position: 'relative',
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'nowrap',
