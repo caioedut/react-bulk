@@ -75,7 +75,7 @@ const base = {
   },
 
   mixins: {
-    transition: '0.3s ease',
+    transition: '0.35s ease',
 
     zIndex: {
       modal: 900,

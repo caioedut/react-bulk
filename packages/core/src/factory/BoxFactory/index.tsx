@@ -58,8 +58,6 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
   }
 
   style = [
-    { position: 'relative' },
-
     block && {
       marginLeft: 0,
       marginRight: 0,
@@ -112,7 +110,7 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
 
     native && rawStyle,
 
-    hidden && { display: 'none !important' },
+    hidden && { display: web ? 'none !important' : 'none' },
   ];
 
   // Apply responsive styles
@@ -149,16 +147,21 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     // }
   }
 
+  if (native) {
+    const arrayed = Array.isArray(className) ? className : [className];
+    style.push(...arrayed.filter((item) => item && typeof item === 'object'));
+  }
+
   const processed = createStyle({ style });
 
   if (processed) {
     // Web: CSS Class Name
-    if (typeof processed === 'string') {
+    if (web) {
       classes.push(processed);
     }
 
     // Native: Style Object
-    if (typeof processed === 'object') {
+    if (native) {
       rest.style = processed;
     }
   }

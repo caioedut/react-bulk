@@ -1,22 +1,23 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import createStyle from '../../createStyle';
 import { FactoryProps, ModalProps } from '../../types';
-import clsx from '../../utils/clsx';
+import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 
 function ModalFactory({ className, children, map, ...props }: FactoryProps & ModalProps, ref: any) {
   const theme = useTheme();
   const { web, native } = map;
-  const classes: any[] = ['rbk-modal', className];
 
   // Extends from default props
   props = { ...theme.components.Modal.defaultProps, ...props };
 
-  let { align, onBackdropPress, visible, style, ...rest } = props;
+  let { align, onBackdropPress, visible, ...rest } = props;
 
-  style = [
-    {
+  const styleRoot = createStyle({
+    className: 'rbk-modal',
+    style: {
       position: web ? 'fixed' : 'relative',
       top: 0,
       left: 0,
@@ -25,31 +26,38 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
       width: '100%',
 
       display: 'flex',
+      flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
 
-    align === 'top' && { alignItems: 'flex-start' },
-
-    align === 'bottom' && { alignItems: 'flex-end' },
-
-    web && {
-      transition: 'all 0.4s ease',
-      opacity: 0,
-      visibility: 'hidden',
-      zIndex: -1,
-    },
-
-    web &&
-      visible && {
-        opacity: 1,
-        visibility: 'visible',
-        zIndex: theme.mixins.zIndex.modal,
+      web: {
+        transition: `all ${theme.mixins.transition}`,
+        opacity: 0,
+        visibility: 'hidden',
+        zIndex: -1,
       },
+    },
+  });
 
-    style,
-  ];
+  const styleState = createStyle({
+    style: {
+      alignItems: pick(align, 'center', {
+        center: 'center',
+        top: 'flex-start',
+        bottom: 'flex-end',
+      }),
+    },
+  });
+
+  const styleVisible = createStyle({
+    className: 'rbk-modal-visible',
+    style: web && {
+      opacity: 1,
+      visibility: 'visible',
+      zIndex: theme.mixins.zIndex.modal,
+    },
+  });
 
   const containerProps: any = {};
 
@@ -58,8 +66,10 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
     containerProps.onTouchEnd = (e) => e.stopPropagation();
   }
 
+  const styles: any[] = [styleRoot, styleState, visible && styleVisible, className];
+
   return (
-    <BoxFactory map={map} ref={ref} flexbox {...rest} className={clsx(classes)} style={style} onPress={onBackdropPress}>
+    <BoxFactory map={map} ref={ref} {...rest} className={styles} onPress={onBackdropPress}>
       <BoxFactory map={map} {...containerProps}>
         {children}
       </BoxFactory>
