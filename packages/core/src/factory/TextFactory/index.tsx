@@ -52,16 +52,17 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
     variant === 'caption' && { fontSize: theme.rem(0.75) },
 
     size && { fontSize: theme.rem(size) },
-    center && { textAlign: 'center' },
-    left && { textAlign: 'left' },
-    right && { textAlign: 'right' },
-    justify && { textAlign: 'justify' },
     weight && { fontWeight: weight },
-    bold && { fontWeight: 'bold' },
-    italic && { fontStyle: 'italic' },
-    oblique && { fontStyle: 'oblique' },
-    smallCaps && { fontVariant: 'small-caps' },
-    invisible && { opacity: 0 },
+
+    typeof center === 'boolean' && { textAlign: center ? 'center' : native ? 'auto' : 'initial' },
+    typeof left === 'boolean' && { textAlign: left ? 'left' : native ? 'auto' : 'initial' },
+    typeof right === 'boolean' && { textAlign: right ? 'right' : native ? 'auto' : 'initial' },
+    typeof justify === 'boolean' && { textAlign: justify ? 'justify' : native ? 'auto' : 'initial' },
+    typeof smallCaps === 'boolean' && { fontVariant: smallCaps ? 'small-caps' : native ? undefined : 'initial' },
+
+    typeof bold === 'boolean' && { fontWeight: bold ? 'bold' : 'normal' },
+    typeof italic === 'boolean' && { fontStyle: italic ? 'italic' : 'normal' },
+
     transform && { textTransform: transform },
 
     web && {

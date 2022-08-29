@@ -33,6 +33,7 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     flow,
     grow,
     hidden,
+    invisible,
     justify,
     justifyContent,
     justifyItems,
@@ -65,6 +66,8 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     },
 
     web && block && { display: 'block' },
+
+    typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
 
     // Flex Container
     flexbox && {
