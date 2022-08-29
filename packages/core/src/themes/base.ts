@@ -129,8 +129,8 @@ const base = {
     },
     Divider: {
       defaultProps: {
-        color: 'text.secondary',
-        opacity: 0.25,
+        color: 'text.primary',
+        opacity: 0.15,
         size: 1,
       },
     },
