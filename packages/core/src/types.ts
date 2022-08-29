@@ -232,6 +232,7 @@ export type BoxProps = PressableProps &
     platform?: object;
     accessibility?: AccessibilityProps;
     children?: ReactNode;
+    invisible?: boolean;
     style?: JssStyles;
     rawStyle?: JssStyles;
     block?: boolean;
@@ -272,9 +273,7 @@ export type TextProps = BoxProps & {
   justify?: boolean;
   bold?: boolean;
   italic?: boolean;
-  oblique?: boolean;
   smallCaps?: boolean;
-  invisible?: boolean;
   weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
   transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
 
