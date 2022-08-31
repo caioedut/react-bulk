@@ -66,7 +66,7 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
     containerProps.onTouchEnd = (e) => e.stopPropagation();
   }
 
-  const styles: any[] = [styleRoot, styleState, visible && styleVisible, className];
+  const styles = [styleRoot, styleState, visible && styleVisible, className];
 
   return (
     <BoxFactory map={map} ref={ref} {...rest} className={styles} onPress={onBackdropPress}>

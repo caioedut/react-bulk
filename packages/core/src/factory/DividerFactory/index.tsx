@@ -1,41 +1,35 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import createStyle from '../../createStyle';
 import { DividerProps, FactoryProps } from '../../types';
-import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
 function DividerFactory({ className, map, ...props }: FactoryProps & DividerProps, ref: any) {
   const theme = useTheme();
-  const classes: any[] = ['rbk-divider', className];
 
   // Extends from default props
   props = { ...theme.components.Divider.defaultProps, ...props };
 
-  let {
-    //
-    color,
-    opacity,
-    size,
-    vertical,
-    style,
-    ...rest
-  } = props;
+  let { color, opacity, size, vertical, ...rest } = props;
 
-  style = [
-    {
+  const styleRoot = createStyle({
+    className: 'rbk-divider',
+    style: null,
+  });
+
+  const styleState = createStyle({
+    style: {
       backgroundColor: color,
+      height: vertical ? '100%' : size,
+      width: vertical ? size : '100%',
       opacity,
     },
+  });
 
-    vertical && { width: size, height: '100%' },
+  const styles = [styleRoot, styleState, className];
 
-    !vertical && { height: size },
-
-    style,
-  ];
-
-  return <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} style={style} />;
+  return <BoxFactory map={map} ref={ref} {...rest} className={styles} />;
 }
 
 export default React.forwardRef(DividerFactory);

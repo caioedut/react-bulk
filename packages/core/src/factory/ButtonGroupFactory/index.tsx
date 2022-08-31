@@ -31,7 +31,7 @@ function ButtonGroupFactory({ className, children, map, ...props }: FactoryProps
         alignItems: 'stretch',
       }}
     >
-      {children.map((child, key) => {
+      {children?.map((child, key) => {
         const isFirst = key === 0;
         const isLast = key === children.length - 1;
 

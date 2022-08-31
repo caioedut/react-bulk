@@ -10,8 +10,8 @@
     ]
   },
   "scripts": {
-    "dev:web": "yarn --cwd ./examples/web dev",
-    "dev:native": "yarn --cwd ./examples/native dev",
+    "dev:web": "yarn build && yarn --cwd ./examples/web dev",
+    "dev:native": "yarn build && yarn --cwd ./examples/native dev",
     "bootstrap": "lerna bootstrap",
     "prebuild": "lerna exec --parallel -- rimraf dist typings",
     "build": "lerna exec --parallel -- tsc --build",

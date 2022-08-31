@@ -1,19 +1,18 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import createStyle from '../../createStyle';
 import { FactoryProps, IconProps } from '../../types';
-import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
 function IconFactory({ className, map, ...props }: FactoryProps & IconProps, ref: any) {
   const theme = useTheme();
-  const { web, Icons } = map;
-  const classes: any[] = ['rbk-icon', className];
+  const { Icons } = map;
 
   // Extends from default props
   props = { ...theme.components.Icon.defaultProps, ...props };
 
-  let { color, name, size, style, ...rest } = props;
+  let { color, name, size, ...rest } = props;
 
   const iconName = `${name || ''}`
     .split(/_|-|\s/g)
@@ -24,26 +23,17 @@ function IconFactory({ className, map, ...props }: FactoryProps & IconProps, ref
 
   size = size ?? theme.rem(1.25);
 
-  style = [
-    web && {
-      verticalAlign: 'text-bottom',
+  const styleRoot = createStyle({
+    className: 'rbk-icon',
+    style: {
+      web: { verticalAlign: 'text-bottom' },
+      native: { marginTop: -4 },
     },
+  });
 
-    style,
-  ];
+  const styles = [styleRoot, className];
 
-  return (
-    <BoxFactory
-      ref={ref}
-      map={map}
-      component={Component}
-      color={theme.color(color)}
-      size={size}
-      {...rest}
-      className={clsx(classes)}
-      style={style}
-    />
-  );
+  return <BoxFactory ref={ref} map={map} component={Component} color={theme.color(color)} size={size} {...rest} className={styles} />;
 }
 
 export default React.forwardRef(IconFactory);

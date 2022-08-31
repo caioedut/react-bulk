@@ -1,35 +1,20 @@
 import React, { isValidElement } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import createStyle from '../../createStyle';
 import { FactoryProps, TableProps } from '../../types';
-import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
 function TableFactory({ className, map, ...props }: FactoryProps & TableProps, ref: any) {
   const theme = useTheme();
-  const classes: any[] = ['rbk-table', className];
 
   // Extends from default props
   props = { ...theme.components.Table.defaultProps, ...props };
 
-  let { border, columns, rows, style, ...rest } = props;
+  let { border, columns, rows, ...rest } = props;
 
   const width = `${100 / columns?.length}%`;
-
-  style = [
-    {
-      border,
-      borderRadius: theme.shape.borderRadius,
-    },
-    style,
-  ];
-
-  const columnStyle = {
-    width,
-    flexGrow: 0,
-    flexShrink: 0,
-  };
 
   const renderContent = (child: any, data: any = undefined, bold = false) => {
     if (child) {
@@ -62,12 +47,28 @@ function TableFactory({ className, map, ...props }: FactoryProps & TableProps, r
       !borderLeft && { borderLeftWidth: 0 },
 
       column.style,
-      columnStyle,
+
+      {
+        width,
+        flexGrow: 0,
+        flexShrink: 0,
+      },
     ];
   };
 
+  const styleRoot = createStyle({
+    className: 'rbk-table',
+    style: { borderRadius: theme.shape.borderRadius },
+  });
+
+  const styleState = createStyle({
+    style: { border },
+  });
+
+  const styles = [styleRoot, styleState, className];
+
   return (
-    <BoxFactory ref={ref} map={map} {...rest} className={clsx(classes)} style={style}>
+    <BoxFactory ref={ref} map={map} {...rest} className={styles}>
       <BoxFactory map={map} flexbox noWrap>
         {columns?.map((column, index) => (
           <BoxFactory key={index} map={map} style={buildStyle(column, false, index > 0)}>

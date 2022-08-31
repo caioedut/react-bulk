@@ -366,7 +366,7 @@ export type CheckboxProps = InputBaseProps & {
 export type CardProps = BoxProps & {};
 
 export type ScrollableProps = BoxProps & {
-  horizontal?: boolean;
+  direction?: 'vertical' | 'horizontal';
 };
 
 export type ImageProps = BoxProps & {
