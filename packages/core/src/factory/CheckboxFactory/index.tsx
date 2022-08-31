@@ -61,6 +61,8 @@ function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxPr
         get: () => (internal ? value ?? internal : unique ? null : false),
       });
     }
+
+    return () => form.unsetField(name);
   }, [name, form, internal, value]);
 
   const focus = useCallback(() => {
