@@ -64,16 +64,6 @@ function Main() {
   return (
     <Scrollable bg="background.secondary">
       <Box p={3}>
-        <Card mb={3}>
-          <Text variant="title" mb={3}>
-            Dropdown
-          </Text>
-          <Box>
-            <Button onPress={toggleDropdown}>Toggle Dropdown</Button>
-            <Dropdown visible={dropdown}>Lorem ipsum dolor sit amet</Dropdown>
-          </Box>
-        </Card>
-
         <Card>
           <Text variant="title">React Bulk</Text>
           <Box flexbox wrap alignItems="center" justifyContent="space-between">

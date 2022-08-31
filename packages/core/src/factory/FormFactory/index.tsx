@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useRef } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import createStyle from '../../createStyle';
 import { FactoryProps, FormProps } from '../../types';
-import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
 const Context = createContext(null);
@@ -12,7 +12,6 @@ export const useForm: any = () => useContext(Context);
 function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps & FormProps, ref: any) {
   const theme = useTheme();
   const { Form } = map;
-  const classes: any[] = ['rbk-form', className];
 
   const formRef: any = useRef(null);
   const defaultRef = useRef(null);
@@ -21,9 +20,7 @@ function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps 
   // Extends from default props
   props = { ...theme.components.Form.defaultProps, ...props };
 
-  let { style, ...rest } = props;
-
-  style = [{ margin: 0 }, style];
+  let { ...rest } = props;
 
   const getField = (name) => {
     return ref.current.fields.find((item) => item?.name === name);
@@ -72,9 +69,19 @@ function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps 
     onSubmit?.(e, getData());
   };
 
+  const styleRoot = createStyle({
+    className: 'rbk-form',
+    style: {
+      margin: 0,
+      padding: 0,
+    },
+  });
+
+  const styles = [styleRoot, className];
+
   return (
     <Context.Provider value={ref?.current}>
-      <BoxFactory map={map} ref={formRef} component={Form} {...rest} onSubmit={handleSubmit} className={clsx(classes)} style={style} />
+      <BoxFactory map={map} ref={formRef} component={Form} {...rest} onSubmit={handleSubmit} className={styles} />
     </Context.Provider>
   );
 }

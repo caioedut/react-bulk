@@ -1,29 +1,40 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import createStyle from '../../createStyle';
 import { FactoryProps, ScrollableProps } from '../../types';
-import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
-function ScrollableFactory({ className, map, ...props }: FactoryProps & ScrollableProps, ref: any) {
+function ScrollableFactory({ className, children, map, ...props }: FactoryProps & ScrollableProps, ref: any) {
   const theme = useTheme();
-  const { web, ScrollView } = map;
-  const classes: any[] = ['rbk-scrollable', className];
+  const { web, ScrollView, View } = map;
 
   // Extends from default props
   props = { ...theme.components.Scrollable.defaultProps, ...props };
 
-  let { horizontal, style, ...rest } = props;
+  let { direction, ...rest } = props;
 
-  style = [
-    { flex: 1 },
+  const isHorizontal = direction === 'horizontal';
 
-    web && horizontal && { overflowX: 'auto' },
-    web && !horizontal && { overflowY: 'auto' },
-    web && { scrollBehavior: 'smooth' },
+  const styleRoot = createStyle({
+    className: 'rbk-scrollable',
+    style: {
+      flex: 1,
+      web: {
+        overflow: 'hidden',
+        scrollBehavior: 'smooth',
+      },
+    },
+  });
 
-    style,
-  ];
+  const styleState = createStyle({
+    style: web && {
+      overflowX: isHorizontal ? 'auto' : 'hidden',
+      overflowY: isHorizontal ? 'hidden' : 'auto',
+    },
+  });
+
+  const styles = [styleRoot, styleState, className];
 
   return (
     <BoxFactory
@@ -31,12 +42,13 @@ function ScrollableFactory({ className, map, ...props }: FactoryProps & Scrollab
       ref={ref}
       component={ScrollView}
       {...rest}
-      className={clsx(classes)}
-      style={style}
+      className={styles}
       platform={{
-        native: { horizontal },
+        native: { horizontal: isHorizontal },
       }}
-    />
+    >
+      <View>{children}</View>
+    </BoxFactory>
   );
 }
 

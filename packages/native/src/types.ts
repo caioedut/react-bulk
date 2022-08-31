@@ -22,6 +22,9 @@ export type NativeScrollableProps = ScrollableProps & {
   onRefresh?: () => void;
   refreshing?: boolean;
   refreshControl?: ReactElement<RefreshControlProps>;
+
+  /** @deprecated use direction instead */
+  horizontal?: boolean;
 };
 
 export type NativeImageProps = NativeBindingProps & ImageProps;

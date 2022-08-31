@@ -192,7 +192,9 @@ const base = {
       defaultProps: {},
     },
     Scrollable: {
-      defaultProps: {},
+      defaultProps: {
+        direction: 'vertical',
+      },
     },
     Select: {
       defaultProps: {

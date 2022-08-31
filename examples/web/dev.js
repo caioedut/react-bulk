@@ -4,7 +4,9 @@ const { execSync } = require('child_process');
 
 fs.removeSync('yarn.lock');
 fs.removeSync('package-lock.json');
-fs.removeSync(path.join('node_modules', '@react-bulk'), { recursive: true });
+fs.removeSync(path.join('node_modules'), {
+  recursive: true,
+});
 
 execSync('yarn add file:../../packages/core file:../../packages/web', {
   stdio: 'inherit',

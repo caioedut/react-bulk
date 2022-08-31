@@ -1,18 +1,17 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import createStyle from '../../createStyle';
 import { FactoryProps, GridProps } from '../../types';
-import clsx from '../../utils/clsx';
 import BoxFactory from '../BoxFactory';
 
 function GridFactory({ className, children, map, ...props }: FactoryProps & GridProps, ref: any) {
   const theme = useTheme();
-  const classes: any[] = ['rbk-grid', className];
 
   // Extends from default props
   props = { ...theme.components.Grid.defaultProps, ...props };
 
-  let { gap, size, style, ...rest } = props;
+  let { gap, size, ...rest } = props;
 
   const breakpoints = Object.keys(theme.breakpoints);
   const spacing = !gap ? 0 : theme.spacing(gap) / 2;
@@ -21,20 +20,24 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
     children = [children];
   }
 
-  style = [
-    {
+  const styleRoot = createStyle({
+    className: 'rbk-grid',
+    style: {
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
       alignContent: 'stretch',
-      margin: -spacing,
     },
+  });
 
-    style,
-  ];
+  const styleState = createStyle({
+    style: { padding: -spacing },
+  });
+
+  const styles = [styleRoot, styleState, className];
 
   return (
-    <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} style={style}>
+    <BoxFactory map={map} ref={ref} {...rest} className={styles}>
       {children?.map((child, index) => {
         const props = { ...child.props };
         const childStyle: any[] = [props.style, { padding: spacing }];
