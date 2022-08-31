@@ -11,12 +11,9 @@ export type createStyle = {
   name?: string;
   style: any;
   global?: boolean;
-
-  /** @deprecated use name instead */
-  className?: string;
 };
 
-export default function createStyle({ name, style, global, className }: createStyle) {
+export default function createStyle({ name, style, global }: createStyle) {
   const theme = useTheme();
   const { web, native } = Platform;
 
@@ -27,14 +24,12 @@ export default function createStyle({ name, style, global, className }: createSt
 
   const { current: id } = useRef(uuid());
 
-  name = name ?? className;
-
   const hash = useMemo(() => {
     if (!styleX) return '';
 
     const uid = name ?? (isObject ? JSON.stringify(styleX) : id);
 
-    return 'css-' + crypt(uid);
+    return 'rbk-' + crypt(uid);
   }, [styleX, name, isObject]);
 
   name = name ?? hash;
