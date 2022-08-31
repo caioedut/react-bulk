@@ -36,6 +36,14 @@ function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps 
     }
   };
 
+  const unsetField = (name) => {
+    const index = ref.current.fields.findIndex((item) => item?.name === name);
+
+    if (index !== -1) {
+      ref.current.fields.splice(index, 1);
+    }
+  };
+
   const getData = () => {
     const data = {};
 
@@ -48,6 +56,10 @@ function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps 
     Object.keys(data).forEach((attr) => getField(attr)?.set?.(data[attr]));
   };
 
+  const clear = () => {
+    ref.current.fields.forEach(({ set }) => set(''));
+  };
+
   useEffect(() => {
     ref.current = {
       target: formRef?.current,
@@ -56,6 +68,8 @@ function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps 
       setData,
       getField,
       setField,
+      unsetField,
+      clear,
       fields: [] as any,
     };
   }, [formRef]);

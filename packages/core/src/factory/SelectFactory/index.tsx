@@ -39,6 +39,8 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
       set: setInternal,
       get: () => internal?.value,
     });
+
+    return () => form.unsetField(name);
   }, [name, form, internal]);
 
   const focus = useCallback(() => {

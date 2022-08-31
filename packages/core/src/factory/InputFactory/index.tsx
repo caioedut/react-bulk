@@ -65,6 +65,8 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
       set: setInternal,
       get: () => internal,
     });
+
+    return () => form.unsetField(name);
   }, [name, form, internal]);
 
   const focus = useCallback(() => {
