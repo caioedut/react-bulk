@@ -8,35 +8,42 @@ import crypt from './utils/crypt';
 import uuid from './utils/uuid';
 
 export type createStyle = {
+  name?: string;
   style: any;
-  className?: string;
   global?: boolean;
+
+  /** @deprecated use name instead */
+  className?: string;
 };
 
-export default function createStyle({ style, className, global }: createStyle) {
+export default function createStyle({ name, style, global, className }: createStyle) {
   const theme = useTheme();
   const { web, native } = Platform;
+
+  style = typeof style === 'function' ? style(theme) : style;
 
   const isObject = style && typeof style === 'object';
   const styleX = isObject ? jss({ theme }, style) : style;
 
   const { current: id } = useRef(uuid());
 
+  name = name ?? className;
+
   const hash = useMemo(() => {
     if (!styleX) return '';
 
-    const uid = className ?? (isObject ? JSON.stringify(styleX) : id);
+    const uid = name ?? (isObject ? JSON.stringify(styleX) : id);
 
     return 'css-' + crypt(uid);
-  }, [styleX, className, isObject]);
+  }, [styleX, name, isObject]);
 
-  className = global ? 'global' : className || hash;
+  name = name ?? hash;
 
   useEffect(() => {
     if (!web || !styleX) return;
 
     const element = document?.getElementById(hash) || document?.createElement('style');
-    const cssStyle = (typeof styleX === 'string' ? styleX : css(styleX, `.${className}`))
+    const cssStyle = (typeof styleX === 'string' ? styleX : css(styleX, global ? '::root' : `.${name}`))
       .replace(/[\n\r]|\s{2,}/g, '')
       .replace(/\s?{/g, '{')
       .replace(/}\s?/g, '} ')
@@ -56,5 +63,5 @@ export default function createStyle({ style, className, global }: createStyle) {
     return native ? {} : '';
   }
 
-  return native ? styleX : className;
+  return native ? styleX : name;
 }

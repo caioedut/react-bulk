@@ -21,7 +21,7 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
   }
 
   const styleRoot = createStyle({
-    className: 'rbk-grid',
+    name: 'rbk-grid',
     style: {
       display: 'flex',
       flexDirection: 'row',

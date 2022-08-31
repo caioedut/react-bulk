@@ -14,7 +14,7 @@ function CardFactory({ className, map, ...props }: FactoryProps & CardProps, ref
   let { ...rest } = props;
 
   const styleRoot = createStyle({
-    className: 'rbk-card',
+    name: 'rbk-card',
     style: {
       backgroundColor: theme.colors.background.primary,
       borderRadius: theme.shape.borderRadius,

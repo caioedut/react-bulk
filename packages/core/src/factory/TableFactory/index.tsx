@@ -57,7 +57,7 @@ function TableFactory({ className, map, ...props }: FactoryProps & TableProps, r
   };
 
   const styleRoot = createStyle({
-    className: 'rbk-table',
+    name: 'rbk-table',
     style: { borderRadius: theme.shape.borderRadius },
   });
 

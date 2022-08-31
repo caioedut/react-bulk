@@ -19,7 +19,7 @@ function LoadingFactory({ className, map, ...props }: FactoryProps | LoadingProp
   size = size ?? theme.rem(multiplier);
 
   const styleRoot = createStyle({
-    className: 'rbk-loading',
+    name: 'rbk-loading',
     style: null,
   });
 

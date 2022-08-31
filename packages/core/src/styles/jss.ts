@@ -66,6 +66,11 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
     delete styles[attr];
 
+    const remRegex = /(\d)rem/gi;
+    if (remRegex.test(`${value ?? ''}`)) {
+      value = value.replace(/(\d)rem/gi, ($x, $1) => ($x ? theme?.rem?.($1) : 0));
+    }
+
     if (customSpacings.includes(prop)) {
       prop = attr
         .replace(/^(.)t$/, '$1Top')
