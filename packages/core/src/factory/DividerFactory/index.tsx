@@ -14,7 +14,7 @@ function DividerFactory({ className, map, ...props }: FactoryProps & DividerProp
   let { color, opacity, size, vertical, ...rest } = props;
 
   const styleRoot = createStyle({
-    className: 'rbk-divider',
+    name: 'rbk-divider',
     style: null,
   });
 

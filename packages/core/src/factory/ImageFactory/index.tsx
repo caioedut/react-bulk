@@ -18,7 +18,7 @@ function ImageFactory({ className, map, ...props }: FactoryProps & ImageProps, r
   const imageRef = ref || defaultRef;
 
   const styleRoot = createStyle({
-    className: 'rbk-image',
+    name: 'rbk-image',
     style: web && { display: 'inline-block' },
   });
 

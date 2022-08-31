@@ -19,7 +19,7 @@ function BadgeFactory({ className, children, map, ...props }: FactoryProps & Bad
   const halfBaseSize = baseSize / 2;
 
   const styleRoot = createStyle({
-    className: 'rbk-badge',
+    name: 'rbk-badge',
     style: {
       display: 'flex',
       alignItems: 'center',

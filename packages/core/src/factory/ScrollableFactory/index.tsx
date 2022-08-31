@@ -17,7 +17,7 @@ function ScrollableFactory({ className, children, map, ...props }: FactoryProps 
   const isHorizontal = direction === 'horizontal';
 
   const styleRoot = createStyle({
-    className: 'rbk-scrollable',
+    name: 'rbk-scrollable',
     style: {
       flex: 1,
       web: {

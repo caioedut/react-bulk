@@ -16,7 +16,7 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
   let { align, onBackdropPress, visible, ...rest } = props;
 
   const styleRoot = createStyle({
-    className: 'rbk-modal',
+    name: 'rbk-modal',
     style: {
       position: web ? 'fixed' : 'relative',
       top: 0,
@@ -51,7 +51,7 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
   });
 
   const styleVisible = createStyle({
-    className: 'rbk-modal-visible',
+    name: 'rbk-modal-visible',
     style: web && {
       opacity: 1,
       visibility: 'visible',

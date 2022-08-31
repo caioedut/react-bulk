@@ -31,8 +31,17 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
     ...rest
   } = props;
 
+  if (native) {
+    rest.includeFontPadding = false;
+    rest.textAlignVertical = 'center';
+
+    if (numberOfLines) {
+      rest.numberOfLines = numberOfLines;
+    }
+  }
+
   const styleRoot = createStyle({
-    className: 'rbk-text',
+    name: 'rbk-text',
     style: {
       fontSize: theme.rem(1),
       margin: 0,
@@ -83,15 +92,6 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
         },
     ],
   });
-
-  if (native) {
-    rest.includeFontPadding = false;
-    rest.textAlignVertical = 'center';
-
-    if (numberOfLines) {
-      rest.numberOfLines = numberOfLines;
-    }
-  }
 
   const styles = [styleRoot, styleState, className];
 
