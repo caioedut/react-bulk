@@ -126,25 +126,6 @@ function GroupFactory({ className, children, map, ...props }: GroupProps | any, 
       )}
 
       <BoxFactory map={map} ref={ref} id={id} className={clsx(classes)} {...rest} style={style}>
-        {loading && (
-          <BoxFactory
-            map={map}
-            flexbox
-            center
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              bg: theme.hex2rgba(theme.colors.background.secondary, 0.1),
-              borderRadius: get('borderRadius', style),
-            }}
-          >
-            <LoadingFactory map={map} color={iconColor} size={iconSize} />
-          </BoxFactory>
-        )}
-
         {Boolean(startIcon) && (
           <BoxFactory map={map} style={{ mr: children || secChildren || endIcon ? 2 : 0 }}>
             {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={iconColor} size={iconSize} /> : startIcon}
@@ -158,6 +139,25 @@ function GroupFactory({ className, children, map, ...props }: GroupProps | any, 
         {Boolean(endIcon) && (
           <BoxFactory map={map} style={{ ml: children || secChildren || startIcon ? 2 : 0 }}>
             {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={iconColor} size={iconSize} /> : endIcon}
+          </BoxFactory>
+        )}
+
+        {loading && (
+          <BoxFactory
+            map={map}
+            flexbox
+            center
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              bg: theme.hex2rgba(theme.colors.background.secondary, 0.15),
+              borderRadius: get('borderRadius', style),
+            }}
+          >
+            <LoadingFactory map={map} color={iconColor} size={iconSize} />
           </BoxFactory>
         )}
       </BoxFactory>

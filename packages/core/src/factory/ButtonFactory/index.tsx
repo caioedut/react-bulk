@@ -18,7 +18,7 @@ function ButtonFactory({ className, children, map, ...props }: FactoryProps & Bu
   // Extends from default props
   props = { ...theme.components.Button.defaultProps, ...props };
 
-  let { autoFocus, badge, style, labelStyle, ...rest } = props;
+  let { badge, style, labelStyle, ...rest } = props;
 
   const form = useForm();
 
@@ -56,7 +56,6 @@ function ButtonFactory({ className, children, map, ...props }: FactoryProps & Bu
       {...rest}
       // Component
       className={clsx(classes)}
-      autoFocus={autoFocus}
       // Styles
       style={style}
       // Other
