@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useEffect, useRef } from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { FactoryProps, FormProps } from '../../types';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 const Context = createContext(null);
@@ -11,6 +12,7 @@ export const useForm: any = () => useContext(Context);
 
 function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps & FormProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Form;
   const { Form } = map;
 
   const formRef: any = useRef(null);
@@ -18,9 +20,7 @@ function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps 
   ref = ref || defaultRef;
 
   // Extends from default props
-  props = { ...theme.components.Form.defaultProps, ...props };
-
-  let { ...rest } = props;
+  let { defaultStyle, ...rest } = factory(props, options.defaultProps);
 
   const getField = (name) => {
     return ref.current.fields.find((item) => item?.name === name);
@@ -83,13 +83,9 @@ function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps 
     onSubmit?.(e, getData());
   };
 
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-form',
-    style: {
-      margin: 0,
-      padding: 0,
-    },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
   const styles = [styleRoot, className];

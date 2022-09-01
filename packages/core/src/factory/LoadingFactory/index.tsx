@@ -1,31 +1,29 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { FactoryProps, LoadingProps } from '../../types';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import IconFactory from '../IconFactory';
 
 function LoadingFactory({ className, map, ...props }: FactoryProps | LoadingProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Loading;
   const { web } = map;
 
   // Extends from default props
-  props = { ...theme.components.Loading.defaultProps, ...props };
-
-  let { color, label, size, speed, ...rest } = props;
+  let { color, label, size, speed, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
   const multiplier = 1.25;
   size = size ?? theme.rem(multiplier);
 
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-loading',
-    style: null,
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
-  const styleState = createStyle({
-    insert: 'before',
+  const styleState = useStylist({
     style: web && {
       animation: `spin ${speed} linear infinite`,
     },

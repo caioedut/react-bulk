@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import BaseStyleNative from './BaseStyleNative';
-import BaseStyleWeb from './BaseStyleWeb';
+import BaseNative from './BaseNative';
+import BaseWeb from './BaseWeb';
 import Platform from './Platform';
 import createTheme from './createTheme';
 import light from './themes/light';
@@ -33,9 +33,8 @@ function ReactBulk({ theme, children }: any) {
 
   return (
     <Context.Provider value={{ ...themeState, setTheme }}>
-      {web && <BaseStyleWeb />}
-      {native && <BaseStyleNative />}
-      {children}
+      {web && <BaseWeb>{children}</BaseWeb>}
+      {native && <BaseNative>{children}</BaseNative>}
     </Context.Provider>
   );
 }

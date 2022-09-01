@@ -155,7 +155,7 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     style.push(...arrayed.filter((item) => item && typeof item === 'object'));
   }
 
-  const processed = createStyle({ style });
+  const processed = createStyle({ style, theme });
 
   if (processed) {
     // Web: CSS Class Name

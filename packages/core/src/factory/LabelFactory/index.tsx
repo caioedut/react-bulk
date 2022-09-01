@@ -1,28 +1,22 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { FactoryProps, LabelProps } from '../../types';
+import useStylist from '../../useStylist';
 import TextFactory from '../TextFactory';
 
 function LabelFactory({ className, map, ...props }: FactoryProps & LabelProps, ref: any) {
   const theme = useTheme();
-  const { web, Label } = map;
+  const options = theme.components.Label;
+  const { Label } = map;
 
   // Extends from default props
-  props = { ...theme.components.Label.defaultProps, ...props };
+  let { for: htmlFor, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
-  let { for: htmlFor, ...rest } = props;
-
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-label',
-    style: web && {
-      textRendering: 'optimizeLegibility',
-      '-webkit-font-smoothing': 'antialiased',
-      '-moz-osx-font-smoothing': 'grayscale',
-      'font-smooth': 'always',
-    },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
   const styles = [styleRoot, className];

@@ -1,57 +1,36 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { FactoryProps, ModalProps } from '../../types';
+import useStylist from '../../useStylist';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 
 function ModalFactory({ className, children, map, ...props }: FactoryProps & ModalProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Modal;
   const { web, native } = map;
 
   // Extends from default props
-  props = { ...theme.components.Modal.defaultProps, ...props };
+  let { align, onBackdropPress, visible, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
-  let { align, onBackdropPress, visible, ...rest } = props;
-
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-modal',
-    style: {
-      position: web ? 'fixed' : 'relative',
-      top: 0,
-      left: 0,
-
-      height: '100%',
-      width: '100%',
-
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-
-      web: {
-        transition: `all ${theme.mixins.transition}`,
-        opacity: 0,
-        visibility: 'hidden',
-        zIndex: -1,
-      },
-    },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
-  const styleVisible = createStyle({
-    insert: 'before',
+  const styleVisible = useStylist({
+    avoid: !web || !visible,
     name: 'rbk-modal-visible',
-    style: web && {
+    style: {
       opacity: 1,
       visibility: 'visible',
       zIndex: theme.mixins.zIndex.modal,
     },
   });
 
-  const styleState = createStyle({
-    insert: 'before',
+  const styleState = useStylist({
     style: {
       alignItems: pick(align, 'center', {
         center: 'center',
@@ -68,7 +47,7 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
     containerProps.onTouchEnd = (e) => e.stopPropagation();
   }
 
-  const styles = [styleRoot, styleState, visible && styleVisible, className];
+  const styles = [styleRoot, styleState, styleVisible, className];
 
   return (
     <BoxFactory map={map} ref={ref} {...rest} className={styles} onPress={onBackdropPress}>

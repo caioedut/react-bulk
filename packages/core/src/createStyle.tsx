@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react';
-
 import Platform from './Platform';
-import { useTheme } from './ReactBulk';
+import createTheme from './createTheme';
 import css from './styles/css';
 import jss from './styles/jss';
+import { ThemeProps } from './types';
 import crypt from './utils/crypt';
 import uuid from './utils/uuid';
 
@@ -11,26 +10,27 @@ export type createStyle = {
   name?: string;
   parent?: string;
   style: any;
+  theme?: ThemeProps;
   global?: boolean;
-  insert?: 'after' | 'before';
 };
 
-export default function createStyle({ name, style, global, insert }: createStyle) {
-  const theme = useTheme();
+export default function createStyle({ name, style, theme, global }: createStyle) {
   const { web, native } = Platform;
 
-  insert = insert || 'after';
+  theme = theme || createTheme();
   style = typeof style === 'function' ? style(theme) : style;
 
   const isObject = style && typeof style === 'object';
   const styleX = isObject ? jss({ theme }, style) : style;
   const isEmpty = (isObject ? Object.keys(style) : `${style || ''}`.trim()).length === 0;
 
-  const { current: id } = useRef(name ?? 'rbk-' + crypt(isObject ? JSON.stringify(styleX) : uuid()));
+  const id = name ?? 'rbk-' + crypt(isObject ? JSON.stringify(styleX) : uuid());
 
-  useEffect(() => {
-    if (!web || isEmpty) return;
+  if (isEmpty) {
+    return native ? {} : '';
+  }
 
+  if (web && !isEmpty) {
     const element = document.getElementById(id) || document.createElement('style');
     const cssStyle = (typeof styleX === 'string' ? styleX : css(styleX, global ? '::root' : `.${id}`))
       .replace(/[\n\r]|\s{2,}/g, '')
@@ -44,16 +44,8 @@ export default function createStyle({ name, style, global, insert }: createStyle
     }
 
     if (element.parentElement !== document.head) {
-      // if (insert === 'before') {
-      //   document.head.prepend(element);
-      // } else {
       document.head.append(element);
-      // }
     }
-  }, [id, styleX]);
-
-  if (isEmpty) {
-    return native ? {} : '';
   }
 
   return native ? styleX : id;

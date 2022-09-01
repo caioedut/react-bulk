@@ -98,6 +98,23 @@ const base = {
       defaultProps: {
         color: 'error.dark',
         size: 'medium',
+        style: {
+          display: 'flex',
+          alignItems: 'center',
+          alignContent: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          color: 'common.white',
+          fontSize: '0.625rem',
+          fontWeight: 'bold',
+          web: {
+            display: 'inline-flex',
+            lineHeight: 1,
+          },
+          native: {
+            alignSelf: 'flex-start',
+          },
+        },
       },
     },
     Box: {
@@ -120,7 +137,13 @@ const base = {
     },
     Card: {
       name: 'rbk-card',
-      defaultProps: {},
+      defaultProps: {
+        style: {
+          backgroundColor: 'background.primary',
+          corners: 1,
+          p: 3,
+        },
+      },
     },
     Checkbox: {
       name: 'rbk-checkbox',
@@ -148,15 +171,39 @@ const base = {
         accessibility: {
           role: 'menu',
         },
+        style: {
+          position: 'absolute',
+          maxWidth: '100%',
+          border: `1px solid background.secondary`,
+          zIndex: -1,
+          web: {
+            boxShadow: 'rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px',
+            transition: 'all 0.35s ease',
+            opacity: 0,
+            visibility: 'hidden',
+          },
+        },
       },
     },
     Form: {
       name: 'rbk-form',
-      defaultProps: {},
+      defaultProps: {
+        style: {
+          margin: 0,
+          padding: 0,
+        },
+      },
     },
     Grid: {
       name: 'rbk-grid',
-      defaultProps: {},
+      defaultProps: {
+        style: {
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          alignContent: 'stretch',
+        },
+      },
     },
     Group: {
       name: 'rbk-group',
@@ -169,6 +216,10 @@ const base = {
       defaultProps: {
         color: 'primary',
         weight: 'regular',
+        style: {
+          web: { verticalAlign: 'text-bottom' },
+          native: { marginTop: -4 },
+        },
       },
     },
     Image: {
@@ -178,6 +229,9 @@ const base = {
           role: 'image',
         },
         mode: 'cover',
+        style: {
+          web: { display: 'inline-block' },
+        },
       },
     },
     Input: {
@@ -193,7 +247,16 @@ const base = {
     },
     Label: {
       name: 'rbk-label',
-      defaultProps: {},
+      defaultProps: {
+        style: {
+          web: {
+            textRendering: 'optimizeLegibility',
+            '-webkit-font-smoothing': 'antialiased',
+            '-moz-osx-font-smoothing': 'grayscale',
+            'font-smooth': 'always',
+          },
+        },
+      },
     },
     Loading: {
       name: 'rbk-loading',
@@ -207,12 +270,41 @@ const base = {
     },
     Modal: {
       name: 'rbk-modal',
-      defaultProps: {},
+      defaultProps: {
+        style: {
+          position: 'relative',
+          top: 0,
+          left: 0,
+
+          height: '100%',
+          width: '100%',
+
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
+          web: {
+            position: 'fixed',
+            transition: 'all 0.35s ease',
+            opacity: 0,
+            visibility: 'hidden',
+            zIndex: -1,
+          },
+        },
+      },
     },
     Scrollable: {
       name: 'rbk-scrollable',
       defaultProps: {
         direction: 'vertical',
+        style: {
+          flex: 1,
+          web: {
+            overflow: 'hidden',
+            scrollBehavior: 'smooth',
+          },
+        },
       },
     },
     Select: {
@@ -225,7 +317,11 @@ const base = {
     },
     Table: {
       name: 'rbk-table',
-      defaultProps: {},
+      defaultProps: {
+        style: {
+          corners: 1,
+        },
+      },
     },
     Text: {
       name: 'rbk-text',
