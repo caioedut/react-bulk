@@ -24,6 +24,16 @@ export default function BaseStyleWeb() {
     );
   }, [theme]);
 
+  useEffect(() => {
+    const types = ['component', 'custom'];
+
+    types.forEach((type) => {
+      const style = document.createElement('style');
+      style.dataset.type = type;
+      document.head.append(style);
+    });
+  }, []);
+
   const style = `
     *, *:before, *:after {
       box-sizing: border-box;

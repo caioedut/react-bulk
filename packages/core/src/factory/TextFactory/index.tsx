@@ -42,6 +42,7 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
 
   const styleRoot = createStyle({
     name: 'rbk-text',
+    type: 'component',
     style: {
       fontSize: theme.rem(1),
       margin: 0,
@@ -55,6 +56,7 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
   });
 
   const styleState = createStyle({
+    type: 'component',
     style: [
       { color },
 
