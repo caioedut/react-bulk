@@ -20,10 +20,12 @@ function LoadingFactory({ className, map, ...props }: FactoryProps | LoadingProp
 
   const styleRoot = createStyle({
     name: 'rbk-loading',
+    type: 'component',
     style: null,
   });
 
   const styleState = createStyle({
+    type: 'component',
     style: web && {
       animation: `spin ${speed} linear infinite`,
     },
