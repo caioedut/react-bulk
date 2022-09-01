@@ -16,6 +16,7 @@ function LabelFactory({ className, map, ...props }: FactoryProps & LabelProps, r
 
   const styleRoot = createStyle({
     name: 'rbk-label',
+    type: 'component',
     style: web && {
       textRendering: 'optimizeLegibility',
       '-webkit-font-smoothing': 'antialiased',
