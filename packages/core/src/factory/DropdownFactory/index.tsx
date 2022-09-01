@@ -17,6 +17,7 @@ function DropdownFactory({ className, children, map, ...props }: FactoryProps & 
 
   const styleRoot = createStyle({
     name: 'rbk-dropdown',
+    type: 'component',
     style: {
       position: 'absolute',
       maxWidth: '100%',
@@ -32,11 +33,13 @@ function DropdownFactory({ className, children, map, ...props }: FactoryProps & 
   });
 
   const styleState = createStyle({
+    type: 'component',
     style: native && !visible && { display: 'none' },
   });
 
   const styleVisible = createStyle({
     name: 'rbk-dropdown-visible',
+    type: 'component',
     style: {
       zIndex: theme.mixins.zIndex.dropdown,
       web: {

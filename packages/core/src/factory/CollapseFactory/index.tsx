@@ -15,6 +15,7 @@ function CollapseFactory({ className, map, ...props }: FactoryProps & CollapsePr
 
   const styleRoot = createStyle({
     name: 'rbk-collapse',
+    type: 'component',
     style: null,
   });
 

@@ -11,13 +11,14 @@ export type createStyle = {
   name?: string;
   style: any;
   global?: boolean;
-  type?: 'component' | 'custom';
+  type?: 'base' | 'component' | 'custom';
 };
 
-export default function createStyle({ name, style, global, type = 'custom' }: createStyle) {
+export default function createStyle({ name, style, global, type }: createStyle) {
   const theme = useTheme();
   const { web, native } = Platform;
 
+  type = type || 'custom';
   style = typeof style === 'function' ? style(theme) : style;
 
   const isObject = style && typeof style === 'object';
@@ -40,14 +41,11 @@ export default function createStyle({ name, style, global, type = 'custom' }: cr
 
     if (element.textContent !== cssStyle) {
       element.id = id;
-      element.dataset.type = type;
       element.textContent = cssStyle;
     }
 
-    const lastOfType = Array.from(document.head.querySelectorAll(`style[data-type="${type}"]`)).pop();
-
-    if (lastOfType) {
-      lastOfType.after(element);
+    if (['base', 'component'].includes(type as string)) {
+      document.head.querySelector('title')?.before(element);
     } else {
       document.head.append(element);
     }

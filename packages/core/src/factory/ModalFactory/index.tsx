@@ -17,6 +17,7 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
 
   const styleRoot = createStyle({
     name: 'rbk-modal',
+    type: 'component',
     style: {
       position: web ? 'fixed' : 'relative',
       top: 0,
@@ -41,6 +42,7 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
   });
 
   const styleState = createStyle({
+    type: 'component',
     style: {
       alignItems: pick(align, 'center', {
         center: 'center',
@@ -52,6 +54,7 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
 
   const styleVisible = createStyle({
     name: 'rbk-modal-visible',
+    type: 'component',
     style: web && {
       opacity: 1,
       visibility: 'visible',

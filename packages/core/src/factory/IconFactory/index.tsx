@@ -25,6 +25,7 @@ function IconFactory({ className, map, ...props }: FactoryProps & IconProps, ref
 
   const styleRoot = createStyle({
     name: 'rbk-icon',
+    type: 'component',
     style: {
       web: { verticalAlign: 'text-bottom' },
       native: { marginTop: -4 },

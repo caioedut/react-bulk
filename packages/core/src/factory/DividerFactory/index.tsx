@@ -15,10 +15,12 @@ function DividerFactory({ className, map, ...props }: FactoryProps & DividerProp
 
   const styleRoot = createStyle({
     name: 'rbk-divider',
+    type: 'component',
     style: null,
   });
 
   const styleState = createStyle({
+    type: 'component',
     style: {
       backgroundColor: color,
       height: vertical ? '100%' : size,

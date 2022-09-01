@@ -19,10 +19,12 @@ function ImageFactory({ className, map, ...props }: FactoryProps & ImageProps, r
 
   const styleRoot = createStyle({
     name: 'rbk-image',
+    type: 'component',
     style: web && { display: 'inline-block' },
   });
 
   const styleState = createStyle({
+    type: 'component',
     style: {
       height,
       width,

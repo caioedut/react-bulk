@@ -104,15 +104,7 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
         />
       )}
 
-      <DropdownFactory
-        map={map}
-        visible={visible}
-        style={{
-          mt: 0.5,
-          p: 1,
-          w: '100%',
-        }}
-      >
+      <DropdownFactory map={map} visible={visible} mt={0.5} p={1} w="100%">
         {options?.map((option) => (
           <ButtonFactory
             key={option.value}

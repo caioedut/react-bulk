@@ -24,19 +24,12 @@ export default function BaseStyleWeb() {
     );
   }, [theme]);
 
-  useEffect(() => {
-    const types = ['component', 'custom'];
-
-    types.forEach((type) => {
-      const style = document.createElement('style');
-      style.dataset.type = type;
-      document.head.append(style);
-    });
-  }, []);
-
   const style = `
-    *, *:before, *:after {
+    *,
+    *:before,
+    *:after {
       box-sizing: border-box;
+      font-family: inherit;
     }
 
     html {
@@ -46,34 +39,24 @@ export default function BaseStyleWeb() {
     }
 
     body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100%;
       background-color: ${theme.colors.background.secondary};
       color: ${theme.colors.text.primary};
-    }
-
-    body > #root {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
       line-height: 1.15;
+      margin: 0;
       min-height: 100%;
-      min-width: 100%;
+      padding: 0;
     }
 
     ::placeholder {
-      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)}
+      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)};
     }
 
     :-ms-input-placeholder {
-      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)}
+      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)};
     }
 
     ::-ms-input-placeholder {
-      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)}
+      color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)};
     }
   `;
 
@@ -84,8 +67,8 @@ export default function BaseStyleWeb() {
     }
   `;
 
-  createStyle({ style, global: true });
-  createStyle({ style: animations, global: true });
+  createStyle({ type: 'base', style, global: true });
+  createStyle({ type: 'base', style: animations, global: true });
 
   return null;
 }

@@ -85,6 +85,7 @@ function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps 
 
   const styleRoot = createStyle({
     name: 'rbk-form',
+    type: 'component',
     style: {
       margin: 0,
       padding: 0,
