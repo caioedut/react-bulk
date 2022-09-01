@@ -30,7 +30,7 @@ export default function createStyle({ name, style, theme, global }: createStyle)
     return native ? {} : '';
   }
 
-  if (web && !isEmpty) {
+  if (web) {
     const element = document.getElementById(id) || document.createElement('style');
     const cssStyle = (typeof styleX === 'string' ? styleX : css(styleX, global ? '::root' : `.${id}`))
       .replace(/[\n\r]|\s{2,}/g, '')
