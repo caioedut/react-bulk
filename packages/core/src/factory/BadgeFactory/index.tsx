@@ -19,8 +19,8 @@ function BadgeFactory({ className, children, map, ...props }: FactoryProps & Bad
   const halfBaseSize = baseSize / 2;
 
   const styleRoot = createStyle({
+    insert: 'before',
     name: 'rbk-badge',
-    type: 'component',
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -44,7 +44,7 @@ function BadgeFactory({ className, children, map, ...props }: FactoryProps & Bad
   });
 
   const styleState = createStyle({
-    type: 'component',
+    insert: 'before',
     style: [
       {
         backgroundColor: color,

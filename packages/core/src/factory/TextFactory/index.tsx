@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { FactoryProps, TextProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
@@ -10,8 +11,6 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
   const { web, native, Text } = map;
 
   // Extends from default props
-  props = { ...theme.components.Text.defaultProps, ...props };
-
   let {
     bold,
     center,
@@ -28,8 +27,9 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
     transform,
     variant,
     weight,
+    defaultStyle,
     ...rest
-  } = props;
+  } = factory(props, theme.components.Text.defaultProps);
 
   if (native) {
     rest.includeFontPadding = false;
@@ -41,22 +41,13 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
   }
 
   const styleRoot = createStyle({
-    name: 'rbk-text',
-    type: 'component',
-    style: {
-      fontSize: theme.rem(1),
-      margin: 0,
-      textDecorationLine: 'none',
-
-      web: {
-        display: 'block',
-        '& .rbk-text': { display: 'inline' },
-      },
-    },
+    insert: 'before',
+    name: theme.components.Text.name,
+    style: defaultStyle,
   });
 
   const styleState = createStyle({
-    type: 'component',
+    insert: 'before',
     style: [
       { color },
 

@@ -67,8 +67,8 @@ export default function BaseStyleWeb() {
     }
   `;
 
-  createStyle({ type: 'base', style, global: true });
-  createStyle({ type: 'base', style: animations, global: true });
+  createStyle({ insert: 'before', style, global: true });
+  createStyle({ insert: 'before', style: animations, global: true });
 
   return null;
 }

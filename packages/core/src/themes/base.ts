@@ -10,7 +10,7 @@ const base = {
 
   color(mixin) {
     const [color, variation = 'main'] = `${mixin || ''}`.split('.');
-    return this?.colors[color]?.[variation] ?? this?.colors[color]?.primary ?? this?.colors[color] ?? mixin ?? 'transparent';
+    return this?.colors[color]?.[variation] ?? this?.colors[color]?.primary ?? this?.colors[color] ?? mixin;
   },
 
   colors: {
@@ -94,15 +94,18 @@ const base = {
 
   components: {
     Badge: {
+      name: 'rbk-badge',
       defaultProps: {
         color: 'error.dark',
         size: 'medium',
       },
     },
     Box: {
+      name: 'rbk-box',
       defaultProps: {},
     },
     Button: {
+      name: 'rbk-button',
       defaultProps: {
         accessibility: {
           role: 'button',
@@ -110,14 +113,17 @@ const base = {
       },
     },
     ButtonGroup: {
+      name: 'rbk-button-group',
       defaultProps: {
         color: 'primary',
       },
     },
     Card: {
+      name: 'rbk-card',
       defaultProps: {},
     },
     Checkbox: {
+      name: 'rbk-checkbox',
       defaultProps: {
         accessibility: {
           role: 'combobox',
@@ -125,9 +131,11 @@ const base = {
       },
     },
     Collapse: {
+      name: 'rbk-collapse',
       defaultProps: {},
     },
     Divider: {
+      name: 'rbk-divider',
       defaultProps: {
         color: 'text.primary',
         opacity: 0.15,
@@ -135,6 +143,7 @@ const base = {
       },
     },
     Dropdown: {
+      name: 'rbk-dropdown',
       defaultProps: {
         accessibility: {
           role: 'menu',
@@ -142,23 +151,28 @@ const base = {
       },
     },
     Form: {
+      name: 'rbk-form',
       defaultProps: {},
     },
     Grid: {
+      name: 'rbk-grid',
       defaultProps: {},
     },
     Group: {
+      name: 'rbk-group',
       defaultProps: {
         color: 'primary',
       },
     },
     Icon: {
+      name: 'rbk-icon',
       defaultProps: {
         color: 'primary',
         weight: 'regular',
       },
     },
     Image: {
+      name: 'rbk-image',
       defaultProps: {
         accessibility: {
           role: 'image',
@@ -167,6 +181,7 @@ const base = {
       },
     },
     Input: {
+      name: 'rbk-input',
       defaultProps: {
         autoCapitalize: 'sentences',
         autoCorrect: true,
@@ -177,9 +192,11 @@ const base = {
       },
     },
     Label: {
+      name: 'rbk-label',
       defaultProps: {},
     },
     Loading: {
+      name: 'rbk-loading',
       defaultProps: {
         color: 'primary',
         accessibility: {
@@ -189,14 +206,17 @@ const base = {
       },
     },
     Modal: {
+      name: 'rbk-modal',
       defaultProps: {},
     },
     Scrollable: {
+      name: 'rbk-scrollable',
       defaultProps: {
         direction: 'vertical',
       },
     },
     Select: {
+      name: 'rbk-select',
       defaultProps: {
         accessibility: {
           role: 'combobox',
@@ -204,11 +224,22 @@ const base = {
       },
     },
     Table: {
+      name: 'rbk-table',
       defaultProps: {},
     },
     Text: {
+      name: 'rbk-text',
       defaultProps: {
-        color: 'text',
+        style: {
+          color: 'text.primary',
+          fontSize: '1rem',
+          margin: 0,
+          textDecorationLine: 'none',
+          web: {
+            display: 'block',
+            '& .rbk-text': { display: 'inline' },
+          },
+        },
       },
     },
   },

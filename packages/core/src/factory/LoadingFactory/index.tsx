@@ -19,13 +19,13 @@ function LoadingFactory({ className, map, ...props }: FactoryProps | LoadingProp
   size = size ?? theme.rem(multiplier);
 
   const styleRoot = createStyle({
+    insert: 'before',
     name: 'rbk-loading',
-    type: 'component',
     style: null,
   });
 
   const styleState = createStyle({
-    type: 'component',
+    insert: 'before',
     style: web && {
       animation: `spin ${speed} linear infinite`,
     },

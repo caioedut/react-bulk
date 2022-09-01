@@ -9,16 +9,17 @@ import uuid from './utils/uuid';
 
 export type createStyle = {
   name?: string;
+  parent?: string;
   style: any;
   global?: boolean;
-  type?: 'base' | 'component' | 'custom';
+  insert?: 'after' | 'before';
 };
 
-export default function createStyle({ name, style, global, type }: createStyle) {
+export default function createStyle({ name, style, global, insert }: createStyle) {
   const theme = useTheme();
   const { web, native } = Platform;
 
-  type = type || 'custom';
+  insert = insert || 'after';
   style = typeof style === 'function' ? style(theme) : style;
 
   const isObject = style && typeof style === 'object';
@@ -26,8 +27,6 @@ export default function createStyle({ name, style, global, type }: createStyle) 
   const isEmpty = (isObject ? Object.keys(style) : `${style || ''}`.trim()).length === 0;
 
   const { current: id } = useRef(name ?? 'rbk-' + crypt(isObject ? JSON.stringify(styleX) : uuid()));
-
-  const hasName = Boolean(name);
 
   useEffect(() => {
     if (!web || isEmpty) return;
@@ -44,12 +43,14 @@ export default function createStyle({ name, style, global, type }: createStyle) 
       element.textContent = cssStyle;
     }
 
-    if (['base', 'component'].includes(type as string)) {
-      document.head.querySelector('title')?.before(element);
-    } else {
+    if (element.parentElement !== document.head) {
+      // if (insert === 'before') {
+      //   document.head.prepend(element);
+      // } else {
       document.head.append(element);
+      // }
     }
-  }, [id, styleX, hasName]);
+  }, [id, styleX]);
 
   if (isEmpty) {
     return native ? {} : '';

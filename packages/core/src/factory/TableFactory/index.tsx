@@ -57,13 +57,13 @@ function TableFactory({ className, map, ...props }: FactoryProps & TableProps, r
   };
 
   const styleRoot = createStyle({
+    insert: 'before',
     name: 'rbk-table',
-    type: 'component',
     style: { borderRadius: theme.shape.borderRadius },
   });
 
   const styleState = createStyle({
-    type: 'component',
+    insert: 'before',
     style: { border },
   });
 
