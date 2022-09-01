@@ -62,17 +62,14 @@ export default function BaseWeb({ children }) {
       ::-ms-input-placeholder {
         color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)};
       }
-    `;
 
-    const animations = `
       @keyframes spin {
         from { transform: rotate(0deg); }
         to { transform: rotate(359deg); }
       }
     `;
 
-    createStyle({ theme, style, global: true });
-    createStyle({ theme, style: animations, global: true });
+    createStyle({ name: 'rbk-global', style, theme, global: true });
 
     const components = { ...theme.components };
     const ordered = extract(['Box', 'Scrollable', 'Card', 'Dropdown', 'Group', 'Text', 'Label'], components);
