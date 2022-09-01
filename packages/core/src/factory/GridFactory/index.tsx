@@ -21,8 +21,8 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
   }
 
   const styleRoot = createStyle({
+    insert: 'before',
     name: 'rbk-grid',
-    type: 'component',
     style: {
       display: 'flex',
       flexDirection: 'row',
@@ -32,7 +32,7 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
   });
 
   const styleState = createStyle({
-    type: 'component',
+    insert: 'before',
     style: { padding: -spacing },
   });
 

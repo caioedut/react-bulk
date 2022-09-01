@@ -14,13 +14,13 @@ function DividerFactory({ className, map, ...props }: FactoryProps & DividerProp
   let { color, opacity, size, vertical, ...rest } = props;
 
   const styleRoot = createStyle({
+    insert: 'before',
     name: 'rbk-divider',
-    type: 'component',
     style: null,
   });
 
   const styleState = createStyle({
-    type: 'component',
+    insert: 'before',
     style: {
       backgroundColor: color,
       height: vertical ? '100%' : size,

@@ -154,6 +154,7 @@ export type ThemeColorsProps = {
 };
 
 export type ThemeComponentProps = {
+  name: string;
   defaultProps: {};
 };
 

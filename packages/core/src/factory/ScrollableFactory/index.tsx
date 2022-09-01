@@ -17,8 +17,8 @@ function ScrollableFactory({ className, children, map, ...props }: FactoryProps 
   const isHorizontal = direction === 'horizontal';
 
   const styleRoot = createStyle({
+    insert: 'before',
     name: 'rbk-scrollable',
-    type: 'component',
     style: {
       flex: 1,
       web: {
@@ -29,7 +29,7 @@ function ScrollableFactory({ className, children, map, ...props }: FactoryProps 
   });
 
   const styleState = createStyle({
-    type: 'component',
+    insert: 'before',
     style: web && {
       overflowX: isHorizontal ? 'auto' : 'hidden',
       overflowY: isHorizontal ? 'hidden' : 'auto',

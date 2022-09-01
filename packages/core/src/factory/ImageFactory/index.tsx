@@ -18,13 +18,13 @@ function ImageFactory({ className, map, ...props }: FactoryProps & ImageProps, r
   const imageRef = ref || defaultRef;
 
   const styleRoot = createStyle({
+    insert: 'before',
     name: 'rbk-image',
-    type: 'component',
     style: web && { display: 'inline-block' },
   });
 
   const styleState = createStyle({
-    type: 'component',
+    insert: 'before',
     style: {
       height,
       width,

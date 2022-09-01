@@ -16,8 +16,8 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
   let { align, onBackdropPress, visible, ...rest } = props;
 
   const styleRoot = createStyle({
+    insert: 'before',
     name: 'rbk-modal',
-    type: 'component',
     style: {
       position: web ? 'fixed' : 'relative',
       top: 0,
@@ -28,7 +28,6 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
 
       display: 'flex',
       flexDirection: 'row',
-      alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
 
@@ -41,24 +40,24 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
     },
   });
 
+  const styleVisible = createStyle({
+    insert: 'before',
+    name: 'rbk-modal-visible',
+    style: web && {
+      opacity: 1,
+      visibility: 'visible',
+      zIndex: theme.mixins.zIndex.modal,
+    },
+  });
+
   const styleState = createStyle({
-    type: 'component',
+    insert: 'before',
     style: {
       alignItems: pick(align, 'center', {
         center: 'center',
         top: 'flex-start',
         bottom: 'flex-end',
       }),
-    },
-  });
-
-  const styleVisible = createStyle({
-    name: 'rbk-modal-visible',
-    type: 'component',
-    style: web && {
-      opacity: 1,
-      visibility: 'visible',
-      zIndex: theme.mixins.zIndex.modal,
     },
   });
 
