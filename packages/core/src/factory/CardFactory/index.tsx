@@ -1,26 +1,21 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { CardProps, FactoryProps } from '../../types';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function CardFactory({ className, map, ...props }: FactoryProps & CardProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Card;
 
   // Extends from default props
-  props = { ...theme.components.Card.defaultProps, ...props };
+  let { defaultStyle, ...rest } = factory(props, options.defaultProps);
 
-  let { ...rest } = props;
-
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-card',
-    style: {
-      backgroundColor: theme.colors.background.primary,
-      borderRadius: theme.shape.borderRadius,
-      p: 3,
-    },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
   const styles = [styleRoot, className];

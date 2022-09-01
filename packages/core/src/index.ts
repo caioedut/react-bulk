@@ -31,10 +31,6 @@ export { default as createTheme } from './createTheme';
 export { default as createStyle } from './createStyle';
 export { default as createMeta } from './createMeta';
 
-// Base
-export { default as BaseStyleWeb } from './BaseStyleWeb';
-export { default as BaseStyleNative } from './BaseStyleNative';
-
 // Factory
 export { default as BadgeFactory } from './factory/BadgeFactory';
 export { default as BoxFactory } from './factory/BoxFactory';

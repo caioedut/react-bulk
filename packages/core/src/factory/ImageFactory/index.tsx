@@ -1,30 +1,28 @@
 import React, { useRef } from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { FactoryProps, ImageProps } from '../../types';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function ImageFactory({ className, map, ...props }: FactoryProps & ImageProps, ref: any) {
   const theme = useTheme();
-  const { web, Image } = map;
+  const options = theme.components.Image;
+  const { Image } = map;
 
   // Extends from default props
-  props = { ...theme.components.Image.defaultProps, ...props };
-
-  let { mode, height, width, ...rest } = props;
+  let { mode, height, width, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
   const defaultRef: any = useRef(null);
   const imageRef = ref || defaultRef;
 
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-image',
-    style: web && { display: 'inline-block' },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
-  const styleState = createStyle({
-    insert: 'before',
+  const styleState = useStylist({
     style: {
       height,
       width,

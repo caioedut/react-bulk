@@ -1,50 +1,29 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { BadgeProps, FactoryProps } from '../../types';
+import useStylist from '../../useStylist';
 import TextFactory from '../TextFactory';
 
 function BadgeFactory({ className, children, map, ...props }: FactoryProps & BadgeProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Badge;
   const { native, Text } = map;
 
   // Extends from default props
-  props = { ...theme.components.Badge.defaultProps, ...props };
-
-  let { bottom, color, dot, left, right, size, top, value, ...rest } = props;
+  let { bottom, color, dot, left, right, size, top, value, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
   const absolute = top || bottom || left || right;
   const baseSize = size === 'small' ? theme.rem(1) : size === 'large' ? theme.rem(1.5) : theme.rem(1.25);
   const halfBaseSize = baseSize / 2;
 
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-badge',
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      alignContent: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
-
-      color: theme.colors.common.white,
-      fontSize: theme.rem(0.625),
-      fontWeight: 'bold',
-
-      web: {
-        display: 'inline-flex',
-        lineHeight: 1,
-      },
-
-      native: {
-        alignSelf: 'flex-start',
-      },
-    },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
-  const styleState = createStyle({
-    insert: 'before',
+  const styleState = useStylist({
     style: [
       {
         backgroundColor: color,

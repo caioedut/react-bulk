@@ -1,17 +1,17 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { FactoryProps, GridProps } from '../../types';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function GridFactory({ className, children, map, ...props }: FactoryProps & GridProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Grid;
 
   // Extends from default props
-  props = { ...theme.components.Grid.defaultProps, ...props };
-
-  let { gap, size, ...rest } = props;
+  let { gap, size, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
   const breakpoints = Object.keys(theme.breakpoints);
   const spacing = !gap ? 0 : theme.spacing(gap) / 2;
@@ -20,19 +20,12 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
     children = [children];
   }
 
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-grid',
-    style: {
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      alignContent: 'stretch',
-    },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
-  const styleState = createStyle({
-    insert: 'before',
+  const styleState = useStylist({
     style: { padding: -spacing },
   });
 

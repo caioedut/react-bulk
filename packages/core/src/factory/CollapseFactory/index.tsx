@@ -1,22 +1,21 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { CollapseProps, FactoryProps } from '../../types';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function CollapseFactory({ className, map, ...props }: FactoryProps & CollapseProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Collapse;
 
   // Extends from default props
-  props = { ...theme.components.Collapse.defaultProps, ...props };
+  let { defaultStyle, ...rest } = factory(props, options.defaultProps);
 
-  let { ...rest } = props;
-
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-collapse',
-    style: null,
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
   const styles = [styleRoot, className];

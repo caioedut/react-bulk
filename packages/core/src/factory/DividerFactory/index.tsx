@@ -1,26 +1,24 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { DividerProps, FactoryProps } from '../../types';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function DividerFactory({ className, map, ...props }: FactoryProps & DividerProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Divider;
 
   // Extends from default props
-  props = { ...theme.components.Divider.defaultProps, ...props };
+  let { color, opacity, size, vertical, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
-  let { color, opacity, size, vertical, ...rest } = props;
-
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-divider',
-    style: null,
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
-  const styleState = createStyle({
-    insert: 'before',
+  const styleState = useStylist({
     style: {
       backgroundColor: color,
       height: vertical ? '100%' : size,

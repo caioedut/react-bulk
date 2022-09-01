@@ -1,18 +1,18 @@
 import React, { isValidElement } from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { FactoryProps, TableProps } from '../../types';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
 function TableFactory({ className, map, ...props }: FactoryProps & TableProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Table;
 
   // Extends from default props
-  props = { ...theme.components.Table.defaultProps, ...props };
-
-  let { border, columns, rows, ...rest } = props;
+  let { border, columns, rows, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
   const width = `${100 / columns?.length}%`;
 
@@ -56,14 +56,12 @@ function TableFactory({ className, map, ...props }: FactoryProps & TableProps, r
     ];
   };
 
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-table',
-    style: { borderRadius: theme.shape.borderRadius },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
-  const styleState = createStyle({
-    insert: 'before',
+  const styleState = useStylist({
     style: { border },
   });
 

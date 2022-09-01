@@ -1,18 +1,18 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
+import factory from '../../props/factory';
 import { FactoryProps, IconProps } from '../../types';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function IconFactory({ className, map, ...props }: FactoryProps & IconProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Icon;
   const { Icons } = map;
 
   // Extends from default props
-  props = { ...theme.components.Icon.defaultProps, ...props };
-
-  let { color, name, size, ...rest } = props;
+  let { color, name, size, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
   const iconName = `${name || ''}`
     .split(/_|-|\s/g)
@@ -23,13 +23,9 @@ function IconFactory({ className, map, ...props }: FactoryProps & IconProps, ref
 
   size = size ?? theme.rem(1.25);
 
-  const styleRoot = createStyle({
-    insert: 'before',
-    name: 'rbk-icon',
-    style: {
-      web: { verticalAlign: 'text-bottom' },
-      native: { marginTop: -4 },
-    },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
   });
 
   const styles = [styleRoot, className];

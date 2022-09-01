@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import createStyle from '../../createStyle';
 import factory from '../../props/factory';
 import { FactoryProps, TextProps } from '../../types';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref) {
@@ -40,14 +40,12 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
     }
   }
 
-  const styleRoot = createStyle({
-    insert: 'before',
+  const styleRoot = useStylist({
     name: theme.components.Text.name,
     style: defaultStyle,
   });
 
-  const styleState = createStyle({
-    insert: 'before',
+  const styleState = useStylist({
     style: [
       { color },
 
