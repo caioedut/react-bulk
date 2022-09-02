@@ -47,7 +47,7 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
 
   const styleState = useStylist({
     style: [
-      { color },
+      color && { color },
 
       variant === 'h1' && { fontSize: theme.rem(2.6) },
       variant === 'h2' && { fontSize: theme.rem(2.1) },

@@ -26,7 +26,7 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
   });
 
   const styleState = useStylist({
-    style: { padding: -spacing },
+    style: { margin: -spacing },
   });
 
   const styles = [styleRoot, styleState, className];

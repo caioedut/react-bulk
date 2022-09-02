@@ -67,10 +67,10 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     delete styles[attr];
 
     // Cast REM
-    const remRegex = /^(\d)rem$/gi;
+    const remRegex = /^((\d+\.)?\d+)rem$/gi;
     const remValue = `${value ?? ''}`.trim();
     if (remRegex.test(remValue)) {
-      value = +remValue.replace(/(\d)rem/gi, ($x, $1) => ($x ? theme?.rem?.($1) : 0));
+      value = +remValue.replace(/((\d+\.)?\d+)rem/gi, ($x, $1) => ($x ? theme?.rem?.($1) : 0));
     }
 
     if (customSpacings.includes(prop)) {
@@ -171,6 +171,19 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         prop = null;
         styles.marginLeft = value;
         styles.marginRight = value;
+      }
+
+      if (prop === 'transform' && Array.isArray(value)) {
+        const values: string[] = [];
+
+        value.forEach((item) => {
+          for (const attr in item) {
+            const unit = Array.isArray(item[attr]) ? item[attr].join(', ') : item[attr];
+            values.push(`${attr}(${unit})`);
+          }
+        });
+
+        value = values.join(', ');
       }
     }
 

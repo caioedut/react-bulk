@@ -445,3 +445,9 @@ export type FormProps = BoxProps & {
   data?: any;
   onSubmit?: SubmitCallback;
 };
+
+export type TooltipProps = BoxProps & {
+  title?: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  color?: 'black' | 'white' | ColorValues;
+};

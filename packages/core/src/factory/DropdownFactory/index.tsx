@@ -33,8 +33,8 @@ function DropdownFactory({ className, children, map, ...props }: FactoryProps & 
   });
 
   const styleState = useStylist({
-    avoid: !native || !visible,
-    style: { display: 'none' },
+    avoid: visible,
+    style: native && { display: 'none' },
   });
 
   const styles = [styleRoot, styleState, styleVisible, className];
