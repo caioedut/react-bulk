@@ -7,7 +7,7 @@ import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import IconFactory from '../IconFactory';
 
-function LoadingFactory({ className, map, ...props }: FactoryProps | LoadingProps, ref: any) {
+function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Loading;
   const { web } = map;
@@ -29,10 +29,10 @@ function LoadingFactory({ className, map, ...props }: FactoryProps | LoadingProp
     },
   });
 
-  const styles = [styleRoot, styleState, className];
+  stylist = [styleRoot, styleState, stylist];
 
   return (
-    <BoxFactory ref={ref} map={map} flexbox center {...rest} className={styles}>
+    <BoxFactory ref={ref} map={map} stylist={stylist} flexbox center {...rest}>
       <IconFactory map={map} name="Spinner" size={size} color={color} />
       {Boolean(label) && (
         <BoxFactory map={map} style={{ color, fontSize: size / multiplier, marginLeft: size / 2 }}>

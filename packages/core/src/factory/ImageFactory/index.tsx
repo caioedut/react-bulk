@@ -6,7 +6,7 @@ import { FactoryProps, ImageProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function ImageFactory({ className, map, ...props }: FactoryProps & ImageProps, ref: any) {
+function ImageFactory({ stylist, map, ...props }: FactoryProps & ImageProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Image;
   const { Image } = map;
@@ -31,9 +31,9 @@ function ImageFactory({ className, map, ...props }: FactoryProps & ImageProps, r
     },
   });
 
-  const styles = [styleRoot, styleState, className];
+  stylist = [styleRoot, styleState, stylist];
 
-  return <BoxFactory map={map} ref={imageRef} component={Image} {...rest} className={styles} />;
+  return <BoxFactory map={map} ref={imageRef} component={Image} stylist={stylist} {...rest} />;
 }
 
 export default React.forwardRef(ImageFactory);

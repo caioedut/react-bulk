@@ -10,7 +10,7 @@ const Context = createContext(null);
 
 export const useForm: any = () => useContext(Context);
 
-function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps & FormProps, ref: any) {
+function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & FormProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Form;
   const { Form } = map;
@@ -88,11 +88,11 @@ function FormFactory({ data, onSubmit, className, map, ...props }: FactoryProps 
     style: defaultStyle,
   });
 
-  const styles = [styleRoot, className];
+  stylist = [styleRoot, stylist];
 
   return (
     <Context.Provider value={ref?.current}>
-      <BoxFactory map={map} ref={formRef} component={Form} {...rest} onSubmit={handleSubmit} className={styles} />
+      <BoxFactory map={map} ref={formRef} component={Form} stylist={stylist} {...rest} onSubmit={handleSubmit} />
     </Context.Provider>
   );
 }

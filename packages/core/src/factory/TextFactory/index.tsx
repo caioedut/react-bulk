@@ -6,7 +6,7 @@ import { FactoryProps, TextProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref) {
+function TextFactory({ stylist, map, ...props }: FactoryProps & TextProps, ref) {
   const theme = useTheme();
   const { web, native, Text } = map;
 
@@ -84,9 +84,9 @@ function TextFactory({ className, map, ...props }: FactoryProps & TextProps, ref
     ],
   });
 
-  const styles = [styleRoot, styleState, className];
+  stylist = [styleRoot, styleState, stylist];
 
-  return <BoxFactory map={map} ref={ref} component={Text} {...rest} className={styles} />;
+  return <BoxFactory map={map} ref={ref} component={Text} stylist={stylist} {...rest} />;
 }
 
 export default React.forwardRef(TextFactory);

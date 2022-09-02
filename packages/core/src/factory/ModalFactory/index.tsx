@@ -7,7 +7,7 @@ import useStylist from '../../useStylist';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 
-function ModalFactory({ className, children, map, ...props }: FactoryProps & ModalProps, ref: any) {
+function ModalFactory({ stylist, children, map, ...props }: FactoryProps & ModalProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Modal;
   const { web, native } = map;
@@ -47,10 +47,10 @@ function ModalFactory({ className, children, map, ...props }: FactoryProps & Mod
     containerProps.onTouchEnd = (e) => e.stopPropagation();
   }
 
-  const styles = [styleRoot, styleState, styleVisible, className];
+  stylist = [styleRoot, styleState, styleVisible, stylist];
 
   return (
-    <BoxFactory map={map} ref={ref} {...rest} className={styles} onPress={onBackdropPress}>
+    <BoxFactory map={map} ref={ref} stylist={stylist} {...rest} onPress={onBackdropPress}>
       <BoxFactory map={map} {...containerProps}>
         {children}
       </BoxFactory>

@@ -6,7 +6,7 @@ import { CollapseProps, FactoryProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function CollapseFactory({ className, map, ...props }: FactoryProps & CollapseProps, ref: any) {
+function CollapseFactory({ stylist, map, ...props }: FactoryProps & CollapseProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Collapse;
 
@@ -18,9 +18,9 @@ function CollapseFactory({ className, map, ...props }: FactoryProps & CollapsePr
     style: defaultStyle,
   });
 
-  const styles = [styleRoot, className];
+  stylist = [styleRoot, stylist];
 
-  return <BoxFactory map={map} ref={ref} {...rest} className={styles} />;
+  return <BoxFactory map={map} ref={ref} stylist={stylist} {...rest} />;
 }
 
 export default React.forwardRef(CollapseFactory);

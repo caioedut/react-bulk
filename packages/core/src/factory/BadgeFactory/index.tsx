@@ -6,7 +6,7 @@ import { BadgeProps, FactoryProps } from '../../types';
 import useStylist from '../../useStylist';
 import TextFactory from '../TextFactory';
 
-function BadgeFactory({ className, children, map, ...props }: FactoryProps & BadgeProps, ref: any) {
+function BadgeFactory({ stylist, children, map, ...props }: FactoryProps & BadgeProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Badge;
   const { native, Text } = map;
@@ -60,10 +60,10 @@ function BadgeFactory({ className, children, map, ...props }: FactoryProps & Bad
     ],
   });
 
-  const styles = [styleRoot, styleState, className];
+  stylist = [styleRoot, styleState, stylist];
 
   return (
-    <TextFactory map={map} ref={ref} {...rest} className={styles}>
+    <TextFactory map={map} ref={ref} stylist={stylist} {...rest}>
       {!dot && <Text>{value ?? children ?? '&nbsp;'}</Text>}
     </TextFactory>
   );

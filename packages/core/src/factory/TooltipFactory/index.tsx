@@ -7,7 +7,7 @@ import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function TooltipFactory({ className, children, map, ...props }: FactoryProps & TooltipProps, ref: any) {
+function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & TooltipProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Tooltip;
   const { native, dimensions, Button } = map;
@@ -37,7 +37,7 @@ function TooltipFactory({ className, children, map, ...props }: FactoryProps & T
     ],
   });
 
-  const styles = [styleRoot, styleState, className];
+  stylist = [styleRoot, styleState, stylist];
 
   const handleTooltipShow = () => {
     if (timeoutRef.current) {
@@ -74,7 +74,7 @@ function TooltipFactory({ className, children, map, ...props }: FactoryProps & T
     >
       {children}
       {Boolean(visible) && (
-        <BoxFactory map={map} ref={ref} {...rest} className={styles}>
+        <BoxFactory map={map} ref={ref} stylist={stylist} {...rest}>
           <TextFactory
             map={map}
             numberOfLines={1}

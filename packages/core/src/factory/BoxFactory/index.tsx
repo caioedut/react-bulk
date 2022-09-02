@@ -9,10 +9,9 @@ import { customStyleProps } from '../../styles/jss';
 import { BoxProps, FactoryProps } from '../../types';
 import clsx from '../../utils/clsx';
 
-function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxProps, ref) {
+function BoxFactory({ className, stylist, children, map, ...props }: FactoryProps & BoxProps, ref) {
   const theme = useTheme();
   const { web, native, dimensions, Text, View } = map;
-  const classes: any[] = [className];
 
   // Extends from default props
   props = { ...theme.components.Box.defaultProps, ...props };
@@ -48,6 +47,15 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     rawStyle,
     ...rest
   } = props;
+
+  // Platform specific props
+  if (platform) {
+    Object.keys(platform).forEach((item) => {
+      if (map[item] || item === '*') {
+        Object.assign(rest, merge({}, platform[item]));
+      }
+    });
+  }
 
   // Extract style props
   const styleProps: any[] = [];
@@ -126,27 +134,20 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     }
   }
 
-  if (native) {
-    const arrayed = Array.isArray(className) ? className : [className];
-    style.unshift(...arrayed.filter((item) => item && typeof item === 'object'));
-  }
+  // if (native) {
+  //   style.unshift(...stylists.filter((item) => item && typeof item === 'object'));
+  // }
 
+  const styles = Array.isArray(stylist) ? stylist : [stylist];
   const processed = createStyle({ style, theme });
+  styles.push(processed);
 
-  if (processed) {
-    // Web: CSS Class Name
-    if (web) {
-      classes.push(processed);
-    }
-
-    // Native: Style Object
-    if (native) {
-      rest.style = processed;
-    }
+  if (native) {
+    rest.style = styles;
   }
 
   if (web) {
-    rest.className = clsx(classes);
+    rest.className = clsx(styles, className);
     rest.style = merge(rawStyle);
   }
 
@@ -177,15 +178,6 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
       rest.accessibilityState = accessibility?.state;
       rest.accessibilityValue = accessibility?.value;
     }
-  }
-
-  // Platform specific props
-  if (platform) {
-    Object.keys(platform).forEach((item) => {
-      if (map[item] || item === '*') {
-        Object.assign(rest, merge({}, platform[item]));
-      }
-    });
   }
 
   rest = bindings(rest);
