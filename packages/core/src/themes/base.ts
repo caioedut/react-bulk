@@ -399,15 +399,6 @@ const base = {
           position: 'top',
           color: 'black',
           style: {
-            position: 'absolute',
-            zIndex: this.mixins.zIndex.tooltip,
-
-            fontSize: '0.75rem',
-            py: 1,
-            px: 1.5,
-            textAlign: 'center',
-            whiteSpace: 'nowrap',
-
             // display: 'flex',
             // flexDirection: 'column',
             // alignItems: 'center',
