@@ -183,12 +183,27 @@ const base = {
           accessibility: {
             role: 'button',
           },
+          style: {
+            justifyContent: 'center',
+            web: {
+              cursor: 'pointer',
+              '-webkit-user-select': 'none',
+              '-ms-user-select': 'none',
+              'user-select': 'none',
+            },
+          },
         },
       },
       ButtonGroup: {
         name: 'rbk-button-group',
         defaultProps: {
           color: 'primary',
+          style: {
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            alignItems: 'stretch',
+          },
         },
       },
       Card: {
@@ -206,6 +221,9 @@ const base = {
         defaultProps: {
           accessibility: {
             role: 'combobox',
+          },
+          style: {
+            padding: 0,
           },
         },
       },
@@ -265,6 +283,14 @@ const base = {
         name: 'rbk-group',
         defaultProps: {
           color: 'primary',
+          style: {
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          },
         },
       },
       Icon: {

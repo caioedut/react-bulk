@@ -7,7 +7,7 @@ import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function TableFactory({ className, map, ...props }: FactoryProps & TableProps, ref: any) {
+function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Table;
 
@@ -65,10 +65,10 @@ function TableFactory({ className, map, ...props }: FactoryProps & TableProps, r
     style: { border },
   });
 
-  const styles = [styleRoot, styleState, className];
+  stylist = [styleRoot, styleState, stylist];
 
   return (
-    <BoxFactory ref={ref} map={map} {...rest} className={styles}>
+    <BoxFactory ref={ref} map={map} stylist={stylist} {...rest}>
       <BoxFactory map={map} flexbox noWrap>
         {columns?.map((column, index) => (
           <BoxFactory key={index} map={map} style={buildStyle(column, false, index > 0)}>

@@ -1,22 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import get from '../../props/get';
 import { FactoryProps, InputProps } from '../../types';
-import clsx from '../../utils/clsx';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import { useForm } from '../FormFactory';
 import GroupFactory from '../GroupFactory';
 
-function InputFactory({ className, map, ...props }: FactoryProps & InputProps, ref: any) {
+function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Input;
   const { web, native, Input, Label, TextArea, View } = map;
-  const classes: any[] = ['rbk-input', className];
 
   // Extends from default props
-  props = { ...theme.components.Input.defaultProps, ...props };
-
   let {
     autoCapitalize,
     autoCorrect,
@@ -33,14 +31,13 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
     selectionColor,
     type,
     value,
-    // Bindings
     onChange,
     onFocus,
     onBlur,
-    // Styles
+    defaultStyle,
     style,
     ...rest
-  } = props;
+  } = factory(props, options.defaultProps);
 
   const form = useForm();
   const defaultRef: any = useRef(null);
@@ -106,10 +103,11 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
   };
 
   return (
-    <BoxFactory map={map} component={native ? View : Label} className={clsx(classes)}>
+    <BoxFactory map={map} component={native ? View : Label} className={options.name}>
       <GroupFactory
         {...rest}
         map={map}
+        stylist={stylist}
         variant="outline"
         focused={focused}
         style={[
@@ -124,23 +122,18 @@ function InputFactory({ className, map, ...props }: FactoryProps & InputProps, r
         ]}
         renderChildren={(style) => (
           <BoxFactory
-            // Custom
             map={map}
             ref={inputRef}
             component={multiline ? TextArea : Input}
-            // Component
-            className={clsx(classes)}
             autoCapitalize={autoCapitalize}
             autoFocus={autoFocus}
             maxLength={maxLength}
             name={name}
             placeholder={placeholder}
             value={internal}
-            // Bindings
             onChange={handleChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            // Styles
             style={[
               {
                 backgroundColor: 'transparent',

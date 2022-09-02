@@ -1,39 +1,30 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import get from '../../props/get';
 import { ButtonProps, FactoryProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BadgeFactory from '../BadgeFactory';
 import BoxFactory from '../BoxFactory';
 import { useForm } from '../FormFactory';
 import GroupFactory from '../GroupFactory';
 import LabelFactory from '../LabelFactory';
 
-function ButtonFactory({ className, children, map, ...props }: FactoryProps & ButtonProps, ref) {
+function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & ButtonProps, ref) {
   const theme = useTheme();
+  const options = theme.components.Button;
   const { web, native, Button, Text } = map;
-  const classes: any[] = ['rbk-button', className];
 
   // Extends from default props
-  props = { ...theme.components.Button.defaultProps, ...props };
-
-  let { badge, style, labelStyle, ...rest } = props;
+  let { badge, labelStyle, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
   const form = useForm();
 
-  style = [
-    { justifyContent: 'center' },
-
-    web && {
-      cursor: 'pointer',
-      '-webkit-user-select': 'none',
-      '-ms-user-select': 'none',
-      'user-select': 'none',
-    },
-
-    style,
-  ];
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
+  });
 
   if (web && !rest.type) {
     rest.type = 'button';
@@ -47,18 +38,16 @@ function ButtonFactory({ className, children, map, ...props }: FactoryProps & Bu
     delete rest.type;
   }
 
+  stylist = [styleRoot, stylist];
+
   return (
     <GroupFactory
       // Custom
       map={map}
       ref={ref}
       component={web && rest.href ? 'a' : Button}
+      stylist={stylist}
       {...rest}
-      // Component
-      className={clsx(classes)}
-      // Styles
-      style={style}
-      // Other
       renderChildren={(style) => {
         badge = typeof badge === 'number' ? { value: badge } : badge;
 

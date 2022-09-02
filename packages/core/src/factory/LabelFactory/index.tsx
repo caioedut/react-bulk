@@ -6,7 +6,7 @@ import { FactoryProps, LabelProps } from '../../types';
 import useStylist from '../../useStylist';
 import TextFactory from '../TextFactory';
 
-function LabelFactory({ className, map, ...props }: FactoryProps & LabelProps, ref: any) {
+function LabelFactory({ stylist, map, ...props }: FactoryProps & LabelProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Label;
   const { Label } = map;
@@ -19,9 +19,9 @@ function LabelFactory({ className, map, ...props }: FactoryProps & LabelProps, r
     style: defaultStyle,
   });
 
-  const styles = [styleRoot, className];
+  stylist = [styleRoot, stylist];
 
-  return <TextFactory map={map} ref={ref} component={Label} {...rest} htmlFor={htmlFor} className={styles} />;
+  return <TextFactory map={map} ref={ref} component={Label} stylist={stylist} {...rest} htmlFor={htmlFor} />;
 }
 
 export default React.forwardRef(LabelFactory);

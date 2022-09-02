@@ -6,7 +6,7 @@ import { FactoryProps, IconProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function IconFactory({ className, map, ...props }: FactoryProps & IconProps, ref: any) {
+function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Icon;
   const { Icons } = map;
@@ -28,9 +28,9 @@ function IconFactory({ className, map, ...props }: FactoryProps & IconProps, ref
     style: defaultStyle,
   });
 
-  const styles = [styleRoot, className];
+  stylist = [styleRoot, stylist];
 
-  return <BoxFactory ref={ref} map={map} component={Component} color={theme.color(color)} size={size} {...rest} className={styles} />;
+  return <BoxFactory ref={ref} map={map} component={Component} stylist={stylist} color={theme.color(color)} size={size} {...rest} />;
 }
 
 export default React.forwardRef(IconFactory);

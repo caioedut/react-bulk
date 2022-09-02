@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import extract from '../../props/extract';
+import factory from '../../props/factory';
 import { spacings } from '../../styles/jss';
 import { CheckboxProps, FactoryProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import crypt from '../../utils/crypt';
 import uuid from '../../utils/uuid';
 import BoxFactory from '../BoxFactory';
@@ -12,14 +13,12 @@ import ButtonFactory from '../ButtonFactory';
 import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
 
-function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxProps, ref: any) {
+function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Checkbox;
   const { web, Input } = map;
-  const classes: any[] = ['rbk-checkbox', className];
 
   // Extends from default props
-  props = { ...theme.components.Checkbox.defaultProps, ...props };
-
   let {
     checked,
     defaultChecked,
@@ -31,11 +30,12 @@ function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxPr
     readOnly,
     unique,
     value,
+    defaultStyle,
     style,
     labelStyle,
     containerStyle,
     ...rest
-  } = props;
+  } = factory(props, options.defaultProps);
 
   id = id ?? `rbk-${crypt(uuid())}`;
 
@@ -91,20 +91,28 @@ function CheckboxFactory({ className, map, ...props }: FactoryProps & CheckboxPr
     onChange?.({ target, checked, focus, blur, clear, isFocused, nativeEvent }, checked);
   };
 
-  containerStyle = [extract(spacings, rest, style), containerStyle];
+  containerStyle = [extract(spacings, defaultStyle, rest, style), containerStyle];
+
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
+  });
+
+  stylist = [styleRoot, stylist];
 
   return (
     <>
-      <BoxFactory map={map} className={clsx(classes)} flexbox noWrap alignItems="center" style={containerStyle}>
+      <BoxFactory map={map} className="rbk-checkbox" flexbox noWrap alignItems="center" style={containerStyle}>
         <ButtonFactory
           ref={buttonRef}
           map={map}
+          stylist={stylist}
           id={id}
           variant="text"
           {...rest}
           startIcon={unique ? (internal ? 'CheckCircle' : 'Circle') : internal ? 'CheckSquare' : 'Square'}
           onPress={handleChange}
-          style={[{ padding: 0 }, style]}
+          style={style}
           accessibility={{
             role: 'checkbox',
             state: { checked: internal },

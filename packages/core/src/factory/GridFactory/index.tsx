@@ -6,7 +6,7 @@ import { FactoryProps, GridProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function GridFactory({ className, children, map, ...props }: FactoryProps & GridProps, ref: any) {
+function GridFactory({ stylist, children, map, ...props }: FactoryProps & GridProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Grid;
 
@@ -29,10 +29,10 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
     style: { margin: -spacing },
   });
 
-  const styles = [styleRoot, styleState, className];
+  stylist = [styleRoot, styleState, stylist];
 
   return (
-    <BoxFactory map={map} ref={ref} {...rest} className={styles}>
+    <BoxFactory map={map} ref={ref} stylist={stylist} {...rest}>
       {children?.map((child, index) => {
         const props = { ...child.props };
         const childStyle: any[] = [props.style, { padding: spacing }];

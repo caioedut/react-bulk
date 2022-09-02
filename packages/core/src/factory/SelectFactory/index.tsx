@@ -1,33 +1,43 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { FactoryProps, SelectProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
+import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import DropdownFactory from '../DropdownFactory';
 import { useForm } from '../FormFactory';
 import TextFactory from '../TextFactory';
 
-function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps, ref: any) {
+function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Select;
   const { web, Input } = map;
-  const classes: any[] = ['rbk-select', className];
 
   // Extends from default props
-  props = { ...theme.components.Select.defaultProps, ...props };
-
-  let { defaultValue, name, onChange, options, placeholder, readOnly, value, ...rest } = props;
+  let {
+    defaultValue,
+    name,
+    onChange,
+    options: arrOptions,
+    placeholder,
+    readOnly,
+    value,
+    defaultStyle,
+    ...rest
+  } = factory(props, options.defaultProps);
 
   const form = useForm();
   const defaultRef: any = useRef(null);
   const buttonRef = ref || defaultRef;
 
   const [visible, setVisible] = useState(false);
-  const [internal, setInternal] = useState(options?.find((item) => item.value == defaultValue));
+  const [internal, setInternal] = useState(arrOptions?.find((item) => item.value == defaultValue));
 
   useEffect(() => {
     if (typeof value !== 'undefined') {
-      setInternal(options?.find((item) => item.value == value));
+      setInternal(arrOptions?.find((item) => item.value == value));
     }
   }, [value]);
 
@@ -52,7 +62,7 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
   }, [buttonRef]);
 
   const clear = useCallback(() => {
-    setInternal(options?.find((item) => item.value == defaultValue));
+    setInternal(arrOptions?.find((item) => item.value == defaultValue));
   }, []);
 
   const isFocused = useCallback(() => {
@@ -65,25 +75,32 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
     const value = option.value;
 
     setVisible(false);
-    setInternal(options?.find((item) => item.value == value));
+    setInternal(arrOptions?.find((item) => item.value == value));
 
     onChange?.({ target, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
   };
 
   const handleChangeNative = (e) => {
-    const option = options.find((item) => item.value == e.target.value);
+    const option = arrOptions.find((item) => item.value == e.target.value);
     handleChange(e, option);
   };
 
+  const styleRoot = useStylist({
+    name: arrOptions.name,
+    style: defaultStyle,
+  });
+
+  stylist = [styleRoot, stylist];
+
   return (
-    <>
+    <BoxFactory map={map}>
       <ButtonFactory
         ref={buttonRef}
         map={map}
-        className={clsx(classes)}
+        stylist={stylist}
         endIcon={visible ? 'CaretUp' : 'CaretDown'}
+        w="100%"
         {...rest}
-        block
         type="button"
         variant="outline"
         onPress={() => setVisible((current) => (readOnly ? false : !current))}
@@ -105,25 +122,27 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
       )}
 
       <DropdownFactory map={map} visible={visible} mt={0.5} p={1} w="100%">
-        {options?.map((option) => (
-          <ButtonFactory
-            key={option.value}
-            map={map}
-            block
-            wrap={false}
-            type="button"
-            variant="text"
-            disabled={option.disabled}
-            endIcon={option.value == internal?.value ? 'Check' : null}
-            onPress={(e) => handleChange(e, option)}
-          >
-            <TextFactory map={map} flex style={{ textAlign: 'left' }}>
-              {option.label}
-            </TextFactory>
-          </ButtonFactory>
-        ))}
+        <BoxFactory map={map}>
+          {arrOptions?.map((option) => (
+            <ButtonFactory
+              key={option.value}
+              map={map}
+              wrap={false}
+              type="button"
+              variant="text"
+              disabled={option.disabled}
+              endIcon={option.value == internal?.value ? 'Check' : null}
+              onPress={(e) => handleChange(e, option)}
+              w="100%"
+            >
+              <TextFactory map={map} flex style={{ textAlign: 'left' }}>
+                {option.label}
+              </TextFactory>
+            </ButtonFactory>
+          ))}
+        </BoxFactory>
       </DropdownFactory>
-    </>
+    </BoxFactory>
   );
 }
 

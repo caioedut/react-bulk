@@ -1,36 +1,31 @@
 import React, { cloneElement } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { ButtonGroupProps, FactoryProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function ButtonGroupFactory({ className, children, map, ...props }: FactoryProps & ButtonGroupProps, ref: any) {
+function ButtonGroupFactory({ stylist, children, map, ...props }: FactoryProps & ButtonGroupProps, ref: any) {
   const theme = useTheme();
-  const classes: any[] = ['rbk-button-group', className];
+  const options = theme.components.ButtonGroup;
 
   // Extends from default props
-  props = { ...theme.components.ButtonGroup.defaultProps, ...props };
+  let { color, disabled, loading, size, variant, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
-  let { color, disabled, loading, size, variant, ...rest } = props;
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
+  });
 
   if (children && !Array.isArray(children)) {
     children = [children];
   }
 
+  stylist = [styleRoot, stylist];
+
   return (
-    <BoxFactory
-      ref={ref}
-      map={map}
-      {...rest}
-      className={clsx(classes)}
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
-        alignItems: 'stretch',
-      }}
-    >
+    <BoxFactory ref={ref} map={map} stylist={stylist} {...rest}>
       {children?.map((child, key) => {
         const isFirst = key === 0;
         const isLast = key === children.length - 1;

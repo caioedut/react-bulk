@@ -7,7 +7,7 @@ import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import CardFactory from '../CardFactory';
 
-function DropdownFactory({ className, children, map, ...props }: FactoryProps & DropdownProps, ref: any) {
+function DropdownFactory({ stylist, children, map, ...props }: FactoryProps & DropdownProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Dropdown;
   const { native } = map;
@@ -37,11 +37,11 @@ function DropdownFactory({ className, children, map, ...props }: FactoryProps & 
     style: native && { display: 'none' },
   });
 
-  const styles = [styleRoot, styleState, styleVisible, className];
+  stylist = [styleRoot, styleState, styleVisible, stylist];
 
   return (
     <BoxFactory map={map} style={{ position: 'relative' }}>
-      <CardFactory ref={ref} {...rest} map={map} className={styles}>
+      <CardFactory map={map} ref={ref} stylist={stylist} {...rest}>
         {children}
       </CardFactory>
     </BoxFactory>

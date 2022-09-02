@@ -32,6 +32,7 @@ export type MapType = {
 
 export type FactoryProps = any & {
   map: MapType;
+  stylist?: JssStyles | string | string[];
 };
 
 export type AccessibilityProps = {

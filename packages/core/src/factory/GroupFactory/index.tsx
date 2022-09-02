@@ -2,24 +2,23 @@ import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import extract from '../../props/extract';
+import factory from '../../props/factory';
 import get from '../../props/get';
 import { spacings } from '../../styles/jss';
 import { GroupProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import IconFactory from '../IconFactory';
 import LabelFactory from '../LabelFactory';
 import LoadingFactory from '../LoadingFactory';
 import TextFactory from '../TextFactory';
 
-function GroupFactory({ className, children, map, ...props }: GroupProps | any, ref: any) {
+function GroupFactory({ stylist, children, map, ...props }: GroupProps | any, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Group;
   const { web } = map;
-  const classes: any[] = ['rbk-group', className];
 
   // Extends from default props
-  props = { ...theme.components.Group.defaultProps, ...props };
-
   let {
     color,
     disabled,
@@ -33,12 +32,13 @@ function GroupFactory({ className, children, map, ...props }: GroupProps | any, 
     size,
     startIcon,
     variant,
+    defaultStyle,
     style,
     labelStyle,
     errorStyle,
     containerStyle,
     ...rest
-  } = props;
+  } = factory(props, options.defaultProps);
 
   const fontSize =
     size === 'small' ? theme.rem(0.75) : size === 'large' ? theme.rem(1.25) : size === 'xlarge' ? theme.rem(1.5) : theme.rem(1);
@@ -51,15 +51,13 @@ function GroupFactory({ className, children, map, ...props }: GroupProps | any, 
 
   containerStyle = [extract(spacings, rest, style), containerStyle];
 
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
+  });
+
   style = [
     {
-      position: 'relative',
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'nowrap',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-
       borderWidth: 1,
       borderStyle: 'solid',
       borderColor: color,
@@ -117,6 +115,8 @@ function GroupFactory({ className, children, map, ...props }: GroupProps | any, 
   const iconColor = get('color', style);
   const secChildren = renderChildren?.(style);
 
+  stylist = [styleRoot, stylist];
+
   return (
     <BoxFactory map={map} style={containerStyle}>
       {Boolean(label) && (
@@ -125,7 +125,7 @@ function GroupFactory({ className, children, map, ...props }: GroupProps | any, 
         </LabelFactory>
       )}
 
-      <BoxFactory map={map} ref={ref} id={id} className={clsx(classes)} {...rest} style={style}>
+      <BoxFactory map={map} ref={ref} id={id} stylist={stylist} {...rest} style={style}>
         {Boolean(startIcon) && (
           <BoxFactory map={map} style={{ mr: children || secChildren || endIcon ? 2 : 0 }}>
             {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={iconColor} size={iconSize} /> : startIcon}
