@@ -399,10 +399,8 @@ const base = {
           position: 'top',
           color: 'black',
           style: {
-            // display: 'flex',
-            // flexDirection: 'column',
-            // alignItems: 'center',
-            // justifyContent: 'center',
+            position: 'absolute',
+            zIndex: this.mixins.zIndex.tooltip,
           },
         },
       },
