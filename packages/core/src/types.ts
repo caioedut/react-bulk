@@ -373,9 +373,8 @@ export type ScrollableProps = BoxProps & {
 
 export type ImageProps = BoxProps & {
   source: { uri?: string } | string | number;
+  alt?: string;
   mode?: 'cover' | 'contain' | 'fill';
-  width?: number | string;
-  height?: number | string;
   rounded?: boolean;
 };
 

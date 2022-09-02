@@ -9,13 +9,17 @@ import BoxFactory from '../BoxFactory';
 function ImageFactory({ stylist, map, ...props }: FactoryProps & ImageProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Image;
-  const { Image } = map;
+  const { web, Image } = map;
 
   // Extends from default props
   let { mode, height, width, defaultStyle, ...rest } = factory(props, options.defaultProps);
 
   const defaultRef: any = useRef(null);
   const imageRef = ref || defaultRef;
+
+  if (web) {
+    rest.alt = rest.alt ?? '';
+  }
 
   const styleRoot = useStylist({
     name: options.name,
