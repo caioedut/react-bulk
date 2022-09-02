@@ -1,43 +1,56 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import extract from '../../props/extract';
 import factory from '../../props/factory';
-import get from '../../props/get';
+import { spacings } from '../../styles/jss';
 import { FactoryProps, InputProps } from '../../types';
+import useHtmlId from '../../useHtmlId';
+import useStylist from '../../useStylist';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import { useForm } from '../FormFactory';
-import GroupFactory from '../GroupFactory';
+import IconFactory from '../IconFactory';
+import LabelFactory from '../LabelFactory';
 
 function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Input;
-  const { web, native, Input, Label, TextArea, View } = map;
+  const { web, Input, TextArea } = map;
 
   // Extends from default props
   let {
-    autoCapitalize,
     autoCorrect,
-    autoFocus,
     caretHidden,
+    color,
     defaultValue,
-    maxLength,
+    disabled,
+    endIcon,
+    id,
+    label,
     multiline,
     name,
-    placeholder,
+    platform,
     readOnly,
     returnKeyType,
     secure,
     selectionColor,
+    size,
+    startIcon,
     type,
     value,
     onChange,
     onFocus,
     onBlur,
+    containerStyle,
     defaultStyle,
+    inputStyle,
+    labelStyle,
     style,
     ...rest
   } = factory(props, options.defaultProps);
+
+  id = useHtmlId(id);
 
   const form = useForm();
   const defaultRef: any = useRef(null);
@@ -46,7 +59,20 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   const [focused, setFocused] = useState(false);
   const [internal, setInternal] = useState(`${defaultValue ?? ''}`);
 
-  selectionColor = theme.color(selectionColor);
+  selectionColor = theme.color(selectionColor ?? color);
+
+  const multiplier = pick(size, 'medium', {
+    xsmall: 0.625,
+    small: 0.75,
+    medium: 1,
+    large: 1.25,
+    xlarge: 1.625,
+  });
+
+  const fontSize = theme.rem(multiplier);
+  const lineSize = theme.rem(theme.typography.lineHeight, fontSize);
+  const spacing = theme.rem(0.5, fontSize);
+  const height = lineSize * (multiline ? 3 : 1) + spacing * 2;
 
   useEffect(() => {
     if (typeof value !== 'undefined') {
@@ -102,75 +128,117 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     onBlur?.(e);
   };
 
+  const styleRoot = useStylist({
+    name: options.name,
+    style: defaultStyle,
+  });
+
+  const styleFocus = useStylist({
+    avoid: !focused,
+    name: options.name + '-focus',
+    style: {
+      web: {
+        boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}`,
+      },
+      native: {
+        shadowColor: color,
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+      },
+    },
+  });
+
+  const styleDisabled = useStylist({
+    avoid: !disabled,
+    name: options.name + '-disabled',
+    style: {
+      backgroundColor: theme.hex2rgba('background.disabled', 0.125),
+      borderColor: theme.hex2rgba('background.disabled', 0.25),
+      web: {
+        cursor: 'not-allowed',
+        pointerEvents: 'none',
+        '& *': { cursor: 'not-allowed' },
+      },
+    },
+  });
+
+  const styleState = useStylist({
+    style: { borderColor: color },
+  });
+
+  const inputStyleRoot = useStylist({
+    name: options.name + '-input',
+    style: inputStyle,
+  });
+
+  const inputStyleState = useStylist({
+    style: [
+      {
+        fontSize,
+        height,
+        padding: spacing,
+      },
+
+      web && {
+        caretColor: caretHidden ? theme.colors.common.trans : selectionColor,
+      },
+
+      web &&
+        selectionColor && {
+          '&::-moz-selection': { backgroundColor: selectionColor, color: theme.contrast(selectionColor) },
+          '&::selection': { backgroundColor: selectionColor, color: theme.contrast(selectionColor) },
+        },
+    ],
+  });
+
+  containerStyle = [extract(spacings, rest, style), containerStyle];
+
   return (
-    <BoxFactory map={map} component={native ? View : Label} className={options.name}>
-      <GroupFactory
-        {...rest}
-        map={map}
-        stylist={stylist}
-        variant="outline"
-        focused={focused}
-        style={[
-          rest.disabled && {
-            backgroundColor: theme.colors.background.secondary,
-            borderColor: theme.colors.background.disabled,
-          },
+    <BoxFactory map={map} style={containerStyle}>
+      {Boolean(label) && (
+        <LabelFactory map={map} numberOfLines={1} for={inputRef} style={[{ mx: 1, mb: 1 }, labelStyle]}>
+          {label}
+        </LabelFactory>
+      )}
 
-          web && { cursor: 'text' },
+      <BoxFactory map={map} stylist={[styleRoot, styleFocus, styleDisabled, styleState, stylist]} style={style}>
+        <BoxFactory
+          map={map}
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          {Boolean(startIcon) && (
+            <BoxFactory map={map} style={{ marginLeft: spacing }}>
+              {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={color} size={lineSize} /> : startIcon}
+            </BoxFactory>
+          )}
 
-          style,
-        ]}
-        renderChildren={(style) => (
           <BoxFactory
             map={map}
             ref={inputRef}
             component={multiline ? TextArea : Input}
-            autoCapitalize={autoCapitalize}
-            autoFocus={autoFocus}
-            maxLength={maxLength}
+            stylist={[inputStyleRoot, inputStyleState]}
+            {...rest}
+            id={id}
+            disabled={disabled}
             name={name}
-            placeholder={placeholder}
             value={internal}
             onChange={handleChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            style={[
-              {
-                backgroundColor: 'transparent',
-                borderWidth: 0,
-                color: theme.colors.text.primary,
-                flex: 1,
-                fontSize: get('fontSize', style),
-                margin: 0,
-                padding: 0,
-                height: get('fontSize', style) * 1.25,
-                width: '100%',
-
-                web: [
-                  {
-                    backgroundImage: 'none',
-                    boxShadow: 'none',
-                    caretColor: caretHidden ? theme.colors.common.trans : selectionColor,
-                    cursor: 'inherit',
-                    fontFamily: 'inherit',
-                    outline: '0 !important',
-                  },
-
-                  caretHidden && { caretColor: 'transparent' },
-
-                  selectionColor && {
-                    '&::-moz-selection': { backgroundColor: selectionColor },
-                    '&::selection': { backgroundColor: selectionColor },
-                  },
-                ],
-              },
-            ]}
-            // Specific
             platform={{
+              ...platform,
               web: {
+                ...platform?.web,
                 autoCorrect: autoCorrect ? 'on' : 'off',
                 enterKeyHint: returnKeyType,
-                disabled: rest.disabled,
+                disabled,
                 readOnly,
                 type: pick(secure ? 'secure' : type, 'text', {
                   text: 'text',
@@ -182,14 +250,15 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
                 }),
               },
               native: {
+                ...platform?.native,
                 autoCorrect,
                 caretHidden,
                 multiline,
-                editable: rest.disabled ? false : !readOnly,
+                editable: disabled ? false : !readOnly,
                 keyboardAppearance: theme.mode,
-                placeholderTextColor: theme.hex2rgba(theme.colors.text.primary, 0.4),
+                placeholderTextColor: theme.hex2rgba('text.primary', 0.4),
                 returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
-                secureTextEntry: Boolean(secure),
+                secureTextEntry: secure,
                 selectionColor,
                 underlineColorAndroid: 'transparent',
                 keyboardType: pick(type, 'text', {
@@ -202,8 +271,14 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
               },
             }}
           />
-        )}
-      />
+
+          {Boolean(endIcon) && (
+            <BoxFactory map={map} style={{ marginRight: spacing }}>
+              {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={color} size={lineSize} /> : endIcon}
+            </BoxFactory>
+          )}
+        </BoxFactory>
+      </BoxFactory>
     </BoxFactory>
   );
 }

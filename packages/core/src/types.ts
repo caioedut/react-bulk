@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode, RefObject } from 'react';
 
 export type TimeoutType = ReturnType<typeof setInterval> | null;
 export type AnyCallback = (mixed: any) => any;
@@ -109,7 +109,7 @@ export type EditableProps = {
 export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch';
 export type FlexAlignValues = 'flex-start' | 'flex-end' | 'center' | 'stretch';
 export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
-export type SizeValues = 'small' | 'medium' | 'large' | 'xlarge';
+export type SizeValues = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
 export type CustomStyles = {
   h?: number | string;
@@ -283,7 +283,7 @@ export type TextProps = BoxProps & {
 };
 
 export type LabelProps = TextProps & {
-  for?: string;
+  for?: string | RefObject<ReactNode>;
 };
 
 export type GroupProps = BoxProps & {
@@ -375,6 +375,8 @@ export type ImageProps = BoxProps & {
   source: { uri?: string } | string | number;
   alt?: string;
   mode?: 'cover' | 'contain' | 'fill';
+  width?: number | string;
+  height?: number | string;
   rounded?: boolean;
 };
 

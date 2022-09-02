@@ -50,7 +50,7 @@ function Main() {
 
   const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
   const variants = ['solid', 'outline', 'text'];
-  const sizes = ['medium', 'small', 'large'];
+  const sizes = ['medium', 'xsmall', 'small', 'large', 'xlarge'];
   const tooltips = ['top', 'bottom', 'left', 'right'];
 
   const getLabel = (str) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
@@ -67,6 +67,14 @@ function Main() {
   return (
     <Scrollable bg="background.secondary">
       <Box p={3}>
+        <Card mb={3}>
+          {sizes.map((size) => (
+            <Box key={size} mt={3}>
+              <Input label="Label" placeholder={`size="${size}"`} size={size} startIcon="CurrencyDollar" endIcon="CreditCard" />
+            </Box>
+          ))}
+        </Card>
+
         <Card>
           <Text variant="title">React Bulk</Text>
           <Box flexbox wrap alignItems="center" justifyContent="space-between">

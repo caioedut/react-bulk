@@ -6,6 +6,7 @@ const base = {
 
   typography: {
     fontSize: 16,
+    lineHeight: 1.15,
   },
 
   colors: {
@@ -54,7 +55,23 @@ const base = {
   },
 
   mixins: {
-    transition: '0.35s ease',
+    transitions: {
+      slow: {
+        transitionProperty: 'all',
+        transitionDuration: '0.5s',
+        transitionTimingFunction: 'ease',
+      },
+      medium: {
+        transitionProperty: 'all',
+        transitionDuration: '0.35s',
+        transitionTimingFunction: 'ease',
+      },
+      fast: {
+        transitionProperty: 'all',
+        transitionDuration: '0.2s',
+        transitionTimingFunction: 'ease',
+      },
+    },
 
     zIndex: {
       modal: 900,
@@ -252,9 +269,9 @@ const base = {
             zIndex: -1,
             web: {
               boxShadow: 'rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px',
-              transition: 'all 0.35s ease',
               opacity: 0,
               visibility: 'hidden',
+              ...this.mixins.transitions.medium,
             },
           },
         },
@@ -321,8 +338,35 @@ const base = {
           autoCapitalize: 'sentences',
           autoCorrect: true,
           color: 'primary',
-          get selectionColor() {
-            return this.color;
+          style: {
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor: 'primary',
+            borderRadius: this.shape.borderRadius,
+            backgroundColor: this.colors.common.trans,
+            web: {
+              ...this.mixins.transitions.fast,
+              transitionProperty: 'box-shadow',
+            },
+          },
+          inputStyle: {
+            backgroundColor: this.colors.common.trans,
+            borderWidth: 0,
+            color: 'text.primary',
+            flex: 1,
+            fontSize: '1rem',
+            height: '1.25rem',
+            margin: 0,
+            padding: '0.5rem',
+            textDecorationLine: 'none',
+            width: '100%',
+            web: {
+              backgroundImage: 'none',
+              boxShadow: 'none',
+              cursor: 'inherit',
+              fontFamily: 'inherit',
+              outline: '0 !important',
+            },
           },
         },
       },
@@ -367,10 +411,10 @@ const base = {
 
             web: {
               position: 'fixed',
-              transition: 'all 0.35s ease',
               opacity: 0,
               visibility: 'hidden',
               zIndex: -1,
+              ...this.mixins.transitions.medium,
             },
           },
         },
