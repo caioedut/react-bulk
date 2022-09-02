@@ -48,8 +48,10 @@ function Main() {
     { dessert: 'Eclair', calories: '262', fat: '16.0', carbs: '24' },
   ];
 
+  const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
   const variants = ['solid', 'outline', 'text'];
   const sizes = ['medium', 'small', 'large'];
+  const tooltips = ['top', 'bottom', 'left', 'right'];
 
   const getLabel = (str) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 
@@ -484,38 +486,23 @@ function Main() {
             Tooltip
           </Text>
           <Text variant="subtitle" mb={3}>
-            Hover texts below
+            Hover/press texts below
           </Text>
           <Box flexbox center>
-            <Tooltip title="My tooltip">
-              <Text>Top</Text>
-            </Tooltip>
-            <Divider invisible />
-            <Tooltip title="My tooltip" position="left">
-              <Text>Left</Text>
-            </Tooltip>
-            <Box mx={1.5} />
-            <Tooltip title="My tooltip" position="right">
-              <Text>Right</Text>
-            </Tooltip>
-            <Divider invisible />
-            <Tooltip title="My tooltip" position="bottom">
-              <Text>Bottom</Text>
-            </Tooltip>
-          </Box>
-          <Box flexbox center column mt={3}>
-            <Tooltip title="My tooltip" color="primary">
-              <Text>Primary</Text>
-            </Tooltip>
-            <Tooltip title="My tooltip" color="secondary">
-              <Text>Secondary</Text>
-            </Tooltip>
-            <Tooltip title="My tooltip" color="success">
-              <Text>Success</Text>
-            </Tooltip>
-            <Tooltip title="My tooltip" color="error">
-              <Text>Error</Text>
-            </Tooltip>
+            {tooltips.map((pos) => (
+              <Box key={pos} p={3}>
+                <Tooltip title="My tooltip" position={pos}>
+                  <Text>{getLabel(pos)}</Text>
+                </Tooltip>
+              </Box>
+            ))}
+            {colors.map((color) => (
+              <Box key={color} p={3}>
+                <Tooltip title="My tooltip" color={color}>
+                  <Text>{getLabel(color)}</Text>
+                </Tooltip>
+              </Box>
+            ))}
           </Box>
         </Card>
       </Box>
