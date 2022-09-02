@@ -126,33 +126,9 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     }
   }
 
-  const hasFlex = ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'justifyItems', 'alignContent', 'alignItems'].some((prop) =>
-    get(prop, style),
-  );
-
-  if (hasFlex) {
-    if (!get('display', style)) {
-      style.push({ display: 'flex' });
-    }
-
-    if (!get('flexFlow', style)) {
-      if (!get('flexDirection', style)) {
-        style.push({ flexDirection: 'column' });
-      }
-
-      if (!get('flexWrap', style)) {
-        style.push({ flexWrap: 'wrap' });
-      }
-    }
-
-    // if (!get('alignContent', style)) {
-    //   style.push({ alignContent: 'flex-start' });
-    // }
-  }
-
   if (native) {
     const arrayed = Array.isArray(className) ? className : [className];
-    style.push(...arrayed.filter((item) => item && typeof item === 'object'));
+    style.unshift(...arrayed.filter((item) => item && typeof item === 'object'));
   }
 
   const processed = createStyle({ style, theme });

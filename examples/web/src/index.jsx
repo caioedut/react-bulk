@@ -21,6 +21,7 @@ import {
   Select,
   Table,
   Text,
+  Tooltip,
 } from '@react-bulk/web';
 
 function Main() {
@@ -424,31 +425,6 @@ function Main() {
 
         <Card mt={3}>
           <Text variant="title" mb={3}>
-            Collapse
-          </Text>
-          <Box>
-            <Button onPress={toggleCollapse}>Toggle Collapse</Button>
-          </Box>
-          <Collapse in={collpase} mt={3}>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis, dignissimos
-              distinctio earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam recusandae suscipit, tempora.
-            </Text>
-          </Collapse>
-        </Card>
-
-        <Card mt={3}>
-          <Text variant="title" mb={3}>
-            Dropdown
-          </Text>
-          <Box>
-            <Button onPress={toggleDropdown}>Toggle Dropdown</Button>
-            <Dropdown visible={dropdown}>Lorem ipsum dolor sit amet</Dropdown>
-          </Box>
-        </Card>
-
-        <Card mt={3}>
-          <Text variant="title" mb={3}>
             Modals
           </Text>
           <Box flexbox>
@@ -476,6 +452,71 @@ function Main() {
               </Button>
             </Card>
           </Modal>
+        </Card>
+
+        <Card mt={3}>
+          <Text variant="title" mb={3}>
+            Dropdown
+          </Text>
+          <Box>
+            <Button onPress={toggleDropdown}>Toggle Dropdown</Button>
+            <Dropdown visible={dropdown}>Lorem ipsum dolor sit amet</Dropdown>
+          </Box>
+        </Card>
+
+        <Card mt={3}>
+          <Text variant="title" mb={3}>
+            Collapse
+          </Text>
+          <Box>
+            <Button onPress={toggleCollapse}>Toggle Collapse</Button>
+          </Box>
+          <Collapse in={collpase} mt={3}>
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis, dignissimos
+              distinctio earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam recusandae suscipit, tempora.
+            </Text>
+          </Collapse>
+        </Card>
+
+        <Card mt={3}>
+          <Text variant="title" mb={3}>
+            Tooltip
+          </Text>
+          <Text variant="subtitle" mb={3}>
+            Hover texts below
+          </Text>
+          <Box flexbox center>
+            <Tooltip title="My tooltip">
+              <Text>Top</Text>
+            </Tooltip>
+            <Divider invisible />
+            <Tooltip title="My tooltip" position="left">
+              <Text>Left</Text>
+            </Tooltip>
+            <Box mx={1.5} />
+            <Tooltip title="My tooltip" position="right">
+              <Text>Right</Text>
+            </Tooltip>
+            <Divider invisible />
+            <Tooltip title="My tooltip" position="bottom">
+              <Text>Bottom</Text>
+            </Tooltip>
+          </Box>
+          <Box flexbox center column mt={3}>
+            <Tooltip title="My tooltip" color="primary">
+              <Text>Primary</Text>
+            </Tooltip>
+            <Tooltip title="My tooltip" color="secondary">
+              <Text>Secondary</Text>
+            </Tooltip>
+            <Tooltip title="My tooltip" color="success">
+              <Text>Success</Text>
+            </Tooltip>
+            <Tooltip title="My tooltip" color="error">
+              <Text>Error</Text>
+            </Tooltip>
+          </Box>
         </Card>
       </Box>
     </Scrollable>
