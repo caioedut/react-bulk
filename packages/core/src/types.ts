@@ -321,6 +321,7 @@ export type ButtonProps = GroupProps &
   FocusableProps & {
     badge?: number | BadgeProps;
     href?: string;
+    icon?: boolean | string | ReactNode;
     type?: 'button' | 'submit';
   };
 
