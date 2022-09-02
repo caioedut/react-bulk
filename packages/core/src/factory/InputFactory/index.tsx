@@ -16,7 +16,7 @@ import LabelFactory from '../LabelFactory';
 function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Input;
-  const { web, Input, TextArea } = map;
+  const { web, native, Input, TextArea } = map;
 
   // Extends from default props
   let {
@@ -30,7 +30,6 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     label,
     multiline,
     name,
-    platform,
     readOnly,
     returnKeyType,
     secure,
@@ -73,6 +72,45 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   const lineSize = theme.rem(theme.typography.lineHeight, fontSize);
   const spacing = theme.rem(0.5, fontSize);
   const height = lineSize * (multiline ? 3 : 1) + spacing * 2;
+
+  if (web) {
+    Object.assign(rest, {
+      autoCorrect: autoCorrect ? 'on' : 'off',
+      enterKeyHint: returnKeyType,
+      disabled,
+      readOnly,
+      type: pick(secure ? 'secure' : type, 'text', {
+        text: 'text',
+        number: 'number',
+        email: 'email',
+        secure: 'password',
+        phone: 'tel',
+        url: 'url',
+      }),
+    });
+  }
+
+  if (native) {
+    Object.assign(rest, {
+      autoCorrect,
+      caretHidden,
+      multiline,
+      editable: disabled ? false : !readOnly,
+      keyboardAppearance: theme.mode,
+      placeholderTextColor: theme.hex2rgba('text.primary', 0.4),
+      returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
+      secureTextEntry: secure,
+      selectionColor,
+      underlineColorAndroid: 'transparent',
+      keyboardType: pick(type, 'text', {
+        text: 'default',
+        number: 'number-pad',
+        email: 'email-address',
+        phone: 'phone-pad',
+        url: 'url',
+      }),
+    });
+  }
 
   useEffect(() => {
     if (typeof value !== 'undefined') {
@@ -157,7 +195,6 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
       borderColor: theme.hex2rgba('background.disabled', 0.25),
       web: {
         cursor: 'not-allowed',
-        pointerEvents: 'none',
         '& *': { cursor: 'not-allowed' },
       },
     },
@@ -232,44 +269,6 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
             onChange={handleChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            platform={{
-              ...platform,
-              web: {
-                ...platform?.web,
-                autoCorrect: autoCorrect ? 'on' : 'off',
-                enterKeyHint: returnKeyType,
-                disabled,
-                readOnly,
-                type: pick(secure ? 'secure' : type, 'text', {
-                  text: 'text',
-                  number: 'number',
-                  email: 'email',
-                  secure: 'password',
-                  phone: 'tel',
-                  url: 'url',
-                }),
-              },
-              native: {
-                ...platform?.native,
-                autoCorrect,
-                caretHidden,
-                multiline,
-                editable: disabled ? false : !readOnly,
-                keyboardAppearance: theme.mode,
-                placeholderTextColor: theme.hex2rgba('text.primary', 0.4),
-                returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
-                secureTextEntry: secure,
-                selectionColor,
-                underlineColorAndroid: 'transparent',
-                keyboardType: pick(type, 'text', {
-                  text: 'default',
-                  number: 'number-pad',
-                  email: 'email-address',
-                  phone: 'phone-pad',
-                  url: 'url',
-                }),
-              },
-            }}
           />
 
           {Boolean(endIcon) && (
