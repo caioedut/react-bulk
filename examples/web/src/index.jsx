@@ -67,14 +67,6 @@ function Main() {
   return (
     <Scrollable bg="background.secondary">
       <Box p={3}>
-        <Card mb={3}>
-          {sizes.map((size) => (
-            <Box key={size} mt={3}>
-              <Input label="Label" placeholder={`size="${size}"`} size={size} startIcon="CurrencyDollar" endIcon="CreditCard" />
-            </Box>
-          ))}
-        </Card>
-
         <Card>
           <Text variant="title">React Bulk</Text>
           <Box flexbox wrap alignItems="center" justifyContent="space-between">
@@ -167,7 +159,7 @@ function Main() {
                 <Button variant={variant} mr={3} mt={3} loading={loading} onPress={toggleLoading}>
                   Loading
                 </Button>
-                <Button variant={variant} mr={3} mt={3} startIcon="House" />
+                <Button variant={variant} mr={3} mt={3} icon="House" />
                 <Button variant={variant} mr={3} mt={3} startIcon="House">
                   Start Icon
                 </Button>

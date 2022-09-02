@@ -60,19 +60,6 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   selectionColor = theme.color(selectionColor ?? color);
 
-  const multiplier = pick(size, 'medium', {
-    xsmall: 0.625,
-    small: 0.75,
-    medium: 1,
-    large: 1.25,
-    xlarge: 1.625,
-  });
-
-  const fontSize = theme.rem(multiplier);
-  const lineSize = theme.rem(theme.typography.lineHeight, fontSize);
-  const spacing = theme.rem(0.5, fontSize);
-  const height = lineSize * (multiline ? 3 : 1) + spacing * 2;
-
   if (web) {
     Object.assign(rest, {
       autoCorrect: autoCorrect ? 'on' : 'off',
@@ -165,6 +152,19 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     setFocused(false);
     onBlur?.(e);
   };
+
+  const multiplier = pick(size, 'medium', {
+    xsmall: 0.625,
+    small: 0.75,
+    medium: 1,
+    large: 1.25,
+    xlarge: 1.625,
+  });
+
+  const fontSize = theme.rem(multiplier);
+  const lineSize = theme.rem(theme.typography.lineHeight, fontSize);
+  const spacing = theme.rem(0.5, fontSize);
+  const height = lineSize * (multiline ? 3 : 1) + spacing * 2;
 
   const styleRoot = useStylist({
     name: options.name,

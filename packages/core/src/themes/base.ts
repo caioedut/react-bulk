@@ -129,10 +129,16 @@ const base = {
     return '#' + r + g + b;
   },
 
-  contrast(color) {
-    const { black, white } = this.colors.common;
+  contrast(color, lightColor?: string | null, darkColor?: string | null) {
+    lightColor = this.color(lightColor || this.colors.common.white);
+    darkColor = this.color(darkColor || this.colors.common.black);
 
     color = this.color(color);
+
+    // Transparent
+    if (['transparent', this.colors.common.trans].includes(color)) {
+      return darkColor;
+    }
 
     // Must be an HEX color
     if (color.includes('rgb')) {
@@ -161,7 +167,7 @@ const base = {
     const yiq = (r * 299 + g * 587 + b * 114) / 1000;
 
     // Check contrast
-    return yiq >= 128 ? black : white;
+    return yiq >= 128 ? darkColor : lightColor;
   },
 
   get components() {
@@ -197,16 +203,42 @@ const base = {
       Button: {
         name: 'rbk-button',
         defaultProps: {
-          accessibility: {
-            role: 'button',
-          },
+          accessibility: { role: 'button' },
+          color: 'primary',
           style: {
+            position: 'relative',
+
+            backgroundColor: 'primary',
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor: 'primary',
+            borderRadius: this.shape.borderRadius,
+
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            alignItems: 'center',
             justifyContent: 'center',
+
+            margin: 0,
+            padding: 0,
+            touchAction: 'none',
+
             web: {
+              backgroundImage: 'none',
+              boxShadow: 'none',
               cursor: 'pointer',
               '-webkit-user-select': 'none',
               '-ms-user-select': 'none',
               'user-select': 'none',
+              outline: '0 !important',
+              textDecorationLine: 'none !important',
+              ...this.mixins.transitions.fast,
+              transitionProperty: 'background-color, box-shadow',
+
+              '&:hover': {
+                backgroundColor: this.hex2rgba('primary.main', 0.9),
+              },
             },
           },
         },
@@ -364,8 +396,8 @@ const base = {
               backgroundImage: 'none',
               boxShadow: 'none',
               cursor: 'inherit',
-              fontFamily: 'inherit',
               outline: '0 !important',
+              touchAction: 'none',
             },
           },
         },
