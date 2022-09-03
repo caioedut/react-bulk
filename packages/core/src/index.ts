@@ -43,7 +43,6 @@ export { default as DividerFactory } from './factory/DividerFactory';
 export { default as DropdownFactory } from './factory/DropdownFactory';
 export { default as FormFactory } from './factory/FormFactory';
 export { default as GridFactory } from './factory/GridFactory';
-export { default as GroupFactory } from './factory/GroupFactory';
 export { default as IconFactory } from './factory/IconFactory';
 export { default as ImageFactory } from './factory/ImageFactory';
 export { default as InputFactory } from './factory/InputFactory';

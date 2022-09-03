@@ -3,11 +3,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTheme } from '../../ReactBulk';
 import factory from '../../props/factory';
 import { FactoryProps, SelectProps } from '../../types';
+import useHtmlId from '../../useHtmlId';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import DropdownFactory from '../DropdownFactory';
 import { useForm } from '../FormFactory';
+import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
 function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, ref: any) {
@@ -18,6 +20,8 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   // Extends from default props
   let {
     defaultValue,
+    id,
+    label,
     name,
     onChange,
     options: arrOptions,
@@ -25,8 +29,13 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     readOnly,
     value,
     defaultStyle,
+    buttonStyle,
+    labelStyle,
+    style,
     ...rest
   } = factory(props, options.defaultProps);
+
+  id = useHtmlId(id);
 
   const form = useForm();
   const defaultRef: any = useRef(null);
@@ -93,21 +102,27 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   stylist = [styleRoot, stylist];
 
   return (
-    <BoxFactory map={map}>
+    <BoxFactory map={map} style={style}>
+      {Boolean(label) && (
+        <LabelFactory map={map} numberOfLines={1} for={buttonRef} style={[{ mx: 1, mb: 1 }, labelStyle]}>
+          {label}
+        </LabelFactory>
+      )}
+
       <ButtonFactory
         ref={buttonRef}
         map={map}
         stylist={stylist}
+        block
         endIcon={visible ? 'CaretUp' : 'CaretDown'}
-        w="100%"
+        style={buttonStyle}
         {...rest}
-        type="button"
+        id={id}
         variant="outline"
+        contentStyle={{ flex: 1 }}
         onPress={() => setVisible((current) => (readOnly ? false : !current))}
       >
-        <TextFactory map={map} flex style={{ textAlign: 'left' }}>
-          {internal?.label ?? internal?.value ?? placeholder ?? ''}
-        </TextFactory>
+        <TextFactory map={map}>{internal?.label ?? internal?.value ?? placeholder ?? ''}</TextFactory>
       </ButtonFactory>
 
       {web && (
@@ -127,17 +142,14 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
             <ButtonFactory
               key={option.value}
               map={map}
-              wrap={false}
-              type="button"
+              block
               variant="text"
               disabled={option.disabled}
               endIcon={option.value == internal?.value ? 'Check' : null}
+              contentStyle={{ flex: 1 }}
               onPress={(e) => handleChange(e, option)}
-              w="100%"
             >
-              <TextFactory map={map} flex style={{ textAlign: 'left' }}>
-                {option.label}
-              </TextFactory>
+              <TextFactory map={map}>{option.label}</TextFactory>
             </ButtonFactory>
           ))}
         </BoxFactory>
