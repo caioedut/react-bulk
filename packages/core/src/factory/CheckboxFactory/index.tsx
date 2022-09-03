@@ -5,9 +5,8 @@ import extract from '../../props/extract';
 import factory from '../../props/factory';
 import { spacings } from '../../styles/jss';
 import { CheckboxProps, FactoryProps } from '../../types';
+import useHtmlId from '../../useHtmlId';
 import useStylist from '../../useStylist';
-import crypt from '../../utils/crypt';
-import uuid from '../../utils/uuid';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import { useForm } from '../FormFactory';
@@ -31,13 +30,13 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
     unique,
     value,
     defaultStyle,
-    style,
+    buttonStyle,
     labelStyle,
-    containerStyle,
+    style,
     ...rest
   } = factory(props, options.defaultProps);
 
-  id = id ?? `rbk-${crypt(uuid())}`;
+  id = useHtmlId(id);
 
   const form = useForm();
   const defaultRef: any = useRef(null);
@@ -91,40 +90,37 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
     onChange?.({ target, checked, focus, blur, clear, isFocused, nativeEvent }, checked);
   };
 
-  containerStyle = [extract(spacings, defaultStyle, rest, style), containerStyle];
-
   const styleRoot = useStylist({
     name: options.name,
     style: defaultStyle,
   });
 
-  stylist = [styleRoot, stylist];
+  const styleState = useStylist({
+    style: extract(spacings, rest),
+  });
 
   return (
-    <>
-      <BoxFactory map={map} className="rbk-checkbox" flexbox noWrap alignItems="center" style={containerStyle}>
-        <ButtonFactory
-          ref={buttonRef}
-          map={map}
-          stylist={stylist}
-          id={id}
-          variant="text"
-          {...rest}
-          startIcon={unique ? (internal ? 'CheckCircle' : 'Circle') : internal ? 'CheckSquare' : 'Square'}
-          onPress={handleChange}
-          style={style}
-          accessibility={{
-            role: 'checkbox',
-            state: { checked: internal },
-          }}
-        />
+    <BoxFactory map={map} style={style} stylist={[styleRoot, styleState, stylist]}>
+      <ButtonFactory
+        ref={buttonRef}
+        map={map}
+        style={buttonStyle}
+        {...rest}
+        id={id}
+        variant="text"
+        startIcon={unique ? (internal ? 'CheckCircle' : 'Circle') : internal ? 'CheckSquare' : 'Square'}
+        onPress={handleChange}
+        accessibility={{
+          role: unique ? 'radio' : 'checkbox',
+          state: { checked: internal },
+        }}
+      />
 
-        {Boolean(label) && (
-          <LabelFactory map={map} numberOfLines={1} for={id} style={[{ ml: 1, flex: 1 }, labelStyle]}>
-            {label}
-          </LabelFactory>
-        )}
-      </BoxFactory>
+      {Boolean(label) && (
+        <LabelFactory map={map} numberOfLines={1} for={id} style={[{ ml: 1, flex: 1 }, labelStyle]}>
+          {label}
+        </LabelFactory>
+      )}
 
       {web && (
         <Input //
@@ -137,7 +133,7 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
           onChange={handleChange}
         />
       )}
-    </>
+    </BoxFactory>
   );
 }
 

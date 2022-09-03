@@ -363,6 +363,7 @@ export type SelectProps = InputBaseProps & {
 
 export type CheckboxProps = InputBaseProps & {
   checked?: boolean;
+  defaultChecked?: boolean;
   unique?: boolean;
 };
 

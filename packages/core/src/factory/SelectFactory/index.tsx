@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import extract from '../../props/extract';
 import factory from '../../props/factory';
+import { spacings } from '../../styles/jss';
 import { FactoryProps, SelectProps } from '../../types';
 import useHtmlId from '../../useHtmlId';
 import useStylist from '../../useStylist';
@@ -99,10 +101,12 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     style: defaultStyle,
   });
 
-  stylist = [styleRoot, stylist];
+  const styleState = useStylist({
+    style: extract(spacings, rest),
+  });
 
   return (
-    <BoxFactory map={map} style={style}>
+    <BoxFactory map={map} style={style} stylist={[styleRoot, styleState, stylist]}>
       {Boolean(label) && (
         <LabelFactory map={map} numberOfLines={1} for={buttonRef} style={[{ mx: 1, mb: 1 }, labelStyle]}>
           {label}
@@ -112,10 +116,9 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
       <ButtonFactory
         ref={buttonRef}
         map={map}
-        stylist={stylist}
+        style={buttonStyle}
         block
         endIcon={visible ? 'CaretUp' : 'CaretDown'}
-        style={buttonStyle}
         {...rest}
         id={id}
         variant="outline"

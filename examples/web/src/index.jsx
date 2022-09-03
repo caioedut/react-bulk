@@ -294,7 +294,7 @@ function Main() {
                   ]}
                 />
               </Box>
-              <Box xs={6} md={4} ml={-2}>
+              <Box xs={6} md={4}>
                 <Checkbox name="acceptTerms" label="I accept the terms of use." />
               </Box>
               <Box xs={6} md={4}>
