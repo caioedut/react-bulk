@@ -10,6 +10,7 @@ export const customSpacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 
 export const customStyleProps = ['w', 'h', 'maxw', 'maxh', 'minw', 'minh', 'bg', 'border', 'corners', 'shadow', ...customSpacings];
 
 export const spacings = [
+  'position',
   'top',
   'bottom',
   'left',
