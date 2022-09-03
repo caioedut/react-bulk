@@ -272,7 +272,15 @@ const base = {
             role: 'combobox',
           },
           style: {
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            alignItems: 'center',
+          },
+          buttonStyle: {
             padding: 0,
+            minHeight: 0,
+            minWidth: 0,
           },
         },
       },

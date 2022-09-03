@@ -56,9 +56,6 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
   }
 
   if (icon) {
-    endIcon = null;
-    startIcon = null;
-
     if (typeof icon === 'string') {
       startIcon = icon;
     }
