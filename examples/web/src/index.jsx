@@ -187,7 +187,7 @@ function Main() {
             <Button loading={loading} onPress={toggleLoading}>
               Loading
             </Button>
-            <Button startIcon="House" />
+            <Button icon="House" />
             <Button startIcon="House">Start Icon</Button>
             <Button endIcon="House">End Icon</Button>
           </ButtonGroup>

@@ -18,14 +18,30 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
   const { web, native, Button } = map;
 
   // Extends from default props
-  let { badge, block, color, disabled, endIcon, icon, loading, size, startIcon, variant, labelStyle, defaultStyle, style, ...rest } =
-    factory(props, options.defaultProps);
+  let {
+    badge,
+    block,
+    color,
+    disabled,
+    endIcon,
+    icon,
+    label,
+    loading,
+    size,
+    startIcon,
+    variant,
+    // Styles
+    labelStyle,
+    contentStyle,
+    defaultStyle,
+    ...rest
+  } = factory(props, options.defaultProps);
 
   const form = useForm();
   const isBasic = ['outline', 'text'].includes(variant);
-  const hasChildren = Boolean(children || children?.length);
 
   badge = typeof badge === 'number' ? { value: badge } : badge;
+  children = children ?? label;
 
   if (web && !rest.type) {
     rest.type = 'button';
@@ -68,7 +84,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   if (typeof children === 'string') {
     children = (
-      <TextFactory map={map} style={{ fontSize, color: textColor }}>
+      <TextFactory map={map} style={[{ fontSize, color: textColor }, labelStyle]}>
         {children}
       </TextFactory>
     );
@@ -135,15 +151,18 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
         </BoxFactory>
       )}
 
-      {hasChildren && (
+      {Boolean(children || children?.length) && (
         <BoxFactory
           map={map}
-          style={{
-            display: 'flex',
-            opacity: loading ? 0 : 1,
-            ml: startIcon ? 2 : 0,
-            mr: endIcon ? 2 : 0,
-          }}
+          style={[
+            contentStyle,
+            {
+              display: 'flex',
+              opacity: loading ? 0 : 1,
+              ml: startIcon ? 2 : 0,
+              mr: endIcon ? 2 : 0,
+            },
+          ]}
         >
           {children}
         </BoxFactory>

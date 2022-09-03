@@ -97,12 +97,14 @@ export type FocusableProps = {
 
 export type EditableProps = {
   defaultValue?: string;
+  disabled?: boolean;
   value?: string;
   onChange?: ChangeCallback;
+  readOnly?: boolean;
 
-  /** @deprecated use onChange instead */
+  /** @deprecated use onChange(e, value) instead */
   onInput?: Function;
-  /** @deprecated use onChange instead */
+  /** @deprecated use onChange(e, value) instead */
   onChangeText?: Function;
 };
 
@@ -235,10 +237,12 @@ export type BoxProps = PressableProps &
     accessibility?: AccessibilityProps;
     children?: ReactNode;
     invisible?: boolean;
-    style?: JssStyles;
-    rawStyle?: JssStyles;
     block?: boolean;
     hidden?: boolean;
+
+    // Styles
+    style?: JssStyles;
+    rawStyle?: JssStyles;
 
     // Flexbox container
     flexbox?: boolean | 'flex' | 'flex-inline';
@@ -263,6 +267,14 @@ export type BoxProps = PressableProps &
     basis?: 'auto' | number | string;
     align?: FlexAlignValues;
     justify?: FlexJustifyValues;
+
+    // To use only on children of Grid
+    xs?: number | true | 'auto';
+    sm?: number | true | 'auto';
+    md?: number | true | 'auto';
+    lg?: number | true | 'auto';
+    xl?: number | true | 'auto';
+    xxl?: number | true | 'auto';
   };
 
 export type TextProps = BoxProps & {
@@ -286,43 +298,27 @@ export type LabelProps = TextProps & {
   for?: string | RefObject<ReactNode>;
 };
 
-export type GroupProps = BoxProps & {
-  id?: string;
-  className?: string;
-  disabled?: boolean;
-  focused?: boolean;
-
+export type FormControlBaseProps = {
   color?: ColorValues;
-  error?: string;
-  label?: string;
-  loading?: boolean;
-  size?: SizeValues;
-  variant?: 'solid' | 'outline' | 'text';
-
-  startIcon?: string | ReactNode;
   endIcon?: string | ReactNode;
-  renderChildren?: Function;
-
-  style?: JssStyles;
+  label?: string;
+  size?: SizeValues;
+  startIcon?: string | ReactNode;
+  // Styles
   labelStyle?: JssStyles;
-  errorStyle?: JssStyles;
-  containerStyle?: JssStyles;
-
-  // To use only on children of Grid
-  xs?: number | true | 'auto';
-  sm?: number | true | 'auto';
-  md?: number | true | 'auto';
-  lg?: number | true | 'auto';
-  xl?: number | true | 'auto';
-  xxl?: number | true | 'auto';
 };
 
-export type ButtonProps = GroupProps &
-  FocusableProps & {
+export type ButtonProps = FocusableProps &
+  FormControlBaseProps & {
     badge?: number | BadgeProps;
+    disabled?: boolean;
     href?: string;
     icon?: boolean | string | ReactNode;
+    loading?: boolean;
     type?: 'button' | 'submit';
+    variant?: 'solid' | 'outline' | 'text';
+    // Styles
+    contentStyle?: JssStyles;
   };
 
 export type ButtonGroupProps = BoxProps & {
@@ -333,13 +329,10 @@ export type ButtonGroupProps = BoxProps & {
   variant?: 'solid' | 'outline' | 'text' | string;
 };
 
-export type InputBaseProps = GroupProps &
-  FocusableProps &
+export type InputBaseProps = FocusableProps &
+  FormControlBaseProps &
   EditableProps & {
     name?: string;
-    readOnly?: boolean;
-    returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
-    placeholder?: string;
   };
 
 export type InputProps = InputBaseProps & {
@@ -348,9 +341,14 @@ export type InputProps = InputBaseProps & {
   caretHidden?: boolean;
   maxLength?: number;
   multiline?: boolean;
+  placeholder?: string;
+  returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
   secure?: boolean;
-  selectionColor?: string;
+  selectionColor?: ColorValues;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url';
+  // Styles
+  containerStyle?: JssStyles;
+  inputStyle?: JssStyles;
 };
 
 export type SelectProps = InputBaseProps & {
@@ -359,6 +357,8 @@ export type SelectProps = InputBaseProps & {
     value: string;
     disabled?: boolean;
   }[];
+  // Styles
+  buttonStyle?: JssStyles;
 };
 
 export type CheckboxProps = InputBaseProps & {
@@ -382,7 +382,7 @@ export type ImageProps = BoxProps & {
 };
 
 export type DividerProps = BoxProps & {
-  color?: string;
+  color?: ColorValues;
   size?: number | string;
   opacity?: number;
   vertical?: boolean;
