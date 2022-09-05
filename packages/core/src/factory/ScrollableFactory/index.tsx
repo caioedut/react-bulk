@@ -12,13 +12,13 @@ function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & 
   const { web, ScrollView, View } = map;
 
   // Extends from default props
-  let { direction, platform, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { direction, platform, ...rest } = factory(props, options.defaultProps);
 
   const isHorizontal = direction === 'horizontal';
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleState = useStylist({

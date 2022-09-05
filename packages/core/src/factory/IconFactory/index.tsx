@@ -12,7 +12,7 @@ function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: 
   const { Icons } = map;
 
   // Extends from default props
-  let { color, name, size, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { color, name, size, ...rest } = factory(props, options.defaultProps);
 
   const iconName = `${name || ''}`
     .split(/_|-|\s/g)
@@ -25,7 +25,7 @@ function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: 
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   stylist = [styleRoot, stylist];

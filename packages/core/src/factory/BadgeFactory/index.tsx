@@ -12,7 +12,7 @@ function BadgeFactory({ stylist, children, map, ...props }: FactoryProps & Badge
   const { native, Text } = map;
 
   // Extends from default props
-  let { bottom, color, dot, left, right, size, top, value, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { bottom, color, dot, left, right, size, top, value, ...rest } = factory(props, options.defaultProps);
 
   const absolute = top || bottom || left || right;
   const baseSize = size === 'small' ? theme.rem(1) : size === 'large' ? theme.rem(1.5) : theme.rem(1.25);
@@ -20,7 +20,7 @@ function BadgeFactory({ stylist, children, map, ...props }: FactoryProps & Badge
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleState = useStylist({

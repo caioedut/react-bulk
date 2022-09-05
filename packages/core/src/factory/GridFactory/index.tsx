@@ -11,7 +11,7 @@ function GridFactory({ stylist, children, map, ...props }: FactoryProps & GridPr
   const options = theme.components.Grid;
 
   // Extends from default props
-  let { gap, size, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { gap, size, ...rest } = factory(props, options.defaultProps);
 
   const breakpoints = Object.keys(theme.breakpoints);
   const spacing = !gap ? 0 : theme.spacing(gap) / 2;
@@ -22,7 +22,7 @@ function GridFactory({ stylist, children, map, ...props }: FactoryProps & GridPr
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleState = useStylist({

@@ -11,11 +11,11 @@ function CollapseFactory({ stylist, map, ...props }: FactoryProps & CollapseProp
   const options = theme.components.Collapse;
 
   // Extends from default props
-  let { defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { ...rest } = factory(props, options.defaultProps);
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   stylist = [styleRoot, stylist];

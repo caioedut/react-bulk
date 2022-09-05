@@ -13,11 +13,11 @@ function DropdownFactory({ stylist, children, map, ...props }: FactoryProps & Dr
   const { native } = map;
 
   // Extends from default props
-  let { visible, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { visible, ...rest } = factory(props, options.defaultProps);
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleVisible = useStylist({

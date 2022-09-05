@@ -12,7 +12,7 @@ function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref
   const options = theme.components.Table;
 
   // Extends from default props
-  let { border, columns, rows, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { border, columns, rows, ...rest } = factory(props, options.defaultProps);
 
   const width = `${100 / columns?.length}%`;
 
@@ -58,7 +58,7 @@ function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleState = useStylist({

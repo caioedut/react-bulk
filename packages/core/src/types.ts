@@ -1,5 +1,6 @@
 import { CSSProperties, ReactNode, RefObject } from 'react';
 
+export type AnyObject = { [key: string]: string };
 export type TimeoutType = ReturnType<typeof setInterval> | null;
 export type AnyCallback = (mixed: any) => any;
 export type EventCallback = (e: any) => any;
@@ -32,6 +33,7 @@ export type MapType = {
 
 export type FactoryProps = any & {
   map: MapType;
+  defaults?: AnyObject;
   stylist?: JssStyles | string | string[];
 };
 
@@ -150,51 +152,82 @@ export type CustomStyles = {
 
 export type JssStyles = (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
 
-export type ThemeColorsProps = {
-  main?: string;
-  light?: string;
-  dark?: string;
-};
+export type ThemeMode = 'light' | 'dark' | string;
+
+export type ThemeColorsProps =
+  | string
+  | {
+      main?: string;
+      light?: string;
+      dark?: string;
+    };
 
 export type ThemeComponentProps = {
   name: string;
-  defaultProps: {};
+  defaultProps: AnyObject;
+  defaultStyles: {
+    root?: JssStyles;
+    [key: string]: JssStyles;
+  };
 };
 
 export type ThemeProps = {
-  mode?: 'light' | 'dark' | string;
-  spacing?: Readonly<Function>;
-  color?: Readonly<Function>;
-  rem?: Readonly<Function>;
-  hex2rgba?: Readonly<Function>;
+  mode?: ThemeMode;
+
   shape?: {
     borderRadius?: number;
     spacing?: number;
   };
+
+  typography?: {
+    fontSize?: number;
+    lineHeight?: number;
+  };
+
   colors?: {
-    common?: {
-      trans: 'rgba(0, 0, 0, 0)' | string;
-      black: '#000000' | string;
-      white: '#ffffff' | string;
-    };
-    text?: {
-      primary?: string;
-      secondary?: string;
-      disabled?: string;
-    };
-    background?: {
-      primary?: string;
-      secondary?: string;
-      disabled?: string;
-    };
     primary?: ThemeColorsProps;
     secondary?: ThemeColorsProps;
     info?: ThemeColorsProps;
     success?: ThemeColorsProps;
     warning?: ThemeColorsProps;
     error?: ThemeColorsProps;
+
+    common?: {
+      trans?: 'rgba(0, 0, 0, 0)' | string;
+      black?: '#000000' | string;
+      white?: '#ffffff' | string;
+      gray?: '#808080' | string;
+    };
+
+    text?: {
+      primary?: string;
+      secondary?: string;
+      disabled?: string;
+    };
+
+    background?: {
+      primary?: string;
+      secondary?: string;
+      disabled?: string;
+    };
+
     [key: string]: ThemeColorsProps | any;
   };
+
+  mixins?: {
+    transitions?: {
+      slow?: AnyObject;
+      medium?: AnyObject;
+      fast?: AnyObject;
+    };
+
+    zIndex: {
+      modal: number;
+      dropdown: number;
+      tooltip: number;
+    };
+  };
+
   breakpoints?: {
     xs?: number;
     sm?: number;
@@ -203,6 +236,14 @@ export type ThemeProps = {
     xl?: number;
     xxl?: number;
   };
+
+  rem?: Readonly<Function>;
+  spacing?: Readonly<Function>;
+  color?: Readonly<Function>;
+  hex2rgba?: Readonly<Function>;
+  rgba2hex?: Readonly<Function>;
+  contrast?: Readonly<Function>;
+
   components?: {
     Badge?: ThemeComponentProps;
     Box?: ThemeComponentProps;
@@ -225,6 +266,7 @@ export type ThemeProps = {
     Select?: ThemeComponentProps;
     Table?: ThemeComponentProps;
     Text?: ThemeComponentProps;
+    Tooltip?: ThemeComponentProps;
   };
 };
 
@@ -327,6 +369,8 @@ export type ButtonGroupProps = BoxProps & {
   loading?: boolean;
   size?: SizeValues;
   variant?: 'solid' | 'outline' | 'text' | string;
+  // Styles
+  contentStyle?: JssStyles;
 };
 
 export type InputBaseProps = FocusableProps &

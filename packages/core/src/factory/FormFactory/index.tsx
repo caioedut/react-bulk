@@ -20,7 +20,7 @@ function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & 
   ref = ref || defaultRef;
 
   // Extends from default props
-  let { defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { ...rest } = factory(props, options.defaultProps);
 
   const getField = (name) => {
     return ref.current.fields.find((item) => item?.name === name);
@@ -85,7 +85,7 @@ function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & 
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   stylist = [styleRoot, stylist];

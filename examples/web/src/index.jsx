@@ -27,6 +27,7 @@ import {
 function Main() {
   const theme = useTheme();
 
+  const timeoutRef = useRef({});
   const formRef = useRef(null);
 
   const [modal, setModal] = useState({});
@@ -55,9 +56,34 @@ function Main() {
 
   const getLabel = (str) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 
-  const handleChangeSize = (e) => {
-    const fontSize = Math.min(32, Math.max(12, e.target.value));
-    theme.setTheme({ typography: { fontSize } });
+  const handleChangeTheme = (e) => {
+    const prop = e.target.name;
+    const split = prop.split('.');
+    const last = split.pop();
+
+    let value = e.target.value;
+
+    if (prop === 'typography.fontSize') {
+      value = Math.min(32, Math.max(8, e.target.value));
+    }
+
+    const data = {};
+    let ref = data;
+
+    for (let attr of split) {
+      ref[attr] = {};
+      ref = ref[attr];
+    }
+
+    ref[last] = value;
+
+    if (timeoutRef.current[prop]) {
+      clearTimeout(timeoutRef.current[prop]);
+    }
+
+    timeoutRef.current[prop] = setTimeout(() => {
+      theme.setTheme(data);
+    }, 500);
   };
 
   const handleSubmitForm = (e, data) => {
@@ -69,15 +95,53 @@ function Main() {
       <Box p={3}>
         <Card>
           <Text variant="title">React Bulk</Text>
-          <Box flexbox wrap alignItems="center" justifyContent="space-between">
-            <Text m={3} ml={0}>
+          <Box flexbox wrap alignItems="flex-end">
+            <Text m={3} ml={0} flex>
               Open up App.tsx to start working on your app!
             </Text>
-            <Box w={80}>
-              {/*<Input label="Adjust Size" value={`${theme.typography.fontSize}`} endIcon={<Text>px</Text>} onChange={handleChangeSize}/>*/}
+            <Box maxw={240}>
+              <Input
+                type="number"
+                label="Font Size"
+                name="typography.fontSize"
+                value={`${theme.typography.fontSize}`}
+                endIcon={
+                  <ButtonGroup mr={-2}>
+                    <Button variant={theme.mode === 'light' ? 'solid' : 'outline'} onPress={() => theme.setTheme('light')}>
+                      Light
+                    </Button>
+                    <Button variant={theme.mode === 'dark' ? 'solid' : 'outline'} onPress={() => theme.setTheme('dark')}>
+                      Dark
+                    </Button>
+                  </ButtonGroup>
+                }
+                onChange={handleChangeTheme}
+              />
             </Box>
-            <Button onPress={() => theme.setTheme({ mode: theme.mode === 'dark' ? 'light' : 'dark' })}>Change Theme</Button>
+            <Box></Box>
           </Box>
+        </Card>
+
+        <Card mt={3}>
+          <Text variant="title" mb={3}>
+            Colors
+          </Text>
+          <Grid gap={3}>
+            {Object.keys(theme.colors)
+              .filter((item) => !['common', 'text', 'background'].includes(item))
+              .map((color) => (
+                <Box key={color} xs={12} sm={4} xxl={2}>
+                  <Input
+                    color={color}
+                    label={getLabel(color)}
+                    labelStyle={{ color }}
+                    name="colors.primary.main"
+                    value={theme.colors[color]?.main ?? theme.colors[color]?.primary}
+                    onChange={handleChangeTheme}
+                  />
+                </Box>
+              ))}
+          </Grid>
         </Card>
 
         <Card mt={3}>
@@ -181,7 +245,7 @@ function Main() {
           <Text mt={3} variant="subtitle">
             Group
           </Text>
-          <ButtonGroup mt={3} p={1}>
+          <ButtonGroup mt={3} p={1} variant="outline">
             <Button>Button</Button>
             <Button disabled>Disabled</Button>
             <Button loading={loading} onPress={toggleLoading}>

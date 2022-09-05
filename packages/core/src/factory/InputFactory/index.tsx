@@ -42,7 +42,6 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     onFocus,
     onBlur,
     containerStyle,
-    defaultStyle,
     inputStyle,
     labelStyle,
     style,
@@ -168,7 +167,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleFocus = useStylist({
@@ -204,12 +203,12 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     style: { borderColor: color },
   });
 
-  const inputStyleRoot = useStylist({
+  const styleInput = useStylist({
     name: options.name + '-input',
-    style: inputStyle,
+    style: options.defaultStyles.input,
   });
 
-  const inputStyleState = useStylist({
+  const styleInputState = useStylist({
     style: [
       {
         fontSize,
@@ -260,7 +259,8 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
             map={map}
             ref={inputRef}
             component={multiline ? TextArea : Input}
-            stylist={[inputStyleRoot, inputStyleState]}
+            style={inputStyle}
+            stylist={[styleInput, styleInputState]}
             {...rest}
             id={id}
             disabled={disabled}

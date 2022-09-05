@@ -13,14 +13,14 @@ function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps,
   const { web } = map;
 
   // Extends from default props
-  let { color, label, size, speed, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { color, label, size, speed, ...rest } = factory(props, options.defaultProps);
 
   const multiplier = 1.25;
   size = size ?? theme.rem(multiplier);
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleState = useStylist({

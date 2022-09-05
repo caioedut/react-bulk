@@ -12,7 +12,7 @@ function ImageFactory({ stylist, map, ...props }: FactoryProps & ImageProps, ref
   const { web, Image } = map;
 
   // Extends from default props
-  let { mode, height, width, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { mode, height, width, ...rest } = factory(props, options.defaultProps);
 
   const defaultRef: any = useRef(null);
   const imageRef = ref || defaultRef;
@@ -23,7 +23,7 @@ function ImageFactory({ stylist, map, ...props }: FactoryProps & ImageProps, ref
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleState = useStylist({

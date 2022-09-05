@@ -11,18 +11,18 @@ function DividerFactory({ stylist, map, ...props }: FactoryProps & DividerProps,
   const options = theme.components.Divider;
 
   // Extends from default props
-  let { color, opacity, size, vertical, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { color, opacity, size, vertical, ...rest } = factory(props, options.defaultProps);
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleState = useStylist({
     style: {
       backgroundColor: color,
-      height: vertical ? '100%' : size,
-      width: vertical ? size : '100%',
+      minHeight: vertical ? '100%' : size,
+      minWidth: vertical ? size : '100%',
       opacity,
     },
   });

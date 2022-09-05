@@ -12,7 +12,7 @@ function LabelFactory({ stylist, map, ...props }: FactoryProps & LabelProps, ref
   const { web, native, Label } = map;
 
   // Extends from default props
-  let { for: forProp, platform, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { for: forProp, platform, ...rest } = factory(props, options.defaultProps);
 
   const [focusProps, setFocusProps] = useState({});
 
@@ -35,7 +35,7 @@ function LabelFactory({ stylist, map, ...props }: FactoryProps & LabelProps, ref
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   stylist = [styleRoot, stylist];
