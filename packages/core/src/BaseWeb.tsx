@@ -75,9 +75,17 @@ export default function BaseWeb({ children }) {
     const ordered = extract(['Box', 'Scrollable', 'Card', 'Dropdown', 'Group', 'Text', 'Label'], components);
 
     [...Object.values(ordered), ...Object.values(components)].forEach((component: any) => {
-      const name = component?.name;
-      const style = component?.defaultProps?.style;
-      name && createStyle({ name, style, theme });
+      const componentName = component?.name;
+      const styles = component?.defaultStyles || {};
+
+      if (!componentName) return;
+
+      for (const prop in styles) {
+        const style = styles?.[prop];
+        const name = componentName + (prop === 'root' ? '' : `-${prop}`);
+
+        createStyle({ name, style, theme });
+      }
     });
 
     setLoading(false);

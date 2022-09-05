@@ -29,7 +29,6 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
     readOnly,
     unique,
     value,
-    defaultStyle,
     buttonStyle,
     labelStyle,
     style,
@@ -92,7 +91,12 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
+  });
+
+  const styleButton = useStylist({
+    name: options.name + 'button',
+    style: options.defaultStyles.button,
   });
 
   const styleState = useStylist({
@@ -105,6 +109,7 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
         ref={buttonRef}
         map={map}
         style={buttonStyle}
+        stylist={styleButton}
         {...rest}
         id={id}
         variant="text"

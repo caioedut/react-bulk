@@ -13,11 +13,11 @@ function ModalFactory({ stylist, children, map, ...props }: FactoryProps & Modal
   const { web, native } = map;
 
   // Extends from default props
-  let { align, onBackdropPress, visible, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { align, onBackdropPress, visible, ...rest } = factory(props, options.defaultProps);
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleVisible = useStylist({

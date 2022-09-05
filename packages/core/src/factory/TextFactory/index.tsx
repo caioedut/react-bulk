@@ -8,6 +8,7 @@ import BoxFactory from '../BoxFactory';
 
 function TextFactory({ stylist, map, ...props }: FactoryProps & TextProps, ref) {
   const theme = useTheme();
+  const options = theme.components.Text;
   const { web, native, Text } = map;
 
   // Extends from default props
@@ -27,9 +28,8 @@ function TextFactory({ stylist, map, ...props }: FactoryProps & TextProps, ref) 
     transform,
     variant,
     weight,
-    defaultStyle,
     ...rest
-  } = factory(props, theme.components.Text.defaultProps);
+  } = factory(props, options.defaultProps);
 
   if (native) {
     rest.includeFontPadding = false;
@@ -41,8 +41,8 @@ function TextFactory({ stylist, map, ...props }: FactoryProps & TextProps, ref) 
   }
 
   const styleRoot = useStylist({
-    name: theme.components.Text.name,
-    style: defaultStyle,
+    name: options.name,
+    style: options.defaultStyles.root,
   });
 
   const styleState = useStylist({

@@ -33,7 +33,6 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
     // Styles
     labelStyle,
     contentStyle,
-    defaultStyle,
     ...rest
   } = factory(props, options.defaultProps);
 
@@ -89,7 +88,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleBlock = useStylist({
@@ -107,11 +106,24 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
     },
   });
 
-  const styleState = useStylist({
+  const styleColor = useStylist({
     style: [
       {
         backgroundColor: color,
         borderColor: color,
+      },
+
+      isBasic && { backgroundColor: 'common.trans' },
+
+      variant === 'text' && { borderColor: 'common.trans' },
+
+      web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}` } },
+    ],
+  });
+
+  const styleState = useStylist({
+    style: [
+      {
         minHeight: height,
         minWidth: height,
         paddingHorizontal: spacing,
@@ -122,14 +134,6 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
         height,
         width: height,
       },
-
-      isBasic && { backgroundColor: 'common.trans' },
-
-      variant === 'text' && { borderColor: 'common.trans' },
-
-      web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}` } },
-
-      web && isBasic && { '&:hover': { backgroundColor: theme.hex2rgba(color, 0.1) } },
     ],
   });
 
@@ -138,7 +142,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
       map={map}
       ref={ref}
       component={web && rest.href ? 'a' : Button}
-      stylist={[styleRoot, styleBlock, styleDisabled, styleState, stylist]}
+      stylist={[styleRoot, styleBlock, styleDisabled, styleColor, styleState, stylist]}
       {...rest}
       disabled={disabled}
     >

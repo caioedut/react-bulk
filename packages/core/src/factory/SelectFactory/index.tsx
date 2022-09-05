@@ -30,7 +30,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     placeholder,
     readOnly,
     value,
-    defaultStyle,
+
     buttonStyle,
     labelStyle,
     style,
@@ -98,7 +98,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
 
   const styleRoot = useStylist({
     name: arrOptions.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleState = useStylist({

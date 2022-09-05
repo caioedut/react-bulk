@@ -4,14 +4,13 @@ import BaseNative from './BaseNative';
 import BaseWeb from './BaseWeb';
 import Platform from './Platform';
 import createTheme from './createTheme';
-import light from './themes/light';
-import { ThemeProps } from './types';
+import { ThemeMode, ThemeProps } from './types';
 
 type ThemeContextValue = ThemeProps & {
   setTheme?: Function;
 };
 
-const defaultTheme: ThemeContextValue = createTheme(light);
+const defaultTheme: ThemeContextValue = createTheme();
 const Context = createContext(defaultTheme);
 
 export function useTheme() {
@@ -23,8 +22,9 @@ function ReactBulk({ theme, children }: any) {
 
   const [themeState, setThemeState] = useState<ThemeProps>(createTheme(theme));
 
-  const setTheme = (theme: ThemeProps) => {
-    setThemeState((current) => createTheme(theme, current));
+  const setTheme = (theme: ThemeMode | ThemeProps) => {
+    theme = typeof theme === 'string' ? { mode: theme } : theme;
+    setThemeState((current) => createTheme(theme as ThemeProps, current));
   };
 
   useEffect(() => {

@@ -1,4 +1,6 @@
-const base = {
+import { ThemeProps } from '@react-bulk/core';
+
+const base: ThemeProps & any = {
   shape: {
     borderRadius: 4,
     spacing: 4,
@@ -10,47 +12,18 @@ const base = {
   },
 
   colors: {
+    primary: '#673ab7',
+    secondary: '#009688',
+    info: '#2196f3',
+    success: '#4caf50',
+    warning: '#ff9800',
+    error: '#f44336',
+
     common: {
       trans: 'rgba(0, 0, 0, 0)',
       black: '#000000',
       white: '#ffffff',
       gray: '#808080',
-    },
-
-    primary: {
-      main: '#673ab7',
-      light: '#9a67ea',
-      dark: '#320b86',
-    },
-
-    secondary: {
-      main: '#009688',
-      light: '#52c7b8',
-      dark: '#00675b',
-    },
-
-    info: {
-      main: '#2196f3',
-      light: '#6ec6ff',
-      dark: '#0069c0',
-    },
-
-    success: {
-      main: '#4caf50',
-      light: '#80e27e',
-      dark: '#087f23',
-    },
-
-    warning: {
-      main: '#ff9800',
-      light: '#ffc947',
-      dark: '#c66900',
-    },
-
-    error: {
-      main: '#f44336',
-      light: '#ff7961',
-      dark: '#ba000d',
     },
   },
 
@@ -177,7 +150,9 @@ const base = {
         defaultProps: {
           color: 'error.dark',
           size: 'medium',
-          style: {
+        },
+        defaultStyles: {
+          root: {
             display: 'flex',
             alignItems: 'center',
             alignContent: 'center',
@@ -199,13 +174,16 @@ const base = {
       Box: {
         name: 'rbk-box',
         defaultProps: {},
+        defaultStyles: {},
       },
       Button: {
         name: 'rbk-button',
         defaultProps: {
           accessibility: { role: 'button' },
           color: 'primary',
-          style: {
+        },
+        defaultStyles: {
+          root: {
             position: 'relative',
 
             backgroundColor: 'primary',
@@ -234,10 +212,10 @@ const base = {
               outline: '0 !important',
               textDecorationLine: 'none !important',
               ...this.mixins.transitions.fast,
-              transitionProperty: 'background-color, box-shadow',
+              transitionProperty: 'box-shadow, opacity',
 
               '&:hover': {
-                backgroundColor: this.hex2rgba('primary.main', 0.9),
+                opacity: 0.75,
               },
             },
           },
@@ -247,7 +225,9 @@ const base = {
         name: 'rbk-button-group',
         defaultProps: {
           color: 'primary',
-          style: {
+        },
+        defaultStyles: {
+          content: {
             display: 'flex',
             flexDirection: 'row',
             flexWrap: 'nowrap',
@@ -257,8 +237,9 @@ const base = {
       },
       Card: {
         name: 'rbk-card',
-        defaultProps: {
-          style: {
+        defaultProps: {},
+        defaultStyles: {
+          root: {
             backgroundColor: 'background.primary',
             corners: 1,
             p: 3,
@@ -268,16 +249,16 @@ const base = {
       Checkbox: {
         name: 'rbk-checkbox',
         defaultProps: {
-          accessibility: {
-            role: 'combobox',
-          },
-          style: {
+          accessibility: { role: 'combobox' },
+        },
+        defaultStyles: {
+          root: {
             display: 'flex',
             flexDirection: 'row',
             flexWrap: 'nowrap',
             alignItems: 'center',
           },
-          buttonStyle: {
+          button: {
             padding: 0,
             minHeight: 0,
             minWidth: 0,
@@ -287,6 +268,7 @@ const base = {
       Collapse: {
         name: 'rbk-collapse',
         defaultProps: {},
+        defaultStyles: {},
       },
       Divider: {
         name: 'rbk-divider',
@@ -295,14 +277,15 @@ const base = {
           opacity: 0.15,
           size: 1,
         },
+        defaultStyles: {},
       },
       Dropdown: {
         name: 'rbk-dropdown',
         defaultProps: {
-          accessibility: {
-            role: 'menu',
-          },
-          style: {
+          accessibility: { role: 'menu' },
+        },
+        defaultStyles: {
+          root: {
             position: 'absolute',
             maxWidth: '100%',
             border: `1px solid background.secondary`,
@@ -318,8 +301,9 @@ const base = {
       },
       Form: {
         name: 'rbk-form',
-        defaultProps: {
-          style: {
+        defaultProps: {},
+        defaultStyles: {
+          root: {
             margin: 0,
             padding: 0,
           },
@@ -328,7 +312,10 @@ const base = {
       Grid: {
         name: 'rbk-grid',
         defaultProps: {
-          style: {
+          size: 12,
+        },
+        defaultStyles: {
+          root: {
             display: 'flex',
             flexDirection: 'row',
             flexWrap: 'wrap',
@@ -340,7 +327,9 @@ const base = {
         name: 'rbk-group',
         defaultProps: {
           color: 'primary',
-          style: {
+        },
+        defaultStyles: {
+          root: {
             position: 'relative',
             display: 'flex',
             flexDirection: 'row',
@@ -355,7 +344,9 @@ const base = {
         defaultProps: {
           color: 'primary',
           weight: 'regular',
-          style: {
+        },
+        defaultStyles: {
+          root: {
             web: { verticalAlign: 'text-bottom' },
           },
         },
@@ -363,11 +354,11 @@ const base = {
       Image: {
         name: 'rbk-image',
         defaultProps: {
-          accessibility: {
-            role: 'image',
-          },
+          accessibility: { role: 'image' },
           mode: 'cover',
-          style: {
+        },
+        defaultStyles: {
+          root: {
             web: { display: 'inline-block' },
           },
         },
@@ -378,7 +369,9 @@ const base = {
           autoCapitalize: 'sentences',
           autoCorrect: true,
           color: 'primary',
-          style: {
+        },
+        defaultStyles: {
+          root: {
             borderWidth: 1,
             borderStyle: 'solid',
             borderColor: 'primary',
@@ -389,7 +382,7 @@ const base = {
               transitionProperty: 'box-shadow',
             },
           },
-          inputStyle: {
+          input: {
             backgroundColor: this.colors.common.trans,
             borderWidth: 0,
             color: 'text.primary',
@@ -412,8 +405,9 @@ const base = {
       },
       Label: {
         name: 'rbk-label',
-        defaultProps: {
-          style: {
+        defaultProps: {},
+        defaultStyles: {
+          root: {
             web: {
               textRendering: 'optimizeLegibility',
               '-webkit-font-smoothing': 'antialiased',
@@ -427,16 +421,16 @@ const base = {
         name: 'rbk-loading',
         defaultProps: {
           color: 'primary',
-          accessibility: {
-            role: 'progressbar',
-          },
+          accessibility: { role: 'progressbar' },
           speed: '1s',
         },
+        defaultStyles: {},
       },
       Modal: {
         name: 'rbk-modal',
-        defaultProps: {
-          style: {
+        defaultProps: {},
+        defaultStyles: {
+          root: {
             position: 'relative',
             top: 0,
             left: 0,
@@ -463,7 +457,9 @@ const base = {
         name: 'rbk-scrollable',
         defaultProps: {
           direction: 'vertical',
-          style: {
+        },
+        defaultStyles: {
+          root: {
             flex: 1,
             web: {
               overflow: 'hidden',
@@ -475,23 +471,24 @@ const base = {
       Select: {
         name: 'rbk-select',
         defaultProps: {
-          accessibility: {
-            role: 'combobox',
-          },
+          accessibility: { role: 'combobox' },
         },
+        defaultStyles: {},
       },
       Table: {
         name: 'rbk-table',
-        defaultProps: {
-          style: {
+        defaultProps: {},
+        defaultStyles: {
+          root: {
             corners: 1,
           },
         },
       },
       Text: {
         name: 'rbk-text',
-        defaultProps: {
-          style: {
+        defaultProps: {},
+        defaultStyles: {
+          root: {
             color: 'text.primary',
             fontSize: '1rem',
             margin: 0,
@@ -508,7 +505,9 @@ const base = {
         defaultProps: {
           position: 'top',
           color: 'black',
-          style: {
+        },
+        defaultStyles: {
+          root: {
             position: 'absolute',
             zIndex: this.mixins.zIndex.tooltip,
           },

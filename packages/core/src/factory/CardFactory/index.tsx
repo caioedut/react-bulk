@@ -11,11 +11,11 @@ function CardFactory({ stylist, map, ...props }: FactoryProps & CardProps, ref: 
   const options = theme.components.Card;
 
   // Extends from default props
-  let { defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { ...rest } = factory(props, options.defaultProps);
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   stylist = [styleRoot, stylist];

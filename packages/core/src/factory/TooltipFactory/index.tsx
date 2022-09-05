@@ -13,7 +13,7 @@ function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & Too
   const { native, dimensions, Button } = map;
 
   // Extends from default props
-  let { color, position, title, defaultStyle, ...rest } = factory(props, options.defaultProps);
+  let { color, position, title, ...rest } = factory(props, options.defaultProps);
 
   const timeoutRef = useRef<TimeoutType>(null);
 
@@ -25,7 +25,7 @@ function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & Too
 
   const styleRoot = useStylist({
     name: options.name,
-    style: defaultStyle,
+    style: options.defaultStyles.root,
   });
 
   const styleState = useStylist({
