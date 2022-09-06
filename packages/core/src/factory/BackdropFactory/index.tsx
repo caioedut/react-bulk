@@ -69,7 +69,7 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
 
   if (native) {
     return (
-      <Dialog transparent statusBarTranslucent visible={visible} animationType="fade" presentationStyle="overFullScreen">
+      <Dialog transparent statusBarTranslucent visible={Boolean(visible)} animationType="fade" presentationStyle="overFullScreen">
         <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleVisible, stylist]} {...rest}>
           <Child />
         </BoxFactory>

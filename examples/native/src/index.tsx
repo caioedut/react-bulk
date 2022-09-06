@@ -96,11 +96,13 @@ function Main() {
       <Box p={3}>
         <Card>
           <Text variant="title">React Bulk</Text>
-          <Box flexbox wrap alignItems="flex-end">
-            <Text m={3} ml={0} flex>
-              Open up App.tsx to start working on your app!
-            </Text>
-            <Box maxw={240}>
+          <Grid>
+            <Box xs={12} md>
+              <Text m={3} ml={0} flex>
+                Open up App.tsx to start working on your app!
+              </Text>
+            </Box>
+            <Box xs={12}>
               <Input
                 type="number"
                 label="Font Size"
@@ -120,7 +122,7 @@ function Main() {
               />
             </Box>
             <Box></Box>
-          </Box>
+          </Grid>
         </Card>
 
         <Card mt={3}>
