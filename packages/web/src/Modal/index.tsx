@@ -1,19 +1,31 @@
-import { forwardRef, useRef } from 'react';
+import { forwardRef } from 'react';
 
-import { ModalFactory, ModalProps } from '@react-bulk/core';
+import { BackdropFactory, ModalProps, pick } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-function Modal({ onBackdropPress, ...props }: ModalProps, ref) {
-  const map = useMap();
+function Modal({ halign, valign, onBackdropPress, style, ...props }: ModalProps, ref) {
+  const alignItems = pick(valign as string, 'center', {
+    center: 'center',
+    top: 'flex-start',
+    bottom: 'flex-end',
+  });
 
-  const defaultRef = useRef(null);
-  const backdropRef: any = ref || defaultRef;
+  const justifyContent = pick(halign as string, 'center', {
+    center: 'center',
+    left: 'flex-start',
+    right: 'flex-end',
+  });
 
-  // @ts-ignore
-  props.onBackdropPress = !onBackdropPress ? undefined : (e) => e.target === backdropRef.current && onBackdropPress(e);
-
-  return <ModalFactory ref={ref} {...props} map={map} />;
+  return (
+    <BackdropFactory
+      ref={ref}
+      {...props}
+      map={useMap()}
+      onPress={onBackdropPress}
+      style={[style, { flexDirection: 'row', alignItems, justifyContent }]}
+    />
+  );
 }
 
 export default forwardRef<typeof Modal, ModalProps>(Modal);

@@ -47,9 +47,10 @@ const base: ThemeProps & any = {
     },
 
     zIndex: {
-      modal: 900,
-      dropdown: 901,
-      tooltip: 902,
+      backdrop: 900,
+      modal: 901,
+      dropdown: 902,
+      tooltip: 903,
     },
   },
 
@@ -145,6 +146,44 @@ const base: ThemeProps & any = {
 
   get components() {
     return {
+      Backdrop: {
+        name: 'rbk-backdrop',
+        defaultProps: {},
+        defaultStyles: {
+          root: {
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
+            native: {
+              position: 'absolute',
+            },
+
+            web: {
+              position: 'fixed',
+              opacity: 0,
+              visibility: 'hidden',
+              zIndex: -1,
+              ...this.mixins.transitions.medium,
+              transitionProperty: 'opacity',
+            },
+          },
+          visible: {
+            web: {
+              opacity: 1,
+              visibility: 'visible',
+              zIndex: this.mixins.zIndex.backdrop,
+            },
+          },
+        },
+      },
       Badge: {
         name: 'rbk-badge',
         defaultProps: {
@@ -428,7 +467,9 @@ const base: ThemeProps & any = {
       },
       Modal: {
         name: 'rbk-modal',
-        defaultProps: {},
+        defaultProps: {
+          align: 'center',
+        },
         defaultStyles: {
           root: {
             position: 'relative',

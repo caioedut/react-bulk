@@ -2,6 +2,7 @@ import React, { useReducer, useRef, useState } from 'react';
 
 import ReactBulk, { useTheme } from '@react-bulk/core';
 import {
+  Backdrop,
   Badge,
   Box,
   Button,
@@ -494,14 +495,20 @@ function Main() {
             Modals
           </Text>
           <Box flexbox>
-            <Button mr={2} onPress={() => setModal({ visible: true, align: 'center' })}>
-              Center
-            </Button>
-            <Button mr={2} onPress={() => setModal({ visible: true, align: 'top' })}>
+            <Button mr={2} onPress={() => setModal({ visible: true, valign: 'top' })}>
               Top
             </Button>
-            <Button mr={2} onPress={() => setModal({ visible: true, align: 'bottom' })}>
+            <Button mr={2} onPress={() => setModal({ visible: true, valign: 'bottom' })}>
               Bottom
+            </Button>
+            <Button mr={2} onPress={() => setModal({ visible: true, valign: 'center' })}>
+              Center
+            </Button>
+            <Button mr={2} onPress={() => setModal({ visible: true, halign: 'left' })}>
+              Left
+            </Button>
+            <Button mr={2} onPress={() => setModal({ visible: true, halign: 'right' })}>
+              Right
             </Button>
           </Box>
           <Modal {...modal} onBackdropPress={() => setModal((current) => ({ ...current, visible: false }))}>
