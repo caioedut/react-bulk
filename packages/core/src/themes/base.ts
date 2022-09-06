@@ -148,13 +148,18 @@ const base: ThemeProps & any = {
     return {
       Backdrop: {
         name: 'rbk-backdrop',
-        defaultProps: {},
+        defaultProps: {
+          accessibility: { role: 'dialog' },
+        },
         defaultStyles: {
           root: {
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
+
+            height: '100%',
+            width: '100%',
 
             display: 'flex',
             flexDirection: 'column',
@@ -172,7 +177,7 @@ const base: ThemeProps & any = {
               visibility: 'hidden',
               zIndex: -1,
               ...this.mixins.transitions.medium,
-              transitionProperty: 'opacity',
+              transitionProperty: 'all',
             },
           },
           visible: {
@@ -472,25 +477,7 @@ const base: ThemeProps & any = {
         },
         defaultStyles: {
           root: {
-            position: 'relative',
-            top: 0,
-            left: 0,
-
-            height: '100%',
-            width: '100%',
-
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-
-            web: {
-              position: 'fixed',
-              opacity: 0,
-              visibility: 'hidden',
-              zIndex: -1,
-              ...this.mixins.transitions.medium,
-            },
+            zIndex: (theme) => theme.mixins.zIndex.modal,
           },
         },
       },
