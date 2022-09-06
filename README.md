@@ -31,21 +31,10 @@ import { Box, Card, Text } from '@react-bulk/web'; // OR @react-bulk/native
 
 export default function App() {
   const theme = {
-    mode: 'dark',
-    typography: {
-      fontSize: 16
-    },
+    mode: 'light',
     colors: {
-      primary: {
-        main: '#673ab7',
-        light: '#9a67ea',
-        dark: '#320b86',
-      },
-      secondary: {
-        main: '#009688',
-        light: '#52c7b8',
-        dark: '#00675b',
-      },
+      primary: '#673ab7',
+      secondary: '#009688',
     },
   };
 
