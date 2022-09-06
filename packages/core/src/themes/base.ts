@@ -510,6 +510,29 @@ const base: ThemeProps & any = {
           root: {
             position: 'absolute',
             zIndex: this.mixins.zIndex.tooltip,
+
+            native: {
+              display: 'none',
+            },
+
+            web: {
+              opacity: 0,
+              pointerEvents: 'none',
+              visibility: 'hidden',
+              zIndex: -1,
+              ...this.mixins.transitions.medium,
+            },
+          },
+          visible: {
+            native: {
+              display: 'flex',
+            },
+
+            web: {
+              opacity: 1,
+              visibility: 'visible',
+              zIndex: this.mixins.zIndex.tooltip,
+            },
           },
         },
       },
