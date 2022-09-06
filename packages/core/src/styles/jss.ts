@@ -5,7 +5,28 @@ import remove from '../props/remove';
 import { ThemeProps } from '../types';
 import clone from '../utils/clone';
 
-export const customSpacings = ['t', 'b', 'l', 'r', 'm', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
+export const customSpacings = [
+  't',
+  'b',
+  'l',
+  'r',
+  'm',
+  'mt',
+  'mb',
+  'ml',
+  'mr',
+  'mh',
+  'mv',
+  'mx',
+  'my',
+  'p',
+  'pt',
+  'pb',
+  'pl',
+  'pr',
+  'px',
+  'py',
+];
 
 export const customStyleProps = ['w', 'h', 'maxw', 'maxh', 'minw', 'minh', 'bg', 'border', 'corners', 'shadow', ...customSpacings];
 
@@ -67,6 +88,11 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
     delete styles[attr];
 
+    // Call function with theme
+    if (typeof value === 'function') {
+      value = value(theme);
+    }
+
     // Cast REM
     const remRegex = /^((\d+\.)?\d+)rem$/gi;
     const remValue = `${value ?? ''}`.trim();
@@ -80,6 +106,8 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         .replace(/^(.)b$/, '$1Bottom')
         .replace(/^(.)l$/, '$1Left')
         .replace(/^(.)r$/, '$1Right')
+        .replace(/^(.)h$/, '$1Horizontal')
+        .replace(/^(.)v$/, '$1Vertical')
         .replace(/^(.)x$/, '$1Horizontal')
         .replace(/^(.)y$/, '$1Vertical')
         .replace(/^m/, 'margin')
@@ -120,7 +148,8 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     }
 
     if (prop === 'bg') {
-      prop = 'backgroundColor';
+      prop = 'background';
+      value = theme?.color?.(value);
     }
 
     if (prop === 'corners') {
@@ -142,8 +171,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         const styleIndex = split.findIndex((item: string) => types.includes(item));
         const borderStyle = styleIndex >= 0 ? split.splice(styleIndex, 1).shift() : 'solid';
 
-        // @ts-ignore
-        const borderColor = theme.color(split.shift() || '#000000');
+        const borderColor = theme?.color?.(split.shift() || theme.colors?.common?.black);
 
         Object.assign(styles, { borderWidth, borderStyle, borderColor });
       }
@@ -213,9 +241,8 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       }
     }
 
-    if (theme?.colors && `${prop || ''}`.toLowerCase().includes('color')) {
-      // @ts-ignore
-      value = theme.color(value);
+    if (`${prop || ''}`.toLowerCase().includes('color')) {
+      value = theme?.color?.(value) ?? value;
     }
 
     if (prop) {
