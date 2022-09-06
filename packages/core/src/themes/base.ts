@@ -149,7 +149,11 @@ const base: ThemeProps & any = {
       Backdrop: {
         name: 'rbk-backdrop',
         defaultProps: {
-          accessibility: { role: 'dialog' },
+          platform: {
+            web: {
+              accessibility: { role: 'dialog' },
+            },
+          },
         },
         defaultStyles: {
           root: {
