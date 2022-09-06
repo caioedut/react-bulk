@@ -44,7 +44,6 @@ export type AccessibilityProps = {
   role?:
     | 'none'
     | 'button'
-    | 'dialog'
     | 'link'
     | 'search'
     | 'image'
