@@ -1,4 +1,4 @@
-import { Image, Platform, ScrollView, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { Image, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 
 import * as Icons from 'phosphor-react-native';
 
@@ -15,6 +15,7 @@ export default function useMap() {
     Icons,
 
     Button: TouchableOpacity,
+    Dialog: Modal,
     Form: View,
     Image,
     Input: TextInput,

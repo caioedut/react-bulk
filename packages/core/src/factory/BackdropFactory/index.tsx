@@ -9,7 +9,7 @@ import BoxFactory from '../BoxFactory';
 function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & BackdropProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Backdrop;
-  const { web, native, Button } = map;
+  const { web, native, Button, Dialog } = map;
 
   // Extends from default props
   let { visible, ...rest } = factory(props, options.defaultProps);
@@ -42,7 +42,7 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
       const left = window.pageXOffset || document.documentElement.scrollLeft;
 
       // @ts-ignore
-      window.onscroll = () => window.scrollBy({ top, left, behavior: 'instant' });
+      window.onscroll = () => window.scrollTo({ top, left, behavior: 'instant' });
     }
 
     return () => {
@@ -61,11 +61,25 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
     style: options.defaultStyles.visible,
   });
 
+  let Child = () => (
+    <BoxFactory map={map} {...containerProps}>
+      {children}
+    </BoxFactory>
+  );
+
+  if (native) {
+    return (
+      <Dialog transparent statusBarTranslucent visible={visible} animationType="fade" presentationStyle="overFullScreen">
+        <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleVisible, stylist]} {...rest}>
+          <Child />
+        </BoxFactory>
+      </Dialog>
+    );
+  }
+
   return (
-    <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleVisible, stylist]} {...rest}>
-      <BoxFactory map={map} {...containerProps}>
-        {children}
-      </BoxFactory>
+    <BoxFactory map={map} ref={ref} component={Dialog} stylist={[styleRoot, styleVisible, stylist]} {...rest}>
+      <Child />
     </BoxFactory>
   );
 }
