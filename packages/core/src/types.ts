@@ -31,11 +31,11 @@ export type MapType = {
   View: ReactNode | any;
 };
 
-export type FactoryProps = any & {
+export type FactoryProps = {
   map: MapType;
   defaults?: AnyObject;
   stylist?: JssStyles | string | string[];
-};
+} & any;
 
 export type AccessibilityProps = {
   accessible?: boolean;
@@ -271,56 +271,56 @@ export type ThemeProps = {
   };
 };
 
-export type BoxProps = PressableProps &
-  CustomStyles & {
-    component?: any;
-    id?: string;
-    className?: any;
-    platform?: object;
-    accessibility?: AccessibilityProps;
-    children?: ReactNode;
-    invisible?: boolean;
-    block?: boolean;
-    hidden?: boolean;
+export type BoxProps = {
+  component?: any;
+  id?: string;
+  className?: any;
+  platform?: object;
+  accessibility?: AccessibilityProps;
+  children?: ReactNode;
+  invisible?: boolean;
+  block?: boolean;
+  hidden?: boolean;
 
-    // Styles
-    style?: JssStyles;
-    rawStyle?: JssStyles;
+  // Styles
+  style?: JssStyles;
+  rawStyle?: JssStyles;
 
-    // Flexbox container
-    flexbox?: boolean | 'flex' | 'flex-inline';
-    direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
-    row?: boolean;
-    column?: boolean;
-    reverse?: boolean;
-    wrap?: boolean | 'nowrap' | 'wrap' | 'wrap-reverse';
-    noWrap?: boolean;
-    flow?: string;
-    justifyContent?: FlexJustifyValues;
-    alignContent?: FlexAlignValues;
-    justifyItems?: FlexJustifyValues;
-    alignItems?: FlexAlignValues | 'baseline';
-    center?: boolean;
+  // Flexbox container
+  flexbox?: boolean | 'flex' | 'flex-inline';
+  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+  row?: boolean;
+  column?: boolean;
+  reverse?: boolean;
+  wrap?: boolean | 'nowrap' | 'wrap' | 'wrap-reverse';
+  noWrap?: boolean;
+  flow?: string;
+  justifyContent?: FlexJustifyValues;
+  alignContent?: FlexAlignValues;
+  justifyItems?: FlexJustifyValues;
+  alignItems?: FlexAlignValues | 'baseline';
+  center?: boolean;
 
-    // Flexbox item
-    flex?: boolean;
-    order?: number;
-    grow?: number;
-    shrink?: number;
-    basis?: 'auto' | number | string;
-    align?: FlexAlignValues;
-    justify?: FlexJustifyValues;
+  // Flexbox item
+  flex?: boolean;
+  order?: number;
+  grow?: number;
+  shrink?: number;
+  basis?: 'auto' | number | string;
+  align?: FlexAlignValues;
+  justify?: FlexJustifyValues;
 
-    // To use only on children of Grid
-    xs?: number | true | 'auto';
-    sm?: number | true | 'auto';
-    md?: number | true | 'auto';
-    lg?: number | true | 'auto';
-    xl?: number | true | 'auto';
-    xxl?: number | true | 'auto';
-  };
+  // To use only on children of Grid
+  xs?: number | true | 'auto';
+  sm?: number | true | 'auto';
+  md?: number | true | 'auto';
+  lg?: number | true | 'auto';
+  xl?: number | true | 'auto';
+  xxl?: number | true | 'auto';
+} & PressableProps &
+  CustomStyles;
 
-export type TextProps = BoxProps & {
+export type TextProps = {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'caption';
   size?: number;
   color?: ColorValues;
@@ -335,11 +335,11 @@ export type TextProps = BoxProps & {
   transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
 
   numberOfLines?: number;
-};
+} & BoxProps;
 
-export type LabelProps = TextProps & {
+export type LabelProps = {
   for?: string | RefObject<ReactNode>;
-};
+} & TextProps;
 
 export type FormControlBaseProps = {
   color?: ColorValues;
@@ -351,20 +351,19 @@ export type FormControlBaseProps = {
   labelStyle?: JssStyles;
 };
 
-export type ButtonProps = FocusableProps &
-  FormControlBaseProps & {
-    badge?: number | BadgeProps;
-    disabled?: boolean;
-    href?: string;
-    icon?: boolean | string | ReactNode;
-    loading?: boolean;
-    type?: 'button' | 'submit';
-    variant?: 'solid' | 'outline' | 'text';
-    // Styles
-    contentStyle?: JssStyles;
-  };
+export type ButtonProps = FormControlBaseProps & {
+  badge?: number | BadgeProps;
+  disabled?: boolean;
+  href?: string;
+  icon?: boolean | string | ReactNode;
+  loading?: boolean;
+  type?: 'button' | 'submit';
+  variant?: 'solid' | 'outline' | 'text';
+  // Styles
+  contentStyle?: JssStyles;
+} & FocusableProps;
 
-export type ButtonGroupProps = BoxProps & {
+export type ButtonGroupProps = {
   color?: ColorValues;
   disabled?: boolean;
   loading?: boolean;
@@ -372,13 +371,13 @@ export type ButtonGroupProps = BoxProps & {
   variant?: 'solid' | 'outline' | 'text' | string;
   // Styles
   contentStyle?: JssStyles;
-};
+} & BoxProps;
 
-export type InputBaseProps = FocusableProps &
+export type InputBaseProps = {
+  name?: string;
+} & EditableProps &
   FormControlBaseProps &
-  EditableProps & {
-    name?: string;
-  };
+  FocusableProps;
 
 export type InputProps = InputBaseProps & {
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
@@ -412,69 +411,69 @@ export type CheckboxProps = InputBaseProps & {
   unique?: boolean;
 };
 
-export type CardProps = BoxProps & {};
+export type CardProps = BoxProps;
 
-export type ScrollableProps = BoxProps & {
+export type ScrollableProps = {
   direction?: 'vertical' | 'horizontal';
-};
+} & BoxProps;
 
-export type ImageProps = BoxProps & {
+export type ImageProps = {
   source: { uri?: string } | string | number;
   alt?: string;
   mode?: 'cover' | 'contain' | 'fill';
   width?: number | string;
   height?: number | string;
   rounded?: boolean;
-};
+} & BoxProps;
 
-export type DividerProps = BoxProps & {
+export type DividerProps = {
   color?: ColorValues;
   size?: number | string;
   opacity?: number;
   vertical?: boolean;
-};
+} & BoxProps;
 
-export type BackdropProps = BoxProps & {
+export type BackdropProps = {
   visible?: boolean;
-};
+} & BoxProps;
 
-export type ModalProps = BoxProps & {
+export type ModalProps = {
   halign?: 'center' | 'left' | 'right';
   valign?: 'center' | 'top' | 'bottom';
   visible?: boolean;
   onBackdropPress?: EventCallback;
-};
+} & BoxProps;
 
-export type CollapseProps = BoxProps & {
+export type CollapseProps = {
   in?: boolean;
-};
+} & BoxProps;
 
-export type DropdownProps = BoxProps & {
+export type DropdownProps = {
   visible?: boolean;
-};
+} & BoxProps;
 
-export type IconProps = BoxProps & {
+export type IconProps = {
   alt?: string;
   color?: ColorValues;
   mirrored?: boolean;
   name: string;
   size?: number;
   weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
-};
+} & BoxProps;
 
-export type LoadingProps = BoxProps & {
+export type LoadingProps = {
   color?: ColorValues;
   label?: string;
   size?: number;
   speed?: string;
-};
+} & BoxProps;
 
-export type GridProps = BoxProps & {
+export type GridProps = {
   gap?: number;
   size?: number;
-};
+} & BoxProps;
 
-export type TableProps = BoxProps & {
+export type TableProps = {
   columns: [
     {
       header?: ReactNode | AnyCallback | string;
@@ -483,9 +482,9 @@ export type TableProps = BoxProps & {
     },
   ];
   rows: any[];
-};
+} & BoxProps;
 
-export type BadgeProps = TextProps & {
+export type BadgeProps = {
   value?: number;
   size?: SizeValues;
   dot?: boolean;
@@ -493,15 +492,15 @@ export type BadgeProps = TextProps & {
   bottom?: boolean;
   left?: boolean;
   right?: boolean;
-};
+} & TextProps;
 
-export type FormProps = BoxProps & {
+export type FormProps = {
   data?: any;
   onSubmit?: SubmitCallback;
-};
+} & BoxProps;
 
-export type TooltipProps = BoxProps & {
+export type TooltipProps = {
   title?: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
   color?: 'black' | 'white' | ColorValues;
-};
+} & BoxProps;
