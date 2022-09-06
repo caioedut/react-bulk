@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import factory from '../../props/factory';
@@ -29,6 +29,26 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
       rest.activeOpacity = 1;
     }
   }
+
+  useEffect(() => {
+    if (!web) return;
+
+    if (!visible) {
+      window.onscroll = null;
+    }
+
+    if (visible) {
+      const top = window.pageYOffset || document.documentElement.scrollTop;
+      const left = window.pageXOffset || document.documentElement.scrollLeft;
+
+      // @ts-ignore
+      window.onscroll = () => window.scrollBy({ top, left, behavior: 'instant' });
+    }
+
+    return () => {
+      window.onscroll = null;
+    };
+  }, [visible]);
 
   const styleRoot = useStylist({
     name: options.name,
