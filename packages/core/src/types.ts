@@ -245,6 +245,7 @@ export type ThemeProps = {
   contrast?: Readonly<Function>;
 
   components?: {
+    Backdrop?: ThemeComponentProps;
     Badge?: ThemeComponentProps;
     Box?: ThemeComponentProps;
     Button?: ThemeComponentProps;
@@ -433,9 +434,14 @@ export type DividerProps = BoxProps & {
   vertical?: boolean;
 };
 
-export type ModalProps = BoxProps & {
+export type BackdropProps = BoxProps & {
   visible?: boolean;
-  align?: 'center' | 'top' | 'bottom';
+};
+
+export type ModalProps = BoxProps & {
+  halign?: 'center' | 'left' | 'right';
+  valign?: 'center' | 'top' | 'bottom';
+  visible?: boolean;
   onBackdropPress?: EventCallback;
 };
 

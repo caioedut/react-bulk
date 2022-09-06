@@ -1,29 +1,30 @@
 import { forwardRef } from 'react';
-import { Pressable, Modal as RNModal } from 'react-native';
 
-import { ModalFactory, ModalProps } from '@react-bulk/core';
+import { BackdropFactory, ModalProps, pick } from '@react-bulk/core';
 
 import useMap from '../useMap';
 
-function Modal({ visible, onBackdropPress, ...props }: ModalProps, ref) {
-  const map = useMap();
+function Modal({ halign, valign, onBackdropPress, style, ...props }: ModalProps, ref) {
+  const alignItems = pick(valign as string, 'center', {
+    center: 'center',
+    top: 'flex-start',
+    bottom: 'flex-end',
+  });
 
-  if (onBackdropPress) {
-    // @ts-ignore
-    props.onBackdropPress = onBackdropPress;
-    props.component = props.component ?? Pressable;
-  }
+  const justifyContent = pick(halign as string, 'center', {
+    center: 'center',
+    left: 'flex-start',
+    right: 'flex-end',
+  });
 
   return (
-    <RNModal //
-      transparent
-      statusBarTranslucent
-      visible={Boolean(visible)}
-      animationType="fade"
-      presentationStyle="overFullScreen"
-    >
-      <ModalFactory ref={ref} {...props} map={map} />
-    </RNModal>
+    <BackdropFactory
+      ref={ref}
+      {...props}
+      map={useMap()}
+      onPress={onBackdropPress}
+      style={[style, { flexDirection: 'row', alignItems, justifyContent }]}
+    />
   );
 }
 
