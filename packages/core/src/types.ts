@@ -126,10 +126,11 @@ export type CustomStyles = {
   maxh?: number | string;
 
   bg?: string;
-  border?: string | number;
+  border?: string | number | boolean;
   corners?: number;
   shadow?: string;
 
+  i?: number | string;
   t?: number | string;
   b?: number | string;
   l?: number | string;
@@ -361,14 +362,15 @@ export type ButtonProps = FormControlBaseProps & {
   variant?: 'solid' | 'outline' | 'text';
   // Styles
   contentStyle?: JssStyles;
-} & FocusableProps;
+} & FocusableProps &
+  BoxProps;
 
 export type ButtonGroupProps = {
   color?: ColorValues;
   disabled?: boolean;
   loading?: boolean;
   size?: SizeValues;
-  variant?: 'solid' | 'outline' | 'text' | string;
+  variant?: 'solid' | 'outline' | 'text';
   // Styles
   contentStyle?: JssStyles;
 } & BoxProps;
@@ -393,7 +395,7 @@ export type InputProps = InputBaseProps & {
   // Styles
   containerStyle?: JssStyles;
   inputStyle?: JssStyles;
-};
+} & BoxProps;
 
 export type SelectProps = InputBaseProps & {
   options: {
@@ -401,15 +403,16 @@ export type SelectProps = InputBaseProps & {
     value: string;
     disabled?: boolean;
   }[];
+  placeholder?: string;
   // Styles
   buttonStyle?: JssStyles;
-};
+} & BoxProps;
 
 export type CheckboxProps = InputBaseProps & {
   checked?: boolean;
   defaultChecked?: boolean;
   unique?: boolean;
-};
+} & BoxProps;
 
 export type CardProps = BoxProps;
 
@@ -474,13 +477,11 @@ export type GridProps = {
 } & BoxProps;
 
 export type TableProps = {
-  columns: [
-    {
-      header?: ReactNode | AnyCallback | string;
-      content?: ReactNode | AnyCallback | string;
-      style?: JssStyles;
-    },
-  ];
+  columns: {
+    header?: ReactNode | AnyCallback | string;
+    content?: ReactNode | AnyCallback | string;
+    style?: JssStyles;
+  }[];
   rows: any[];
 } & BoxProps;
 
