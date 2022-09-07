@@ -1,24 +1,41 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import extract from '../../props/extract';
 import factory from '../../props/factory';
+import merge from '../../props/merge';
+import { flexContainerAlignProps } from '../../styles/constants';
 import { FactoryProps, ScrollableProps } from '../../types';
 import useStylist from '../../useStylist';
+import clone from '../../utils/clone';
 import BoxFactory from '../BoxFactory';
 
 function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & ScrollableProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Scrollable;
-  const { web, ScrollView, View } = map;
+  const { web, native, ScrollView, View } = map;
 
   // Extends from default props
-  let { direction, platform, ...rest } = factory(props, options.defaultProps);
+  let { direction, platform, style, ...rest } = factory(props, options.defaultProps);
 
   const isHorizontal = direction === 'horizontal';
 
+  const boxStyles = clone(theme.components.Box.defaultStyles.root);
+  const rootStyles = clone(options.defaultStyles.root);
+
+  let flexStyles = null;
+
+  if (native) {
+    flexStyles = extract(flexContainerAlignProps, boxStyles, rootStyles, style);
+  }
+
+  const styleBox = useStylist({
+    style: boxStyles,
+  });
+
   const styleRoot = useStylist({
     name: options.name,
-    style: options.defaultStyles.root,
+    style: rootStyles,
   });
 
   const styleState = useStylist({
@@ -28,18 +45,22 @@ function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & 
     },
   });
 
-  stylist = [styleRoot, styleState, stylist];
-
   return (
     <BoxFactory
       map={map}
       ref={ref}
       component={ScrollView}
-      stylist={stylist}
+      style={style}
+      stylist={[styleBox, styleRoot, styleState, stylist]}
       {...rest}
+      noRootStyles={native}
       platform={{
         ...platform,
-        native: { ...platform?.native, horizontal: isHorizontal },
+        native: {
+          ...platform?.native,
+          horizontal: isHorizontal,
+          contentContainerStyle: merge(flexStyles),
+        },
       }}
     >
       <View>{children}</View>

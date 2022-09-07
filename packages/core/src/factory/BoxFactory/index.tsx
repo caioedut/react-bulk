@@ -25,7 +25,6 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
     alignContent,
     alignItems,
     basis,
-    block,
     center,
     column,
     component,
@@ -39,9 +38,11 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
     justify,
     justifyContent,
     justifyItems,
+    noRootStyles,
     noWrap,
     order,
     platform,
+    position,
     reverse,
     row,
     shrink,
@@ -70,28 +71,16 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
   }
 
   style = [
-    block && {
-      marginLeft: 0,
-      marginRight: 0,
-      width: '100%',
-    },
-
-    web && block && { display: 'block' },
+    position && { position },
 
     typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
 
     // Flex Container
-    flexbox && {
-      display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}`,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      alignContent: 'stretch',
-    },
-
-    direction && { flexDirection: direction },
-    row && { flexDirection: reverse ? 'row-reverse' : 'row' },
-    column && { flexDirection: reverse ? 'column-reverse' : 'column' },
     flow && { flexFlow: flow },
+    direction && { flexDirection: direction },
+
+    row && { flexDirection: reverse ? 'row-reverse' : 'row', flexWrap: 'wrap' },
+    column && { flexDirection: reverse ? 'column-reverse' : 'column' },
 
     wrap && typeof wrap !== 'boolean' && { flexWrap: wrap },
     typeof wrap === 'boolean' && { flexWrap: wrap ? 'wrap' : 'nowrap' },
@@ -122,9 +111,7 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
 
     styleProps,
 
-    native && rawStyle,
-
-    hidden && { display: web ? 'none !important' : 'none' },
+    hidden && { display: 'none' },
   ];
 
   // Apply responsive styles
@@ -138,22 +125,22 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
   }
 
   const styleRoot = useStylist({
+    avoid: noRootStyles,
     name: options.name,
     style: options.defaultStyles.root,
   });
 
-  stylist = [styleRoot, stylist];
-  const styles = Array.isArray(stylist) ? stylist : [stylist];
+  const styles = [styleRoot, stylist];
   const processed = createStyle({ style, theme });
   styles.push(processed);
 
   if (native) {
-    rest.style = styles;
+    rest.style = merge(styles, rawStyle);
   }
 
   if (web) {
-    rest.className = clsx(styles, className);
     rest.style = merge(rawStyle);
+    rest.className = clsx(styles, className);
   }
 
   // Aria / Accessibility

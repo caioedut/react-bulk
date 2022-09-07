@@ -5,6 +5,7 @@ import factory from '../../props/factory';
 import { FactoryProps, TableProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
+import ScrollableFactory from '../ScrollableFactory';
 import TextFactory from '../TextFactory';
 
 function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref: any) {
@@ -65,11 +66,9 @@ function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref
     style: { border },
   });
 
-  stylist = [styleRoot, styleState, stylist];
-
   return (
-    <BoxFactory ref={ref} map={map} stylist={stylist} {...rest}>
-      <BoxFactory map={map} flexbox noWrap>
+    <ScrollableFactory ref={ref} map={map} stylist={[styleRoot, styleState, stylist]} direction="horizontal" {...rest}>
+      <BoxFactory map={map} row noWrap>
         {columns?.map((column, index) => (
           <BoxFactory key={index} map={map} style={buildStyle(column, false, index > 0)}>
             {renderContent(column.header, column, true)}
@@ -77,7 +76,7 @@ function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref
         ))}
       </BoxFactory>
       {rows?.map((row, rowIndex) => (
-        <BoxFactory key={rowIndex} map={map} flexbox noWrap>
+        <BoxFactory key={rowIndex} map={map} row noWrap>
           {columns.map((column, index) => (
             <BoxFactory key={index} map={map} style={buildStyle(column, true, index > 0)}>
               {renderContent(column.content, row)}
@@ -85,7 +84,7 @@ function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref
           ))}
         </BoxFactory>
       ))}
-    </BoxFactory>
+    </ScrollableFactory>
   );
 }
 
