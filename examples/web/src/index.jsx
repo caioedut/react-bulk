@@ -31,7 +31,7 @@ function Main() {
   const formRef = useRef(null);
 
   const [modal, setModal] = useState({});
-  const [select, setSelect] = useState(null);
+  const [select, setSelect] = useState('');
   const [loading, toggleLoading] = useReducer((state) => !state, true);
   const [collpase, toggleCollapse] = useReducer((state) => !state, false);
   const [dropdown, toggleDropdown] = useReducer((state) => !state, false);
@@ -166,7 +166,7 @@ function Main() {
                 Column 2 xs={5} md={3}
               </Text>
             </Box>
-            <Box xs={5} md="flex">
+            <Box xs={5} md="auto">
               <Text>Column 3 xs={5} md="flex"</Text>
             </Box>
           </Grid>
