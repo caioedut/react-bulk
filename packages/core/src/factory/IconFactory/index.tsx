@@ -21,16 +21,16 @@ function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: 
 
   const Component = Icons[iconName] ?? Icons.Question;
 
-  size = size ?? theme.rem(1.25);
+  size = size ?? theme.rem(theme.typography.lineHeight);
 
   const styleRoot = useStylist({
     name: options.name,
     style: options.defaultStyles.root,
   });
 
-  stylist = [styleRoot, stylist];
-
-  return <BoxFactory ref={ref} map={map} component={Component} stylist={stylist} color={theme.color(color)} size={size} {...rest} />;
+  return (
+    <BoxFactory ref={ref} map={map} component={Component} stylist={[styleRoot, stylist]} color={theme.color(color)} size={size} {...rest} />
+  );
 }
 
 export default React.forwardRef(IconFactory);

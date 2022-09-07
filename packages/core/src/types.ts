@@ -1,6 +1,6 @@
 import { CSSProperties, ReactNode, RefObject } from 'react';
 
-export type AnyObject = { [key: string]: string };
+export type AnyObject = { [key: string]: any };
 export type TimeoutType = ReturnType<typeof setInterval> | null;
 export type AnyCallback = (mixed: any) => any;
 export type EventCallback = (e: any) => any;
@@ -173,104 +173,108 @@ export type ThemeComponentProps = {
 };
 
 export type ThemeProps = {
-  mode?: ThemeMode;
+  mode: ThemeMode;
 
-  shape?: {
-    borderRadius?: number;
-    spacing?: number;
+  shape: {
+    borderRadius: number;
+    spacing: number;
   };
 
-  typography?: {
-    fontSize?: number;
-    lineHeight?: number;
+  typography: {
+    fontSize: number;
+    lineHeight: number;
   };
 
-  colors?: {
-    primary?: ThemeColorsProps;
-    secondary?: ThemeColorsProps;
-    info?: ThemeColorsProps;
-    success?: ThemeColorsProps;
-    warning?: ThemeColorsProps;
-    error?: ThemeColorsProps;
+  colors: {
+    primary: ThemeColorsProps;
+    secondary: ThemeColorsProps;
+    info: ThemeColorsProps;
+    success: ThemeColorsProps;
+    warning: ThemeColorsProps;
+    error: ThemeColorsProps;
 
-    common?: {
-      trans?: 'rgba(0, 0, 0, 0)' | string;
-      black?: '#000000' | string;
-      white?: '#ffffff' | string;
-      gray?: '#808080' | string;
+    common: {
+      trans: string;
+      black: string;
+      white: string;
+      gray: string;
     };
 
-    text?: {
-      primary?: string;
-      secondary?: string;
-      disabled?: string;
+    text: {
+      primary: string;
+      secondary: string;
+      disabled: string;
     };
 
-    background?: {
-      primary?: string;
-      secondary?: string;
-      disabled?: string;
+    background: {
+      primary: string;
+      secondary: string;
+      disabled: string;
     };
 
     [key: string]: ThemeColorsProps | any;
   };
 
-  mixins?: {
-    transitions?: {
-      slow?: AnyObject;
-      medium?: AnyObject;
-      fast?: AnyObject;
+  mixins: {
+    transitions: {
+      slow: AnyObject;
+      medium: AnyObject;
+      fast: AnyObject;
     };
 
     zIndex: {
+      backdrop: number;
       modal: number;
       dropdown: number;
       tooltip: number;
     };
   };
 
-  breakpoints?: {
-    xs?: number;
-    sm?: number;
-    md?: number;
-    lg?: number;
-    xl?: number;
-    xxl?: number;
+  breakpoints: {
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
+    xxl: number;
   };
 
-  rem?: Readonly<Function>;
-  spacing?: Readonly<Function>;
-  color?: Readonly<Function>;
-  hex2rgba?: Readonly<Function>;
-  rgba2hex?: Readonly<Function>;
-  contrast?: Readonly<Function>;
+  rem: Readonly<Function>;
+  spacing: Readonly<Function>;
+  color: Readonly<Function>;
+  hex2rgba: Readonly<Function>;
+  rgba2hex: Readonly<Function>;
+  contrast: Readonly<Function>;
 
-  components?: {
-    Backdrop?: ThemeComponentProps;
-    Badge?: ThemeComponentProps;
-    Box?: ThemeComponentProps;
-    Button?: ThemeComponentProps;
-    ButtonGroup?: ThemeComponentProps;
-    Card?: ThemeComponentProps;
-    Checkbox?: ThemeComponentProps;
-    Collapse?: ThemeComponentProps;
-    Divider?: ThemeComponentProps;
-    Dropdown?: ThemeComponentProps;
-    Grid?: ThemeComponentProps;
-    Group?: ThemeComponentProps;
-    Icon?: ThemeComponentProps;
-    Image?: ThemeComponentProps;
-    Input?: ThemeComponentProps;
-    Label?: ThemeComponentProps;
-    Loading?: ThemeComponentProps;
-    Modal?: ThemeComponentProps;
-    Scrollable?: ThemeComponentProps;
-    Select?: ThemeComponentProps;
-    Table?: ThemeComponentProps;
-    Text?: ThemeComponentProps;
-    Tooltip?: ThemeComponentProps;
+  components: {
+    Backdrop: ThemeComponentProps;
+    Badge: ThemeComponentProps;
+    Box: ThemeComponentProps;
+    Button: ThemeComponentProps;
+    ButtonGroup: ThemeComponentProps;
+    Card: ThemeComponentProps;
+    Checkbox: ThemeComponentProps;
+    Collapse: ThemeComponentProps;
+    Divider: ThemeComponentProps;
+    Dropdown: ThemeComponentProps;
+    Form: ThemeComponentProps;
+    Grid: ThemeComponentProps;
+    Group: ThemeComponentProps;
+    Icon: ThemeComponentProps;
+    Image: ThemeComponentProps;
+    Input: ThemeComponentProps;
+    Label: ThemeComponentProps;
+    Loading: ThemeComponentProps;
+    Modal: ThemeComponentProps;
+    Scrollable: ThemeComponentProps;
+    Select: ThemeComponentProps;
+    Table: ThemeComponentProps;
+    Text: ThemeComponentProps;
+    Tooltip: ThemeComponentProps;
   };
 };
+
+export type ThemeOptionalProps = Partial<ThemeProps>;
 
 export type BoxProps = {
   component?: any;

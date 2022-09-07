@@ -222,7 +222,16 @@ const base: ThemeProps & any = {
       Box: {
         name: 'rbk-box',
         defaultProps: {},
-        defaultStyles: {},
+        defaultStyles: {
+          root: {
+            display: 'flex',
+            flexDirection: 'column',
+            flexShrink: 0,
+            alignContent: 'flex-start',
+            justifyContent: 'flex-start',
+            alignItems: 'stretch',
+          },
+        },
       },
       Button: {
         name: 'rbk-button',
@@ -524,11 +533,11 @@ const base: ThemeProps & any = {
         defaultStyles: {
           root: {
             color: 'text.primary',
+            flexDirection: 'row',
             fontSize: '1rem',
             margin: 0,
             textDecorationLine: 'none',
             web: {
-              display: 'block',
               '& .rbk-text': { display: 'inline' },
             },
           },

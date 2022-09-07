@@ -3,9 +3,9 @@ import deepmerge from 'deepmerge';
 import base from './themes/base';
 import dark from './themes/dark';
 import light from './themes/light';
-import { ThemeProps } from './types';
+import { ThemeOptionalProps, ThemeProps } from './types';
 
-export default function createTheme(options?: ThemeProps, extendsTo?: ThemeProps): ThemeProps | any {
+export default function createTheme(options?: ThemeOptionalProps, extendsTo?: ThemeOptionalProps): ThemeProps | any {
   options = options || {};
   extendsTo = extendsTo || {};
 

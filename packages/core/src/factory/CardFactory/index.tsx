@@ -18,9 +18,7 @@ function CardFactory({ stylist, map, ...props }: FactoryProps & CardProps, ref: 
     style: options.defaultStyles.root,
   });
 
-  stylist = [styleRoot, stylist];
-
-  return <BoxFactory map={map} ref={ref} stylist={stylist} {...rest} />;
+  return <BoxFactory map={map} ref={ref} stylist={[styleRoot, stylist]} {...rest} />;
 }
 
 export default React.forwardRef(CardFactory);

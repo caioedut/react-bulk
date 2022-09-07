@@ -3,18 +3,21 @@ import React from 'react';
 import { useTheme } from '../../ReactBulk';
 import createStyle from '../../createStyle';
 import bindings from '../../props/bindings';
+import factory from '../../props/factory';
 import get from '../../props/get';
 import merge from '../../props/merge';
 import { customStyleProps } from '../../styles/jss';
 import { BoxProps, FactoryProps } from '../../types';
+import useStylist from '../../useStylist';
 import clsx from '../../utils/clsx';
 
 function BoxFactory({ className, stylist, children, map, ...props }: FactoryProps & BoxProps, ref) {
   const theme = useTheme();
+  const options = theme.components.Box;
   const { web, native, dimensions, Text, View } = map;
 
   // Extends from default props
-  props = { ...theme.components.Box.defaultProps, ...props };
+  props = factory(props, options.defaultProps);
 
   let {
     accessibility,
@@ -134,10 +137,12 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
     }
   }
 
-  // if (native) {
-  //   style.unshift(...stylists.filter((item) => item && typeof item === 'object'));
-  // }
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
+  stylist = [styleRoot, stylist];
   const styles = Array.isArray(stylist) ? stylist : [stylist];
   const processed = createStyle({ style, theme });
   styles.push(processed);
