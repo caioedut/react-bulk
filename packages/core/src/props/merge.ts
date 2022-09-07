@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-export default function merge(...mixin: (Object | Array<any> | Function)[]) {
+export default function merge(...mixin: (Object | Array<any> | Function | any)[]) {
   let result: any = {};
 
   for (const item of mixin) {

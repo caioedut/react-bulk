@@ -4,6 +4,9 @@ import merge from '../props/merge';
 import remove from '../props/remove';
 import { ThemeProps } from '../types';
 import clone from '../utils/clone';
+import { customSpacings, customStyleProps, flexAlignProps, spacings } from './constants';
+
+export { customSpacings, customStyleProps, spacings };
 
 export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   const { web, native } = Platform;
@@ -72,15 +75,8 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       }
     }
 
-    if (flexAlignProps.includes(prop) && value) {
-      value = value
-        .replace(/^normal$/, 'stretch')
-        .replace(/^start$/, 'flex-start')
-        .replace(/^end$/, 'flex-end')
-        .replace(/^space/, 'space-between')
-        .replace(/^between/, 'space-between')
-        .replace(/^around/, 'space-around')
-        .replace(/^evenly/, 'space-evenly');
+    if (flexAlignProps.includes(prop) && valueTrim) {
+      value = parseFlexAlign(valueTrim);
     }
 
     // Cast REM
@@ -91,9 +87,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         return native ? parsed : `${parsed}px`;
       });
 
-      if (!isNaN(value)) {
-        value = Number(value);
-      }
+      value = parseUnit(value);
     }
 
     if (prop === 'w') {
@@ -188,59 +182,49 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     }
 
     if (native) {
-      if (prop === 'margin') {
-        const [v1, v2, v3, v4] = valueSplit;
-
-        if (valueSplit.length > 1) {
-          prop = null;
-
-          Object.assign(styles, {
-            marginTop: v1,
-            marginRight: v2 ?? v1,
-            marginBottom: v3 ?? v1,
-            marginLeft: v4 ?? v2 ?? v1,
-          });
-        }
-      }
-
-      if (prop === 'padding') {
-        const [v1, v2, v3, v4] = valueSplit;
-
-        if (valueSplit.length > 1) {
-          prop = null;
-
-          Object.assign(styles, {
-            paddingTop: v1,
-            paddingRight: v2 ?? v1,
-            paddingBottom: v3 ?? v1,
-            paddingLeft: v4 ?? v2 ?? v1,
-          });
-        }
-      }
-
       if (prop === 'inset') {
         const [v1, v2, v3, v4] = valueSplit;
 
         prop = null;
 
         Object.assign(styles, {
-          top: v1,
-          right: v2 ?? v1,
-          bottom: v3 ?? v1,
-          left: v4 ?? v2 ?? v1,
+          top: parseUnit(v1),
+          right: parseUnit(v2 ?? v1),
+          bottom: parseUnit(v3 ?? v1),
+          left: parseUnit(v4 ?? v2 ?? v1),
         });
       }
 
-      if (prop === 'placeItems') {
-        const [v1, v2] = valueSplit;
+      ['padding', 'margin'].forEach((prefix) => {
+        if (prop === prefix) {
+          const [v1, v2, v3, v4] = valueSplit;
 
-        prop = null;
+          if (valueSplit.length > 1) {
+            prop = null;
 
-        Object.assign(styles, {
-          alignItems: v1,
-          justifyItems: v2 ?? v1,
-        });
-      }
+            Object.assign(styles, {
+              [`${prefix}Top`]: parseUnit(v1),
+              [`${prefix}Right`]: parseUnit(v2 ?? v1),
+              [`${prefix}Bottom`]: parseUnit(v3 ?? v1),
+              [`${prefix}Left`]: parseUnit(v4 ?? v2 ?? v1),
+            });
+          }
+        }
+      });
+
+      // place-* props
+      ['Content', 'Items', 'Self'].forEach((suffix) => {
+        if (prop === 'place' + suffix) {
+          prop = null;
+
+          const [v1, v2] = valueSplit;
+
+          Object.assign(styles, {
+            [`align${suffix}`]: parseFlexAlign(v1),
+            [`justify${suffix}`]: parseFlexAlign(v2 ?? v1),
+          });
+        }
+      });
 
       if (prop === 'shadow' || prop === 'boxShadow') {
         prop = null;
@@ -278,53 +262,17 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   return styles;
 }
 
-export const customSpacings = [
-  'i',
-  't',
-  'b',
-  'l',
-  'r',
-  'm',
-  'mt',
-  'mb',
-  'ml',
-  'mr',
-  'mh',
-  'mv',
-  'mx',
-  'my',
-  'p',
-  'pt',
-  'pb',
-  'pl',
-  'pr',
-  'px',
-  'py',
-];
+const parseUnit = (value) => {
+  return isNaN(value) ? value : Number(value);
+};
 
-export const customStyleProps = ['w', 'h', 'maxw', 'maxh', 'minw', 'minh', 'bg', 'border', 'corners', 'shadow', ...customSpacings];
-
-export const spacings = [
-  'position',
-  'top',
-  'bottom',
-  'left',
-  'right',
-  'margin',
-  'marginTop',
-  'marginBottom',
-  'marginLeft',
-  'marginRight',
-  'marginHorizontal',
-  'marginVertical',
-  'padding',
-  'paddingTop',
-  'paddingBottom',
-  'paddingLeft',
-  'paddingRight',
-  'paddingHorizontal',
-  'paddingVertical',
-  ...customSpacings,
-];
-
-export const flexAlignProps = ['placeItems', 'alignContent', 'alignItems', 'alignSelf', 'justifyContent', 'justifyItems', 'justifySelf'];
+const parseFlexAlign = (value) => {
+  return value
+    .replace(/^normal$/, 'stretch')
+    .replace(/^start$/, 'flex-start')
+    .replace(/^end$/, 'flex-end')
+    .replace(/^space$/, 'space-between')
+    .replace(/^between$/, 'space-between')
+    .replace(/^around$/, 'space-around')
+    .replace(/^evenly$/, 'space-evenly');
+};

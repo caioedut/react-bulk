@@ -13,7 +13,7 @@ type ThemeContextValue = ThemeProps & {
 const defaultTheme: ThemeContextValue = createTheme();
 const Context = createContext(defaultTheme);
 
-export function useTheme(): ThemeProps {
+export function useTheme(): ThemeContextValue {
   return (useContext(Context) || defaultTheme) as any;
 }
 

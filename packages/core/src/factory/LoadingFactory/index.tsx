@@ -29,10 +29,8 @@ function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps,
     },
   });
 
-  stylist = [styleRoot, styleState, stylist];
-
   return (
-    <BoxFactory ref={ref} map={map} stylist={stylist} flexbox center {...rest}>
+    <BoxFactory ref={ref} map={map} stylist={[styleRoot, styleState, stylist]} row center {...rest}>
       <IconFactory map={map} name="Spinner" size={size} color={color} />
       {Boolean(label) && (
         <BoxFactory map={map} style={{ color, fontSize: size / multiplier, marginLeft: size / 2 }}>

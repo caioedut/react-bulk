@@ -116,6 +116,8 @@ export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warnin
 export type SizeValues = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
 export type CustomStyles = {
+  position?: 'relative' | 'absolute';
+
   h?: number | string;
   w?: number | string;
 
@@ -284,8 +286,8 @@ export type BoxProps = {
   accessibility?: AccessibilityProps;
   children?: ReactNode;
   invisible?: boolean;
-  block?: boolean;
   hidden?: boolean;
+  noRootStyles?: boolean;
 
   // Styles
   style?: JssStyles;

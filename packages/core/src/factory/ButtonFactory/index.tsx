@@ -176,7 +176,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
       )}
 
       {loading && (
-        <BoxFactory map={map} flexbox center style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+        <BoxFactory map={map} position="absolute" i={0} center>
           <LoadingFactory map={map} color={textColor} size={lineSize} />
         </BoxFactory>
       )}

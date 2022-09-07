@@ -51,7 +51,7 @@ function Main() {
 
   const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
   const variants = ['solid', 'outline', 'text'];
-  const sizes = ['medium', 'xsmall', 'small', 'large', 'xlarge'];
+  const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
   const tooltips = ['top', 'bottom', 'left', 'right'];
 
   const getLabel = (str) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
@@ -176,7 +176,7 @@ function Main() {
           <Text variant="title" mb={3}>
             Typography
           </Text>
-          <Box flexbox alignItems="baseline">
+          <Box row alignItems="baseline">
             <Text mr={3} mt={3} variant="h1">
               H1
             </Text>
@@ -217,7 +217,7 @@ function Main() {
               <Text variant="subtitle" transform="capitalize" mt={3}>
                 {variant}
               </Text>
-              <Box flexbox wrap direction="row" alignItems="center">
+              <Box row wrap alignItems="center">
                 <Button variant={variant} mr={3} mt={3}>
                   Button
                 </Button>
@@ -234,15 +234,13 @@ function Main() {
                 <Button variant={variant} mr={3} mt={3} endIcon="House">
                   End Icon
                 </Button>
+                <Divider invisible />
                 {sizes.map((size) => (
                   <Button key={size} variant={variant} size={size} mr={3} mt={3}>
                     {getLabel(size)}
                   </Button>
                 ))}
               </Box>
-              <Button mt={3} variant={variant} block>
-                Block
-              </Button>
               <Divider mx={-3} my={3} />
             </Box>
           ))}
@@ -317,12 +315,12 @@ function Main() {
           <Text variant="subtitle" mt={3}>
             Checkbox / Radio Button
           </Text>
-          <Box flexbox alignItems="center">
+          <Box row alignItems="center">
             {sizes.map((size) => (
               <Checkbox key={size} mt={3} mr={3} size={size} label={getLabel(size)} checked={checkbox} onChange={toggleCheckbox} />
             ))}
           </Box>
-          <Box flexbox alignItems="center">
+          <Box row alignItems="center">
             {sizes.map((size) => (
               <Checkbox
                 key={size}
@@ -366,9 +364,7 @@ function Main() {
                 <Checkbox name="acceptTerms" label="I accept the terms of use." />
               </Box>
               <Box xs={6} md={4}>
-                <Button type="submit" block>
-                  Submit
-                </Button>
+                <Button type="submit">Submit</Button>
               </Box>
             </Grid>
           </Form>
@@ -376,7 +372,7 @@ function Main() {
 
         <Card mt={3}>
           <Text variant="title">Badge</Text>
-          <Box flexbox alignItems="center">
+          <Box row alignItems="center">
             <Badge mt={3} mr={3} dot />
             <Badge mt={3} mr={3} color="warning">
               2
@@ -400,7 +396,7 @@ function Main() {
           <Text variant="title" mb={3}>
             Breakpoints
           </Text>
-          <Box flexbox wrap>
+          <Box row wrap>
             <Button variant="outline" mr={2} style={{ display: 'none', xs: { display: 'flex' } }}>
               Visible on XS
             </Button>
@@ -454,7 +450,7 @@ function Main() {
           <Text variant="title" mb={3}>
             Images
           </Text>
-          <Box flexbox center>
+          <Box row center>
             <Image mr={2} w={120} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
             <Image mr={2} w="15%" source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
             <Image mr={2} h={80} corners={3} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
@@ -466,14 +462,14 @@ function Main() {
           <Text variant="title" mb={3}>
             Dividers
           </Text>
-          <Box flexbox center>
+          <Box row center>
             <Box flex>
               <Text>Horizontal</Text>
               <Divider mt={3} />
               <Divider mt={3} color="primary" />
               <Divider mt={3} color="secondary" />
             </Box>
-            <Box flexbox center w="50%" h={100}>
+            <Box row center w="50%" h={100}>
               <Text my={3}>Vertical</Text>
               <Divider ml={3} vertical />
               <Divider ml={3} color="primary" vertical />
@@ -497,7 +493,7 @@ function Main() {
           <Text variant="title" mb={3}>
             Modals
           </Text>
-          <Box flexbox>
+          <Box row>
             <Button mr={2} onPress={() => setModal({ visible: true, valign: 'top' })}>
               Top
             </Button>
@@ -523,7 +519,7 @@ function Main() {
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consectetur cupiditate deserunt dolorum eius et expedita
                 qui repellendus voluptatibus! Accusamus consectetur deleniti fuga iure laborum quam quisquam quo ut, velit!
               </Text>
-              <Button mt={3} block onPress={() => setModal((current) => ({ ...current, visible: false }))}>
+              <Button mt={3} onPress={() => setModal((current) => ({ ...current, visible: false }))}>
                 Close
               </Button>
             </Card>
@@ -534,17 +530,19 @@ function Main() {
           <Text variant="title" mb={3}>
             Dropdown
           </Text>
-          <Box>
+          <Box row>
             <Button onPress={toggleDropdown}>Toggle Dropdown</Button>
-            <Dropdown visible={dropdown}>Lorem ipsum dolor sit amet</Dropdown>
           </Box>
+          <Dropdown visible={dropdown}>
+            <Text>Lorem ipsum dolor sit amet</Text>
+          </Dropdown>
         </Card>
 
         <Card mt={3}>
           <Text variant="title" mb={3}>
             Collapse
           </Text>
-          <Box>
+          <Box row>
             <Button onPress={toggleCollapse}>Toggle Collapse</Button>
           </Box>
           <Collapse in={collpase} mt={3}>
@@ -562,7 +560,7 @@ function Main() {
           <Text variant="subtitle" mb={3}>
             Hover/press texts below
           </Text>
-          <Box flexbox center>
+          <Box row center>
             {tooltips.map((pos) => (
               <Box key={pos} p={3}>
                 <Tooltip title="My tooltip" position={pos}>
