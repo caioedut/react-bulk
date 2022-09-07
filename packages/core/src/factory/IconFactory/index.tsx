@@ -29,7 +29,16 @@ function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: 
   });
 
   return (
-    <BoxFactory ref={ref} map={map} component={Component} stylist={[styleRoot, stylist]} color={theme.color(color)} size={size} {...rest} />
+    <BoxFactory
+      ref={ref}
+      map={map}
+      component={Component}
+      stylist={[styleRoot, stylist]}
+      color={theme.color(color)}
+      size={size}
+      {...rest}
+      noRootStyles
+    />
   );
 }
 
