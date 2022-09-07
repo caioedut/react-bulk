@@ -493,6 +493,8 @@ const base: ThemeProps & any = {
         defaultStyles: {
           root: {
             flex: 1,
+            maxHeight: '100%',
+            maxWidth: '100%',
             web: {
               overflow: 'hidden',
               scrollBehavior: 'smooth',
