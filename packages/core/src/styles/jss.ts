@@ -38,20 +38,14 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     let prop: any = attr;
     let value = styles[attr];
 
-    const splitValue = `${value ?? ''}`.split(/\s/g).filter((item: string) => item.trim());
+    const valueTrim = `${value ?? ''}`.trim();
+    const valueSplit = valueTrim.split(/\s/g).filter((item: string) => item.trim());
 
     delete styles[attr];
 
     // Call function with theme
     if (typeof value === 'function') {
       value = value(theme);
-    }
-
-    // Cast REM
-    const remRegex = /^((\d+\.)?\d+)rem$/gi;
-    const remValue = `${value ?? ''}`.trim();
-    if (remRegex.test(remValue)) {
-      value = +remValue.replace(/((\d+\.)?\d+)rem/gi, ($x, $1) => ($x ? theme?.rem?.($1) : 0));
     }
 
     if (customSpacings.includes(prop)) {
@@ -87,6 +81,19 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         .replace(/^between/, 'space-between')
         .replace(/^around/, 'space-around')
         .replace(/^evenly/, 'space-evenly');
+    }
+
+    // Cast REM
+    const remRegex = /([+-]?([0-9]*[.])?[0-9]+)rem/gi;
+    if (remRegex.test(valueTrim)) {
+      value = valueTrim.replace(remRegex, ($x, $1) => {
+        const parsed = $x ? theme?.rem?.($1) : 0;
+        return native ? parsed : `${parsed}px`;
+      });
+
+      if (!isNaN(value)) {
+        value = Number(value);
+      }
     }
 
     if (prop === 'w') {
@@ -128,14 +135,14 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       if (value) {
         const types = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset', 'initial', 'inherit'];
 
-        const sizeIndex = splitValue.findIndex((item: string) => /^\d\w*$/.test(item));
+        const sizeIndex = valueSplit.findIndex((item: string) => /^\d\w*$/.test(item));
         // @ts-ignore
-        const borderWidth = sizeIndex >= 0 ? +splitValue.splice(sizeIndex, 1).shift().replace(/\D/g, '') : 1;
+        const borderWidth = sizeIndex >= 0 ? +valueSplit.splice(sizeIndex, 1).shift().replace(/\D/g, '') : 1;
 
-        const styleIndex = splitValue.findIndex((item: string) => types.includes(item));
-        const borderStyle = styleIndex >= 0 ? splitValue.splice(styleIndex, 1).shift() : 'solid';
+        const styleIndex = valueSplit.findIndex((item: string) => types.includes(item));
+        const borderStyle = styleIndex >= 0 ? valueSplit.splice(styleIndex, 1).shift() : 'solid';
 
-        const borderColor = theme?.color?.(splitValue.shift() || theme.colors?.common?.black);
+        const borderColor = theme?.color?.(valueSplit.shift() || theme.colors?.common?.black);
 
         Object.assign(styles, { borderWidth, borderStyle, borderColor });
       }
@@ -181,8 +188,38 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     }
 
     if (native) {
+      if (prop === 'margin') {
+        const [v1, v2, v3, v4] = valueSplit;
+
+        if (valueSplit.length > 1) {
+          prop = null;
+
+          Object.assign(styles, {
+            marginTop: v1,
+            marginRight: v2 ?? v1,
+            marginBottom: v3 ?? v1,
+            marginLeft: v4 ?? v2 ?? v1,
+          });
+        }
+      }
+
+      if (prop === 'padding') {
+        const [v1, v2, v3, v4] = valueSplit;
+
+        if (valueSplit.length > 1) {
+          prop = null;
+
+          Object.assign(styles, {
+            paddingTop: v1,
+            paddingRight: v2 ?? v1,
+            paddingBottom: v3 ?? v1,
+            paddingLeft: v4 ?? v2 ?? v1,
+          });
+        }
+      }
+
       if (prop === 'inset') {
-        const [v1, v2, v3, v4] = splitValue;
+        const [v1, v2, v3, v4] = valueSplit;
 
         prop = null;
 
@@ -195,7 +232,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       }
 
       if (prop === 'placeItems') {
-        const [v1, v2] = splitValue;
+        const [v1, v2] = valueSplit;
 
         prop = null;
 
@@ -229,11 +266,11 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       }
     }
 
-    if (`${prop || ''}`.toLowerCase().includes('color')) {
-      value = theme?.color?.(value) ?? value;
-    }
-
     if (prop) {
+      if (`${prop || ''}`.toLowerCase().includes('color')) {
+        value = theme?.color?.(value) ?? value;
+      }
+
       styles[prop] = value;
     }
   }

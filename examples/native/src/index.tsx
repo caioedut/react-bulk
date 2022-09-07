@@ -2,7 +2,6 @@ import React, { useReducer, useRef, useState } from 'react';
 
 import ReactBulk, { useTheme } from '@react-bulk/core';
 import {
-  Backdrop,
   Badge,
   Box,
   Button,
@@ -109,14 +108,16 @@ function Main() {
                 name="typography.fontSize"
                 value={`${theme.typography.fontSize}`}
                 endIcon={
-                  <ButtonGroup mr={-2}>
-                    <Button variant={theme.mode === 'light' ? 'solid' : 'outline'} onPress={() => theme.setTheme('light')}>
-                      Light
-                    </Button>
-                    <Button variant={theme.mode === 'dark' ? 'solid' : 'outline'} onPress={() => theme.setTheme('dark')}>
-                      Dark
-                    </Button>
-                  </ButtonGroup>
+                  <Box mr={-2}>
+                    <ButtonGroup>
+                      <Button variant={theme.mode === 'light' ? 'solid' : 'outline'} onPress={() => theme.setTheme('light')}>
+                        Light
+                      </Button>
+                      <Button variant={theme.mode === 'dark' ? 'solid' : 'outline'} onPress={() => theme.setTheme('dark')}>
+                        Dark
+                      </Button>
+                    </ButtonGroup>
+                  </Box>
                 }
                 onChange={handleChangeTheme}
               />

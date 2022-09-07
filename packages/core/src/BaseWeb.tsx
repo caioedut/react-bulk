@@ -47,8 +47,10 @@ export default function BaseWeb({ children }) {
         color: ${theme.colors.text.primary};
         line-height: 1.15;
         margin: 0;
-        min-height: 100%;
         padding: 0;
+
+        height: 100%;
+        width: 100%;
       }
 
       ::placeholder {
@@ -72,7 +74,7 @@ export default function BaseWeb({ children }) {
     createStyle({ name: 'rbk-global', style, theme, global: true });
 
     const components = { ...theme.components };
-    const ordered = extract(['Box', 'Scrollable', 'Card', 'Dropdown', 'Group', 'Text', 'Label'], components);
+    const ordered = extract(['Box', 'Text', 'Label', 'Backdrop', 'Scrollable', 'Card', 'Dropdown', 'Button', 'ButtonGroup'], components);
 
     [...Object.values(ordered), ...Object.values(components)].forEach((component: any) => {
       const componentName = component?.name;
