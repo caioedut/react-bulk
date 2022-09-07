@@ -86,7 +86,7 @@ function TextFactory({ stylist, map, ...props }: FactoryProps & TextProps, ref) 
 
   stylist = [styleRoot, styleState, stylist];
 
-  return <BoxFactory map={map} ref={ref} component={Text} stylist={stylist} {...rest} />;
+  return <BoxFactory map={map} ref={ref} component={Text} stylist={stylist} {...rest} noRootStyles />;
 }
 
 export default React.forwardRef(TextFactory);

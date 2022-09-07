@@ -536,8 +536,10 @@ const base: ThemeProps & any = {
             flexDirection: 'row',
             fontSize: '1rem',
             margin: 0,
+            textAlign: 'left',
             textDecorationLine: 'none',
             web: {
+              display: 'block',
               '& .rbk-text': { display: 'inline' },
             },
           },
