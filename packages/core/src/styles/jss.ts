@@ -27,7 +27,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     nativeStyle.push(extracted.native);
   }
 
-  if (theme?.breakpoints) {
+  if (theme.breakpoints) {
     remove(Object.keys(theme.breakpoints), args);
   }
 
@@ -67,7 +67,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         .replace(/^r$/, 'right');
 
       // Theme multiplier
-      if (theme?.spacing && typeof value === 'number') {
+      if (theme.spacing && typeof value === 'number') {
         value = theme.spacing(value);
       }
     }
@@ -87,7 +87,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     const remRegex = /([+-]?([0-9]*[.])?[0-9]+)rem/gi;
     if (remRegex.test(valueTrim)) {
       value = valueTrim.replace(remRegex, ($x, $1) => {
-        const parsed = $x ? theme?.rem?.($1) : 0;
+        const parsed = $x ? theme.rem($1) : 0;
         return native ? parsed : `${parsed}px`;
       });
 
@@ -126,7 +126,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
     if (prop === 'corners') {
       prop = 'borderRadius';
-      value = (theme?.shape?.borderRadius ?? 0) * value;
+      value = (theme.shape.borderRadius ?? 0) * value;
     }
 
     if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(prop)) {
@@ -142,7 +142,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         const styleIndex = valueSplit.findIndex((item: string) => types.includes(item));
         const borderStyle = styleIndex >= 0 ? valueSplit.splice(styleIndex, 1).shift() : 'solid';
 
-        const borderColor = theme?.color?.(valueSplit.shift() || theme.colors?.common?.black);
+        const borderColor = theme.color(valueSplit.shift() || theme.colors.common.black);
 
         Object.assign(styles, { borderWidth, borderStyle, borderColor });
       }
@@ -268,7 +268,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
     if (prop) {
       if (`${prop || ''}`.toLowerCase().includes('color')) {
-        value = theme?.color?.(value) ?? value;
+        value = theme.color(value) ?? value;
       }
 
       styles[prop] = value;

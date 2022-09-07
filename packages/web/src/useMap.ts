@@ -18,7 +18,7 @@ export default function useMap() {
 
     timeoutRef.current = setTimeout(() => {
       setDimensions({ height: window.innerHeight, width: window.innerWidth });
-    }, 50);
+    }, 10);
   };
 
   useEffect(() => {
