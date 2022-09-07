@@ -94,14 +94,14 @@ function Main() {
     <Scrollable bg="background.secondary">
       <Box p={3}>
         <Card>
-          <Text variant="title">React Bulk</Text>
           <Grid>
             <Box xs={12} md>
+              <Text variant="title">React Bulk</Text>
               <Text m={3} ml={0} flex>
                 Open up App.tsx to start working on your app!
               </Text>
             </Box>
-            <Box xs={12}>
+            <Box xs={12} md={4} lg={3} xl={2}>
               <Input
                 type="number"
                 label="Font Size"
