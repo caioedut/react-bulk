@@ -1,42 +1,70 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import extract from '../../props/extract';
+import factory from '../../props/factory';
+import merge from '../../props/merge';
+import { flexContainerAlignProps } from '../../styles/constants';
 import { FactoryProps, ScrollableProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
+import clone from '../../utils/clone';
 import BoxFactory from '../BoxFactory';
 
-function ScrollableFactory({ className, map, ...props }: FactoryProps & ScrollableProps, ref: any) {
+function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & ScrollableProps, ref: any) {
   const theme = useTheme();
-  const { web, ScrollView } = map;
-  const classes: any[] = ['rbk-scrollable', className];
+  const options = theme.components.Scrollable;
+  const { web, native, ScrollView, View } = map;
 
   // Extends from default props
-  props = { ...theme.components.Scrollable.defaultProps, ...props };
+  let { direction, platform, style, ...rest } = factory(props, options.defaultProps);
 
-  let { horizontal, style, ...rest } = props;
+  const isHorizontal = direction === 'horizontal';
 
-  style = [
-    { flex: 1 },
+  const boxStyles = clone(theme.components.Box.defaultStyles.root);
+  const rootStyles = clone(options.defaultStyles.root);
 
-    web && horizontal && { overflowX: 'auto' },
-    web && !horizontal && { overflowY: 'auto' },
-    web && { scrollBehavior: 'smooth' },
+  let flexStyles = null;
 
-    style,
-  ];
+  if (native) {
+    flexStyles = extract(flexContainerAlignProps, boxStyles, rootStyles, style);
+  }
+
+  const styleBox = useStylist({
+    style: boxStyles,
+  });
+
+  const styleRoot = useStylist({
+    name: options.name,
+    style: rootStyles,
+  });
+
+  const styleState = useStylist({
+    style: web && {
+      overflowX: isHorizontal ? 'auto' : 'hidden',
+      overflowY: isHorizontal ? 'hidden' : 'auto',
+    },
+  });
 
   return (
     <BoxFactory
       map={map}
       ref={ref}
       component={ScrollView}
-      {...rest}
-      className={clsx(classes)}
       style={style}
+      stylist={[styleBox, styleRoot, styleState, stylist]}
+      {...rest}
+      noRootStyles={native}
       platform={{
-        native: { horizontal },
+        ...platform,
+        native: {
+          ...platform?.native,
+          horizontal: isHorizontal,
+          contentContainerStyle: merge(flexStyles),
+        },
       }}
-    />
+    >
+      <View>{children}</View>
+    </BoxFactory>
   );
 }
 

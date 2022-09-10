@@ -1,30 +1,24 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { CardProps, FactoryProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function CardFactory({ className, map, ...props }: FactoryProps & CardProps, ref: any) {
+function CardFactory({ stylist, map, ...props }: FactoryProps & CardProps, ref: any) {
   const theme = useTheme();
-  const classes: any[] = ['rbk-card', className];
+  const options = theme.components.Card;
 
   // Extends from default props
-  props = { ...theme.components.Card.defaultProps, ...props };
+  let { ...rest } = factory(props, options.defaultProps);
 
-  let { style, ...rest } = props;
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
-  style = [
-    {
-      backgroundColor: theme.colors.background.primary,
-      borderRadius: theme.shape.borderRadius,
-      p: 3,
-    },
-
-    style,
-  ];
-
-  return <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} style={style} />;
+  return <BoxFactory map={map} ref={ref} stylist={[styleRoot, stylist]} {...rest} />;
 }
 
 export default React.forwardRef(CardFactory);

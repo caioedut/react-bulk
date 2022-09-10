@@ -1,41 +1,35 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { DividerProps, FactoryProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function DividerFactory({ className, map, ...props }: FactoryProps & DividerProps, ref: any) {
+function DividerFactory({ stylist, map, ...props }: FactoryProps & DividerProps, ref: any) {
   const theme = useTheme();
-  const classes: any[] = ['rbk-divider', className];
+  const options = theme.components.Divider;
 
   // Extends from default props
-  props = { ...theme.components.Divider.defaultProps, ...props };
+  let { color, opacity, size, vertical, ...rest } = factory(props, options.defaultProps);
 
-  let {
-    //
-    color,
-    opacity,
-    size,
-    vertical,
-    style,
-    ...rest
-  } = props;
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
-  style = [
-    {
+  const styleState = useStylist({
+    style: {
       backgroundColor: color,
+      minHeight: vertical ? '100%' : size,
+      minWidth: vertical ? size : '100%',
       opacity,
     },
+  });
 
-    vertical && { width: size, height: '100%' },
+  stylist = [styleRoot, styleState, stylist];
 
-    !vertical && { height: size },
-
-    style,
-  ];
-
-  return <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} style={style} />;
+  return <BoxFactory map={map} ref={ref} stylist={stylist} {...rest} />;
 }
 
 export default React.forwardRef(DividerFactory);

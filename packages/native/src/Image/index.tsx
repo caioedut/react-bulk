@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useState } from 'react';
 import { Image as RNImage } from 'react-native';
 
 import { BoxFactory, ImageFactory, extract } from '@react-bulk/core';
-import { customStyleProps, spacings } from '@react-bulk/core/src/styles/jss';
+import { customStyleProps, spacings } from '@react-bulk/core';
 
 import { NativeImageProps } from '../types';
 import useMap from '../useMap';

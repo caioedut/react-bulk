@@ -1,34 +1,43 @@
 import React, { useRef } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { FactoryProps, ImageProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function ImageFactory({ className, map, ...props }: FactoryProps & ImageProps, ref: any) {
+function ImageFactory({ stylist, map, ...props }: FactoryProps & ImageProps, ref: any) {
   const theme = useTheme();
-  const { web, native, Image } = map;
-  const classes: any[] = ['rbk-image', className];
+  const options = theme.components.Image;
+  const { web, Image } = map;
 
   // Extends from default props
-  props = { ...theme.components.Image.defaultProps, ...props };
-
-  let { mode, height, width, style, ...rest } = props;
+  let { mode, height, width, ...rest } = factory(props, options.defaultProps);
 
   const defaultRef: any = useRef(null);
   const imageRef = ref || defaultRef;
 
-  style = [
-    web && { display: 'inline-block', objectFit: mode },
+  if (web) {
+    rest.alt = rest.alt ?? '';
+  }
 
-    native && { resizeMode: mode === 'fill' ? 'stretch' : mode },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
-    style,
+  const styleState = useStylist({
+    style: {
+      height,
+      width,
+      web: { objectFit: mode },
+      native: { resizeMode: mode === 'fill' ? 'stretch' : mode },
+    },
+  });
 
-    { width, height },
-  ];
+  stylist = [styleRoot, styleState, stylist];
 
-  return <BoxFactory map={map} ref={imageRef} component={Image} {...rest} className={clsx(classes)} style={style} />;
+  return <BoxFactory map={map} ref={imageRef} component={Image} stylist={stylist} {...rest} />;
 }
 
 export default React.forwardRef(ImageFactory);

@@ -1,69 +1,46 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { FactoryProps, ModalProps } from '../../types';
-import clsx from '../../utils/clsx';
-import BoxFactory from '../BoxFactory';
+import useStylist from '../../useStylist';
+import pick from '../../utils/pick';
+import BackdropFactory from '../BackdropFactory';
 
-function ModalFactory({ className, children, map, ...props }: FactoryProps & ModalProps, ref: any) {
+function ModalFactory({ stylist, map, ...props }: FactoryProps & ModalProps, ref: any) {
   const theme = useTheme();
-  const { web, native } = map;
-  const classes: any[] = ['rbk-modal', className];
+  const options = theme.components.Modal;
 
   // Extends from default props
-  props = { ...theme.components.Modal.defaultProps, ...props };
+  let { halign, valign, onBackdropPress, ...rest } = factory(props, options.defaultProps);
 
-  let { align, onBackdropPress, visible, style, ...rest } = props;
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
-  style = [
-    {
-      position: web ? 'fixed' : 'relative',
-      top: 0,
-      left: 0,
-
-      height: '100%',
-      width: '100%',
-
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  const styleHAlign = useStylist({
+    style: {
+      alignItems: pick(halign as string, 'center', {
+        center: 'center',
+        left: 'flex-start',
+        right: 'flex-end',
+      }),
     },
+  });
 
-    align === 'top' && { alignItems: 'flex-start' },
-
-    align === 'bottom' && { alignItems: 'flex-end' },
-
-    web && {
-      transition: 'all 0.4s ease',
-      opacity: 0,
-      visibility: 'hidden',
-      zIndex: -1,
+  const styleVAlign = useStylist({
+    style: {
+      justifyContent: pick(valign as string, 'center', {
+        center: 'center',
+        top: 'flex-start',
+        bottom: 'flex-end',
+      }),
     },
-
-    web &&
-      visible && {
-        opacity: 1,
-        visibility: 'visible',
-        zIndex: theme.mixins.zIndex.modal,
-      },
-
-    style,
-  ];
-
-  const containerProps: any = {};
-
-  if (native) {
-    containerProps.onStartShouldSetResponder = () => true;
-    containerProps.onTouchEnd = (e) => e.stopPropagation();
-  }
+  });
 
   return (
-    <BoxFactory map={map} ref={ref} flexbox {...rest} className={clsx(classes)} style={style} onPress={onBackdropPress}>
-      <BoxFactory map={map} {...containerProps}>
-        {children}
-      </BoxFactory>
-    </BoxFactory>
+    <BackdropFactory map={map} ref={ref} stylist={[styleRoot, styleHAlign, styleVAlign, stylist]} {...rest} onPress={onBackdropPress} />
   );
 }
 

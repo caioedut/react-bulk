@@ -1,55 +1,58 @@
 import React, { cloneElement } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { ButtonGroupProps, FactoryProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import ScrollableFactory from '../ScrollableFactory';
 
-function ButtonGroupFactory({ className, children, map, ...props }: FactoryProps & ButtonGroupProps, ref: any) {
+function ButtonGroupFactory({ stylist, children, map, ...props }: FactoryProps & ButtonGroupProps, ref: any) {
   const theme = useTheme();
-  const classes: any[] = ['rbk-button-group', className];
+  const options = theme.components.ButtonGroup;
 
   // Extends from default props
-  props = { ...theme.components.ButtonGroup.defaultProps, ...props };
+  let { color, disabled, loading, size, variant, contentStyle, ...rest } = factory(props, options.defaultProps);
 
-  let { color, disabled, loading, size, variant, ...rest } = props;
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
+
+  const styleContent = useStylist({
+    name: options.name + '-content',
+    style: options.defaultStyles.content,
+  });
 
   if (children && !Array.isArray(children)) {
     children = [children];
   }
 
   return (
-    <ScrollableFactory ref={ref} map={map} horizontal {...rest} className={clsx(classes)}>
-      <BoxFactory
-        map={map}
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'nowrap',
-          alignItems: 'stretch',
-        }}
-      >
-        {children.map((child, key) => {
+    <ScrollableFactory map={map} ref={ref} stylist={[styleRoot, stylist]} {...rest} direction="horizontal">
+      <BoxFactory map={map} style={contentStyle} stylist={[styleContent]}>
+        {children?.map((child, key) => {
           const isFirst = key === 0;
           const isLast = key === children.length - 1;
+          const borderLeftWidth = children.length > 1 && !isFirst ? 0 : 1;
 
           const button = cloneElement(child, {
+            color,
             disabled,
             loading,
-            variant,
             size,
-            color,
+            variant,
             ...child.props,
             mt: 0,
             mb: 0,
             ml: 0,
             mr: 0,
             style: [
+              { borderLeftWidth, height: 'auto', width: 'auto' },
               child.style,
               !isFirst && !isLast && { borderRadius: 0 },
-              isFirst && { borderTopRightRadius: 0, borderBottomRightRadius: 0 },
-              isLast && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 },
+              !isFirst && isLast && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 },
+              isFirst && !isLast && { borderTopRightRadius: 0, borderBottomRightRadius: 0 },
             ],
           });
 

@@ -1,19 +1,18 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { FactoryProps, IconProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function IconFactory({ className, map, ...props }: FactoryProps & IconProps, ref: any) {
+function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: any) {
   const theme = useTheme();
-  const { web, Icons } = map;
-  const classes: any[] = ['rbk-icon', className];
+  const options = theme.components.Icon;
+  const { Icons } = map;
 
   // Extends from default props
-  props = { ...theme.components.Icon.defaultProps, ...props };
-
-  let { color, name, size, style, ...rest } = props;
+  let { color, name, size, ...rest } = factory(props, options.defaultProps);
 
   const iconName = `${name || ''}`
     .split(/_|-|\s/g)
@@ -22,26 +21,23 @@ function IconFactory({ className, map, ...props }: FactoryProps & IconProps, ref
 
   const Component = Icons[iconName] ?? Icons.Question;
 
-  size = size ?? theme.rem(1.25);
+  size = size ?? theme.rem(theme.typography.lineHeight);
 
-  style = [
-    web && {
-      verticalAlign: 'text-bottom',
-    },
-
-    style,
-  ];
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
   return (
     <BoxFactory
       ref={ref}
       map={map}
       component={Component}
+      stylist={[styleRoot, stylist]}
       color={theme.color(color)}
       size={size}
       {...rest}
-      className={clsx(classes)}
-      style={style}
+      noRootStyles
     />
   );
 }
