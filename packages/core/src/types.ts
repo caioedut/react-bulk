@@ -289,6 +289,7 @@ export type BoxProps = {
   children?: ReactNode;
   invisible?: boolean;
   hidden?: boolean;
+  componentProps?: AnyObject;
   noRootStyles?: boolean;
 
   // Styles

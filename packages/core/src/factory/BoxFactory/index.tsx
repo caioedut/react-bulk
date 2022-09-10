@@ -28,6 +28,7 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
     center,
     column,
     component,
+    componentProps,
     direction,
     flex,
     grow,
@@ -187,7 +188,7 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
   const Component = component || View;
 
   return (
-    <Component ref={ref} {...rest}>
+    <Component ref={ref} {...rest} {...componentProps}>
       {children}
     </Component>
   );
