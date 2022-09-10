@@ -3,8 +3,15 @@
 # Button
 A extensible button component.
 
-## Props
+### `component`
 
+| Web               | Native             |
+|-------------------|--------------------|
+| `'button'`, `'a'` | `TouchableOpacity` |
+
+---
+
+## Props
 Extends all [`Box`](Box.md) properties.
 
 ### `autoFocus`

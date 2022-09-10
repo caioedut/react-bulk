@@ -1,8 +1,17 @@
 [‹ Go Back](README.md)
 
 # Box
-
 It is the primary component, factory for everything. All components extends the `Box`.
+
+### `component`
+
+Defines which element will be rendered.
+
+| Type                  | Default (Web) | Default (Native) |
+|-----------------------|---------------|------------------|
+| `string`, `Component` | `'div'`       | `View`           |
+
+---
 
 ## Core Props
 
@@ -23,16 +32,6 @@ Defines the `class` attribute.
 | Type     |
 |----------|
 | `string` |
-
----
-
-### `component`
-
-Defines which element will be rendered.
-
-| Type                  | Default (Web) | Default (Native) |
-|-----------------------|---------------|------------------|
-| `string`, `Component` | `'div'`       | `View`           |
 
 ---
 

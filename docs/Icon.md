@@ -1,11 +1,17 @@
 [‹ Go Back](README.md)
 
 # Icon
-
 Incorpored Phosphor Icons. [See more or browse icons repository here](https://phosphoricons.com/).
 
-## Props
+### `component`
 
+| Web                                                                | Native                                                                     |
+|--------------------------------------------------------------------|----------------------------------------------------------------------------|
+| [Phosphor React](https://github.com/phosphor-icons/phosphor-react) | [Phosphor React Native](https://github.com/duongdev/phosphor-react-native) |
+
+---
+
+## Props
 Extends all [`Box`](Box.md) properties.
 
 ### `alt`

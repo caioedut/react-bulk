@@ -3,8 +3,15 @@
 # Form
 A extensible form component.
 
-## Props
+### `component`
 
+| Web      | Native  |
+|----------|---------|
+| `'form'` | `View`  |
+
+---
+
+## Props
 Extends all [`Box`](Box.md) properties.
 
 ### `data`
