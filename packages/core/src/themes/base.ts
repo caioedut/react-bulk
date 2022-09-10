@@ -226,6 +226,7 @@ const base: ThemeProps & any = {
           root: {
             display: 'flex',
             flexDirection: 'column',
+            flexWrap: 'nowrap',
             flexShrink: 0,
             alignContent: 'flex-start',
             justifyContent: 'flex-start',
