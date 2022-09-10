@@ -7,11 +7,45 @@ A extensible button component.
 
 Extends all [`Box`](Box.md) properties.
 
+### `autoFocus`
+
+If `true`, focuses the input on `componentDidMount` or `useEffect`.
+
+| Type      |
+|-----------|
+| `boolean` |
+
+---
+
+### `badge`
+
+| Type                              |
+|-----------------------------------|
+| `number`, [Badge Props](Badge.md) |
+
+---
+
 ### `color`
 
 | Type     | Default     |
 |----------|-------------|
 | `string` | `'primary'` |
+
+---
+
+### `contentStyle`
+
+| Type              |
+|-------------------|
+| `object`, `array` |
+
+---
+
+### `disabled`
+
+| Type      |
+|-----------|
+| `boolean` |
 
 ---
 
@@ -25,11 +59,49 @@ Shows an icon after the text. See more in [Icon](Icon.md).
 
 ---
 
+### `href`
+
+For web only.
+
+| Type     |
+|----------|
+| `string` |
+
+---
+
+### `icon`
+
+Shows an icon as child and rounds the button. See more in [Icon](Icon.md).
+
+| Type                             |
+|----------------------------------|
+| `boolean`, `string`, `ReactNode` |
+
+---
+
 ### `loading`
 
 | Type      |
 |-----------|
 | `boolean` |
+
+---
+
+### `label`
+
+Render text label as child.
+
+| Type     |
+|----------|
+| `string` |
+
+---
+
+### `labelStyle`
+
+| Type              |
+|-------------------|
+| `object`, `array` |
 
 ---
 
@@ -51,11 +123,37 @@ Shows an icon before the text. See more in [Icon](Icon.md).
 
 ---
 
+### `type`
+
+| Type                     |
+|--------------------------|
+| enum(`button`, `submit`) |
+
+---
+
 ### `variant`
 
 | Type                               | Default   |
 |------------------------------------|-----------|
 | `enum('solid', 'outline', 'text')` | `'solid'` |
+
+---
+
+## Event Props
+
+### `onFocus`
+
+| Type              |
+|-------------------|
+| `Function(event)` |
+
+---
+
+### `onBlur`
+
+| Type              |
+|-------------------|
+| `Function(event)` |
 
 ---
 
