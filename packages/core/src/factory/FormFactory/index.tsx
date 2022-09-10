@@ -79,7 +79,7 @@ function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & 
   }, [data]);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e?.preventDefault?.();
     onSubmit?.(e, getData());
   };
 
