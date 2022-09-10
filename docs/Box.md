@@ -12,14 +12,6 @@ It is the primary component, factory for everything. All components extends the 
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `{ accessible: boolean, hint: string, label: string, role: enum('none', 'button', 'link', 'search', 'image', 'alert', 'checkbox', 'combobox', 'menu', 'menubar', 'menuitem', 'progressbar', 'radio', 'radiogroup', 'scrollbar', 'spinbutton', 'switch', 'tab', 'tablist', 'timer', 'toolbar') }` |
 
-### `component`
-
-Defines which element will be rendered.
-
-| Type                  | Default (Web) | Default (Native) |
-|-----------------------|---------------|------------------|
-| `string`, `Component` | `'div'`       | `View`           |
-
 ---
 
 ### `className`
@@ -31,6 +23,26 @@ Defines the `class` attribute.
 | Type     |
 |----------|
 | `string` |
+
+---
+
+### `component`
+
+Defines which element will be rendered.
+
+| Type                  | Default (Web) | Default (Native) |
+|-----------------------|---------------|------------------|
+| `string`, `Component` | `'div'`       | `View`           |
+
+---
+
+### `componentProps`
+
+Pass raw props to the `component` prop.
+
+| Type     |
+|----------|
+| `object` |
 
 ---
 
