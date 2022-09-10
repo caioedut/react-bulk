@@ -102,6 +102,22 @@ Shows an icon after the text. See more in [Icon](Icon.md).
 
 ---
 
+### `label`
+
+| Type                  |
+|-----------------------|
+| `string`, `ReactNode` |
+
+---
+
+### `labelStyle`
+
+| Type              |
+|-------------------|
+| `object`, `array` |
+
+---
+
 ### `maxLength`
 
 Limits the maximum number of characters that can be entered. Use this instead of implementing the logic in JS to avoid flicker.
