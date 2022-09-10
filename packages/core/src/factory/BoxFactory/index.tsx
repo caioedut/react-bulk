@@ -30,8 +30,6 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
     component,
     direction,
     flex,
-    flexbox,
-    flow,
     grow,
     hidden,
     invisible,
@@ -76,9 +74,7 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
     typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
 
     // Flex Container
-    flow && { flexFlow: flow },
     direction && { flexDirection: direction },
-
     row && { flexDirection: reverse ? 'row-reverse' : 'row', flexWrap: 'wrap' },
     column && { flexDirection: reverse ? 'column-reverse' : 'column' },
 

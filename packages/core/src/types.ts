@@ -83,11 +83,11 @@ export type PressableProps = {
   onPressIn?: Function;
   onPressOut?: Function;
 
-  /** @deprecated use onPress instead */
+  /** @deprecated use onPress(event) instead */
   onClick?: EventCallback;
-  /** @deprecated use onPressIn instead */
+  /** @deprecated use onPressIn(event) instead */
   onMouseDown?: EventCallback;
-  /** @deprecated use onPressOut instead */
+  /** @deprecated use onPressOut(event) instead */
   onMouseUp?: EventCallback;
 };
 
@@ -104,13 +104,13 @@ export type EditableProps = {
   onChange?: ChangeCallback;
   readOnly?: boolean;
 
-  /** @deprecated use onChange(e, value) instead */
+  /** @deprecated use onChange(event, value) instead */
   onInput?: Function;
-  /** @deprecated use onChange(e, value) instead */
+  /** @deprecated use onChange(event, value) instead */
   onChangeText?: Function;
 };
 
-export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch';
+export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around' | 'space-evenly';
 export type FlexAlignValues = 'flex-start' | 'flex-end' | 'center' | 'stretch';
 export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
 export type SizeValues = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
@@ -142,7 +142,9 @@ export type CustomStyles = {
   mb?: number | string;
   ml?: number | string;
   mr?: number | string;
+  mh?: number | string;
   mx?: number | string;
+  mv?: number | string;
   my?: number | string;
   p?: number | string;
   pt?: number | string;
@@ -294,14 +296,12 @@ export type BoxProps = {
   rawStyle?: JssStyles;
 
   // Flexbox container
-  flexbox?: boolean | 'flex' | 'flex-inline';
   direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   row?: boolean;
   column?: boolean;
   reverse?: boolean;
-  wrap?: boolean | 'nowrap' | 'wrap' | 'wrap-reverse';
+  wrap?: boolean | 'wrap' | 'nowrap' | 'wrap-reverse';
   noWrap?: boolean;
-  flow?: string;
   justifyContent?: FlexJustifyValues;
   alignContent?: FlexAlignValues;
   justifyItems?: FlexJustifyValues;
