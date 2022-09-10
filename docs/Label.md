@@ -9,6 +9,10 @@ Extends all [`Text`](Text.md) properties.
 
 ### `for`
 
-| Type     |
-|----------|
-| `string` |
+| Type                             |
+|----------------------------------|
+| `string`, `RefObject<ReactNode>` |
+
+---
+
+[‹ Go Back](README.md)

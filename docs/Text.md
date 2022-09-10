@@ -1,87 +1,137 @@
 [‹ Go Back](README.md)
 
 # Text
+
 A extensible text component.
 
 Extends all [`Box`](Box.md) properties.
 
-### `variant`
+### `bold`
 
-| Type                                                                       | Default |
-|----------------------------------------------------------------------------|---------|
-| `enum('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'title', 'subtitle', 'caption')` | `'h1'`  |
+Sets `fontWeigth` style to `bold`.
 
-### `size`
+| Type      |
+|-----------|
+| `boolean` |
 
-| Type     |
-|----------|
-| `number` |
+---
 
 ### `color`
+
+Sets `color` style.
 
 | Type     | Default     |
 |----------|-------------|
 | `string` | `'primary'` |
 
+---
+
 ### `center`
 
-| Type      |
-|-----------|
-| `boolean` |
-
-### `left`
+Sets `textAlign` style to `center`.
 
 | Type      |
 |-----------|
 | `boolean` |
 
-### `right`
-
-| Type      |
-|-----------|
-| `boolean` |
-
-### `justify`
-
-| Type      |
-|-----------|
-| `boolean` |
-
-### `bold`
-
-| Type      |
-|-----------|
-| `boolean` |
+---
 
 ### `italic`
 
-| Type      |
-|-----------|
-| `boolean` |
-
-### `smallCaps`
+Sets `fontStyle` style to `italic`.
 
 | Type      |
 |-----------|
 | `boolean` |
 
-### `weigth`
+---
 
-| Type                                                                                    | Default    |
-|-----------------------------------------------------------------------------------------|------------|
-| `enum('normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900')` | `'normal'` |
+### `justify`
 
+Sets `textAlign` style to `justify`.
 
-### `transform`
+| Type      |
+|-----------|
+| `boolean` |
 
-| Type                                                              | Default    |
-|-------------------------------------------------------------------|------------|
-| `enum('none', 'captalize', 'uppercase', lowercase', 'full-width)` | `'normal'` |
+---
+
+### `left`
+
+Sets `textAlign` style to `left`.
+
+| Type      |
+|-----------|
+| `boolean` |
+
+---
 
 ### `numberOfLines`
+
+Sets the maximun lines of text.
 
 | Type     |
 |----------|
 | `number` |
 
+---
 
+### `right`
+
+Sets `textAlign` style to `right`.
+
+| Type      |
+|-----------|
+| `boolean` |
+
+---
+
+### `smallCaps`
+
+Sets `fontVariant` style to `small-caps`.
+
+| Type      |
+|-----------|
+| `boolean` |
+
+---
+
+### `size`
+
+Sets `fontSize` style. The set value will be multiplied by the `theme.typography.fontSize` value.
+
+| Type     |
+|----------|
+| `number` |
+
+---
+
+### `transform`
+
+Sets `textTransform` style.
+
+| Type                                                              |
+|-------------------------------------------------------------------|
+| `enum('none', 'captalize', 'uppercase', lowercase', 'full-width)` |
+
+---
+
+### `variant`
+
+| Type                                                                       |
+|----------------------------------------------------------------------------|
+| `enum('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'title', 'subtitle', 'caption')` |
+
+---
+
+### `weigth`
+
+Sets `fontWeight` style.
+
+| Type                                                                                    |
+|-----------------------------------------------------------------------------------------|
+| `enum('normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900')` |
+
+---
+
+[‹ Go Back](README.md)
