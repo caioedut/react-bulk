@@ -1,11 +1,17 @@
 [‹ Go Back](README.md)
 
 # Input
-
 A extensible text input component.
 
-## Props
+### `component`
 
+| Web                     | Native      |
+|-------------------------|-------------|
+| `'input'`, `'textarea'` | `TextInput` |
+
+---
+
+## Props
 Extends all [`Box`](Box.md) properties.
 
 ### `autoCapitalize`

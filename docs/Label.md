@@ -3,8 +3,15 @@
 # Label
 A extensible label component.
 
-## Props
+### `component`
 
+| Web       | Native |
+|-----------|--------|
+| `'label'` | `Text` |
+
+---
+
+## Props
 Extends all [`Text`](Text.md) properties.
 
 ### `for`

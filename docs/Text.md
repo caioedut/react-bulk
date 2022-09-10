@@ -1,9 +1,17 @@
 [‹ Go Back](README.md)
 
 # Text
-
 A extensible text component.
 
+### `component`
+
+| Web      | Native |
+|----------|--------|
+| `'span'` | `Text` |
+
+---
+
+## Props
 Extends all [`Box`](Box.md) properties.
 
 ### `bold`
