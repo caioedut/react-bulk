@@ -16,7 +16,7 @@ Extends all [`Box`](Box.md) properties.
 
 ### `bold`
 
-Sets `fontWeigth` style to `bold`.
+Sets `fontWeight` style to `bold`.
 
 | Type      |
 |-----------|
@@ -132,7 +132,7 @@ Sets `textTransform` style.
 
 ---
 
-### `weigth`
+### `weight`
 
 Sets `fontWeight` style.
 
