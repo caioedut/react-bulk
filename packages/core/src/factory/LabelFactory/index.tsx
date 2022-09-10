@@ -1,32 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { FactoryProps, LabelProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import TextFactory from '../TextFactory';
 
-function LabelFactory({ className, map, ...props }: FactoryProps & LabelProps, ref: any) {
+function LabelFactory({ stylist, map, ...props }: FactoryProps & LabelProps, ref: any) {
   const theme = useTheme();
-  const { web, Label } = map;
-  const classes: any[] = ['rbk-label', className];
+  const options = theme.components.Label;
+  const { web, native, Label } = map;
 
   // Extends from default props
-  props = { ...theme.components.Label.defaultProps, ...props };
+  let { for: forProp, platform, ...rest } = factory(props, options.defaultProps);
 
-  let { for: htmlFor, style, ...rest } = props;
+  const [focusProps, setFocusProps] = useState({});
 
-  style = [
-    web && {
-      textRendering: 'optimizeLegibility',
-      '-webkit-font-smoothing': 'antialiased',
-      '-moz-osx-font-smoothing': 'grayscale',
-      'font-smooth': 'always',
-    },
+  useEffect(() => {
+    if (web && forProp) {
+      setFocusProps({
+        htmlFor: typeof forProp === 'string' ? forProp : forProp?.current?.id,
+      });
+    }
 
-    style,
-  ];
+    if (native && forProp?.current?.focus) {
+      setFocusProps({
+        platform: {
+          ...platform,
+          native: { ...platform?.native, onPress: forProp.current.focus },
+        },
+      });
+    }
+  }, [forProp, platform]);
 
-  return <TextFactory map={map} ref={ref} component={Label} {...rest} htmlFor={htmlFor} className={clsx(classes)} style={style} />;
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
+
+  stylist = [styleRoot, stylist];
+
+  return <TextFactory map={map} ref={ref} component={Label} stylist={stylist} {...rest} {...focusProps} />;
 }
 
 export default React.forwardRef(LabelFactory);

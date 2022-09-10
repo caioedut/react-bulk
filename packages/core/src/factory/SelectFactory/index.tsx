@@ -1,33 +1,68 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import extract from '../../props/extract';
+import factory from '../../props/factory';
+import { spacings } from '../../styles/jss';
 import { FactoryProps, SelectProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useHtmlId from '../../useHtmlId';
+import useStylist from '../../useStylist';
+import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import DropdownFactory from '../DropdownFactory';
+import { useForm } from '../FormFactory';
+import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
-function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps, ref: any) {
+function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, ref: any) {
   const theme = useTheme();
+  const options = theme.components.Select;
   const { web, Input } = map;
-  const classes: any[] = ['rbk-select', className];
 
   // Extends from default props
-  props = { ...theme.components.Select.defaultProps, ...props };
+  let {
+    defaultValue,
+    id,
+    label,
+    name,
+    onChange,
+    options: arrOptions,
+    placeholder,
+    readOnly,
+    value,
 
-  let { defaultValue, name, onChange, options, placeholder, readOnly, value, ...rest } = props;
+    buttonStyle,
+    labelStyle,
+    style,
+    ...rest
+  } = factory(props, options.defaultProps);
 
+  id = useHtmlId(id);
+
+  const form = useForm();
   const defaultRef: any = useRef(null);
   const buttonRef = ref || defaultRef;
 
   const [visible, setVisible] = useState(false);
-  const [internal, setInternal] = useState(options?.find((item) => item.value == defaultValue));
+  const [internal, setInternal] = useState(arrOptions?.find((item) => item.value == defaultValue));
 
   useEffect(() => {
     if (typeof value !== 'undefined') {
-      setInternal(options?.find((item) => item.value == value));
+      setInternal(arrOptions?.find((item) => item.value == value));
     }
   }, [value]);
+
+  useEffect(() => {
+    if (!name || !form) return;
+
+    form.setField({
+      name,
+      set: setInternal,
+      get: () => internal?.value,
+    });
+
+    return () => form.unsetField(name);
+  }, [name, form, internal]);
 
   const focus = useCallback(() => {
     buttonRef?.current?.focus?.();
@@ -38,7 +73,7 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
   }, [buttonRef]);
 
   const clear = useCallback(() => {
-    setInternal(options?.find((item) => item.value == defaultValue));
+    setInternal(arrOptions?.find((item) => item.value == defaultValue));
   }, []);
 
   const isFocused = useCallback(() => {
@@ -51,32 +86,46 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
     const value = option.value;
 
     setVisible(false);
-    setInternal(options?.find((item) => item.value == value));
+    setInternal(arrOptions?.find((item) => item.value == value));
 
     onChange?.({ target, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
   };
 
   const handleChangeNative = (e) => {
-    const option = options.find((item) => item.value == e.target.value);
+    const option = arrOptions.find((item) => item.value == e.target.value);
     handleChange(e, option);
   };
 
+  const styleRoot = useStylist({
+    name: arrOptions.name,
+    style: options.defaultStyles.root,
+  });
+
+  const styleState = useStylist({
+    style: extract(spacings, rest),
+  });
+
   return (
-    <>
+    <BoxFactory map={map} style={style} stylist={[styleRoot, styleState, stylist]}>
+      {Boolean(label) && (
+        <LabelFactory map={map} numberOfLines={1} for={buttonRef} style={[{ mx: 1, mb: 1 }, labelStyle]}>
+          {label}
+        </LabelFactory>
+      )}
+
       <ButtonFactory
         ref={buttonRef}
         map={map}
-        className={clsx(classes)}
+        style={buttonStyle}
+        block
         endIcon={visible ? 'CaretUp' : 'CaretDown'}
         {...rest}
-        block
-        type="button"
+        id={id}
         variant="outline"
+        contentStyle={{ flex: 1 }}
         onPress={() => setVisible((current) => (readOnly ? false : !current))}
       >
-        <TextFactory map={map} flex style={{ textAlign: 'left' }}>
-          {internal?.label ?? internal?.value ?? placeholder ?? ''}
-        </TextFactory>
+        <TextFactory map={map}>{internal?.label ?? internal?.value ?? placeholder ?? ''}</TextFactory>
       </ButtonFactory>
 
       {web && (
@@ -90,34 +139,25 @@ function SelectFactory({ className, map, ...props }: FactoryProps & SelectProps,
         />
       )}
 
-      <DropdownFactory
-        map={map}
-        visible={visible}
-        style={{
-          mt: 0.5,
-          p: 1,
-          w: '100%',
-        }}
-      >
-        {options?.map((option) => (
-          <ButtonFactory
-            key={option.value}
-            map={map}
-            block
-            wrap={false}
-            type="button"
-            variant="text"
-            disabled={option.disabled}
-            endIcon={option.value == internal?.value ? 'Check' : null}
-            onPress={(e) => handleChange(e, option)}
-          >
-            <TextFactory map={map} flex style={{ textAlign: 'left' }}>
-              {option.label}
-            </TextFactory>
-          </ButtonFactory>
-        ))}
+      <DropdownFactory map={map} visible={visible} mt={0.5} p={1} w="100%">
+        <BoxFactory map={map}>
+          {arrOptions?.map((option) => (
+            <ButtonFactory
+              key={option.value}
+              map={map}
+              block
+              variant="text"
+              disabled={option.disabled}
+              endIcon={option.value == internal?.value ? 'Check' : null}
+              contentStyle={{ flex: 1 }}
+              onPress={(e) => handleChange(e, option)}
+            >
+              <TextFactory map={map}>{option.label}</TextFactory>
+            </ButtonFactory>
+          ))}
+        </BoxFactory>
       </DropdownFactory>
-    </>
+    </BoxFactory>
   );
 }
 

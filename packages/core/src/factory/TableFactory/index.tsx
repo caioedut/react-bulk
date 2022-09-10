@@ -1,35 +1,21 @@
 import React, { isValidElement } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { FactoryProps, TableProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
+import ScrollableFactory from '../ScrollableFactory';
 import TextFactory from '../TextFactory';
 
-function TableFactory({ className, map, ...props }: FactoryProps & TableProps, ref: any) {
+function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref: any) {
   const theme = useTheme();
-  const classes: any[] = ['rbk-table', className];
+  const options = theme.components.Table;
 
   // Extends from default props
-  props = { ...theme.components.Table.defaultProps, ...props };
-
-  let { border, columns, rows, style, ...rest } = props;
+  let { border, columns, rows, ...rest } = factory(props, options.defaultProps);
 
   const width = `${100 / columns?.length}%`;
-
-  style = [
-    {
-      border,
-      borderRadius: theme.shape.borderRadius,
-    },
-    style,
-  ];
-
-  const columnStyle = {
-    width,
-    flexGrow: 0,
-    flexShrink: 0,
-  };
 
   const renderContent = (child: any, data: any = undefined, bold = false) => {
     if (child) {
@@ -62,13 +48,27 @@ function TableFactory({ className, map, ...props }: FactoryProps & TableProps, r
       !borderLeft && { borderLeftWidth: 0 },
 
       column.style,
-      columnStyle,
+
+      {
+        width,
+        flexGrow: 0,
+        flexShrink: 0,
+      },
     ];
   };
 
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
+
+  const styleState = useStylist({
+    style: { border },
+  });
+
   return (
-    <BoxFactory ref={ref} map={map} {...rest} className={clsx(classes)} style={style}>
-      <BoxFactory map={map} flexbox noWrap>
+    <ScrollableFactory ref={ref} map={map} stylist={[styleRoot, styleState, stylist]} direction="horizontal" {...rest}>
+      <BoxFactory map={map} row noWrap>
         {columns?.map((column, index) => (
           <BoxFactory key={index} map={map} style={buildStyle(column, false, index > 0)}>
             {renderContent(column.header, column, true)}
@@ -76,7 +76,7 @@ function TableFactory({ className, map, ...props }: FactoryProps & TableProps, r
         ))}
       </BoxFactory>
       {rows?.map((row, rowIndex) => (
-        <BoxFactory key={rowIndex} map={map} flexbox noWrap>
+        <BoxFactory key={rowIndex} map={map} row noWrap>
           {columns.map((column, index) => (
             <BoxFactory key={index} map={map} style={buildStyle(column, true, index > 0)}>
               {renderContent(column.content, row)}
@@ -84,7 +84,7 @@ function TableFactory({ className, map, ...props }: FactoryProps & TableProps, r
           ))}
         </BoxFactory>
       ))}
-    </BoxFactory>
+    </ScrollableFactory>
   );
 }
 

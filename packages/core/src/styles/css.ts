@@ -1,21 +1,16 @@
 import uuid from '../utils/uuid';
 
-export default function css(style: any, selector?: string | null) {
+export default function css(style: any, selector?: string) {
   let result = style;
 
   const isObject = style && typeof style === 'object';
 
   if (!selector) {
-    selector = isObject
-      ? Object.entries(style)
-          .map(([attr, val]) => `${attr}${val}`)
-          .sort()
-          .join('')
-      : uuid();
+    selector = isObject ? JSON.stringify(style) : uuid();
   }
 
-  if (selector === 'global') {
-    selector = null;
+  if (selector === '::root') {
+    selector = undefined;
   }
 
   if (isObject) {

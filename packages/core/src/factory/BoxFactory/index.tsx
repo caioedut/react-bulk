@@ -3,19 +3,21 @@ import React from 'react';
 import { useTheme } from '../../ReactBulk';
 import createStyle from '../../createStyle';
 import bindings from '../../props/bindings';
+import factory from '../../props/factory';
 import get from '../../props/get';
 import merge from '../../props/merge';
 import { customStyleProps } from '../../styles/jss';
 import { BoxProps, FactoryProps } from '../../types';
+import useStylist from '../../useStylist';
 import clsx from '../../utils/clsx';
 
-function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxProps, ref) {
+function BoxFactory({ className, stylist, children, map, ...props }: FactoryProps & BoxProps, ref) {
   const theme = useTheme();
+  const options = theme.components.Box;
   const { web, native, dimensions, Text, View } = map;
-  const classes: any[] = [className];
 
   // Extends from default props
-  props = { ...theme.components.Box.defaultProps, ...props };
+  props = factory(props, options.defaultProps);
 
   let {
     accessibility,
@@ -23,22 +25,23 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     alignContent,
     alignItems,
     basis,
-    block,
     center,
     column,
     component,
+    componentProps,
     direction,
     flex,
-    flexbox,
-    flow,
     grow,
     hidden,
+    invisible,
     justify,
     justifyContent,
     justifyItems,
+    noRootStyles,
     noWrap,
     order,
     platform,
+    position,
     reverse,
     row,
     shrink,
@@ -47,6 +50,15 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     rawStyle,
     ...rest
   } = props;
+
+  // Platform specific props
+  if (platform) {
+    Object.keys(platform).forEach((item) => {
+      if (map[item] || item === '*') {
+        Object.assign(rest, merge({}, platform[item]));
+      }
+    });
+  }
 
   // Extract style props
   const styleProps: any[] = [];
@@ -58,28 +70,14 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
   }
 
   style = [
-    { position: 'relative' },
+    position && { position },
 
-    block && {
-      marginLeft: 0,
-      marginRight: 0,
-      width: '100%',
-    },
-
-    web && block && { display: 'block' },
+    typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
 
     // Flex Container
-    flexbox && {
-      display: `${typeof flexbox === 'boolean' ? 'flex' : flexbox}`,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      alignContent: 'stretch',
-    },
-
     direction && { flexDirection: direction },
-    row && { flexDirection: reverse ? 'row-reverse' : 'row' },
+    row && { flexDirection: reverse ? 'row-reverse' : 'row', flexWrap: 'wrap' },
     column && { flexDirection: reverse ? 'column-reverse' : 'column' },
-    flow && { flexFlow: flow },
 
     wrap && typeof wrap !== 'boolean' && { flexWrap: wrap },
     typeof wrap === 'boolean' && { flexWrap: wrap ? 'wrap' : 'nowrap' },
@@ -106,13 +104,11 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     align && { alignSelf: align },
     justify && { justifySelf: justify },
 
-    styleProps,
-
     style,
 
-    native && rawStyle,
+    styleProps,
 
-    hidden && { display: 'none !important' },
+    hidden && { display: 'none' },
   ];
 
   // Apply responsive styles
@@ -125,47 +121,23 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     }
   }
 
-  const hasFlex = ['flexDirection', 'flexWrap', 'flexFlow', 'justifyContent', 'justifyItems', 'alignContent', 'alignItems'].some((prop) =>
-    get(prop, style),
-  );
+  const styleRoot = useStylist({
+    avoid: noRootStyles,
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
-  if (hasFlex) {
-    if (!get('display', style)) {
-      style.push({ display: 'flex' });
-    }
+  const styles = [styleRoot, stylist];
+  const processed = createStyle({ style, theme });
+  styles.push(processed);
 
-    if (!get('flexFlow', style)) {
-      if (!get('flexDirection', style)) {
-        style.push({ flexDirection: 'column' });
-      }
-
-      if (!get('flexWrap', style)) {
-        style.push({ flexWrap: 'wrap' });
-      }
-    }
-
-    // if (!get('alignContent', style)) {
-    //   style.push({ alignContent: 'flex-start' });
-    // }
-  }
-
-  const processed = createStyle({ style });
-
-  if (processed) {
-    // Web: CSS Class Name
-    if (typeof processed === 'string') {
-      classes.push(processed);
-    }
-
-    // Native: Style Object
-    if (typeof processed === 'object') {
-      rest.style = processed;
-    }
+  if (native) {
+    rest.style = merge(styles, rawStyle);
   }
 
   if (web) {
-    rest.className = clsx(classes);
     rest.style = merge(rawStyle);
+    rest.className = clsx(styles, className);
   }
 
   // Aria / Accessibility
@@ -197,15 +169,6 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
     }
   }
 
-  // Platform specific props
-  if (platform) {
-    Object.keys(platform).forEach((item) => {
-      if (map[item] || item === '*') {
-        Object.assign(rest, merge({}, platform[item]));
-      }
-    });
-  }
-
   rest = bindings(rest);
 
   if ([undefined, null, false, NaN].includes(children)) {
@@ -225,7 +188,7 @@ function BoxFactory({ className, children, map, ...props }: FactoryProps & BoxPr
   const Component = component || View;
 
   return (
-    <Component ref={ref} {...rest}>
+    <Component ref={ref} {...rest} {...componentProps}>
       {children}
     </Component>
   );

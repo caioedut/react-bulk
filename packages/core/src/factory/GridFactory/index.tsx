@@ -1,41 +1,41 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { FactoryProps, GridProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function GridFactory({ className, children, map, ...props }: FactoryProps & GridProps, ref: any) {
+function GridFactory({ stylist, children, map, ...props }: FactoryProps & GridProps, ref: any) {
   const theme = useTheme();
-  const classes: any[] = ['rbk-grid', className];
+  const options = theme.components.Grid;
 
   // Extends from default props
-  props = { ...theme.components.Grid.defaultProps, ...props };
-
-  let { size, style, ...rest } = props;
+  let { gap, size, ...rest } = factory(props, options.defaultProps);
 
   const breakpoints = Object.keys(theme.breakpoints);
+  const spacing = !gap ? 0 : theme.spacing(gap) / 2;
 
   if (children && !Array.isArray(children)) {
     children = [children];
   }
 
-  style = [
-    {
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      alignContent: 'stretch',
-    },
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
-    style,
-  ];
+  const styleState = useStylist({
+    style: { margin: -spacing },
+  });
+
+  stylist = [styleRoot, styleState, stylist];
 
   return (
-    <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} style={style}>
+    <BoxFactory map={map} ref={ref} stylist={stylist} {...rest}>
       {children?.map((child, index) => {
         const props = { ...child.props };
-        const childStyle: any[] = [props.style];
+        const childStyle: any[] = [props.style, { padding: spacing }];
 
         breakpoints.forEach((key: string) => {
           if (key in props) {
@@ -49,9 +49,9 @@ function GridFactory({ className, children, map, ...props }: FactoryProps & Grid
                 width: !isFlex ? `${width}%` : undefined,
               },
             });
-
-            delete props[key];
           }
+
+          delete props[key];
         });
 
         return <BoxFactory key={index} map={map} component={child.type} {...props} style={childStyle} />;

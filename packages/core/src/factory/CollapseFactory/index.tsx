@@ -1,20 +1,26 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { CollapseProps, FactoryProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function CollapseFactory({ className, map, ...props }: FactoryProps & CollapseProps, ref: any) {
+function CollapseFactory({ stylist, map, ...props }: FactoryProps & CollapseProps, ref: any) {
   const theme = useTheme();
-  const classes: any[] = ['rbk-collapse', className];
+  const options = theme.components.Collapse;
 
   // Extends from default props
-  props = { ...theme.components.Collapse.defaultProps, ...props };
+  let { ...rest } = factory(props, options.defaultProps);
 
-  let { ...rest } = props;
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
-  return <BoxFactory map={map} ref={ref} {...rest} className={clsx(classes)} />;
+  stylist = [styleRoot, stylist];
+
+  return <BoxFactory map={map} ref={ref} stylist={stylist} {...rest} />;
 }
 
 export default React.forwardRef(CollapseFactory);

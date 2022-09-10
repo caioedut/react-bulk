@@ -1,75 +1,69 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { BadgeProps, FactoryProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import TextFactory from '../TextFactory';
 
-function BadgeFactory({ className, children, map, ...props }: FactoryProps & BadgeProps, ref: any) {
+function BadgeFactory({ stylist, children, map, ...props }: FactoryProps & BadgeProps, ref: any) {
   const theme = useTheme();
-  const { web, native, Text } = map;
-  const classes: any[] = ['rbk-badge', className];
+  const options = theme.components.Badge;
+  const { native, Text } = map;
 
   // Extends from default props
-  props = { ...theme.components.Badge.defaultProps, ...props };
-
-  let { bottom, color, dot, left, right, size, top, value, style, ...rest } = props;
+  let { bottom, color, dot, left, right, size, top, value, ...rest } = factory(props, options.defaultProps);
 
   const absolute = top || bottom || left || right;
   const baseSize = size === 'small' ? theme.rem(1) : size === 'large' ? theme.rem(1.5) : theme.rem(1.25);
   const halfBaseSize = baseSize / 2;
 
-  style = [
-    {
-      display: 'flex',
-      alignItems: 'center',
-      alignContent: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
-      backgroundColor: color,
-      borderRadius: halfBaseSize,
-      color: theme.colors.common.white,
-      fontSize: theme.rem(0.625),
-    },
+  const styleState = useStylist({
+    style: [
+      {
+        backgroundColor: color,
+        borderRadius: halfBaseSize,
+      },
 
-    absolute && {
-      position: 'absolute',
-      border: `1px solid ${theme.colors.background.primary}`,
-    },
+      absolute && {
+        position: 'absolute',
+        borderWidth: 1,
+        borderColor: theme.colors.background.primary,
+        borderStyle: 'solid',
+      },
 
-    top && { top: -halfBaseSize },
-    bottom && { bottom: -halfBaseSize },
-    left && { left: -halfBaseSize },
-    right && { right: -halfBaseSize },
+      top && { top: -halfBaseSize },
+      bottom && { bottom: -halfBaseSize },
+      left && { left: -halfBaseSize },
+      right && { right: -halfBaseSize },
 
-    dot && {
-      borderRadius: halfBaseSize / 2,
-      height: halfBaseSize,
-      width: halfBaseSize,
-    },
+      dot && {
+        borderRadius: halfBaseSize / 2,
+        height: halfBaseSize,
+        width: halfBaseSize,
+      },
 
-    !dot && {
-      px: halfBaseSize * 0.15,
-      height: baseSize,
-      minWidth: baseSize,
-    },
+      !dot && {
+        px: halfBaseSize * 0.15,
+        height: baseSize,
+        minWidth: baseSize,
+      },
 
-    web && {
-      display: 'inline-flex',
-      lineHeight: 1,
-    },
+      native && {
+        py: halfBaseSize * 0.06,
+      },
+    ],
+  });
 
-    native && {
-      alignSelf: 'flex-start',
-      py: halfBaseSize * 0.05,
-    },
-
-    style,
-  ];
+  stylist = [styleRoot, styleState, stylist];
 
   return (
-    <TextFactory map={map} ref={ref} {...rest} bold className={clsx(classes)} style={style}>
+    <TextFactory map={map} ref={ref} stylist={stylist} {...rest}>
       {!dot && <Text>{value ?? children ?? '&nbsp;'}</Text>}
     </TextFactory>
   );

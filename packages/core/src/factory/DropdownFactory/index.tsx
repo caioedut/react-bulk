@@ -1,70 +1,47 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import factory from '../../props/factory';
 import { DropdownProps, FactoryProps } from '../../types';
-import clsx from '../../utils/clsx';
+import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import CardFactory from '../CardFactory';
 
-function DropdownFactory({ className, children, map, ...props }: FactoryProps & DropdownProps, ref: any) {
+function DropdownFactory({ stylist, children, map, ...props }: FactoryProps & DropdownProps, ref: any) {
   const theme = useTheme();
-  const { web, native } = map;
-  const classes: any[] = ['rbk-dropdown', className];
+  const options = theme.components.Dropdown;
+  const { native } = map;
 
   // Extends from default props
-  props = { ...theme.components.Dropdown.defaultProps, ...props };
+  let { visible, ...rest } = factory(props, options.defaultProps);
 
-  let { visible, style, ...rest } = props;
+  const styleRoot = useStylist({
+    name: options.name,
+    style: options.defaultStyles.root,
+  });
 
-  // useEffect(() => {
-  //   if (!web) return;
-  //
-  //   function clickAway(e) {
-  //     console.log(e);
-  //     e.target.closest();
-  //   }
-  //
-  //   document.addEventListener('click', clickAway);
-  //
-  //   return () => document.removeEventListener('click', clickAway);
-  // }, []);
-
-  style = [
-    {
-      position: 'absolute',
-      maxWidth: '100%',
-      border: `1px solid ${theme.colors.background.secondary}`,
-      zIndex: -1,
-    },
-
-    visible && {
+  const styleVisible = useStylist({
+    avoid: !visible,
+    name: 'rbk-dropdown-visible',
+    style: {
       zIndex: theme.mixins.zIndex.dropdown,
-    },
-
-    web && {
-      boxShadow: 'rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px',
-      transition: `all ${theme.mixins.transition}`,
-      opacity: 0,
-      visibility: 'hidden',
-    },
-
-    web &&
-      visible && {
+      web: {
         opacity: 1,
         visibility: 'visible',
       },
+    },
+  });
 
-    native &&
-      !visible && {
-        display: 'none',
-      },
+  const styleState = useStylist({
+    avoid: visible,
+    style: native && { display: 'none' },
+  });
 
-    style,
-  ];
+  stylist = [styleRoot, styleState, styleVisible, stylist];
 
   return (
     <BoxFactory map={map} style={{ position: 'relative' }}>
-      <CardFactory ref={ref} {...rest} map={map} className={clsx(classes)} style={style}>
+      <CardFactory map={map} ref={ref} stylist={stylist} {...rest}>
         {children}
       </CardFactory>
     </BoxFactory>
