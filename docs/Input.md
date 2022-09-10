@@ -57,6 +57,14 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 ---
 
+### `containerStyle`
+
+| Type              |
+|-------------------|
+| `object`, `array` |
+
+---
+
 ### `defaultValue`
 
 Provides an initial value that will change when the user starts typing. Useful for use-cases where you do not want to deal with listening to
@@ -65,6 +73,14 @@ events and updating the value prop to keep the controlled state in sync.
 | Type     |
 |----------|
 | `string` |
+
+---
+
+### `disabled`
+
+| Type      |
+|-----------|
+| `boolean` |
 
 ---
 
@@ -78,9 +94,27 @@ Shows an icon after the text. See more in [Icon](Icon.md).
 
 ---
 
+### `inputStyle`
+
+| Type              |
+|-------------------|
+| `object`, `array` |
+
+---
+
 ### `maxLength`
 
 Limits the maximum number of characters that can be entered. Use this instead of implementing the logic in JS to avoid flicker.
+
+| Type     |
+|----------|
+| `number` |
+
+---
+
+### `multiline`
+
+If `true`, the text input can be multiple lines.
 
 | Type     |
 |----------|
@@ -140,9 +174,9 @@ If `true`, the text input obscures the text entered so that sensitive text like 
 
 The highlight and cursor color of the text input.
 
-| Type     |
-|----------|
-| `string` |
+| Type     | Default  |
+|----------|----------|
+| `string` | `'text'` |
 
 ---
 
@@ -189,6 +223,32 @@ The value to show for the text input.
 | Type                               | Default   |
 |------------------------------------|-----------|
 | `enum('solid', 'outline', 'text')` | `'solid'` |
+
+---
+
+## Event Props
+
+### `onBlur`
+
+| Type              |
+|-------------------|
+| `Function(event)` |
+
+---
+
+### `onChange`
+
+| Type                     |
+|--------------------------|
+| `Function(event, value)` |
+
+---
+
+### `onFocus`
+
+| Type              |
+|-------------------|
+| `Function(event)` |
 
 ---
 

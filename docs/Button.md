@@ -141,7 +141,7 @@ Shows an icon before the text. See more in [Icon](Icon.md).
 
 ## Event Props
 
-### `onFocus`
+### `onBlur`
 
 | Type              |
 |-------------------|
@@ -149,7 +149,7 @@ Shows an icon before the text. See more in [Icon](Icon.md).
 
 ---
 
-### `onBlur`
+### `onFocus`
 
 | Type              |
 |-------------------|
