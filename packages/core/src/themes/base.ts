@@ -206,9 +206,12 @@ const base: ThemeProps & any = {
             alignContent: 'center',
             justifyContent: 'center',
             textAlign: 'center',
+
             color: 'common.white',
             fontSize: '0.625rem',
             fontWeight: 'bold',
+            overflow: 'hidden',
+
             web: {
               display: 'inline-flex',
               lineHeight: 1,
