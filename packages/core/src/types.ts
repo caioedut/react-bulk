@@ -114,6 +114,7 @@ export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'stretch'
 export type FlexAlignValues = 'flex-start' | 'flex-end' | 'center' | 'stretch';
 export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
 export type SizeValues = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
 
 export type CustomStyles = {
   position?: 'relative' | 'absolute';
@@ -340,7 +341,7 @@ export type TextProps = {
   italic?: boolean;
   smallCaps?: boolean;
   weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
-  transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
+  transform?: TextTransformValues;
 
   numberOfLines?: number;
 } & BoxProps;
@@ -365,6 +366,8 @@ export type ButtonProps = FormControlBaseProps & {
   href?: string;
   icon?: boolean | string | ReactNode;
   loading?: boolean;
+  rounded?: boolean;
+  transform?: TextTransformValues;
   type?: 'button' | 'submit';
   variant?: 'solid' | 'outline' | 'text';
   // Styles

@@ -1,4 +1,4 @@
-import React, { isValidElement } from 'react';
+import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import factory from '../../props/factory';
@@ -27,6 +27,8 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
     icon,
     label,
     loading,
+    transform,
+    rounded,
     size,
     startIcon,
     variant,
@@ -41,6 +43,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   badge = typeof badge === 'number' ? { value: badge } : badge;
   children = children ?? label;
+  startIcon = startIcon ?? icon;
 
   if (web && !rest.type) {
     rest.type = 'button';
@@ -52,16 +55,6 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   if (native) {
     delete rest.type;
-  }
-
-  if (icon) {
-    if (typeof icon === 'string') {
-      startIcon = icon;
-    }
-
-    if (isValidElement(icon)) {
-      children = icon;
-    }
   }
 
   const multiplier = pick(size, 'medium', {
@@ -78,17 +71,14 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
   const height = lineSize + spacing * 2;
   const textColor = isBasic ? color : theme.contrast(color);
 
-  if (typeof children === 'string') {
-    children = (
-      <TextFactory map={map} style={[{ fontSize, color: textColor }, labelStyle]}>
-        {children}
-      </TextFactory>
-    );
-  }
-
   const styleRoot = useStylist({
     name: options.name,
     style: options.defaultStyles.root,
+  });
+
+  const styleLabel = useStylist({
+    name: options.name + '-label',
+    style: options.defaultStyles.label,
   });
 
   const styleBlock = useStylist({
@@ -129,13 +119,21 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
         paddingHorizontal: spacing,
       },
 
-      icon && {
+      rounded && {
         borderRadius: height / 2,
         height,
         width: height,
       },
     ],
   });
+
+  if (typeof children === 'string') {
+    children = (
+      <TextFactory map={map} transform={transform} style={[{ color: textColor, fontSize }, labelStyle]} stylist={[styleLabel]}>
+        {children}
+      </TextFactory>
+    );
+  }
 
   return (
     <BoxFactory
