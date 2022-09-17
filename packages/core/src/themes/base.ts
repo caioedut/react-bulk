@@ -280,6 +280,10 @@ const base: ThemeProps & any = {
               },
             },
           },
+          label: {
+            color: 'primary',
+            fontSize: '1rem',
+          },
         },
       },
       ButtonGroup: {

@@ -227,14 +227,17 @@ function Main() {
                 <Button variant={variant} mr={3} mt={3} loading={loading} onPress={toggleLoading}>
                   Loading
                 </Button>
-                <Button variant={variant} mr={3} mt={3} icon="House" />
+                <Button variant={variant} mr={3} mt={3} icon="House" rounded />
                 <Button variant={variant} mr={3} mt={3} startIcon="House">
                   Start Icon
                 </Button>
                 <Button variant={variant} mr={3} mt={3} endIcon="House">
                   End Icon
                 </Button>
-                <Divider invisible />
+                <Button variant={variant} mr={3} mt={3} transform="uppercase">
+                  Transformed
+                </Button>
+                <Box w="100%" />
                 {sizes.map((size) => (
                   <Button key={size} variant={variant} size={size} mr={3} mt={3}>
                     {getLabel(size)}
@@ -253,7 +256,7 @@ function Main() {
             <Button loading={loading} onPress={toggleLoading}>
               Loading
             </Button>
-            <Button icon="House" />
+            <Button icon="House" rounded />
             <Button startIcon="House">Start Icon</Button>
             <Button endIcon="House">End Icon</Button>
           </ButtonGroup>
