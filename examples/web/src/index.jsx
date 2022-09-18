@@ -2,6 +2,7 @@ import React, { useReducer, useRef, useState } from 'react';
 
 import ReactBulk, { useTheme } from '@react-bulk/core';
 import {
+  Animation,
   Badge,
   Box,
   Button,
@@ -17,6 +18,7 @@ import {
   Image,
   Input,
   Modal,
+  Progress,
   Scrollable,
   Select,
   Table,
@@ -579,6 +581,24 @@ function Main() {
               </Box>
             ))}
           </Box>
+        </Card>
+
+        <Card mt={3}>
+          <Text variant="title" mb={3}>
+            Animations
+          </Text>
+          <Text variant="subtitle" transform="capitalize" mb={3}>
+            Spinner
+          </Text>
+
+          <Grid gap={6} alignItems="center">
+            <Box>
+              <Animation.Spinner component={Progress} />
+            </Box>
+            <Box>
+              <Animation.Spinner component={Text}>Anything</Animation.Spinner>
+            </Box>
+          </Grid>
         </Card>
       </Box>
     </Scrollable>

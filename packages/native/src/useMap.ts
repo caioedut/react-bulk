@@ -1,6 +1,41 @@
-import { Image, Modal, Platform, ScrollView, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import {
+  Animated,
+  Easing,
+  Image,
+  Modal,
+  Platform,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 
 import * as Icons from 'phosphor-react-native';
+import Svg, {
+  Circle,
+  ClipPath,
+  Defs,
+  Ellipse,
+  G,
+  Line,
+  LinearGradient,
+  Mask,
+  Path,
+  Pattern,
+  Polygon,
+  Polyline,
+  RadialGradient,
+  Rect,
+  Stop,
+  Image as SvgImage,
+  Text as SvgText,
+  Symbol,
+  TSpan,
+  TextPath,
+  Use,
+} from 'react-native-svg';
 
 export default function useMap() {
   const dimensions = useWindowDimensions();
@@ -25,5 +60,35 @@ export default function useMap() {
     Text,
     TextArea: TextInput,
     View,
+
+    // Animated
+    Animated,
+    Easing,
+
+    // Svg
+    svg: {
+      Svg,
+      Circle,
+      Ellipse,
+      G,
+      Text: SvgText,
+      TSpan,
+      TextPath,
+      Path,
+      Polygon,
+      Polyline,
+      Line,
+      Rect,
+      Use,
+      Image: SvgImage,
+      Symbol,
+      Defs,
+      LinearGradient,
+      RadialGradient,
+      Stop,
+      ClipPath,
+      Pattern,
+      Mask,
+    },
   };
 }
