@@ -1,3 +1,9 @@
+/************
+ * Box Size *
+ ************/
+
+export const boxSizeProps = ['w', 'h', 'maxw', 'maxh', 'minw', 'minh'];
+
 /***********
  * Flexbox *
  ***********/
