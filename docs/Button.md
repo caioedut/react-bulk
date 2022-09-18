@@ -138,6 +138,16 @@ Shows an icon before the text. See more in [Icon](Icon.md).
 
 ---
 
+### `transform`
+
+Sets `textTransform` style for label.
+
+| Type                                                              |
+|-------------------------------------------------------------------|
+| `enum('none', 'captalize', 'uppercase', lowercase', 'full-width)` |
+
+---
+
 ### `type`
 
 | Type                     |
