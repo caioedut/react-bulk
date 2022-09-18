@@ -4,7 +4,7 @@ import merge from '../props/merge';
 import remove from '../props/remove';
 import { ThemeProps } from '../types';
 import clone from '../utils/clone';
-import { customSpacings, customStyleProps, flexAlignProps, spacings } from './constants';
+import { boxSizeProps, customSpacings, customStyleProps, flexAlignProps, spacings } from './constants';
 
 export { customSpacings, customStyleProps, spacings };
 
@@ -88,6 +88,10 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       });
 
       value = parseUnit(value);
+    }
+
+    if (boxSizeProps.includes(prop) && value === true) {
+      value = '100%';
     }
 
     if (prop === 'w') {
