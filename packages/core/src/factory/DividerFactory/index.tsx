@@ -18,18 +18,18 @@ function DividerFactory({ stylist, map, ...props }: FactoryProps & DividerProps,
     style: options.defaultStyles.root,
   });
 
+  const styleSize = useStylist({
+    style: vertical ? { alignSelf: 'stretch', width: 1 } : { height: 1 },
+  });
+
   const styleState = useStylist({
     style: {
       backgroundColor: color,
-      minHeight: vertical ? '100%' : size,
-      minWidth: vertical ? size : '100%',
       opacity,
     },
   });
 
-  stylist = [styleRoot, styleState, stylist];
-
-  return <BoxFactory map={map} ref={ref} stylist={stylist} {...rest} />;
+  return <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleSize, styleState, stylist]} {...rest} />;
 }
 
 export default React.forwardRef(DividerFactory);

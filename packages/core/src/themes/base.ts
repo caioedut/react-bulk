@@ -338,11 +338,14 @@ const base: ThemeProps & any = {
       Divider: {
         name: 'rbk-divider',
         defaultProps: {
-          color: 'text.primary',
-          opacity: 0.15,
           size: 1,
         },
-        defaultStyles: {},
+        defaultStyles: {
+          root: {
+            backgroundColor: 'text.primary',
+            opacity: 0.15,
+          },
+        },
       },
       Dropdown: {
         name: 'rbk-dropdown',
