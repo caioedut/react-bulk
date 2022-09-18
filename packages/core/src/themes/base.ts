@@ -488,8 +488,8 @@ const base: ThemeProps & any = {
       Loading: {
         name: 'rbk-loading',
         defaultProps: {
-          color: 'primary',
           accessibility: { role: 'progressbar' },
+          color: 'primary',
           speed: '1s',
         },
         defaultStyles: {},
@@ -502,6 +502,20 @@ const base: ThemeProps & any = {
         defaultStyles: {
           root: {
             zIndex: (theme) => theme.mixins.zIndex.modal,
+          },
+        },
+      },
+      Progress: {
+        name: 'rbk-progress',
+        defaultProps: {
+          accessibility: { role: 'progressbar' },
+          color: 'primary',
+          size: 1,
+        },
+        defaultStyles: {
+          root: {
+            height: this.typography.fontSize * 2,
+            width: this.typography.fontSize * 2,
           },
         },
       },
@@ -528,6 +542,18 @@ const base: ThemeProps & any = {
           accessibility: { role: 'combobox' },
         },
         defaultStyles: {},
+      },
+      Spinner: {
+        name: 'rbk-spinner',
+        defaultProps: {
+          size: 1,
+          speed: 625,
+        },
+        defaultStyles: {
+          root: {
+            web: { animation: `spin 625ms linear infinite` },
+          },
+        },
       },
       Table: {
         name: 'rbk-table',

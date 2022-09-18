@@ -46,5 +46,35 @@ export default function useMap() {
     Text: 'span',
     TextArea: 'textarea',
     View: 'div',
+
+    Animated: {
+      View: 'div',
+    },
+
+    // Svg
+    svg: {
+      Svg: 'svg',
+      Circle: 'circle',
+      Ellipse: 'ellipse',
+      G: 'g',
+      Text: 'text',
+      TSpan: 'tspan',
+      TextPath: 'textPath',
+      Path: 'path',
+      Polygon: 'polygon',
+      Polyline: 'polyline',
+      Line: 'line',
+      Rect: 'rect',
+      Use: 'use',
+      Image: 'image',
+      Symbol: 'symbol',
+      Defs: 'defs',
+      LinearGradient: 'linearGradient',
+      RadialGradient: 'radialGradient',
+      Stop: 'stop',
+      ClipPath: 'clipPath',
+      Pattern: 'pattern',
+      Mask: 'mask',
+    },
   };
 }

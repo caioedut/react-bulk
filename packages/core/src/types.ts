@@ -271,8 +271,10 @@ export type ThemeProps = {
     Label: ThemeComponentProps;
     Loading: ThemeComponentProps;
     Modal: ThemeComponentProps;
+    Progress: ThemeComponentProps;
     Scrollable: ThemeComponentProps;
     Select: ThemeComponentProps;
+    Spinner: ThemeComponentProps;
     Table: ThemeComponentProps;
     Text: ThemeComponentProps;
     Tooltip: ThemeComponentProps;
@@ -514,4 +516,13 @@ export type TooltipProps = {
   title?: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
   color?: 'black' | 'white' | ColorValues;
+} & BoxProps;
+
+export type SpinnerProps = {
+  speed?: number;
+} & BoxProps;
+
+export type ProgressProps = {
+  color?: ColorValues;
+  size?: number;
 } & BoxProps;
