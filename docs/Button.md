@@ -78,11 +78,11 @@ For web only.
 
 ### `icon`
 
-Shows an icon as child and rounds the button. See more in [Icon](Icon.md).
+Alias for `startIcon`.
 
 | Type                             |
 |----------------------------------|
-| `boolean`, `string`, `ReactNode` |
+| `string`, `ReactNode` |
 
 ---
 
@@ -109,6 +109,14 @@ Render text label as child.
 | Type              |
 |-------------------|
 | `object`, `array` |
+
+---
+
+### `rounded`
+
+| Type      |
+|-----------|
+| `boolean` |
 
 ---
 
