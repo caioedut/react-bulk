@@ -15,22 +15,40 @@ function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps,
   // Extends from default props
   let { color, label, size, speed, ...rest } = factory(props, options.defaultProps);
 
-  const multiplier = size ?? theme.typography.lineHeight;
-
-  size = theme.rem(multiplier);
+  size = size ?? 1;
 
   const styleRoot = useStylist({
     name: options.name,
     style: options.defaultStyles.root,
   });
 
+  const styleLabel = useStylist({
+    name: options.name + '-label',
+    style: options.defaultStyles.label,
+  });
+
+  const styleLabelState = useStylist({
+    style: {
+      color,
+      fontSize: size,
+      ml: size,
+    },
+  });
+
   return (
     <BoxFactory ref={ref} map={map} stylist={[styleRoot, stylist]} row center {...rest}>
-      <AnimationFactory map={map} loop in from={{ transform: [{ rotate: '0deg' }] }} to={{ transform: [{ rotate: '360deg' }] }}>
-        <IconFactory map={map} name="Spinner" size={multiplier} color={color} />
+      <AnimationFactory
+        map={map}
+        loop
+        in
+        speed={1000}
+        from={{ transform: [{ rotate: '0deg' }] }}
+        to={{ transform: [{ rotate: '360deg' }] }}
+      >
+        <IconFactory map={map} name="Spinner" size={size} color={color} />
       </AnimationFactory>
       {Boolean(label) && (
-        <BoxFactory map={map} style={{ color, fontSize: size, marginLeft: size / 2 }}>
+        <BoxFactory map={map} stylist={[styleLabel, styleLabelState]}>
           {label}
         </BoxFactory>
       )}

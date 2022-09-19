@@ -505,7 +505,14 @@ const base: ThemeProps & any = {
           accessibility: { role: 'progressbar' },
           color: 'primary',
         },
-        defaultStyles: {},
+        defaultStyles: {
+          root: {},
+          label: {
+            color: 'primary',
+            fontSize: '1rem',
+            ml: 1,
+          },
+        },
       },
       Modal: {
         name: 'rbk-modal',
