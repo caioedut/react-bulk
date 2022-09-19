@@ -480,8 +480,7 @@ export type LoadingProps = {
   color?: ColorValues;
   label?: string;
   size?: number;
-  speed?: string;
-} & BoxProps;
+} & AnimationProps;
 
 export type GridProps = {
   gap?: number;

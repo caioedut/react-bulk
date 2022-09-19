@@ -470,7 +470,7 @@ const base: ThemeProps & any = {
             color: 'text.primary',
             flex: 1,
             fontSize: '1rem',
-            height: '1.25rem',
+            height: '1.65rem',
             margin: 0,
             padding: '0.5rem',
             textDecorationLine: 'none',
@@ -504,7 +504,6 @@ const base: ThemeProps & any = {
         defaultProps: {
           accessibility: { role: 'progressbar' },
           color: 'primary',
-          speed: '1s',
         },
         defaultStyles: {},
       },
