@@ -275,7 +275,6 @@ export type ThemeProps = {
     Progress: ThemeComponentProps;
     Scrollable: ThemeComponentProps;
     Select: ThemeComponentProps;
-    Spinner: ThemeComponentProps;
     Table: ThemeComponentProps;
     Text: ThemeComponentProps;
     Tooltip: ThemeComponentProps;
@@ -525,8 +524,6 @@ export type AnimationProps = {
   speed?: number;
   to?: number | string;
 } & BoxProps;
-
-export type SpinnerProps = {} & AnimationProps;
 
 export type ProgressProps = {
   color?: ColorValues;
