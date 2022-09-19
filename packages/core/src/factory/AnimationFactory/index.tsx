@@ -4,7 +4,7 @@ import { useTheme } from '../../ReactBulk';
 import createStyle from '../../createStyle';
 import factory from '../../props/factory';
 import jss from '../../styles/jss';
-import { AnimationProps, FactoryProps } from '../../types';
+import { AnimationProps, FactoryProps, JssStyles } from '../../types';
 import useHtmlId from '../../useHtmlId';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
@@ -18,6 +18,8 @@ function AnimationFactory({ stylist, children, component, map, ...props }: Facto
   let { from, infinite, speed, to, ...rest } = factory(props, options.defaultProps);
 
   const name = useHtmlId();
+  from = jss({ theme }, from);
+  to = jss({ theme }, to);
 
   const { current: animationValue } = useRef(native ? new Animated.Value(0) : null);
 
@@ -39,11 +41,11 @@ function AnimationFactory({ stylist, children, component, map, ...props }: Facto
   }, []);
 
   if (web) {
-    const fromCSS = Object.entries(jss({ theme }, from))
+    const fromCSS = Object.entries(from)
       .map(([attr, val]) => `${attr}: ${val};`)
       .join('');
 
-    const toCSS = Object.entries(jss({ theme }, to))
+    const toCSS = Object.entries(to)
       .map(([attr, val]) => `${attr}: ${val};`)
       .join('');
 
@@ -69,7 +71,7 @@ function AnimationFactory({ stylist, children, component, map, ...props }: Facto
     },
   });
 
-  const style = { position: 'relative' };
+  const style: JssStyles = { position: 'relative' };
 
   if (native) {
     Object.entries(from).forEach(([attr, val], index) => {
