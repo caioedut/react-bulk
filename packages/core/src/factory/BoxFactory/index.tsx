@@ -14,7 +14,7 @@ import clsx from '../../utils/clsx';
 function BoxFactory({ className, stylist, children, map, ...props }: FactoryProps & BoxProps, ref) {
   const theme = useTheme();
   const options = theme.components.Box;
-  const { web, native, dimensions, Text, View } = map;
+  const { web, native, dimensions, Button, Text, View } = map;
 
   // Extends from default props
   props = factory(props, options.defaultProps);
@@ -175,13 +175,20 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
     children = null;
   }
 
-  if (native && children) {
-    if (typeof children === 'string') {
-      children = <Text>{children}</Text>;
+  if (native) {
+    if (native && children) {
+      if (typeof children === 'string') {
+        children = <Text>{children}</Text>;
+      }
+
+      if (Array.isArray(children)) {
+        children = children.map((child) => (typeof children === 'string' ? <Text>{child}</Text> : child));
+      }
     }
 
-    if (Array.isArray(children)) {
-      children = children.map((child) => (typeof children === 'string' ? <Text>{child}</Text> : child));
+    if ((props.onPress || props.onPressIn || props.onPressOut || props.onClick) && !component) {
+      rest.activeOpacity = rest.activeOpacity ?? 0.75;
+      rest.component = Button;
     }
   }
 

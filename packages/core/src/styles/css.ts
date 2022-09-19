@@ -1,4 +1,5 @@
 import uuid from '../utils/uuid';
+import { notPxProps } from './constants';
 
 export default function css(style: any, selector?: string) {
   let result = style;
@@ -21,7 +22,7 @@ export default function css(style: any, selector?: string) {
       if (attr.startsWith('&')) return;
 
       let suffix = '';
-      if (val && typeof val === 'number' && !notPx.includes(attr)) {
+      if (val && typeof val === 'number' && !notPxProps.includes(attr)) {
         suffix = 'px';
       }
 
@@ -50,33 +51,3 @@ export default function css(style: any, selector?: string) {
 
   return result || '';
 }
-
-// See https://react-cn.github.io/react/tips/style-props-value-px.html
-const notPx = [
-  'animationIterationCount',
-  'boxFlex',
-  'boxFlexGroup',
-  'boxOrdinalGroup',
-  'columnCount',
-  'fillOpacity',
-  'flex',
-  'flexGrow',
-  'flexPositive',
-  'flexShrink',
-  'flexNegative',
-  'flexOrder',
-  'fontWeight',
-  'lineClamp',
-  'lineHeight',
-  'opacity',
-  'order',
-  'orphans',
-  'stopOpacity',
-  'strokeDashoffset',
-  'strokeOpacity',
-  'strokeWidth',
-  'tabSize',
-  'widows',
-  'zIndex',
-  'zoom',
-];
