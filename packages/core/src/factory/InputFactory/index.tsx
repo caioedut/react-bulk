@@ -163,7 +163,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   const fontSize = theme.rem(multiplier);
   const lineSize = theme.rem(theme.typography.lineHeight, fontSize);
   const spacing = theme.rem(0.5, fontSize);
-  const height = lineSize * (multiline ? 3 : 1) + spacing * 2 - 2;
+  const height = lineSize * (multiline ? 3 : 1) + spacing * 2;
 
   const styleRoot = useStylist({
     name: options.name,
@@ -218,9 +218,9 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
         padding: spacing,
       },
 
-      web && {
-        caretColor: caretHidden ? theme.colors.common.trans : selectionColor,
-      },
+      native && { paddingVertical: 0 },
+
+      web && { caretColor: caretHidden ? theme.colors.common.trans : selectionColor },
 
       web &&
         selectionColor && {
@@ -241,7 +241,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
       )}
 
       <BoxFactory map={map} stylist={[styleRoot, styleFocus, styleDisabled, styleState, stylist]} style={style}>
-        <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between" h="100%">
+        <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between">
           {Boolean(startIcon) && (
             <BoxFactory map={map} style={{ marginLeft: spacing }}>
               {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={color} size={multiplier} /> : startIcon}
