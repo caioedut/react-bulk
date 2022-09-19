@@ -15,30 +15,41 @@ function AnimationFactory({ stylist, children, component, map, ...props }: Facto
   const { web, native, Animated, Easing } = map;
 
   // Extends from default props
-  let { from, infinite, speed, to, ...rest } = factory(props, options.defaultProps);
+  let { delay, direction, from, in: run, loop, speed, to, ...rest } = factory(props, options.defaultProps);
 
-  const name = useHtmlId();
   from = jss({ theme }, from);
   to = jss({ theme }, to);
 
-  const { current: animationValue } = useRef(native ? new Animated.Value(0) : null);
+  const name = useHtmlId();
+  const iterations = loop === true ? -1 : Number(loop ?? 1);
+
+  const defaultValue = Number(direction.includes('reverse'));
+  const { current: animationValue } = useRef(native ? new Animated.Value(defaultValue) : null);
 
   useEffect(() => {
     if (!native) return;
 
-    const animate = () => {
-      animationValue.setValue(0);
+    animationValue.setValue(defaultValue);
 
+    const animation = Animated.loop(
       Animated.timing(animationValue, {
-        toValue: 1,
+        delay,
+        toValue: Number(!defaultValue),
         duration: speed,
         easing: Easing.linear,
         useNativeDriver: false,
-      }).start(() => infinite && animate());
-    };
+      }),
+      { iterations },
+    );
 
-    animate();
-  }, []);
+    if (run) {
+      animation.start();
+    }
+
+    return () => {
+      animation.stop();
+    };
+  }, [run, iterations, defaultValue]);
 
   if (web) {
     const fromCSS = Object.entries(from)
@@ -67,7 +78,9 @@ function AnimationFactory({ stylist, children, component, map, ...props }: Facto
 
   const styleState = useStylist({
     style: web && {
-      animation: `${name} ${speed}ms linear ${infinite ? 'infinite' : ''}`,
+      animation: `${name} ${speed}ms linear ${delay ? `${delay}ms` : ''} ${iterations === -1 ? 'infinite' : iterations} ${
+        run ? 'running' : 'paused'
+      } ${direction}`,
     },
   });
 

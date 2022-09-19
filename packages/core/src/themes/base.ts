@@ -149,6 +149,7 @@ const base: ThemeProps & any = {
       Animation: {
         name: 'rbk-animation',
         defaultProps: {
+          direction: 'normal',
           speed: 625,
         },
         defaultStyles: {

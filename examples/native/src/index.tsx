@@ -593,28 +593,53 @@ function Main() {
 
             return (
               <React.Fragment key={key}>
-                {key > 0 && <Divider my={3} />}
                 <Box key={key}>
                   <Text variant="subtitle" mb={3}>
                     {animation}
                   </Text>
                   <Grid noWrap gap={6} alignItems="center">
                     <Box>
-                      <Component component={Progress} infinite />
+                      <Component loop in>
+                        <Progress />
+                      </Component>
                     </Box>
                     <Box>
-                      <Component infinite>
+                      <Component loop in>
                         <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
                       </Component>
                     </Box>
                     <Box>
-                      <Component infinite>Anything</Component>
+                      <Component loop in>
+                        <Text>Anything</Text>
+                      </Component>
                     </Box>
                   </Grid>
                 </Box>
+                <Divider my={3} />
               </React.Fragment>
             );
           })}
+
+          <Box>
+            <Text variant="subtitle" mb={3}>
+              Custom
+            </Text>
+            <Grid noWrap gap={6} alignItems="center">
+              <Box>
+                <Animation component={Progress} loop in from={{ top: -50, left: 50, opacity: 0 }} to={{ top: 0, left: 0, opacity: 1 }} />
+              </Box>
+              <Box>
+                <Animation loop in from={{ top: -50, right: 50, opacity: 0 }} to={{ top: 0, right: 0, opacity: 1 }}>
+                  <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+                </Animation>
+              </Box>
+              <Box>
+                <Animation loop in from={{ right: 50, opacity: 0 }} to={{ right: 0, opacity: 1 }}>
+                  Anything
+                </Animation>
+              </Box>
+            </Grid>
+          </Box>
         </Card>
       </Box>
     </Scrollable>

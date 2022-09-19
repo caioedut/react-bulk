@@ -519,10 +519,13 @@ export type TooltipProps = {
 } & BoxProps;
 
 export type AnimationProps = {
-  from?: number | string;
-  infinite?: boolean;
+  delay?: number;
+  direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+  from?: JssStyles;
+  in?: boolean;
+  loop?: boolean | number;
   speed?: number;
-  to?: number | string;
+  to?: JssStyles;
 } & BoxProps;
 
 export type ProgressProps = {

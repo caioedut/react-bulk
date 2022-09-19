@@ -71,3 +71,33 @@ export const spacings = [
   'paddingVertical',
   ...customSpacings,
 ];
+
+// See https://react-cn.github.io/react/tips/style-props-value-px.html
+export const notPxProps = [
+  'animationIterationCount',
+  'boxFlex',
+  'boxFlexGroup',
+  'boxOrdinalGroup',
+  'columnCount',
+  'fillOpacity',
+  'flex',
+  'flexGrow',
+  'flexPositive',
+  'flexShrink',
+  'flexNegative',
+  'flexOrder',
+  'fontWeight',
+  'lineClamp',
+  'lineHeight',
+  'opacity',
+  'order',
+  'orphans',
+  'stopOpacity',
+  'strokeDashoffset',
+  'strokeOpacity',
+  'strokeWidth',
+  'tabSize',
+  'widows',
+  'zIndex',
+  'zoom',
+];
