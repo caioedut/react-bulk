@@ -163,7 +163,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   const fontSize = theme.rem(multiplier);
   const lineSize = theme.rem(theme.typography.lineHeight, fontSize);
   const spacing = theme.rem(0.5, fontSize);
-  const height = lineSize * (multiline ? 3 : 1) + spacing * 2;
+  const height = lineSize * (multiline ? 3 : 1) + spacing * 2 - 2;
 
   const styleRoot = useStylist({
     name: options.name,
@@ -200,7 +200,9 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   });
 
   const styleState = useStylist({
-    style: { borderColor: color },
+    style: {
+      borderColor: color,
+    },
   });
 
   const styleInput = useStylist({
@@ -239,19 +241,10 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
       )}
 
       <BoxFactory map={map} stylist={[styleRoot, styleFocus, styleDisabled, styleState, stylist]} style={style}>
-        <BoxFactory
-          map={map}
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'nowrap',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
+        <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between" h="100%">
           {Boolean(startIcon) && (
             <BoxFactory map={map} style={{ marginLeft: spacing }}>
-              {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={color} size={lineSize} /> : startIcon}
+              {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={color} size={multiplier} /> : startIcon}
             </BoxFactory>
           )}
 
@@ -273,7 +266,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
           {Boolean(endIcon) && (
             <BoxFactory map={map} style={{ marginRight: spacing }}>
-              {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={color} size={lineSize} /> : endIcon}
+              {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={color} size={multiplier} /> : endIcon}
             </BoxFactory>
           )}
         </BoxFactory>

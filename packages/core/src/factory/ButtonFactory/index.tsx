@@ -146,7 +146,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
     >
       {Boolean(startIcon) && (
         <BoxFactory map={map}>
-          {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={textColor} size={lineSize} /> : startIcon}
+          {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={textColor} size={multiplier} /> : startIcon}
         </BoxFactory>
       )}
 
@@ -169,13 +169,13 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
       {Boolean(endIcon) && (
         <BoxFactory map={map}>
-          {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={textColor} size={lineSize} /> : endIcon}
+          {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={textColor} size={multiplier} /> : endIcon}
         </BoxFactory>
       )}
 
       {loading && (
         <BoxFactory map={map} position="absolute" i={0} center>
-          <LoadingFactory map={map} color={textColor} size={lineSize} />
+          <LoadingFactory map={map} color={textColor} size={multiplier} />
         </BoxFactory>
       )}
 

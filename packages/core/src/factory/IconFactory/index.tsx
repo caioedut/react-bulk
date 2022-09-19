@@ -21,7 +21,7 @@ function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: 
 
   const Component = Icons[iconName] ?? Icons.Question;
 
-  size = size ?? theme.rem(theme.typography.lineHeight);
+  size = theme.rem(size ?? theme.typography.lineHeight);
 
   const styleRoot = useStylist({
     name: options.name,

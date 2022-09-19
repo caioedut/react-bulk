@@ -4,36 +4,33 @@ import { useTheme } from '../../ReactBulk';
 import factory from '../../props/factory';
 import { FactoryProps, LoadingProps } from '../../types';
 import useStylist from '../../useStylist';
+import AnimationFactory from '../AnimationFactory';
 import BoxFactory from '../BoxFactory';
 import IconFactory from '../IconFactory';
 
 function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Loading;
-  const { web } = map;
 
   // Extends from default props
   let { color, label, size, speed, ...rest } = factory(props, options.defaultProps);
 
-  const multiplier = 1.25;
-  size = size ?? theme.rem(multiplier);
+  const multiplier = size ?? theme.typography.lineHeight;
+
+  size = theme.rem(multiplier);
 
   const styleRoot = useStylist({
     name: options.name,
     style: options.defaultStyles.root,
   });
 
-  const styleState = useStylist({
-    style: web && {
-      animation: `spin ${speed} linear infinite`,
-    },
-  });
-
   return (
-    <BoxFactory ref={ref} map={map} stylist={[styleRoot, styleState, stylist]} row center {...rest}>
-      <IconFactory map={map} name="Spinner" size={size} color={color} />
+    <BoxFactory ref={ref} map={map} stylist={[styleRoot, stylist]} row center {...rest}>
+      <AnimationFactory map={map} loop in from={{ transform: [{ rotate: '0deg' }] }} to={{ transform: [{ rotate: '360deg' }] }}>
+        <IconFactory map={map} name="Spinner" size={multiplier} color={color} />
+      </AnimationFactory>
       {Boolean(label) && (
-        <BoxFactory map={map} style={{ color, fontSize: size / multiplier, marginLeft: size / 2 }}>
+        <BoxFactory map={map} style={{ color, fontSize: size, marginLeft: size / 2 }}>
           {label}
         </BoxFactory>
       )}
