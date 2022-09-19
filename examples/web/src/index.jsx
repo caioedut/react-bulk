@@ -587,18 +587,62 @@ function Main() {
           <Text variant="title" mb={3}>
             Animations
           </Text>
-          <Text variant="subtitle" transform="capitalize" mb={3}>
-            Spinner
-          </Text>
-
-          <Grid gap={6} alignItems="center">
-            <Box>
-              <Animation.Spinner component={Progress} />
+          <Box row>
+            <Box flex mb={3}>
+              <Text variant="subtitle" transform="capitalize" mb={3}>
+                Spinner
+              </Text>
+              <Grid noWrap gap={6} alignItems="center">
+                <Box>
+                  <Animation.Spinner component={Progress} infinite />
+                </Box>
+                <Box>
+                  <Animation.Spinner infinite>
+                    <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+                  </Animation.Spinner>
+                </Box>
+                <Box>
+                  <Animation.Spinner infinite>Anything</Animation.Spinner>
+                </Box>
+              </Grid>
             </Box>
-            <Box>
-              <Animation.Spinner component={Text}>Anything</Animation.Spinner>
+            <Box flex mb={3}>
+              <Text variant="subtitle" transform="capitalize" mb={3}>
+                Fade In
+              </Text>
+              <Grid noWrap gap={6} alignItems="center">
+                <Box>
+                  <Animation.FadeIn component={Progress} infinite />
+                </Box>
+                <Box>
+                  <Animation.FadeIn infinite>
+                    <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+                  </Animation.FadeIn>
+                </Box>
+                <Box>
+                  <Animation.FadeIn infinite>Anything</Animation.FadeIn>
+                </Box>
+              </Grid>
             </Box>
-          </Grid>
+            <Box flex mb={3}>
+              <Text variant="subtitle" transform="capitalize" mb={3}>
+                Fade Out
+              </Text>
+              <Grid noWrap gap={6} alignItems="center">
+                <Box>
+                  <Animation.FadeOut component={Progress} infinite />
+                </Box>
+                <Box>
+                  <Animation.FadeOut infinite>
+                    <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+                  </Animation.FadeOut>
+                </Box>
+                <Box>
+                  <Animation.FadeOut infinite>Anything</Animation.FadeOut>
+                </Box>
+              </Grid>
+            </Box>
+          </Box>
         </Card>
       </Box>
     </Scrollable>

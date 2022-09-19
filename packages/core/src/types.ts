@@ -252,6 +252,7 @@ export type ThemeProps = {
   contrast: Readonly<Function>;
 
   components: {
+    Animation: ThemeComponentProps;
     Backdrop: ThemeComponentProps;
     Badge: ThemeComponentProps;
     Box: ThemeComponentProps;
@@ -518,9 +519,14 @@ export type TooltipProps = {
   color?: 'black' | 'white' | ColorValues;
 } & BoxProps;
 
-export type SpinnerProps = {
+export type AnimationProps = {
+  from?: number | string;
+  infinite?: boolean;
   speed?: number;
+  to?: number | string;
 } & BoxProps;
+
+export type SpinnerProps = {} & AnimationProps;
 
 export type ProgressProps = {
   color?: ColorValues;

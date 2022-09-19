@@ -1,5 +1,4 @@
-import Spinner from './Spinner';
-
+export { default as Animation } from './Animation';
 export { default as Backdrop } from './Backdrop';
 export { default as Badge } from './Badge';
 export { default as Box } from './Box';
@@ -24,7 +23,3 @@ export { default as Select } from './Select';
 export { default as Table } from './Table';
 export { default as Text } from './Text';
 export { default as Tooltip } from './Tooltip';
-
-export const Animation = {
-  Spinner,
-};

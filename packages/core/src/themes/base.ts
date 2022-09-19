@@ -146,6 +146,13 @@ const base: ThemeProps & any = {
 
   get components() {
     return {
+      Animation: {
+        name: 'rbk-animation',
+        defaultProps: {
+          speed: 625,
+        },
+        defaultStyles: {},
+      },
       Backdrop: {
         name: 'rbk-backdrop',
         defaultProps: {
@@ -512,12 +519,7 @@ const base: ThemeProps & any = {
           color: 'primary',
           size: 1,
         },
-        defaultStyles: {
-          root: {
-            height: this.typography.fontSize * 2,
-            width: this.typography.fontSize * 2,
-          },
-        },
+        defaultStyles: {},
       },
       Scrollable: {
         name: 'rbk-scrollable',
@@ -545,15 +547,8 @@ const base: ThemeProps & any = {
       },
       Spinner: {
         name: 'rbk-spinner',
-        defaultProps: {
-          size: 1,
-          speed: 625,
-        },
-        defaultStyles: {
-          root: {
-            web: { animation: `spin 625ms linear infinite` },
-          },
-        },
+        defaultProps: {},
+        defaultStyles: {},
       },
       Table: {
         name: 'rbk-table',

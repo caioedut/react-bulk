@@ -591,12 +591,14 @@ function Main() {
             Spinner
           </Text>
 
-          <Grid gap={3} alignItems="center" justifyContent="space-evenly">
+          <Grid gap={6} alignItems="center">
             <Box>
-              <Animation.Spinner component={Progress} />
+              <Animation.Spinner component={Progress} infinite />
             </Box>
             <Box>
-              <Animation.Spinner component={Text}>Anything</Animation.Spinner>
+              <Animation.Spinner component={Text} infinite>
+                Anything
+              </Animation.Spinner>
             </Box>
           </Grid>
         </Card>

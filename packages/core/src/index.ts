@@ -33,6 +33,7 @@ export { default as createStyle } from './createStyle';
 export { default as createMeta } from './createMeta';
 
 // Factory
+export { default as AnimationFactory } from './factory/AnimationFactory';
 export { default as BackdropFactory } from './factory/BackdropFactory';
 export { default as BadgeFactory } from './factory/BadgeFactory';
 export { default as BoxFactory } from './factory/BoxFactory';
@@ -54,7 +55,6 @@ export { default as ModalFactory } from './factory/ModalFactory';
 export { default as ProgressFactory } from './factory/ProgressFactory';
 export { default as ScrollableFactory } from './factory/ScrollableFactory';
 export { default as SelectFactory } from './factory/SelectFactory';
-export { default as SpinnerFactory } from './factory/SpinnerFactory';
 export { default as TableFactory } from './factory/TableFactory';
 export { default as TextFactory } from './factory/TextFactory';
 export { default as TooltipFactory } from './factory/TooltipFactory';

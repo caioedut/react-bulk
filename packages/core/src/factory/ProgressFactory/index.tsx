@@ -27,7 +27,6 @@ function ProgressFactory({ stylist, map, ...props }: FactoryProps & ProgressProp
   });
 
   const styleSize = useStylist({
-    avoid: size === options.defaultProps.size,
     style: {
       height: base,
       width: base,
