@@ -55,7 +55,7 @@ function BadgeFactory({ stylist, children, map, ...props }: FactoryProps & Badge
       },
 
       native && {
-        py: halfBaseSize * 0.06,
+        py: halfBaseSize * 0.08,
       },
     ],
   });
