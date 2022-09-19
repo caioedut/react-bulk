@@ -55,6 +55,7 @@ function Main() {
   const variants = ['solid', 'outline', 'text'];
   const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
   const tooltips = ['top', 'bottom', 'left', 'right'];
+  const animations = ['Spin', 'FadeIn', 'FadeOut', 'ZoomIn', 'ZoomOut'];
 
   const getLabel = (str) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 
@@ -587,20 +588,33 @@ function Main() {
           <Text variant="title" mb={3}>
             Animations
           </Text>
-          <Text variant="subtitle" transform="capitalize" mb={3}>
-            Spinner
-          </Text>
+          {animations.map((animation, key) => {
+            const Component = Animation[animation];
 
-          <Grid gap={6} alignItems="center">
-            <Box>
-              <Animation.Spinner component={Progress} infinite />
-            </Box>
-            <Box>
-              <Animation.Spinner component={Text} infinite>
-                Anything
-              </Animation.Spinner>
-            </Box>
-          </Grid>
+            return (
+              <React.Fragment key={key}>
+                {key > 0 && <Divider my={3} />}
+                <Box key={key}>
+                  <Text variant="subtitle" mb={3}>
+                    {animation}
+                  </Text>
+                  <Grid noWrap gap={6} alignItems="center">
+                    <Box>
+                      <Component component={Progress} infinite />
+                    </Box>
+                    <Box>
+                      <Component infinite>
+                        <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+                      </Component>
+                    </Box>
+                    <Box>
+                      <Component infinite>Anything</Component>
+                    </Box>
+                  </Grid>
+                </Box>
+              </React.Fragment>
+            );
+          })}
         </Card>
       </Box>
     </Scrollable>

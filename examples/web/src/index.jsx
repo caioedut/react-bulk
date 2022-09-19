@@ -55,6 +55,7 @@ function Main() {
   const variants = ['solid', 'outline', 'text'];
   const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
   const tooltips = ['top', 'bottom', 'left', 'right'];
+  const animations = ['Spin', 'FadeIn', 'FadeOut', 'ZoomIn', 'ZoomOut'];
 
   const getLabel = (str) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 
@@ -587,61 +588,58 @@ function Main() {
           <Text variant="title" mb={3}>
             Animations
           </Text>
-          <Box row>
-            <Box flex mb={3}>
-              <Text variant="subtitle" transform="capitalize" mb={3}>
-                Spinner
-              </Text>
-              <Grid noWrap gap={6} alignItems="center">
-                <Box>
-                  <Animation.Spinner component={Progress} infinite />
+          {animations.map((animation, key) => {
+            const Component = Animation[animation];
+
+            return (
+              <React.Fragment key={key}>
+                <Box key={key}>
+                  <Text variant="subtitle" mb={3}>
+                    {animation}
+                  </Text>
+                  <Grid noWrap gap={6} alignItems="center">
+                    <Box>
+                      <Component component={Progress} infinite />
+                    </Box>
+                    <Box>
+                      <Component infinite>
+                        <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+                      </Component>
+                    </Box>
+                    <Box>
+                      <Component infinite>Anything</Component>
+                    </Box>
+                  </Grid>
                 </Box>
-                <Box>
-                  <Animation.Spinner infinite>
-                    <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-                  </Animation.Spinner>
-                </Box>
-                <Box>
-                  <Animation.Spinner infinite>Anything</Animation.Spinner>
-                </Box>
-              </Grid>
-            </Box>
-            <Box flex mb={3}>
-              <Text variant="subtitle" transform="capitalize" mb={3}>
-                Fade In
-              </Text>
-              <Grid noWrap gap={6} alignItems="center">
-                <Box>
-                  <Animation.FadeIn component={Progress} infinite />
-                </Box>
-                <Box>
-                  <Animation.FadeIn infinite>
-                    <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-                  </Animation.FadeIn>
-                </Box>
-                <Box>
-                  <Animation.FadeIn infinite>Anything</Animation.FadeIn>
-                </Box>
-              </Grid>
-            </Box>
-            <Box flex mb={3}>
-              <Text variant="subtitle" transform="capitalize" mb={3}>
-                Fade Out
-              </Text>
-              <Grid noWrap gap={6} alignItems="center">
-                <Box>
-                  <Animation.FadeOut component={Progress} infinite />
-                </Box>
-                <Box>
-                  <Animation.FadeOut infinite>
-                    <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-                  </Animation.FadeOut>
-                </Box>
-                <Box>
-                  <Animation.FadeOut infinite>Anything</Animation.FadeOut>
-                </Box>
-              </Grid>
-            </Box>
+                <Divider my={3} />
+              </React.Fragment>
+            );
+          })}
+
+          <Box>
+            <Text variant="subtitle" mb={3}>
+              Custom
+            </Text>
+            <Grid noWrap gap={6} alignItems="center">
+              <Box>
+                <Animation
+                  component={Progress}
+                  infinite
+                  from={{ top: '-50px', left: '50px', opacity: 0 }}
+                  to={{ top: 0, left: 0, opacity: 1 }}
+                />
+              </Box>
+              <Box>
+                <Animation infinite from={{ top: '-50px', right: '50px', opacity: 0 }} to={{ top: 0, right: 0, opacity: 1 }}>
+                  <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+                </Animation>
+              </Box>
+              <Box>
+                <Animation infinite from={{ right: '50px', opacity: 0 }} to={{ right: 0, opacity: 1 }}>
+                  Anything
+                </Animation>
+              </Box>
+            </Grid>
           </Box>
         </Card>
       </Box>

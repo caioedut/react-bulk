@@ -21,7 +21,17 @@ Component.FadeOut = forwardRef<typeof Animation, AnimationProps>((props, ref) =>
 ));
 
 // @ts-ignore
-Component.Spinner = forwardRef<typeof Animation, AnimationProps>((props, ref) => (
+Component.ZoomIn = forwardRef<typeof Animation, AnimationProps>((props, ref) => (
+  <AnimationFactory ref={ref} {...props} map={useMap()} from={{ transform: [{ scale: 0 }] }} to={{ transform: [{ scale: 1 }] }} />
+));
+
+// @ts-ignore
+Component.ZoomOut = forwardRef<typeof Animation, AnimationProps>((props, ref) => (
+  <AnimationFactory ref={ref} {...props} map={useMap()} from={{ transform: [{ scale: 1 }] }} to={{ transform: [{ scale: 0 }] }} />
+));
+
+// @ts-ignore
+Component.Spin = forwardRef<typeof Animation, AnimationProps>((props, ref) => (
   <AnimationFactory
     ref={ref}
     {...props}

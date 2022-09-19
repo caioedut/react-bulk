@@ -151,7 +151,11 @@ const base: ThemeProps & any = {
         defaultProps: {
           speed: 625,
         },
-        defaultStyles: {},
+        defaultStyles: {
+          root: {
+            position: 'relative',
+          },
+        },
       },
       Backdrop: {
         name: 'rbk-backdrop',
@@ -345,7 +349,9 @@ const base: ThemeProps & any = {
       Divider: {
         name: 'rbk-divider',
         defaultProps: {
+          color: 'text.primary',
           size: 1,
+          opacity: 0.15,
         },
         defaultStyles: {
           root: {
@@ -543,11 +549,6 @@ const base: ThemeProps & any = {
         defaultProps: {
           accessibility: { role: 'combobox' },
         },
-        defaultStyles: {},
-      },
-      Spinner: {
-        name: 'rbk-spinner',
-        defaultProps: {},
         defaultStyles: {},
       },
       Table: {

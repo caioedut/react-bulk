@@ -69,10 +69,25 @@ function AnimationFactory({ stylist, children, component, map, ...props }: Facto
     },
   });
 
-  const style = {};
+  const style = { position: 'relative' };
 
   if (native) {
-    Object.entries(from).forEach(([attr, val]) => {
+    Object.entries(from).forEach(([attr, val], index) => {
+      if (attr === 'transform') {
+        style[attr] = (val as any[]).map((obj) => {
+          for (let objAttr in obj) {
+            obj[objAttr] = animationValue.interpolate({
+              inputRange: [0, 1],
+              outputRange: [obj[objAttr], to[attr][index][objAttr]],
+            });
+          }
+
+          return obj;
+        });
+
+        return;
+      }
+
       style[attr] = animationValue.interpolate({
         inputRange: [0, 1],
         outputRange: [val, to[attr]],
