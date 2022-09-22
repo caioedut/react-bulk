@@ -186,8 +186,8 @@ function BoxFactory({ platform, className, stylist, children, map, ...props }: F
     }
 
     if ((props.onPress || props.onPressIn || props.onPressOut || props.onClick) && !component) {
+      component = Button;
       rest.activeOpacity = rest.activeOpacity ?? 0.75;
-      rest.component = Button;
     }
   }
 
