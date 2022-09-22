@@ -6,8 +6,8 @@ export default function event($el, event, callback) {
     const name = 'fn_anonym_' + crypt(callback.toString());
 
     callback = {
-      [name]() {
-        return original();
+      [name](e) {
+        return original(e);
       },
     }[name];
   }

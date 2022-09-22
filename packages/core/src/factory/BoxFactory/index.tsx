@@ -11,13 +11,22 @@ import { BoxProps, FactoryProps } from '../../types';
 import useStylist from '../../useStylist';
 import clsx from '../../utils/clsx';
 
-function BoxFactory({ className, stylist, children, map, ...props }: FactoryProps & BoxProps, ref) {
+function BoxFactory({ platform, className, stylist, children, map, ...props }: FactoryProps & BoxProps, ref) {
   const theme = useTheme();
   const options = theme.components.Box;
   const { web, native, dimensions, Button, Text, View } = map;
 
   // Extends from default props
   props = factory(props, options.defaultProps);
+
+  // Platform specific props
+  if (platform) {
+    Object.keys(platform).forEach((item) => {
+      if (map[item] || item === '*') {
+        Object.assign(props, merge({}, platform[item]));
+      }
+    });
+  }
 
   let {
     accessibility,
@@ -40,7 +49,6 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
     noRootStyles,
     noWrap,
     order,
-    platform,
     position,
     reverse,
     row,
@@ -50,15 +58,6 @@ function BoxFactory({ className, stylist, children, map, ...props }: FactoryProp
     rawStyle,
     ...rest
   } = props;
-
-  // Platform specific props
-  if (platform) {
-    Object.keys(platform).forEach((item) => {
-      if (map[item] || item === '*') {
-        Object.assign(rest, merge({}, platform[item]));
-      }
-    });
-  }
 
   // Extract style props
   const styleProps: any[] = [];

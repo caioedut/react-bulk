@@ -33,16 +33,11 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
   useEffect(() => {
     if (!web) return;
 
-    if (!visible) {
-      window.onscroll = null;
-    }
-
     if (visible) {
       const top = document.documentElement.scrollTop;
       const left = document.documentElement.scrollLeft;
 
-      // @ts-ignore
-      window.onscroll = () => window.scrollTo({ top, left, behavior: 'instant' });
+      window.onscroll = () => window.scrollTo({ top, left, behavior: 'auto' });
     }
 
     return () => {
