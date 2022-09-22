@@ -48,10 +48,12 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   const buttonRef = ref || defaultRef;
   const scrollRef: any = useRef(null);
   const selectedRef: any = useRef(null);
+  const optionsRef: any = useRef([]);
 
   const [metrics, setMetrics] = useState<AnyObject>({});
   const [visible, setVisible] = useState(false);
   const [internal, setInternal] = useState(arrOptions?.find((item) => item.value == defaultValue));
+  const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == defaultValue));
 
   const gutter = theme.spacing(3);
 
@@ -91,23 +93,12 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     }
   }, [visible]);
 
-  const focus = useCallback(() => {
-    buttonRef?.current?.focus?.();
-  }, [buttonRef]);
+  const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
+  const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
+  const clear = useCallback(() => setInternal(arrOptions?.find((item) => item.value == defaultValue)), []);
+  const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
 
-  const blur = useCallback(() => {
-    buttonRef?.current?.blur?.();
-  }, [buttonRef]);
-
-  const clear = useCallback(() => {
-    setInternal(arrOptions?.find((item) => item.value == defaultValue));
-  }, []);
-
-  const isFocused = useCallback(() => {
-    return buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement;
-  }, [buttonRef]);
-
-  const handleShow = () => {
+  const handleOpen = () => {
     const callback = ({ top, left, height, width }) => {
       width += theme.spacing(2);
 
@@ -137,7 +128,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     }
   };
 
-  const handleChange = (e, option) => {
+  const handleChange = (e, option, autoFocus = false) => {
     const target = buttonRef?.current;
     const nativeEvent = e?.nativeEvent ?? e;
     const value = option.value;
@@ -145,12 +136,62 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     setVisible(false);
     setInternal(arrOptions?.find((item) => item.value == value));
 
+    autoFocus && focus();
     onChange?.({ target, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
   };
 
   const handleChangeNative = (e) => {
     const option = arrOptions.find((item) => item.value == e.target.value);
-    handleChange(e, option);
+    handleChange(e, option, false);
+  };
+
+  const handleKeyDown = (e) => {
+    const { code } = e;
+
+    let newIndex = activeIndex;
+
+    if (!['Enter', 'Escape'].includes(code)) {
+      e?.preventDefault?.();
+    }
+
+    if (code === 'Escape') {
+      return setVisible(false);
+    }
+
+    if (code === 'ArrowUp') {
+      newIndex -= 1;
+    }
+
+    if (code === 'ArrowDown') {
+      newIndex += 1;
+    }
+
+    if (code === 'Home') {
+      newIndex = 0;
+    }
+
+    if (code === 'End') {
+      newIndex = arrOptions.length - 1;
+    }
+
+    if (code === 'PageUp') {
+      newIndex = Math.max(newIndex - 3, 0);
+    }
+
+    if (code === 'PageDown') {
+      newIndex = Math.min(newIndex + 3, arrOptions.length - 1);
+    }
+
+    if (newIndex >= arrOptions.length) {
+      newIndex = 0;
+    }
+
+    if (newIndex < 0) {
+      newIndex = arrOptions.length - 1;
+    }
+
+    optionsRef?.current?.[newIndex]?.focus?.();
+    setActiveIndex(newIndex);
   };
 
   const styleRoot = useStylist({
@@ -163,7 +204,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   });
 
   return (
-    <BoxFactory map={map} style={style} stylist={[styleRoot, styleState, stylist]}>
+    <BoxFactory map={map} style={style} stylist={[styleRoot, styleState, stylist]} onKeyDown={handleKeyDown}>
       {Boolean(label) && (
         <LabelFactory map={map} numberOfLines={1} for={buttonRef} style={[{ mx: 1, mb: 1 }, labelStyle]}>
           {label}
@@ -181,7 +222,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
         id={id}
         variant="outline"
         contentStyle={{ flex: 1 }}
-        onPress={handleShow}
+        onPress={handleOpen}
       >
         <TextFactory map={map}>{internal?.label ?? internal?.value ?? placeholder ?? ''}</TextFactory>
       </ButtonFactory>
@@ -200,25 +241,39 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
       <BackdropFactory map={map} visible={visible} onPress={() => setVisible(false)}>
         <CardFactory map={map} position="absolute" p={0} m={-1} style={[{ overflow: 'hidden' }, metrics]}>
           <ScrollableFactory map={map} ref={scrollRef} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth} p={1}>
-            {arrOptions?.map((option) => {
+            {arrOptions?.map((option, index) => {
               const isSelected = option.value == internal?.value;
 
               return (
                 <ButtonFactory
                   key={option.value}
                   map={map}
-                  ref={isSelected ? selectedRef : null}
-                  block
                   variant="text"
+                  block
                   disabled={option.disabled}
                   bg={isSelected && theme.hex2rgba(color, 0.1)}
+                  contentStyle={{ flex: 1 }}
+                  onPress={(e) => handleChange(e, option, true)}
                   endIcon={
                     <BoxFactory map={map} w="1rem" pl={1}>
                       {isSelected && <IconFactory map={map} name="Check" weight="bold" />}
                     </BoxFactory>
                   }
-                  contentStyle={{ flex: 1 }}
-                  onPress={(e) => handleChange(e, option)}
+                  ref={(el) => {
+                    optionsRef.current[index] = el;
+
+                    if (isSelected) {
+                      selectedRef.current = el;
+                    }
+                  }}
+                  platform={{
+                    web: {
+                      accessibility: {
+                        role: 'option',
+                        state: { selected: isSelected },
+                      },
+                    },
+                  }}
                 >
                   <TextFactory map={map}>{option.label}</TextFactory>
                 </ButtonFactory>
