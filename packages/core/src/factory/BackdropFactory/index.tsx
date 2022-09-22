@@ -38,8 +38,8 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
     }
 
     if (visible) {
-      const top = window.pageYOffset || document.documentElement.scrollTop;
-      const left = window.pageXOffset || document.documentElement.scrollLeft;
+      const top = document.documentElement.scrollTop;
+      const left = document.documentElement.scrollLeft;
 
       // @ts-ignore
       window.onscroll = () => window.scrollTo({ top, left, behavior: 'instant' });
@@ -61,17 +61,11 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
     style: options.defaultStyles.visible,
   });
 
-  let Child = () => (
-    <BoxFactory map={map} {...containerProps}>
-      {children}
-    </BoxFactory>
-  );
-
   if (native) {
     return (
       <Dialog transparent statusBarTranslucent visible={Boolean(visible)} animationType="fade" presentationStyle="overFullScreen">
-        <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleVisible, stylist]} {...rest}>
-          <Child />
+        <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleVisible, stylist]} {...rest} {...containerProps}>
+          {children}
         </BoxFactory>
       </Dialog>
     );
@@ -79,7 +73,9 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
 
   return (
     <BoxFactory map={map} ref={ref} component={Dialog} stylist={[styleRoot, styleVisible, stylist]} {...rest}>
-      <Child />
+      <BoxFactory map={map} {...containerProps}>
+        {children}
+      </BoxFactory>
     </BoxFactory>
   );
 }

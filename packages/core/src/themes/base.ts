@@ -555,6 +555,7 @@ const base: ThemeProps & any = {
         name: 'rbk-select',
         defaultProps: {
           accessibility: { role: 'combobox' },
+          color: 'primary',
         },
         defaultStyles: {},
       },

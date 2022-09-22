@@ -4,25 +4,29 @@ import { useTheme } from '../../ReactBulk';
 import extract from '../../props/extract';
 import factory from '../../props/factory';
 import { spacings } from '../../styles/jss';
-import { FactoryProps, SelectProps } from '../../types';
+import { AnyObject, FactoryProps, SelectProps } from '../../types';
 import useHtmlId from '../../useHtmlId';
 import useStylist from '../../useStylist';
+import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
-import DropdownFactory from '../DropdownFactory';
+import CardFactory from '../CardFactory';
 import { useForm } from '../FormFactory';
+import IconFactory from '../IconFactory';
 import LabelFactory from '../LabelFactory';
+import ScrollableFactory from '../ScrollableFactory';
 import TextFactory from '../TextFactory';
 
 function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Select;
-  const { web, Input } = map;
+  const { web, native, dimensions, Input } = map;
 
   // Extends from default props
   let {
     defaultValue,
     id,
+    color,
     label,
     name,
     onChange,
@@ -42,9 +46,14 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   const form = useForm();
   const defaultRef: any = useRef(null);
   const buttonRef = ref || defaultRef;
+  const scrollRef: any = useRef(null);
+  const selectedRef: any = useRef(null);
 
+  const [metrics, setMetrics] = useState<AnyObject>({});
   const [visible, setVisible] = useState(false);
   const [internal, setInternal] = useState(arrOptions?.find((item) => item.value == defaultValue));
+
+  const gutter = theme.spacing(3);
 
   useEffect(() => {
     if (typeof value !== 'undefined') {
@@ -64,6 +73,24 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     return () => form.unsetField(name);
   }, [name, form, internal]);
 
+  useEffect(() => {
+    if (!visible || !selectedRef.current) return;
+
+    if (web) {
+      selectedRef.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
+    }
+
+    if (native) {
+      setTimeout(() => {
+        // @ts-ignore
+        selectedRef.current.measureLayout(scrollRef.current, (left, top) => {
+          const y = Math.max(0, top - metrics?.maxHeight / 2);
+          scrollRef.current.scrollTo({ x: 0, y, animated: true });
+        });
+      }, 100);
+    }
+  }, [visible]);
+
   const focus = useCallback(() => {
     buttonRef?.current?.focus?.();
   }, [buttonRef]);
@@ -79,6 +106,36 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   const isFocused = useCallback(() => {
     return buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement;
   }, [buttonRef]);
+
+  const handleShow = () => {
+    const callback = ({ top, left, height, width }) => {
+      width += theme.spacing(2);
+
+      const newMetrics: any = { left, width };
+
+      if (top <= dimensions.height / 2) {
+        newMetrics.top = Math.max(gutter, top);
+      } else {
+        newMetrics.bottom = Math.max(gutter, dimensions.height - top - height);
+      }
+
+      const sub = (newMetrics.top || 0) + (newMetrics.bottom || 0);
+      newMetrics.maxHeight = Math.min(theme.rem(20), dimensions.height - gutter - sub);
+      newMetrics.maxWidth = dimensions.width - gutter * 2;
+
+      setMetrics(newMetrics);
+      setVisible((current) => (readOnly ? false : !current));
+    };
+
+    if (web) {
+      callback(buttonRef.current.getBoundingClientRect());
+    }
+
+    if (native) {
+      // @ts-ignore
+      buttonRef.current.measure((x, y, width, height, left, top) => callback({ top, left, height, width }));
+    }
+  };
 
   const handleChange = (e, option) => {
     const target = buttonRef?.current;
@@ -118,12 +175,13 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
         map={map}
         style={buttonStyle}
         block
+        color={color}
         endIcon={visible ? 'CaretUp' : 'CaretDown'}
         {...rest}
         id={id}
         variant="outline"
         contentStyle={{ flex: 1 }}
-        onPress={() => setVisible((current) => (readOnly ? false : !current))}
+        onPress={handleShow}
       >
         <TextFactory map={map}>{internal?.label ?? internal?.value ?? placeholder ?? ''}</TextFactory>
       </ButtonFactory>
@@ -139,24 +197,36 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
         />
       )}
 
-      <DropdownFactory map={map} visible={visible} mt={0.5} p={1} w="100%">
-        <BoxFactory map={map}>
-          {arrOptions?.map((option) => (
-            <ButtonFactory
-              key={option.value}
-              map={map}
-              block
-              variant="text"
-              disabled={option.disabled}
-              endIcon={option.value == internal?.value ? 'Check' : null}
-              contentStyle={{ flex: 1 }}
-              onPress={(e) => handleChange(e, option)}
-            >
-              <TextFactory map={map}>{option.label}</TextFactory>
-            </ButtonFactory>
-          ))}
-        </BoxFactory>
-      </DropdownFactory>
+      <BackdropFactory map={map} visible={visible} onPress={() => setVisible(false)}>
+        <CardFactory map={map} position="absolute" p={0} m={-1} style={[{ overflow: 'hidden' }, metrics]}>
+          <ScrollableFactory map={map} ref={scrollRef} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth} p={1}>
+            {arrOptions?.map((option) => {
+              const isSelected = option.value == internal?.value;
+
+              return (
+                <ButtonFactory
+                  key={option.value}
+                  map={map}
+                  ref={isSelected ? selectedRef : null}
+                  block
+                  variant="text"
+                  disabled={option.disabled}
+                  bg={isSelected && theme.hex2rgba(color, 0.1)}
+                  endIcon={
+                    <BoxFactory map={map} w="1rem" pl={1}>
+                      {isSelected && <IconFactory map={map} name="Check" weight="bold" />}
+                    </BoxFactory>
+                  }
+                  contentStyle={{ flex: 1 }}
+                  onPress={(e) => handleChange(e, option)}
+                >
+                  <TextFactory map={map}>{option.label}</TextFactory>
+                </ButtonFactory>
+              );
+            })}
+          </ScrollableFactory>
+        </CardFactory>
+      </BackdropFactory>
     </BoxFactory>
   );
 }
