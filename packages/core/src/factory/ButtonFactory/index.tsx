@@ -57,18 +57,19 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
     delete rest.type;
   }
 
-  const multiplier = pick(size, 'medium', {
-    xsmall: 0.625,
-    small: 0.75,
-    medium: 1,
-    large: 1.25,
-    xlarge: 1.625,
-  });
+  if (typeof size === 'string') {
+    size = pick(size, 'medium', {
+      xsmall: 0.625,
+      small: 0.75,
+      medium: 1,
+      large: 1.25,
+      xlarge: 1.625,
+    });
+  }
 
-  const fontSize = theme.rem(multiplier);
-  const lineSize = theme.rem(theme.typography.lineHeight, fontSize);
+  const fontSize = theme.rem(size);
   const spacing = theme.rem(0.5, fontSize);
-  const height = lineSize + spacing * 2;
+  const height = fontSize * 2;
   const textColor = isBasic ? color : theme.contrast(color);
 
   const styleRoot = useStylist({
@@ -98,7 +99,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   const styleColor = useStylist({
     style: [
-      {
+      color !== options.defaultProps.color && {
         backgroundColor: color,
         borderColor: color,
       },
@@ -113,7 +114,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   const styleState = useStylist({
     style: [
-      {
+      fontSize !== theme.typography.fontSize && {
         minHeight: height,
         minWidth: height,
         paddingHorizontal: spacing,
@@ -146,36 +147,25 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
     >
       {Boolean(startIcon) && (
         <BoxFactory map={map}>
-          {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={textColor} size={multiplier} /> : startIcon}
+          {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={textColor} size={size} /> : startIcon}
         </BoxFactory>
       )}
 
       {Boolean(children || children?.length) && (
-        <BoxFactory
-          map={map}
-          style={[
-            contentStyle,
-            {
-              display: 'flex',
-              opacity: loading ? 0 : 1,
-              ml: startIcon ? 2 : 0,
-              mr: endIcon ? 2 : 0,
-            },
-          ]}
-        >
+        <BoxFactory map={map} style={[contentStyle, loading && { opacity: 0 }, startIcon && { ml: 2 }, endIcon && { mr: 2 }]}>
           {children}
         </BoxFactory>
       )}
 
       {Boolean(endIcon) && (
         <BoxFactory map={map}>
-          {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={textColor} size={multiplier} /> : endIcon}
+          {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={textColor} size={size} /> : endIcon}
         </BoxFactory>
       )}
 
       {loading && (
         <BoxFactory map={map} position="absolute" i={0} center>
-          <LoadingFactory map={map} color={textColor} size={multiplier} />
+          <LoadingFactory map={map} color={textColor} size={size} />
         </BoxFactory>
       )}
 

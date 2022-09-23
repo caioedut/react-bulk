@@ -48,9 +48,9 @@ Extends all [`Box`](Box.md) properties.
 
 ### `size`
 
-| Type     | Default                                                   |
-|----------|-----------------------------------------------------------|
-| `number` | `theme.typography.fontSize * theme.typography.lineHeight` |
+| Type     | Default                     |
+|----------|-----------------------------|
+| `number` | `theme.typography.fontSize` |
 
 ---
 

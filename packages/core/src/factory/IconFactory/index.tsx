@@ -14,14 +14,14 @@ function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: 
   // Extends from default props
   let { color, name, size, ...rest } = factory(props, options.defaultProps);
 
+  const fontSize = theme.rem(size);
+
   const iconName = `${name || ''}`
     .split(/_|-|\s/g)
     .map((str) => str.charAt(0).toUpperCase() + str.slice(1))
     .join('');
 
   const Component = Icons[iconName] ?? Icons.Question;
-
-  size = theme.rem(size ?? theme.typography.lineHeight);
 
   const styleRoot = useStylist({
     name: options.name,
@@ -35,7 +35,7 @@ function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: 
       component={Component}
       stylist={[styleRoot, stylist]}
       color={theme.color(color)}
-      size={size}
+      size={fontSize}
       {...rest}
       noRootStyles
     />

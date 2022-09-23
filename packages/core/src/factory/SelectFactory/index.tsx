@@ -27,6 +27,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     defaultValue,
     id,
     color,
+    error,
     label,
     name,
     onChange,
@@ -36,6 +37,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     value,
 
     buttonStyle,
+    errorStyle,
     labelStyle,
     style,
     ...rest
@@ -199,6 +201,16 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     style: options.defaultStyles.root,
   });
 
+  const styleLabel = useStylist({
+    name: options.name + '-label',
+    style: options.defaultStyles.label,
+  });
+
+  const styleError = useStylist({
+    name: options.name + '-error',
+    style: options.defaultStyles.error,
+  });
+
   const styleState = useStylist({
     style: extract(spacings, rest),
   });
@@ -206,7 +218,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   return (
     <BoxFactory map={map} style={style} stylist={[styleRoot, styleState, stylist]} onKeyDown={handleKeyDown}>
       {Boolean(label) && (
-        <LabelFactory map={map} numberOfLines={1} for={buttonRef} style={[{ mx: 1, mb: 1 }, labelStyle]}>
+        <LabelFactory map={map} numberOfLines={1} for={buttonRef} style={labelStyle} stylist={[styleLabel]}>
           {label}
         </LabelFactory>
       )}
@@ -226,6 +238,12 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
       >
         <TextFactory map={map}>{internal?.label ?? internal?.value ?? placeholder ?? ''}</TextFactory>
       </ButtonFactory>
+
+      {Boolean(error) && typeof error === 'string' && (
+        <TextFactory map={map} variant="caption" style={errorStyle} stylist={[styleError]}>
+          {error}
+        </TextFactory>
+      )}
 
       {web && (
         <Input //

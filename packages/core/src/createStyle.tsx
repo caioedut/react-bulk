@@ -22,7 +22,7 @@ export default function createStyle({ name, style, theme, global }: createStyle)
 
   const isObject = style && typeof style === 'object';
   const styleX = isObject ? jss({ theme }, style) : style;
-  const isEmpty = (isObject ? Object.keys(style) : `${style || ''}`.trim()).length === 0;
+  const isEmpty = (isObject ? Object.keys(styleX) : `${styleX || ''}`.trim()).length === 0;
 
   const id = name ?? 'rbk-' + crypt(isObject ? JSON.stringify(styleX) : uuid());
 

@@ -53,7 +53,7 @@ function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & 
   };
 
   const setData = (data: any = {}) => {
-    Object.keys(data).forEach((attr) => getField(attr)?.set?.(data[attr]));
+    Object.keys(Object(data)).forEach((attr) => getField(attr)?.set?.(data[attr]));
   };
 
   const clear = () => {
@@ -91,7 +91,7 @@ function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & 
   stylist = [styleRoot, stylist];
 
   return (
-    <Context.Provider value={ref?.current}>
+    <Context.Provider value={ref.current}>
       <BoxFactory map={map} ref={formRef} component={Form} stylist={stylist} {...rest} onSubmit={handleSubmit} />
     </Context.Provider>
   );

@@ -181,7 +181,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
           }
         });
 
-        value = values.join(', ');
+        value = values.join(' ');
       }
     }
 

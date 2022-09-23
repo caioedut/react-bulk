@@ -40,7 +40,8 @@ export default function createTheme(options?: ThemeOptionalProps, extendsTo?: Th
     }
   }
 
-  return deepmerge.all(all);
+  // @ts-ignore
+  return deepmerge.all(all, { arrayMerge: (prev, next) => next });
 }
 
 function colorize(hex, luminosity = 0) {
