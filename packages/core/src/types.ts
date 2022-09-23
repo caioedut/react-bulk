@@ -113,7 +113,7 @@ export type EditableProps = {
 export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around' | 'space-evenly';
 export type FlexAlignValues = 'flex-start' | 'flex-end' | 'center' | 'stretch';
 export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
-export type SizeValues = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+export type SizeValues = number | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
 
 export type CustomStyles = {
@@ -397,6 +397,7 @@ export type InputProps = InputBaseProps & {
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   autoCorrect?: boolean;
   caretHidden?: boolean;
+  error?: string;
   maxLength?: number;
   multiline?: boolean;
   placeholder?: string;
@@ -406,10 +407,12 @@ export type InputProps = InputBaseProps & {
   type?: 'text' | 'number' | 'email' | 'phone' | 'url';
   // Styles
   containerStyle?: JssStyles;
+  errorStyle?: JssStyles;
   inputStyle?: JssStyles;
 } & BoxProps;
 
 export type SelectProps = InputBaseProps & {
+  error?: string;
   options: {
     label: string;
     value: string;
@@ -418,6 +421,7 @@ export type SelectProps = InputBaseProps & {
   placeholder?: string;
   // Styles
   buttonStyle?: JssStyles;
+  errorStyle?: JssStyles;
 } & BoxProps;
 
 export type CheckboxProps = InputBaseProps & {

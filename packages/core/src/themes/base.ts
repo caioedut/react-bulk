@@ -258,6 +258,11 @@ const base: ThemeProps & any = {
         defaultStyles: {
           root: {
             position: 'relative',
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            alignItems: 'center',
+            justifyContent: 'center',
 
             backgroundColor: 'primary',
             borderWidth: 1,
@@ -265,14 +270,11 @@ const base: ThemeProps & any = {
             borderColor: 'primary',
             borderRadius: this.shape.borderRadius,
 
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap: 'nowrap',
-            alignItems: 'center',
-            justifyContent: 'center',
-
             margin: 0,
+            minHeight: '2rem',
+            minWidth: '2rem',
             padding: 0,
+            paddingHorizontal: '0.5rem',
             touchAction: 'none',
 
             web: {
@@ -293,7 +295,7 @@ const base: ThemeProps & any = {
             },
           },
           label: {
-            color: 'primary',
+            color: 'white',
             fontSize: '1rem',
           },
         },
@@ -425,6 +427,7 @@ const base: ThemeProps & any = {
         name: 'rbk-icon',
         defaultProps: {
           color: 'primary',
+          size: 1,
           weight: 'regular',
         },
         defaultStyles: {
@@ -464,13 +467,17 @@ const base: ThemeProps & any = {
               transitionProperty: 'box-shadow',
             },
           },
+          label: {
+            mx: 1,
+            mb: 1,
+          },
           input: {
             backgroundColor: this.colors.common.trans,
             borderWidth: 0,
             color: 'text.primary',
             flex: 1,
             fontSize: '1rem',
-            height: '1.65rem',
+            height: '2rem',
             margin: 0,
             padding: '0.5rem',
             textDecorationLine: 'none',
@@ -482,6 +489,11 @@ const base: ThemeProps & any = {
               outline: '0 !important',
               touchAction: 'none',
             },
+          },
+          error: {
+            color: 'error',
+            mx: 1,
+            mt: 1,
           },
         },
       },
@@ -557,7 +569,17 @@ const base: ThemeProps & any = {
           accessibility: { role: 'combobox' },
           color: 'primary',
         },
-        defaultStyles: {},
+        defaultStyles: {
+          label: {
+            mx: 1,
+            mb: 1,
+          },
+          error: {
+            color: 'error',
+            mx: 1,
+            mt: 1,
+          },
+        },
       },
       Table: {
         name: 'rbk-table',

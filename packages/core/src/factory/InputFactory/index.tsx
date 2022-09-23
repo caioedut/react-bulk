@@ -12,6 +12,7 @@ import BoxFactory from '../BoxFactory';
 import { useForm } from '../FormFactory';
 import IconFactory from '../IconFactory';
 import LabelFactory from '../LabelFactory';
+import TextFactory from '../TextFactory';
 
 function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref: any) {
   const theme = useTheme();
@@ -26,6 +27,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     defaultValue,
     disabled,
     endIcon,
+    error,
     id,
     label,
     multiline,
@@ -42,6 +44,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     onFocus,
     onBlur,
     containerStyle,
+    errorStyle,
     inputStyle,
     labelStyle,
     style,
@@ -98,6 +101,20 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     });
   }
 
+  if (typeof size === 'string') {
+    size = pick(size, 'medium', {
+      xsmall: 0.625,
+      small: 0.75,
+      medium: 1,
+      large: 1.25,
+      xlarge: 1.625,
+    });
+  }
+
+  const fontSize = theme.rem(size);
+  const spacing = theme.rem(0.5, fontSize);
+  const height = (multiline ? 3 : 1) * fontSize * 2;
+
   useEffect(() => {
     if (typeof value !== 'undefined') {
       setInternal(value);
@@ -116,21 +133,10 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     return () => form.unsetField(name);
   }, [name, form, internal]);
 
-  const focus = useCallback(() => {
-    inputRef?.current?.focus?.();
-  }, [inputRef]);
-
-  const blur = useCallback(() => {
-    inputRef?.current?.blur?.();
-  }, [inputRef]);
-
-  const clear = useCallback(() => {
-    setInternal(`${defaultValue ?? ''}`);
-  }, []);
-
-  const isFocused = useCallback(() => {
-    return inputRef?.current?.isFocused?.() || inputRef?.current === document?.activeElement;
-  }, [inputRef]);
+  const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
+  const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
+  const clear = useCallback(() => setInternal(`${defaultValue ?? ''}`), []);
+  const isFocused = useCallback(() => inputRef?.current?.isFocused?.() || inputRef?.current === document?.activeElement, [inputRef]);
 
   const handleChange = (e) => {
     const target = inputRef?.current;
@@ -152,27 +158,23 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     onBlur?.(e);
   };
 
-  const multiplier = pick(size, 'medium', {
-    xsmall: 0.625,
-    small: 0.75,
-    medium: 1,
-    large: 1.25,
-    xlarge: 1.625,
-  });
-
-  const fontSize = theme.rem(multiplier);
-  const lineSize = theme.rem(theme.typography.lineHeight, fontSize);
-  const spacing = theme.rem(0.5, fontSize);
-  const height = lineSize * (multiline ? 3 : 1) + spacing * 2;
-
   const styleRoot = useStylist({
     name: options.name,
     style: options.defaultStyles.root,
   });
 
+  const styleLabel = useStylist({
+    name: options.name + '-label',
+    style: options.defaultStyles.label,
+  });
+
+  const styleError = useStylist({
+    name: options.name + '-error',
+    style: options.defaultStyles.error,
+  });
+
   const styleFocus = useStylist({
     avoid: !focused,
-    name: options.name + '-focus',
     style: {
       web: {
         boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}`,
@@ -188,7 +190,6 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   const styleDisabled = useStylist({
     avoid: !disabled,
-    name: options.name + '-disabled',
     style: {
       backgroundColor: theme.hex2rgba('background.disabled', 0.125),
       borderColor: theme.hex2rgba('background.disabled', 0.25),
@@ -199,10 +200,12 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     },
   });
 
-  const styleState = useStylist({
-    style: {
-      borderColor: color,
-    },
+  const styleColor = useStylist({
+    style: [
+      color !== options.defaultProps.color && {
+        borderColor: color,
+      },
+    ],
   });
 
   const styleInput = useStylist({
@@ -212,11 +215,13 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   const styleInputState = useStylist({
     style: [
-      {
+      fontSize !== theme.typography.fontSize && {
         fontSize,
         height,
         padding: spacing,
       },
+
+      multiline && { height },
 
       native && { paddingVertical: 0 },
 
@@ -235,16 +240,16 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   return (
     <BoxFactory map={map} style={containerStyle}>
       {Boolean(label) && (
-        <LabelFactory map={map} numberOfLines={1} for={inputRef} style={[{ mx: 1, mb: 1 }, labelStyle]}>
+        <LabelFactory map={map} numberOfLines={1} for={inputRef} style={labelStyle} stylist={[styleLabel]}>
           {label}
         </LabelFactory>
       )}
 
-      <BoxFactory map={map} stylist={[styleRoot, styleFocus, styleDisabled, styleState, stylist]} style={style}>
-        <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between">
+      <BoxFactory map={map} stylist={[styleRoot, styleFocus, styleDisabled, styleColor, stylist]} style={style}>
+        <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
           {Boolean(startIcon) && (
             <BoxFactory map={map} style={{ marginLeft: spacing }}>
-              {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={color} size={multiplier} /> : startIcon}
+              {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={color} size={size} /> : startIcon}
             </BoxFactory>
           )}
 
@@ -266,11 +271,17 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
           {Boolean(endIcon) && (
             <BoxFactory map={map} style={{ marginRight: spacing }}>
-              {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={color} size={multiplier} /> : endIcon}
+              {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={color} size={size} /> : endIcon}
             </BoxFactory>
           )}
         </BoxFactory>
       </BoxFactory>
+
+      {Boolean(error) && typeof error === 'string' && (
+        <TextFactory map={map} variant="caption" style={errorStyle} stylist={[styleError]}>
+          {error}
+        </TextFactory>
+      )}
     </BoxFactory>
   );
 }

@@ -7,6 +7,7 @@ import useStylist from '../../useStylist';
 import AnimationFactory from '../AnimationFactory';
 import BoxFactory from '../BoxFactory';
 import IconFactory from '../IconFactory';
+import TextFactory from '../TextFactory';
 
 function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps, ref: any) {
   const theme = useTheme();
@@ -30,7 +31,6 @@ function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps,
   const styleLabelState = useStylist({
     style: {
       color,
-      fontSize: size,
       ml: size,
     },
   });
@@ -48,9 +48,9 @@ function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps,
         <IconFactory map={map} name="Spinner" size={size} color={color} />
       </AnimationFactory>
       {Boolean(label) && (
-        <BoxFactory map={map} stylist={[styleLabel, styleLabelState]}>
+        <TextFactory map={map} size={size} stylist={[styleLabel, styleLabelState]}>
           {label}
-        </BoxFactory>
+        </TextFactory>
       )}
     </BoxFactory>
   );
