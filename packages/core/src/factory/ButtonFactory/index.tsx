@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { ButtonProps, FactoryProps } from '../../types';
 import useStylist from '../../useStylist';
 import pick from '../../utils/pick';
@@ -32,14 +32,16 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
     size,
     startIcon,
     variant,
+    variants,
     // Styles
     labelStyle,
     contentStyle,
     ...rest
-  } = factory(props, options.defaultProps);
+  } = factory2(props, options, theme);
 
   const form = useForm();
   const isBasic = ['outline', 'text'].includes(variant);
+  const dynamic = !isNaN(size);
 
   badge = typeof badge === 'number' ? { value: badge } : badge;
   children = children ?? label;
@@ -82,39 +84,19 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
     style: options.defaultStyles.label,
   });
 
-  const styleBlock = useStylist({
-    avoid: !block,
-    name: options.name + '-block',
-    style: { width: '100%' },
-  });
-
-  const styleDisabled = useStylist({
-    avoid: !disabled,
-    name: options.name + '-disabled',
-    style: {
-      opacity: 0.75,
-      web: { cursor: 'not-allowed', '& *': { cursor: 'not-allowed' } },
-    },
-  });
-
   const styleColor = useStylist({
+    avoid: color === options.defaultProps.color,
     style: [
-      color !== options.defaultProps.color && {
-        backgroundColor: color,
-        borderColor: color,
-      },
-
-      isBasic && { backgroundColor: 'common.trans' },
-
-      variant === 'text' && { borderColor: 'common.trans' },
-
+      color && { borderColor: color },
+      color && !isBasic && { backgroundColor: color },
       web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}` } },
+      web && color && { '&:hover': { bg: theme.hex2rgba(color, isBasic ? 0.1 : 0.9) } },
     ],
   });
 
   const styleState = useStylist({
     style: [
-      fontSize !== theme.typography.fontSize && {
+      dynamic && {
         minHeight: height,
         minWidth: height,
         paddingHorizontal: spacing,
@@ -130,7 +112,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   if (typeof children === 'string') {
     children = (
-      <TextFactory map={map} transform={transform} style={[{ color: textColor, fontSize }, labelStyle]} stylist={[styleLabel]}>
+      <TextFactory map={map} transform={transform} style={[{ color: textColor }, labelStyle]} stylist={[styleLabel, variants?.label]}>
         {children}
       </TextFactory>
     );
@@ -141,7 +123,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
       map={map}
       ref={ref}
       component={web && rest.href ? 'a' : Button}
-      stylist={[styleRoot, styleBlock, styleDisabled, styleColor, styleState, stylist]}
+      stylist={[styleRoot, variants?.root, styleColor, styleState, stylist]}
       {...rest}
       disabled={disabled}
     >

@@ -219,7 +219,7 @@ const base: ThemeProps & any = {
             justifyContent: 'center',
             textAlign: 'center',
 
-            color: 'common.white',
+            color: 'white',
             fontSize: '0.625rem',
             fontWeight: 'bold',
             overflow: 'hidden',
@@ -254,6 +254,8 @@ const base: ThemeProps & any = {
         defaultProps: {
           accessibility: { role: 'button' },
           color: 'primary',
+          size: 'medium',
+          variant: 'solid',
         },
         defaultStyles: {
           root: {
@@ -264,12 +266,9 @@ const base: ThemeProps & any = {
             alignItems: 'center',
             justifyContent: 'center',
 
-            backgroundColor: 'primary',
-            borderWidth: 1,
-            borderStyle: 'solid',
-            borderColor: 'primary',
+            bg: 'primary',
+            border: '1px solid primary',
             borderRadius: this.shape.borderRadius,
-
             margin: 0,
             minHeight: '2rem',
             minWidth: '2rem',
@@ -287,16 +286,105 @@ const base: ThemeProps & any = {
               outline: '0 !important',
               textDecorationLine: 'none !important',
               ...this.mixins.transitions.fast,
-              transitionProperty: 'box-shadow, opacity',
+              transitionProperty: 'background-color, box-shadow',
 
-              '&:hover': {
-                opacity: 0.75,
-              },
+              '&:hover': { bg: this.hex2rgba('primary', 0.9) },
             },
           },
           label: {
             color: 'white',
             fontSize: '1rem',
+            web: { lineHeight: 1 },
+          },
+        },
+        variants: {
+          block: {
+            true: {
+              styles: {
+                root: { width: '100%' },
+              },
+            },
+          },
+          disabled: {
+            true: {
+              styles: {
+                root: {
+                  opacity: 0.75,
+                  web: { cursor: 'not-allowed', '& *': { cursor: 'not-allowed' } },
+                },
+              },
+            },
+          },
+          size: {
+            xsmall: {
+              styles: {
+                root: {
+                  minHeight: '1.25rem',
+                  paddingHorizontal: '0.3125rem',
+                },
+                label: {
+                  fontSize: '0.625rem',
+                },
+              },
+            },
+            small: {
+              styles: {
+                root: {
+                  minHeight: '1.5rem',
+                  paddingHorizontal: '0.375rem',
+                },
+                label: {
+                  fontSize: '0.75rem',
+                },
+              },
+            },
+            large: {
+              styles: {
+                root: {
+                  minHeight: '2.5rem',
+                  paddingHorizontal: '0.625rem',
+                },
+                label: {
+                  fontSize: '1.25rem',
+                },
+              },
+            },
+            xlarge: {
+              styles: {
+                root: {
+                  minHeight: '3.25rem',
+                  paddingHorizontal: '0.8125rem',
+                },
+                label: {
+                  fontSize: '1.625rem',
+                },
+              },
+            },
+          },
+          variant: {
+            outline: {
+              styles: {
+                root: {
+                  bg: 'trans',
+                  '&:hover': { bg: (theme) => theme.hex2rgba('primary', 0.1) },
+                },
+                label: {
+                  color: 'primary',
+                },
+              },
+            },
+            text: {
+              styles: {
+                root: {
+                  bg: 'trans',
+                  borderWidth: 0,
+                  '&:hover': { bg: this.hex2rgba('primary', 0.1) },
+                },
+                label: {
+                  color: 'primary',
+                },
+              },
+            },
           },
         },
       },

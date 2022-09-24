@@ -75,8 +75,9 @@ export default function BaseWeb({ children }) {
 
     const components = { ...theme.components };
     const ordered = extract(['Box', 'Text', 'Label', 'Backdrop', 'Scrollable', 'Card', 'Dropdown', 'Button', 'ButtonGroup'], components);
+    const list = [...Object.values(ordered), ...Object.values(components)];
 
-    [...Object.values(ordered), ...Object.values(components)].forEach((component: any) => {
+    list.forEach((component: any) => {
       const componentName = component?.name;
       const styles = component?.defaultStyles || {};
 
@@ -88,6 +89,19 @@ export default function BaseWeb({ children }) {
 
         createStyle({ name, style, theme });
       }
+
+      // Generate variant styles
+      Object.entries(component?.variants || {}).forEach(([varAttr, varOptions]: any) => {
+        Object.entries(varOptions).map(([optionKey, optionVal]: any) => {
+          Object.entries(optionVal?.styles || {}).forEach(([styleId, styleCss]: any) => {
+            createStyle({
+              theme,
+              style: styleCss,
+              name: `${componentName}-${varAttr}-${optionKey}` + (styleId === 'root' ? '' : `-${styleId}`),
+            });
+          });
+        });
+      });
     });
 
     setLoading(false);
