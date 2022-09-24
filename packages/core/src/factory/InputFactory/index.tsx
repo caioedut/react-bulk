@@ -201,11 +201,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   });
 
   const styleColor = useStylist({
-    style: [
-      color !== options.defaultProps.color && {
-        borderColor: color,
-      },
-    ],
+    style: [color !== options.defaultStyles.root.borderColor && { borderColor: color }],
   });
 
   const styleInput = useStylist({

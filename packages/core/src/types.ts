@@ -170,6 +170,7 @@ export type ThemeColorsProps =
 
 export type ThemeComponentProps = {
   name: string;
+  variants: AnyObject;
   defaultProps: AnyObject;
   defaultStyles: {
     root?: JssStyles;

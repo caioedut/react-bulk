@@ -96,6 +96,18 @@ function Main() {
   return (
     <Scrollable bg="background.secondary">
       <Box p={3}>
+        <Card mb={3}>
+          <Grid gap={3}>
+            {variants.map((variant) => (
+              <Box key={variant}>
+                <Button variant={variant} size="xlarge">
+                  Ver Histórico
+                </Button>
+              </Box>
+            ))}
+          </Grid>
+        </Card>
+
         <Card>
           <Grid>
             <Box xs={12} md>
@@ -648,7 +660,18 @@ function Main() {
 
 function App() {
   return (
-    <ReactBulk theme={{ typography: { fontSize: 16 } }}>
+    <ReactBulk
+      theme={{
+        typography: { fontSize: 16 },
+        components: {
+          Button: {
+            defaultProps: {
+              color: 'secondary',
+            },
+          },
+        },
+      }}
+    >
       <Main />
     </ReactBulk>
   );
