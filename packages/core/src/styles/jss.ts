@@ -41,6 +41,12 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     let prop: any = attr;
     let value = styles[attr];
 
+    // Parse "&" for css. Eg.: '&:hover'
+    if (prop.startsWith('&')) {
+      styles[prop] = jss({ theme }, value);
+      continue;
+    }
+
     const valueTrim = `${value ?? ''}`.trim();
     const valueSplit = valueTrim.split(/\s/g).filter((item: string) => item.trim());
 
