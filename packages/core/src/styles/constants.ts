@@ -92,6 +92,7 @@ export const notPxProps = [
   'opacity',
   'order',
   'orphans',
+  'scale',
   'stopOpacity',
   'strokeDashoffset',
   'strokeOpacity',
