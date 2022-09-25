@@ -7,8 +7,8 @@ export default function useMap() {
   const timeoutRef = useRef<TimeoutType>(null);
 
   const [dimensions, setDimensions] = useState({
-    height: window.innerHeight,
-    width: window.innerWidth,
+    height: window?.innerHeight,
+    width: window?.innerWidth,
   });
 
   const handleResize = () => {
@@ -17,13 +17,15 @@ export default function useMap() {
     }
 
     timeoutRef.current = setTimeout(() => {
-      setDimensions({ height: window.innerHeight, width: window.innerWidth });
+      setDimensions({ height: window?.innerHeight, width: window?.innerWidth });
     }, 10);
   };
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    if (!window) return;
+
+    window?.addEventListener('resize', handleResize);
+    return () => window?.removeEventListener('resize', handleResize);
   }, []);
 
   return {

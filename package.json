@@ -15,7 +15,7 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna exec --parallel -- rimraf dist typings",
     "prebuild": "npm run clean",
-    "build": "lerna exec --parallel -- tsc --build",
+    "build": "lerna exec --parallel -- rollup -c ../../rollup.config.js",
     "publish:stable": "npm run build && lerna publish"
   },
   "devDependencies": {
@@ -30,7 +30,13 @@
     "react-native": "^0.63.4",
     "react-native-svg": "^13.2.0",
     "rimraf": "^3.0.0",
-    "rollup-plugin-typescript2": "^0.32.1",
+    "rollup": "2.38.0",
+    "rollup-plugin-babel": "4.4.0",
+    "rollup-plugin-commonjs": "10.1.0",
+    "rollup-plugin-node-resolve": "5.2.0",
+    "rollup-plugin-terser": "7.0.2",
+    "rollup-plugin-typescript2": "0.29.0",
+    "rollup-plugin-url": "3.0.1",
     "typescript": "^4.7.4"
   },
   "dependencies": {}
