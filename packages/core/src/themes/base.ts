@@ -288,7 +288,7 @@ const base: ThemeProps & any = {
               ...this.mixins.transitions.fast,
               transitionProperty: 'background-color, box-shadow',
 
-              '&:hover': { bg: this.hex2rgba('primary', 0.9) },
+              '&:hover': { bg: this.hex2rgba('primary', 0.8) },
             },
           },
           label: {

@@ -74,23 +74,12 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
   const height = fontSize * 2;
   const textColor = isBasic ? color : theme.contrast(color);
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleLabel = useStylist({
-    name: options.name + '-label',
-    style: options.defaultStyles.label,
-  });
-
   const styleColor = useStylist({
-    avoid: color === options.defaultProps.color,
     style: [
       color && { borderColor: color },
       color && !isBasic && { backgroundColor: color },
       web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}` } },
-      web && color && { '&:hover': { bg: theme.hex2rgba(color, isBasic ? 0.1 : 0.9) } },
+      web && color && { '&:hover': { bg: theme.hex2rgba(color, isBasic ? 0.1 : 0.8) } },
     ],
   });
 
@@ -112,7 +101,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   if (typeof children === 'string') {
     children = (
-      <TextFactory map={map} transform={transform} style={[{ color: textColor }, labelStyle]} stylist={[styleLabel, variants?.label]}>
+      <TextFactory map={map} transform={transform} style={[{ color: textColor }, labelStyle]} stylist={[variants?.label]}>
         {children}
       </TextFactory>
     );
@@ -123,7 +112,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
       map={map}
       ref={ref}
       component={web && rest.href ? 'a' : Button}
-      stylist={[styleRoot, variants?.root, styleColor, styleState, stylist]}
+      stylist={[variants?.root, styleColor, styleState, stylist]}
       {...rest}
       disabled={disabled}
     >

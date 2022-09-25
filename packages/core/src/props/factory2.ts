@@ -15,13 +15,21 @@ export default function factory2(props, options?: ThemeComponentProps, theme?: T
       const varStyles = varOptions[varValue]?.styles || {};
 
       Object.entries(varStyles).forEach(([styleId, styleCss]: any) => {
-        variants[styleId] = variants[styleId] || [];
+        const suffix = styleId === 'root' ? '' : `-${styleId}`;
+
+        variants[styleId] = variants[styleId] || [
+          createStyle({
+            theme,
+            name: `${options?.name}${suffix}`,
+            style: options?.defaultStyles?.[styleId],
+          }),
+        ];
 
         variants[styleId].push(
           createStyle({
             theme,
             style: styleCss,
-            name: `${options?.name}-${varAttr}-${varValue}` + (styleId === 'root' ? '' : `-${styleId}`),
+            name: `${options?.name}-${varAttr}-${varValue}${suffix}`,
           }),
         );
       });
