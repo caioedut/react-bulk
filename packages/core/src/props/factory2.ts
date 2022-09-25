@@ -6,34 +6,39 @@ export default function factory2(props, options?: ThemeComponentProps, theme?: T
 
   const variants = {};
 
+  Object.entries(options?.defaultStyles || {}).forEach(([styleId, styleCss]: any) => {
+    if (!options?.name) return;
+
+    variants[styleId] = [
+      createStyle({
+        theme,
+        style: styleCss,
+        name: options.name + (styleId === 'root' ? '' : `-${styleId}`),
+      }),
+    ];
+  });
+
   Object.entries(options?.variants || {}).forEach(([varAttr, varOptions]: any) => {
     const varValue = newProps[varAttr];
 
-    if (typeof varValue !== 'undefined') {
-      newProps = { ...newProps, ...varOptions[varValue]?.props };
+    if (!options?.name) return;
+    if (typeof varValue === 'undefined') return;
 
-      const varStyles = varOptions[varValue]?.styles || {};
+    newProps = { ...newProps, ...varOptions[varValue]?.props };
 
-      Object.entries(varStyles).forEach(([styleId, styleCss]: any) => {
-        const suffix = styleId === 'root' ? '' : `-${styleId}`;
+    const varStyles = varOptions[varValue]?.styles || {};
 
-        variants[styleId] = variants[styleId] || [
-          createStyle({
-            theme,
-            name: `${options?.name}${suffix}`,
-            style: options?.defaultStyles?.[styleId],
-          }),
-        ];
+    Object.entries(varStyles).forEach(([styleId, styleCss]: any) => {
+      variants[styleId] = variants[styleId] || [];
 
-        variants[styleId].push(
-          createStyle({
-            theme,
-            style: styleCss,
-            name: `${options?.name}-${varAttr}-${varValue}${suffix}`,
-          }),
-        );
-      });
-    }
+      variants[styleId].push(
+        createStyle({
+          theme,
+          style: styleCss,
+          name: `${options?.name}-${varAttr}-${varValue}` + (styleId === 'root' ? '' : `-${styleId}`),
+        }),
+      );
+    });
   });
 
   return { ...newProps, ...props, variants };
