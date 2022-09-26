@@ -16,10 +16,6 @@ function GridFactory({ stylist, children, map, ...props }: FactoryProps & GridPr
   const breakpoints = Object.keys(theme.breakpoints);
   const spacing = !gap ? 0 : theme.spacing(gap) / 2;
 
-  if (children && !Array.isArray(children)) {
-    children = [children];
-  }
-
   const styleRoot = useStylist({
     name: options.name,
     style: options.defaultStyles.root,
@@ -33,8 +29,12 @@ function GridFactory({ stylist, children, map, ...props }: FactoryProps & GridPr
 
   return (
     <BoxFactory map={map} ref={ref} stylist={stylist} {...rest}>
-      {children?.map((child, index) => {
-        const props = { ...child.props };
+      {React.Children.map(children, (child, index) => {
+        if ([undefined, null].includes(child)) {
+          return null;
+        }
+
+        const props = { ...(child?.props || {}) };
         const childStyle: any[] = [props.style, { padding: spacing }];
 
         breakpoints.forEach((key: string) => {
@@ -54,7 +54,7 @@ function GridFactory({ stylist, children, map, ...props }: FactoryProps & GridPr
           delete props[key];
         });
 
-        return <BoxFactory key={index} map={map} component={child.type} {...props} style={childStyle} />;
+        return <BoxFactory key={index} map={map} component={child?.type} {...props} style={childStyle} />;
       })}
     </BoxFactory>
   );
