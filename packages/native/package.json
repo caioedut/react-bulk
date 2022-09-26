@@ -1,6 +1,6 @@
 {
   "name": "@react-bulk/native",
-  "version": "0.1.1-alpha.0",
+  "version": "0.1.1-alpha.1",
   "description": "React Bulk for React Native",
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
@@ -21,7 +21,7 @@
   },
   "scripts": {},
   "dependencies": {
-    "@react-bulk/core": "^0.1.1-alpha.0",
+    "@react-bulk/core": "^0.1.1-alpha.1",
     "phosphor-react-native": "^1.1.2"
   },
   "peerDependencies": {
