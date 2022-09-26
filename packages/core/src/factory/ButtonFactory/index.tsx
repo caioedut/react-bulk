@@ -32,8 +32,8 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
     size,
     startIcon,
     variant,
-    variants,
     // Styles
+    variants,
     labelStyle,
     contentStyle,
     ...rest

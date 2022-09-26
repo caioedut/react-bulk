@@ -271,6 +271,7 @@ export type ThemeProps = {
     Image: ThemeComponentProps;
     Input: ThemeComponentProps;
     Label: ThemeComponentProps;
+    ListItem: ThemeComponentProps;
     Loading: ThemeComponentProps;
     Modal: ThemeComponentProps;
     Progress: ThemeComponentProps;
@@ -535,4 +536,9 @@ export type AnimationProps = {
 export type ProgressProps = {
   color?: ColorValues;
   size?: number;
+} & BoxProps;
+
+export type ListItemProps = {
+  chevron?: boolean | string | ReactNode;
+  gap?: number;
 } & BoxProps;

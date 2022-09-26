@@ -50,6 +50,7 @@ export { default as IconFactory } from './factory/IconFactory';
 export { default as ImageFactory } from './factory/ImageFactory';
 export { default as InputFactory } from './factory/InputFactory';
 export { default as LabelFactory } from './factory/LabelFactory';
+export { default as ListItemFactory } from './factory/ListItemFactory';
 export { default as LoadingFactory } from './factory/LoadingFactory';
 export { default as ModalFactory } from './factory/ModalFactory';
 export { default as ProgressFactory } from './factory/ProgressFactory';

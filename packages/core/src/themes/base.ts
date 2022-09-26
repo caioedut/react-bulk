@@ -599,6 +599,14 @@ const base: ThemeProps & any = {
           },
         },
       },
+      ListItem: {
+        name: 'rbk-list-item',
+        defaultProps: {
+          gap: 3,
+        },
+        defaultStyles: {},
+        variants: {},
+      },
       Loading: {
         name: 'rbk-loading',
         defaultProps: {

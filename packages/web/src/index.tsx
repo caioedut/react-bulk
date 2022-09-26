@@ -31,6 +31,8 @@ import {
   InputProps,
   LabelFactory,
   LabelProps,
+  ListItemFactory,
+  ListItemProps,
   LoadingFactory,
   LoadingProps,
   ModalFactory,
@@ -98,6 +100,10 @@ export const Input: ForwardRefExoticComponent<InputProps> = forwardRef((props, r
 
 export const Label: ForwardRefExoticComponent<LabelProps> = forwardRef((props, ref) => (
   <LabelFactory ref={ref} {...props} map={useMap()} />
+));
+
+export const ListItem: ForwardRefExoticComponent<ListItemProps> = forwardRef((props, ref) => (
+  <ListItemFactory ref={ref} {...props} map={useMap()} />
 ));
 
 export const Loading: ForwardRefExoticComponent<LoadingProps> = forwardRef((props, ref) => (
