@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import extract from '../../props/extract';
 import factory from '../../props/factory';
 import { FactoryProps, IconProps } from '../../types';
 import useStylist from '../../useStylist';
@@ -12,9 +13,17 @@ function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: 
   const { Icons } = map;
 
   // Extends from default props
-  let { color, name, size, ...rest } = factory(props, options.defaultProps);
+  let {
+    color,
+    name,
+    size,
+    // Styles
+    style,
+    ...rest
+  } = factory(props, options.defaultProps);
 
   const fontSize = theme.rem(size);
+  const styleProps = extract(['color', 'size', 'weight'], style);
 
   const iconName = `${name || ''}`
     .split(/_|-|\s/g)
@@ -34,9 +43,11 @@ function IconFactory({ stylist, map, ...props }: FactoryProps & IconProps, ref: 
       map={map}
       component={Component}
       stylist={[styleRoot, stylist]}
-      color={theme.color(color)}
-      size={fontSize}
       {...rest}
+      {...styleProps}
+      color={theme.color(styleProps?.color ?? color)}
+      size={styleProps?.size ?? fontSize}
+      style={style}
       noRootStyles
     />
   );

@@ -540,5 +540,13 @@ export type ProgressProps = {
 
 export type ListItemProps = {
   chevron?: boolean | string | ReactNode;
+  endIcon?: string | ReactNode;
   gap?: number;
+  icon?: string | ReactNode;
+  startIcon?: string | ReactNode;
+  // Styles
+  chevronStyle?: JssStyles;
+  iconStyle?: JssStyles;
+  startIconStyle?: JssStyles;
+  endIconStyle?: JssStyles;
 } & BoxProps;

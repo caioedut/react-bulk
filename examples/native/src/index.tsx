@@ -17,6 +17,7 @@ import {
   Icon,
   Image,
   Input,
+  ListItem,
   Modal,
   Progress,
   Scrollable,
@@ -212,6 +213,13 @@ function Main() {
             </Text>
           </Box>
         </Card>
+
+        <ListItem startIcon="heart" startIconStyle={{ color: 'red', size: 1.25 }} endIcon="gear" chevron mt={3}>
+          <Box>
+            <Text bold>List Item</Text>
+            <Text>Lorem ipsum dolor sit amet</Text>
+          </Box>
+        </ListItem>
 
         <Card mt={3}>
           <Text variant="title">Buttons</Text>
