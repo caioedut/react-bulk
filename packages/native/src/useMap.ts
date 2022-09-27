@@ -12,7 +12,6 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import * as Icons from 'phosphor-react-native';
 import Svg, {
   Circle,
   ClipPath,
@@ -47,7 +46,6 @@ export default function useMap() {
     android: Platform.OS === 'android',
 
     dimensions,
-    Icons,
 
     Button: TouchableOpacity,
     Dialog: Modal,

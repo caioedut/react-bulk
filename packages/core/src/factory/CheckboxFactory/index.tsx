@@ -7,10 +7,12 @@ import { spacings } from '../../styles/jss';
 import { CheckboxProps, FactoryProps } from '../../types';
 import useHtmlId from '../../useHtmlId';
 import useStylist from '../../useStylist';
+import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
+import TextFactory from '../TextFactory';
 
 function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProps, ref: any) {
   const theme = useTheme();
@@ -20,6 +22,7 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
   // Extends from default props
   let {
     checked,
+    color,
     defaultChecked,
     id,
     label,
@@ -27,6 +30,7 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
     onChange,
     placeholder,
     readOnly,
+    size,
     unique,
     value,
     buttonStyle,
@@ -40,6 +44,18 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
   const form = useForm();
   const defaultRef: any = useRef(null);
   const buttonRef = ref || defaultRef;
+
+  if (typeof size === 'string') {
+    size = pick(size, 'medium', {
+      xsmall: 0.625,
+      small: 0.75,
+      medium: 1,
+      large: 1.25,
+      xlarge: 1.625,
+    });
+  }
+
+  const fontSize = theme.rem(size);
 
   const [internal, setInternal] = useState(Boolean(+defaultChecked));
 
@@ -63,21 +79,10 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
     return () => form.unsetField(name);
   }, [name, form, internal, value]);
 
-  const focus = useCallback(() => {
-    buttonRef?.current?.focus?.();
-  }, [buttonRef]);
-
-  const blur = useCallback(() => {
-    buttonRef?.current?.blur?.();
-  }, [buttonRef]);
-
-  const clear = useCallback(() => {
-    setInternal(Boolean(+defaultChecked));
-  }, []);
-
-  const isFocused = useCallback(() => {
-    return buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement;
-  }, [buttonRef]);
+  const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
+  const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
+  const clear = useCallback(() => setInternal(Boolean(+defaultChecked)), []);
+  const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
 
   const handleChange = (e) => {
     const target = buttonRef?.current;
@@ -110,11 +115,21 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
         map={map}
         style={buttonStyle}
         stylist={styleButton}
+        color={color}
+        size={size}
         {...rest}
         id={id}
         variant="text"
-        startIcon={unique ? (internal ? 'CheckCircle' : 'Circle') : internal ? 'CheckSquare' : 'Square'}
+        rounded={Boolean(unique)}
         onPress={handleChange}
+        startIcon={
+          <BoxFactory map={map} center w={fontSize}>
+            <TextFactory map={map} color={color} size={size}>
+              {unique && (internal ? '◉' : '○')}
+              {!unique && (internal ? '☑' : '☐')}
+            </TextFactory>
+          </BoxFactory>
+        }
         accessibility={{
           role: unique ? 'radio' : 'checkbox',
           state: { checked: internal },

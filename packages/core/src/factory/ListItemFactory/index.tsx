@@ -1,12 +1,11 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { FactoryProps, ListItemProps } from '../../types';
 import CardFactory from '../CardFactory';
 import GridFactory from '../GridFactory';
-import IconFactory from '../IconFactory';
+import TextFactory from '../TextFactory';
 
 function ListItemFactory({ stylist, children, map, ...props }: FactoryProps & ListItemProps, ref: any) {
   const theme = useTheme();
@@ -33,17 +32,10 @@ function ListItemFactory({ stylist, children, map, ...props }: FactoryProps & Li
   startIcon = startIcon ?? icon;
   startIconStyle = startIconStyle ?? iconStyle;
 
-  const startIconProps = extract(['color', 'size', 'weight'], startIconStyle);
-  const endIconProps = extract(['color', 'size', 'weight'], endIconStyle);
-
   return (
     <CardFactory map={map} ref={ref} stylist={[variants?.root, stylist]} {...rest}>
       <GridFactory map={map} row noWrap alignItems="center" gap={gap}>
-        {Boolean(startIcon) && (
-          <View style={startIconStyle}>
-            {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} {...startIconProps} /> : startIcon}
-          </View>
-        )}
+        {Boolean(startIcon) && <View style={startIconStyle}>{startIcon}</View>}
 
         <View style={{ flex: 1 }}>
           <GridFactory map={map} row noWrap alignItems="center" gap={gap}>
@@ -51,15 +43,13 @@ function ListItemFactory({ stylist, children, map, ...props }: FactoryProps & Li
           </GridFactory>
         </View>
 
-        {Boolean(endIcon) && (
-          <View style={endIconStyle}>
-            {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} {...endIconProps} /> : endIcon}
-          </View>
-        )}
+        {Boolean(endIcon) && <View style={endIconStyle}>{endIcon}</View>}
 
         {Boolean(chevron) && (
           <View style={chevronStyle}>
-            <IconFactory map={map} name={chevron} />
+            <TextFactory map={map} color="primary" style={{ fontSize: theme.rem(2), marginTop: -theme.rem(0.5) }}>
+              ›
+            </TextFactory>
           </View>
         )}
       </GridFactory>

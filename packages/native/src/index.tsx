@@ -25,8 +25,6 @@ import {
   FormProps,
   GridFactory,
   GridProps,
-  IconFactory,
-  IconProps,
   InputFactory,
   InputProps,
   LabelFactory,
@@ -90,8 +88,6 @@ export const Dropdown: ForwardRefExoticComponent<DropdownProps> = forwardRef((pr
 export const Form: ForwardRefExoticComponent<FormProps> = forwardRef((props, ref) => <FormFactory ref={ref} {...props} map={useMap()} />);
 
 export const Grid: ForwardRefExoticComponent<GridProps> = forwardRef((props, ref) => <GridFactory ref={ref} {...props} map={useMap()} />);
-
-export const Icon: ForwardRefExoticComponent<IconProps> = forwardRef((props, ref) => <IconFactory ref={ref} {...props} map={useMap()} />);
 
 export const Input: ForwardRefExoticComponent<InputProps> = forwardRef((props, ref) => (
   <InputFactory ref={ref} {...props} map={useMap()} />

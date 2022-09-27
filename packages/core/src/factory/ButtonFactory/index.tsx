@@ -8,7 +8,6 @@ import pick from '../../utils/pick';
 import BadgeFactory from '../BadgeFactory';
 import BoxFactory from '../BoxFactory';
 import { useForm } from '../FormFactory';
-import IconFactory from '../IconFactory';
 import LoadingFactory from '../LoadingFactory';
 import TextFactory from '../TextFactory';
 
@@ -116,11 +115,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
       {...rest}
       disabled={disabled}
     >
-      {Boolean(startIcon) && (
-        <BoxFactory map={map}>
-          {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={textColor} size={size} /> : startIcon}
-        </BoxFactory>
-      )}
+      {Boolean(startIcon) && <BoxFactory map={map}>{startIcon}</BoxFactory>}
 
       {Boolean(children || children?.length) && (
         <BoxFactory map={map} style={[contentStyle, loading && { opacity: 0 }, startIcon && { ml: 2 }, endIcon && { mr: 2 }]}>
@@ -128,11 +123,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
         </BoxFactory>
       )}
 
-      {Boolean(endIcon) && (
-        <BoxFactory map={map}>
-          {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={textColor} size={size} /> : endIcon}
-        </BoxFactory>
-      )}
+      {Boolean(endIcon) && <BoxFactory map={map}>{endIcon}</BoxFactory>}
 
       {loading && (
         <BoxFactory map={map} position="absolute" i={0} center>

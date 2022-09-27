@@ -6,7 +6,7 @@ import { FactoryProps, LoadingProps } from '../../types';
 import useStylist from '../../useStylist';
 import AnimationFactory from '../AnimationFactory';
 import BoxFactory from '../BoxFactory';
-import IconFactory from '../IconFactory';
+import ProgressFactory from '../ProgressFactory';
 import TextFactory from '../TextFactory';
 
 function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps, ref: any) {
@@ -45,7 +45,7 @@ function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps,
         from={{ transform: [{ rotate: '0deg' }] }}
         to={{ transform: [{ rotate: '360deg' }] }}
       >
-        <IconFactory map={map} name="Spinner" size={size} color={color} />
+        <ProgressFactory map={map} size={size / 4} color={color} />
       </AnimationFactory>
       {Boolean(label) && (
         <TextFactory map={map} size={size} stylist={[styleLabel, styleLabelState]}>

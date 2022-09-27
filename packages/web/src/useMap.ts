@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { TimeoutType } from '@react-bulk/core';
-import * as Icons from 'phosphor-react';
 
 export default function useMap() {
   const timeoutRef = useRef<TimeoutType>(null);
@@ -35,7 +34,6 @@ export default function useMap() {
     android: false,
 
     dimensions,
-    Icons,
 
     Button: 'button',
     Dialog: 'div',

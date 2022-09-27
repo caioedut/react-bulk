@@ -14,7 +14,6 @@ import {
   Dropdown,
   Form,
   Grid,
-  Icon,
   Image,
   Input,
   ListItem,
@@ -26,6 +25,7 @@ import {
   Text,
   Tooltip,
 } from '@react-bulk/web';
+import { CreditCard, CurrencyDollar, Gear, Heart, House, HouseLine } from 'phosphor-react';
 
 function Main() {
   const theme = useTheme();
@@ -214,7 +214,7 @@ function Main() {
           </Box>
         </Card>
 
-        <ListItem startIcon="heart" startIconStyle={{ color: 'red', size: 1.25 }} endIcon="gear" chevron mt={3}>
+        <ListItem startIcon={<Heart color="red" size={24} />} endIcon={<Gear />} chevron mt={3}>
           <Box>
             <Text bold>List Item</Text>
             <Text>Lorem ipsum dolor sit amet</Text>
@@ -238,11 +238,11 @@ function Main() {
                 <Button variant={variant} mr={3} mt={3} loading={loading} onPress={toggleLoading}>
                   Loading
                 </Button>
-                <Button variant={variant} mr={3} mt={3} icon="House" rounded />
-                <Button variant={variant} mr={3} mt={3} startIcon="House">
+                <Button variant={variant} mr={3} mt={3} icon={<House />} rounded />
+                <Button variant={variant} mr={3} mt={3} startIcon={<House />}>
                   Start Icon
                 </Button>
-                <Button variant={variant} mr={3} mt={3} endIcon="House">
+                <Button variant={variant} mr={3} mt={3} endIcon={<House />}>
                   End Icon
                 </Button>
                 <Button variant={variant} mr={3} mt={3} transform="uppercase">
@@ -267,9 +267,9 @@ function Main() {
             <Button loading={loading} onPress={toggleLoading}>
               Loading
             </Button>
-            <Button icon="House" rounded />
-            <Button startIcon="House">Start Icon</Button>
-            <Button endIcon="House">End Icon</Button>
+            <Button icon={<House />} rounded />
+            <Button startIcon={<House />}>Start Icon</Button>
+            <Button endIcon={<House />}>End Icon</Button>
           </ButtonGroup>
         </Card>
 
@@ -284,7 +284,7 @@ function Main() {
           <Input mt={3} label="Read Only" placeholder="Read only input" readOnly />
           <Input mt={3} label="Disabled" placeholder="Disabled input" disabled />
           <Input mt={3} label="Invalid" placeholder="Input with error" error="Value is invalid!" />
-          <Input mt={3} label="Icons" placeholder="Input with icons" startIcon="CurrencyDollar" endIcon="CreditCard" />
+          <Input mt={3} label="Icons" placeholder="Input with icons" startIcon={<CurrencyDollar />} endIcon={<CreditCard />} />
 
           {sizes.map((size) => (
             <Input key={size} mt={3} size={size} label={getLabel(size)} placeholder={`This is a ${size} input`} />
@@ -315,7 +315,7 @@ function Main() {
             mt={3}
             label="Payment"
             placeholder="[Select]"
-            startIcon="CreditCard"
+            startIcon={<CreditCard />}
             defaultValue="2"
             options={[
               { label: 'Money', value: '1' },
@@ -498,8 +498,7 @@ function Main() {
           </Text>
           <Box />
           <Text>
-            <Icon name="HouseLine" /> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquam, <Icon name="house_line" />{' '}
-            Animi architecto <Icon name="house line" />.
+            <HouseLine /> Lorem ipsum dolor sit amet, <HouseLine /> consectetur adipisicing elit.
           </Text>
         </Card>
 

@@ -10,5 +10,4 @@
 [Label](Label.md)<br/>
 
 ### Other
-[Icon](Icon.md)<br/>
 [Text](Text.md)<br/>
