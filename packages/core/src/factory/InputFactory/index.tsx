@@ -10,7 +10,6 @@ import useStylist from '../../useStylist';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import { useForm } from '../FormFactory';
-import IconFactory from '../IconFactory';
 import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
@@ -245,7 +244,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
         <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
           {Boolean(startIcon) && (
             <BoxFactory map={map} style={{ marginLeft: spacing }}>
-              {typeof startIcon === 'string' ? <IconFactory map={map} name={startIcon} color={color} size={size} /> : startIcon}
+              {startIcon}
             </BoxFactory>
           )}
 
@@ -267,7 +266,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
           {Boolean(endIcon) && (
             <BoxFactory map={map} style={{ marginRight: spacing }}>
-              {typeof endIcon === 'string' ? <IconFactory map={map} name={endIcon} color={color} size={size} /> : endIcon}
+              {endIcon}
             </BoxFactory>
           )}
         </BoxFactory>

@@ -417,6 +417,8 @@ const base: ThemeProps & any = {
         name: 'rbk-checkbox',
         defaultProps: {
           accessibility: { role: 'combobox' },
+          color: 'primary',
+          size: 'medium',
         },
         defaultStyles: {
           root: {

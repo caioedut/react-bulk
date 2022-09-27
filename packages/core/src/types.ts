@@ -473,15 +473,6 @@ export type DropdownProps = {
   visible?: boolean;
 } & BoxProps;
 
-export type IconProps = {
-  alt?: string;
-  color?: ColorValues;
-  mirrored?: boolean;
-  name: string;
-  size?: number;
-  weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
-} & BoxProps;
-
 export type LoadingProps = {
   color?: ColorValues;
   label?: string;
