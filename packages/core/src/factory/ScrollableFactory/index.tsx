@@ -4,7 +4,7 @@ import { useTheme } from '../../ReactBulk';
 import extract from '../../props/extract';
 import factory from '../../props/factory';
 import merge from '../../props/merge';
-import { flexContainerAlignProps } from '../../styles/constants';
+import { flexContainerProps } from '../../styles/constants';
 import { FactoryProps, ScrollableProps } from '../../types';
 import useStylist from '../../useStylist';
 import clone from '../../utils/clone';
@@ -13,25 +13,20 @@ import BoxFactory from '../BoxFactory';
 function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & ScrollableProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Scrollable;
-  const { web, native, ScrollView, View } = map;
+  const { web, native, ScrollView } = map;
 
   // Extends from default props
   let { direction, platform, style, ...rest } = factory(props, options.defaultProps);
 
   const isHorizontal = direction === 'horizontal';
 
-  const boxStyles = clone(theme.components.Box.defaultStyles.root);
+  const nativeProps: any = {};
   const rootStyles = clone(options.defaultStyles.root);
 
-  let flexStyles = null;
-
   if (native) {
-    flexStyles = extract(flexContainerAlignProps, boxStyles, rootStyles, style);
+    const flexContainerStyles = extract(flexContainerProps, rootStyles, style);
+    nativeProps.contentContainerStyle = merge(flexContainerStyles);
   }
-
-  const styleBox = useStylist({
-    style: boxStyles,
-  });
 
   const styleRoot = useStylist({
     name: options.name,
@@ -51,19 +46,12 @@ function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & 
       ref={ref}
       component={ScrollView}
       style={style}
-      stylist={[styleBox, styleRoot, styleState, stylist]}
+      stylist={[styleRoot, styleState, stylist]}
       {...rest}
       noRootStyles={native}
-      platform={{
-        ...platform,
-        native: {
-          ...platform?.native,
-          horizontal: isHorizontal,
-          contentContainerStyle: merge(flexStyles),
-        },
-      }}
+      {...nativeProps}
     >
-      <View>{children}</View>
+      {children}
     </BoxFactory>
   );
 }

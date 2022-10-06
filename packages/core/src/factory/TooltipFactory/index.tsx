@@ -93,6 +93,7 @@ function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & Too
               borderRadius: theme.shape.borderRadius,
               color: theme.contrast(color),
               fontSize: '0.75rem',
+              overflow: 'hidden',
               py: 1,
               px: 1.5,
               textAlign: 'center',
