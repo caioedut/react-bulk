@@ -132,14 +132,14 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     const nativeEvent = e?.nativeEvent ?? e;
     const value = option.value;
 
-    setVisible(false);
-    setInternal(arrOptions?.find((item) => item.value == value));
-
     autoFocus && focus();
     onChange?.({ target, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
+
+    setInternal(arrOptions?.find((item) => item.value == value));
+    setVisible(false);
   };
 
-  const handleChangeNative = (e) => {
+  const handleChangeBrowser = (e) => {
     const option = arrOptions.find((item) => item.value == e.target.value);
     handleChange(e, option, false);
   };
@@ -253,7 +253,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
           name={name}
           readOnly={readOnly}
           value={`${internal?.value ?? ''}`}
-          onChange={handleChangeNative}
+          onChange={handleChangeBrowser}
         />
       )}
 
