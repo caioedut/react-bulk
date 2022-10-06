@@ -37,14 +37,7 @@ function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps,
 
   return (
     <BoxFactory ref={ref} map={map} stylist={[styleRoot, stylist]} row center {...rest}>
-      <AnimationFactory
-        map={map}
-        loop
-        in
-        speed={1000}
-        from={{ transform: [{ rotate: '0deg' }] }}
-        to={{ transform: [{ rotate: '360deg' }] }}
-      >
+      <AnimationFactory map={map} loop in speed={500} from={{ transform: [{ rotate: '0deg' }] }} to={{ transform: [{ rotate: '360deg' }] }}>
         <ProgressFactory map={map} size={size / 4} color={color} />
       </AnimationFactory>
       {Boolean(label) && (
