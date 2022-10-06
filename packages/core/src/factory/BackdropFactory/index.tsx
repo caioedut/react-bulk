@@ -12,7 +12,7 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
   const { web, native, Button, Dialog } = map;
 
   // Extends from default props
-  let { visible, ...rest } = factory(props, options.defaultProps);
+  let { visible, onRequestClose, ...rest } = factory(props, options.defaultProps);
 
   const containerProps: any = {};
 
@@ -58,7 +58,14 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
 
   if (native) {
     return (
-      <Dialog transparent statusBarTranslucent visible={Boolean(visible)} animationType="fade" presentationStyle="overFullScreen">
+      <Dialog
+        transparent
+        statusBarTranslucent
+        visible={Boolean(visible)}
+        animationType="fade"
+        presentationStyle="overFullScreen"
+        onRequestClose={onRequestClose}
+      >
         <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleVisible, stylist]} {...rest} {...containerProps}>
           {children}
         </BoxFactory>

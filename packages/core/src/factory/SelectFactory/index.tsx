@@ -58,6 +58,8 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
 
   const gutter = theme.spacing(3);
 
+  const nativeProps = !native ? {} : { onRequestClose: () => setVisible(false) };
+
   useEffect(() => {
     if (typeof value !== 'undefined') {
       setInternal(arrOptions?.find((item) => item.value == value));
@@ -257,7 +259,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
         />
       )}
 
-      <BackdropFactory map={map} visible={visible} style={{ bg: 'rgba(0, 0, 0, 0.2)' }} onPress={() => setVisible(false)}>
+      <BackdropFactory map={map} visible={visible} style={{ bg: 'rgba(0, 0, 0, 0.2)' }} onPress={() => setVisible(false)} {...nativeProps}>
         <CardFactory map={map} position="absolute" p={0} style={[{ overflow: 'hidden' }, metrics]}>
           <ScrollableFactory map={map} ref={scrollRef} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth} p={1}>
             {arrOptions?.map((option, index) => {
