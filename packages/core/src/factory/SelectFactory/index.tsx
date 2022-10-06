@@ -134,11 +134,14 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     const nativeEvent = e?.nativeEvent ?? e;
     const value = option.value;
 
-    autoFocus && focus();
-    onChange?.({ target, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
-
     setInternal(arrOptions?.find((item) => item.value == value));
     setVisible(false);
+
+    onChange?.({ target, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
+
+    if (autoFocus) {
+      setTimeout(focus, 250);
+    }
   };
 
   const handleChangeBrowser = (e) => {
