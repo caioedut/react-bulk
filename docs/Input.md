@@ -162,6 +162,14 @@ The string that will be rendered before text input has been entered.
 
 ---
 
+### `placeholderColor`
+
+| Type     | Default          |
+|----------|------------------|
+| `string` | `'text.primary'` |
+
+---
+
 ### `readOnly`
 
 If `true`, text is not editable.
@@ -237,14 +245,6 @@ The value to show for the text input.
 | Type     |
 |----------|
 | `string` |
-
----
-
-### `variant`
-
-| Type                               | Default   |
-|------------------------------------|-----------|
-| `enum('solid', 'outline', 'text')` | `'solid'` |
 
 ---
 

@@ -31,6 +31,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     label,
     multiline,
     name,
+    placeholderColor,
     readOnly,
     returnKeyType,
     secure,
@@ -60,6 +61,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   const [internal, setInternal] = useState(`${defaultValue ?? ''}`);
 
   selectionColor = theme.color(selectionColor ?? color);
+  placeholderColor = theme.hex2rgba(placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary', 0.4);
 
   if (web) {
     Object.assign(rest, {
@@ -85,7 +87,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
       multiline,
       editable: disabled ? false : !readOnly,
       keyboardAppearance: theme.mode,
-      placeholderTextColor: theme.hex2rgba('text.primary', 0.4),
+      placeholderTextColor: placeholderColor,
       returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
       secureTextEntry: secure,
       selectionColor,
@@ -200,7 +202,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   });
 
   const styleColor = useStylist({
-    style: [color !== options.defaultStyles.root.borderColor && { borderColor: color }],
+    style: color && { borderColor: color },
   });
 
   const styleInput = useStylist({
@@ -223,8 +225,14 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
       web && { caretColor: caretHidden ? theme.colors.common.trans : selectionColor },
 
       web &&
+        placeholderColor && {
+          '&::-webkit-input-placeholder': { color: placeholderColor },
+          '&::-ms-input-placeholder': { color: placeholderColor },
+          '&::placeholder': { color: placeholderColor },
+        },
+
+      web &&
         selectionColor && {
-          '&::-moz-selection': { backgroundColor: selectionColor, color: theme.contrast(selectionColor) },
           '&::selection': { backgroundColor: selectionColor, color: theme.contrast(selectionColor) },
         },
     ],
