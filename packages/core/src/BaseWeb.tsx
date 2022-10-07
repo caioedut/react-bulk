@@ -53,18 +53,6 @@ export default function BaseWeb({ children }) {
         width: 100%;
       }
 
-      ::placeholder {
-        color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)};
-      }
-
-      :-ms-input-placeholder {
-        color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)};
-      }
-
-      ::-ms-input-placeholder {
-        color: ${theme.hex2rgba(theme.colors.text.primary, 0.4)};
-      }
-
       @keyframes spin {
         from { transform: rotate(0deg); }
         to { transform: rotate(359deg); }

@@ -403,6 +403,7 @@ export type InputProps = InputBaseProps & {
   maxLength?: number;
   multiline?: boolean;
   placeholder?: string;
+  placeholderColor?: ColorValues;
   returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
   secure?: boolean;
   selectionColor?: ColorValues;
