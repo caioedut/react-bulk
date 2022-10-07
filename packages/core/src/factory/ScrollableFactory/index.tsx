@@ -25,7 +25,7 @@ function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & 
 
   if (native) {
     const flexContainerStyles = extract(flexContainerProps, rootStyles, style);
-    nativeProps.contentContainerStyle = merge(flexContainerStyles, { flex: 1 });
+    nativeProps.contentContainerStyle = merge(flexContainerStyles, { flexGrow: 1 });
   }
 
   const styleRoot = useStylist({
