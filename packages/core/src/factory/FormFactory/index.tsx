@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import factory from '../../props/factory';
@@ -18,6 +18,8 @@ function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & 
   const formRef: any = useRef(null);
   const defaultRef = useRef(null);
   ref = ref || defaultRef;
+
+  const [, setReload] = useState<number>();
 
   // Extends from default props
   let { ...rest } = factory(props, options.defaultProps);
@@ -60,10 +62,14 @@ function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & 
     ref.current.fields.forEach(({ set }) => set(''));
   };
 
+  const submit = () => {
+    onSubmit?.({}, getData());
+  };
+
   useEffect(() => {
     ref.current = {
       target: formRef?.current,
-      submit: handleSubmit,
+      submit,
       getData,
       setData,
       getField,
@@ -72,6 +78,8 @@ function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & 
       clear,
       fields: [] as any,
     };
+
+    setReload(Date.now());
   }, [formRef]);
 
   useEffect(() => {
