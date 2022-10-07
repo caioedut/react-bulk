@@ -437,6 +437,9 @@ export type CardProps = BoxProps;
 
 export type ScrollableProps = {
   direction?: 'vertical' | 'horizontal';
+  contentInset?: number;
+  // Styles
+  contentStyle?: JssStyles;
 } & BoxProps;
 
 export type ImageProps = {

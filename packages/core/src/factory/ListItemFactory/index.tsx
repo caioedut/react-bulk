@@ -33,7 +33,7 @@ function ListItemFactory({ stylist, children, map, ...props }: FactoryProps & Li
   startIconStyle = startIconStyle ?? iconStyle;
 
   return (
-    <CardFactory map={map} ref={ref} stylist={[variants?.root, stylist]} {...rest}>
+    <CardFactory map={map} ref={ref} p={gap} stylist={[variants?.root, stylist]} {...rest}>
       <GridFactory map={map} row noWrap alignItems="center" gap={gap}>
         {Boolean(startIcon) && <View style={startIconStyle}>{startIcon}</View>}
 

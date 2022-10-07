@@ -5,6 +5,7 @@ import extract from '../../props/extract';
 import factory from '../../props/factory';
 import merge from '../../props/merge';
 import { flexContainerProps } from '../../styles/constants';
+import jss from '../../styles/jss';
 import { FactoryProps, ScrollableProps } from '../../types';
 import useStylist from '../../useStylist';
 import clone from '../../utils/clone';
@@ -16,16 +17,26 @@ function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & 
   const { web, native, ScrollView } = map;
 
   // Extends from default props
-  let { direction, platform, style, ...rest } = factory(props, options.defaultProps);
+  let {
+    contentInset,
+    direction,
+    platform,
+    // Styles
+    contentStyle,
+    style,
+    ...rest
+  } = factory(props, options.defaultProps);
 
   const isHorizontal = direction === 'horizontal';
 
   const nativeProps: any = {};
   const rootStyles = clone(options.defaultStyles.root);
+  const flexContainerStyles = extract(flexContainerProps, rootStyles, style);
+
+  contentStyle = merge(flexContainerStyles, { flexGrow: 1, p: contentInset ?? 0 }, contentStyle);
 
   if (native) {
-    const flexContainerStyles = extract(flexContainerProps, rootStyles, style);
-    nativeProps.contentContainerStyle = merge(flexContainerStyles, { flexGrow: 1 });
+    nativeProps.contentContainerStyle = jss({ theme }, contentStyle);
   }
 
   const styleRoot = useStylist({
@@ -48,10 +59,16 @@ function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & 
       style={style}
       stylist={[styleRoot, styleState, stylist]}
       {...rest}
-      noRootStyles={native}
+      noRootStyles
       {...nativeProps}
     >
-      {children}
+      {web ? (
+        <BoxFactory map={map} style={contentStyle}>
+          {children}
+        </BoxFactory>
+      ) : (
+        children
+      )}
     </BoxFactory>
   );
 }
