@@ -107,7 +107,10 @@ function BoxFactory({ platform, className, stylist, children, map, ...props }: F
 
     styleProps,
 
-    hidden && { display: 'none' },
+    hidden && {
+      display: 'none',
+      overflow: 'hidden',
+    },
   ];
 
   // Apply responsive styles
