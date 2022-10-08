@@ -429,6 +429,7 @@ const base: ThemeProps & any = {
           },
           button: {
             padding: 0,
+            marginLeft: '-0.5rem',
             minHeight: 0,
             minWidth: 0,
           },

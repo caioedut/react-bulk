@@ -12,12 +12,12 @@ import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
-import TextFactory from '../TextFactory';
 
 function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Checkbox;
-  const { web, Input } = map;
+  const { web, svg, Input } = map;
+  const { Svg, Circle, Polyline } = svg;
 
   // Extends from default props
   let {
@@ -40,6 +40,7 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
   } = factory(props, options.defaultProps);
 
   id = useHtmlId(id);
+  color = theme.color(color);
 
   const form = useForm();
   const defaultRef: any = useRef(null);
@@ -56,6 +57,7 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
   }
 
   const fontSize = theme.rem(size);
+  const iconSize = fontSize * theme.typography.lineHeight;
 
   const [internal, setInternal] = useState(Boolean(+defaultChecked));
 
@@ -99,13 +101,17 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
     style: options.defaultStyles.root,
   });
 
+  const styleState = useStylist({
+    style: extract(spacings, rest),
+  });
+
   const styleButton = useStylist({
     name: options.name + 'button',
     style: options.defaultStyles.button,
   });
 
-  const styleState = useStylist({
-    style: extract(spacings, rest),
+  const styleButtonState = useStylist({
+    style: { marginLeft: -theme.rem(0.5, fontSize) },
   });
 
   return (
@@ -114,30 +120,50 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
         ref={buttonRef}
         map={map}
         style={buttonStyle}
-        stylist={styleButton}
+        stylist={[styleButton, styleButtonState]}
         color={color}
         size={size}
         {...rest}
         id={id}
         variant="text"
-        rounded={Boolean(unique)}
+        rounded
         onPress={handleChange}
-        startIcon={
-          <BoxFactory map={map} center w={fontSize}>
-            <TextFactory map={map} color={color} size={size}>
-              {unique && (internal ? '◉' : '○')}
-              {!unique && (internal ? '☑' : '☐')}
-            </TextFactory>
-          </BoxFactory>
-        }
         accessibility={{
           role: unique ? 'radio' : 'checkbox',
           state: { checked: internal },
         }}
-      />
+      >
+        <BoxFactory
+          map={map}
+          center
+          h={iconSize}
+          w={iconSize}
+          style={{
+            border: `2px solid ${color}`,
+            borderRadius: unique ? iconSize / 2 : theme.shape.borderRadius,
+          }}
+        >
+          {Boolean(internal) && (
+            <Svg viewBox="0 0 256 256" height="100%" width="100%">
+              {unique ? (
+                <Circle cx="128" cy="128" r="80" fill={color} />
+              ) : (
+                <Polyline
+                  points="216 72 104 184 48 128"
+                  fill="none"
+                  stroke={color}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="32"
+                />
+              )}
+            </Svg>
+          )}
+        </BoxFactory>
+      </ButtonFactory>
 
       {Boolean(label) && (
-        <LabelFactory map={map} numberOfLines={1} for={id} style={[{ ml: 1, flex: 1 }, labelStyle]}>
+        <LabelFactory map={map} numberOfLines={1} for={buttonRef} style={[{ ml: 1, flex: 1 }, labelStyle]}>
           {label}
         </LabelFactory>
       )}
