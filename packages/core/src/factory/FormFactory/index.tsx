@@ -10,7 +10,7 @@ const Context = createContext(null);
 
 export const useForm: any = () => useContext(Context);
 
-function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & FormProps, ref: any) {
+function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Form;
   const { Form } = map;
@@ -22,7 +22,7 @@ function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & 
   const [, setReload] = useState<number>();
 
   // Extends from default props
-  let { ...rest } = factory(props, options.defaultProps);
+  let { data, onSubmit, onCancel, ...rest } = factory(props, options.defaultProps);
 
   const getField = (name) => {
     return ref.current.fields.find((item) => item?.name === name);
@@ -58,24 +58,21 @@ function FormFactory({ data, onSubmit, stylist, map, ...props }: FactoryProps & 
     Object.keys(Object(data)).forEach((attr) => getField(attr)?.set?.(data[attr]));
   };
 
-  const clear = () => {
-    ref.current.fields.forEach(({ set }) => set(''));
-  };
-
-  const submit = () => {
-    onSubmit?.({}, getData());
-  };
+  const submit = () => onSubmit?.({}, getData());
+  const cancel = () => onCancel?.({});
+  const clear = () => ref.current.fields.forEach(({ set }) => set(''));
 
   useEffect(() => {
     ref.current = {
       target: formRef?.current,
       submit,
+      cancel,
+      clear,
       getData,
       setData,
       getField,
       setField,
       unsetField,
-      clear,
       fields: [] as any,
     };
 
