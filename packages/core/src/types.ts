@@ -372,7 +372,7 @@ export type ButtonProps = FormControlBaseProps & {
   loading?: boolean;
   rounded?: boolean;
   transform?: TextTransformValues;
-  type?: 'button' | 'submit';
+  type?: 'button' | 'submit' | 'cancel' | 'clear';
   variant?: 'solid' | 'outline' | 'text';
   // Styles
   contentStyle?: JssStyles;
@@ -510,6 +510,7 @@ export type BadgeProps = {
 export type FormProps = {
   data?: any;
   onSubmit?: SubmitCallback;
+  onCancel?: EventCallback;
 } & BoxProps;
 
 export type TooltipProps = {

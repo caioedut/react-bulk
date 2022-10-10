@@ -50,8 +50,20 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
     rest.type = 'button';
   }
 
-  if (form && rest.type === 'submit' && !props.onPress && !props.onClick) {
-    rest.onPress = form.submit;
+  if (form && !props.onPress && !props.onClick) {
+    if (rest.type === 'submit') {
+      rest.onPress = form.submit;
+    }
+
+    if (rest.type === 'cancel') {
+      rest.type = 'button';
+      rest.onPress = form.cancel;
+    }
+
+    if (['clear', 'reset'].includes(rest.type)) {
+      rest.type = 'button';
+      rest.onPress = form.clear;
+    }
   }
 
   if (native) {
