@@ -146,7 +146,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
     setInternal(value);
 
-    onChange?.({ target, value, focus, blur, clear, isFocused, nativeEvent }, value);
+    onChange?.({ target, name, value, focus, blur, clear, isFocused, nativeEvent }, value);
   };
 
   const handleFocus = (e) => {

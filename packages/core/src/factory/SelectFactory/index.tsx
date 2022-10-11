@@ -33,8 +33,9 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     options: arrOptions,
     placeholder,
     readOnly,
+    size,
     value,
-
+    // Styles
     buttonStyle,
     errorStyle,
     labelStyle,
@@ -61,10 +62,10 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   const nativeProps = !native ? {} : { onRequestClose: () => setVisible(false) };
 
   useEffect(() => {
-    if (typeof value !== 'undefined') {
+    if (arrOptions && typeof value !== 'undefined') {
       setInternal(arrOptions?.find((item) => item.value == value));
     }
-  }, [value]);
+  }, [value, arrOptions]);
 
   useEffect(() => {
     if (!name || !form) return;
@@ -137,7 +138,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     setInternal(arrOptions?.find((item) => item.value == value));
     setVisible(false);
 
-    onChange?.({ target, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
+    onChange?.({ target, name, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
 
     if (autoFocus) {
       setTimeout(focus, 250);
@@ -238,6 +239,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
         }
         {...rest}
         id={id}
+        size={size}
         variant="outline"
         contentStyle={{ flex: 1 }}
         onPress={handleOpen}
@@ -272,6 +274,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
                 <ButtonFactory
                   key={option.value}
                   map={map}
+                  size={size}
                   variant="text"
                   block
                   disabled={option.disabled}
