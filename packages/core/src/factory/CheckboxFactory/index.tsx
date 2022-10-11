@@ -93,7 +93,7 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
 
     setInternal(checked);
 
-    onChange?.({ target, checked, focus, blur, clear, isFocused, nativeEvent }, checked);
+    onChange?.({ target, name, checked, focus, blur, clear, isFocused, nativeEvent }, checked);
   };
 
   const styleRoot = useStylist({
