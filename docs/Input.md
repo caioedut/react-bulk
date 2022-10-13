@@ -23,17 +23,17 @@ Automatically capitalize certain characters.
 - `words`: first letter of each word.
 - `characters`: all characters.
 
-| Type                                                  | Default        |
-|-------------------------------------------------------|----------------|
-| `enum('none' , 'sentences' , 'words' , 'characters')` | `'sentences'`  |
+| Type                                                  |
+|-------------------------------------------------------|
+| `enum('none' , 'sentences' , 'words' , 'characters')` |
 
 ---
 
 ### `autoCorrect`
 
-| Type      | Default |
-|-----------|---------|
-| `boolean` | `true`  |
+| Type      |
+|-----------|
+| `boolean` |
 
 ---
 
