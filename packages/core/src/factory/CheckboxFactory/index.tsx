@@ -74,12 +74,14 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
     if (!unique || internal) {
       form.setField({
         name,
-        set: setInternal,
+        set: setInternal as any,
         get: () => (internal ? value ?? internal : unique ? null : false),
       });
     }
 
-    return () => form.unsetField(name);
+    return () => {
+      form.unsetField(name);
+    };
   }, [name, form, internal, value]);
 
   const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);

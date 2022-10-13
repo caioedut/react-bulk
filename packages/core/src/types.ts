@@ -6,7 +6,7 @@ export type AnyCallback = (mixed: any) => any;
 export type EventCallback = (event: any) => any;
 export type ChangeCallback = (event: any, value: string) => any;
 export type SubmitCallback = (event: FormRef, data: AnyObject) => any;
-export type InputValue = string | number;
+export type InputValue = string | number | boolean;
 
 export type MapType = {
   web: boolean;
@@ -439,6 +439,7 @@ export type InputProps = InputBaseProps & {
 
 export type SelectProps = InputBaseProps & {
   error?: string;
+  loading?: boolean;
   options: {
     label: string;
     value: InputValue;
