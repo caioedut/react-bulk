@@ -59,18 +59,16 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   const maskValue = useCallback(
     (value) => {
-      value = `${value ?? ''}`;
       value = typeof mask === 'function' ? mask(value) : value;
-      return `${value ?? ''}`;
+      return value ?? '';
     },
     [mask],
   );
 
   const unmaskValue = useCallback(
     (value) => {
-      value = `${value ?? ''}`;
       value = typeof unmask === 'function' ? unmask(value) : value;
-      return `${value ?? ''}`;
+      return value ?? '';
     },
     [unmask],
   );
@@ -153,7 +151,9 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
       get: () => unmaskValue(maskValue(internal)),
     });
 
-    return () => form.unsetField(name);
+    return () => {
+      form.unsetField(name);
+    };
   }, [name, form, internal]);
 
   const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);

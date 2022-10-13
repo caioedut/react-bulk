@@ -1,14 +1,14 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import factory from '../../props/factory';
-import { FactoryProps, FormProps } from '../../types';
+import { FactoryProps, FormContext, FormField, FormProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-const Context = createContext(null);
+const Context = createContext<FormContext>(null as any);
 
-export const useForm: any = () => useContext(Context);
+export const useForm = () => useContext<FormContext>(Context);
 
 function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: any) {
   const theme = useTheme();
@@ -18,21 +18,28 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
   const formRef: any = useRef(null);
   const defaultRef = useRef(null);
   ref = ref || defaultRef;
-
-  const [, setReload] = useState<number>();
+  ref.current = ref.current || { fields: [] };
 
   // Extends from default props
-  let { data, onSubmit, onCancel, ...rest } = factory(props, options.defaultProps);
+  let {
+    data,
+    // Events
+    onSubmit,
+    onCancel,
+    onClear,
+    ...rest
+  } = factory(props, options.defaultProps);
 
   const getField = (name) => {
     return ref.current.fields.find((item) => item?.name === name);
   };
 
-  const setField = ({ name, get, set }) => {
+  const setField = ({ name, get, set }: FormField) => {
     const field = getField(name);
 
     if (field) {
-      Object.assign(field, { get, set });
+      Object.getOwnPropertyNames(field).forEach((prop) => delete field[prop]);
+      Object.assign(field, { name, get, set });
     } else {
       ref.current.fields.push({ name, get, set });
     }
@@ -58,46 +65,52 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
     Object.keys(Object(data)).forEach((attr) => getField(attr)?.set?.(data[attr]));
   };
 
-  const submit = () => onSubmit?.({}, getData());
-  const cancel = () => onCancel?.({});
-  const clear = () => ref.current.fields.forEach(({ set }) => set(''));
+  const submit = (e: any = undefined) => {
+    e?.preventDefault?.();
+    onSubmit?.(ref.current, getData());
+  };
+
+  const cancel = () => {
+    onCancel?.(ref.current);
+  };
+
+  const clear = () => {
+    const data = getData();
+    ref.current.fields.forEach(({ set }) => set(''));
+    onClear?.(ref.current, data);
+  };
+
+  Object.assign(ref.current, {
+    submit,
+    cancel,
+    clear,
+    getData,
+    setData,
+  });
 
   useEffect(() => {
-    ref.current = {
-      target: formRef?.current,
-      submit,
-      cancel,
-      clear,
-      getData,
-      setData,
-      getField,
-      setField,
-      unsetField,
-      fields: [] as any,
-    };
-
-    setReload(Date.now());
-  }, [formRef]);
-
-  useEffect(() => {
-    setData(data);
+    setData(Object(data));
   }, [data]);
 
-  const handleSubmit = (e) => {
-    e?.preventDefault?.();
-    onSubmit?.(e, getData());
-  };
+  useEffect(() => {
+    Object.assign(ref.current, { target: formRef?.current });
+  }, [formRef]);
 
   const styleRoot = useStylist({
     name: options.name,
     style: options.defaultStyles.root,
   });
 
-  stylist = [styleRoot, stylist];
-
   return (
-    <Context.Provider value={ref.current}>
-      <BoxFactory map={map} ref={formRef} component={Form} stylist={stylist} {...rest} onSubmit={handleSubmit} />
+    <Context.Provider
+      value={{
+        ...ref.current,
+        getField,
+        setField,
+        unsetField,
+      }}
+    >
+      <BoxFactory map={map} ref={formRef} component={Form} stylist={[styleRoot, stylist]} {...rest} onSubmit={submit} />
     </Context.Provider>
   );
 }
