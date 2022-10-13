@@ -33,6 +33,7 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
     size,
     unique,
     value,
+    // Styles
     buttonStyle,
     labelStyle,
     style,
