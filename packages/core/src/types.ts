@@ -1,11 +1,12 @@
 import { CSSProperties, ReactNode, RefObject } from 'react';
 
 export type AnyObject = { [key: string]: any };
-export type TimeoutType = ReturnType<typeof setInterval> | null;
+export type TimeoutType = ReturnType<typeof setTimeout> | null;
 export type AnyCallback = (mixed: any) => any;
-export type EventCallback = (e: any) => any;
-export type ChangeCallback = (e: any, value: string) => any;
-export type SubmitCallback = (e: any, data: any) => any;
+export type EventCallback = (event: any) => any;
+export type ChangeCallback = (event: any, value: string) => any;
+export type SubmitCallback = (event: FormRef, data: AnyObject) => any;
+export type InputValue = string | number;
 
 export type MapType = {
   web: boolean;
@@ -17,8 +18,6 @@ export type MapType = {
     height: number;
     width: number;
   };
-
-  Icons: any;
 
   Button: ReactNode | any;
   Image: ReactNode | any;
@@ -98,9 +97,9 @@ export type FocusableProps = {
 };
 
 export type EditableProps = {
-  defaultValue?: string;
+  defaultValue?: InputValue;
   disabled?: boolean;
-  value?: string;
+  value?: InputValue;
   onChange?: ChangeCallback;
   readOnly?: boolean;
 
@@ -108,6 +107,28 @@ export type EditableProps = {
   onInput?: Function;
   /** @deprecated use onChange(event, value) instead */
   onChangeText?: Function;
+};
+
+export type FormField = {
+  name: string;
+  get: () => InputValue | null | undefined;
+  set: (value: InputValue) => void;
+};
+
+export type FormRef = {
+  cancel: () => void;
+  clear: () => void;
+  fields: FormField[];
+  getData: () => AnyObject;
+  setData: (data: AnyObject) => void;
+  submit: () => void;
+  target: RefObject<ReactNode>;
+};
+
+export type FormContext = FormRef & {
+  getField: (name: string) => FormField;
+  setField: (options: FormField) => void;
+  unsetField: (name: string) => FormField;
 };
 
 export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around' | 'space-evenly';
@@ -400,7 +421,7 @@ export type InputProps = InputBaseProps & {
   autoCorrect?: boolean;
   caretHidden?: boolean;
   error?: string;
-  mask?: (e: string) => string;
+  mask?: (value: InputValue, data: AnyObject) => InputValue;
   maxLength?: number;
   multiline?: boolean;
   placeholder?: string;
@@ -409,7 +430,7 @@ export type InputProps = InputBaseProps & {
   secure?: boolean;
   selectionColor?: ColorValues;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url';
-  unmask?: (e: string) => string;
+  unmask?: (InputValue: string, data: AnyObject) => InputValue;
   // Styles
   containerStyle?: JssStyles;
   errorStyle?: JssStyles;
@@ -420,7 +441,7 @@ export type SelectProps = InputBaseProps & {
   error?: string;
   options: {
     label: string;
-    value: string;
+    value: InputValue;
     disabled?: boolean;
   }[];
   placeholder?: string;
