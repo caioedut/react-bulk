@@ -124,6 +124,15 @@ Shows an icon after the text. See more in [Icon](Icon.md).
 
 ---
 
+### `mask`
+
+| Type                                |
+|-------------------------------------|
+| `Function(value: string) => string` |
+
+
+---
+
 ### `maxLength`
 
 Limits the maximum number of characters that can be entered. Use this instead of implementing the logic in JS to avoid flicker.
@@ -235,6 +244,14 @@ Determines which keyboard to open.
 | Type                                              | Default  |
 |---------------------------------------------------|----------|
 | `enum('text', 'number', 'email', 'phone', 'url')` | `'text'` |
+
+---
+
+### `unmask`
+
+| Type                                |
+|-------------------------------------|
+| `Function(value: string) => string` |
 
 ---
 

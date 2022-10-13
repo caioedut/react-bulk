@@ -29,6 +29,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     error,
     id,
     label,
+    mask,
     multiline,
     name,
     placeholderColor,
@@ -39,10 +40,13 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     size,
     startIcon,
     type,
+    unmask,
     value,
+    // Events
     onChange,
     onFocus,
     onBlur,
+    // Styles
     containerStyle,
     errorStyle,
     inputStyle,
@@ -53,12 +57,30 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   id = useHtmlId(id);
 
+  const maskValue = useCallback(
+    (value) => {
+      value = `${value ?? ''}`;
+      value = typeof mask === 'function' ? mask(value) : value;
+      return `${value ?? ''}`;
+    },
+    [mask],
+  );
+
+  const unmaskValue = useCallback(
+    (value) => {
+      value = `${value ?? ''}`;
+      value = typeof unmask === 'function' ? unmask(value) : value;
+      return `${value ?? ''}`;
+    },
+    [unmask],
+  );
+
   const form = useForm();
   const defaultRef: any = useRef(null);
   const inputRef = ref || defaultRef;
 
   const [focused, setFocused] = useState(false);
-  const [internal, setInternal] = useState(`${defaultValue ?? ''}`);
+  const [internal, setInternal] = useState(defaultValue);
 
   selectionColor = theme.color(selectionColor ?? color);
   placeholderColor = theme.hex2rgba(placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary', 0.4);
@@ -128,7 +150,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     form.setField({
       name,
       set: setInternal,
-      get: () => internal,
+      get: () => unmaskValue(maskValue(internal)),
     });
 
     return () => form.unsetField(name);
@@ -136,13 +158,13 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
   const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
-  const clear = useCallback(() => setInternal(`${defaultValue ?? ''}`), []);
+  const clear = useCallback(() => setInternal(defaultValue), []);
   const isFocused = useCallback(() => inputRef?.current?.isFocused?.() || inputRef?.current === document?.activeElement, [inputRef]);
 
   const handleChange = (e) => {
     const target = inputRef?.current;
     const nativeEvent = e?.nativeEvent ?? e;
-    const value = `${target?.value ?? e?.nativeEvent?.text ?? ''}`;
+    const value = maskValue(target?.value ?? e?.nativeEvent?.text);
 
     setInternal(value);
 
@@ -266,7 +288,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
             id={id}
             disabled={disabled}
             name={name}
-            value={internal}
+            value={maskValue(internal)}
             onChange={handleChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
