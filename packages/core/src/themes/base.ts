@@ -542,9 +542,8 @@ const base: ThemeProps & any = {
       Input: {
         name: 'rbk-input',
         defaultProps: {
-          autoCapitalize: 'sentences',
-          autoCorrect: true,
           color: 'primary',
+          size: 'medium',
         },
         defaultStyles: {
           root: {
@@ -665,6 +664,7 @@ const base: ThemeProps & any = {
         defaultProps: {
           accessibility: { role: 'combobox' },
           color: 'primary',
+          size: 'medium',
         },
         defaultStyles: {
           label: {
