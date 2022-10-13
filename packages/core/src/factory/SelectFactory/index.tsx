@@ -13,6 +13,7 @@ import ButtonFactory from '../ButtonFactory';
 import CardFactory from '../CardFactory';
 import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
+import LoadingFactory from '../LoadingFactory';
 import ScrollableFactory from '../ScrollableFactory';
 import TextFactory from '../TextFactory';
 
@@ -28,13 +29,15 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     color,
     error,
     label,
+    loading,
     name,
-    onChange,
     options: arrOptions,
     placeholder,
     readOnly,
     size,
     value,
+    // Events
+    onChange,
     // Styles
     buttonStyle,
     errorStyle,
@@ -76,7 +79,9 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
       get: () => internal?.value,
     });
 
-    return () => form.unsetField(name);
+    return () => {
+      form.unsetField(name);
+    };
   }, [name, form, internal]);
 
   useEffect(() => {
@@ -88,11 +93,13 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
 
     if (native) {
       setTimeout(() => {
-        // @ts-ignore
-        selectedRef.current.measureLayout(scrollRef.current, (left, top) => {
-          const y = Math.max(0, top - metrics?.maxHeight / 2);
-          scrollRef.current.scrollTo({ x: 0, y, animated: true });
-        });
+        if (selectedRef.current && scrollRef.current) {
+          // @ts-ignore
+          selectedRef.current.measureLayout(scrollRef.current, (left, top) => {
+            const y = Math.max(0, top - metrics?.maxHeight / 2);
+            scrollRef.current.scrollTo({ x: 0, y, animated: true });
+          });
+        }
       }, 100);
     }
   }, [visible]);
@@ -141,7 +148,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
     onChange?.({ target, name, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
 
     if (autoFocus) {
-      setTimeout(focus, 250);
+      setTimeout(focus, 100);
     }
   };
 
@@ -233,9 +240,13 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
         block
         color={color}
         endIcon={
-          <TextFactory map={map} color={color} style={{ transform: [{ scaleY: 0.65 }] }}>
-            {visible ? '▲' : '▼'}
-          </TextFactory>
+          loading ? (
+            <LoadingFactory map={map} />
+          ) : (
+            <TextFactory map={map} color={color} style={{ transform: [{ scaleY: 0.65 }] }}>
+              {visible ? '▲' : '▼'}
+            </TextFactory>
+          )
         }
         {...rest}
         id={id}
