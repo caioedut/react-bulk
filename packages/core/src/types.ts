@@ -400,6 +400,7 @@ export type InputProps = InputBaseProps & {
   autoCorrect?: boolean;
   caretHidden?: boolean;
   error?: string;
+  mask?: (e: string) => string;
   maxLength?: number;
   multiline?: boolean;
   placeholder?: string;
@@ -408,6 +409,7 @@ export type InputProps = InputBaseProps & {
   secure?: boolean;
   selectionColor?: ColorValues;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url';
+  unmask?: (e: string) => string;
   // Styles
   containerStyle?: JssStyles;
   errorStyle?: JssStyles;
