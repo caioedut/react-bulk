@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import extract from '../../props/extract';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
 import { FactoryProps, InputProps } from '../../types';
 import useHtmlId from '../../useHtmlId';
@@ -47,13 +47,14 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     onFocus,
     onBlur,
     // Styles
+    variants,
     containerStyle,
     errorStyle,
     inputStyle,
     labelStyle,
     style,
     ...rest
-  } = factory(props, options.defaultProps);
+  } = factory2(props, options, theme);
 
   id = useHtmlId(id);
 
@@ -181,21 +182,6 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     onBlur?.(e);
   };
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleLabel = useStylist({
-    name: options.name + '-label',
-    style: options.defaultStyles.label,
-  });
-
-  const styleError = useStylist({
-    name: options.name + '-error',
-    style: options.defaultStyles.error,
-  });
-
   const styleFocus = useStylist({
     avoid: !focused,
     style: {
@@ -211,25 +197,9 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     },
   });
 
-  const styleDisabled = useStylist({
-    avoid: !disabled,
-    style: {
-      backgroundColor: theme.hex2rgba('background.disabled', 0.125),
-      borderColor: theme.hex2rgba('background.disabled', 0.25),
-      web: {
-        cursor: 'not-allowed',
-        '& *': { cursor: 'not-allowed' },
-      },
-    },
-  });
-
   const styleColor = useStylist({
+    avoid: disabled,
     style: color && { borderColor: color },
-  });
-
-  const styleInput = useStylist({
-    name: options.name + '-input',
-    style: options.defaultStyles.input,
   });
 
   const styleInputState = useStylist({
@@ -237,13 +207,13 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
       {
         fontSize,
         height,
-        paddingVertical: spacing * 2,
+        paddingVertical: 0,
         paddingHorizontal: spacing,
       },
 
-      multiline && { height },
+      web && { paddingVertical: spacing * 2 },
 
-      native && { paddingVertical: 0 },
+      multiline && { height },
 
       web && { caretColor: caretHidden ? theme.colors.common.trans : selectionColor },
 
@@ -266,12 +236,12 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   return (
     <BoxFactory map={map} style={containerStyle}>
       {Boolean(label) && (
-        <LabelFactory map={map} numberOfLines={1} for={inputRef} style={labelStyle} stylist={[styleLabel]}>
+        <LabelFactory map={map} numberOfLines={1} for={inputRef} style={labelStyle} stylist={[variants.label]}>
           {label}
         </LabelFactory>
       )}
 
-      <BoxFactory map={map} stylist={[styleRoot, styleFocus, styleDisabled, styleColor, stylist]} style={style}>
+      <BoxFactory map={map} stylist={[variants.root, styleFocus, styleColor, stylist]} style={style}>
         <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
           {Boolean(startIcon) && (
             <BoxFactory map={map} style={{ marginLeft: spacing }}>
@@ -284,7 +254,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
             ref={inputRef}
             component={multiline ? TextArea : Input}
             style={inputStyle}
-            stylist={[styleInput, styleInputState]}
+            stylist={[variants.input, styleInputState]}
             {...rest}
             id={id}
             disabled={disabled}
@@ -304,7 +274,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
       </BoxFactory>
 
       {Boolean(error) && typeof error === 'string' && (
-        <TextFactory map={map} variant="caption" style={errorStyle} stylist={[styleError]}>
+        <TextFactory map={map} variant="caption" style={errorStyle} stylist={[variants.error]}>
           {error}
         </TextFactory>
       )}

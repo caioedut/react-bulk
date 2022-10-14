@@ -573,7 +573,7 @@ const base: ThemeProps & any = {
             fontSize: '1rem',
             height: '2.5rem',
             margin: 0,
-            paddingVertical: '1rem',
+            paddingVertical: 0,
             paddingHorizontal: '0.5rem',
             textDecorationLine: 'none',
             width: '100%',
@@ -582,6 +582,7 @@ const base: ThemeProps & any = {
               boxShadow: 'none',
               cursor: 'inherit',
               outline: '0 !important',
+              paddingVertical: '1rem',
               touchAction: 'none',
             },
           },
@@ -589,6 +590,22 @@ const base: ThemeProps & any = {
             color: 'error',
             mx: 1,
             mt: 1,
+          },
+        },
+        variants: {
+          disabled: {
+            true: {
+              styles: {
+                root: {
+                  backgroundColor: (theme) => theme.hex2rgba('background.disabled', 0.125),
+                  borderColor: (theme) => theme.hex2rgba('background.disabled', 0.25),
+                  web: {
+                    cursor: 'not-allowed',
+                    '& *': { cursor: 'not-allowed' },
+                  },
+                },
+              },
+            },
           },
         },
       },
