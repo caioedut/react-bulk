@@ -134,7 +134,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   const fontSize = theme.rem(size);
   const spacing = theme.rem(0.5, fontSize);
-  const height = (multiline ? 3 : 1) * fontSize * 2;
+  const height = (multiline ? 3 : 1) * fontSize * +options.defaultStyles.input.height.replace(/[^.\d]/g, '');
 
   useEffect(() => {
     if (typeof value !== 'undefined') {
@@ -234,10 +234,11 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   const styleInputState = useStylist({
     style: [
-      fontSize !== theme.typography.fontSize && {
+      {
         fontSize,
         height,
-        padding: spacing,
+        paddingVertical: spacing * 2,
+        paddingHorizontal: spacing,
       },
 
       multiline && { height },

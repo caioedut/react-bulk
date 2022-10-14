@@ -270,10 +270,10 @@ const base: ThemeProps & any = {
             border: '1px solid primary',
             borderRadius: this.shape.borderRadius,
             margin: 0,
-            minHeight: '2rem',
-            minWidth: '2rem',
+            minHeight: '2.5rem',
+            minWidth: '2.5rem',
             padding: 0,
-            paddingHorizontal: '0.5rem',
+            paddingHorizontal: '1rem',
             touchAction: 'none',
 
             web: {
@@ -319,8 +319,9 @@ const base: ThemeProps & any = {
             xsmall: {
               styles: {
                 root: {
-                  minHeight: '1.25rem',
-                  paddingHorizontal: '0.3125rem',
+                  minHeight: '1.5625rem',
+                  minWidth: '1.5625rem',
+                  paddingHorizontal: '0.625rem',
                 },
                 label: {
                   fontSize: '0.625rem',
@@ -330,8 +331,9 @@ const base: ThemeProps & any = {
             small: {
               styles: {
                 root: {
-                  minHeight: '1.5rem',
-                  paddingHorizontal: '0.375rem',
+                  minHeight: '1.875rem',
+                  minWidth: '1.875rem',
+                  paddingHorizontal: '0.75rem',
                 },
                 label: {
                   fontSize: '0.75rem',
@@ -341,8 +343,9 @@ const base: ThemeProps & any = {
             large: {
               styles: {
                 root: {
-                  minHeight: '2.5rem',
-                  paddingHorizontal: '0.625rem',
+                  minHeight: '3.125rem',
+                  minWidth: '3.125rem',
+                  paddingHorizontal: '1.25rem',
                 },
                 label: {
                   fontSize: '1.25rem',
@@ -352,8 +355,9 @@ const base: ThemeProps & any = {
             xlarge: {
               styles: {
                 root: {
-                  minHeight: '3.25rem',
-                  paddingHorizontal: '0.8125rem',
+                  minHeight: '4.0625rem',
+                  minWidth: '4.0625rem',
+                  paddingHorizontal: '1.625rem',
                 },
                 label: {
                   fontSize: '1.625rem',
@@ -567,9 +571,10 @@ const base: ThemeProps & any = {
             color: 'text.primary',
             flex: 1,
             fontSize: '1rem',
-            height: '2rem',
+            height: '2.5rem',
             margin: 0,
-            padding: '0.5rem',
+            paddingVertical: '1rem',
+            paddingHorizontal: '0.5rem',
             textDecorationLine: 'none',
             width: '100%',
             web: {
