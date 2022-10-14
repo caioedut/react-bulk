@@ -5,7 +5,6 @@ export type TimeoutType = ReturnType<typeof setTimeout> | null;
 export type AnyCallback = (mixed: any) => any;
 export type EventCallback = (event: any) => any;
 export type ChangeCallback = (event: any, value: string) => any;
-export type SubmitCallback = (event: FormRef, data: AnyObject) => any;
 export type InputValue = string | number | boolean;
 
 export type MapType = {
@@ -533,8 +532,9 @@ export type BadgeProps = {
 
 export type FormProps = {
   data?: any;
-  onSubmit?: SubmitCallback;
-  onCancel?: EventCallback;
+  onSubmit?: (event: FormRef, data: AnyObject) => any;
+  onCancel?: (event: FormRef) => any;
+  onClear?: (event: FormRef, data: AnyObject) => any;
 } & BoxProps;
 
 export type TooltipProps = {

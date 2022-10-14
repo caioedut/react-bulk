@@ -1,9 +1,8 @@
 import React, { ReactNode, createContext, useContext, useEffect, useImperativeHandle, useRef } from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { FactoryProps, FormContext, FormField, FormProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 const Context = createContext<FormContext>(null as any);
@@ -22,8 +21,10 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
     onSubmit,
     onCancel,
     onClear,
+    // Styles
+    variants,
     ...rest
-  } = factory(props, options.defaultProps);
+  } = factory2(props, options, theme);
 
   const formRef = useRef<ReactNode>(null);
   const fieldsRef = useRef<FormField[]>([]);
@@ -96,11 +97,6 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
     onClear?.(ref.current, data);
   }
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
   return (
     <Context.Provider
       value={{
@@ -110,7 +106,7 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
         unsetField,
       }}
     >
-      <BoxFactory map={map} ref={formRef} component={Form} stylist={[styleRoot, stylist]} {...rest} onSubmit={submit} />
+      <BoxFactory map={map} ref={formRef} component={Form} stylist={[variants.root, stylist]} {...rest} onSubmit={submit} />
     </Context.Provider>
   );
 }

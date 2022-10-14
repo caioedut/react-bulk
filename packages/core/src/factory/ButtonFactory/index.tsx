@@ -123,7 +123,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
       map={map}
       ref={ref}
       component={web && rest.href ? 'a' : Button}
-      stylist={[variants?.root, styleColor, styleState, stylist]}
+      stylist={[variants.root, styleColor, styleState, stylist]}
       {...rest}
       disabled={disabled}
     >
