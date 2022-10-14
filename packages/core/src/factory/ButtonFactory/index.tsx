@@ -40,7 +40,6 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   const form = useForm();
   const isBasic = ['outline', 'text'].includes(variant);
-  const dynamic = !isNaN(size);
 
   badge = typeof badge === 'number' ? { value: badge } : badge;
   children = children ?? label;
@@ -81,9 +80,9 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
   }
 
   const fontSize = theme.rem(size);
-  const spacing = theme.rem(0.5, fontSize);
-  const height = fontSize * 2;
-  const textColor = isBasic ? color : theme.contrast(color);
+  const spacing = theme.rem(1, fontSize);
+  const height = fontSize * +options.defaultStyles.root.minHeight.replace(/[^.\d]/g, '');
+  const textColor = isBasic ? color : 'white';
 
   const styleColor = useStylist({
     style: [
@@ -96,7 +95,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   const styleState = useStylist({
     style: [
-      dynamic && {
+      {
         minHeight: height,
         minWidth: height,
         paddingHorizontal: spacing,
@@ -112,7 +111,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
 
   if (typeof children === 'string') {
     children = (
-      <TextFactory map={map} transform={transform} style={[{ color: textColor }, labelStyle]} stylist={[variants?.label]}>
+      <TextFactory map={map} transform={transform} style={[{ color: textColor, fontSize }, labelStyle]} stylist={[variants.label]}>
         {children}
       </TextFactory>
     );
