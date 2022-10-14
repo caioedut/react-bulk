@@ -4,12 +4,9 @@
   "version": "0.0.0",
   "main": "",
   "scripts": {
-    "predev": "yarn install --check-files",
     "dev": "node dev.js"
   },
   "dependencies": {
-    "@react-bulk/core": "file:../../packages/core",
-    "@react-bulk/web": "file:../../packages/web",
     "phosphor-react": "^1.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"

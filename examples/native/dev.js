@@ -1,17 +1,11 @@
-const fs = require('fs-extra');
-const path = require('path');
 const { execSync } = require('child_process');
 
-fs.removeSync('yarn.lock');
-fs.removeSync('package-lock.json');
-fs.removeSync(path.join('node_modules', '@react-bulk'), {
-  recursive: true,
-});
+execSync('yarn --cwd ../../packages/core link', { stdio: 'inherit' });
 
-execSync('yarn add file:../../packages/core file:../../packages/native', {
-  stdio: 'inherit',
-});
+execSync('yarn --cwd ../../packages/native link', { stdio: 'inherit' });
 
-execSync('expo start', {
-  stdio: 'inherit',
-});
+execSync('yarn link "@react-bulk/core" "@react-bulk/native"', { stdio: 'inherit' });
+
+execSync('vite', { stdio: 'inherit' });
+
+execSync('expo start', { stdio: 'inherit' });
