@@ -623,6 +623,25 @@ const base: ThemeProps & any = {
           },
         },
       },
+      Link: {
+        name: 'rbk-link',
+        defaultProps: {},
+        defaultStyles: {
+          root: {
+            color: 'primary',
+            web: { cursor: 'pointer' },
+          },
+        },
+        variants: {
+          underline: {
+            true: {
+              styles: {
+                root: { textDecoration: 'underline' },
+              },
+            },
+          },
+        },
+      },
       ListItem: {
         name: 'rbk-list-item',
         defaultProps: {

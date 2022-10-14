@@ -49,6 +49,7 @@ export { default as GridFactory } from './factory/GridFactory';
 export { default as ImageFactory } from './factory/ImageFactory';
 export { default as InputFactory } from './factory/InputFactory';
 export { default as LabelFactory } from './factory/LabelFactory';
+export { default as LinkFactory } from './factory/LinkFactory';
 export { default as ListItemFactory } from './factory/ListItemFactory';
 export { default as LoadingFactory } from './factory/LoadingFactory';
 export { default as ModalFactory } from './factory/ModalFactory';

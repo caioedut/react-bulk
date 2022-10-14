@@ -291,6 +291,7 @@ export type ThemeProps = {
     Image: ThemeComponentProps;
     Input: ThemeComponentProps;
     Label: ThemeComponentProps;
+    Link: ThemeComponentProps;
     ListItem: ThemeComponentProps;
     Loading: ThemeComponentProps;
     Modal: ThemeComponentProps;
@@ -570,3 +571,5 @@ export type ListItemProps = {
   startIconStyle?: JssStyles;
   endIconStyle?: JssStyles;
 } & BoxProps;
+
+export type LinkProps = {} & BoxProps;
