@@ -57,6 +57,10 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   id = useHtmlId(id);
 
+  const form = useForm();
+  const defaultRef: any = useRef(null);
+  const inputRef = ref || defaultRef;
+
   const maskValue = useCallback(
     (value) => {
       value = typeof mask === 'function' ? mask(value) : value;
@@ -72,10 +76,6 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
     },
     [unmask],
   );
-
-  const form = useForm();
-  const defaultRef: any = useRef(null);
-  const inputRef = ref || defaultRef;
 
   const [focused, setFocused] = useState(false);
   const [internal, setInternal] = useState(defaultValue);
