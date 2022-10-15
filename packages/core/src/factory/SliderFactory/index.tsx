@@ -3,19 +3,22 @@ import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTheme } from '../../ReactBulk';
 import factory2 from '../../props/factory2';
 import { FactoryProps, RectType, SliderProps } from '../../types';
+import useHtmlId from '../../useHtmlId';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
+import { useForm } from '../FormFactory';
 
 function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, ref: any) {
   const theme = useTheme();
   const options = theme.components.Slider;
-  const { web, native, View } = map;
+  const { web, native, Input, View } = map;
 
   // Extends from default props
   let {
     color,
     defaultValue,
+    id,
     max,
     min,
     name,
@@ -29,6 +32,10 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     variants,
     ...rest
   } = factory2(props, options, theme);
+
+  id = useHtmlId(id);
+
+  const form = useForm();
 
   const containerRef = useRef(null);
   const buttonRef = useRef(null);
@@ -49,15 +56,31 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     });
   }
 
-  const baseCalc = max - min;
+  const step = 1;
+  const baseCalc = max - min + step;
   const iconSize = theme.rem(size);
   const ruleSize = iconSize / 4;
   const ThumbFactory = web ? ButtonFactory : BoxFactory;
 
   defaultValue = Math.min(max, Math.max(min, defaultValue ?? min));
-  const [percent, setPercent] = useState(Math.round((defaultValue * 100) / max));
+  const [percent, setPercent] = useState(getPercentByValue(defaultValue));
+  const internal = getValueByPercent(percent);
 
   useImperativeHandle(ref, () => containerRef.current);
+
+  useEffect(() => {
+    if (!name || !form) return;
+
+    form.setField({
+      name,
+      set: (value) => setPercent(getPercentByValue(value)),
+      get: () => getValueByPercent(percent),
+    });
+
+    return () => {
+      form.unsetField(name);
+    };
+  }, [name, form, getPercentByValue, getValueByPercent]);
 
   useEffect(() => {
     if (!web) return;
@@ -82,6 +105,16 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     if (native) {
       $el.setNativeProps(styles);
     }
+  }
+
+  function getValueByPercent(percent) {
+    const value = Math.round((percent / 100) * (baseCalc + min));
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function getPercentByValue(value) {
+    const percent = Math.round(((value - min) * 100) / baseCalc);
+    return Math.min(100, Math.max(0, percent));
   }
 
   async function getRect($el): Promise<RectType> {
@@ -113,11 +146,8 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
       const targetX = dotRect.pageOffsetX - containerRectRef.current.pageOffsetX;
 
       percent = (targetX / containerRectRef.current.width) * 100;
-      value = Math.round((percent / 100) * baseCalc + min);
-
-      percent = Math.round((value * 100) / baseCalc);
-      percent = Math.min(percent, 100);
-      percent = Math.max(percent, 0);
+      value = getValueByPercent(percent);
+      // percent = getPercentByValue(value);
     }
 
     return { percent, value };
@@ -196,15 +226,15 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     const { code } = e;
 
     let changed = false;
-    let value = Math.round((percent / 100) * baseCalc + min);
+    let value = getValueByPercent(percent);
 
     if (code === 'ArrowLeft') {
-      value -= 1;
+      value -= step;
       changed = true;
     }
 
     if (code === 'ArrowRight') {
-      value += 1;
+      value += step;
       changed = true;
     }
 
@@ -230,17 +260,11 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
     if (changed) {
       e?.preventDefault?.();
+      const percent = getPercentByValue(value);
 
-      let newPercent = Math.round((value * 100) / baseCalc);
-      newPercent = Math.min(newPercent, 100);
-      newPercent = Math.max(newPercent, 0);
-
-      // Set percent and call handlers
-      if (percent !== newPercent) {
-        setPercent(newPercent);
-        onSlide?.({}, value, percent);
-        onChange?.({}, value);
-      }
+      setPercent(percent);
+      onSlide?.({}, value, percent);
+      onChange?.({}, value);
     }
   };
 
@@ -266,7 +290,10 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           onResponderEnd: handleRelease,
         },
       }}
-      style={{ height: iconSize }}
+      style={{
+        height: iconSize,
+        marginHorizontal: iconSize / 2,
+      }}
       stylist={[variants.root, stylist]}
     >
       {/* Full Width Rule */}
@@ -275,6 +302,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
         style={{
           borderRadius: ruleSize / 2,
           marginTop: -ruleSize / 2,
+          marginRight: -iconSize / 2,
           height: ruleSize,
         }}
         stylist={[variants.rule]}
@@ -289,8 +317,10 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
         }}
         style={{
           backgroundColor: color,
-          borderRadius: ruleSize / 2,
+          borderTopLeftRadius: ruleSize / 2,
+          borderBottomLeftRadius: ruleSize / 2,
           marginTop: -ruleSize / 2,
+          marginLeft: -iconSize / 2,
           height: ruleSize,
           width: `${percent}%`,
         }}
@@ -312,6 +342,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
         <ThumbFactory
           map={map}
           ref={buttonRef}
+          id={id}
           onKeyDown={handleKeyDown}
           style={{
             left: -iconSize / 2,
@@ -327,6 +358,16 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           stylist={[variants.thumb]}
         />
       </BoxFactory>
+
+      <Input //
+        hidden
+        type="checkbox"
+        name={name}
+        // readOnly={readOnly}
+        value={internal}
+        // checked={internal}
+        // onChange={handleChange}
+      />
     </BoxFactory>
   );
 }
