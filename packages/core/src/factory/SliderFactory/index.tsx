@@ -385,15 +385,17 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
         </TooltipFactory>
       </BoxFactory>
 
-      <Input //
-        hidden
-        type="checkbox"
-        name={name}
-        // readOnly={readOnly}
-        value={internal}
-        // checked={internal}
-        // onChange={handleChange}
-      />
+      {web && (
+        <Input //
+          hidden
+          type="checkbox"
+          name={name}
+          // readOnly={readOnly}
+          value={internal}
+          // checked={internal}
+          // onChange={handleChange}
+        />
+      )}
     </BoxFactory>
   );
 }
