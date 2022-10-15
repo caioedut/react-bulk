@@ -423,43 +423,44 @@ export type ButtonGroupProps = {
 export type InputBaseProps = {
   name?: string;
 } & EditableProps &
-  FormControlBaseProps &
   FocusableProps;
 
-export type InputProps = InputBaseProps & {
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
-  autoCorrect?: boolean;
-  caretHidden?: boolean;
-  error?: string;
-  mask?: (value: InputValue, data: AnyObject) => InputValue;
-  maxLength?: number;
-  multiline?: boolean;
-  placeholder?: string;
-  placeholderColor?: ColorValues;
-  returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
-  secure?: boolean;
-  selectionColor?: ColorValues;
-  type?: 'text' | 'number' | 'email' | 'phone' | 'url';
-  unmask?: (InputValue: string, data: AnyObject) => InputValue;
-  // Styles
-  containerStyle?: JssStyles;
-  errorStyle?: JssStyles;
-  inputStyle?: JssStyles;
-} & BoxProps;
+export type InputProps = InputBaseProps &
+  FormControlBaseProps & {
+    autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+    autoCorrect?: boolean;
+    caretHidden?: boolean;
+    error?: string;
+    mask?: (value: InputValue, data: AnyObject) => InputValue;
+    maxLength?: number;
+    multiline?: boolean;
+    placeholder?: string;
+    placeholderColor?: ColorValues;
+    returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
+    secure?: boolean;
+    selectionColor?: ColorValues;
+    type?: 'text' | 'number' | 'email' | 'phone' | 'url';
+    unmask?: (InputValue: string, data: AnyObject) => InputValue;
+    // Styles
+    containerStyle?: JssStyles;
+    errorStyle?: JssStyles;
+    inputStyle?: JssStyles;
+  } & BoxProps;
 
-export type SelectProps = InputBaseProps & {
-  error?: string;
-  loading?: boolean;
-  options: {
-    label: string;
-    value: InputValue;
-    disabled?: boolean;
-  }[];
-  placeholder?: string;
-  // Styles
-  buttonStyle?: JssStyles;
-  errorStyle?: JssStyles;
-} & BoxProps;
+export type SelectProps = InputBaseProps &
+  FormControlBaseProps & {
+    error?: string;
+    loading?: boolean;
+    options: {
+      label: string;
+      value: InputValue;
+      disabled?: boolean;
+    }[];
+    placeholder?: string;
+    // Styles
+    buttonStyle?: JssStyles;
+    errorStyle?: JssStyles;
+  } & BoxProps;
 
 export type CheckboxProps = InputBaseProps & {
   checked?: boolean;
@@ -467,10 +468,11 @@ export type CheckboxProps = InputBaseProps & {
   unique?: boolean;
 } & BoxProps;
 
-export type SliderProps = {
+export type SliderProps = InputBaseProps & {
   defaultValue?: number;
   max?: number;
   min?: number;
+  size?: SizeValues;
   // Events
   onChange: (event: AnyObject, value: number) => any;
   onSlide: (event: AnyObject, value: number, percent: number) => any;

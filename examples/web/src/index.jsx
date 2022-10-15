@@ -101,9 +101,13 @@ function Main() {
           // min={3}
           // max={6}
           // defaultValue={50}
-          onChange={(e, value) => console.log('VALUE', value)}
-          onSlide={(e, value, percent) => console.log('onSlide', 'value: ', value, '|', 'percent: ', percent)}
+          onChange={(e, value) => console.log('onChange', value)}
+          onSlide={(e, value, percent) => console.log('onSlide', 'value:', value, '|', 'percent:', percent)}
         />
+
+        {sizes.map((size) => (
+          <Slider key={size} size={size} mt={3} />
+        ))}
       </Card>
 
       <Card>

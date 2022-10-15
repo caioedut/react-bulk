@@ -3,6 +3,7 @@ import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTheme } from '../../ReactBulk';
 import factory2 from '../../props/factory2';
 import { FactoryProps, RectType, SliderProps } from '../../types';
+import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 
 function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, ref: any) {
@@ -12,9 +13,14 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
   // Extends from default props
   let {
+    color,
     defaultValue,
     max,
     min,
+    name,
+    platform,
+    size,
+    value,
     // Events
     onChange,
     onSlide,
@@ -23,16 +29,27 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     ...rest
   } = factory2(props, options, theme);
 
-  const baseCalc = max - min;
-  const iconSize = 16;
+  const containerRef = useRef(null);
+  const dotRef = useRef(null);
+  const barRef = useRef(null);
 
   const containerRectRef = useRef<RectType | null>(null);
   const dotIniPosRef = useRef<number | null>(null);
   const pressIniPosRef = useRef<number | null>(null);
 
-  const containerRef = useRef(null);
-  const dotRef = useRef(null);
-  const barRef = useRef(null);
+  if (typeof size === 'string') {
+    size = pick(size, 'medium', {
+      xsmall: 0.625,
+      small: 0.75,
+      medium: 1,
+      large: 1.25,
+      xlarge: 1.625,
+    });
+  }
+
+  const baseCalc = max - min;
+  const iconSize = theme.rem(size);
+  const ruleSize = iconSize / 4;
 
   defaultValue = Math.min(max, Math.max(min, defaultValue ?? min));
   const [percent, setPercent] = useState(Math.round((defaultValue * 100) / max));
@@ -55,7 +72,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     if (web) {
       for (let attr in styles) {
         const value = styles[attr];
-        $el.style[attr] = isNaN(value) ? value : `${value}px`;
+        $el.style[attr] = value && !isNaN(value) ? `${value}px` : value;
       }
     }
 
@@ -67,30 +84,14 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   async function getRect($el): Promise<RectType> {
     if (web) {
       const { offsetLeft: offsetX, offsetTop: offsetY } = $el;
-
       const { width, height, left: pageOffsetX, top: pageOffsetY } = $el.getBoundingClientRect();
-
-      return {
-        width,
-        height,
-        offsetX,
-        offsetY,
-        pageOffsetX,
-        pageOffsetY,
-      };
+      return { width, height, offsetX, offsetY, pageOffsetX, pageOffsetY };
     }
 
     if (native) {
       return new Promise((resolve) =>
         $el.measure((offsetX, offsetY, width, height, pageOffsetX, pageOffsetY) =>
-          resolve({
-            width,
-            height,
-            offsetX,
-            offsetY,
-            pageOffsetX,
-            pageOffsetY,
-          }),
+          resolve({ width, height, offsetX, offsetY, pageOffsetX, pageOffsetY }),
         ),
       );
     }
@@ -169,8 +170,8 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     const { percent, value } = await getState();
 
     // Reset styles
-    setStyles(dotRef.current, { marginLeft: undefined });
-    setStyles(barRef.current, { width: undefined });
+    setStyles(dotRef.current, { marginLeft: web ? '' : undefined });
+    setStyles(barRef.current, { width: web ? '' : undefined });
 
     // Reset refs
     containerRectRef.current = null;
@@ -190,10 +191,13 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
       {...rest}
       component={View}
       platform={{
+        ...Object(platform),
         web: {
+          ...Object(platform?.web),
           onPressIn: handlePress,
         },
         native: {
+          ...Object(platform?.native),
           collapsable: false,
           onStartShouldSetResponder: () => true,
           onMoveShouldSetResponder: () => true,
@@ -202,42 +206,35 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           onResponderEnd: handleRelease,
         },
       }}
-      style={{
-        position: 'relative',
-        height: iconSize,
-        web: { cursor: 'pointer' },
-      }}
+      style={{ height: iconSize }}
+      stylist={[variants.root, stylist]}
     >
+      {/* Full Width Rule */}
       <BoxFactory
         map={map}
-        corners
         style={{
-          position: 'absolute',
-          top: '50%',
-          left: 0,
-          marginTop: -1.5,
-          backgroundColor: 'background.secondary',
-          height: 3,
-          width: '100%',
+          borderRadius: ruleSize / 2,
+          marginTop: -ruleSize / 2,
+          height: ruleSize,
         }}
+        stylist={[variants.rule]}
       />
 
+      {/* Value Bar */}
       <BoxFactory
         map={map}
         ref={barRef}
-        corners
         platform={{
           native: { collapsable: false },
         }}
         style={{
-          position: 'absolute',
-          top: '50%',
-          left: 0,
-          marginTop: -1.5,
-          backgroundColor: 'primary',
-          height: 3,
+          backgroundColor: color,
+          borderRadius: ruleSize / 2,
+          marginTop: -ruleSize / 2,
+          height: ruleSize,
           width: `${percent}%`,
         }}
+        stylist={[variants.bar]}
       />
 
       <BoxFactory
@@ -255,14 +252,13 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
         <BoxFactory
           map={map}
           style={{
-            position: 'absolute',
-            top: 0,
             left: -iconSize / 2,
-            backgroundColor: 'primary',
+            backgroundColor: color,
             borderRadius: iconSize / 2,
             height: iconSize,
             width: iconSize,
           }}
+          stylist={[variants.thumb]}
         />
       </BoxFactory>
     </BoxFactory>
