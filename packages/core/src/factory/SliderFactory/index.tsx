@@ -353,36 +353,35 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           width: 1,
         }}
       >
-        <TooltipFactory map={map} title={tooltip ?? internal} visible={tooltip !== null}>
-          <ThumbFactory
-            map={map}
-            ref={buttonRef}
-            id={id}
-            color={color}
-            variant="solid"
-            onKeyDown={handleKeyDown}
-            platform={{
-              web: {
-                onMouseOver: () => setTooltip(getValueByPercent(percent)),
-                onMouseOut: () => setTooltip(null),
-                onFocus: () => setTooltip(getValueByPercent(percent)),
-                onBlur: () => setTooltip(null),
-              },
-            }}
-            style={{
-              left: -iconSize / 2,
-              backgroundColor: color,
-              borderRadius: iconSize / 2,
-              minHeight: 0,
-              minWidth: 0,
-              paddingVertical: 0,
-              paddingHorizontal: 0,
-              height: iconSize,
-              width: iconSize,
-            }}
-            stylist={[variants.thumb]}
-          />
-        </TooltipFactory>
+        <TooltipFactory map={map} title={tooltip ?? internal} visible={tooltip !== null} />
+        <ThumbFactory
+          map={map}
+          ref={buttonRef}
+          id={id}
+          color={color}
+          variant="solid"
+          platform={{
+            web: {
+              onKeyDown: handleKeyDown,
+              onMouseOver: () => setTooltip(getValueByPercent(percent)),
+              onMouseOut: () => setTooltip(null),
+              onFocus: () => setTooltip(getValueByPercent(percent)),
+              onBlur: () => setTooltip(null),
+            },
+          }}
+          style={{
+            left: -iconSize / 2,
+            backgroundColor: color,
+            borderRadius: iconSize / 2,
+            minHeight: 0,
+            minWidth: 0,
+            paddingVertical: 0,
+            paddingHorizontal: 0,
+            height: iconSize,
+            width: iconSize,
+          }}
+          stylist={[variants.thumb]}
+        />
       </BoxFactory>
 
       {web && (
