@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import usePropState from '../../hooks/usePropState';
 import factory from '../../props/factory';
 import { FactoryProps, TimeoutType, TooltipProps } from '../../types';
 import useStylist from '../../useStylist';
@@ -13,15 +14,16 @@ function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & Too
   const { native, dimensions, Button } = map;
 
   // Extends from default props
-  let { color, position, title, ...rest } = factory(props, options.defaultProps);
+  let { color, position, title, visible, ...rest } = factory(props, options.defaultProps);
 
   const timeoutRef = useRef<TimeoutType>(null);
 
-  const [visible, setVisible] = useState(false);
+  const [shown, setShown] = usePropState(false, visible);
   const [trans, setTrans] = useState(0);
 
   const translate = native ? -(trans / 2) : '-50%';
   const isHorizontal = ['left', 'right'].includes(position);
+  const isControlled = typeof visible === 'boolean';
 
   const styleRoot = useStylist({
     name: options.name,
@@ -29,7 +31,7 @@ function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & Too
   });
 
   const styleVisible = useStylist({
-    avoid: !visible,
+    avoid: !shown,
     name: options.name + '-visible',
     style: options.defaultStyles.visible,
   });
@@ -48,7 +50,11 @@ function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & Too
       clearTimeout(timeoutRef.current);
     }
 
-    timeoutRef.current = setTimeout(() => setVisible(true), 50);
+    if (!isControlled) {
+      timeoutRef.current = setTimeout(() => {
+        setShown(true);
+      }, 50);
+    }
   };
 
   const handleTooltipHide = () => {
@@ -56,7 +62,9 @@ function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & Too
       clearTimeout(timeoutRef.current);
     }
 
-    setVisible(false);
+    if (!isControlled) {
+      setShown(false);
+    }
   };
 
   return (

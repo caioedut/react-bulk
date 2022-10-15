@@ -560,9 +560,10 @@ export type FormProps = {
 } & BoxProps;
 
 export type TooltipProps = {
-  title?: string;
-  position?: 'top' | 'bottom' | 'left' | 'right';
   color?: 'black' | 'white' | ColorValues;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  title?: string;
+  visible?: boolean;
 } & BoxProps;
 
 export type AnimationProps = {

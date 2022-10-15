@@ -8,6 +8,7 @@ import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import { useForm } from '../FormFactory';
+import TooltipFactory from '../TooltipFactory';
 
 function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, ref: any) {
   const theme = useTheme();
@@ -64,6 +65,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
   defaultValue = Math.min(max, Math.max(min, defaultValue ?? min));
   const [percent, setPercent] = useState(getPercentByValue(defaultValue));
+  const [tooltip, setTooltip] = useState<number | null>(null);
   const internal = getValueByPercent(percent);
 
   useImperativeHandle(ref, () => containerRef.current);
@@ -173,6 +175,9 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     setStyles($dot, { marginLeft: targetX });
     setStyles($bar, { width: targetX });
 
+    const percent = (targetX / containerRectRef.current.width) * 100;
+    setTooltip(getValueByPercent(percent));
+
     const dotRect = await getRect($dot);
     dotIniPosRef.current = dotRect.pageOffsetX as number;
     pressIniPosRef.current = pageX;
@@ -193,6 +198,9 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
       setStyles(dotRef.current, { marginLeft: targetX });
       setStyles(barRef.current, { width: targetX });
 
+      const percent = (targetX / containerRectRef.current.width) * 100;
+      setTooltip(getValueByPercent(percent));
+
       if (typeof onSlide === 'function') {
         const { percent, value } = await getState();
         onSlide?.({}, value, percent);
@@ -210,6 +218,10 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     // Reset styles
     setStyles(dotRef.current, { marginLeft: web ? '' : undefined });
     setStyles(barRef.current, { width: web ? '' : undefined });
+
+    if (native) {
+      setTooltip(null);
+    }
 
     // Reset refs
     containerRectRef.current = null;
@@ -263,6 +275,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
       const percent = getPercentByValue(value);
       value = getValueByPercent(percent);
 
+      setTooltip(value);
       setPercent(percent);
       onSlide?.({}, value, percent);
       onChange?.({}, value);
@@ -340,24 +353,36 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           width: 1,
         }}
       >
-        <ThumbFactory
-          map={map}
-          ref={buttonRef}
-          id={id}
-          onKeyDown={handleKeyDown}
-          style={{
-            left: -iconSize / 2,
-            backgroundColor: color,
-            borderRadius: iconSize / 2,
-            minHeight: 0,
-            minWidth: 0,
-            paddingVertical: 0,
-            paddingHorizontal: 0,
-            height: iconSize,
-            width: iconSize,
-          }}
-          stylist={[variants.thumb]}
-        />
+        <TooltipFactory map={map} title={tooltip ?? internal} visible={tooltip !== null}>
+          <ThumbFactory
+            map={map}
+            ref={buttonRef}
+            id={id}
+            color={color}
+            variant="solid"
+            onKeyDown={handleKeyDown}
+            platform={{
+              web: {
+                onMouseOver: () => setTooltip(getValueByPercent(percent)),
+                onMouseOut: () => setTooltip(null),
+                onFocus: () => setTooltip(getValueByPercent(percent)),
+                onBlur: () => setTooltip(null),
+              },
+            }}
+            style={{
+              left: -iconSize / 2,
+              backgroundColor: color,
+              borderRadius: iconSize / 2,
+              minHeight: 0,
+              minWidth: 0,
+              paddingVertical: 0,
+              paddingHorizontal: 0,
+              height: iconSize,
+              width: iconSize,
+            }}
+            stylist={[variants.thumb]}
+          />
+        </TooltipFactory>
       </BoxFactory>
 
       <Input //
