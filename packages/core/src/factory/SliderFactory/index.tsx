@@ -52,6 +52,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   const baseCalc = max - min;
   const iconSize = theme.rem(size);
   const ruleSize = iconSize / 4;
+  const ThumbFactory = web ? ButtonFactory : BoxFactory;
 
   defaultValue = Math.min(max, Math.max(min, defaultValue ?? min));
   const [percent, setPercent] = useState(Math.round((defaultValue * 100) / max));
@@ -125,8 +126,10 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   async function handlePress(e) {
     e.preventDefault();
 
-    // @ts-ignore
-    buttonRef?.current?.focus();
+    if (web && buttonRef.current) {
+      // @ts-ignore
+      buttonRef.current.focus?.();
+    }
 
     const pageX = e?.pageX ?? e?.nativeEvent?.pageX;
 
@@ -188,6 +191,58 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     onSlide?.({}, value, percent);
     onChange?.({}, value);
   }
+
+  const handleKeyDown = (e) => {
+    const { code } = e;
+
+    let changed = false;
+    let value = Math.round((percent / 100) * baseCalc + min);
+
+    if (code === 'ArrowLeft') {
+      value -= 1;
+      changed = true;
+    }
+
+    if (code === 'ArrowRight') {
+      value += 1;
+      changed = true;
+    }
+
+    if (code === 'Home') {
+      value = min;
+      changed = true;
+    }
+
+    if (code === 'End') {
+      value = max;
+      changed = true;
+    }
+
+    if (code === 'PageUp') {
+      value += baseCalc / 10;
+      changed = true;
+    }
+
+    if (code === 'PageDown') {
+      value -= baseCalc / 10;
+      changed = true;
+    }
+
+    if (changed) {
+      e?.preventDefault?.();
+
+      let newPercent = Math.round((value * 100) / baseCalc);
+      newPercent = Math.min(newPercent, 100);
+      newPercent = Math.max(newPercent, 0);
+
+      // Set percent and call handlers
+      if (percent !== newPercent) {
+        setPercent(newPercent);
+        onSlide?.({}, value, percent);
+        onChange?.({}, value);
+      }
+    }
+  };
 
   return (
     <BoxFactory
@@ -254,16 +309,18 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           width: 1,
         }}
       >
-        <ButtonFactory
+        <ThumbFactory
           map={map}
           ref={buttonRef}
+          onKeyDown={handleKeyDown}
           style={{
             left: -iconSize / 2,
             backgroundColor: color,
             borderRadius: iconSize / 2,
             minHeight: 0,
             minWidth: 0,
-            padding: 0,
+            paddingVertical: 0,
+            paddingHorizontal: 0,
             height: iconSize,
             width: iconSize,
           }}

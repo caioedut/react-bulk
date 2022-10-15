@@ -96,16 +96,6 @@ function Main() {
 
   return (
     <Scrollable bg="background.secondary" contentInset={3}>
-      <Card mb={3} px={10}>
-        <Slider //
-          // min={3}
-          // max={6}
-          // defaultValue={50}
-          onChange={(e, value) => console.log('onChange', value)}
-          onSlide={(e, value, percent) => console.log('onSlide', 'value:', value, '|', 'percent:', percent)}
-        />
-      </Card>
-
       <Card>
         <Grid>
           <Box xs={12} md>
@@ -355,6 +345,17 @@ function Main() {
               checked={radio === size}
               onChange={() => setRadio(size)}
             />
+          ))}
+        </Box>
+
+        <Divider mt={3} mx={-3} />
+
+        <Text variant="subtitle" mt={3}>
+          Slide
+        </Text>
+        <Box p={3}>
+          {sizes.map((size) => (
+            <Slider key={size} size={size} defaultValue={Math.random() * 100} mt={3} />
           ))}
         </Box>
 
