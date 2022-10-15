@@ -722,10 +722,47 @@ const base: ThemeProps & any = {
       Slider: {
         name: 'rbk-slider',
         defaultProps: {
+          color: 'primary',
           min: 0,
           max: 100,
+          size: 'medium',
         },
-        defaultStyles: {},
+        defaultStyles: {
+          root: {
+            position: 'relative',
+            height: '1rem',
+            web: { cursor: 'pointer' },
+          },
+          rule: {
+            position: 'absolute',
+            top: '50%',
+            left: 0,
+            marginTop: '-0.125rem',
+            backgroundColor: 'background.secondary',
+            borderRadius: '0.125rem',
+            height: '0.25rem',
+            width: '100%',
+          },
+          bar: {
+            position: 'absolute',
+            top: '50%',
+            left: 0,
+            marginTop: '-0.125rem',
+            backgroundColor: 'primary',
+            borderRadius: '0.125rem',
+            height: '0.25rem',
+            width: 0,
+          },
+          thumb: {
+            position: 'absolute',
+            top: 0,
+            left: '-0.5rem',
+            backgroundColor: 'primary',
+            borderRadius: '0.5rem',
+            height: '1rem',
+            width: '1rem',
+          },
+        },
       },
       Table: {
         name: 'rbk-table',
