@@ -385,6 +385,15 @@ function Main() {
               />
             </Box>
             <Box xs={6} md={4}>
+              <Text>Rating</Text>
+              <Slider //
+                name="rating"
+                label="Rating"
+                // min={3}
+                // max={5}
+              />
+            </Box>
+            <Box xs={6} md={4}>
               <Checkbox name="acceptTerms" label="I accept the terms of use." />
             </Box>
             <Box xs={6} md={4}>

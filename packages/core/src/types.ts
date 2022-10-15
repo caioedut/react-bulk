@@ -474,8 +474,8 @@ export type SliderProps = InputBaseProps & {
   min?: number;
   size?: SizeValues;
   // Events
-  onChange: (event: AnyObject, value: number) => any;
-  onSlide: (event: AnyObject, value: number, percent: number) => any;
+  onChange?: (event: AnyObject, value: number) => any;
+  onSlide?: (event: AnyObject, value: number, percent: number) => any;
 } & BoxProps;
 
 export type CardProps = BoxProps;
