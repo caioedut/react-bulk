@@ -56,6 +56,7 @@ export { default as ModalFactory } from './factory/ModalFactory';
 export { default as ProgressFactory } from './factory/ProgressFactory';
 export { default as ScrollableFactory } from './factory/ScrollableFactory';
 export { default as SelectFactory } from './factory/SelectFactory';
+export { default as SliderFactory } from './factory/SliderFactory';
 export { default as TableFactory } from './factory/TableFactory';
 export { default as TextFactory } from './factory/TextFactory';
 export { default as TooltipFactory } from './factory/TooltipFactory';

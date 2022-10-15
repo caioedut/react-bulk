@@ -41,6 +41,8 @@ import {
   ProgressProps,
   SelectFactory,
   SelectProps,
+  SliderFactory,
+  SliderProps,
   TableFactory,
   TableProps,
   TextFactory,
@@ -119,6 +121,10 @@ export const Progress: ForwardRefExoticComponent<ProgressProps> = forwardRef((pr
 
 export const Select: ForwardRefExoticComponent<SelectProps> = forwardRef((props, ref) => (
   <SelectFactory ref={ref} {...props} map={useMap()} />
+));
+
+export const Slider: ForwardRefExoticComponent<SliderProps> = forwardRef((props, ref) => (
+  <SliderFactory ref={ref} {...props} map={useMap()} />
 ));
 
 export const Table: ForwardRefExoticComponent<TableProps> = forwardRef((props, ref) => (

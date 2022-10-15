@@ -719,6 +719,14 @@ const base: ThemeProps & any = {
           },
         },
       },
+      Slider: {
+        name: 'rbk-slider',
+        defaultProps: {
+          min: 0,
+          max: 100,
+        },
+        defaultStyles: {},
+      },
       Table: {
         name: 'rbk-table',
         defaultProps: {},

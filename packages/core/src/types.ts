@@ -29,6 +29,15 @@ export type MapType = {
   View: ReactNode | any;
 };
 
+export type RectType = {
+  width: number;
+  height: number;
+  offsetX: number;
+  offsetY: number;
+  pageOffsetX: number;
+  pageOffsetY: number;
+};
+
 export type FactoryProps = {
   map: MapType;
   defaults?: AnyObject;
@@ -298,6 +307,7 @@ export type ThemeProps = {
     Progress: ThemeComponentProps;
     Scrollable: ThemeComponentProps;
     Select: ThemeComponentProps;
+    Slider: ThemeComponentProps;
     Table: ThemeComponentProps;
     Text: ThemeComponentProps;
     Tooltip: ThemeComponentProps;
@@ -457,6 +467,15 @@ export type CheckboxProps = InputBaseProps & {
   unique?: boolean;
 } & BoxProps;
 
+export type SliderProps = {
+  defaultValue?: number;
+  max?: number;
+  min?: number;
+  // Events
+  onChange: (event: AnyObject, value: number) => any;
+  onSlide: (event: AnyObject, value: number, percent: number) => any;
+} & BoxProps;
+
 export type CardProps = BoxProps;
 
 export type ScrollableProps = {
@@ -572,4 +591,6 @@ export type ListItemProps = {
   endIconStyle?: JssStyles;
 } & BoxProps;
 
-export type LinkProps = {} & BoxProps;
+export type LinkProps = {
+  underline?: boolean;
+} & BoxProps;
