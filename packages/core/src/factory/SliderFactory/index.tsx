@@ -5,6 +5,7 @@ import factory2 from '../../props/factory2';
 import { FactoryProps, RectType, SliderProps } from '../../types';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
+import ButtonFactory from '../ButtonFactory';
 
 function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, ref: any) {
   const theme = useTheme();
@@ -30,6 +31,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   } = factory2(props, options, theme);
 
   const containerRef = useRef(null);
+  const buttonRef = useRef(null);
   const dotRef = useRef(null);
   const barRef = useRef(null);
 
@@ -122,6 +124,9 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
   async function handlePress(e) {
     e.preventDefault();
+
+    // @ts-ignore
+    buttonRef?.current?.focus();
 
     const pageX = e?.pageX ?? e?.nativeEvent?.pageX;
 
@@ -249,12 +254,16 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           width: 1,
         }}
       >
-        <BoxFactory
+        <ButtonFactory
           map={map}
+          ref={buttonRef}
           style={{
             left: -iconSize / 2,
             backgroundColor: color,
             borderRadius: iconSize / 2,
+            minHeight: 0,
+            minWidth: 0,
+            padding: 0,
             height: iconSize,
             width: iconSize,
           }}
