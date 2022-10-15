@@ -57,9 +57,9 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   }
 
   const step = 1;
-  const baseCalc = max - min + step;
   const iconSize = theme.rem(size);
   const ruleSize = iconSize / 4;
+
   const ThumbFactory = web ? ButtonFactory : BoxFactory;
 
   defaultValue = Math.min(max, Math.max(min, defaultValue ?? min));
@@ -108,12 +108,12 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   }
 
   function getValueByPercent(percent) {
-    const value = Math.round((percent / 100) * (baseCalc + min));
+    const value = Math.round((percent / 100) * max);
     return Math.min(max, Math.max(min, value));
   }
 
   function getPercentByValue(value) {
-    const percent = Math.round(((value - min) * 100) / baseCalc);
+    const percent = Math.round(((value - min) * 100) / (max - min));
     return Math.min(100, Math.max(0, percent));
   }
 
@@ -147,7 +147,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
       percent = (targetX / containerRectRef.current.width) * 100;
       value = getValueByPercent(percent);
-      // percent = getPercentByValue(value);
+      percent = getPercentByValue(value);
     }
 
     return { percent, value };
@@ -249,18 +249,19 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     }
 
     if (code === 'PageUp') {
-      value += baseCalc / 10;
+      value += (max - min) / 10;
       changed = true;
     }
 
     if (code === 'PageDown') {
-      value -= baseCalc / 10;
+      value -= (max - min) / 10;
       changed = true;
     }
 
     if (changed) {
       e?.preventDefault?.();
       const percent = getPercentByValue(value);
+      value = getValueByPercent(percent);
 
       setPercent(percent);
       onSlide?.({}, value, percent);
