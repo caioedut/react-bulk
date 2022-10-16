@@ -25,6 +25,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     min,
     name,
     platform,
+    readOnly,
     size,
     value,
     // Events
@@ -69,7 +70,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   const [tooltip, setTooltip] = useState<number | null>(null);
   const internal = getValueByPercent(percent);
 
-  if (!disabled) {
+  if (!disabled && !readOnly) {
     if (web) {
       Object.assign(rest, {
         onPressIn: handlePress,
@@ -308,7 +309,6 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
       ref={containerRef}
       {...rest}
       component={View}
-      disabled={disabled}
       style={{
         height: iconSize,
         marginHorizontal: iconSize / 2,
@@ -366,8 +366,10 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           color={color}
           variant="solid"
           disabled={disabled}
+          readOnly={readOnly}
           platform={
-            !disabled && {
+            !disabled &&
+            !readOnly && {
               web: {
                 onKeyDown: handleKeyDown,
                 onMouseOver: () => setTooltip(getValueByPercent(percent)),
@@ -400,7 +402,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           hidden
           type="checkbox"
           name={name}
-          // readOnly={readOnly}
+          readOnly={readOnly}
           value={internal}
           onChange={(e) => setPercent(getPercentByValue(e.target.value))}
         />
