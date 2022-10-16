@@ -19,6 +19,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   let {
     color,
     defaultValue,
+    disabled,
     id,
     max,
     min,
@@ -67,6 +68,25 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   const [percent, setPercent] = useState(getPercentByValue(defaultValue));
   const [tooltip, setTooltip] = useState<number | null>(null);
   const internal = getValueByPercent(percent);
+
+  if (!disabled) {
+    if (web) {
+      Object.assign(rest, {
+        onPressIn: handlePress,
+      });
+    }
+
+    if (native) {
+      Object.assign(rest, {
+        collapsable: false,
+        onStartShouldSetResponder: () => true,
+        onMoveShouldSetResponder: () => true,
+        onResponderStart: handlePress,
+        onResponderMove: handleMove,
+        onResponderEnd: handleRelease,
+      });
+    }
+  }
 
   useImperativeHandle(ref, () => containerRef.current);
 
@@ -288,22 +308,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
       ref={containerRef}
       {...rest}
       component={View}
-      platform={{
-        ...Object(platform),
-        web: {
-          ...Object(platform?.web),
-          onPressIn: handlePress,
-        },
-        native: {
-          ...Object(platform?.native),
-          collapsable: false,
-          onStartShouldSetResponder: () => true,
-          onMoveShouldSetResponder: () => true,
-          onResponderStart: handlePress,
-          onResponderMove: handleMove,
-          onResponderEnd: handleRelease,
-        },
-      }}
+      disabled={disabled}
       style={{
         height: iconSize,
         marginHorizontal: iconSize / 2,
@@ -360,26 +365,32 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           id={id}
           color={color}
           variant="solid"
-          platform={{
-            web: {
-              onKeyDown: handleKeyDown,
-              onMouseOver: () => setTooltip(getValueByPercent(percent)),
-              onMouseOut: () => setTooltip(null),
-              onFocus: () => setTooltip(getValueByPercent(percent)),
-              onBlur: () => setTooltip(null),
+          disabled={disabled}
+          platform={
+            !disabled && {
+              web: {
+                onKeyDown: handleKeyDown,
+                onMouseOver: () => setTooltip(getValueByPercent(percent)),
+                onMouseOut: () => setTooltip(null),
+                onFocus: () => setTooltip(getValueByPercent(percent)),
+                onBlur: () => setTooltip(null),
+              },
+            }
+          }
+          style={[
+            disabled && theme.components.Button.variants.disabled.true.styles.root,
+            {
+              left: -iconSize / 2,
+              backgroundColor: color,
+              borderRadius: iconSize / 2,
+              minHeight: 0,
+              minWidth: 0,
+              paddingVertical: 0,
+              paddingHorizontal: 0,
+              height: iconSize,
+              width: iconSize,
             },
-          }}
-          style={{
-            left: -iconSize / 2,
-            backgroundColor: color,
-            borderRadius: iconSize / 2,
-            minHeight: 0,
-            minWidth: 0,
-            paddingVertical: 0,
-            paddingHorizontal: 0,
-            height: iconSize,
-            width: iconSize,
-          }}
+          ]}
           stylist={[variants.thumb]}
         />
       </BoxFactory>
@@ -391,8 +402,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
           name={name}
           // readOnly={readOnly}
           value={internal}
-          // checked={internal}
-          // onChange={handleChange}
+          onChange={(e) => setPercent(getPercentByValue(e.target.value))}
         />
       )}
     </BoxFactory>
