@@ -1,13 +1,13 @@
-import React, { ReactNode, createContext, useContext, useEffect, useImperativeHandle, useReducer, useRef } from 'react';
+import React, { ReactNode, createContext, useContext, useEffect, useImperativeHandle, useRef } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import factory2 from '../../props/factory2';
-import { FactoryProps, FormContext, FormField, FormProps } from '../../types';
+import { FactoryProps, FormField, FormProps, FormRef } from '../../types';
 import BoxFactory from '../BoxFactory';
 
-const Context = createContext<FormContext>(null as any);
+const Context = createContext<FormRef>(null as any);
 
-export const useForm = () => useContext<FormContext>(Context);
+export const useForm = () => useContext<FormRef>(Context);
 
 function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: any) {
   const theme = useTheme();
@@ -26,33 +26,37 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
     ...rest
   } = factory2(props, options, theme);
 
+  const defaultRef = useRef(null);
   const formRef = useRef<ReactNode>(null);
   const fieldsRef = useRef<FormField[]>([]);
-  const [, refreshContext] = useReducer(() => Date.now(), 0);
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      submit,
-      cancel,
-      clear,
-      getData,
-      setData,
-      target: formRef.current,
-      fields: fieldsRef.current,
-    }),
-    [submit, cancel, clear, getData, setData],
-  );
+  ref = (ref || defaultRef) as FormRef;
+
+  const context = {
+    submit,
+    cancel,
+    clear,
+    getData,
+    setData,
+    getValue,
+    setValue,
+    getField,
+    setField,
+    unsetField,
+    target: formRef.current,
+  };
+
+  useImperativeHandle(ref, () => context, [context]);
 
   useEffect(() => {
     setData(Object(data));
   }, [data]);
 
   useEffect(() => {
-    refreshContext();
-  }, [ref]);
+    Object.assign(ref.current, { target: formRef.current });
+  }, [formRef]);
 
-  function getField(name) {
+  function getField(name: string) {
     return fieldsRef.current.find((item) => item?.name === name);
   }
 
@@ -67,12 +71,20 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
     }
   }
 
-  function unsetField(name) {
+  function unsetField(name: string) {
     const index = fieldsRef.current.findIndex((item) => item?.name === name);
 
     if (index !== -1) {
       fieldsRef.current.splice(index, 1);
     }
+  }
+
+  function getValue(name: string): any {
+    return getField(name)?.get?.();
+  }
+
+  function setValue(name: string, value: any) {
+    return getField(name)?.set?.(value);
   }
 
   function getData() {
@@ -103,14 +115,7 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
   }
 
   return (
-    <Context.Provider
-      value={{
-        ...ref.current,
-        getField,
-        setField,
-        unsetField,
-      }}
-    >
+    <Context.Provider value={context}>
       <BoxFactory map={map} ref={formRef} component={Form} stylist={[variants.root, stylist]} {...rest} onSubmit={submit} />
     </Context.Provider>
   );
