@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useContext, useEffect, useImperativeHandle, useRef } from 'react';
+import React, { ReactNode, createContext, useContext, useEffect, useImperativeHandle, useReducer, useRef } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import factory2 from '../../props/factory2';
@@ -28,6 +28,7 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
 
   const formRef = useRef<ReactNode>(null);
   const fieldsRef = useRef<FormField[]>([]);
+  const [, refreshContext] = useReducer(() => Date.now(), 0);
 
   useImperativeHandle(
     ref,
@@ -46,6 +47,10 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
   useEffect(() => {
     setData(Object(data));
   }, [data]);
+
+  useEffect(() => {
+    refreshContext();
+  }, [ref]);
 
   function getField(name) {
     return fieldsRef.current.find((item) => item?.name === name);
