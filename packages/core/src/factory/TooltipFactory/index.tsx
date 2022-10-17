@@ -74,8 +74,8 @@ function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & Too
       style={{ position: 'relative' }}
       platform={{
         web: {
-          onMouseOver: handleTooltipShow,
-          onMouseOut: handleTooltipHide,
+          onPointerOver: handleTooltipShow,
+          onPointerOut: handleTooltipHide,
         },
         native: {
           activeOpacity: 1,

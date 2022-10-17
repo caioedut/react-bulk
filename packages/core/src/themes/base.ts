@@ -274,7 +274,6 @@ const base: ThemeProps & any = {
             minWidth: '2.5rem',
             padding: 0,
             paddingHorizontal: '1rem',
-            touchAction: 'none',
 
             web: {
               backgroundImage: 'none',
@@ -287,6 +286,9 @@ const base: ThemeProps & any = {
               textDecorationLine: 'none !important',
               ...this.mixins.transitions.fast,
               transitionProperty: 'background-color, box-shadow',
+
+              touchAction: 'none',
+              '-webkit-tap-highlight-color': 'transparent',
 
               '&:hover': { bg: this.hex2rgba('primary', 0.8) },
             },
@@ -559,6 +561,9 @@ const base: ThemeProps & any = {
             web: {
               ...this.mixins.transitions.fast,
               transitionProperty: 'box-shadow',
+
+              touchAction: 'none',
+              '-webkit-tap-highlight-color': 'transparent',
             },
           },
           label: {
@@ -732,7 +737,11 @@ const base: ThemeProps & any = {
             position: 'relative',
             height: '1rem',
             marginHorizontal: '0.5rem',
-            web: { cursor: 'pointer' },
+            web: {
+              cursor: 'pointer',
+              touchAction: 'none',
+              '-webkit-tap-highlight-color': 'transparent',
+            },
           },
           rule: {
             position: 'absolute',

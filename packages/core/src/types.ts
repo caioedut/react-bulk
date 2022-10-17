@@ -86,6 +86,7 @@ export type AccessibilityProps = {
 };
 
 export type PressableProps = {
+  pressable?: boolean;
   onPress?: Function;
   onPressIn?: Function;
   onPressOut?: Function;

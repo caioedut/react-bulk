@@ -108,12 +108,12 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   useEffect(() => {
     if (!web) return;
 
-    document.addEventListener('mousemove', handleMove);
-    document.addEventListener('mouseup', handleRelease);
+    document.addEventListener('pointermove', handleMove);
+    document.addEventListener('pointerup', handleRelease);
 
     return () => {
-      document.removeEventListener('mousemove', handleMove);
-      document.removeEventListener('mouseup', handleRelease);
+      document.removeEventListener('pointermove', handleMove);
+      document.removeEventListener('pointerup', handleRelease);
     };
   }, [handleMove]);
 
@@ -256,37 +256,37 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   }
 
   const handleKeyDown = (e) => {
-    const { code } = e;
-
     let changed = false;
     let value = getValueByPercent(percent);
 
-    if (code === 'ArrowLeft') {
-      value -= step;
-      changed = true;
-    }
+    const isKey = (...keys) => [e.code, e.key].some((eKey) => keys.includes(eKey));
 
-    if (code === 'ArrowRight') {
+    if (isKey('ArrowRight', 'ArrowUp')) {
       value += step;
       changed = true;
     }
 
-    if (code === 'Home') {
+    if (isKey('ArrowLeft', 'ArrowDown')) {
+      value -= step;
+      changed = true;
+    }
+
+    if (isKey('Home')) {
       value = min;
       changed = true;
     }
 
-    if (code === 'End') {
+    if (isKey('End')) {
       value = max;
       changed = true;
     }
 
-    if (code === 'PageUp') {
+    if (isKey('PageUp')) {
       value += (max - min) / 10;
       changed = true;
     }
 
-    if (code === 'PageDown') {
+    if (isKey('PageDown')) {
       value -= (max - min) / 10;
       changed = true;
     }
@@ -372,8 +372,8 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
             !readOnly && {
               web: {
                 onKeyDown: handleKeyDown,
-                onMouseOver: () => setTooltip(getValueByPercent(percent)),
-                onMouseOut: () => setTooltip(null),
+                onPointerOver: () => setTooltip(getValueByPercent(percent)),
+                onPointerOut: () => setTooltip(null),
                 onFocus: () => setTooltip(getValueByPercent(percent)),
                 onBlur: () => setTooltip(null),
               },
