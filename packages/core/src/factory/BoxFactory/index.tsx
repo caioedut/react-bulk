@@ -49,6 +49,7 @@ function BoxFactory({ platform, className, stylist, children, map, ...props }: F
     noRootStyles,
     noWrap,
     order,
+    pressable,
     position,
     reverse,
     row,
@@ -109,6 +110,7 @@ function BoxFactory({ platform, className, stylist, children, map, ...props }: F
 
     hidden && {
       display: 'none',
+      opacity: 0,
       overflow: 'hidden',
     },
   ];
@@ -173,32 +175,28 @@ function BoxFactory({ platform, className, stylist, children, map, ...props }: F
 
   rest = bindings(rest);
 
-  if ([undefined, null, false, NaN].includes(children)) {
-    children = null;
-  }
+  pressable = pressable ?? Boolean(props.onPress || props.onPressIn || props.onPressOut || props.onClick);
 
-  if (native) {
-    if (native && children) {
-      if (typeof children === 'string') {
-        children = <Text>{children}</Text>;
-      }
-
-      if (Array.isArray(children)) {
-        children = children.map((child) => (typeof children === 'string' ? <Text>{child}</Text> : child));
-      }
-    }
-
-    if ((props.onPress || props.onPressIn || props.onPressOut || props.onClick) && !component) {
-      component = Button;
-      rest.activeOpacity = rest.activeOpacity ?? 0.75;
-    }
+  if (native && pressable && !component) {
+    component = Button;
+    rest.activeOpacity = rest.activeOpacity ?? 0.75;
   }
 
   const Component = component || View;
 
   return (
     <Component ref={ref} {...rest} {...componentProps}>
-      {children}
+      {React.Children.map(children, (child) => {
+        if ([undefined, null, false, NaN].includes(child)) {
+          return null;
+        }
+
+        if (typeof children === 'string') {
+          return <Text>{child}</Text>;
+        }
+
+        return child;
+      })}
     </Component>
   );
 }

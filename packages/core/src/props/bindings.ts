@@ -10,11 +10,11 @@ export default function ({ ...props }: any) {
     }
 
     if (props.onPressIn) {
-      props.onMouseDown = props.onPressIn;
+      props.onPointerDown = props.onPressIn;
     }
 
     if (props.onPressOut) {
-      props.onMouseUp = props.onPressOut;
+      props.onPointerUp = props.onPressOut;
     }
 
     // if (props.onChange) {
