@@ -31,7 +31,6 @@ function Main() {
   const theme = useTheme();
 
   const timeoutRef = useRef({});
-  const formRef = useRef(null);
 
   const [modal, setModal] = useState({});
   const [select, setSelect] = useState('');
@@ -364,7 +363,7 @@ function Main() {
         <Text variant="subtitle" mt={3}>
           Serializable
         </Text>
-        <Form ref={formRef} onSubmit={handleSubmitForm} data={formData} mt={3}>
+        <Form onSubmit={handleSubmitForm} data={formData} mt={3}>
           <Grid size={6} gap={3}>
             <Box xs={6} md={4}>
               <Input name="firstName" label="First Name" />
@@ -386,7 +385,7 @@ function Main() {
             </Box>
             <Box xs={6} md={4}>
               <Text>Rating</Text>
-              <Slider name="rating" label="Rating" />
+              <Slider name="rating" label="Rating" min={1} max={5} />
             </Box>
             <Box xs={6} md={4}>
               <Checkbox name="acceptTerms" label="I accept the terms of use." />

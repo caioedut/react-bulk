@@ -126,17 +126,15 @@ export type FormField = {
 export type FormRef = {
   cancel: () => void;
   clear: () => void;
-  fields: FormField[];
   getData: () => AnyObject;
   setData: (data: AnyObject) => void;
+  getValue: (name: string) => InputValue | undefined;
+  setValue: (name: string, value: InputValue) => void;
   submit: () => void;
-  target: RefObject<ReactNode>;
-};
-
-export type FormContext = FormRef & {
-  getField: (name: string) => FormField;
+  target: ReactNode;
+  getField: (name: string) => FormField | null | undefined;
   setField: (options: FormField) => void;
-  unsetField: (name: string) => FormField;
+  unsetField: (name: string) => void;
 };
 
 export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around' | 'space-evenly';
@@ -465,6 +463,7 @@ export type SelectProps = InputBaseProps &
 export type CheckboxProps = InputBaseProps & {
   checked?: boolean;
   defaultChecked?: boolean;
+  label?: string;
   unique?: boolean;
 } & BoxProps;
 
