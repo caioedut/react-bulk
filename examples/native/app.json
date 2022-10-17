@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "caioedut",
     "name": "react-bulk-native",
     "slug": "react-bulk-native",
     "version": "1.0.0",
