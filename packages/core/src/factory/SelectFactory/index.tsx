@@ -64,6 +64,9 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
 
   const nativeProps = !native ? {} : { onRequestClose: () => setVisible(false) };
 
+  const fontSize = theme.rem(size);
+  const spacing = theme.rem(0.5, fontSize);
+
   useEffect(() => {
     if (arrOptions && typeof value !== 'undefined') {
       setInternal(arrOptions?.find((item) => item.value == value));
@@ -236,14 +239,13 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
       <ButtonFactory
         ref={buttonRef}
         map={map}
-        style={buttonStyle}
         block
         color={color}
         endIcon={
           loading ? (
             <LoadingFactory map={map} />
           ) : (
-            <TextFactory map={map} color={color} style={{ transform: [{ scaleY: 0.65 }] }}>
+            <TextFactory map={map} color={color} style={{ fontSize, transform: [{ scaleY: 0.65 }] }}>
               {visible ? '▲' : '▼'}
             </TextFactory>
           )
@@ -252,6 +254,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
         id={id}
         size={size}
         variant="outline"
+        style={[{ paddingHorizontal: spacing }, buttonStyle]}
         contentStyle={{ flex: 1 }}
         onPress={handleOpen}
       >
@@ -277,7 +280,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
 
       <BackdropFactory map={map} visible={visible} style={{ bg: 'rgba(0, 0, 0, 0.2)' }} onPress={() => setVisible(false)} {...nativeProps}>
         <CardFactory map={map} position="absolute" p={0} style={[{ overflow: 'hidden' }, metrics]}>
-          <ScrollableFactory map={map} ref={scrollRef} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth} p={1}>
+          <ScrollableFactory map={map} ref={scrollRef} contentInset={1} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth}>
             {arrOptions?.map((option, index) => {
               const isSelected = option.value == internal?.value;
 
@@ -290,12 +293,13 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
                   block
                   disabled={option.disabled}
                   bg={isSelected && theme.hex2rgba(color, 0.1)}
+                  style={{ paddingHorizontal: spacing }}
                   contentStyle={{ flex: 1 }}
                   onPress={(e) => handleChange(e, option, true)}
                   endIcon={
-                    <BoxFactory map={map} center w="1rem" pl={1}>
+                    <BoxFactory map={map} center w={fontSize} pl={1}>
                       {isSelected && (
-                        <TextFactory map={map} color={color} size={1.25}>
+                        <TextFactory map={map} color={color} style={{ fontSize: theme.rem(1.25, fontSize) }}>
                           ✓
                         </TextFactory>
                       )}
