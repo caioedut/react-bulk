@@ -101,8 +101,12 @@ export type PressableProps = {
 
 export type FocusableProps = {
   autoFocus?: boolean;
-  onFocus?: EventCallback;
+  blur?: Function;
+  focus?: Function;
+  isFocused?: () => boolean;
+  // Events
   onBlur?: EventCallback;
+  onFocus?: EventCallback;
 };
 
 export type EditableProps = {

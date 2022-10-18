@@ -1,8 +1,8 @@
-import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import factory2 from '../../props/factory2';
-import { FactoryProps, RectType, SliderProps } from '../../types';
+import { FactoryProps, FocusableProps, RectType, SliderProps } from '../../types';
 import useHtmlId from '../../useHtmlId';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
@@ -41,7 +41,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   const form = useForm();
 
   const containerRef = useRef(null);
-  const buttonRef = useRef(null);
+  const buttonRef = useRef<FocusableProps>(null);
   const dotRef = useRef(null);
   const barRef = useRef(null);
 
@@ -176,6 +176,23 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     return { percent, value };
   }
 
+  const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
+  const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
+  const clear = useCallback(() => setPercent(getPercentByValue(defaultValue)), []);
+  const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
+
+  function dispatchEvent(type: string, value: number, percent?: number) {
+    const callback = {
+      slide: onSlide,
+      change: onChange,
+    }[type];
+
+    if (typeof callback === 'function') {
+      const target = buttonRef.current;
+      callback({ type, target, name, value, focus, blur, clear, isFocused }, value, percent);
+    }
+  }
+
   async function handlePress(e) {
     e.preventDefault();
 
@@ -186,22 +203,13 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
     const pageX = e?.pageX ?? e?.nativeEvent?.pageX;
 
-    const $container = containerRef.current;
-    const $dot = dotRef.current;
-    const $bar = barRef.current;
+    containerRectRef.current = await getRect(containerRef.current);
+    const dotRect = await getRect(dotRef.current);
 
-    containerRectRef.current = await getRect($container);
-    const targetX = pageX - containerRectRef.current.pageOffsetX;
-
-    setStyles($dot, { marginLeft: targetX });
-    setStyles($bar, { width: targetX });
-
-    const percent = (targetX / containerRectRef.current.width) * 100;
-    setTooltip(getValueByPercent(percent));
-
-    const dotRect = await getRect($dot);
-    dotIniPosRef.current = dotRect.pageOffsetX as number;
+    dotIniPosRef.current = dotRect.pageOffsetX;
     pressIniPosRef.current = pageX;
+
+    await handleMove(e);
   }
 
   async function handleMove(e) {
@@ -224,7 +232,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
       if (typeof onSlide === 'function') {
         const { percent, value } = await getState();
-        onSlide?.({}, value, percent);
+        dispatchEvent('slide', value, percent);
       }
     }
   }
@@ -240,9 +248,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     setStyles(dotRef.current, { marginLeft: web ? '' : undefined });
     setStyles(barRef.current, { width: web ? '' : undefined });
 
-    if (native) {
-      setTooltip(null);
-    }
+    setTooltip(null);
 
     // Reset refs
     containerRectRef.current = null;
@@ -251,8 +257,9 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
     // Set percent and call handlers
     setPercent(percent);
-    onSlide?.({}, value, percent);
-    onChange?.({}, value);
+
+    dispatchEvent('slide', value, percent);
+    dispatchEvent('change', value);
   }
 
   const handleKeyDown = (e) => {
@@ -298,8 +305,9 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
       setTooltip(value);
       setPercent(percent);
-      onSlide?.({}, value, percent);
-      onChange?.({}, value);
+
+      dispatchEvent('slide', value, percent);
+      dispatchEvent('change', value);
     }
   };
 
@@ -372,8 +380,8 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
             !readOnly && {
               web: {
                 onKeyDown: handleKeyDown,
-                onPointerOver: () => setTooltip(getValueByPercent(percent)),
-                onPointerOut: () => setTooltip(null),
+                onPointerOver: () => !pressIniPosRef.current && setTooltip(getValueByPercent(percent)),
+                onPointerOut: () => !pressIniPosRef.current && setTooltip(null),
                 onFocus: () => setTooltip(getValueByPercent(percent)),
                 onBlur: () => setTooltip(null),
               },
