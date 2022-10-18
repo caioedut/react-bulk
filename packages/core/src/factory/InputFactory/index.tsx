@@ -162,24 +162,38 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   const clear = useCallback(() => setInternal(defaultValue), []);
   const isFocused = useCallback(() => inputRef?.current?.isFocused?.() || inputRef?.current === document?.activeElement, [inputRef]);
 
+  function dispatchEvent(type: string, value: number, nativeEvent?: any) {
+    const callback = {
+      change: onChange,
+      focus: onFocus,
+      blur: onBlur,
+    }[type];
+
+    if (typeof callback === 'function') {
+      const target = inputRef.current;
+      callback({ type, value, name, target, focus, blur, clear, isFocused, nativeEvent }, value);
+    }
+  }
+
   const handleChange = (e) => {
     const target = inputRef?.current;
     const nativeEvent = e?.nativeEvent ?? e;
     const value = maskValue(target?.value ?? e?.nativeEvent?.text);
 
     setInternal(value);
-
-    onChange?.({ target, name, value, focus, blur, clear, isFocused, nativeEvent }, value);
+    dispatchEvent('change', value, nativeEvent);
   };
 
   const handleFocus = (e) => {
+    const nativeEvent = e?.nativeEvent ?? e;
     setFocused(true);
-    onFocus?.(e);
+    dispatchEvent('focus', internal, nativeEvent);
   };
 
   const handleBlur = (e) => {
+    const nativeEvent = e?.nativeEvent ?? e;
     setFocused(false);
-    onBlur?.(e);
+    dispatchEvent('blur', internal, nativeEvent);
   };
 
   const styleFocus = useStylist({

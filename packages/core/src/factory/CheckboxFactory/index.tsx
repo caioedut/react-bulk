@@ -89,14 +89,24 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
   const clear = useCallback(() => setInternal(Boolean(+defaultChecked)), []);
   const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
 
+  function dispatchEvent(type: string, checked: boolean, nativeEvent?: any) {
+    const callback = {
+      change: onChange,
+    }[type];
+
+    if (typeof callback === 'function') {
+      const target = buttonRef.current;
+      callback({ type, checked, name, target, focus, blur, clear, isFocused, nativeEvent }, checked);
+    }
+  }
+
   const handleChange = (e) => {
-    const target = buttonRef?.current;
     const nativeEvent = e?.nativeEvent ?? e;
     const checked = !internal;
 
     setInternal(checked);
 
-    onChange?.({ target, name, checked, focus, blur, clear, isFocused, nativeEvent }, checked);
+    dispatchEvent('change', checked, nativeEvent);
   };
 
   const styleRoot = useStylist({

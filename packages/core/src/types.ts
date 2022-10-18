@@ -1,11 +1,22 @@
-import { CSSProperties, ReactNode, RefObject } from 'react';
+import { CSSProperties, ReactNode, RefObject, SyntheticEvent } from 'react';
 
 export type AnyObject = { [key: string]: any };
 export type TimeoutType = ReturnType<typeof setTimeout> | null;
 export type AnyCallback = (mixed: any) => any;
 export type EventCallback = (event: any) => any;
-export type ChangeCallback = (event: any, value: string) => any;
 export type InputValue = string | number | boolean;
+
+export interface RbkEvent {
+  type: string;
+  value: InputValue;
+  name?: string;
+  target?: ReactNode | any;
+  focus: () => void;
+  blur: () => void;
+  clear: () => void;
+  isFocused: () => void;
+  nativeEvent?: Event | SyntheticEvent;
+}
 
 export type MapType = {
   web: boolean;
@@ -107,19 +118,6 @@ export type FocusableProps = {
   // Events
   onBlur?: EventCallback;
   onFocus?: EventCallback;
-};
-
-export type EditableProps = {
-  defaultValue?: InputValue;
-  disabled?: boolean;
-  value?: InputValue;
-  onChange?: ChangeCallback;
-  readOnly?: boolean;
-
-  /** @deprecated use onChange(event, value) instead */
-  onInput?: Function;
-  /** @deprecated use onChange(event, value) instead */
-  onChangeText?: Function;
 };
 
 export type FormField = {
@@ -388,17 +386,17 @@ export type LabelProps = {
   for?: string | RefObject<ReactNode>;
 } & TextProps;
 
-export type FormControlBaseProps = {
+export type FormControlProps = {
   color?: ColorValues;
-  endIcon?: string | ReactNode;
+  endIcon?: ReactNode;
   label?: string;
   size?: SizeValues;
-  startIcon?: string | ReactNode;
+  startIcon?: ReactNode;
   // Styles
   labelStyle?: JssStyles;
 };
 
-export type ButtonProps = FormControlBaseProps & {
+export type ButtonProps = FormControlProps & {
   badge?: number | BadgeProps;
   disabled?: boolean;
   href?: string;
@@ -423,64 +421,91 @@ export type ButtonGroupProps = {
   contentStyle?: JssStyles;
 } & BoxProps;
 
-export type InputBaseProps = {
+export type InputProps = FormControlProps & {
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+  autoCorrect?: boolean;
+  caretHidden?: boolean;
+  defaultValue?: InputValue;
+  disabled?: boolean;
+  error?: string;
+  mask?: (value: InputValue, data: AnyObject) => InputValue;
+  maxLength?: number;
+  multiline?: boolean;
   name?: string;
-} & EditableProps &
-  FocusableProps;
+  placeholder?: string;
+  placeholderColor?: ColorValues;
+  readOnly?: boolean;
+  returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
+  secure?: boolean;
+  selectionColor?: ColorValues;
+  type?: 'text' | 'number' | 'email' | 'phone' | 'url';
+  unmask?: (InputValue: string, data: AnyObject) => InputValue;
+  value?: InputValue;
+  // Events
+  onChange?: (event: RbkEvent, value: string) => void;
+  // Styles
+  containerStyle?: JssStyles;
+  errorStyle?: JssStyles;
+  inputStyle?: JssStyles;
 
-export type InputProps = InputBaseProps &
-  FormControlBaseProps & {
-    autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
-    autoCorrect?: boolean;
-    caretHidden?: boolean;
-    error?: string;
-    mask?: (value: InputValue, data: AnyObject) => InputValue;
-    maxLength?: number;
-    multiline?: boolean;
-    placeholder?: string;
-    placeholderColor?: ColorValues;
-    returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
-    secure?: boolean;
-    selectionColor?: ColorValues;
-    type?: 'text' | 'number' | 'email' | 'phone' | 'url';
-    unmask?: (InputValue: string, data: AnyObject) => InputValue;
-    // Styles
-    containerStyle?: JssStyles;
-    errorStyle?: JssStyles;
-    inputStyle?: JssStyles;
-  } & BoxProps;
+  /** @deprecated use onChange(event, value) instead */
+  onInput?: Function;
+  /** @deprecated use onChange(event, value) instead */
+  onChangeText?: Function;
+} & FocusableProps &
+  BoxProps;
 
-export type SelectProps = InputBaseProps &
-  FormControlBaseProps & {
-    error?: string;
-    loading?: boolean;
-    options: {
-      label: string;
-      value: InputValue;
-      disabled?: boolean;
-    }[];
-    placeholder?: string;
-    // Styles
-    buttonStyle?: JssStyles;
-    errorStyle?: JssStyles;
-  } & BoxProps;
+export type SelectOption = {
+  label: string;
+  value: InputValue;
+  disabled?: boolean;
+};
 
-export type CheckboxProps = InputBaseProps & {
+export type SelectProps = FormControlProps & {
+  defaultValue?: InputValue;
+  disabled?: boolean;
+  error?: string;
+  loading?: boolean;
+  name?: string;
+  options?: SelectOption[];
+  placeholder?: string;
+  readOnly?: boolean;
+  value?: InputValue;
+  // Events
+  onChange?: (event: RbkEvent, value: string, option: SelectOption) => void;
+  // Styles
+  buttonStyle?: JssStyles;
+  errorStyle?: JssStyles;
+} & FocusableProps &
+  BoxProps;
+
+export type CheckboxProps = {
   checked?: boolean;
   defaultChecked?: boolean;
+  disabled?: boolean;
   label?: string;
+  name?: string;
+  readOnly?: boolean;
   unique?: boolean;
-} & BoxProps;
+  // Events
+  onChange?: (event: { checked: boolean } & Omit<RbkEvent, 'value'>, checked: boolean) => void;
+} & FocusableProps &
+  BoxProps;
 
-export type SliderProps = InputBaseProps & {
+export type SliderProps = {
   defaultValue?: number;
+  disabled?: boolean;
   max?: number;
   min?: number;
+  name?: string;
+  readOnly?: boolean;
   size?: SizeValues;
+  value?: number;
   // Events
   onChange?: (event: AnyObject, value: number) => any;
   onSlide?: (event: AnyObject, value: number, percent: number) => any;
-} & BoxProps;
+} & FocusableProps &
+  BoxProps;
 
 export type CardProps = BoxProps;
 
