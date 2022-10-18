@@ -83,9 +83,10 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
         collapsable: false,
         onStartShouldSetResponder: () => true,
         onMoveShouldSetResponder: () => true,
-        onResponderStart: handlePress,
+        onResponderGrant: handlePress,
         onResponderMove: handleMove,
-        onResponderEnd: handleRelease,
+        onResponderRelease: handleRelease,
+        onResponderTerminate: handleRelease,
       });
     }
   }
@@ -203,15 +204,31 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
       buttonRef.current.focus?.();
     }
 
+    const nativeEvent = e?.nativeEvent ?? e;
     const pageX = e?.pageX ?? e?.nativeEvent?.pageX;
 
-    containerRectRef.current = await getRect(containerRef.current);
-    const dotRect = await getRect(dotRef.current);
+    const $container = containerRef.current;
+    const $dot = dotRef.current;
+    const $bar = barRef.current;
 
+    containerRectRef.current = await getRect($container);
+
+    let targetX = pageX - containerRectRef.current.pageOffsetX;
+    targetX = Math.min(targetX, containerRectRef.current.width);
+    targetX = Math.max(targetX, 0);
+
+    setStyles($dot, { marginLeft: targetX });
+    setStyles($bar, { width: targetX });
+
+    const percent = (targetX / containerRectRef.current.width) * 100;
+    const value = getValueByPercent(percent);
+
+    setTooltip(value);
+    dispatchEvent('slide', value, nativeEvent);
+
+    const dotRect = await getRect($dot);
     dotIniPosRef.current = dotRect.pageOffsetX;
     pressIniPosRef.current = pageX;
-
-    await handleMove(e);
   }
 
   async function handleMove(e) {
@@ -232,12 +249,10 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
       setStyles(barRef.current, { width: targetX });
 
       const percent = (targetX / containerRectRef.current.width) * 100;
-      setTooltip(getValueByPercent(percent));
+      const value = getValueByPercent(percent);
 
-      if (typeof onSlide === 'function') {
-        const { value } = await getState();
-        dispatchEvent('slide', value, nativeEvent);
-      }
+      setTooltip(value);
+      dispatchEvent('slide', value, nativeEvent);
     }
   }
 
@@ -254,14 +269,12 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     setStyles(dotRef.current, { marginLeft: web ? '' : undefined });
     setStyles(barRef.current, { width: web ? '' : undefined });
 
-    setTooltip(null);
-
     // Reset refs
     containerRectRef.current = null;
     pressIniPosRef.current = null;
     dotIniPosRef.current = null;
 
-    // Set percent and call handlers
+    setTooltip(null);
     setPercent(percent);
 
     dispatchEvent('slide', value, nativeEvent);
