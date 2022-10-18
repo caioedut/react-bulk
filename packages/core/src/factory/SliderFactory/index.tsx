@@ -112,10 +112,12 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
     const removeMove = event(document, 'pointermove', handleMove);
     const removeRelease = event(document, 'pointerup', handleRelease);
+    const removeCancel = event(document, 'pointercancel', handleRelease);
 
     return () => {
       removeMove();
       removeRelease();
+      removeCancel();
     };
   }, [handleMove]);
 
