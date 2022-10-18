@@ -7,6 +7,7 @@ import { spacings } from '../../styles/jss';
 import { AnyObject, FactoryProps, SelectProps } from '../../types';
 import useHtmlId from '../../useHtmlId';
 import useStylist from '../../useStylist';
+import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
@@ -63,6 +64,16 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   const gutter = theme.spacing(3);
 
   const nativeProps = !native ? {} : { onRequestClose: () => setVisible(false) };
+
+  if (typeof size === 'string') {
+    size = pick(size, 'medium', {
+      xsmall: 0.625,
+      small: 0.75,
+      medium: 1,
+      large: 1.25,
+      xlarge: 1.625,
+    });
+  }
 
   const fontSize = theme.rem(size);
   const spacing = theme.rem(0.5, fontSize);
