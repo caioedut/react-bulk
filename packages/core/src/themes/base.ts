@@ -444,7 +444,11 @@ const base: ThemeProps & any = {
       Collapse: {
         name: 'rbk-collapse',
         defaultProps: {},
-        defaultStyles: {},
+        defaultStyles: {
+          root: {
+            overflow: 'hidden',
+          },
+        },
       },
       Divider: {
         name: 'rbk-divider',

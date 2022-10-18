@@ -13,6 +13,9 @@ export { default as get } from './props/get';
 export { default as merge } from './props/merge';
 export { default as remove } from './props/remove';
 
+// Element
+export { default as rect } from './element/rect';
+
 // Util
 export { default as Platform } from './Platform';
 export { default as clone } from './utils/clone';

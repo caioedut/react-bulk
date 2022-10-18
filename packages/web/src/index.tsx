@@ -17,6 +17,8 @@ import {
   CardProps,
   CheckboxFactory,
   CheckboxProps,
+  CollapseFactory,
+  CollapseProps,
   DividerFactory,
   DividerProps,
   DropdownFactory,
@@ -55,7 +57,6 @@ import {
 
 import useMap from './useMap';
 
-export { default as Collapse } from './Collapse';
 export { default as Image } from './Image';
 
 export const Backdrop: ForwardRefExoticComponent<BackdropProps> = forwardRef((props, ref) => (
@@ -80,6 +81,10 @@ export const Card: ForwardRefExoticComponent<CardProps> = forwardRef((props, ref
 
 export const Checkbox: ForwardRefExoticComponent<CheckboxProps> = forwardRef((props, ref) => (
   <CheckboxFactory ref={ref} {...props} map={useMap()} />
+));
+
+export const Collapse: ForwardRefExoticComponent<CollapseProps> = forwardRef((props, ref) => (
+  <CollapseFactory ref={ref} {...props} map={useMap()} />
 ));
 
 export const Divider: ForwardRefExoticComponent<DividerProps> = forwardRef((props, ref) => (
