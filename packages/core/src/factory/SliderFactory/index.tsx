@@ -4,6 +4,7 @@ import { useTheme } from '../../ReactBulk';
 import factory2 from '../../props/factory2';
 import { FactoryProps, FocusableProps, RectType, SliderProps } from '../../types';
 import useHtmlId from '../../useHtmlId';
+import event from '../../utils/event';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
@@ -108,14 +109,31 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   useEffect(() => {
     if (!web) return;
 
-    document.addEventListener('pointermove', handleMove);
-    document.addEventListener('pointerup', handleRelease);
+    const removeMove = event(document, 'pointermove', handleMove);
+    const removeRelease = event(document, 'pointerup', handleRelease);
 
     return () => {
-      document.removeEventListener('pointermove', handleMove);
-      document.removeEventListener('pointerup', handleRelease);
+      removeMove();
+      removeRelease();
     };
   }, [handleMove]);
+
+  const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
+  const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
+  const clear = useCallback(() => setPercent(getPercentByValue(defaultValue)), []);
+  const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
+
+  function dispatchEvent(type: string, value: number, nativeEvent?: any) {
+    const callback = {
+      slide: onSlide,
+      change: onChange,
+    }[type];
+
+    if (typeof callback === 'function') {
+      const target = buttonRef.current;
+      callback({ type, value, name, target, focus, blur, clear, isFocused, nativeEvent }, value);
+    }
+  }
 
   function setStyles($el, styles = {}) {
     if (web) {
@@ -176,23 +194,6 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     return { percent, value };
   }
 
-  const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
-  const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
-  const clear = useCallback(() => setPercent(getPercentByValue(defaultValue)), []);
-  const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
-
-  function dispatchEvent(type: string, value: number, percent?: number) {
-    const callback = {
-      slide: onSlide,
-      change: onChange,
-    }[type];
-
-    if (typeof callback === 'function') {
-      const target = buttonRef.current;
-      callback({ type, target, name, value, focus, blur, clear, isFocused }, value, percent);
-    }
-  }
-
   async function handlePress(e) {
     e.preventDefault();
 
@@ -217,6 +218,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
     e.preventDefault();
 
+    const nativeEvent = e?.nativeEvent ?? e;
     const pageX = e?.pageX ?? e?.nativeEvent?.pageX;
 
     if (containerRectRef.current) {
@@ -231,8 +233,8 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
       setTooltip(getValueByPercent(percent));
 
       if (typeof onSlide === 'function') {
-        const { percent, value } = await getState();
-        dispatchEvent('slide', value, percent);
+        const { value } = await getState();
+        dispatchEvent('slide', value, nativeEvent);
       }
     }
   }
@@ -242,6 +244,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
     e.preventDefault();
 
+    const nativeEvent = e?.nativeEvent ?? e;
     const { percent, value } = await getState();
 
     // Reset styles
@@ -258,8 +261,8 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     // Set percent and call handlers
     setPercent(percent);
 
-    dispatchEvent('slide', value, percent);
-    dispatchEvent('change', value);
+    dispatchEvent('slide', value, nativeEvent);
+    dispatchEvent('change', value, nativeEvent);
   }
 
   const handleKeyDown = (e) => {
@@ -300,14 +303,16 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
     if (changed) {
       e?.preventDefault?.();
+
+      const nativeEvent = e?.nativeEvent ?? e;
       const percent = getPercentByValue(value);
       value = getValueByPercent(percent);
 
       setTooltip(value);
       setPercent(percent);
 
-      dispatchEvent('slide', value, percent);
-      dispatchEvent('change', value);
+      dispatchEvent('slide', value, nativeEvent);
+      dispatchEvent('change', value, nativeEvent);
     }
   };
 

@@ -112,6 +112,18 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   const clear = useCallback(() => setInternal(arrOptions?.find((item) => item.value == defaultValue)), []);
   const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
 
+  function dispatchEvent(type: string, option, nativeEvent?: any) {
+    const callback = {
+      change: onChange,
+    }[type];
+
+    if (typeof callback === 'function') {
+      const target = buttonRef.current;
+      const value = option?.value;
+      callback({ type, value, name, target, focus, blur, clear, isFocused, nativeEvent }, value, option);
+    }
+  }
+
   const handleOpen = () => {
     const callback = ({ top, left, height, width }) => {
       const newMetrics: any = { left, width };
@@ -141,14 +153,12 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   };
 
   const handleChange = (e, option, autoFocus = false) => {
-    const target = buttonRef?.current;
     const nativeEvent = e?.nativeEvent ?? e;
-    const value = option.value;
 
-    setInternal(arrOptions?.find((item) => item.value == value));
+    setInternal(arrOptions?.find((item) => item.value == option.value));
     setVisible(false);
 
-    onChange?.({ target, name, value, focus, blur, clear, isFocused, nativeEvent }, value, option);
+    dispatchEvent('change', option, nativeEvent);
 
     if (autoFocus) {
       setTimeout(focus, 100);
