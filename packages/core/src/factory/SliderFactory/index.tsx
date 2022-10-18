@@ -195,7 +195,8 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   }
 
   async function handlePress(e) {
-    e.preventDefault();
+    e?.preventDefault?.();
+    e?.persist?.();
 
     if (web && buttonRef.current) {
       // @ts-ignore
@@ -217,6 +218,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     if (dotIniPosRef.current === null) return;
 
     e.preventDefault();
+    e?.persist?.();
 
     const nativeEvent = e?.nativeEvent ?? e;
     const pageX = e?.pageX ?? e?.nativeEvent?.pageX;
@@ -243,6 +245,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     if (dotIniPosRef.current === null) return;
 
     e.preventDefault();
+    e?.persist?.();
 
     const nativeEvent = e?.nativeEvent ?? e;
     const { percent, value } = await getState();
@@ -303,6 +306,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
     if (changed) {
       e?.preventDefault?.();
+      e?.persist?.();
 
       const nativeEvent = e?.nativeEvent ?? e;
       const percent = getPercentByValue(value);
