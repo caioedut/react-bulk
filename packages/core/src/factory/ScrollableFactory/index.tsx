@@ -33,9 +33,19 @@ function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & 
   const rootStyles = clone(options.defaultStyles.root);
   const flexContainerStyles = extract(flexContainerProps, rootStyles, style);
 
-  contentStyle = merge(flexContainerStyles, { flexGrow: 1, p: contentInset ?? 0 }, contentStyle);
+  contentStyle = merge(
+    theme.components.Box.defaultStyles.root,
+    flexContainerStyles,
+    {
+      p: contentInset ?? 0,
+      flexGrow: 1,
+      minWidth: '100%',
+    },
+    contentStyle,
+  );
 
   if (native) {
+    nativeProps.horizontal = isHorizontal;
     nativeProps.contentContainerStyle = jss({ theme }, contentStyle);
   }
 
