@@ -701,7 +701,7 @@ const base: ThemeProps & any = {
         },
         defaultStyles: {
           root: {
-            flex: 1,
+            flexGrow: 1,
             web: {
               overflow: 'hidden',
               scrollBehavior: 'smooth',

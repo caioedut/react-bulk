@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { RefreshControl } from 'react-native';
+import { Platform, RefreshControl } from 'react-native';
 
 import { ScrollableFactory, useTheme } from '@react-bulk/core';
 
@@ -10,8 +10,19 @@ function Scrollable({ refreshing, onRefresh, refreshControl, ...props }: NativeS
   const map = useMap();
   const theme = useTheme();
 
+  // @ts-ignore
+  const primaryColor = theme.colors.primary.main;
+
   if (!refreshControl && (onRefresh || refreshing)) {
-    refreshControl = <RefreshControl refreshing={refreshing as any} onRefresh={onRefresh} />;
+    refreshControl = (
+      <RefreshControl
+        refreshing={refreshing as any}
+        onRefresh={onRefresh}
+        colors={[primaryColor]}
+        tintColor={primaryColor}
+        progressBackgroundColor={theme.colors.background.primary}
+      />
+    );
   }
 
   if (refreshControl) {
@@ -22,8 +33,9 @@ function Scrollable({ refreshing, onRefresh, refreshControl, ...props }: NativeS
   props = {
     // @ts-ignore
     contentInsetAdjustmentBehavior: 'scrollableAxes',
+    endFillColor: primaryColor,
     indicatorStyle: theme.mode === 'dark' ? 'white' : 'black',
-    keyboardDismissMode: 'on-drag',
+    keyboardDismissMode: Platform.OS === 'ios' ? 'interactive' : 'on-drag',
     keyboardShouldPersistTaps: 'always',
     nestedScrollEnabled: true,
     pinchGestureEnabled: false,
