@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   Animated,
   Easing,
@@ -39,54 +40,57 @@ import Svg, {
 export default function useMap() {
   const dimensions = useWindowDimensions();
 
-  return {
-    web: false,
-    native: true,
-    ios: Platform.OS === 'ios',
-    android: Platform.OS === 'android',
+  return useMemo(
+    () => ({
+      web: false,
+      native: true,
+      ios: Platform.OS === 'ios',
+      android: Platform.OS === 'android',
 
-    dimensions,
+      dimensions,
 
-    Button: TouchableOpacity,
-    Dialog: Modal,
-    Form: View,
-    Image,
-    Input: TextInput,
-    Label: Text,
-    Link: Text,
-    ScrollView,
-    Text,
-    TextArea: TextInput,
-    View,
+      Button: TouchableOpacity,
+      Dialog: Modal,
+      Form: View,
+      Image,
+      Input: TextInput,
+      Label: Text,
+      Link: Text,
+      ScrollView,
+      Text,
+      TextArea: TextInput,
+      View,
 
-    // Animated
-    Animated,
-    Easing,
+      // Animated
+      Animated,
+      Easing,
 
-    // Svg
-    svg: {
-      Svg,
-      Circle,
-      Ellipse,
-      G,
-      Text: SvgText,
-      TSpan,
-      TextPath,
-      Path,
-      Polygon,
-      Polyline,
-      Line,
-      Rect,
-      Use,
-      Image: SvgImage,
-      Symbol,
-      Defs,
-      LinearGradient,
-      RadialGradient,
-      Stop,
-      ClipPath,
-      Pattern,
-      Mask,
-    },
-  };
+      // Svg
+      svg: {
+        Svg,
+        Circle,
+        Ellipse,
+        G,
+        Text: SvgText,
+        TSpan,
+        TextPath,
+        Path,
+        Polygon,
+        Polyline,
+        Line,
+        Rect,
+        Use,
+        Image: SvgImage,
+        Symbol,
+        Defs,
+        LinearGradient,
+        RadialGradient,
+        Stop,
+        ClipPath,
+        Pattern,
+        Mask,
+      },
+    }),
+    [dimensions],
+  );
 }

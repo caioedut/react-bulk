@@ -677,7 +677,8 @@ const base: ThemeProps & any = {
       Modal: {
         name: 'rbk-modal',
         defaultProps: {
-          align: 'center',
+          halign: 'center',
+          valign: 'center',
         },
         defaultStyles: {
           root: {

@@ -7,7 +7,7 @@ import useStylist from '../../useStylist';
 import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
 
-function ModalFactory({ stylist, map, ...props }: FactoryProps & ModalProps, ref: any) {
+function ModalFactory({ stylist, map, innerRef, ...props }: FactoryProps & ModalProps) {
   const theme = useTheme();
   const options = theme.components.Modal;
 
@@ -40,8 +40,14 @@ function ModalFactory({ stylist, map, ...props }: FactoryProps & ModalProps, ref
   });
 
   return (
-    <BackdropFactory map={map} ref={ref} stylist={[styleRoot, styleHAlign, styleVAlign, stylist]} {...rest} onPress={onBackdropPress} />
+    <BackdropFactory
+      map={map}
+      innerRef={innerRef}
+      stylist={[styleRoot, styleHAlign, styleVAlign, stylist]}
+      {...rest}
+      onPress={onBackdropPress}
+    />
   );
 }
 
-export default React.forwardRef(ModalFactory);
+export default React.memo(ModalFactory);

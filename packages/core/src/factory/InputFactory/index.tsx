@@ -13,7 +13,7 @@ import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
-function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref: any) {
+function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & InputProps) {
   const theme = useTheme();
   const options = theme.components.Input;
   const { web, native, Input, TextArea } = map;
@@ -60,7 +60,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
   const form = useForm();
   const defaultRef: any = useRef(null);
-  const inputRef = ref || defaultRef;
+  const inputRef = innerRef || defaultRef;
 
   const maskValue = useCallback(
     (value) => {
@@ -265,7 +265,7 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
 
           <BoxFactory
             map={map}
-            ref={inputRef}
+            innerRef={inputRef}
             component={multiline ? TextArea : Input}
             style={inputStyle}
             stylist={[variants.input, styleInputState]}
@@ -296,4 +296,4 @@ function InputFactory({ stylist, map, ...props }: FactoryProps & InputProps, ref
   );
 }
 
-export default React.forwardRef(InputFactory);
+export default React.memo(InputFactory);

@@ -6,7 +6,7 @@ import { CardProps, FactoryProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function CardFactory({ stylist, map, ...props }: FactoryProps & CardProps, ref: any) {
+function CardFactory({ stylist, map, innerRef, ...props }: FactoryProps & CardProps) {
   const theme = useTheme();
   const options = theme.components.Card;
 
@@ -18,7 +18,7 @@ function CardFactory({ stylist, map, ...props }: FactoryProps & CardProps, ref: 
     style: options.defaultStyles.root,
   });
 
-  return <BoxFactory map={map} ref={ref} stylist={[styleRoot, stylist]} {...rest} />;
+  return <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, stylist]} {...rest} />;
 }
 
-export default React.forwardRef(CardFactory);
+export default React.memo(CardFactory);

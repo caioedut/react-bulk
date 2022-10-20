@@ -11,7 +11,7 @@ import useStylist from '../../useStylist';
 import clone from '../../utils/clone';
 import BoxFactory from '../BoxFactory';
 
-function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & ScrollableProps, ref: any) {
+function ScrollableFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & ScrollableProps) {
   const theme = useTheme();
   const options = theme.components.Scrollable;
   const { web, native, ScrollView } = map;
@@ -64,7 +64,7 @@ function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & 
   return (
     <BoxFactory
       map={map}
-      ref={ref}
+      innerRef={innerRef}
       component={ScrollView}
       style={style}
       stylist={[styleRoot, styleState, stylist]}
@@ -83,4 +83,4 @@ function ScrollableFactory({ stylist, children, map, ...props }: FactoryProps & 
   );
 }
 
-export default React.forwardRef(ScrollableFactory);
+export default React.memo(ScrollableFactory);

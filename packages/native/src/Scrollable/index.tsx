@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 import { Platform, RefreshControl } from 'react-native';
 
 import { ScrollableFactory, useTheme } from '@react-bulk/core';
@@ -43,7 +43,7 @@ function Scrollable({ refreshing, onRefresh, refreshControl, ...props }: NativeS
     ...props,
   };
 
-  return <ScrollableFactory ref={ref} {...props} map={map} />;
+  return <ScrollableFactory innerRef={ref} {...props} map={map} />;
 }
 
-export default forwardRef<typeof Scrollable, NativeScrollableProps>(Scrollable);
+export default memo(forwardRef<typeof Scrollable, NativeScrollableProps>(Scrollable));

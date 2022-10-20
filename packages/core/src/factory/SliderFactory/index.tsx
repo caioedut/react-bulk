@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
+import rect from '../../element/rect';
 import factory2 from '../../props/factory2';
 import { FactoryProps, FocusableProps, RectType, SliderProps } from '../../types';
 import useHtmlId from '../../useHtmlId';
@@ -11,7 +12,7 @@ import ButtonFactory from '../ButtonFactory';
 import { useForm } from '../FormFactory';
 import TooltipFactory from '../TooltipFactory';
 
-function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, ref: any) {
+function SliderFactory({ stylist, map, innerRef, ...props }: FactoryProps & SliderProps) {
   const theme = useTheme();
   const options = theme.components.Slider;
   const { web, native, Input, View } = map;
@@ -91,7 +92,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     }
   }
 
-  useImperativeHandle(ref, () => containerRef.current);
+  useImperativeHandle(innerRef, () => containerRef.current);
 
   useEffect(() => {
     if (!name || !form) return;
@@ -161,24 +162,6 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     return Math.min(100, Math.max(0, percent));
   }
 
-  async function getRect($el): Promise<RectType> {
-    if (web) {
-      const { offsetLeft: offsetX, offsetTop: offsetY } = $el;
-      const { width, height, left: pageOffsetX, top: pageOffsetY } = $el.getBoundingClientRect();
-      return { width, height, offsetX, offsetY, pageOffsetX, pageOffsetY };
-    }
-
-    if (native) {
-      return new Promise((resolve) =>
-        $el.measure((offsetX, offsetY, width, height, pageOffsetX, pageOffsetY) =>
-          resolve({ width, height, offsetX, offsetY, pageOffsetX, pageOffsetY }),
-        ),
-      );
-    }
-
-    return {} as RectType;
-  }
-
   async function getState() {
     const $dot = dotRef.current;
 
@@ -186,7 +169,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     let value;
 
     if (containerRectRef.current) {
-      const dotRect: RectType = await getRect($dot);
+      const dotRect: RectType = await rect($dot);
       const targetX = dotRect.pageOffsetX - containerRectRef.current.pageOffsetX;
 
       percent = (targetX / containerRectRef.current.width) * 100;
@@ -213,7 +196,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     const $dot = dotRef.current;
     const $bar = barRef.current;
 
-    containerRectRef.current = await getRect($container);
+    containerRectRef.current = await rect($container);
 
     let targetX = pageX - containerRectRef.current.pageOffsetX;
     targetX = Math.min(targetX, containerRectRef.current.width);
@@ -228,7 +211,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
     setTooltip(value);
     dispatchEvent('slide', value, nativeEvent);
 
-    const dotRect = await getRect($dot);
+    const dotRect = await rect($dot);
     dotIniPosRef.current = dotRect.pageOffsetX;
     pressIniPosRef.current = pageX;
   }
@@ -338,7 +321,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   return (
     <BoxFactory
       map={map}
-      ref={containerRef}
+      innerRef={containerRef}
       {...rest}
       component={View}
       style={{
@@ -362,7 +345,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
       {/* Value Bar */}
       <BoxFactory
         map={map}
-        ref={barRef}
+        innerRef={barRef}
         platform={{
           native: { collapsable: false },
         }}
@@ -380,7 +363,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
 
       <BoxFactory
         map={map}
-        ref={dotRef}
+        innerRef={dotRef}
         platform={{
           native: { collapsable: false },
         }}
@@ -393,7 +376,7 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
         <TooltipFactory map={map} title={tooltip ?? internal} visible={tooltip !== null} />
         <ThumbFactory
           map={map}
-          ref={buttonRef}
+          innerRef={buttonRef}
           id={id}
           color={color}
           variant="solid"
@@ -443,4 +426,4 @@ function SliderFactory({ stylist, map, ...props }: FactoryProps & SliderProps, r
   );
 }
 
-export default React.forwardRef(SliderFactory);
+export default React.memo(SliderFactory);

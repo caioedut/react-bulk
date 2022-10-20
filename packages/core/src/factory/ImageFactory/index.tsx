@@ -6,7 +6,7 @@ import { FactoryProps, ImageProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function ImageFactory({ stylist, map, ...props }: FactoryProps & ImageProps, ref: any) {
+function ImageFactory({ stylist, map, innerRef, ...props }: FactoryProps & ImageProps) {
   const theme = useTheme();
   const options = theme.components.Image;
   const { web, Image } = map;
@@ -15,7 +15,7 @@ function ImageFactory({ stylist, map, ...props }: FactoryProps & ImageProps, ref
   let { mode, height, width, ...rest } = factory(props, options.defaultProps);
 
   const defaultRef: any = useRef(null);
-  const imageRef = ref || defaultRef;
+  const imageRef = innerRef || defaultRef;
 
   if (web) {
     rest.alt = rest.alt ?? '';
@@ -37,7 +37,7 @@ function ImageFactory({ stylist, map, ...props }: FactoryProps & ImageProps, ref
 
   stylist = [styleRoot, styleState, stylist];
 
-  return <BoxFactory map={map} ref={imageRef} component={Image} stylist={stylist} {...rest} />;
+  return <BoxFactory map={map} innerRef={imageRef} component={Image} stylist={stylist} {...rest} />;
 }
 
-export default React.forwardRef(ImageFactory);
+export default React.memo(ImageFactory);

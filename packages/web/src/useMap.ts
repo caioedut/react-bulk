@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { TimeoutType } from '@react-bulk/core';
 
@@ -10,7 +10,7 @@ export default function useMap() {
     width: window?.innerWidth,
   });
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -18,7 +18,7 @@ export default function useMap() {
     timeoutRef.current = setTimeout(() => {
       setDimensions({ height: window?.innerHeight, width: window?.innerWidth });
     }, 10);
-  };
+  }, [timeoutRef]);
 
   useEffect(() => {
     if (!window) return;
@@ -27,54 +27,57 @@ export default function useMap() {
     return () => window?.removeEventListener('resize', handleResize);
   }, []);
 
-  return {
-    web: true,
-    native: false,
-    ios: false,
-    android: false,
+  return useMemo(
+    () => ({
+      web: true,
+      native: false,
+      ios: false,
+      android: false,
 
-    dimensions,
+      dimensions,
 
-    Button: 'button',
-    Dialog: 'div',
-    Form: 'form',
-    Image: 'img',
-    Input: 'input',
-    Label: 'label',
-    Link: 'a',
-    ScrollView: 'div',
-    Text: 'span',
-    TextArea: 'textarea',
-    View: 'div',
-
-    Animated: {
+      Button: 'button',
+      Dialog: 'div',
+      Form: 'form',
+      Image: 'img',
+      Input: 'input',
+      Label: 'label',
+      Link: 'a',
+      ScrollView: 'div',
+      Text: 'span',
+      TextArea: 'textarea',
       View: 'div',
-    },
 
-    // Svg
-    svg: {
-      Svg: 'svg',
-      Circle: 'circle',
-      Ellipse: 'ellipse',
-      G: 'g',
-      Text: 'text',
-      TSpan: 'tspan',
-      TextPath: 'textPath',
-      Path: 'path',
-      Polygon: 'polygon',
-      Polyline: 'polyline',
-      Line: 'line',
-      Rect: 'rect',
-      Use: 'use',
-      Image: 'image',
-      Symbol: 'symbol',
-      Defs: 'defs',
-      LinearGradient: 'linearGradient',
-      RadialGradient: 'radialGradient',
-      Stop: 'stop',
-      ClipPath: 'clipPath',
-      Pattern: 'pattern',
-      Mask: 'mask',
-    },
-  };
+      Animated: {
+        View: 'div',
+      },
+
+      // Svg
+      svg: {
+        Svg: 'svg',
+        Circle: 'circle',
+        Ellipse: 'ellipse',
+        G: 'g',
+        Text: 'text',
+        TSpan: 'tspan',
+        TextPath: 'textPath',
+        Path: 'path',
+        Polygon: 'polygon',
+        Polyline: 'polyline',
+        Line: 'line',
+        Rect: 'rect',
+        Use: 'use',
+        Image: 'image',
+        Symbol: 'symbol',
+        Defs: 'defs',
+        LinearGradient: 'linearGradient',
+        RadialGradient: 'radialGradient',
+        Stop: 'stop',
+        ClipPath: 'clipPath',
+        Pattern: 'pattern',
+        Mask: 'mask',
+      },
+    }),
+    [dimensions],
+  );
 }

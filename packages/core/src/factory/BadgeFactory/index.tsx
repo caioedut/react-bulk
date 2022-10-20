@@ -6,7 +6,7 @@ import { BadgeProps, FactoryProps } from '../../types';
 import useStylist from '../../useStylist';
 import TextFactory from '../TextFactory';
 
-function BadgeFactory({ stylist, children, map, ...props }: FactoryProps & BadgeProps, ref: any) {
+function BadgeFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & BadgeProps) {
   const theme = useTheme();
   const options = theme.components.Badge;
   const { native, Text } = map;
@@ -63,10 +63,10 @@ function BadgeFactory({ stylist, children, map, ...props }: FactoryProps & Badge
   stylist = [styleRoot, styleState, stylist];
 
   return (
-    <TextFactory map={map} ref={ref} stylist={stylist} {...rest}>
+    <TextFactory map={map} innerRef={innerRef} stylist={stylist} {...rest}>
       {!dot && <Text>{value ?? children ?? '&nbsp;'}</Text>}
     </TextFactory>
   );
 }
 
-export default React.forwardRef(BadgeFactory);
+export default React.memo(BadgeFactory);

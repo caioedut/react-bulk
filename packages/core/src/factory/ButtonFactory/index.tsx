@@ -11,7 +11,7 @@ import { useForm } from '../FormFactory';
 import LoadingFactory from '../LoadingFactory';
 import TextFactory from '../TextFactory';
 
-function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & ButtonProps, ref) {
+function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & ButtonProps) {
   const theme = useTheme();
   const options = theme.components.Button;
   const { web, native, Button } = map;
@@ -120,7 +120,7 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
   return (
     <BoxFactory
       map={map}
-      ref={ref}
+      innerRef={innerRef}
       component={web && rest.href ? 'a' : Button}
       stylist={[variants.root, styleColor, styleState, stylist]}
       {...rest}
@@ -147,4 +147,4 @@ function ButtonFactory({ stylist, children, map, ...props }: FactoryProps & Butt
   );
 }
 
-export default React.forwardRef(ButtonFactory);
+export default React.memo(ButtonFactory);

@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, memo, useEffect, useState } from 'react';
 import { Image as RNImage } from 'react-native';
 
 import { BoxFactory, ImageFactory, extract } from '@react-bulk/core';
@@ -92,9 +92,9 @@ function Image({ source, width, height, w, h, corners, rounded, onLayout, style,
 
   return (
     <BoxFactory {...containerProps} onLayout={handleLayout} style={style} map={map}>
-      <ImageFactory ref={ref} {...props} map={map} />
+      <ImageFactory innerRef={ref} {...props} map={map} />
     </BoxFactory>
   );
 }
 
-export default forwardRef<typeof Image, NativeImageProps>(Image);
+export default memo(forwardRef<typeof Image, NativeImageProps>(Image));

@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, memo, useMemo } from 'react';
 
 import { ImageFactory, ImageProps } from '@react-bulk/core';
 
@@ -18,7 +18,7 @@ function Image({ source, corners, rounded, style, ...props }: ImageProps, ref) {
   // @ts-ignore
   props.src = useMemo(() => source?.uri ?? source, [source]);
 
-  return <ImageFactory ref={ref} {...props} map={map} style={style} />;
+  return <ImageFactory innerRef={ref} {...props} map={map} style={style} />;
 }
 
-export default forwardRef<typeof Image, ImageProps>(Image);
+export default memo(forwardRef<typeof Image, ImageProps>(Image));

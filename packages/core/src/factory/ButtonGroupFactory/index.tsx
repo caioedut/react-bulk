@@ -7,7 +7,7 @@ import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import ScrollableFactory from '../ScrollableFactory';
 
-function ButtonGroupFactory({ stylist, children, map, ...props }: FactoryProps & ButtonGroupProps, ref: any) {
+function ButtonGroupFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & ButtonGroupProps) {
   const theme = useTheme();
   const options = theme.components.ButtonGroup;
 
@@ -29,7 +29,7 @@ function ButtonGroupFactory({ stylist, children, map, ...props }: FactoryProps &
   }
 
   return (
-    <ScrollableFactory map={map} ref={ref} stylist={[styleRoot, stylist]} {...rest} direction="horizontal">
+    <ScrollableFactory map={map} innerRef={innerRef} stylist={[styleRoot, stylist]} {...rest} direction="horizontal">
       <BoxFactory map={map} style={contentStyle} stylist={[styleContent]}>
         {children?.map((child, key) => {
           const isFirst = key === 0;
@@ -63,4 +63,4 @@ function ButtonGroupFactory({ stylist, children, map, ...props }: FactoryProps &
   );
 }
 
-export default React.forwardRef(ButtonGroupFactory);
+export default React.memo(ButtonGroupFactory);

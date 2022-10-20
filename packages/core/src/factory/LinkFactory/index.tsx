@@ -5,7 +5,7 @@ import factory2 from '../../props/factory2';
 import { FactoryProps, LinkProps } from '../../types';
 import TextFactory from '../TextFactory';
 
-function LinkFactory({ stylist, map, ...props }: FactoryProps & LinkProps, ref: any) {
+function LinkFactory({ stylist, map, innerRef, ...props }: FactoryProps & LinkProps) {
   const theme = useTheme();
   const options = theme.components.Link;
   const { Link } = map;
@@ -18,7 +18,7 @@ function LinkFactory({ stylist, map, ...props }: FactoryProps & LinkProps, ref: 
     ...rest
   } = factory2(props, options, theme);
 
-  return <TextFactory map={map} ref={ref} component={Link} stylist={[variants.root, stylist]} {...rest} />;
+  return <TextFactory map={map} innerRef={innerRef} component={Link} stylist={[variants.root, stylist]} {...rest} />;
 }
 
-export default React.forwardRef(LinkFactory);
+export default React.memo(LinkFactory);

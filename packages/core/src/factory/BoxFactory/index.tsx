@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import createStyle from '../../createStyle';
@@ -11,13 +11,13 @@ import { BoxProps, FactoryProps } from '../../types';
 import useStylist from '../../useStylist';
 import clsx from '../../utils/clsx';
 
-function BoxFactory({ platform, className, stylist, children, map, ...props }: FactoryProps & BoxProps, ref) {
+function BoxFactory({ platform, className, stylist, children, map, innerRef, ...props }: FactoryProps & BoxProps) {
   const theme = useTheme();
   const options = theme.components.Box;
   const { web, native, dimensions, Button, Text, View } = map;
 
   // Extends from default props
-  props = factory(props, options.defaultProps);
+  props = useMemo(() => factory(props, options.defaultProps), [props, options.defaultProps]);
 
   // Platform specific props
   if (platform) {
@@ -132,7 +132,7 @@ function BoxFactory({ platform, className, stylist, children, map, ...props }: F
   });
 
   const styles = [styleRoot, stylist];
-  const processed = createStyle({ style, theme });
+  const processed = useMemo(() => createStyle({ style, theme }), [style, theme]);
   styles.push(processed);
 
   if (native) {
@@ -185,7 +185,7 @@ function BoxFactory({ platform, className, stylist, children, map, ...props }: F
   const Component = component || View;
 
   return (
-    <Component ref={ref} {...rest} {...componentProps}>
+    <Component ref={innerRef} {...rest} {...componentProps}>
       {React.Children.map(children, (child) => {
         if ([undefined, null, false, NaN].includes(child)) {
           return null;
@@ -201,4 +201,4 @@ function BoxFactory({ platform, className, stylist, children, map, ...props }: F
   );
 }
 
-export default React.forwardRef(BoxFactory);
+export default React.memo(BoxFactory);

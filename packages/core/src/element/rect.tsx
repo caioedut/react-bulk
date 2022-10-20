@@ -1,7 +1,7 @@
 import Platform from '../Platform';
 import { RectType } from '../types';
 
-export default async function getRect($el): Promise<RectType> {
+export default async function rect($el): Promise<RectType> {
   const { web, native } = Platform;
 
   if (web) {
