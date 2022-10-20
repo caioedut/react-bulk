@@ -7,7 +7,7 @@ import CardFactory from '../CardFactory';
 import GridFactory from '../GridFactory';
 import TextFactory from '../TextFactory';
 
-function ListItemFactory({ stylist, children, map, ...props }: FactoryProps & ListItemProps, ref: any) {
+function ListItemFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & ListItemProps) {
   const theme = useTheme();
   const options = theme.components.ListItem;
   const { View } = map;
@@ -33,7 +33,7 @@ function ListItemFactory({ stylist, children, map, ...props }: FactoryProps & Li
   startIconStyle = startIconStyle ?? iconStyle;
 
   return (
-    <CardFactory map={map} ref={ref} p={gap} stylist={[variants?.root, stylist]} {...rest}>
+    <CardFactory map={map} innerRef={innerRef} p={gap} stylist={[variants?.root, stylist]} {...rest}>
       <GridFactory map={map} row noWrap alignItems="center" gap={gap}>
         {Boolean(startIcon) && <View style={startIconStyle}>{startIcon}</View>}
 
@@ -57,4 +57,4 @@ function ListItemFactory({ stylist, children, map, ...props }: FactoryProps & Li
   );
 }
 
-export default React.forwardRef(ListItemFactory);
+export default React.memo(ListItemFactory);

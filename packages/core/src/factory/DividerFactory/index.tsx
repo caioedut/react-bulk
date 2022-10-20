@@ -6,7 +6,7 @@ import { DividerProps, FactoryProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function DividerFactory({ stylist, map, ...props }: FactoryProps & DividerProps, ref: any) {
+function DividerFactory({ stylist, map, innerRef, ...props }: FactoryProps & DividerProps) {
   const theme = useTheme();
   const options = theme.components.Divider;
 
@@ -29,7 +29,7 @@ function DividerFactory({ stylist, map, ...props }: FactoryProps & DividerProps,
     },
   });
 
-  return <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleSize, styleState, stylist]} {...rest} />;
+  return <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, styleSize, styleState, stylist]} {...rest} />;
 }
 
-export default React.forwardRef(DividerFactory);
+export default React.memo(DividerFactory);

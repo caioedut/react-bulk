@@ -18,7 +18,7 @@ import LoadingFactory from '../LoadingFactory';
 import ScrollableFactory from '../ScrollableFactory';
 import TextFactory from '../TextFactory';
 
-function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, ref: any) {
+function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & SelectProps) {
   const theme = useTheme();
   const options = theme.components.Select;
   const { web, native, dimensions, Input } = map;
@@ -51,7 +51,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
 
   const form = useForm();
   const defaultRef: any = useRef(null);
-  const buttonRef = ref || defaultRef;
+  const buttonRef = innerRef || defaultRef;
   const scrollRef: any = useRef(null);
   const selectedRef: any = useRef(null);
   const optionsRef: any = useRef([]);
@@ -258,7 +258,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
       )}
 
       <ButtonFactory
-        ref={buttonRef}
+        innerRef={buttonRef}
         map={map}
         block
         color={color}
@@ -301,7 +301,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
 
       <BackdropFactory map={map} visible={visible} style={{ bg: 'rgba(0, 0, 0, 0.2)' }} onPress={() => setVisible(false)} {...nativeProps}>
         <CardFactory map={map} position="absolute" p={0} style={[{ overflow: 'hidden' }, metrics]}>
-          <ScrollableFactory map={map} ref={scrollRef} contentInset={1} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth}>
+          <ScrollableFactory map={map} innerRef={scrollRef} contentInset={1} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth}>
             {arrOptions?.map((option, index) => {
               const isSelected = option.value == internal?.value;
 
@@ -326,7 +326,7 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
                       )}
                     </BoxFactory>
                   }
-                  ref={(el) => {
+                  innerRef={(el) => {
                     optionsRef.current[index] = el;
 
                     if (isSelected) {
@@ -353,4 +353,4 @@ function SelectFactory({ stylist, map, ...props }: FactoryProps & SelectProps, r
   );
 }
 
-export default React.forwardRef(SelectFactory);
+export default React.memo(SelectFactory);

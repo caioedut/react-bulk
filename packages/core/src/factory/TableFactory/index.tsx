@@ -8,7 +8,7 @@ import BoxFactory from '../BoxFactory';
 import ScrollableFactory from '../ScrollableFactory';
 import TextFactory from '../TextFactory';
 
-function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref: any) {
+function TableFactory({ stylist, map, innerRef, ...props }: FactoryProps & TableProps) {
   const theme = useTheme();
   const options = theme.components.Table;
 
@@ -67,7 +67,7 @@ function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref
   });
 
   return (
-    <ScrollableFactory ref={ref} map={map} stylist={[styleRoot, styleState, stylist]} direction="horizontal" {...rest}>
+    <ScrollableFactory innerRef={innerRef} map={map} stylist={[styleRoot, styleState, stylist]} direction="horizontal" {...rest}>
       <BoxFactory map={map} row noWrap>
         {columns?.map((column, index) => (
           <BoxFactory key={index} map={map} style={buildStyle(column, false, index > 0)}>
@@ -88,4 +88,4 @@ function TableFactory({ stylist, map, ...props }: FactoryProps & TableProps, ref
   );
 }
 
-export default React.forwardRef(TableFactory);
+export default React.memo(TableFactory);

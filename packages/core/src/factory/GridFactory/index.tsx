@@ -6,7 +6,7 @@ import { FactoryProps, GridProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function GridFactory({ stylist, children, map, ...props }: FactoryProps & GridProps, ref: any) {
+function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & GridProps) {
   const theme = useTheme();
   const options = theme.components.Grid;
 
@@ -28,7 +28,7 @@ function GridFactory({ stylist, children, map, ...props }: FactoryProps & GridPr
   stylist = [styleRoot, styleState, stylist];
 
   return (
-    <BoxFactory map={map} ref={ref} stylist={stylist} {...rest}>
+    <BoxFactory map={map} innerRef={innerRef} stylist={stylist} {...rest}>
       {React.Children.map(children, (child, index) => {
         if ([undefined, null].includes(child)) {
           return null;
@@ -60,4 +60,4 @@ function GridFactory({ stylist, children, map, ...props }: FactoryProps & GridPr
   );
 }
 
-export default React.forwardRef(GridFactory);
+export default React.memo(GridFactory);

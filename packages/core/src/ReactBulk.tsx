@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 import BaseNative from './BaseNative';
 import BaseWeb from './BaseWeb';
@@ -20,16 +20,23 @@ export function useTheme(): ThemeContextValue {
 function ReactBulk({ theme, children }: any) {
   const { web, native } = Platform;
 
-  const [themeState, setThemeState] = useState<ThemeProps>(createTheme(theme));
+  const [themeState, setThemeState] = useState<ThemeProps>();
 
-  const setTheme = (theme: ThemeMode | ThemeOptionalProps) => {
-    theme = typeof theme === 'string' ? { mode: theme } : theme;
-    setThemeState((current) => createTheme(theme as ThemeProps, current));
-  };
+  const setTheme = useCallback(
+    (theme: ThemeMode | ThemeOptionalProps) => {
+      theme = typeof theme === 'string' ? { mode: theme } : theme;
+      setThemeState((current) => createTheme(theme as ThemeProps, current));
+    },
+    [theme],
+  );
 
   useEffect(() => {
     setTheme(theme);
   }, [theme]);
+
+  if (!themeState) {
+    return null;
+  }
 
   return (
     <Context.Provider value={{ ...themeState, setTheme }}>

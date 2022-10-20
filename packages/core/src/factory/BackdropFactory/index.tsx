@@ -6,7 +6,7 @@ import { BackdropProps, FactoryProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & BackdropProps, ref: any) {
+function BackdropFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & BackdropProps) {
   const theme = useTheme();
   const options = theme.components.Backdrop;
   const { web, native, Button, Dialog } = map;
@@ -66,7 +66,7 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
         presentationStyle="overFullScreen"
         onRequestClose={onRequestClose}
       >
-        <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleVisible, stylist]} {...rest} {...containerProps}>
+        <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, styleVisible, stylist]} {...rest} {...containerProps}>
           {children}
         </BoxFactory>
       </Dialog>
@@ -74,7 +74,7 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
   }
 
   return (
-    <BoxFactory map={map} ref={ref} component={Dialog} stylist={[styleRoot, styleVisible, stylist]} {...rest}>
+    <BoxFactory map={map} innerRef={innerRef} component={Dialog} stylist={[styleRoot, styleVisible, stylist]} {...rest}>
       <BoxFactory map={map} {...containerProps}>
         {children}
       </BoxFactory>
@@ -82,4 +82,4 @@ function BackdropFactory({ stylist, children, map, ...props }: FactoryProps & Ba
   );
 }
 
-export default React.forwardRef(BackdropFactory);
+export default React.memo(BackdropFactory);

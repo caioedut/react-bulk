@@ -9,7 +9,7 @@ import useHtmlId from '../../useHtmlId';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function AnimationFactory({ stylist, children, component, map, ...props }: FactoryProps & AnimationProps, ref: any) {
+function AnimationFactory({ stylist, children, component, map, innerRef, ...props }: FactoryProps & AnimationProps) {
   const theme = useTheme();
   const options = theme.components.Animation;
   const { web, native, Animated, Easing } = map;
@@ -111,7 +111,7 @@ function AnimationFactory({ stylist, children, component, map, ...props }: Facto
   }
 
   return (
-    <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleState, stylist]} row {...rest}>
+    <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, styleState, stylist]} row {...rest}>
       <Animated.View style={style}>
         <BoxFactory map={map} component={component}>
           {children}
@@ -121,4 +121,4 @@ function AnimationFactory({ stylist, children, component, map, ...props }: Facto
   );
 }
 
-export default React.forwardRef(AnimationFactory);
+export default React.memo(AnimationFactory);

@@ -51,6 +51,7 @@ export type RectType = {
 
 export type FactoryProps = {
   map: MapType;
+  innerRef?: RefObject<any>;
   defaults?: AnyObject;
   stylist?: JssStyles | string | string[];
 } & any;

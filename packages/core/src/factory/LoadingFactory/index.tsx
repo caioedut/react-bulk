@@ -9,7 +9,7 @@ import BoxFactory from '../BoxFactory';
 import ProgressFactory from '../ProgressFactory';
 import TextFactory from '../TextFactory';
 
-function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps, ref: any) {
+function LoadingFactory({ stylist, map, innerRef, ...props }: FactoryProps | LoadingProps) {
   const theme = useTheme();
   const options = theme.components.Loading;
 
@@ -36,7 +36,7 @@ function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps,
   });
 
   return (
-    <BoxFactory ref={ref} map={map} stylist={[styleRoot, stylist]} row center {...rest}>
+    <BoxFactory innerRef={innerRef} map={map} stylist={[styleRoot, stylist]} row center {...rest}>
       <AnimationFactory map={map} loop in speed={500} from={{ transform: [{ rotate: '0deg' }] }} to={{ transform: [{ rotate: '360deg' }] }}>
         <ProgressFactory map={map} size={size / 4} color={color} />
       </AnimationFactory>
@@ -49,4 +49,4 @@ function LoadingFactory({ stylist, map, ...props }: FactoryProps | LoadingProps,
   );
 }
 
-export default React.forwardRef(LoadingFactory);
+export default React.memo(LoadingFactory);

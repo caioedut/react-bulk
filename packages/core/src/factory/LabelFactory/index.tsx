@@ -6,7 +6,7 @@ import { FactoryProps, LabelProps } from '../../types';
 import useStylist from '../../useStylist';
 import TextFactory from '../TextFactory';
 
-function LabelFactory({ stylist, map, ...props }: FactoryProps & LabelProps, ref: any) {
+function LabelFactory({ stylist, map, innerRef, ...props }: FactoryProps & LabelProps) {
   const theme = useTheme();
   const options = theme.components.Label;
   const { web, native, Label } = map;
@@ -40,7 +40,7 @@ function LabelFactory({ stylist, map, ...props }: FactoryProps & LabelProps, ref
 
   stylist = [styleRoot, stylist];
 
-  return <TextFactory map={map} ref={ref} component={Label} stylist={stylist} {...rest} {...focusProps} />;
+  return <TextFactory map={map} innerRef={innerRef} component={Label} stylist={stylist} {...rest} {...focusProps} />;
 }
 
-export default React.forwardRef(LabelFactory);
+export default React.memo(LabelFactory);

@@ -8,7 +8,7 @@ import event from '../../utils/event';
 import sleep from '../../utils/sleep';
 import BoxFactory from '../BoxFactory';
 
-function CollapseFactory({ stylist, map, ...props }: FactoryProps & CollapseProps, ref: any) {
+function CollapseFactory({ stylist, map, innerRef, ...props }: FactoryProps & CollapseProps) {
   const theme = useTheme();
   const options = theme.components.Collapse;
   const { web, native } = map;
@@ -22,7 +22,7 @@ function CollapseFactory({ stylist, map, ...props }: FactoryProps & CollapseProp
   } = factory2(props, options, theme);
 
   const defaultRef: any = useRef(null);
-  ref = ref || defaultRef;
+  innerRef = innerRef || defaultRef;
 
   const initialized = useRef(false);
   const initExpanded = useMemo(() => expanded, []);
@@ -31,9 +31,9 @@ function CollapseFactory({ stylist, map, ...props }: FactoryProps & CollapseProp
 
   // @ts-ignore
   useEffect(() => {
-    if (!web || !ref.current) return;
+    if (!web || !innerRef.current) return;
 
-    const $el = ref.current;
+    const $el = innerRef.current;
 
     const complete = () => {
       if ($el.offsetHeight <= 0) return;
@@ -45,7 +45,7 @@ function CollapseFactory({ stylist, map, ...props }: FactoryProps & CollapseProp
     return () => {
       remove();
     };
-  }, [ref]);
+  }, [innerRef]);
 
   useEffect(() => {
     if (!initialized.current) {
@@ -53,7 +53,7 @@ function CollapseFactory({ stylist, map, ...props }: FactoryProps & CollapseProp
       return;
     }
 
-    const $el = ref.current;
+    const $el = innerRef.current;
 
     (async () => {
       // Reset CSS to get original size
@@ -99,7 +99,7 @@ function CollapseFactory({ stylist, map, ...props }: FactoryProps & CollapseProp
   return (
     <BoxFactory
       map={map}
-      ref={ref}
+      innerRef={innerRef}
       platform={{ native: { collapsable: false } }}
       stylist={[variants.root, stylist]}
       rawStyle={!initExpanded && { height: 0 }}
@@ -109,4 +109,4 @@ function CollapseFactory({ stylist, map, ...props }: FactoryProps & CollapseProp
   );
 }
 
-export default React.forwardRef(CollapseFactory);
+export default React.memo(CollapseFactory);

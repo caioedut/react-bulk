@@ -7,7 +7,7 @@ import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import CardFactory from '../CardFactory';
 
-function DropdownFactory({ stylist, children, map, ...props }: FactoryProps & DropdownProps, ref: any) {
+function DropdownFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & DropdownProps) {
   const theme = useTheme();
   const options = theme.components.Dropdown;
   const { native } = map;
@@ -41,11 +41,11 @@ function DropdownFactory({ stylist, children, map, ...props }: FactoryProps & Dr
 
   return (
     <BoxFactory map={map} style={{ position: 'relative' }}>
-      <CardFactory map={map} ref={ref} stylist={stylist} {...rest}>
+      <CardFactory map={map} innerRef={innerRef} stylist={stylist} {...rest}>
         {children}
       </CardFactory>
     </BoxFactory>
   );
 }
 
-export default React.forwardRef(DropdownFactory);
+export default React.memo(DropdownFactory);

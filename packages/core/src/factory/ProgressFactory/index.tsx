@@ -6,7 +6,7 @@ import { FactoryProps, ProgressProps } from '../../types';
 import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
-function ProgressFactory({ stylist, map, ...props }: FactoryProps & ProgressProps, ref: any) {
+function ProgressFactory({ stylist, map, innerRef, ...props }: FactoryProps & ProgressProps) {
   const theme = useTheme();
   const options = theme.components.Progress;
   const { Svg, Circle } = map.svg;
@@ -34,7 +34,7 @@ function ProgressFactory({ stylist, map, ...props }: FactoryProps & ProgressProp
   });
 
   return (
-    <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleSize, stylist]} {...rest}>
+    <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, styleSize, stylist]} {...rest}>
       <Svg viewBox={`0 0 ${base} ${base}`} height="100%" width="100%">
         <Circle //
           cx={c}
@@ -60,4 +60,4 @@ function ProgressFactory({ stylist, map, ...props }: FactoryProps & ProgressProp
   );
 }
 
-export default React.forwardRef(ProgressFactory);
+export default React.memo(ProgressFactory);

@@ -8,7 +8,7 @@ import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & TooltipProps, ref: any) {
+function TooltipFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & TooltipProps) {
   const theme = useTheme();
   const options = theme.components.Tooltip;
   const { native, dimensions, Button } = map;
@@ -85,7 +85,7 @@ function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & Too
       }}
     >
       {children}
-      <BoxFactory map={map} ref={ref} stylist={[styleRoot, styleVisible, styleState, stylist]} {...rest}>
+      <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, styleVisible, styleState, stylist]} {...rest}>
         <TextFactory
           map={map}
           numberOfLines={1}
@@ -127,4 +127,4 @@ function TooltipFactory({ stylist, children, map, ...props }: FactoryProps & Too
   );
 }
 
-export default React.forwardRef(TooltipFactory);
+export default React.memo(TooltipFactory);

@@ -13,7 +13,7 @@ import ButtonFactory from '../ButtonFactory';
 import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
 
-function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProps, ref: any) {
+function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & CheckboxProps) {
   const theme = useTheme();
   const options = theme.components.Checkbox;
   const { web, svg, Input } = map;
@@ -45,7 +45,7 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
 
   const form = useForm();
   const defaultRef: any = useRef(null);
-  const buttonRef = ref || defaultRef;
+  const buttonRef = innerRef || defaultRef;
 
   if (typeof size === 'string') {
     size = pick(size, 'medium', {
@@ -130,7 +130,7 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
   return (
     <BoxFactory map={map} style={style} stylist={[styleRoot, styleState, stylist]}>
       <ButtonFactory
-        ref={buttonRef}
+        innerRef={buttonRef}
         map={map}
         style={buttonStyle}
         stylist={[styleButton, styleButtonState]}
@@ -196,4 +196,4 @@ function CheckboxFactory({ stylist, map, ...props }: FactoryProps & CheckboxProp
   );
 }
 
-export default React.forwardRef(CheckboxFactory);
+export default React.memo(CheckboxFactory);

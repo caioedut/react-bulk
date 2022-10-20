@@ -9,7 +9,7 @@ const Context = createContext<FormRef>(null as any);
 
 export const useForm = () => useContext<FormRef>(Context);
 
-function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: any) {
+function FormFactory({ stylist, map, innerRef, ...props }: FactoryProps & FormProps) {
   const theme = useTheme();
   const options = theme.components.Form;
   const { Form } = map;
@@ -30,7 +30,7 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
   const formRef = useRef<ReactNode>(null);
   const fieldsRef = useRef<FormField[]>([]);
 
-  ref = (ref || defaultRef) as FormRef;
+  innerRef = (innerRef || defaultRef) as FormRef;
 
   const context = {
     submit,
@@ -46,14 +46,14 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
     target: formRef.current,
   };
 
-  useImperativeHandle(ref, () => context, [context]);
+  useImperativeHandle(innerRef, () => context, [context]);
 
   useEffect(() => {
     setData(Object(data));
   }, [data]);
 
   useEffect(() => {
-    Object.assign(ref.current, { target: formRef.current });
+    Object.assign(innerRef.current, { target: formRef.current });
   }, [formRef]);
 
   function getField(name: string) {
@@ -101,24 +101,24 @@ function FormFactory({ stylist, map, ...props }: FactoryProps & FormProps, ref: 
 
   function submit(e: any = undefined) {
     e?.preventDefault?.();
-    onSubmit?.(ref.current, getData());
+    onSubmit?.(innerRef.current, getData());
   }
 
   function cancel() {
-    onCancel?.(ref.current);
+    onCancel?.(innerRef.current);
   }
 
   function clear() {
     const data = getData();
     fieldsRef.current.forEach(({ set }) => set(''));
-    onClear?.(ref.current, data);
+    onClear?.(innerRef.current, data);
   }
 
   return (
     <Context.Provider value={context}>
-      <BoxFactory map={map} ref={formRef} component={Form} stylist={[variants.root, stylist]} {...rest} onSubmit={submit} />
+      <BoxFactory map={map} innerRef={formRef} component={Form} stylist={[variants.root, stylist]} {...rest} onSubmit={submit} />
     </Context.Provider>
   );
 }
 
-export default React.forwardRef(FormFactory);
+export default React.memo(FormFactory);

@@ -33,9 +33,66 @@ const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
 const tooltips = ['top', 'bottom', 'left', 'right'];
 const animations = ['Spin', 'FadeIn', 'FadeOut', 'ZoomIn', 'ZoomOut'];
 
+const formData = {
+  firstName: 'Richard',
+  lastName: 'William',
+};
+
+const table = [
+  { dessert: 'Frozen yogurt', calories: '159', fat: '6.0', carbs: '24' },
+  { dessert: 'Ice cream sandwich', calories: '237', fat: '9.0', carbs: '37' },
+  { dessert: 'Eclair', calories: '262', fat: '16.0', carbs: '24' },
+];
+
 const getLabel = (str) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 
 function Main() {
+  const theme = useTheme();
+
+  const timeoutRef = useRef({});
+
+  const [radio, setRadio] = useState('medium');
+  const [modal, setModal] = useState({});
+
+  const [loading, toggleLoading] = useReducer((state) => !state, true);
+  const [checkbox, toggleCheckbox] = useReducer((state) => !state, true);
+  const [dropdown, toggleDropdown] = useReducer((state) => !state, false);
+  const [collpase, toggleCollapse] = useReducer((state) => !state, false);
+
+  const handleSubmitForm = (e, data) => {
+    alert(JSON.stringify(data, null, 2));
+  };
+
+  const handleChangeTheme = (e) => {
+    const prop = e.target.name;
+    const split = prop.split('.');
+    const last = split.pop();
+
+    let value = e.target.value;
+
+    if (prop === 'typography.fontSize') {
+      value = Math.min(32, Math.max(8, e.target.value));
+    }
+
+    const data = {};
+    let ref = data;
+
+    for (let attr of split) {
+      ref[attr] = {};
+      ref = ref[attr];
+    }
+
+    ref[last] = value;
+
+    if (timeoutRef.current[prop]) {
+      clearTimeout(timeoutRef.current[prop]);
+    }
+
+    timeoutRef.current[prop] = setTimeout(() => {
+      theme.setTheme(data);
+    }, 500);
+  };
+
   return (
     <Scrollable bg="background.secondary" contentInset={3}>
       <Card>
@@ -44,7 +101,103 @@ function Main() {
       </Card>
 
       <Card mt={3}>
-        <ExTheme />
+        <Text variant="title">Theme</Text>
+
+        <Divider mt={3} mx={-3} />
+
+        <Text variant="subtitle" my={3}>
+          Mode
+        </Text>
+        <Grid gap={3}>
+          <Box flex>
+            <Button variant={theme.mode === 'light' ? 'solid' : 'outline'} onPress={() => theme.setTheme('light')}>
+              Light
+            </Button>
+          </Box>
+          <Box flex>
+            <Button variant={theme.mode === 'dark' ? 'solid' : 'outline'} onPress={() => theme.setTheme('dark')}>
+              Dark
+            </Button>
+          </Box>
+        </Grid>
+
+        <Divider mt={3} mx={-3} />
+
+        <Text variant="subtitle" my={3}>
+          Shape
+        </Text>
+        <Grid gap={3}>
+          <Box xs={6} md={3}>
+            <Input
+              type="number"
+              label="Spacing"
+              name="shape.spacing"
+              endIcon="px"
+              value={`${theme.shape.spacing}`}
+              onChange={handleChangeTheme}
+            />
+          </Box>
+          <Box xs={6} md={3}>
+            <Input
+              type="number"
+              label="Border Radius"
+              name="shape.borderRadius"
+              endIcon="px"
+              value={`${theme.shape.borderRadius}`}
+              onChange={handleChangeTheme}
+            />
+          </Box>
+        </Grid>
+
+        <Divider mt={3} mx={-3} />
+
+        <Text variant="subtitle" my={3}>
+          Typography
+        </Text>
+        <Grid gap={3}>
+          <Box xs={6} md={3}>
+            <Input
+              type="number"
+              label="Font Size"
+              name="typography.fontSize"
+              endIcon="px"
+              value={`${theme.typography.fontSize}`}
+              onChange={handleChangeTheme}
+            />
+          </Box>
+          <Box xs={6} md={3}>
+            <Input
+              type="number"
+              label="Line Height"
+              name="typography.lineHeight"
+              endIcon="float"
+              value={`${theme.typography.lineHeight}`}
+              onChange={handleChangeTheme}
+            />
+          </Box>
+        </Grid>
+
+        <Divider mt={3} mx={-3} />
+
+        <Text variant="subtitle" my={3}>
+          Colors
+        </Text>
+        <Grid gap={3}>
+          {Object.keys(theme.colors)
+            .filter((item) => !['common', 'text', 'background'].includes(item))
+            .map((color) => (
+              <Box key={color} xs={12} sm={4} xxl={2}>
+                <Input
+                  color={color}
+                  label={getLabel(color)}
+                  labelStyle={{ color }}
+                  name="colors.primary.main"
+                  value={theme.colors[color]?.main ?? theme.colors[color]?.primary}
+                  onChange={handleChangeTheme}
+                />
+              </Box>
+            ))}
+        </Grid>
       </Card>
 
       <Card mt={3}>
@@ -117,11 +270,179 @@ function Main() {
       </ListItem>
 
       <Card mt={3}>
-        <ExButton />
+        <Text variant="title">Buttons</Text>
+        {variants.map((variant) => (
+          <Box key={variant}>
+            <Text variant="subtitle" transform="capitalize" mt={3}>
+              {variant}
+            </Text>
+            <Box row wrap alignItems="center">
+              <Button variant={variant} mr={3} mt={3}>
+                Button
+              </Button>
+              <Button variant={variant} mr={3} mt={3} disabled>
+                Disabled
+              </Button>
+              <Button variant={variant} mr={3} mt={3} loading={loading} onPress={toggleLoading}>
+                Loading
+              </Button>
+              <Button variant={variant} mr={3} mt={3} icon="⚙" rounded />
+              <Button variant={variant} mr={3} mt={3} startIcon="⚙">
+                Start Icon
+              </Button>
+              <Button variant={variant} mr={3} mt={3} endIcon="⚙">
+                End Icon
+              </Button>
+              <Button variant={variant} mr={3} mt={3} transform="uppercase">
+                Transformed
+              </Button>
+              <Box w="100%" />
+              {sizes.map((size) => (
+                <Button key={size} variant={variant} size={size} mr={3} mt={3}>
+                  {getLabel(size)}
+                </Button>
+              ))}
+            </Box>
+            <Divider mx={-3} my={3} />
+          </Box>
+        ))}
+        <Text mt={3} variant="subtitle">
+          Group
+        </Text>
+        <ButtonGroup mt={3} p={1} variant="outline">
+          <Button>Button</Button>
+          <Button disabled>Disabled</Button>
+          <Button loading={loading} onPress={toggleLoading}>
+            Loading
+          </Button>
+          <Button icon="⚙" rounded />
+          <Button startIcon="⚙">Start Icon</Button>
+          <Button endIcon="⚙">End Icon</Button>
+        </ButtonGroup>
       </Card>
 
       <Card mt={3}>
-        <ExForm />
+        <Text variant="title">Forms</Text>
+        <Text mt={3} variant="subtitle">
+          Text Field
+        </Text>
+
+        <Input mt={3} label="Default Input" placeholder="This is the default input" />
+        <Input mt={3} label="Secure" placeholder="Secure input" secure />
+        <Input mt={3} label="Read Only" placeholder="Read only input" readOnly />
+        <Input mt={3} label="Disabled" placeholder="Disabled input" disabled />
+        <Input mt={3} label="Invalid" placeholder="Input with error" error="Value is invalid!" />
+        <Input mt={3} label="Icons" placeholder="Input with icons" startIcon="$" endIcon="💳" />
+
+        {sizes.map((size) => (
+          <Input key={size} mt={3} size={size} label={getLabel(size)} placeholder={`This is a ${size} input`} />
+        ))}
+
+        <Input mt={3} label="Multiline" placeholder="Multiline input" multiline />
+
+        <Divider mt={3} mx={-3} />
+
+        <Text mt={3} variant="subtitle">
+          Combobox
+        </Text>
+
+        <Select
+          mt={3}
+          label="City"
+          placeholder="[Select]"
+          options={[
+            { label: 'Option 1', value: 1 },
+            { label: 'Option 2', value: 2 },
+            { label: 'Option 3', value: 3 },
+          ]}
+        />
+
+        <Select
+          mt={3}
+          label="Payment"
+          placeholder="[Select]"
+          startIcon="💳"
+          defaultValue="2"
+          options={[
+            { label: 'Money', value: '1' },
+            { label: 'Credit Card', value: '2' },
+            { label: 'Free', value: '3' },
+          ]}
+        />
+
+        <Divider mt={3} mx={-3} />
+
+        <Text variant="subtitle" mt={3}>
+          Checkbox / Radio Button
+        </Text>
+        <Box row alignItems="center">
+          {sizes.map((size) => (
+            <Checkbox key={size} mt={3} mr={3} size={size} label={getLabel(size)} checked={checkbox} onChange={toggleCheckbox} />
+          ))}
+        </Box>
+        <Box row alignItems="center">
+          {sizes.map((size) => (
+            <Checkbox
+              key={size}
+              mt={3}
+              mr={3}
+              size={size}
+              label={getLabel(size)}
+              unique
+              checked={radio === size}
+              onChange={() => setRadio(size)}
+            />
+          ))}
+        </Box>
+
+        <Divider mt={3} mx={-3} />
+
+        <Text variant="subtitle" mt={3}>
+          Slide
+        </Text>
+        <Box p={3}>
+          {sizes.map((size) => (
+            <Slider key={size} size={size} defaultValue={Math.random() * 100} mt={3} />
+          ))}
+        </Box>
+
+        <Divider mt={3} mx={-3} />
+
+        <Text variant="subtitle" mt={3}>
+          Serializable
+        </Text>
+        <Form onSubmit={handleSubmitForm} data={formData} mt={3}>
+          <Grid size={6} gap={3}>
+            <Box xs={6} md={4}>
+              <Input name="firstName" label="First Name" />
+            </Box>
+            <Box xs={6} md={4}>
+              <Input name="lastName" label="Last Name" />
+            </Box>
+            <Box xs={6} md={4}>
+              <Select
+                name="size"
+                label="Size"
+                defaultValue="small"
+                options={[
+                  { value: 'small', label: 'Small' },
+                  { value: 'medium', label: 'Medium' },
+                  { value: 'large', label: 'Large' },
+                ]}
+              />
+            </Box>
+            <Box xs={6} md={4}>
+              <Text>Rating</Text>
+              <Slider name="rating" label="Rating" min={1} max={5} />
+            </Box>
+            <Box xs={6} md={4}>
+              <Checkbox name="acceptTerms" label="I accept the terms of use." />
+            </Box>
+            <Box xs={6} md={4}>
+              <Button type="submit">Submit</Button>
+            </Box>
+          </Grid>
+        </Form>
       </Card>
 
       <Card mt={3}>
@@ -173,7 +494,31 @@ function Main() {
       </Card>
 
       <Card mt={3}>
-        <ExTable />
+        <Text variant="title" mb={3}>
+          Tables
+        </Text>
+        <Table
+          border
+          rows={table}
+          columns={[
+            {
+              header: 'Dessert',
+              content: ({ dessert }) => dessert,
+            },
+            {
+              header: 'Calories',
+              content: ({ calories }) => calories,
+            },
+            {
+              header: 'Fat (g)',
+              content: ({ fat }) => fat,
+            },
+            {
+              header: 'Carbs (g)',
+              content: ({ carbs }) => carbs,
+            },
+          ]}
+        />
       </Card>
 
       <Card mt={3}>
@@ -209,15 +554,67 @@ function Main() {
       </Card>
 
       <Card mt={3}>
-        <ExModal />
+        <Text variant="title" mb={3}>
+          Modals
+        </Text>
+        <Box row>
+          <Button mr={2} onPress={() => setModal({ visible: true, valign: 'top' })}>
+            Top
+          </Button>
+          <Button mr={2} onPress={() => setModal({ visible: true, valign: 'bottom' })}>
+            Bottom
+          </Button>
+          <Button mr={2} onPress={() => setModal({ visible: true, valign: 'center' })}>
+            Center
+          </Button>
+          <Button mr={2} onPress={() => setModal({ visible: true, halign: 'left' })}>
+            Left
+          </Button>
+          <Button mr={2} onPress={() => setModal({ visible: true, halign: 'right' })}>
+            Right
+          </Button>
+        </Box>
+        <Modal {...modal} onBackdropPress={() => setModal((current) => ({ ...current, visible: false }))}>
+          <Card m={3} maxw={300}>
+            <Text bold size={1.25}>
+              My Modal
+            </Text>
+            <Text mt={1}>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consectetur cupiditate deserunt dolorum eius et expedita qui
+              repellendus voluptatibus! Accusamus consectetur deleniti fuga iure laborum quam quisquam quo ut, velit!
+            </Text>
+            <Button mt={3} onPress={() => setModal((current) => ({ ...current, visible: false }))}>
+              Close
+            </Button>
+          </Card>
+        </Modal>
       </Card>
 
       <Card mt={3}>
-        <ExDropdown />
+        <Text variant="title" mb={3}>
+          Dropdown
+        </Text>
+        <Box row>
+          <Button onPress={toggleDropdown}>Toggle Dropdown</Button>
+        </Box>
+        <Dropdown visible={dropdown}>
+          <Text>Lorem ipsum dolor sit amet</Text>
+        </Dropdown>
       </Card>
 
       <Card mt={3}>
-        <ExCollapse />
+        <Text variant="title" mb={3}>
+          Collapse
+        </Text>
+        <Box row>
+          <Button onPress={toggleCollapse}>Toggle Collapse</Button>
+        </Box>
+        <Collapse in={collpase} mt={3}>
+          <Text>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis, dignissimos distinctio
+            earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam recusandae suscipit, tempora.
+          </Text>
+        </Collapse>
       </Card>
 
       <Card mt={3}>
@@ -305,462 +702,6 @@ function Main() {
     </Scrollable>
   );
 }
-
-const ExTheme = () => {
-  const theme = useTheme();
-
-  const timeoutRef = useRef({});
-
-  const handleChangeTheme = (e) => {
-    const prop = e.target.name;
-    const split = prop.split('.');
-    const last = split.pop();
-
-    let value = e.target.value;
-
-    if (prop === 'typography.fontSize') {
-      value = Math.min(32, Math.max(8, e.target.value));
-    }
-
-    const data = {};
-    let ref = data;
-
-    for (let attr of split) {
-      ref[attr] = {};
-      ref = ref[attr];
-    }
-
-    ref[last] = value;
-
-    if (timeoutRef.current[prop]) {
-      clearTimeout(timeoutRef.current[prop]);
-    }
-
-    timeoutRef.current[prop] = setTimeout(() => {
-      theme.setTheme(data);
-    }, 500);
-  };
-
-  return (
-    <>
-      <Text variant="title">Theme</Text>
-
-      <Divider mt={3} mx={-3} />
-
-      <Text variant="subtitle" my={3}>
-        Mode
-      </Text>
-      <Grid gap={3}>
-        <Box flex>
-          <Button variant={theme.mode === 'light' ? 'solid' : 'outline'} onPress={() => theme.setTheme('light')}>
-            Light
-          </Button>
-        </Box>
-        <Box flex>
-          <Button variant={theme.mode === 'dark' ? 'solid' : 'outline'} onPress={() => theme.setTheme('dark')}>
-            Dark
-          </Button>
-        </Box>
-      </Grid>
-
-      <Divider mt={3} mx={-3} />
-
-      <Text variant="subtitle" my={3}>
-        Shape
-      </Text>
-      <Grid gap={3}>
-        <Box xs={6} md={3}>
-          <Input
-            type="number"
-            label="Spacing"
-            name="shape.spacing"
-            endIcon="px"
-            value={`${theme.shape.spacing}`}
-            onChange={handleChangeTheme}
-          />
-        </Box>
-        <Box xs={6} md={3}>
-          <Input
-            type="number"
-            label="Border Radius"
-            name="shape.borderRadius"
-            endIcon="px"
-            value={`${theme.shape.borderRadius}`}
-            onChange={handleChangeTheme}
-          />
-        </Box>
-      </Grid>
-
-      <Divider mt={3} mx={-3} />
-
-      <Text variant="subtitle" my={3}>
-        Typography
-      </Text>
-      <Grid gap={3}>
-        <Box xs={6} md={3}>
-          <Input
-            type="number"
-            label="Font Size"
-            name="typography.fontSize"
-            endIcon="px"
-            value={`${theme.typography.fontSize}`}
-            onChange={handleChangeTheme}
-          />
-        </Box>
-        <Box xs={6} md={3}>
-          <Input
-            type="number"
-            label="Line Height"
-            name="typography.lineHeight"
-            endIcon="float"
-            value={`${theme.typography.lineHeight}`}
-            onChange={handleChangeTheme}
-          />
-        </Box>
-      </Grid>
-
-      <Divider mt={3} mx={-3} />
-
-      <Text variant="subtitle" my={3}>
-        Colors
-      </Text>
-      <Grid gap={3}>
-        {Object.keys(theme.colors)
-          .filter((item) => !['common', 'text', 'background'].includes(item))
-          .map((color) => (
-            <Box key={color} xs={12} sm={4} xxl={2}>
-              <Input
-                color={color}
-                label={getLabel(color)}
-                labelStyle={{ color }}
-                name="colors.primary.main"
-                value={theme.colors[color]?.main ?? theme.colors[color]?.primary}
-                onChange={handleChangeTheme}
-              />
-            </Box>
-          ))}
-      </Grid>
-    </>
-  );
-};
-
-const ExButton = () => {
-  const [loading, toggleLoading] = useReducer((state) => !state, true);
-
-  return (
-    <>
-      <Text variant="title">Buttons</Text>
-      {variants.map((variant) => (
-        <Box key={variant}>
-          <Text variant="subtitle" transform="capitalize" mt={3}>
-            {variant}
-          </Text>
-          <Box row wrap alignItems="center">
-            <Button variant={variant} mr={3} mt={3}>
-              Button
-            </Button>
-            <Button variant={variant} mr={3} mt={3} disabled>
-              Disabled
-            </Button>
-            <Button variant={variant} mr={3} mt={3} loading={loading} onPress={toggleLoading}>
-              Loading
-            </Button>
-            <Button variant={variant} mr={3} mt={3} icon="⚙" rounded />
-            <Button variant={variant} mr={3} mt={3} startIcon="⚙">
-              Start Icon
-            </Button>
-            <Button variant={variant} mr={3} mt={3} endIcon="⚙">
-              End Icon
-            </Button>
-            <Button variant={variant} mr={3} mt={3} transform="uppercase">
-              Transformed
-            </Button>
-            <Box w="100%" />
-            {sizes.map((size) => (
-              <Button key={size} variant={variant} size={size} mr={3} mt={3}>
-                {getLabel(size)}
-              </Button>
-            ))}
-          </Box>
-          <Divider mx={-3} my={3} />
-        </Box>
-      ))}
-      <Text mt={3} variant="subtitle">
-        Group
-      </Text>
-      <ButtonGroup mt={3} p={1} variant="outline">
-        <Button>Button</Button>
-        <Button disabled>Disabled</Button>
-        <Button loading={loading} onPress={toggleLoading}>
-          Loading
-        </Button>
-        <Button icon="⚙" rounded />
-        <Button startIcon="⚙">Start Icon</Button>
-        <Button endIcon="⚙">End Icon</Button>
-      </ButtonGroup>
-    </>
-  );
-};
-
-const ExForm = () => {
-  const [checkbox, toggleCheckbox] = useReducer((state) => !state, true);
-  const [radio, setRadio] = useState('medium');
-
-  const formData = {
-    firstName: 'Richard',
-    lastName: 'William',
-  };
-
-  const handleSubmitForm = (e, data) => {
-    alert(JSON.stringify(data, null, 2));
-  };
-
-  return (
-    <>
-      <Text variant="title">Forms</Text>
-      <Text mt={3} variant="subtitle">
-        Text Field
-      </Text>
-
-      <Input mt={3} label="Default Input" placeholder="This is the default input" />
-      <Input mt={3} label="Secure" placeholder="Secure input" secure />
-      <Input mt={3} label="Read Only" placeholder="Read only input" readOnly />
-      <Input mt={3} label="Disabled" placeholder="Disabled input" disabled />
-      <Input mt={3} label="Invalid" placeholder="Input with error" error="Value is invalid!" />
-      <Input mt={3} label="Icons" placeholder="Input with icons" startIcon="$" endIcon="💳" />
-
-      {sizes.map((size) => (
-        <Input key={size} mt={3} size={size} label={getLabel(size)} placeholder={`This is a ${size} input`} />
-      ))}
-
-      <Input mt={3} label="Multiline" placeholder="Multiline input" multiline />
-
-      <Divider mt={3} mx={-3} />
-
-      <Text mt={3} variant="subtitle">
-        Combobox
-      </Text>
-
-      <Select
-        mt={3}
-        label="City"
-        placeholder="[Select]"
-        options={[
-          { label: 'Option 1', value: 1 },
-          { label: 'Option 2', value: 2 },
-          { label: 'Option 3', value: 3 },
-        ]}
-      />
-
-      <Select
-        mt={3}
-        label="Payment"
-        placeholder="[Select]"
-        startIcon="💳"
-        defaultValue="2"
-        options={[
-          { label: 'Money', value: '1' },
-          { label: 'Credit Card', value: '2' },
-          { label: 'Free', value: '3' },
-        ]}
-      />
-
-      <Divider mt={3} mx={-3} />
-
-      <Text variant="subtitle" mt={3}>
-        Checkbox / Radio Button
-      </Text>
-      <Box row alignItems="center">
-        {sizes.map((size) => (
-          <Checkbox key={size} mt={3} mr={3} size={size} label={getLabel(size)} checked={checkbox} onChange={toggleCheckbox} />
-        ))}
-      </Box>
-      <Box row alignItems="center">
-        {sizes.map((size) => (
-          <Checkbox
-            key={size}
-            mt={3}
-            mr={3}
-            size={size}
-            label={getLabel(size)}
-            unique
-            checked={radio === size}
-            onChange={() => setRadio(size)}
-          />
-        ))}
-      </Box>
-
-      <Divider mt={3} mx={-3} />
-
-      <Text variant="subtitle" mt={3}>
-        Slide
-      </Text>
-      <Box p={3}>
-        {sizes.map((size) => (
-          <Slider key={size} size={size} defaultValue={Math.random() * 100} mt={3} />
-        ))}
-      </Box>
-
-      <Divider mt={3} mx={-3} />
-
-      <Text variant="subtitle" mt={3}>
-        Serializable
-      </Text>
-      <Form onSubmit={handleSubmitForm} data={formData} mt={3}>
-        <Grid size={6} gap={3}>
-          <Box xs={6} md={4}>
-            <Input name="firstName" label="First Name" />
-          </Box>
-          <Box xs={6} md={4}>
-            <Input name="lastName" label="Last Name" />
-          </Box>
-          <Box xs={6} md={4}>
-            <Select
-              name="size"
-              label="Size"
-              defaultValue="small"
-              options={[
-                { value: 'small', label: 'Small' },
-                { value: 'medium', label: 'Medium' },
-                { value: 'large', label: 'Large' },
-              ]}
-            />
-          </Box>
-          <Box xs={6} md={4}>
-            <Text>Rating</Text>
-            <Slider name="rating" label="Rating" min={1} max={5} />
-          </Box>
-          <Box xs={6} md={4}>
-            <Checkbox name="acceptTerms" label="I accept the terms of use." />
-          </Box>
-          <Box xs={6} md={4}>
-            <Button type="submit">Submit</Button>
-          </Box>
-        </Grid>
-      </Form>
-    </>
-  );
-};
-
-const ExTable = () => {
-  const data = [
-    { dessert: 'Frozen yogurt', calories: '159', fat: '6.0', carbs: '24' },
-    { dessert: 'Ice cream sandwich', calories: '237', fat: '9.0', carbs: '37' },
-    { dessert: 'Eclair', calories: '262', fat: '16.0', carbs: '24' },
-  ];
-
-  return (
-    <>
-      <Text variant="title" mb={3}>
-        Tables
-      </Text>
-      <Table
-        border
-        rows={data}
-        columns={[
-          {
-            header: 'Dessert',
-            content: ({ dessert }) => dessert,
-          },
-          {
-            header: 'Calories',
-            content: ({ calories }) => calories,
-          },
-          {
-            header: 'Fat (g)',
-            content: ({ fat }) => fat,
-          },
-          {
-            header: 'Carbs (g)',
-            content: ({ carbs }) => carbs,
-          },
-        ]}
-      />
-    </>
-  );
-};
-
-const ExModal = () => {
-  const [modal, setModal] = useState({});
-
-  return (
-    <>
-      <Text variant="title" mb={3}>
-        Modals
-      </Text>
-      <Box row>
-        <Button mr={2} onPress={() => setModal({ visible: true, valign: 'top' })}>
-          Top
-        </Button>
-        <Button mr={2} onPress={() => setModal({ visible: true, valign: 'bottom' })}>
-          Bottom
-        </Button>
-        <Button mr={2} onPress={() => setModal({ visible: true, valign: 'center' })}>
-          Center
-        </Button>
-        <Button mr={2} onPress={() => setModal({ visible: true, halign: 'left' })}>
-          Left
-        </Button>
-        <Button mr={2} onPress={() => setModal({ visible: true, halign: 'right' })}>
-          Right
-        </Button>
-      </Box>
-      <Modal {...modal} onBackdropPress={() => setModal((current) => ({ ...current, visible: false }))}>
-        <Card m={3} maxw={300}>
-          <Text bold size={1.25}>
-            My Modal
-          </Text>
-          <Text mt={1}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consectetur cupiditate deserunt dolorum eius et expedita qui
-            repellendus voluptatibus! Accusamus consectetur deleniti fuga iure laborum quam quisquam quo ut, velit!
-          </Text>
-          <Button mt={3} onPress={() => setModal((current) => ({ ...current, visible: false }))}>
-            Close
-          </Button>
-        </Card>
-      </Modal>
-    </>
-  );
-};
-
-const ExDropdown = () => {
-  const [dropdown, toggleDropdown] = useReducer((state) => !state, false);
-
-  return (
-    <>
-      <Text variant="title" mb={3}>
-        Dropdown
-      </Text>
-      <Box row>
-        <Button onPress={toggleDropdown}>Toggle Dropdown</Button>
-      </Box>
-      <Dropdown visible={dropdown}>
-        <Text>Lorem ipsum dolor sit amet</Text>
-      </Dropdown>
-    </>
-  );
-};
-
-const ExCollapse = () => {
-  const [collpase, toggleCollapse] = useReducer((state) => !state, false);
-
-  return (
-    <>
-      <Text variant="title" mb={3}>
-        Collapse
-      </Text>
-      <Box row>
-        <Button onPress={toggleCollapse}>Toggle Collapse</Button>
-      </Box>
-      <Collapse in={collpase} mt={3}>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis, dignissimos distinctio
-          earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam recusandae suscipit, tempora.
-        </Text>
-      </Collapse>
-    </>
-  );
-};
 
 function App() {
   return (
