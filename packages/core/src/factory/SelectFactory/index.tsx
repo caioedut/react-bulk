@@ -39,6 +39,7 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
     value,
     // Events
     onChange,
+    onFormChange,
     // Styles
     buttonStyle,
     errorStyle,
@@ -79,9 +80,8 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
   const spacing = theme.rem(0.5, fontSize);
 
   useEffect(() => {
-    if (arrOptions && typeof value !== 'undefined') {
-      setInternal(arrOptions?.find((item) => item.value == value));
-    }
+    if (typeof value === 'undefined') return;
+    setInternal(arrOptions?.find((item) => item.value == value));
   }, [value, arrOptions]);
 
   useEffect(() => {
@@ -91,12 +91,13 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
       name,
       set: setInternal,
       get: () => internal?.value,
+      onFormChange,
     });
 
     return () => {
       form.unsetField(name);
     };
-  }, [name, form, internal]);
+  }, [name, form, onFormChange, internal]);
 
   useEffect(() => {
     if (!visible || !selectedRef.current) return;

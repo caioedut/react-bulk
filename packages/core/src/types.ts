@@ -6,6 +6,14 @@ export type AnyCallback = (mixed: any) => any;
 export type EventCallback = (event: any) => any;
 export type InputValue = string | number | boolean;
 
+export interface RbkFormChangeEvent {
+  type: string;
+  data: AnyObject;
+  name?: string;
+  target?: ReactNode | any;
+  nativeEvent?: Event | SyntheticEvent;
+}
+
 export interface RbkEvent {
   type: string;
   value: InputValue;
@@ -125,6 +133,7 @@ export type FormField = {
   name: string;
   get: () => InputValue | null | undefined;
   set: (value: InputValue) => void;
+  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
 };
 
 export type FormRef = {
@@ -444,6 +453,7 @@ export type InputProps = FormControlProps & {
   value?: InputValue;
   // Events
   onChange?: (event: RbkEvent, value: string) => void;
+  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
   // Styles
   containerStyle?: JssStyles;
   errorStyle?: JssStyles;
@@ -474,6 +484,7 @@ export type SelectProps = FormControlProps & {
   value?: InputValue;
   // Events
   onChange?: (event: RbkEvent, value: string, option: SelectOption) => void;
+  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
   // Styles
   buttonStyle?: JssStyles;
   errorStyle?: JssStyles;
@@ -490,6 +501,7 @@ export type CheckboxProps = {
   unique?: boolean;
   // Events
   onChange?: (event: { checked: boolean } & Omit<RbkEvent, 'value'>, checked: boolean) => void;
+  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
 } & FocusableProps &
   BoxProps;
 
@@ -505,6 +517,7 @@ export type SliderProps = {
   // Events
   onChange?: (event: AnyObject, value: number) => any;
   onSlide?: (event: AnyObject, value: number, percent: number) => any;
+  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
 } & FocusableProps &
   BoxProps;
 
@@ -587,6 +600,7 @@ export type FormProps = {
   onSubmit?: (event: FormRef, data: AnyObject) => any;
   onCancel?: (event: FormRef) => any;
   onClear?: (event: FormRef, data: AnyObject) => any;
+  onChange?: (event: FormRef, data: AnyObject) => void;
 } & BoxProps;
 
 export type TooltipProps = {

@@ -21,6 +21,7 @@ function FormFactory({ stylist, map, innerRef, ...props }: FactoryProps & FormPr
     onSubmit,
     onCancel,
     onClear,
+    onChange,
     // Styles
     variants,
     ...rest
@@ -29,6 +30,7 @@ function FormFactory({ stylist, map, innerRef, ...props }: FactoryProps & FormPr
   const defaultRef = useRef(null);
   const formRef = useRef<ReactNode>(null);
   const fieldsRef = useRef<FormField[]>([]);
+  const dataRef = useRef<any>({});
 
   innerRef = (innerRef || defaultRef) as FormRef;
 
@@ -56,18 +58,43 @@ function FormFactory({ stylist, map, innerRef, ...props }: FactoryProps & FormPr
     Object.assign(innerRef.current, { target: formRef.current });
   }, [formRef]);
 
-  function getField(name: string) {
+  function dispatchEvent(type: string, field?: FormField, nativeEvent?: any) {
+    const callback = {
+      change: onChange,
+    }[type];
+
+    const target = formRef.current;
+    const data = getData();
+    const event = { type, data, name: field?.name, target, nativeEvent };
+
+    if (typeof callback === 'function') {
+      callback(event, data);
+    }
+
+    fieldsRef.current.forEach(({ onFormChange }) => onFormChange?.(event, data));
+  }
+
+  function getField(name: string): FormField | undefined {
     return fieldsRef.current.find((item) => item?.name === name);
   }
 
-  function setField({ name, get, set }: FormField) {
-    const field = getField(name);
+  function setField(options: FormField) {
+    const { name } = options;
+    let field = getField(name);
 
     if (field) {
-      Object.getOwnPropertyNames(field).forEach((prop) => delete field[prop]);
-      Object.assign(field, { name, get, set });
+      Object.getOwnPropertyNames(field).forEach((prop) => delete field?.[prop]);
+      Object.assign(field, options);
     } else {
-      fieldsRef.current.push({ name, get, set });
+      field = options;
+      fieldsRef.current.push(options);
+    }
+
+    const newValue = field.get();
+
+    if (dataRef.current[name] !== newValue) {
+      dataRef.current[name] = newValue;
+      dispatchEvent('change', field);
     }
   }
 

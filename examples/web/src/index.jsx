@@ -398,7 +398,7 @@ function Main() {
         <Divider mt={3} mx={-3} />
 
         <Text variant="subtitle" mt={3}>
-          Slide
+          Slider
         </Text>
         <Box p={3}>
           {sizes.map((size) => (
