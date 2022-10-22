@@ -33,6 +33,7 @@ function SliderFactory({ stylist, map, innerRef, ...props }: FactoryProps & Slid
     // Events
     onChange,
     onSlide,
+    onFormChange,
     // Styles
     variants,
     ...rest
@@ -101,12 +102,13 @@ function SliderFactory({ stylist, map, innerRef, ...props }: FactoryProps & Slid
       name,
       set: (value) => setPercent(getPercentByValue(value)),
       get: () => getValueByPercent(percent),
+      onFormChange,
     });
 
     return () => {
       form.unsetField(name);
     };
-  }, [name, form, getPercentByValue, getValueByPercent]);
+  }, [name, form, onFormChange, getPercentByValue, getValueByPercent]);
 
   useEffect(() => {
     if (!web) return;

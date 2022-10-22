@@ -46,6 +46,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     onChange,
     onFocus,
     onBlur,
+    onFormChange,
     // Styles
     variants,
     containerStyle,
@@ -72,7 +73,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
   const unmaskValue = useCallback(
     (value) => {
-      value = typeof unmask === 'function' ? unmask(value) : value;
+      value = typeof unmask === 'function' ? unmask(maskValue(value)) : value;
       return value ?? '';
     },
     [unmask],
@@ -138,9 +139,8 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
   const height = (multiline ? 3 : 1) * fontSize * +options.defaultStyles.input.height.replace(/[^.\d]/g, '');
 
   useEffect(() => {
-    if (typeof value !== 'undefined') {
-      setInternal(value);
-    }
+    if (typeof value === 'undefined') return;
+    setInternal(value);
   }, [value]);
 
   useEffect(() => {
@@ -148,14 +148,15 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
     form.setField({
       name,
-      set: setInternal,
-      get: () => unmaskValue(maskValue(internal)),
+      set: (value) => setInternal(unmaskValue(value)),
+      get: () => internal,
+      onFormChange,
     });
 
     return () => {
       form.unsetField(name);
     };
-  }, [name, form, internal]);
+  }, [name, form, onFormChange, internal]);
 
   const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
   const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
@@ -178,7 +179,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
   const handleChange = (e) => {
     const target = inputRef?.current;
     const nativeEvent = e?.nativeEvent ?? e;
-    const value = maskValue(target?.value ?? e?.nativeEvent?.text);
+    const value = unmaskValue(target?.value ?? e?.nativeEvent?.text);
 
     setInternal(value);
     dispatchEvent('change', value, nativeEvent);

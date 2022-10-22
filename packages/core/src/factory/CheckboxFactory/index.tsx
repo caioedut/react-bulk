@@ -33,6 +33,8 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
     size,
     unique,
     value,
+    // Events
+    onFormChange,
     // Styles
     buttonStyle,
     labelStyle,
@@ -76,13 +78,14 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
         name,
         set: setInternal as any,
         get: () => (internal ? value ?? internal : unique ? null : false),
+        onFormChange,
       });
     }
 
     return () => {
       form.unsetField(name);
     };
-  }, [name, form, internal, value]);
+  }, [name, form, onFormChange, internal, value]);
 
   const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
   const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
