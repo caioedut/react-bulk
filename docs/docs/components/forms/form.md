@@ -12,11 +12,11 @@ Context to manipulate and serialize forms.
 import { Button, Form, Input } from '@react-bulk/web' // or @react-bulk/native;
 
 export default function Home() {
-  
+
   function handleSubmit(event, data) {
     alert('Your name is ' + data.name)
   }
-    
+
   return (
     <Form onSubmit={handleSubmit}>
       <Input name="name" label="Full Name" />
@@ -28,7 +28,7 @@ export default function Home() {
 
 ## Props
 
-Extends all [`Box`](box) properties.
+Extends all [`Box`](../core/box) properties.
 
 ### `data`
 
@@ -148,7 +148,7 @@ ref.current.setField({
 
 ### unsetField(name: `string`)
 
-Commonly used by libraries that implements some components. Remove the field from `Form` track. 
+Commonly used by libraries that implements some components. Remove the field from `Form` track.
 
 `ref.current.unsetField('age')`
 

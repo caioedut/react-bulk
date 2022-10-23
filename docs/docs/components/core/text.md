@@ -16,7 +16,7 @@ export default function Home() {
 
 ## Props
 
-Extends all [`Box`](box) properties.
+Extends all [`Box`](../core/box) properties.
 
 ### `bold`
 
