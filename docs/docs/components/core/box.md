@@ -4,7 +4,7 @@ It is the primary component, factory for everything. All components extend the B
 
 ## Basic Usage
 
-```jsx title="Basics"
+```jsx
 import { Box } from '@react-bulk/web' // or @react-bulk/native;
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
 
 ## Custom Component
 
-```jsx title="Basics"
+```jsx
 import { Box } from '@react-bulk/web' // or @react-bulk/native;
 
 function Link({ to, ...rest }) {
@@ -126,8 +126,6 @@ Apply props for a specific platform. For example:
 |-------------------|
 | `object`, `array` |
 
----
-
 ## Flexbox Container Props
 
 ### `center`
@@ -197,8 +195,6 @@ Sets `flexWrap` style. When `boolean`, the value will be `'wrap'`.
 | Type                                                |
 |-----------------------------------------------------|
 | `boolean`, `enum('wrap', 'nowrap', 'wrap-reverse')` |
-
----
 
 ## Flexbox Child Props
 
@@ -270,8 +266,6 @@ Sets `flexShrink` style.
 |----------|
 | `number` |
 
----
-
 ## Positioning and Spacing Props
 
 Sets style as described below. Combinations are valid.
@@ -306,8 +300,6 @@ Examples:
 | Type               |
 |--------------------|
 | `number`, `string` |
-
----
 
 ## Custom Style Props
 
@@ -415,8 +407,6 @@ Sets `width` style.
 |--------------------|
 | `number`, `string` |
 
----
-
 ## Other Props
 
 ### `hidden`
@@ -436,8 +426,6 @@ Hides element but keeps its box sizes
 | Type      |
 |-----------|
 | `boolean` |
-
----
 
 ## Event Props
 
@@ -462,5 +450,3 @@ Hides element but keeps its box sizes
 | Type              |
 |-------------------|
 | `Function(event)` |
-
----
