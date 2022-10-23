@@ -8,6 +8,18 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+
+  /*background: linear-gradient(90deg, rgba(69, 104, 220, 1) 0%, rgba(103, 58, 183, 1) 60%);*/
+  background: linear-gradient(90deg, rgba(43,43,43,1) 0%, rgba(60,63,65,1) 100%);
+}
+
+.heroLogo {
+  width: 400px;
+  max-width: 100%;
+}
+
+.heroSubtitle {
+  color: #ffffff;
 }
 
 @media screen and (max-width: 996px) {
@@ -21,6 +33,12 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
+  margin-top: 40px;
+}
+
+.buttons a {
+  background: linear-gradient(90deg, rgba(69, 104, 220, 1) 0%, rgba(103, 58, 183, 1) 60%);
+  color: #fff;
 }
 
 .features {
@@ -30,7 +48,6 @@
   width: 100%;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
+.featureImg {
+  max-width: 240px;
 }

@@ -13,7 +13,7 @@ const base: ThemeProps & any = {
 
   colors: {
     primary: '#673ab7',
-    secondary: '#009688',
+    secondary: '#b06ab3',
     info: '#2196f3',
     success: '#4caf50',
     warning: '#ff9800',

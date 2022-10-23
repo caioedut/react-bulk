@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'React Bulk',
-  tagline: 'Complete uniform UI for ReactJS and React Native',
+  tagline: 'Complete and uniform UI for React Web and Native',
   url: 'https://docs.d3mjrlyontbfe4.amplifyapp.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -49,7 +49,7 @@ const config = {
         title: 'React Bulk',
         logo: {
           alt: 'React Bulk',
-          src: 'img/logo.svg',
+          src: 'img/icon.svg',
         },
         items: [
           {
