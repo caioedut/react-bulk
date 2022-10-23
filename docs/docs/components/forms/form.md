@@ -8,7 +8,7 @@ Context to manipulate and serialize forms.
 
 ## Basic Usage
 
-```jsx title="Basics"
+```jsx
 import { Button, Form, Input } from '@react-bulk/web' // or @react-bulk/native;
 
 export default function Home() {
@@ -63,8 +63,6 @@ Fill inputs with these values.
 | Type                      |
 |---------------------------|
 | `Function(formRef, data)` |
-
----
 
 ## Reference
 

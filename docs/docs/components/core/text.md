@@ -4,7 +4,7 @@ A extensible text component.
 
 ## Basic Usage
 
-```jsx title="Basics"
+```jsx
 import { Text } from '@react-bulk/web' // or @react-bulk/native;
 
 export default function Home() {
