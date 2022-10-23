@@ -400,6 +400,10 @@ const base: ThemeProps & any = {
           color: 'primary',
         },
         defaultStyles: {
+          root: {
+            p: 1,
+            m: -1,
+          },
           content: {
             display: 'flex',
             flexDirection: 'row',
