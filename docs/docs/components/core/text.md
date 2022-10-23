@@ -1,18 +1,22 @@
-[‹ Go Back](README.md)
-
 # Text
+
 A extensible text component.
 
-### `component`
+## Basic Usage
 
-| Web      | Native |
-|----------|--------|
-| `'span'` | `Text` |
+```jsx title="Basics"
+import { Text } from '@react-bulk/web' // or @react-bulk/native;
 
----
+export default function Home() {
+  return (
+    <Text>Hello World!</Text>
+  );
+}
+```
 
 ## Props
-Extends all [`Box`](Box.md) properties.
+
+Extends all [`Box`](box) properties.
 
 ### `bold`
 
@@ -141,5 +145,3 @@ Sets `fontWeight` style.
 | `enum('normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900')` |
 
 ---
-
-[‹ Go Back](README.md)
