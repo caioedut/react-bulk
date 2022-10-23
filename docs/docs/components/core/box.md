@@ -1,17 +1,43 @@
-[‹ Go Back](README.md)
-
 # Box
-It is the primary component, factory for everything. All components extends the `Box`.
 
-### `component`
+It is the primary component, factory for everything. All components extend the Box.
 
-Defines which element will be rendered.
+## Basic Usage
 
-| Type                  | Default (Web) | Default (Native) |
-|-----------------------|---------------|------------------|
-| `string`, `Component` | `'div'`       | `View`           |
+```jsx title="Basics"
+import { Box } from '@react-bulk/web' // or @react-bulk/native;
 
----
+export default function Home() {
+  return (
+    <Box>Hello World!</Box>
+  );
+}
+```
+
+## Custom Component
+
+```jsx title="Basics"
+import { Box } from '@react-bulk/web' // or @react-bulk/native;
+
+function Link({ to, ...rest }) {
+    return (
+        <a href={to} {...rest} />
+    )
+}
+
+export default function Home() {
+  return (
+    <Box>
+        <Box component="b">
+            Hello World!
+        </Box>
+        <Box component={Link} to="/about">
+            Click here!
+        </Box>
+    </Box>
+  );
+}
+```
 
 ## Core Props
 
@@ -32,6 +58,16 @@ Defines the `class` attribute.
 | Type     |
 |----------|
 | `string` |
+
+---
+
+### `component`
+
+Defines which element will be rendered.
+
+| Type                  | Default (Web) | Default (Native) |
+|-----------------------|---------------|------------------|
+| `string`, `Component` | `'div'`       | `View`           |
 
 ---
 
@@ -75,8 +111,7 @@ Apply props for a specific platform. For example:
 
 ### `rawStyle`
 
-**Web:** create inline styles.
-<br/>
+**Web:** create inline styles.<br/>
 **Native:** priorize styles.
 
 | Type              |
@@ -242,23 +277,17 @@ Sets `flexShrink` style.
 Sets style as described below. Combinations are valid.
 When `number` value, it will be multiplied by the `theme.shape.spacing` value.
 
-`i` for `inset` (this one has no combinations).
-
-`m` for `margin`
-<br/>
+`i` for `inset` (this one has no combinations).<br/>
+`m` for `margin`<br/>
 `p` for `padding`
 
-`t` for `top`
-<br/>
-`b` for `bottom`
-<br/>
-`l` for `left`
-<br/>
+`t` for `top`<br/>
+`b` for `bottom`<br/>
+`l` for `left`<br/>
 `r` for `right`
 
-`v` or `y` for `vertical` (combines only with `m` and `p`)
-<br/>
-`h` or `x` for `horizontal` (combines only with `m` and `p`)
+`v` or `y` for `vertical` (combines only with `m` and `p`)<br/>
+`h` or `x` for `horizontal` (combines only with `m` and `p`)<br/>
 
 Examples:
 
@@ -435,5 +464,3 @@ Hides element but keeps its box sizes
 | `Function(event)` |
 
 ---
-
-[‹ Go Back](README.md)
