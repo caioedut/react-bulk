@@ -1,9 +1,8 @@
 import React, { cloneElement } from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { ButtonGroupProps, FactoryProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import ScrollableFactory from '../ScrollableFactory';
 
@@ -12,25 +11,25 @@ function ButtonGroupFactory({ stylist, children, map, innerRef, ...props }: Fact
   const options = theme.components.ButtonGroup;
 
   // Extends from default props
-  let { color, disabled, loading, size, variant, contentStyle, ...rest } = factory(props, options.defaultProps);
-
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleContent = useStylist({
-    name: options.name + '-content',
-    style: options.defaultStyles.content,
-  });
+  let {
+    color,
+    disabled,
+    loading,
+    size,
+    variant,
+    contentStyle,
+    // Styles
+    variants,
+    ...rest
+  } = factory2(props, options, theme);
 
   if (children && !Array.isArray(children)) {
     children = [children];
   }
 
   return (
-    <ScrollableFactory map={map} innerRef={innerRef} stylist={[styleRoot, stylist]} {...rest} direction="horizontal">
-      <BoxFactory map={map} style={contentStyle} stylist={[styleContent]}>
+    <ScrollableFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} {...rest} direction="horizontal">
+      <BoxFactory map={map} style={contentStyle} stylist={[variants.content]}>
         {children?.map((child, key) => {
           const isFirst = key === 0;
           const isLast = key === children.length - 1;

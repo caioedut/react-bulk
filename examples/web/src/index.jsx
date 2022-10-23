@@ -108,18 +108,15 @@ function Main() {
         <Text variant="subtitle" my={3}>
           Mode
         </Text>
-        <Grid gap={3}>
-          <Box flex>
-            <Button variant={theme.mode === 'light' ? 'solid' : 'outline'} onPress={() => theme.setTheme('light')}>
-              Light
-            </Button>
-          </Box>
-          <Box flex>
-            <Button variant={theme.mode === 'dark' ? 'solid' : 'outline'} onPress={() => theme.setTheme('dark')}>
-              Dark
-            </Button>
-          </Box>
-        </Grid>
+
+        <ButtonGroup>
+          <Button variant={theme.mode === 'light' ? 'solid' : 'outline'} onPress={() => theme.setTheme('light')}>
+            Light
+          </Button>
+          <Button variant={theme.mode === 'dark' ? 'solid' : 'outline'} onPress={() => theme.setTheme('dark')}>
+            Dark
+          </Button>
+        </ButtonGroup>
 
         <Divider mt={3} mx={-3} />
 
