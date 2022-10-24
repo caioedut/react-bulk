@@ -2,6 +2,9 @@
 sidebar_position: 1
 ---
 
+import Code from '@site/src/components/Code';
+import { Button } from '@react-bulk/web';
+
 # Breakpoints
 
 Commonly used with [Grid](../layout/grid).
@@ -42,7 +45,7 @@ import { Button } from '@react-bulk/web' // or @react-bulk/native;
 
 export default function Home() {
   return (
-    <>
+    <Box row>
       <Button style={{ display: 'none', xs: { display: 'flex' } }}>
         Visible on XS or higher
       </Button>
@@ -65,3 +68,24 @@ export default function Home() {
   );
 }
 ```
+
+<Code>
+  <Button style={{ display: 'none', xs: { display: 'flex' } }}>
+    Visible on XS or higher
+  </Button>
+  <Button style={{ display: 'none', sm: { display: 'flex' } }} mt={3}>
+    Visible on SM or higher
+  </Button>
+  <Button style={{ display: 'none', md: { display: 'flex' } }} mt={3}>
+    Visible on MD or higher
+  </Button>
+  <Button style={{ display: 'none', lg: { display: 'flex' } }} mt={3}>
+    Visible on LG or higher
+  </Button>
+  <Button style={{ display: 'none', xl: { display: 'flex' } }} mt={3}>
+    Visible on XL or higher
+  </Button>
+  <Button style={{ display: 'none', xxl: { display: 'flex' } }} mt={3}>
+    Visible on XXL or higher
+  </Button>
+</Code>
