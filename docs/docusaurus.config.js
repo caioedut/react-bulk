@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'React Bulk',
   tagline: 'Complete and uniform UI for React Web and Native',
-  url: 'https://docs.d3mjrlyontbfe4.amplifyapp.com',
+  url: 'https://rbk.caioedut.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
