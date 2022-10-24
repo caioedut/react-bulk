@@ -81,7 +81,7 @@ export default function BaseWeb({ children }) {
       // Generate variant styles
       Object.entries(component?.variants || {}).forEach(([varAttr, varOptions]: any) => {
         Object.entries(varOptions).map(([optionKey, optionVal]: any) => {
-          Object.entries(optionVal?.styles || {}).forEach(([styleId, styleCss]: any) => {
+          Object.entries(optionVal || {}).forEach(([styleId, styleCss]: any) => {
             createStyle({
               theme,
               style: styleCss,

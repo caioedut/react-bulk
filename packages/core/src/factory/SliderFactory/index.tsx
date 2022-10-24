@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } 
 import { useTheme } from '../../ReactBulk';
 import rect from '../../element/rect';
 import factory2 from '../../props/factory2';
-import { FactoryProps, FocusableProps, RectType, SliderProps } from '../../types';
+import { FactoryProps, FocusableProps, RbkRect, SliderProps } from '../../types';
 import useHtmlId from '../../useHtmlId';
 import event from '../../utils/event';
 import pick from '../../utils/pick';
@@ -48,7 +48,7 @@ function SliderFactory({ stylist, map, innerRef, ...props }: FactoryProps & Slid
   const dotRef = useRef(null);
   const barRef = useRef(null);
 
-  const containerRectRef = useRef<RectType | null>(null);
+  const containerRectRef = useRef<RbkRect | null>(null);
   const dotIniPosRef = useRef<number | null>(null);
   const pressIniPosRef = useRef<number | null>(null);
 
@@ -171,7 +171,7 @@ function SliderFactory({ stylist, map, innerRef, ...props }: FactoryProps & Slid
     let value;
 
     if (containerRectRef.current) {
-      const dotRect: RectType = await rect($dot);
+      const dotRect: RbkRect = await rect($dot);
       const targetX = dotRect.pageOffsetX - containerRectRef.current.pageOffsetX;
 
       percent = (targetX / containerRectRef.current.width) * 100;

@@ -26,7 +26,7 @@ export default function factory2(props, options?: ThemeComponentProps, theme?: T
 
     newProps = { ...newProps, ...varOptions[varValue]?.props };
 
-    const varStyles = varOptions[varValue]?.styles || {};
+    const varStyles = varOptions[varValue] || {};
 
     Object.entries(varStyles).forEach(([styleId, styleCss]: any) => {
       variants[styleId] = variants[styleId] || [];

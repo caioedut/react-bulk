@@ -1,7 +1,7 @@
 import Platform from '../Platform';
-import { RectType } from '../types';
+import { RbkRect } from '../types';
 
-export default async function rect($el): Promise<RectType> {
+export default async function rect($el): Promise<RbkRect> {
   const { web, native } = Platform;
 
   if (web) {
@@ -18,5 +18,5 @@ export default async function rect($el): Promise<RectType> {
     );
   }
 
-  return {} as RectType;
+  return {} as RbkRect;
 }
