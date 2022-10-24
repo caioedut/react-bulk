@@ -14,7 +14,8 @@ typings/
 .env.test.local
 .env.production.local
 
-# packs
+# generated
+next-env.d.ts
 .eslintcache
 .expo/
 .docusaurus/
