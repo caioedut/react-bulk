@@ -2,6 +2,10 @@
 sidebar_position: 2
 ---
 
+import Code from '@site/src/components/Code';
+import ReactBulk from '@react-bulk/core';
+import { Text } from '@react-bulk/web';
+
 # Theme
 
 React Bulk allow you to customize all components using theme.
