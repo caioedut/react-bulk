@@ -26,7 +26,7 @@ export interface RbkEvent {
   nativeEvent?: Event | SyntheticEvent;
 }
 
-export type MapType = {
+export type RbkFactoryMap = {
   web: boolean;
   native: boolean;
   ios: boolean;
@@ -37,18 +37,10 @@ export type MapType = {
     width: number;
   };
 
-  Button: ReactNode | any;
-  Image: ReactNode | any;
-  Input: ReactNode | any;
-  Label: ReactNode | any;
-  Link: ReactNode | any;
-  ScrollView: ReactNode | any;
-  Text: ReactNode | any;
-  TextArea: ReactNode | any;
-  View: ReactNode | any;
+  [key: string]: ReactNode | any;
 };
 
-export type RectType = {
+export type RbkRect = {
   width: number;
   height: number;
   offsetX: number;
@@ -58,7 +50,7 @@ export type RectType = {
 };
 
 export type FactoryProps = {
-  map: MapType;
+  map: RbkFactoryMap;
   innerRef?: RefObject<any>;
   defaults?: AnyObject;
   stylist?: JssStyles | string | string[];
@@ -206,7 +198,16 @@ export type CustomStyles = {
 
 export type JssStyles = (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
 
-export type ThemeMode = 'light' | 'dark' | string;
+export type VariantProps = {
+  [prop: string]: {
+    [value: string]: {
+      root?: JssStyles;
+      [name: string]: JssStyles;
+    };
+  };
+};
+
+export type ThemeModeValues = 'light' | 'dark' | string;
 
 export type ThemeColorsProps =
   | string
@@ -218,16 +219,16 @@ export type ThemeColorsProps =
 
 export type ThemeComponentProps = {
   name: string;
-  variants: AnyObject;
   defaultProps: AnyObject;
   defaultStyles: {
     root?: JssStyles;
     [key: string]: JssStyles;
   };
+  variants: VariantProps;
 };
 
 export type ThemeProps = {
-  mode: ThemeMode;
+  mode: ThemeModeValues;
 
   shape: {
     borderRadius: number;
@@ -314,8 +315,6 @@ export type ThemeProps = {
     Dropdown: ThemeComponentProps;
     Form: ThemeComponentProps;
     Grid: ThemeComponentProps;
-    Group: ThemeComponentProps;
-    Icon: ThemeComponentProps;
     Image: ThemeComponentProps;
     Input: ThemeComponentProps;
     Label: ThemeComponentProps;
@@ -336,7 +335,7 @@ export type ThemeProps = {
 export type ThemeOptionalProps = Partial<ThemeProps>;
 
 export type RbkTheme = ThemeProps & {
-  setTheme: (options: ThemeMode | ThemeOptionalProps) => void;
+  setTheme: (options: ThemeModeValues | ThemeOptionalProps) => void;
 };
 
 export type BoxProps = {

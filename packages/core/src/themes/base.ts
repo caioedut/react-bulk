@@ -302,93 +302,77 @@ const base: ThemeProps & any = {
         variants: {
           block: {
             true: {
-              styles: {
-                root: { width: '100%' },
-              },
+              root: { width: '100%' },
             },
           },
           disabled: {
             true: {
-              styles: {
-                root: {
-                  opacity: 0.75,
-                  web: { cursor: 'not-allowed', '& *': { cursor: 'not-allowed' } },
-                },
+              root: {
+                opacity: 0.75,
+                web: { cursor: 'not-allowed', '& *': { cursor: 'not-allowed' } },
               },
             },
           },
           size: {
             xsmall: {
-              styles: {
-                root: {
-                  minHeight: '1.5625rem',
-                  minWidth: '1.5625rem',
-                  paddingHorizontal: '0.625rem',
-                },
-                label: {
-                  fontSize: '0.625rem',
-                },
+              root: {
+                minHeight: '1.5625rem',
+                minWidth: '1.5625rem',
+                paddingHorizontal: '0.625rem',
+              },
+              label: {
+                fontSize: '0.625rem',
               },
             },
             small: {
-              styles: {
-                root: {
-                  minHeight: '1.875rem',
-                  minWidth: '1.875rem',
-                  paddingHorizontal: '0.75rem',
-                },
-                label: {
-                  fontSize: '0.75rem',
-                },
+              root: {
+                minHeight: '1.875rem',
+                minWidth: '1.875rem',
+                paddingHorizontal: '0.75rem',
+              },
+              label: {
+                fontSize: '0.75rem',
               },
             },
             large: {
-              styles: {
-                root: {
-                  minHeight: '3.125rem',
-                  minWidth: '3.125rem',
-                  paddingHorizontal: '1.25rem',
-                },
-                label: {
-                  fontSize: '1.25rem',
-                },
+              root: {
+                minHeight: '3.125rem',
+                minWidth: '3.125rem',
+                paddingHorizontal: '1.25rem',
+              },
+              label: {
+                fontSize: '1.25rem',
               },
             },
             xlarge: {
-              styles: {
-                root: {
-                  minHeight: '4.0625rem',
-                  minWidth: '4.0625rem',
-                  paddingHorizontal: '1.625rem',
-                },
-                label: {
-                  fontSize: '1.625rem',
-                },
+              root: {
+                minHeight: '4.0625rem',
+                minWidth: '4.0625rem',
+                paddingHorizontal: '1.625rem',
+              },
+              label: {
+                fontSize: '1.625rem',
               },
             },
           },
           variant: {
             outline: {
-              styles: {
-                root: {
-                  bg: 'trans',
-                  '&:hover': { bg: (theme) => theme.hex2rgba('primary', 0.1) },
-                },
-                label: {
-                  color: 'primary',
-                },
+              root: {
+                bg: 'trans',
+                '&:hover': { bg: (theme) => theme.hex2rgba('primary', 0.1) },
+              },
+              label: {
+                color: 'primary',
               },
             },
             text: {
-              styles: {
-                root: {
-                  bg: 'trans',
-                  borderWidth: 0,
-                  '&:hover': { bg: this.hex2rgba('primary', 0.1) },
-                },
-                label: {
-                  color: 'primary',
-                },
+              root: {
+                bg: 'trans',
+                borderWidth: 0,
+                '&:hover': { bg: this.hex2rgba('primary', 0.1) },
+              },
+              label: {
+                color: 'primary',
               },
             },
           },
@@ -608,14 +592,12 @@ const base: ThemeProps & any = {
         variants: {
           disabled: {
             true: {
-              styles: {
-                root: {
-                  backgroundColor: (theme) => theme.hex2rgba('background.disabled', 0.125),
-                  borderColor: (theme) => theme.hex2rgba('background.disabled', 0.25),
-                  web: {
-                    cursor: 'not-allowed',
-                    '& *': { cursor: 'not-allowed' },
-                  },
+              root: {
+                backgroundColor: (theme) => theme.hex2rgba('background.disabled', 0.125),
+                borderColor: (theme) => theme.hex2rgba('background.disabled', 0.25),
+                web: {
+                  cursor: 'not-allowed',
+                  '& *': { cursor: 'not-allowed' },
                 },
               },
             },
@@ -648,9 +630,7 @@ const base: ThemeProps & any = {
         variants: {
           underline: {
             true: {
-              styles: {
-                root: { textDecoration: 'underline' },
-              },
+              root: { textDecoration: 'underline' },
             },
           },
         },
@@ -661,7 +641,6 @@ const base: ThemeProps & any = {
           gap: 3,
         },
         defaultStyles: {},
-        variants: {},
       },
       Loading: {
         name: 'rbk-loading',

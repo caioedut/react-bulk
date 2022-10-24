@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { CardProps, FactoryProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function CardFactory({ stylist, map, innerRef, ...props }: FactoryProps & CardProps) {
@@ -11,14 +10,13 @@ function CardFactory({ stylist, map, innerRef, ...props }: FactoryProps & CardPr
   const options = theme.components.Card;
 
   // Extends from default props
-  let { ...rest } = factory(props, options.defaultProps);
+  let {
+    // Styles
+    variants,
+    ...rest
+  } = factory2(props, options, theme);
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  return <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, stylist]} {...rest} />;
+  return <BoxFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} {...rest} />;
 }
 
 export default React.memo(CardFactory);
