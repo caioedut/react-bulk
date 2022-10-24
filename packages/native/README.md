@@ -11,12 +11,12 @@ Complete and uniform UI for React Web and Native
 
 ## Docs
 
-[Read the full Docs.](https://docs.d3mjrlyontbfe4.amplifyapp.com/)
+[Read the full Docs.](https://rbk.caioedut.com/)
 
 ### Getting Started
-- [Installation](https://docs.d3mjrlyontbfe4.amplifyapp.com/docs/getting-started/installation)
-- [Configuration](https://docs.d3mjrlyontbfe4.amplifyapp.com/docs/getting-started/configuration)
+- [Installation](https://rbk.caioedut.com/docs/getting-started/installation)
+- [Configuration](https://rbk.caioedut.com/docs/getting-started/configuration)
 
 ### More
-- [Layout](https://docs.d3mjrlyontbfe4.amplifyapp.com/docs/category/layout)
-- [Components](https://docs.d3mjrlyontbfe4.amplifyapp.com/docs/category/components)
+- [Layout](https://rbk.caioedut.com/docs/category/layout)
+- [Components](https://rbk.caioedut.com/docs/category/components)
