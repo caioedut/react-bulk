@@ -4,17 +4,13 @@ import BaseNative from './BaseNative';
 import BaseWeb from './BaseWeb';
 import Platform from './Platform';
 import createTheme from './createTheme';
-import { ThemeMode, ThemeOptionalProps, ThemeProps } from './types';
+import { RbkTheme, ThemeMode, ThemeOptionalProps, ThemeProps } from './types';
 
-type ThemeContextValue = ThemeProps & {
-  setTheme?: Function;
-};
-
-const defaultTheme: ThemeContextValue = createTheme();
+const defaultTheme: RbkTheme = createTheme();
 const Context = createContext(defaultTheme);
 
-export function useTheme(): ThemeContextValue {
-  return (useContext(Context) || defaultTheme) as any;
+export function useTheme(): RbkTheme {
+  return useContext(Context) || defaultTheme;
 }
 
 function ReactBulk({ theme, children }: any) {

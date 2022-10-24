@@ -150,14 +150,22 @@ export type FormRef = {
   unsetField: (name: string) => void;
 };
 
-export type FlexJustifyValues = 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'space-between' | 'space-around' | 'space-evenly';
-export type FlexAlignValues = 'flex-start' | 'flex-end' | 'center' | 'stretch';
+export type FlexJustifyValues =
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'stretch'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+  | string;
+export type FlexAlignValues = 'flex-start' | 'flex-end' | 'center' | 'stretch' | string;
 export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
-export type SizeValues = number | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
+export type SizeValues = number | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | string;
+export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width' | string;
 
 export type CustomStyles = {
-  position?: 'relative' | 'absolute';
+  position?: 'relative' | 'absolute' | string;
 
   h?: number | string;
   w?: number | string;
@@ -327,6 +335,10 @@ export type ThemeProps = {
 
 export type ThemeOptionalProps = Partial<ThemeProps>;
 
+export type RbkTheme = ThemeProps & {
+  setTheme: (options: ThemeMode | ThemeOptionalProps) => void;
+};
+
 export type BoxProps = {
   component?: any;
   id?: string;
@@ -344,11 +356,11 @@ export type BoxProps = {
   rawStyle?: JssStyles;
 
   // Flexbox container
-  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse' | string;
   row?: boolean;
   column?: boolean;
   reverse?: boolean;
-  wrap?: boolean | 'wrap' | 'nowrap' | 'wrap-reverse';
+  wrap?: boolean | 'wrap' | 'nowrap' | 'wrap-reverse' | string;
   noWrap?: boolean;
   justifyContent?: FlexJustifyValues;
   alignContent?: FlexAlignValues;
@@ -376,7 +388,7 @@ export type BoxProps = {
   CustomStyles;
 
 export type TextProps = {
-  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'caption';
+  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'caption' | string;
   size?: number;
   color?: ColorValues;
   center?: boolean;
@@ -386,7 +398,7 @@ export type TextProps = {
   bold?: boolean;
   italic?: boolean;
   smallCaps?: boolean;
-  weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
+  weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | string;
   transform?: TextTransformValues;
 
   numberOfLines?: number;
@@ -414,8 +426,8 @@ export type ButtonProps = FormControlProps & {
   loading?: boolean;
   rounded?: boolean;
   transform?: TextTransformValues;
-  type?: 'button' | 'submit' | 'cancel' | 'clear';
-  variant?: 'solid' | 'outline' | 'text';
+  type?: 'button' | 'submit' | 'cancel' | 'clear' | string;
+  variant?: 'solid' | 'outline' | 'text' | string;
   // Styles
   contentStyle?: JssStyles;
 } & FocusableProps &
@@ -426,13 +438,13 @@ export type ButtonGroupProps = {
   disabled?: boolean;
   loading?: boolean;
   size?: SizeValues;
-  variant?: 'solid' | 'outline' | 'text';
+  variant?: 'solid' | 'outline' | 'text' | string;
   // Styles
   contentStyle?: JssStyles;
 } & BoxProps;
 
 export type InputProps = FormControlProps & {
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | string;
   autoCorrect?: boolean;
   caretHidden?: boolean;
   defaultValue?: InputValue;
@@ -445,10 +457,10 @@ export type InputProps = FormControlProps & {
   placeholder?: string;
   placeholderColor?: ColorValues;
   readOnly?: boolean;
-  returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
+  returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send' | string;
   secure?: boolean;
   selectionColor?: ColorValues;
-  type?: 'text' | 'number' | 'email' | 'phone' | 'url';
+  type?: 'text' | 'number' | 'email' | 'phone' | 'url' | string;
   unmask?: (InputValue: string, data: AnyObject) => InputValue;
   value?: InputValue;
   // Events
@@ -498,6 +510,7 @@ export type CheckboxProps = {
   label?: string;
   name?: string;
   readOnly?: boolean;
+  size?: SizeValues;
   unique?: boolean;
   // Events
   onChange?: (event: { checked: boolean } & Omit<RbkEvent, 'value'>, checked: boolean) => void;
@@ -524,7 +537,7 @@ export type SliderProps = {
 export type CardProps = BoxProps;
 
 export type ScrollableProps = {
-  direction?: 'vertical' | 'horizontal';
+  direction?: 'vertical' | 'horizontal' | string;
   contentInset?: number;
   // Styles
   contentStyle?: JssStyles;
@@ -533,7 +546,7 @@ export type ScrollableProps = {
 export type ImageProps = {
   source: { uri?: string } | string | number;
   alt?: string;
-  mode?: 'cover' | 'contain' | 'fill';
+  mode?: 'cover' | 'contain' | 'fill' | string;
   width?: number | string;
   height?: number | string;
   rounded?: boolean;
@@ -551,8 +564,8 @@ export type BackdropProps = {
 } & BoxProps;
 
 export type ModalProps = {
-  halign?: 'center' | 'left' | 'right';
-  valign?: 'center' | 'top' | 'bottom';
+  halign?: 'center' | 'left' | 'right' | string;
+  valign?: 'center' | 'top' | 'bottom' | string;
   visible?: boolean;
   onBackdropPress?: EventCallback;
 } & BoxProps;
@@ -605,14 +618,14 @@ export type FormProps = {
 
 export type TooltipProps = {
   color?: 'black' | 'white' | ColorValues;
-  position?: 'top' | 'bottom' | 'left' | 'right';
+  position?: 'top' | 'bottom' | 'left' | 'right' | string;
   title?: string;
   visible?: boolean;
 } & BoxProps;
 
 export type AnimationProps = {
   delay?: number;
-  direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+  direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | string;
   from?: JssStyles;
   in?: boolean;
   loop?: boolean | number;
