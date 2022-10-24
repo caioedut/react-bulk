@@ -10,6 +10,7 @@
     ]
   },
   "scripts": {
+    "doc": "yarn --cwd ./docs",
     "example:web": "yarn build && yarn --cwd ./examples/web dev",
     "example:native": "yarn build && yarn --cwd ./examples/native dev",
     "bootstrap": "lerna bootstrap",
