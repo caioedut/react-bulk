@@ -1,6 +1,6 @@
 import React, { useReducer, useRef, useState } from 'react';
 
-import ReactBulk, { useTheme } from '@react-bulk/core';
+import { AnyObject, FormRef, RbkEvent, RbkTheme, useTheme } from '@react-bulk/core';
 import {
   Animation,
   Badge,
@@ -25,7 +25,7 @@ import {
   Table,
   Text,
   Tooltip,
-} from '@react-bulk/native';
+} from '@react-bulk/web';
 
 const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
 const variants = ['solid', 'outline', 'text'];
@@ -44,12 +44,12 @@ const table = [
   { dessert: 'Eclair', calories: '262', fat: '16.0', carbs: '24' },
 ];
 
-const getLabel = (str) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
+const getLabel = (str: string) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 
-function Main() {
-  const theme = useTheme();
+export default function Main() {
+  const theme: RbkTheme = useTheme();
 
-  const timeoutRef = useRef({});
+  const timeoutRef = useRef<any>({});
 
   const [radio, setRadio] = useState('medium');
   const [modal, setModal] = useState({});
@@ -59,11 +59,11 @@ function Main() {
   const [dropdown, toggleDropdown] = useReducer((state) => !state, false);
   const [collpase, toggleCollapse] = useReducer((state) => !state, false);
 
-  const handleSubmitForm = (e, data) => {
+  const handleSubmitForm = (e: FormRef, data: AnyObject) => {
     alert(JSON.stringify(data, null, 2));
   };
 
-  const handleChangeTheme = (e) => {
+  const handleChangeTheme = (e: RbkEvent) => {
     const prop = e.target.name;
     const split = prop.split('.');
     const last = split.pop();
@@ -75,7 +75,7 @@ function Main() {
     }
 
     const data = {};
-    let ref = data;
+    let ref: AnyObject = data;
 
     for (let attr of split) {
       ref[attr] = {};
@@ -430,7 +430,7 @@ function Main() {
             </Box>
             <Box xs={6} md={4}>
               <Text>Rating</Text>
-              <Slider name="rating" label="Rating" min={1} max={5} />
+              <Slider name="rating" min={1} max={5} />
             </Box>
             <Box xs={6} md={4}>
               <Checkbox name="acceptTerms" label="I accept the terms of use." />
@@ -644,6 +644,7 @@ function Main() {
           Animations
         </Text>
         {animations.map((animation, key) => {
+          // @ts-ignore
           const Component = Animation[animation];
 
           return (
@@ -699,13 +700,3 @@ function Main() {
     </Scrollable>
   );
 }
-
-function App() {
-  return (
-    <ReactBulk theme={{ typography: { fontSize: 16 } }}>
-      <Main />
-    </ReactBulk>
-  );
-}
-
-export default App;
