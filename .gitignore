@@ -17,6 +17,8 @@ typings/
 # packs
 .eslintcache
 .expo/
+.docusaurus/
+.cache-loader/
 
 # dependencies
 node_modules/
