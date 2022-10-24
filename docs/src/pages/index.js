@@ -44,7 +44,7 @@ export default function Home() {
           {/*<h1 className="hero__title">{siteConfig.title}</h1>*/}
 
           <h1 className="hero__title">
-            <Logo className={styles.heroLogo} alt="React Bulk" />
+            <Logo className={styles.heroLogo} alt={siteConfig.title} />
           </h1>
 
           <p className={clsx('hero__subtitle', styles.heroSubtitle)}>{siteConfig.tagline}</p>

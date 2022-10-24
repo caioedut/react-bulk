@@ -28,7 +28,7 @@ export default function Home() {
 
 ## Props
 
-Extends all [`Box`](../core/box) properties.
+Extends all [`Box`](/docs/components/core/box) properties.
 
 ### `data`
 
