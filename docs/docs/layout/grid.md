@@ -1,10 +1,6 @@
----
-sidebar_position: 3
----
-
 # Grid
 
-Checkout [Breakpoints](../layout/breakpoints).
+Used to create responsive containers. Checkout [Breakpoints](/docs/layout/breakpoints).
 
 ## Basic Usage
 
@@ -25,7 +21,7 @@ function Home() {
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box) properties.
+Extends all [`Box`](/docs/components/core/box) props.
 
 ### `gap`
 

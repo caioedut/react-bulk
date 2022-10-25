@@ -6,7 +6,9 @@ sidebar_position: 0
 
 Context to manipulate and serialize forms.
 
-## Basic Usage
+## Examples
+
+### Basic
 
 ```jsx live
 function Home() {
@@ -33,51 +35,43 @@ function Home() {
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box) properties.
+Extends all [`Box`](/docs/components/core/box) props.
 
-### `data`
+**`data`**
 
 Fill inputs with these values.
 
-| Type     |
-|----------|
-| `object` |
+➤ Type: **`object`** <br/>
 
 ---
 
-## Event Props
+## Events
 
-### `onSubmit`
+**`onSubmit`**
 
-| Type                      |
-|---------------------------|
-| `Function(formRef, data)` |
+➤ Type: **`Function(FormRef, data)`** <br/>
 
 ---
 
-### `onCancel`
+**`onCancel`**
 
-| Type                |
-|---------------------|
-| `Function(formRef)` |
+➤ Type: **`Function(FormRef)`** <br/>
 
 ---
 
-### `onClear`
+**`onClear`**
 
-| Type                      |
-|---------------------------|
-| `Function(formRef, data)` |
+➤ Type: **`Function(FormRef, data)`** <br/>
 
 ## Reference
 
-### target : `ReactNode`
+**target : `ReactNode`**
 
 `ref.current.target`
 
 ---
 
-### submit()
+**submit()**
 
 Dispatch `onSubmit` handler.
 
@@ -85,7 +79,7 @@ Dispatch `onSubmit` handler.
 
 ---
 
-### cancel()
+**cancel()**
 
 Dispatch `onCancel` handler.
 
@@ -93,7 +87,7 @@ Dispatch `onCancel` handler.
 
 ---
 
-### clear()
+**clear()**
 
 Reset fields and dispatch `onClear` handler.
 
@@ -101,31 +95,31 @@ Reset fields and dispatch `onClear` handler.
 
 ---
 
-### getData() : `object`
+**getData() : `object`**
 
 `ref.current.getData()`
 
 ---
 
-### setData(data: `object`)
+**setData(data: `object`)**
 
 `ref.current.setData({ age: 21 })`
 
 ---
 
-### getValue(name: `string`) : `any`
+**getValue(name: `string`) : `any`**
 
 `ref.current.getValue('age')`
 
 ---
 
-### setValue(name: `string`, value: `any`)
+**setValue(name: `string`, value: `any`)**
 
 `ref.current.setValue('age', '21')`
 
 ---
 
-### getField(name: `string`) : `{ name: string, get: Function, set: Function }`
+**getField(name: `string`) : `{ name: string, get: Function, set: Function }`**
 
 Commonly used by libraries that implements some components. Maybe you are looking for [`getValue`](#getValue).
 
@@ -133,7 +127,7 @@ Commonly used by libraries that implements some components. Maybe you are lookin
 
 ---
 
-### setField(data: `object`)
+**setField(data: `object`)**
 
 Commonly used by libraries that implements some components. Maybe you are looking for [`setValue`](#setValue).
 
@@ -149,7 +143,7 @@ ref.current.setField({
 
 ---
 
-### unsetField(name: `string`)
+**unsetField(name: `string`)**
 
 Commonly used by libraries that implements some components. Remove the field from `Form` track.
 
