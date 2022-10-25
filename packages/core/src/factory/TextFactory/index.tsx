@@ -61,7 +61,7 @@ function TextFactory({ stylist, map, innerRef, ...props }: FactoryProps & TextPr
       variant === 'caption' && { fontSize: theme.rem(0.75) },
 
       size && { fontSize: theme.rem(size) },
-      weight && { fontWeight: weight },
+      weight && { fontWeight: `${weight}` },
 
       typeof center === 'boolean' && { textAlign: center ? 'center' : native ? 'auto' : 'initial' },
       typeof left === 'boolean' && { textAlign: left ? 'left' : native ? 'auto' : 'initial' },
