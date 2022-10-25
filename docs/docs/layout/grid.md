@@ -2,19 +2,14 @@
 sidebar_position: 3
 ---
 
-import Code from '@site/src/components/Code';
-import { Box, Grid, Text } from '@react-bulk/web';
-
 # Grid
 
 Checkout [Breakpoints](../layout/breakpoints).
 
 ## Basic Usage
 
-```jsx
-import { Box, Grid } from '@react-bulk/web' // or @react-bulk/native;
-
-export default function Home() {
+```jsx live
+function Home() {
   return (
     <Grid size={12}>
       <Box xs={12} md={6}>
@@ -27,17 +22,6 @@ export default function Home() {
   );
 }
 ```
-
-<Code>
-  <Grid size={12}>
-    <Box xs={12} md={6}>
-      <Text>Hello World!</Text>
-    </Box>
-    <Box xs={12} md={6}>
-      <Text>Welcome!</Text>
-    </Box>
-  </Grid>
-</Code>
 
 ## Props
 

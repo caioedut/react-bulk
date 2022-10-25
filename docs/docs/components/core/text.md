@@ -1,25 +1,26 @@
-import Code from '@site/src/components/Code';
-import { Text } from '@react-bulk/web';
-
 # Text
 
 A extensible text component.
 
 ## Basic Usage
 
-```jsx
-import { Text } from '@react-bulk/web' // or @react-bulk/native;
-
-export default function Home() {
+```jsx live
+function Home() {
   return (
-    <Text bold>Hello World!</Text>
+    <Grid gap={3} center>
+      <Text bold>Hello World!</Text>
+      <Text color="primary">Primary Color</Text>
+      <Text color="secondary">Secondary Color</Text>
+      <Text color="text.primary">Primary Text Color</Text>
+      <Text color="text.secondary">Secondary Text Color</Text>
+      <Text color="#ff0000">Hex Color</Text>
+      <Text variant="title">Title</Text>
+      <Text variant="subtitle">Subtitle</Text>
+      <Text variant="caption">Caption</Text>
+    </Grid>
   );
 }
 ```
-
-<Code>
-  <Text bold>Hello World!</Text>
-</Code>
 
 ## Props
 
