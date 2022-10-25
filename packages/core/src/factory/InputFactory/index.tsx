@@ -39,6 +39,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     selectionColor,
     size,
     startIcon,
+    textColor,
     type,
     unmask,
     value,
@@ -226,9 +227,11 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
         paddingHorizontal: spacing,
       },
 
-      web && { paddingVertical: spacing * 2 },
-
       multiline && { height },
+
+      textColor && { color: textColor },
+
+      web && { paddingVertical: spacing * 2 },
 
       web && { caretColor: caretHidden ? theme.colors.common.trans : selectionColor },
 
