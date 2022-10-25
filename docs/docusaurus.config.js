@@ -76,7 +76,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       liveCodeBlock: {
-        playgroundPosition: 'bottom',
+        playgroundPosition: 'top',
       },
     }),
 };

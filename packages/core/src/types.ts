@@ -429,7 +429,8 @@ export type ButtonProps = FormControlProps & {
   variant?: 'solid' | 'outline' | 'text' | string;
   // Styles
   contentStyle?: JssStyles;
-} & FocusableProps &
+} & PressableProps &
+  FocusableProps &
   BoxProps;
 
 export type ButtonGroupProps = {
