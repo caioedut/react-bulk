@@ -540,8 +540,11 @@ const base: ThemeProps & any = {
       Input: {
         name: 'rbk-input',
         defaultProps: {
+          autoCapitalize: 'none',
           color: 'primary',
+          returnKeyType: 'default',
           size: 'medium',
+          type: 'text',
         },
         defaultStyles: {
           root: {

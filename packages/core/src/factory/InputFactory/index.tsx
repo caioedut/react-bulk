@@ -20,6 +20,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
   // Extends from default props
   let {
+    autoCapitalize,
     autoCorrect,
     caretHidden,
     color,
@@ -84,9 +85,11 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
   selectionColor = theme.color(selectionColor ?? color);
   placeholderColor = theme.hex2rgba(placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary', 0.4);
+  autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
 
   if (web) {
     Object.assign(rest, {
+      autoCapitalize,
       autoCorrect: autoCorrect ? 'on' : 'off',
       enterKeyHint: returnKeyType,
       disabled,
@@ -104,6 +107,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
   if (native) {
     Object.assign(rest, {
+      autoCapitalize,
       autoCorrect,
       caretHidden,
       multiline,
