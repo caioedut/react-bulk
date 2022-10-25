@@ -8,19 +8,24 @@ Context to manipulate and serialize forms.
 
 ## Basic Usage
 
-```jsx
-import { Button, Form, Input } from '@react-bulk/web' // or @react-bulk/native;
-
-export default function Home() {
-
+```jsx live
+function Home() {
   function handleSubmit(event, data) {
-    alert('Your name is ' + data.name)
+    alert(`Your name is "${data.name || ''}"`);
+  }
+
+  function handleCancel(event, data) {
+    alert('Cancelled!');
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Input name="name" label="Full Name" />
-      <Button type="submit">Submit</Button>
+    <Form onSubmit={handleSubmit} onCancel={handleCancel}>
+      <Input name="name" label="Full Name" placeholder="Type your full name" />
+      <Box row noWrap justifyContent="end" mt={3}>
+        <Button type="cancel" variant="outline" ml={3}>Cancel</Button>
+        <Button type="clear" variant="outline" ml={3}>Clear</Button>
+        <Button type="submit" ml={3}>Submit</Button>
+      </Box>
     </Form>
   );
 }

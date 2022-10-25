@@ -4,36 +4,30 @@ It is the primary component, factory for everything. All components extend the B
 
 ## Basic Usage
 
-```jsx
-import { Box } from '@react-bulk/web' // or @react-bulk/native;
-
-export default function Home() {
+```jsx live
+function Home() {
   return (
-    <Box>Hello World!</Box>
+    <Box border="1px solid secondary" corners={2} p={3}>Hello World!</Box>
   );
 }
 ```
 
 ## Custom Component
 
-```jsx
-import { Box } from '@react-bulk/web' // or @react-bulk/native;
+```jsx live
+function Home() {
+  const Link = ({ to, ...rest }) => {
+      return <a href={to} {...rest} />;
+  };
 
-function Link({ to, ...rest }) {
-    return (
-        <a href={to} {...rest} />
-    )
-}
-
-export default function Home() {
   return (
     <Box>
-        <Box component="b">
-            Hello World!
-        </Box>
-        <Box component={Link} to="/about">
-            Click here!
-        </Box>
+      <Box component="b">
+        Hello World!
+      </Box>
+      <Box component={Link} to="#custom-component">
+        Click here!
+      </Box>
     </Box>
   );
 }
