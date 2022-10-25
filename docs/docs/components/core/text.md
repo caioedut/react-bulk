@@ -1,155 +1,163 @@
 # Text
 
-A extensible text component.
+```jsx live
+<Text>Hello World!</Text>
+```
 
-## Basic Usage
+## Examples
+
+### Basic
 
 ```jsx live
-function Home() {
-  return (
-    <Grid gap={3} center>
-      <Text bold>Hello World!</Text>
-      <Text color="primary">Primary Color</Text>
-      <Text color="secondary">Secondary Color</Text>
-      <Text color="text.primary">Primary Text Color</Text>
-      <Text color="text.secondary">Secondary Text Color</Text>
-      <Text color="#ff0000">Hex Color</Text>
-      <Text variant="title">Title</Text>
-      <Text variant="subtitle">Subtitle</Text>
-      <Text variant="caption">Caption</Text>
-    </Grid>
-  );
-}
+<Box center>
+  <Text bold>Hello World!</Text>
+  <Text color="primary">Primary Color</Text>
+  <Text color="secondary">Secondary Color</Text>
+  <Text color="text.primary">Primary Text Color</Text>
+  <Text color="text.secondary">Secondary Text Color</Text>
+  <Text color="#ff0000">Hex Color</Text>
+</Box>
+```
+
+### Variants
+
+```jsx live
+<Box center>
+  <Text variant="h1">H1</Text>
+  <Text variant="h2">H2</Text>
+  <Text variant="h3">H3</Text>
+  <Text variant="h4">H4</Text>
+  <Text variant="h5">H5</Text>
+  <Text variant="h6">H6</Text>
+  <Text variant="title">Title</Text>
+  <Text variant="subtitle">Subtitle</Text>
+  <Text variant="caption">Caption</Text>
+</Box>
+```
+
+### Sizes
+
+The set value will be multiplied by the `theme.typography.fontSize` value.
+
+```jsx live
+<Box center>
+  <Text size={1}>Default Size</Text>
+  <Text size={2}>Double</Text>
+  <Text size={1.5}>One and a half</Text>
+</Box>
 ```
 
 ## Props
 
 Extends all [`Box`](/docs/components/core/box) properties.
 
-### `bold`
+**`bold`**
 
 Sets `fontWeight` style to `bold`.
 
-| Type      |
-|-----------|
-| `boolean` |
+➤ Type: **`boolean`** <br/>
 
 ---
 
-### `color`
+**`color`**
 
 Sets `color` style.
 
-| Type     | Default     |
-|----------|-------------|
-| `string` | `'primary'` |
+➤ Type: **`string`** <br/>
+➤ Default: **`'primary'`** <br/>
 
 ---
 
-### `center`
+**`center`**
 
 Sets `textAlign` style to `center`.
 
-| Type      |
-|-----------|
-| `boolean` |
+➤ Type: **`boolean`** <br/>
 
 ---
 
-### `italic`
+**`italic`**
 
 Sets `fontStyle` style to `italic`.
 
-| Type      |
-|-----------|
-| `boolean` |
+➤ Type: **`boolean`** <br/>
 
 ---
 
-### `justify`
+**`justify`**
 
 Sets `textAlign` style to `justify`.
 
-| Type      |
-|-----------|
-| `boolean` |
+➤ Type: **`boolean`** <br/>
 
 ---
 
-### `left`
+**`left`**
 
 Sets `textAlign` style to `left`.
 
-| Type      |
-|-----------|
-| `boolean` |
+➤ Type: **`boolean`** <br/>
 
 ---
 
-### `numberOfLines`
+**`numberOfLines`**
 
 Sets the maximun lines of text.
 
-| Type     |
-|----------|
-| `number` |
+➤ Type: **`number`** <br/>
 
 ---
 
-### `right`
+**`right`**
 
 Sets `textAlign` style to `right`.
 
-| Type      |
-|-----------|
-| `boolean` |
+➤ Type: **`boolean`** <br/>
 
 ---
 
-### `smallCaps`
+**`smallCaps`**
 
 Sets `fontVariant` style to `small-caps`.
 
-| Type      |
-|-----------|
-| `boolean` |
+➤ Type: **`boolean`** <br/>
 
 ---
 
-### `size`
+**`size`**
 
 Sets `fontSize` style. The set value will be multiplied by the `theme.typography.fontSize` value.
 
-| Type     |
-|----------|
-| `number` |
+➤ Type: **`number`** <br/>
 
 ---
 
-### `transform`
+**`transform`**
 
 Sets `textTransform` style.
 
-| Type                                                              |
-|-------------------------------------------------------------------|
-| `enum('none', 'captalize', 'uppercase', lowercase', 'full-width)` |
+➤ Type: **`'none'` `'captalize'` `'uppercase'` `'lowercase'` `'full-width'`** <br/>
 
 ---
 
-### `variant`
+**`variant`**
 
-| Type                                                                       |
-|----------------------------------------------------------------------------|
-| `enum('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'title', 'subtitle', 'caption')` |
+➤ Type: **`'h1'` `'h2'` `'h3'` `'h4'` `'h5'` `'h6'` `'title'` `'subtitle'` `'caption'`** <br/>
 
 ---
 
-### `weight`
+**`weight`**
 
 Sets `fontWeight` style.
 
-| Type                                                                                    |
-|-----------------------------------------------------------------------------------------|
-| `enum('normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900')` |
+➤ Type: **`'normal'` `'bold'` `'100'` `'200'` `'300'` `'400'` `'500'` `'600'` `'700'` `'800'` `'900'`** <br/>
+
+---
+
+## Styles
+
+**`style`** to the input element.
+
+➤ Type: **`RbkStyle`** <br/>
 
 ---

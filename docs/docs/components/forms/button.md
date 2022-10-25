@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Button
 
 ```jsx live
@@ -6,10 +10,20 @@
 
 ## Examples
 
-### Basic
+### Variants
 
 ```jsx live
-<Button onPress={() => alert('Hello!')}>Button</Button>
+<Grid column center gap={3}>
+  <Box>
+    <Button variant="solid">Solid</Button>
+  </Box>
+  <Box>
+    <Button variant="outline">Outline</Button>
+  </Box>
+  <Box>
+    <Button variant="text">Text</Button>
+  </Box>
+</Grid>
 ```
 
 ### Sizes
@@ -30,22 +44,6 @@
   </Box>
   <Box>
     <Button size="xlarge">Button</Button>
-  </Box>
-</Grid>
-```
-
-### Variants
-
-```jsx live
-<Grid column center gap={3}>
-  <Box>
-    <Button variant="solid">Solid</Button>
-  </Box>
-  <Box>
-    <Button variant="outline">Outline</Button>
-  </Box>
-  <Box>
-    <Button variant="text">Text</Button>
   </Box>
 </Grid>
 ```
@@ -77,6 +75,8 @@ function Home () {
 
 ### Group and Toggle
 
+[Learn more about `ButtonGroup`](/docs/components/forms/button-group).
+
 ```jsx live
 function Home() {
   const [state, setState] = useState('edit');
@@ -96,8 +96,6 @@ function Home() {
 
 ## Props
 
-### Button
-
 Button extends all [`Box`](/docs/components/core/box) props.
 
 **`autoFocus`**
@@ -105,7 +103,7 @@ Button extends all [`Box`](/docs/components/core/box) props.
 If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 ➤ Type: **`boolean`** <br/>
-➤ Default: **`false`**
+➤ Default: **`false`** <br/>
 
 ---
 
@@ -113,10 +111,6 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 ➤ Type: **`number`, [`BadgeProps`](/docs/components/data-display/badge#props)** <br/>
 ➤ Default: **`false`**
-
-| Type                              |
-|-----------------------------------|
-| `number`, [Badge Props](Badge.md) |
 
 ---
 
@@ -129,7 +123,7 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 **`contentStyle`**
 
-➤ Type: **`object`, `array`** <br/>
+➤ Type: **`object` `array`** <br/>
 
 ---
 
@@ -142,7 +136,7 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 **`endIcon`**
 
-➤ Type: **`string`, `ReactNode`** <br/>
+➤ Type: **`string` `ReactNode`** <br/>
 
 ---
 
@@ -158,7 +152,7 @@ For web only.
 
 Alias for `startIcon`.
 
-➤ Type: **`string`, `ReactNode`** <br/>
+➤ Type: **`string` `ReactNode`** <br/>
 
 ---
 
@@ -179,7 +173,7 @@ Render text label as child.
 
 **`labelStyle`**
 
-➤ Type: **`object`, `array`** <br/>
+➤ Type: **`object` `array`** <br/>
 
 ---
 
@@ -192,14 +186,14 @@ Render text label as child.
 
 **`size`**
 
-➤ Type: **`'small' | 'medium' | 'large' | 'xlarge'`** <br/>
+➤ Type: **`'small'` `'medium'` `'large'` `'xlarge'`** <br/>
 ➤ Default: **`medium`**
 
 ---
 
 **`startIcon`**
 
-➤ Type: **`string`, `ReactNode`** <br/>
+➤ Type: **`string` `ReactNode`** <br/>
 
 ---
 
@@ -207,21 +201,31 @@ Render text label as child.
 
 Sets `textTransform` style for label.
 
-➤ Type: **`'none' | 'captalize' | 'uppercase' | 'lowercase' | 'full-width'`** <br/>
+➤ Type: **`'none'` `'captalize'` `'uppercase'` `'lowercase'` `'full-width'`** <br/>
 
 ---
 
 **`type`**
 
-➤ Type: **`'button' | 'submit' | 'cancel' | 'clear'`** <br/>
+➤ Type: **`'button'` `'submit'` `'cancel'` `'clear'`** <br/>
 ➤ Default: **`button`**
 
 ---
 
 **`variant`**
 
-➤ Type: **`'solid' | 'outline' | 'text'`** <br/>
+➤ Type: **`'solid'` `'outline'` `'text'`** <br/>
 ➤ Default: **`solid`**
+
+---
+
+## Styles
+
+**`style`** to the button element.
+
+**`contentStyle`** to the wrapper of children or label.
+
+➤ Type: **`RbkStyle`** <br/>
 
 ---
 
@@ -255,3 +259,4 @@ Sets `textTransform` style for label.
 
 ➤ Type: **`Function(RbkEvent)`** <br/>
 
+---
