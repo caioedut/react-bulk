@@ -1,272 +1,61 @@
+---
+sidebar_position: 1
+---
+
 # Box
 
-It is the primary component, factory for everything. All components extend the Box.
+It is the primary component, factory for everything. All components extend the [`Box`](/docs/components/core/box).
 
-## Basic Usage
-
-```jsx
-import { Box } from '@react-bulk/web' // or @react-bulk/native;
-
-export default function Home() {
-  return (
-    <Box>Hello World!</Box>
-  );
-}
+```jsx live
+<Box>Hello World!</Box>
 ```
 
-## Custom Component
+## Examples
 
-```jsx
-import { Box } from '@react-bulk/web' // or @react-bulk/native;
+### Basic
 
-function Link({ to, ...rest }) {
-    return (
-        <a href={to} {...rest} />
-    )
-}
+```jsx live
+<Grid column center gap={3}>
+  <Box>
+    <Box border p={3}>Styled Box</Box>
+  </Box>
+  <Box>
+    <Box border mx="auto">Styled Box</Box>
+  </Box>
+  <Box>
+    <Box bg="primary">Styled Box</Box>
+  </Box>
+  <Box>
+    <Box border h={80}>Styled Box</Box>
+  </Box>
+  <Box>
+    <Box border="1px solid secondary" corners={2} p={3}>Styled Box</Box>
+  </Box>
+</Grid>
+```
 
-export default function Home() {
+## Component
+
+```jsx live
+function Home() {
+  const Link = ({ to, ...rest }) => {
+      return <a href={to} {...rest} />;
+  };
+
   return (
     <Box>
-        <Box component="b">
-            Hello World!
-        </Box>
-        <Box component={Link} to="/about">
-            Click here!
-        </Box>
+      <Box component="b">
+        Hello World!
+      </Box>
+      <Box component={Link} to="#custom-component">
+        Click here!
+      </Box>
     </Box>
   );
 }
 ```
 
-## Core Props
-
-### `accessibility`
-
-| Type                                                                                                                                                                                                                                                                                             |
-|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `{ accessible: boolean, hint: string, label: string, role: enum('none', 'button', 'link', 'search', 'image', 'alert', 'checkbox', 'combobox', 'menu', 'menubar', 'menuitem', 'progressbar', 'radio', 'radiogroup', 'scrollbar', 'spinbutton', 'switch', 'tab', 'tablist', 'timer', 'toolbar') }` |
-
----
-
-### `className`
-
-For web only.
-<br/>
-Defines the `class` attribute.
-
-| Type     |
-|----------|
-| `string` |
-
----
-
-### `component`
-
-Defines which element will be rendered.
-
-| Type                  | Default (Web) | Default (Native) |
-|-----------------------|---------------|------------------|
-| `string`, `Component` | `'div'`       | `View`           |
-
----
-
-### `componentProps`
-
-Pass raw props to the `component` prop.
-
-| Type     |
-|----------|
-| `object` |
-
----
-
-### `noRootStyles`
-
-Does not applies the box default styles (flexbox).
-
-| Type      |
-|-----------|
-| `boolean` |
-
----
-
-### `platform`
-
-Apply props for a specific platform. For example:
-```jsx
-<Box
-  platform={{
-    web: { type: 'password' },
-    native: { secureTextEntry: true },
-  }}
-/>
-```
-
-| Type                                                            |
-|-----------------------------------------------------------------|
-| `{ web: object, native: object, ios: object, android: object }` |
-
----
-
-### `rawStyle`
-
-**Web:** create inline styles.<br/>
-**Native:** priorize styles.
-
-| Type              |
-|-------------------|
-| `object`, `array` |
-
----
-
-### `style`
-
-| Type              |
-|-------------------|
-| `object`, `array` |
-
-## Flexbox Container Props
-
-### `center`
-
-Sets `justifyContent`, `justifyItems`, `alignContent` and `alignItems` styles to `center`.
-
-| Type      |
-|-----------|
-| `boolean` |
-
----
-
-### `column`
-
-Sets `flexDirection` style to `column`.
-
-| Type      |
-|-----------|
-| `boolean` |
-
----
-
-### `direction`
-
-Sets `flexDirection` style.
-
-| Type                                                     | Default    |
-|----------------------------------------------------------|------------|
-| `enum('row', 'row-reverse', 'column', 'column-reverse')` | `'column'` |
-
----
-
-### `noWrap`
-
-Sets `flexWrap` style to `no-wrap`.
-
-| Type      |
-|-----------|
-| `boolean` |
-
----
-
-### `reverse`
-
-Sets `flexDirection` style to `row-reverse` or `column-reverse`, combined with props `row` or `column`.
-
-| Type      | Default |
-|-----------|---------|
-| `boolean` | `false` |
-
----
-
-### `row`
-
-Sets `flexDirection` style to `row`.
-
-| Type      | Default |
-|-----------|---------|
-| `boolean` | `true`  |
-
----
-
-### `wrap`
-
-Sets `flexWrap` style. When `boolean`, the value will be `'wrap'`.
-
-| Type                                                |
-|-----------------------------------------------------|
-| `boolean`, `enum('wrap', 'nowrap', 'wrap-reverse')` |
-
-## Flexbox Child Props
-
-### `align`
-
-Sets `alignSelf` style.
-
-| Type                                                  |
-|-------------------------------------------------------|
-| `enum('flex-start', 'flex-end', 'center', 'stretch')` |
-
----
-
-### `basis`
-
-Sets `flexBasis` style.
-
-| Type                         |
-|------------------------------|
-| `'auto'`, `string`, `number` |
-
----
-
-### `flex`
-
-Sets `flex` style to `1`.
-
-| Type      |
-|-----------|
-| `boolean` |
-
----
-
-### `grow`
-
-Sets `flexGrow` style.
-
-| Type     |
-|----------|
-| `number` |
-
----
-
-### `justify`
-
-Sets `justifySelf` style.
-
-| Type                                                                                                   |
-|--------------------------------------------------------------------------------------------------------|
-| `enum('flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly', 'stretch')` |
-
----
-
-### `order`
-
-Sets `order` style.
-
-| Type     |
-|----------|
-| `number` |
-
----
-
-### `shrink`
-
-Sets `flexShrink` style.
-
-| Type     |
-|----------|
-| `number` |
-
-## Positioning and Spacing Props
+## Positioning & Spacing
 
 Sets style as described below. Combinations are valid.
 When `number` value, it will be multiplied by the `theme.shape.spacing` value.
@@ -297,23 +86,302 @@ Examples:
 <Box ph="16px" /> // paddingHorizontal: '16px' (on web, sets paddingLeft and paddingRight)
 ```
 
-| Type               |
-|--------------------|
-| `number`, `string` |
+➤ Type: **`number` `string`** <br/>
 
-## Custom Style Props
+## Props
 
-### `bg`
+### Core
 
-Sets `backgroundColor` style.
+**`className`**
 
-| Type     |
-|----------|
-| `string` |
+For web only. <br/>
+Defines the `class` attribute.
+
+➤ Type: **`string`** <br/>
 
 ---
 
-### `border`
+**`component`**
+
+Defines which element will be rendered.
+
+➤ Type: **`string` `Component`** <br/>
+➤ Default Web: **`'div'`** <br/>
+➤ Default Native: **`View`** <br/>
+
+---
+
+**`componentProps`**
+
+Pass raw props to the `component` prop.
+
+➤ Type: **`object`** <br/>
+
+---
+
+**`hidden`**
+
+Fully hide element
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+**`invisible`**
+
+Hides element but keeps its box sizes
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+**`noRootStyles`**
+
+Does not applies the box default styles (flexbox).
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+**`platform`**
+
+Apply props for a specific platform. For example:
+
+```jsx
+<Box
+  platform={{
+    web: { type: 'password' },
+    native: { secureTextEntry: true },
+  }}
+/>
+```
+
+➤ Type: **`object`** <br/>
+
+```js
+{
+  web: object
+  native: object
+  ios: object
+  android: object
+}
+```
+
+---
+
+**`rawStyle`**
+
+**Web:** create inline styles.<br/>
+**Native:** priorize styles.
+
+➤ Type: **`object` `array`** <br/>
+
+---
+
+### Accessibility
+
+**`accessibility`**
+
+➤ Type: **`object`** <br/>
+
+```js
+{
+  accessible: boolean
+  hint: string
+  label: string
+  role: 'none' | 'button' | 'link'
+        | 'search' | 'image' | 'alert'
+        | 'checkbox' | 'combobox' | 'menu'
+        | 'menubar' | 'menuitem' | 'progressbar'
+        | 'radio' | 'radiogroup' | 'scrollbar'
+        | 'spinbutton' | 'switch' | 'tab'
+        | 'tablist' | 'timer' | 'toolbar'
+  state: {
+    busy: boolean
+    checked: boolean
+    disabled: boolean
+    expanded: boolean
+    selected: boolean
+  }
+  value: {
+    max: number
+    min: number
+    now: number
+    text: string
+  }
+}
+```
+
+---
+
+### Flexbox Container
+
+**`alignContent`**
+
+Sets `alignContent` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'`** <br/>
+➤ Default: **`'flex-start'`** <br/>
+
+---
+
+**`alignItems`**
+
+Sets `alignItems` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'` `'baseline'`** <br/>
+➤ Default: **`'stretch'`** <br/>
+
+---
+
+**`center`**
+
+Sets `justifyContent`, `justifyItems`, `alignContent` and `alignItems` styles to `center`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+**`column`**
+
+Sets `flexDirection` style to `column`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+**`direction`**
+
+Sets `flexDirection` style.
+
+➤ Type: **`'row'` `'row-reverse'` `'column'` `'column-reverse'`** <br/>
+➤ Default: **`'column'`** <br/>
+
+---
+
+**`justifyContent`**
+
+Sets `justifyContent` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'` `'space-between'` `'space-around'` `'space-evenly'`** <br/>
+➤ Default: **`'flex-start'`** <br/>
+
+---
+
+**`justifyItems`**
+
+Sets `justifyItems` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'` `'space-between'` `'space-around'` `'space-evenly'`** <br/>
+➤ Default: **`'flex-start'`** <br/>
+
+---
+
+**`noWrap`**
+
+Sets `flexWrap` style to `no-wrap`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+**`reverse`**
+
+Sets `flexDirection` style to `row-reverse` or `column-reverse`, combined with props `row` or `column`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+**`row`**
+
+Sets `flexDirection` style to `row`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+**`wrap`**
+
+Sets `flexWrap` style. When `boolean`, the value will be `'wrap'`.
+
+➤ Type: **`boolean` `'wrap'` `'nowrap'` `'wrap-reverse'`** <br/>
+➤ Default: **`'nowrap'`** <br/>
+
+### Flexbox Child
+
+**`align`**
+
+Sets `alignSelf` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'`** <br/>
+
+---
+
+**`basis`**
+
+Sets `flexBasis` style.
+
+➤ Type: **`'auto'` `string` `number`** <br/>
+
+---
+
+**`flex`**
+
+Sets `flex` style to `1`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+**`grow`**
+
+Sets `flexGrow` style.
+
+➤ Type: **`number`** <br/>
+
+---
+
+**`justify`**
+
+Sets `justifySelf` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'space-between'` `'space-around'` `'space-evenly'` `'stretch'`** <br/>
+
+---
+
+**`order`**
+
+Sets `order` style.
+
+➤ Type: **`number`** <br/>
+
+---
+
+**`shrink`**
+
+Sets `flexShrink` style.
+
+➤ Type: **`number`** <br/>
+➤ Default: **`0`** <br/>
+
+## Styles
+
+**`style`** to the current element.
+
+➤ Type: **`RbkStyle`** <br/>
+
+---
+
+**`bg`**
+
+Sets `backgroundColor` style.
+
+➤ Type: **`string`** <br/>
+
+---
+
+**`border`**
 
 Sets `borderWidth`, `borderStyle` and `borderColor` styles. For example:
 ```jsx
@@ -323,130 +391,89 @@ Sets `borderWidth`, `borderStyle` and `borderColor` styles. For example:
 <Box border="1px solid purple" />
 ```
 
-| Type                          |
-|-------------------------------|
-| `string`, `number`, `boolean` |
+➤ Type: **`string`, `number`, `boolean`** <br/>
 
 ---
 
-### `corners`
+**`corners`**
 
 Sets `borderRadius` style. The set value will be multiplied by the `theme.shame.borderRadius` value.
 
-| Type     |
-|----------|
-| `number` |
+➤ Type: **`number`** <br/>
 
 ---
 
-### `h`
+**`h`**
 
 Sets `height` style.
 
-| Type               |
-|--------------------|
-| `number`, `string` |
+➤ Type: **`number` `string`** <br/>
 
 ---
 
-### `maxh`
+**`maxh`**
 
 Sets `maxHeight` style.
 
-| Type               |
-|--------------------|
-| `number`, `string` |
+➤ Type: **`number` `string`** <br/>
 
 ---
 
-### `maxw`
+**`maxw`**
 
 Sets `maxWidth` style.
 
-| Type               |
-|--------------------|
-| `number`, `string` |
+➤ Type: **`number` `string`** <br/>
 
 ---
 
-### `minh`
+**`minh`**
 
 Sets `minHeight` style.
 
-| Type               |
-|--------------------|
-| `number`, `string` |
+➤ Type: **`number` `string`** <br/>
 
 ---
 
-### `minw`
+**`minw`**
 
 Sets `minWidth` style.
 
-| Type               |
-|--------------------|
-| `number`, `string` |
+➤ Type: **`number` `string`** <br/>
 
 ---
 
-### `position`
+**`position`**
 
 Sets `position` style.
 
-| Type                           |
-|--------------------------------|
-| `enum('relative', 'absolute')` |
+➤ Type: **`'relative'` `'absolute'`** <br/>
 
 ---
 
-### `w`
+**`w`**
 
 Sets `width` style.
 
-| Type               |
-|--------------------|
-| `number`, `string` |
+➤ Type: **`number` `string`** <br/>
 
-## Other Props
 
-### `hidden`
+## Events
 
-Fully hide element
+**`onPress`**
 
-| Type      |
-|-----------|
-| `boolean` |
+➤ Type: **`Function(RbkEvent)`** <br/>
 
 ---
 
-### `invisible`
+**`onPressIn`**
 
-Hides element but keeps its box sizes
-
-| Type      |
-|-----------|
-| `boolean` |
-
-## Event Props
-
-### `onPress`
-
-| Type              |
-|-------------------|
-| `Function(event)` |
+➤ Type: **`Function(RbkEvent)`** <br/>
 
 ---
 
-### `onPressIn`
+**`onPressOut`**
 
-| Type              |
-|-------------------|
-| `Function(event)` |
+➤ Type: **`Function(RbkEvent)`** <br/>
 
 ---
-
-### `onPressOut`
-
-| Type              |
-|-------------------|
-| `Function(event)` |

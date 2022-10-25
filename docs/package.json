@@ -15,6 +15,7 @@
   "dependencies": {
     "@docusaurus/core": "2.1.0",
     "@docusaurus/preset-classic": "2.1.0",
+    "@docusaurus/theme-live-codeblock": "^2.1.0",
     "@mdx-js/react": "^1.6.22",
     "@react-bulk/core": "latest",
     "@react-bulk/web": "latest",
@@ -39,6 +40,6 @@
     ]
   },
   "engines": {
-    "node": ">=14.19"
+    "node": ">=16.14"
   }
 }

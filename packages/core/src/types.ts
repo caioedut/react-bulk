@@ -429,7 +429,8 @@ export type ButtonProps = FormControlProps & {
   variant?: 'solid' | 'outline' | 'text' | string;
   // Styles
   contentStyle?: JssStyles;
-} & FocusableProps &
+} & PressableProps &
+  FocusableProps &
   BoxProps;
 
 export type ButtonGroupProps = {
@@ -459,6 +460,7 @@ export type InputProps = FormControlProps & {
   returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send' | string;
   secure?: boolean;
   selectionColor?: ColorValues;
+  textColor?: ColorValues;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url' | string;
   unmask?: (InputValue: string, data: AnyObject) => InputValue;
   value?: InputValue;

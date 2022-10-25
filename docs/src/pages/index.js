@@ -19,7 +19,7 @@ const features = [
     image: require('@site/static/img/feature_customizable.png').default,
     description: (
       <>
-        React Bulk allow you to customize all components and defaults using theme. <b>You own your design!</b>
+        React Bulk allow you to customize all components and its defaults using theme. <b>You own your design!</b>
       </>
     ),
   },
