@@ -1,5 +1,7 @@
 # Input
 
+Used to create interactive controls for forms to accept user data.
+
 ```jsx live
 <Input label="Full Name" placeholder="Enter your full name" />
 ```
@@ -82,7 +84,7 @@ function Home () {
 
 ## Props
 
-Input extends all [`Box`](/docs/components/core/box) props.
+Extends all [`Box`](/docs/components/core/box) props.
 
 **`autoCapitalize`**
 
@@ -241,6 +243,13 @@ The highlight and cursor color of the text input.
 **`startIcon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
+
+---
+
+**`textColor`**
+
+➤ Type: **`boolean`** <br/>
+➤ Default: **`'text.primary'`**
 
 ---
 

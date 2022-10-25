@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Breakpoints
 
-Commonly used with [Grid](../layout/grid).
+Used to create responsive design. Commonly used with [Grid](/docs/layout/grid).
 
 ## Default
 

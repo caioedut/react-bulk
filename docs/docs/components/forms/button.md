@@ -4,6 +4,8 @@ sidebar_position: 1
 
 # Button
 
+Allow users to take actions and make choices, with a single tap.
+
 ```jsx live
 <Button>Button</Button>
 ```
@@ -96,21 +98,19 @@ function Home() {
 
 ## Props
 
-Button extends all [`Box`](/docs/components/core/box) props.
+Extends all [`Box`](/docs/components/core/box) props.
 
 **`autoFocus`**
 
 If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 ➤ Type: **`boolean`** <br/>
-➤ Default: **`false`** <br/>
 
 ---
 
 **`badge`**
 
 ➤ Type: **`number`, [`BadgeProps`](/docs/components/data-display/badge#props)** <br/>
-➤ Default: **`false`**
 
 ---
 
@@ -121,16 +121,9 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 ---
 
-**`contentStyle`**
-
-➤ Type: **`object` `array`** <br/>
-
----
-
 **`disabled`**
 
 ➤ Type: **`boolean`** <br/>
-➤ Default: **`false`**
 
 ---
 
@@ -159,7 +152,6 @@ Alias for `startIcon`.
 **`loading`**
 
 ➤ Type: **`boolean`** <br/>
-➤ Default: **`false`**
 
 ---
 
@@ -180,7 +172,6 @@ Render text label as child.
 **`rounded`**
 
 ➤ Type: **`boolean`** <br/>
-➤ Default: **`false`**
 
 ---
 
@@ -223,7 +214,7 @@ Sets `textTransform` style for label.
 
 **`style`** to the button element.
 
-**`contentStyle`** to the wrapper of children or label.
+**`contentStyle`** to the inner wrapper of `children` or `label`.
 
 ➤ Type: **`RbkStyle`** <br/>
 

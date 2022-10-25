@@ -1,4 +1,10 @@
+---
+sidebar_position: 2
+---
+
 # Text
+
+Used to display texts and customize them according to the theme.
 
 ```jsx live
 <Text>Hello World!</Text>
@@ -49,7 +55,7 @@ The set value will be multiplied by the `theme.typography.fontSize` value.
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box) properties.
+Extends all [`Box`](/docs/components/core/box) props.
 
 **`bold`**
 
