@@ -53,6 +53,13 @@ import { Grid } from '@react-bulk/web'; // OR @react-bulk/native
 
 Extends all [`Box`](/docs/components/core/box) props.
 
+**`direction`**
+
+➤ Type: **`'row'` `'column'` `'row-reverse'` `'column-reverse'`** <br/>
+➤ Default: **`'row'`** <br/>
+
+---
+
 **`gap`**
 
 Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.typography.fontSize` value.
