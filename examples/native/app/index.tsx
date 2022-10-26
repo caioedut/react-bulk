@@ -205,58 +205,32 @@ export default function Main() {
           size={5}
         </Text>
         <Grid size={5}>
-          <Box xs={5} md={1}>
-            <Text>
-              Column 1 xs={5} md={1}
-            </Text>
-          </Box>
-          <Box xs={5} md={3}>
-            <Text>
-              Column 2 xs={5} md={3}
-            </Text>
-          </Box>
-          <Box xs={5} md="auto">
-            <Text>Column 3 xs={5} md="flex"</Text>
-          </Box>
+          <Text xs={5} md={1}>
+            Column 1 xs={5} md={1}
+          </Text>
+          <Text xs={5} md={3}>
+            Column 2 xs={5} md={3}
+          </Text>
+          <Text xs={5} md="auto">
+            Column 3 xs={5} md="flex"
+          </Text>
         </Grid>
       </Card>
 
       <Card mt={3}>
-        <Text variant="title" mb={3}>
-          Typography
-        </Text>
-        <Box row alignItems="baseline">
-          <Text mr={3} mt={3} variant="h1">
-            H1
-          </Text>
-          <Text mr={3} mt={3} variant="h2">
-            H2
-          </Text>
-          <Text mr={3} mt={3} variant="h3">
-            H3
-          </Text>
-          <Text mr={3} mt={3} variant="h4">
-            H4
-          </Text>
-          <Text mr={3} mt={3} variant="h5">
-            H5
-          </Text>
-          <Text mr={3} mt={3} variant="h6">
-            H6
-          </Text>
-          <Text mr={3} mt={3} variant="title">
-            Title
-          </Text>
-          <Text mr={3} mt={3} variant="subtitle">
-            Subtitle
-          </Text>
-          <Text mr={3} mt={3} variant="caption">
-            Caption
-          </Text>
-          <Text mr={3} mt={3}>
-            Text
-          </Text>
-        </Box>
+        <Text variant="title">Typography</Text>
+        <Grid alignItems="baseline" gap={3} mt={3}>
+          <Text variant="h1">H1</Text>
+          <Text variant="h2">H2</Text>
+          <Text variant="h3">H3</Text>
+          <Text variant="h4">H4</Text>
+          <Text variant="h5">H5</Text>
+          <Text variant="h6">H6</Text>
+          <Text variant="title">Title</Text>
+          <Text variant="subtitle">Subtitle</Text>
+          <Text variant="caption">Caption</Text>
+          <Text>Text</Text>
+        </Grid>
       </Card>
 
       <ListItem startIcon="❤" endIcon="⚙" chevron mt={3}>
@@ -273,33 +247,31 @@ export default function Main() {
             <Text variant="subtitle" transform="capitalize" mt={3}>
               {variant}
             </Text>
-            <Box row wrap alignItems="center">
-              <Button variant={variant} mr={3} mt={3}>
-                Button
-              </Button>
-              <Button variant={variant} mr={3} mt={3} disabled>
+            <Grid alignItems="center" gap={3} mt={3}>
+              <Button variant={variant}>Button</Button>
+              <Button variant={variant} disabled>
                 Disabled
               </Button>
-              <Button variant={variant} mr={3} mt={3} loading={loading} onPress={toggleLoading}>
+              <Button variant={variant} loading={loading} onPress={toggleLoading}>
                 Loading
               </Button>
-              <Button variant={variant} mr={3} mt={3} icon="⚙" rounded />
-              <Button variant={variant} mr={3} mt={3} startIcon="⚙">
+              <Button variant={variant} icon="⚙" rounded />
+              <Button variant={variant} startIcon="⚙">
                 Start Icon
               </Button>
-              <Button variant={variant} mr={3} mt={3} endIcon="⚙">
+              <Button variant={variant} endIcon="⚙">
                 End Icon
               </Button>
-              <Button variant={variant} mr={3} mt={3} transform="uppercase">
+              <Button variant={variant} transform="uppercase">
                 Transformed
               </Button>
               <Box w="100%" />
               {sizes.map((size) => (
-                <Button key={size} variant={variant} size={size} mr={3} mt={3}>
+                <Button key={size} variant={variant} size={size}>
                   {getLabel(size)}
                 </Button>
               ))}
-            </Box>
+            </Grid>
             <Divider mx={-3} my={3} />
           </Box>
         ))}
@@ -372,25 +344,16 @@ export default function Main() {
         <Text variant="subtitle" mt={3}>
           Checkbox / Radio Button
         </Text>
-        <Box row alignItems="center">
+        <Grid alignItems="center" gap={3}>
           {sizes.map((size) => (
-            <Checkbox key={size} mt={3} mr={3} size={size} label={getLabel(size)} checked={checkbox} onChange={toggleCheckbox} />
+            <Checkbox key={size} size={size} label={getLabel(size)} checked={checkbox} onChange={toggleCheckbox} />
           ))}
-        </Box>
-        <Box row alignItems="center">
+        </Grid>
+        <Grid alignItems="center" gap={3}>
           {sizes.map((size) => (
-            <Checkbox
-              key={size}
-              mt={3}
-              mr={3}
-              size={size}
-              label={getLabel(size)}
-              unique
-              checked={radio === size}
-              onChange={() => setRadio(size)}
-            />
+            <Checkbox key={size} size={size} label={getLabel(size)} unique checked={radio === size} onChange={() => setRadio(size)} />
           ))}
-        </Box>
+        </Grid>
 
         <Divider mt={3} mx={-3} />
 
@@ -444,50 +407,38 @@ export default function Main() {
 
       <Card mt={3}>
         <Text variant="title">Badge</Text>
-        <Box row alignItems="center">
-          <Badge mt={3} mr={3} dot />
-          <Badge mt={3} mr={3} color="warning">
-            2
-          </Badge>
-          <Badge mt={3} mr={3} color="primary">
-            30
-          </Badge>
-          <Badge mt={3} mr={3} color="success">
-            99+
-          </Badge>
-          <Badge mt={3} mr={3}>
-            Large Badge
-          </Badge>
-          <Button mt={3} mr={3} badge={1}>
-            Notifications
-          </Button>
-        </Box>
+        <Grid alignItems="center" gap={3} mt={3}>
+          <Badge dot />
+          <Badge color="warning">2</Badge>
+          <Badge color="primary">30</Badge>
+          <Badge color="success">99+</Badge>
+          <Badge>Large Badge</Badge>
+          <Button badge={1}>Notifications</Button>
+        </Grid>
       </Card>
 
       <Card mt={3}>
-        <Text variant="title" mb={3}>
-          Breakpoints
-        </Text>
-        <Box row wrap>
-          <Button variant="outline" mr={2} style={{ display: 'none', xs: { display: 'flex' } }}>
+        <Text variant="title">Breakpoints</Text>
+        <Grid gap={3} mt={3}>
+          <Button variant="outline" style={{ display: 'none', xs: { display: 'flex' } }}>
             Visible on XS
           </Button>
-          <Button variant="outline" mr={2} style={{ display: 'none', sm: { display: 'flex' } }}>
+          <Button variant="outline" style={{ display: 'none', sm: { display: 'flex' } }}>
             Visible on SM
           </Button>
-          <Button variant="outline" mr={2} style={{ display: 'none', md: { display: 'flex' } }}>
+          <Button variant="outline" style={{ display: 'none', md: { display: 'flex' } }}>
             Visible on MD
           </Button>
-          <Button variant="outline" mr={2} style={{ display: 'none', lg: { display: 'flex' } }}>
+          <Button variant="outline" style={{ display: 'none', lg: { display: 'flex' } }}>
             Visible on LG
           </Button>
-          <Button variant="outline" mr={2} style={{ display: 'none', xl: { display: 'flex' } }}>
+          <Button variant="outline" style={{ display: 'none', xl: { display: 'flex' } }}>
             Visible on XL
           </Button>
-          <Button variant="outline" mr={2} style={{ display: 'none', xxl: { display: 'flex' } }}>
+          <Button variant="outline" style={{ display: 'none', xxl: { display: 'flex' } }}>
             Visible on XXL
           </Button>
-        </Box>
+        </Grid>
       </Card>
 
       <Card mt={3}>
@@ -551,26 +502,14 @@ export default function Main() {
       </Card>
 
       <Card mt={3}>
-        <Text variant="title" mb={3}>
-          Modals
-        </Text>
-        <Box row>
-          <Button mr={2} onPress={() => setModal({ visible: true, valign: 'top' })}>
-            Top
-          </Button>
-          <Button mr={2} onPress={() => setModal({ visible: true, valign: 'bottom' })}>
-            Bottom
-          </Button>
-          <Button mr={2} onPress={() => setModal({ visible: true, valign: 'center' })}>
-            Center
-          </Button>
-          <Button mr={2} onPress={() => setModal({ visible: true, halign: 'left' })}>
-            Left
-          </Button>
-          <Button mr={2} onPress={() => setModal({ visible: true, halign: 'right' })}>
-            Right
-          </Button>
-        </Box>
+        <Text variant="title">Modals</Text>
+        <Grid gap={3} mt={3}>
+          <Button onPress={() => setModal({ visible: true, valign: 'top' })}>Top</Button>
+          <Button onPress={() => setModal({ visible: true, valign: 'bottom' })}>Bottom</Button>
+          <Button onPress={() => setModal({ visible: true, valign: 'center' })}>Center</Button>
+          <Button onPress={() => setModal({ visible: true, halign: 'left' })}>Left</Button>
+          <Button onPress={() => setModal({ visible: true, halign: 'right' })}>Right</Button>
+        </Grid>
         <Modal {...modal} onBackdropPress={() => setModal((current) => ({ ...current, visible: false }))}>
           <Card m={3} maxw={300}>
             <Text bold size={1.25}>
@@ -653,22 +592,16 @@ export default function Main() {
                 <Text variant="subtitle" mb={3}>
                   {animation}
                 </Text>
-                <Grid noWrap gap={6} alignItems="center">
-                  <Box>
-                    <Component loop in>
-                      <Progress />
-                    </Component>
-                  </Box>
-                  <Box>
-                    <Component loop in>
-                      <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-                    </Component>
-                  </Box>
-                  <Box>
-                    <Component loop in>
-                      <Text>Anything</Text>
-                    </Component>
-                  </Box>
+                <Grid noWrap alignItems="center" gap={6}>
+                  <Component loop in>
+                    <Progress />
+                  </Component>
+                  <Component loop in>
+                    <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+                  </Component>
+                  <Component loop in>
+                    <Text>Anything</Text>
+                  </Component>
                 </Grid>
               </Box>
               <Divider my={3} />

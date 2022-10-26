@@ -187,7 +187,7 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
   return (
     <Component ref={innerRef} {...rest} {...componentProps}>
       {React.Children.map(children, (child) => {
-        if ([undefined, null, false, NaN].includes(child)) {
+        if (!child && !['string', 'number'].includes(typeof child)) {
           return null;
         }
 

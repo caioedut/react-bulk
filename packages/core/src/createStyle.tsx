@@ -4,7 +4,6 @@ import css from './styles/css';
 import jss from './styles/jss';
 import { ThemeProps } from './types';
 import crypt from './utils/crypt';
-import uuid from './utils/uuid';
 
 export type createStyle = {
   name?: string;
@@ -24,11 +23,11 @@ export default function createStyle({ name, style, theme, global }: createStyle)
   const styleX = isObject ? jss({ theme }, style) : style;
   const isEmpty = (isObject ? Object.keys(styleX) : `${styleX || ''}`.trim()).length === 0;
 
-  const id = name ?? 'rbk-' + crypt(isObject ? JSON.stringify(styleX) : uuid());
-
   if (isEmpty) {
     return native ? {} : '';
   }
+
+  const id = name ?? 'rbk-' + crypt(isObject ? JSON.stringify(styleX) : styleX);
 
   if (web) {
     const element = document.getElementById(id) || document.createElement('style');
@@ -40,7 +39,6 @@ export default function createStyle({ name, style, theme, global }: createStyle)
 
     if (element.textContent !== cssStyle) {
       element.id = id;
-      element.className = 'rbk-style';
       element.textContent = cssStyle;
     }
 

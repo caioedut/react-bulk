@@ -3,13 +3,13 @@ import React from 'react';
 import { useTheme } from '../../ReactBulk';
 import factory2 from '../../props/factory2';
 import { BadgeProps, FactoryProps } from '../../types';
-import useStylist from '../../useStylist';
+import pick from '../../utils/pick';
 import TextFactory from '../TextFactory';
 
 function BadgeFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & BadgeProps) {
   const theme = useTheme();
   const options = theme.components.Badge;
-  const { native, Text } = map;
+  const { Text } = map;
 
   // Extends from default props
   let {
@@ -23,52 +23,53 @@ function BadgeFactory({ stylist, children, map, innerRef, ...props }: FactoryPro
     value,
     // Styles,
     variants,
+    style,
     ...rest
   } = factory2(props, options);
 
+  if (typeof size === 'string') {
+    size = pick(size, 'medium', {
+      xsmall: 0.625,
+      small: 0.75,
+      medium: 1,
+      large: 1.25,
+      xlarge: 1.625,
+    });
+  }
+
   const absolute = top || bottom || left || right;
-  const baseSize = size === 'small' ? theme.rem(1) : size === 'large' ? theme.rem(1.5) : theme.rem(1.25);
-  const halfBaseSize = baseSize / 2;
+  const fontSize = theme.rem(size);
+  const baseSize = theme.rem(1.25, fontSize);
+  const halfSize = baseSize / 2;
 
-  const styleState = useStylist({
-    style: [
-      {
-        backgroundColor: color,
-        borderRadius: halfBaseSize,
-      },
+  style = [
+    {
+      backgroundColor: color,
+      borderColor: color,
+      borderRadius: halfSize,
+      fontSize: halfSize,
+    },
 
-      absolute && {
-        position: 'absolute',
-        borderWidth: 1,
-        borderColor: theme.colors.background.primary,
-        borderStyle: 'solid',
-      },
+    absolute && {
+      position: 'absolute',
+      borderColor: theme.colors.background.primary,
+    },
 
-      top && { top: -halfBaseSize },
-      bottom && { bottom: -halfBaseSize },
-      left && { left: -halfBaseSize },
-      right && { right: -halfBaseSize },
+    !dot && {
+      minHeight: baseSize,
+      minWidth: baseSize,
+    },
 
-      dot && {
-        borderRadius: halfBaseSize / 2,
-        height: halfBaseSize,
-        width: halfBaseSize,
-      },
+    top && { top: -halfSize },
+    bottom && { bottom: -halfSize },
+    left && { left: -halfSize },
+    right && { right: -halfSize },
 
-      !dot && {
-        px: halfBaseSize * 0.15,
-        height: baseSize,
-        minWidth: baseSize,
-      },
-
-      native && {
-        py: halfBaseSize * 0.08,
-      },
-    ],
-  });
+    style,
+  ];
 
   return (
-    <TextFactory map={map} innerRef={innerRef} stylist={[variants, styleState, stylist]} {...rest}>
+    <TextFactory map={map} innerRef={innerRef} style={style} stylist={[variants.root, stylist]} {...rest}>
       {!dot && <Text>{value ?? children ?? '&nbsp;'}</Text>}
     </TextFactory>
   );
