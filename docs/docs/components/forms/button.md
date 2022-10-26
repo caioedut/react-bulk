@@ -6,11 +6,19 @@ sidebar_position: 1
 
 Allow users to take actions and make choices, with a single tap.
 
-```jsx live
-<Button>Button</Button>
+## Import
+
+```jsx
+import { Button } from '@react-bulk/web'; // OR @react-bulk/native
 ```
 
 ## Examples
+
+### Basic
+
+```jsx live
+<Button onPress={() => alert('Button Pressed!')}>Button</Button>
+```
 
 ### Variants
 

@@ -6,6 +6,12 @@ sidebar_position: 0
 
 Context to manipulate and serialize forms.
 
+## Import
+
+```jsx
+import { Form } from '@react-bulk/web'; // OR @react-bulk/native
+```
+
 ## Examples
 
 ### Basic

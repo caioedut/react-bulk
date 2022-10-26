@@ -6,8 +6,10 @@ sidebar_position: 2
 
 Used to display texts and customize them according to the theme.
 
-```jsx live
-<Text>Hello World!</Text>
+## Import
+
+```jsx
+import { Text } from '@react-bulk/web'; // OR @react-bulk/native
 ```
 
 ## Examples

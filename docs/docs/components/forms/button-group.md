@@ -2,6 +2,12 @@
 
 Used to group multiple buttons into a single scrollable container.
 
+## Import
+
+```jsx
+import { ButtonGroup } from '@react-bulk/web'; // OR @react-bulk/native
+```
+
 ## Examples
 
 ### Basic
