@@ -57,7 +57,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     labelStyle,
     style,
     ...rest
-  } = factory2(props, options, theme);
+  } = factory2(props, options);
 
   id = useHtmlId(id);
 
@@ -266,7 +266,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
       <BoxFactory map={map} stylist={[variants.root, styleFocus, styleColor, stylist]} style={style}>
         <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
           {Boolean(startIcon) && (
-            <BoxFactory map={map} style={{ marginLeft: spacing }}>
+            <BoxFactory map={map} style={{ marginLeft: spacing }} onPress={focus}>
               {startIcon}
             </BoxFactory>
           )}
@@ -288,7 +288,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
           />
 
           {Boolean(endIcon) && (
-            <BoxFactory map={map} style={{ marginRight: spacing }}>
+            <BoxFactory map={map} style={{ marginRight: spacing }} onPress={focus}>
               {endIcon}
             </BoxFactory>
           )}

@@ -25,7 +25,7 @@ function FormFactory({ stylist, map, innerRef, ...props }: FactoryProps & FormPr
     // Styles
     variants,
     ...rest
-  } = factory2(props, options, theme);
+  } = factory2(props, options);
 
   const defaultRef = useRef(null);
   const formRef = useRef<ReactNode>(null);

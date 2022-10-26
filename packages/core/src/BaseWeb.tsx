@@ -52,11 +52,6 @@ export default function BaseWeb({ children }) {
         height: 100%;
         width: 100%;
       }
-
-      @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(359deg); }
-      }
     `;
 
     createStyle({ name: 'rbk-global', style, theme, global: true });
@@ -74,19 +69,15 @@ export default function BaseWeb({ children }) {
       for (const prop in styles) {
         const style = styles?.[prop];
         const name = componentName + (prop === 'root' ? '' : `-${prop}`);
-
-        createStyle({ name, style, theme });
+        global._rbk_styles[name] = createStyle({ name, style, theme });
       }
 
       // Generate variant styles
       Object.entries(component?.variants || {}).forEach(([varAttr, varOptions]: any) => {
         Object.entries(varOptions).map(([optionKey, optionVal]: any) => {
-          Object.entries(optionVal || {}).forEach(([styleId, styleCss]: any) => {
-            createStyle({
-              theme,
-              style: styleCss,
-              name: `${componentName}-${varAttr}-${optionKey}` + (styleId === 'root' ? '' : `-${styleId}`),
-            });
+          Object.entries(optionVal || {}).forEach(([styleId, style]: any) => {
+            const name = `${componentName}-${varAttr}-${optionKey}` + (styleId === 'root' ? '' : `-${styleId}`);
+            global._rbk_styles[name] = createStyle({ name, style, theme });
           });
         });
       });

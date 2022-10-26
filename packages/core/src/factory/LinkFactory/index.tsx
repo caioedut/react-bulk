@@ -16,7 +16,7 @@ function LinkFactory({ stylist, map, innerRef, ...props }: FactoryProps & LinkPr
     // Styles
     variants,
     ...rest
-  } = factory2(props, options, theme);
+  } = factory2(props, options);
 
   return <TextFactory map={map} innerRef={innerRef} component={Link} stylist={[variants.root, stylist]} {...rest} />;
 }

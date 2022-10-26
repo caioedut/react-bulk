@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import createStyle from '../../createStyle';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import jss from '../../styles/jss';
 import { AnimationProps, FactoryProps, JssStyles } from '../../types';
 import useHtmlId from '../../useHtmlId';
@@ -15,7 +15,18 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
   const { web, native, Animated, Easing } = map;
 
   // Extends from default props
-  let { delay, direction, from, in: run, loop, speed, to, ...rest } = factory(props, options.defaultProps);
+  let {
+    delay,
+    direction,
+    from,
+    in: run,
+    loop,
+    speed,
+    to,
+    // Styles
+    variants,
+    ...rest
+  } = factory2(props, options);
 
   from = jss({ theme }, from);
   to = jss({ theme }, to);
@@ -71,11 +82,6 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
     });
   }
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
   const styleState = useStylist({
     style: web && {
       animation: `${name} ${speed}ms linear ${delay ? `${delay}ms` : ''} ${iterations === -1 ? 'infinite' : iterations} ${
@@ -111,7 +117,7 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
   }
 
   return (
-    <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, styleState, stylist]} row {...rest}>
+    <BoxFactory map={map} innerRef={innerRef} stylist={[variants.root, styleState, stylist]} row {...rest}>
       <Animated.View style={style}>
         <BoxFactory map={map} component={component}>
           {children}
