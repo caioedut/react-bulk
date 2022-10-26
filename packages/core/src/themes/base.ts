@@ -225,17 +225,30 @@ const base: ThemeProps & any = {
             justifyContent: 'center',
             textAlign: 'center',
 
+            backgroundColor: 'error.dark',
+            borderRadius: '0.625rem',
+            border: '1px solid error.dark',
             color: 'white',
-            fontSize: '0.625rem',
+            fontSize: '0.75rem',
             fontWeight: 'bold',
+            lineHeight: 1,
             overflow: 'hidden',
+            p: 1,
 
-            web: {
-              display: 'inline-flex',
-              lineHeight: 1,
-            },
-            native: {
-              alignSelf: 'flex-start',
+            minHeight: '1.25rem',
+            minWidth: '1.25rem',
+
+            web: { display: 'inline-flex' },
+            native: { alignSelf: 'flex-start' },
+          },
+        },
+        variants: {
+          dot: {
+            true: {
+              root: {
+                minWidth: 0,
+                minHeight: 0,
+              },
             },
           },
         },
@@ -499,6 +512,20 @@ const base: ThemeProps & any = {
             flexDirection: 'row',
             flexWrap: 'wrap',
             alignContent: 'stretch',
+          },
+          item: {
+            m: 0,
+            p: 0,
+          },
+        },
+        variants: {
+          direction: {
+            horizontal: {
+              root: { flexDirection: 'row' },
+            },
+            vertical: {
+              root: { flexDirection: 'column' },
+            },
           },
         },
       },
