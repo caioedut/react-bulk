@@ -6,6 +6,10 @@ import Platform from './Platform';
 import createTheme from './createTheme';
 import { RbkTheme, ThemeModeValues, ThemeOptionalProps, ThemeProps } from './types';
 
+if (!global._rbk_styles) {
+  global._rbk_styles = {};
+}
+
 const defaultTheme: RbkTheme = createTheme();
 const Context = createContext(defaultTheme);
 

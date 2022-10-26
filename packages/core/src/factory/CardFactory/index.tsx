@@ -14,7 +14,7 @@ function CardFactory({ stylist, map, innerRef, ...props }: FactoryProps & CardPr
     // Styles
     variants,
     ...rest
-  } = factory2(props, options, theme);
+  } = factory2(props, options);
 
   return <BoxFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} {...rest} />;
 }

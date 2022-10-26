@@ -19,7 +19,7 @@ function CollapseFactory({ stylist, map, innerRef, ...props }: FactoryProps & Co
     // Styles
     variants,
     ...rest
-  } = factory2(props, options, theme);
+  } = factory2(props, options);
 
   const defaultRef: any = useRef(null);
   innerRef = innerRef || defaultRef;

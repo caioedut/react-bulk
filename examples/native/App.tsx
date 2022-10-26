@@ -1,5 +1,6 @@
 import ReactBulk from '@react-bulk/core';
-import { Stack } from 'expo-router';
+
+import Main from './app';
 
 const theme = {
   typography: {
@@ -7,10 +8,10 @@ const theme = {
   },
 };
 
-export default function Layout() {
+export default function App() {
   return (
     <ReactBulk theme={theme}>
-      <Stack />
+      <Main />
     </ReactBulk>
   );
 }

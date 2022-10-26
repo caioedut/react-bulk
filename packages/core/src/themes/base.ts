@@ -196,11 +196,17 @@ const base: ThemeProps & any = {
               transitionProperty: 'all',
             },
           },
+        },
+        variants: {
           visible: {
-            web: {
-              opacity: 1,
-              visibility: 'visible',
-              zIndex: this.mixins.zIndex.backdrop,
+            true: {
+              root: {
+                web: {
+                  opacity: 1,
+                  visibility: 'visible',
+                  zIndex: this.mixins.zIndex.backdrop,
+                },
+              },
             },
           },
         },
