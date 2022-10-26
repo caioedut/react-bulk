@@ -256,7 +256,7 @@ Sets `flexDirection` style to `column`.
 
 Sets `flexDirection` style.
 
-➤ Type: **`'row'` `'row-reverse'` `'column'` `'column-reverse'`** <br/>
+➤ Type: **`'column'` `'row'` `'column-reverse'` `'row-reverse'`** <br/>
 ➤ Default: **`'column'`** <br/>
 
 ---
