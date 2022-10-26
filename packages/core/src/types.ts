@@ -558,6 +558,7 @@ export type ScrollableProps = {
 export type ImageProps = {
   source: { uri?: string } | string | number;
   alt?: string;
+  circular?: boolean;
   mode?: 'cover' | 'contain' | 'fill' | string;
   width?: number | string;
   height?: number | string;
