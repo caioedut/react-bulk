@@ -6,8 +6,10 @@ sidebar_position: 1
 
 It is the primary component, factory for everything. All components extend the [`Box`](/docs/components/core/box).
 
-```jsx live
-<Box>Hello World!</Box>
+## Import
+
+```jsx
+import { Box } from '@react-bulk/web'; // OR @react-bulk/native
 ```
 
 ## Examples

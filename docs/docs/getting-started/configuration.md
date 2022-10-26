@@ -1,7 +1,3 @@
----
-sidebar_position: 2
----
-
 # Configuration
 
 On your root JSX file, include the React Bulk context as first parent.

@@ -2,8 +2,10 @@
 
 Used to create interactive controls for forms to accept user data.
 
-```jsx live
-<Input label="Full Name" placeholder="Enter your full name" />
+## Import
+
+```jsx
+import { Input } from '@react-bulk/web'; // OR @react-bulk/native
 ```
 
 ## Examples
@@ -14,6 +16,9 @@ Used to create interactive controls for forms to accept user data.
 function Home () {
   return (
     <Grid column center gap={3}>
+      <Box w={400}>
+        <Input label="Label" placeholder="Label + Input" />
+      </Box>
       <Box w={400}>
         <Input placeholder="Default" />
       </Box>
