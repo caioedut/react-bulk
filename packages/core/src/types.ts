@@ -443,13 +443,16 @@ export type ButtonGroupProps = {
   contentStyle?: JssStyles;
 } & BoxProps;
 
-export type InputProps = FormControlProps & {
+export type InputProps = {
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | string;
   autoCorrect?: boolean;
   caretHidden?: boolean;
+  color?: ColorValues;
   defaultValue?: InputValue;
   disabled?: boolean;
+  endAddon?: ReactNode;
   error?: string;
+  label?: string;
   mask?: (value: InputValue, data: AnyObject) => InputValue;
   maxLength?: number;
   multiline?: boolean;
@@ -460,6 +463,8 @@ export type InputProps = FormControlProps & {
   returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send' | string;
   secure?: boolean;
   selectionColor?: ColorValues;
+  size?: SizeValues;
+  startAddon?: ReactNode;
   textColor?: ColorValues;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url' | string;
   unmask?: (InputValue: string, data: AnyObject) => InputValue;
@@ -470,7 +475,13 @@ export type InputProps = FormControlProps & {
   // Styles
   containerStyle?: JssStyles;
   errorStyle?: JssStyles;
+  labelStyle?: JssStyles;
   inputStyle?: JssStyles;
+
+  /** @deprecated use endAddon instead */
+  endIcon?: ReactNode;
+  /** @deprecated use startIcon instead */
+  startIcon?: ReactNode;
 
   /** @deprecated use onChange(event, value) instead */
   onInput?: Function;
