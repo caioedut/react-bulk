@@ -1,4 +1,4 @@
-import { ThemeProps } from '@react-bulk/core';
+import { ThemeProps } from '../types';
 
 const base: ThemeProps & any = {
   shape: {
