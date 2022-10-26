@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { BadgeProps, FactoryProps } from '../../types';
 import useStylist from '../../useStylist';
 import TextFactory from '../TextFactory';
@@ -12,16 +12,23 @@ function BadgeFactory({ stylist, children, map, innerRef, ...props }: FactoryPro
   const { native, Text } = map;
 
   // Extends from default props
-  let { bottom, color, dot, left, right, size, top, value, ...rest } = factory(props, options.defaultProps);
+  let {
+    bottom,
+    color,
+    dot,
+    left,
+    right,
+    size,
+    top,
+    value,
+    // Styles,
+    variants,
+    ...rest
+  } = factory2(props, options);
 
   const absolute = top || bottom || left || right;
   const baseSize = size === 'small' ? theme.rem(1) : size === 'large' ? theme.rem(1.5) : theme.rem(1.25);
   const halfBaseSize = baseSize / 2;
-
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
 
   const styleState = useStylist({
     style: [
@@ -60,10 +67,8 @@ function BadgeFactory({ stylist, children, map, innerRef, ...props }: FactoryPro
     ],
   });
 
-  stylist = [styleRoot, styleState, stylist];
-
   return (
-    <TextFactory map={map} innerRef={innerRef} stylist={stylist} {...rest}>
+    <TextFactory map={map} innerRef={innerRef} stylist={[variants, styleState, stylist]} {...rest}>
       {!dot && <Text>{value ?? children ?? '&nbsp;'}</Text>}
     </TextFactory>
   );

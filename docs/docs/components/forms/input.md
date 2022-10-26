@@ -74,13 +74,13 @@ function Home () {
   return (
     <Grid column center gap={3}>
       <Box w={400}>
-        <Input placeholder="Username" startIcon="👤" />
+        <Input placeholder="Username" startAddon="👤" />
       </Box>
       <Box w={400}>
-        <Input placeholder="Password" endIcon={<CustomIcon/>} />
+        <Input placeholder="Password" endAddon={<CustomIcon/>} />
       </Box>
       <Box w={400}>
-        <Input placeholder="reactbulk" startIcon="https://" endIcon=".com" />
+        <Input placeholder="reactbulk" startAddon="https://" endAddon=".com" />
       </Box>
     </Grid>
   )
@@ -147,7 +147,7 @@ events and updating the value prop to keep the controlled state in sync.
 
 ---
 
-**`endIcon`**
+**`endAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
 
@@ -245,7 +245,7 @@ The highlight and cursor color of the text input.
 
 ---
 
-**`startIcon`**
+**`startAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
 

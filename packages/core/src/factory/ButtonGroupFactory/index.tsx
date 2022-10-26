@@ -21,7 +21,7 @@ function ButtonGroupFactory({ stylist, children, map, innerRef, ...props }: Fact
     // Styles
     variants,
     ...rest
-  } = factory2(props, options, theme);
+  } = factory2(props, options);
 
   if (children && !Array.isArray(children)) {
     children = [children];

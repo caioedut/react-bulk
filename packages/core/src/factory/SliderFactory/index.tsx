@@ -37,7 +37,7 @@ function SliderFactory({ stylist, map, innerRef, ...props }: FactoryProps & Slid
     // Styles
     variants,
     ...rest
-  } = factory2(props, options, theme);
+  } = factory2(props, options);
 
   id = useHtmlId(id);
 

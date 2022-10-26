@@ -20,11 +20,13 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
   // Extends from default props
   let {
+    autoCapitalize,
     autoCorrect,
     caretHidden,
     color,
     defaultValue,
     disabled,
+    endAddon,
     endIcon,
     error,
     id,
@@ -38,6 +40,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     secure,
     selectionColor,
     size,
+    startAddon,
     startIcon,
     textColor,
     type,
@@ -56,7 +59,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     labelStyle,
     style,
     ...rest
-  } = factory2(props, options, theme);
+  } = factory2(props, options);
 
   id = useHtmlId(id);
 
@@ -85,9 +88,14 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
   selectionColor = theme.color(selectionColor ?? color);
   placeholderColor = theme.hex2rgba(placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary', 0.4);
+  autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
+
+  startAddon = startAddon ?? startIcon;
+  endAddon = endAddon ?? endIcon;
 
   if (web) {
     Object.assign(rest, {
+      autoCapitalize,
       autoCorrect: autoCorrect ? 'on' : 'off',
       enterKeyHint: returnKeyType,
       disabled,
@@ -105,6 +113,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
   if (native) {
     Object.assign(rest, {
+      autoCapitalize,
       autoCorrect,
       caretHidden,
       multiline,
@@ -261,9 +270,9 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
       <BoxFactory map={map} stylist={[variants.root, styleFocus, styleColor, stylist]} style={style}>
         <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
-          {Boolean(startIcon) && (
-            <BoxFactory map={map} style={{ marginLeft: spacing }}>
-              {startIcon}
+          {Boolean(startAddon) && (
+            <BoxFactory map={map} style={{ marginLeft: spacing }} onPress={focus}>
+              {startAddon}
             </BoxFactory>
           )}
 
@@ -283,9 +292,9 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
             onBlur={handleBlur}
           />
 
-          {Boolean(endIcon) && (
-            <BoxFactory map={map} style={{ marginRight: spacing }}>
-              {endIcon}
+          {Boolean(endAddon) && (
+            <BoxFactory map={map} style={{ marginRight: spacing }} onPress={focus}>
+              {endAddon}
             </BoxFactory>
           )}
         </BoxFactory>

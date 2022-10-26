@@ -1,43 +1,30 @@
-import createStyle from '../createStyle';
-import { ThemeComponentProps, ThemeProps } from '../types';
+import { ThemeComponentProps } from '../types';
 
-export default function factory2(props, options?: ThemeComponentProps, theme?: ThemeProps) {
+export default function factory2(props, options?: ThemeComponentProps) {
   let newProps = { ...options?.defaultProps, ...props };
 
   const variants = {};
 
-  Object.entries(options?.defaultStyles || {}).forEach(([styleId, styleCss]: any) => {
+  Object.keys(options?.defaultStyles || {}).forEach((styleId: any) => {
     if (!options?.name) return;
 
-    variants[styleId] = [
-      createStyle({
-        theme,
-        style: styleCss,
-        name: options.name + (styleId === 'root' ? '' : `-${styleId}`),
-      }),
-    ];
+    const name = options.name + (styleId === 'root' ? '' : `-${styleId}`);
+    variants[styleId] = [global._rbk_styles[name]];
   });
 
   Object.entries(options?.variants || {}).forEach(([varAttr, varOptions]: any) => {
+    if (!options?.name) return;
+
     const varValue = newProps[varAttr];
 
-    if (!options?.name) return;
     if (typeof varValue === 'undefined') return;
-
-    newProps = { ...newProps, ...varOptions[varValue]?.props };
 
     const varStyles = varOptions[varValue] || {};
 
-    Object.entries(varStyles).forEach(([styleId, styleCss]: any) => {
+    Object.keys(varStyles).forEach((styleId: any) => {
+      const name = `${options?.name}-${varAttr}-${varValue}` + (styleId === 'root' ? '' : `-${styleId}`);
       variants[styleId] = variants[styleId] || [];
-
-      variants[styleId].push(
-        createStyle({
-          theme,
-          style: styleCss,
-          name: `${options?.name}-${varAttr}-${varValue}` + (styleId === 'root' ? '' : `-${styleId}`),
-        }),
-      );
+      variants[styleId].push(global._rbk_styles[name]);
     });
   });
 

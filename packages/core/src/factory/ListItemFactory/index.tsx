@@ -26,7 +26,7 @@ function ListItemFactory({ stylist, children, map, innerRef, ...props }: Factory
     startIconStyle,
     endIconStyle,
     ...rest
-  } = factory2(props, options, theme);
+  } = factory2(props, options);
 
   chevron = chevron === true ? 'caret-right' : chevron;
   startIcon = startIcon ?? icon;
