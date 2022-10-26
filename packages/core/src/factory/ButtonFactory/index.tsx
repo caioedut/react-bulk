@@ -36,7 +36,7 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
     labelStyle,
     contentStyle,
     ...rest
-  } = factory2(props, options, theme);
+  } = factory2(props, options);
 
   const form = useForm();
   const isBasic = ['outline', 'text'].includes(variant);

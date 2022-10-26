@@ -98,9 +98,9 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
     // Flex Item
     flex && { flex: 1 },
     order && { order },
-    grow && { grow },
-    shrink && { shrink },
-    basis && { basis },
+    grow && { flexGrow: grow },
+    shrink && { flexShrink: shrink },
+    basis && { flexBasis: basis },
     align && { alignSelf: align },
     justify && { justifySelf: justify },
 

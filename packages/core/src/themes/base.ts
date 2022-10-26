@@ -196,11 +196,17 @@ const base: ThemeProps & any = {
               transitionProperty: 'all',
             },
           },
+        },
+        variants: {
           visible: {
-            web: {
-              opacity: 1,
-              visibility: 'visible',
-              zIndex: this.mixins.zIndex.backdrop,
+            true: {
+              root: {
+                web: {
+                  opacity: 1,
+                  visibility: 'visible',
+                  zIndex: this.mixins.zIndex.backdrop,
+                },
+              },
             },
           },
         },
@@ -540,8 +546,11 @@ const base: ThemeProps & any = {
       Input: {
         name: 'rbk-input',
         defaultProps: {
+          autoCapitalize: 'none',
           color: 'primary',
+          returnKeyType: 'default',
           size: 'medium',
+          type: 'text',
         },
         defaultStyles: {
           root: {

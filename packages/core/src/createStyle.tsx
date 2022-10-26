@@ -40,6 +40,7 @@ export default function createStyle({ name, style, theme, global }: createStyle)
 
     if (element.textContent !== cssStyle) {
       element.id = id;
+      element.className = 'rbk-style';
       element.textContent = cssStyle;
     }
 

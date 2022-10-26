@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { BackdropProps, FactoryProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function BackdropFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & BackdropProps) {
@@ -12,7 +11,13 @@ function BackdropFactory({ stylist, children, map, innerRef, ...props }: Factory
   const { web, native, Button, Dialog } = map;
 
   // Extends from default props
-  let { visible, onRequestClose, ...rest } = factory(props, options.defaultProps);
+  let {
+    visible,
+    onRequestClose,
+    // Styles
+    variants,
+    ...rest
+  } = factory2(props, options);
 
   const containerProps: any = {};
 
@@ -45,17 +50,6 @@ function BackdropFactory({ stylist, children, map, innerRef, ...props }: Factory
     };
   }, [visible]);
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleVisible = useStylist({
-    avoid: !visible,
-    name: options.name + '-visible',
-    style: options.defaultStyles.visible,
-  });
-
   if (native) {
     return (
       <Dialog
@@ -66,7 +60,7 @@ function BackdropFactory({ stylist, children, map, innerRef, ...props }: Factory
         presentationStyle="overFullScreen"
         onRequestClose={onRequestClose}
       >
-        <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, styleVisible, stylist]} {...rest} {...containerProps}>
+        <BoxFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} {...rest} {...containerProps}>
           {children}
         </BoxFactory>
       </Dialog>
@@ -74,7 +68,7 @@ function BackdropFactory({ stylist, children, map, innerRef, ...props }: Factory
   }
 
   return (
-    <BoxFactory map={map} innerRef={innerRef} component={Dialog} stylist={[styleRoot, styleVisible, stylist]} {...rest}>
+    <BoxFactory map={map} innerRef={innerRef} component={Dialog} stylist={[variants.root, stylist]} {...rest}>
       <BoxFactory map={map} {...containerProps}>
         {children}
       </BoxFactory>
