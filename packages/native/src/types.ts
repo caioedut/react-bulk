@@ -27,4 +27,4 @@ export type NativeScrollableProps = ScrollableProps & {
   horizontal?: boolean;
 };
 
-export type NativeImageProps = NativeBindingProps & ImageProps;
+export type NativeImageProps = ImageProps & NativeBindingProps;

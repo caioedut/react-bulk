@@ -37,7 +37,7 @@ function ImageFactory({ stylist, map, innerRef, ...props }: FactoryProps & Image
 
   stylist = [styleRoot, styleState, stylist];
 
-  return <BoxFactory map={map} innerRef={imageRef} component={Image} stylist={stylist} {...rest} />;
+  return <BoxFactory map={map} innerRef={imageRef} component={Image} stylist={stylist} {...rest} noRootStyles />;
 }
 
 export default React.memo(ImageFactory);

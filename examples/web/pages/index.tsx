@@ -95,6 +95,10 @@ export default function Main() {
 
   return (
     <Scrollable bg="background.secondary" contentInset={3}>
+      <Card mb={3}>
+        <Image source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+      </Card>
+
       <Card>
         <Text variant="title">React Bulk</Text>
         <Text mt={3}>Open up App.tsx to start working on your app!</Text>
@@ -477,7 +481,7 @@ export default function Main() {
           <Image mr={2} w={120} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
           <Image mr={2} w="15%" source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
           <Image mr={2} h={80} corners={3} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-          <Image mr={2} w={80} h={80} rounded source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+          <Image mr={2} w={80} h={80} circular source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
         </Box>
       </Card>
 

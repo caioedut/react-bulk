@@ -7,7 +7,7 @@ import { customStyleProps, spacings } from '@react-bulk/core';
 import { NativeImageProps } from '../types';
 import useMap from '../useMap';
 
-function Image({ source, width, height, w, h, corners, rounded, onLayout, style, ...props }: NativeImageProps, ref) {
+function Image({ source, width, height, w, h, corners, circular, onLayout, style, ...props }: NativeImageProps, ref) {
   const map = useMap();
 
   const [imgWidth, setImgWidth] = useState<number | null>(null);
@@ -69,9 +69,12 @@ function Image({ source, width, height, w, h, corners, rounded, onLayout, style,
   const containerProps = extract([...spacings, ...customStyleProps], props, style);
 
   style = [
-    { overflow: 'hidden' },
+    {
+      corners: corners ?? 0,
+      overflow: 'hidden',
+    },
 
-    rounded && {
+    circular && {
       borderRadius: ((finalWidth ?? finalHeight ?? height ?? width) as number) / 2,
     },
 
