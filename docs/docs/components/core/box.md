@@ -399,7 +399,7 @@ Sets `borderWidth`, `borderStyle` and `borderColor` styles. For example:
 
 **`corners`**
 
-Sets `borderRadius` style. The set value will be multiplied by the `theme.shame.borderRadius` value.
+Sets `borderRadius` style. The set value will be multiplied by the `theme.shape.borderRadius` value.
 
 ➤ Type: **`number`** <br/>
 

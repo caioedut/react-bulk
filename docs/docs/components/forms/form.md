@@ -97,7 +97,7 @@ Dispatch `onCancel` handler.
 
 Reset fields and dispatch `onClear` handler.
 
-`ref.current.cancel()`
+`ref.current.clear()`
 
 ---
 
