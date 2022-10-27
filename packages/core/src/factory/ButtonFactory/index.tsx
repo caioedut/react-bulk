@@ -20,6 +20,7 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
   let {
     badge,
     block,
+    circular,
     color,
     disabled,
     endIcon,
@@ -27,7 +28,6 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
     label,
     loading,
     transform,
-    rounded,
     size,
     startIcon,
     variant,
@@ -101,7 +101,7 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
         paddingHorizontal: spacing,
       },
 
-      rounded && {
+      circular && {
         borderRadius: height / 2,
         height,
         width: height,

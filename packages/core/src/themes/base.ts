@@ -885,6 +885,34 @@ const base: ThemeProps & any = {
             subtitle: { root: { fontSize: '1.125rem' } },
             caption: { root: { fontSize: '0.75rem' } },
           },
+          bold: {
+            true: { root: { fontWeight: 'bold' } },
+            false: { root: { fontWeight: 'normal' } },
+          },
+          italic: {
+            true: { root: { fontStyle: 'italic' } },
+            false: { root: { fontStyle: 'normal' } },
+          },
+          center: {
+            true: { root: { textAlign: 'center' } },
+            false: { root: { web: { textAlign: 'initial' }, native: { textAlign: 'auto' } } },
+          },
+          left: {
+            true: { root: { textAlign: 'left' } },
+            false: { root: { web: { textAlign: 'initial' }, native: { textAlign: 'auto' } } },
+          },
+          right: {
+            true: { root: { textAlign: 'right' } },
+            false: { root: { web: { textAlign: 'initial' }, native: { textAlign: 'auto' } } },
+          },
+          justify: {
+            true: { root: { textAlign: 'justify' } },
+            false: { root: { web: { textAlign: 'initial' }, native: { textAlign: 'auto' } } },
+          },
+          smallCaps: {
+            true: { root: { web: { fontVariant: 'small-caps' }, native: { fontVariant: ['small-caps'] } } },
+            false: { root: { web: { fontVariant: 'initial' }, native: { fontVariant: [] } } },
+          },
         },
       },
       Tooltip: {

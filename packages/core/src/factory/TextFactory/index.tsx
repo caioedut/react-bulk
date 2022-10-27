@@ -48,21 +48,13 @@ function TextFactory({ stylist, map, innerRef, ...props }: FactoryProps & TextPr
     size && { fontSize: theme.rem(size) },
     weight && { fontWeight: `${weight}` },
 
-    typeof center === 'boolean' && { textAlign: center ? 'center' : native ? 'auto' : 'initial' },
-    typeof left === 'boolean' && { textAlign: left ? 'left' : native ? 'auto' : 'initial' },
-    typeof right === 'boolean' && { textAlign: right ? 'right' : native ? 'auto' : 'initial' },
-    typeof justify === 'boolean' && { textAlign: justify ? 'justify' : native ? 'auto' : 'initial' },
-    typeof smallCaps === 'boolean' && { fontVariant: smallCaps ? 'small-caps' : native ? undefined : 'initial' },
-
-    typeof bold === 'boolean' && { fontWeight: bold ? 'bold' : 'normal' },
-    typeof italic === 'boolean' && { fontStyle: italic ? 'italic' : 'normal' },
-
     transform && { textTransform: transform },
 
     web &&
       Number(numberOfLines) === 1 && {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
       },
 
     web &&

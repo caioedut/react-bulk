@@ -423,7 +423,7 @@ export type ButtonProps = FormControlProps & {
   href?: string;
   icon?: boolean | string | ReactNode;
   loading?: boolean;
-  rounded?: boolean;
+  circular?: boolean;
   transform?: TextTransformValues;
   type?: 'button' | 'submit' | 'cancel' | 'clear' | string;
   variant?: 'solid' | 'outline' | 'text' | string;
