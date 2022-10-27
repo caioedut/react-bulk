@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { FactoryProps, ProgressProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function ProgressFactory({ stylist, map, innerRef, ...props }: FactoryProps & ProgressProps) {
@@ -12,7 +11,14 @@ function ProgressFactory({ stylist, map, innerRef, ...props }: FactoryProps & Pr
   const { Svg, Circle } = map.svg;
 
   // Extends from default props
-  let { color, size, ...rest } = factory(props, options.defaultProps);
+  let {
+    color,
+    size,
+    // Styles
+    variants,
+    style,
+    ...rest
+  } = factory2(props, options);
 
   color = theme.color(color);
 
@@ -21,20 +27,10 @@ function ProgressFactory({ stylist, map, innerRef, ...props }: FactoryProps & Pr
   const w = c / 4;
   const r = c - w / 2;
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleSize = useStylist({
-    style: {
-      height: base,
-      width: base,
-    },
-  });
+  style = [{ height: base, width: base }, style];
 
   return (
-    <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, styleSize, stylist]} {...rest}>
+    <BoxFactory map={map} innerRef={innerRef} style={style} stylist={[variants.root, stylist]} {...rest}>
       <Svg viewBox={`0 0 ${base} ${base}`} height="100%" width="100%">
         <Circle //
           cx={c}

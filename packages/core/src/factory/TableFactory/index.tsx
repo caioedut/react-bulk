@@ -1,9 +1,8 @@
 import React, { isValidElement } from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { FactoryProps, TableProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import ScrollableFactory from '../ScrollableFactory';
 import TextFactory from '../TextFactory';
@@ -13,7 +12,15 @@ function TableFactory({ stylist, map, innerRef, ...props }: FactoryProps & Table
   const options = theme.components.Table;
 
   // Extends from default props
-  let { border, columns, rows, ...rest } = factory(props, options.defaultProps);
+  let {
+    border,
+    columns,
+    rows,
+    // Styles,
+    variants,
+    style,
+    ...rest
+  } = factory2(props, options);
 
   const width = `${100 / columns?.length}%`;
 
@@ -57,17 +64,10 @@ function TableFactory({ stylist, map, innerRef, ...props }: FactoryProps & Table
     ];
   };
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleState = useStylist({
-    style: { border },
-  });
+  style = [{ border }, style];
 
   return (
-    <ScrollableFactory innerRef={innerRef} map={map} stylist={[styleRoot, styleState, stylist]} direction="horizontal" {...rest}>
+    <ScrollableFactory innerRef={innerRef} map={map} style={style} stylist={[variants.root, stylist]} direction="horizontal" {...rest}>
       <BoxFactory map={map} row noWrap>
         {columns?.map((column, index) => (
           <BoxFactory key={index} map={map} style={buildStyle(column, false, index > 0)}>

@@ -595,6 +595,8 @@ export type LoadingProps = {
   color?: ColorValues;
   label?: string;
   size?: number;
+  // Styles
+  labelStyle?: JssStyles;
 } & AnimationProps;
 
 export type GridProps = {

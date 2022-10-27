@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { FactoryProps, LoadingProps } from '../../types';
-import useStylist from '../../useStylist';
 import AnimationFactory from '../AnimationFactory';
 import BoxFactory from '../BoxFactory';
 import ProgressFactory from '../ProgressFactory';
@@ -14,34 +13,28 @@ function LoadingFactory({ stylist, map, innerRef, ...props }: FactoryProps | Loa
   const options = theme.components.Loading;
 
   // Extends from default props
-  let { color, label, size, speed, ...rest } = factory(props, options.defaultProps);
+  let {
+    color,
+    label,
+    size,
+    speed,
+    // Styles,
+    variants,
+    labelStyle,
+    ...rest
+  } = factory2(props, options);
 
-  size = size ?? 1;
+  size = size ?? options.defaultProps.size;
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleLabel = useStylist({
-    name: options.name + '-label',
-    style: options.defaultStyles.label,
-  });
-
-  const styleLabelState = useStylist({
-    style: {
-      color,
-      ml: size,
-    },
-  });
+  labelStyle = [{ color, ml: size }, labelStyle];
 
   return (
-    <BoxFactory innerRef={innerRef} map={map} stylist={[styleRoot, stylist]} row center {...rest}>
+    <BoxFactory innerRef={innerRef} map={map} stylist={[variants.root, stylist]} row center {...rest}>
       <AnimationFactory map={map} loop in speed={500} from={{ transform: [{ rotate: '0deg' }] }} to={{ transform: [{ rotate: '360deg' }] }}>
         <ProgressFactory map={map} size={size / 4} color={color} />
       </AnimationFactory>
       {Boolean(label) && (
-        <TextFactory map={map} size={size} stylist={[styleLabel, styleLabelState]}>
+        <TextFactory map={map} size={size} style={labelStyle} stylist={[variants.label]}>
           {label}
         </TextFactory>
       )}

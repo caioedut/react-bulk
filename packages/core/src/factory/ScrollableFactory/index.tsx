@@ -2,12 +2,11 @@ import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import extract from '../../props/extract';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import merge from '../../props/merge';
 import { flexContainerProps } from '../../styles/constants';
 import jss from '../../styles/jss';
 import { FactoryProps, ScrollableProps } from '../../types';
-import useStylist from '../../useStylist';
 import clone from '../../utils/clone';
 import BoxFactory from '../BoxFactory';
 
@@ -22,44 +21,22 @@ function ScrollableFactory({ stylist, children, map, innerRef, ...props }: Facto
     direction,
     platform,
     // Styles
+    variants,
     contentStyle,
     style,
     ...rest
-  } = factory(props, options.defaultProps);
-
-  const isHorizontal = direction === 'horizontal';
+  } = factory2(props, options);
 
   const nativeProps: any = {};
   const rootStyles = clone(options.defaultStyles.root);
   const flexContainerStyles = extract(flexContainerProps, rootStyles, style);
 
-  contentStyle = merge(
-    theme.components.Box.defaultStyles.root,
-    flexContainerStyles,
-    {
-      p: contentInset ?? 0,
-      flexGrow: 1,
-      minWidth: '100%',
-    },
-    contentStyle,
-  );
+  contentStyle = merge(theme.components.Box.defaultStyles.root, flexContainerStyles, { p: contentInset ?? 0 }, contentStyle);
 
   if (native) {
-    nativeProps.horizontal = isHorizontal;
+    nativeProps.horizontal = direction === 'horizontal';
     nativeProps.contentContainerStyle = jss({ theme }, contentStyle);
   }
-
-  const styleRoot = useStylist({
-    name: options.name,
-    style: rootStyles,
-  });
-
-  const styleState = useStylist({
-    style: web && {
-      overflowX: isHorizontal ? 'auto' : 'hidden',
-      overflowY: isHorizontal ? 'hidden' : 'auto',
-    },
-  });
 
   return (
     <BoxFactory
@@ -67,13 +44,13 @@ function ScrollableFactory({ stylist, children, map, innerRef, ...props }: Facto
       innerRef={innerRef}
       component={ScrollView}
       style={style}
-      stylist={[styleRoot, styleState, stylist]}
+      stylist={[variants.root, stylist]}
       {...rest}
       noRootStyles
       {...nativeProps}
     >
       {web ? (
-        <BoxFactory map={map} style={contentStyle}>
+        <BoxFactory map={map} style={contentStyle} stylist={[variants.content]}>
           {children}
         </BoxFactory>
       ) : (

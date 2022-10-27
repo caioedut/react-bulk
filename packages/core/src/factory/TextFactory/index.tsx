@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { FactoryProps, TextProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function TextFactory({ stylist, map, innerRef, ...props }: FactoryProps & TextProps) {
@@ -28,8 +27,11 @@ function TextFactory({ stylist, map, innerRef, ...props }: FactoryProps & TextPr
     transform,
     variant,
     weight,
+    // Styles
+    variants,
+    style,
     ...rest
-  } = factory(props, options.defaultProps);
+  } = factory2(props, options);
 
   if (native) {
     rest.includeFontPadding = false;
@@ -40,51 +42,43 @@ function TextFactory({ stylist, map, innerRef, ...props }: FactoryProps & TextPr
     }
   }
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
+  style = [
+    color && { color },
 
-  const styleState = useStylist({
-    style: [
-      color && { color },
+    size && { fontSize: theme.rem(size) },
+    weight && { fontWeight: `${weight}` },
 
-      variant === 'h1' && { fontSize: theme.rem(2.6) },
-      variant === 'h2' && { fontSize: theme.rem(2.1) },
-      variant === 'h3' && { fontSize: theme.rem(1.7) },
-      variant === 'h4' && { fontSize: theme.rem(1.4) },
-      variant === 'h5' && { fontSize: theme.rem(1.2) },
-      variant === 'h6' && { fontSize: theme.rem(1.1) },
+    typeof center === 'boolean' && { textAlign: center ? 'center' : native ? 'auto' : 'initial' },
+    typeof left === 'boolean' && { textAlign: left ? 'left' : native ? 'auto' : 'initial' },
+    typeof right === 'boolean' && { textAlign: right ? 'right' : native ? 'auto' : 'initial' },
+    typeof justify === 'boolean' && { textAlign: justify ? 'justify' : native ? 'auto' : 'initial' },
+    typeof smallCaps === 'boolean' && { fontVariant: smallCaps ? 'small-caps' : native ? undefined : 'initial' },
 
-      variant === 'title' && { fontSize: theme.rem(1.25) },
-      variant === 'subtitle' && { fontSize: theme.rem(1.125) },
-      variant === 'caption' && { fontSize: theme.rem(0.75) },
+    typeof bold === 'boolean' && { fontWeight: bold ? 'bold' : 'normal' },
+    typeof italic === 'boolean' && { fontStyle: italic ? 'italic' : 'normal' },
 
-      size && { fontSize: theme.rem(size) },
-      weight && { fontWeight: `${weight}` },
+    transform && { textTransform: transform },
 
-      typeof center === 'boolean' && { textAlign: center ? 'center' : native ? 'auto' : 'initial' },
-      typeof left === 'boolean' && { textAlign: left ? 'left' : native ? 'auto' : 'initial' },
-      typeof right === 'boolean' && { textAlign: right ? 'right' : native ? 'auto' : 'initial' },
-      typeof justify === 'boolean' && { textAlign: justify ? 'justify' : native ? 'auto' : 'initial' },
-      typeof smallCaps === 'boolean' && { fontVariant: smallCaps ? 'small-caps' : native ? undefined : 'initial' },
+    web &&
+      Number(numberOfLines) === 1 && {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      },
 
-      typeof bold === 'boolean' && { fontWeight: bold ? 'bold' : 'normal' },
-      typeof italic === 'boolean' && { fontStyle: italic ? 'italic' : 'normal' },
+    web &&
+      numberOfLines > 1 && {
+        display: '-webkit-box',
+        '-webkit-line-clamp': `${numberOfLines}`,
+        '-webkit-box-orient': 'vertical',
+        overflow: 'hidden',
+      },
 
-      transform && { textTransform: transform },
+    style,
+  ];
 
-      web &&
-        numberOfLines > 0 && {
-          display: '-webkit-box',
-          '-webkit-line-clamp': `${numberOfLines}`,
-          '-webkit-box-orient': 'vertical',
-          overflow: 'hidden',
-        },
-    ],
-  });
-
-  return <BoxFactory map={map} innerRef={innerRef} component={Text} stylist={[styleRoot, styleState, stylist]} {...rest} noRootStyles />;
+  return (
+    <BoxFactory map={map} innerRef={innerRef} component={Text} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles />
+  );
 }
 
 export default React.memo(TextFactory);

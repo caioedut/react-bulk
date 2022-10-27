@@ -1,10 +1,8 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { FactoryProps, ModalProps } from '../../types';
-import useStylist from '../../useStylist';
-import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
 
 function ModalFactory({ stylist, map, innerRef, ...props }: FactoryProps & ModalProps) {
@@ -12,42 +10,16 @@ function ModalFactory({ stylist, map, innerRef, ...props }: FactoryProps & Modal
   const options = theme.components.Modal;
 
   // Extends from default props
-  let { halign, valign, onBackdropPress, ...rest } = factory(props, options.defaultProps);
+  let {
+    halign,
+    valign,
+    onBackdropPress,
+    // Styles
+    variants,
+    ...rest
+  } = factory2(props, options);
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleHAlign = useStylist({
-    style: {
-      alignItems: pick(halign as string, 'center', {
-        center: 'center',
-        left: 'flex-start',
-        right: 'flex-end',
-      }),
-    },
-  });
-
-  const styleVAlign = useStylist({
-    style: {
-      justifyContent: pick(valign as string, 'center', {
-        center: 'center',
-        top: 'flex-start',
-        bottom: 'flex-end',
-      }),
-    },
-  });
-
-  return (
-    <BackdropFactory
-      map={map}
-      innerRef={innerRef}
-      stylist={[styleRoot, styleHAlign, styleVAlign, stylist]}
-      {...rest}
-      onPress={onBackdropPress}
-    />
-  );
+  return <BackdropFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} {...rest} onPress={onBackdropPress} />;
 }
 
 export default React.memo(ModalFactory);

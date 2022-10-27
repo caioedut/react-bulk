@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { DividerProps, FactoryProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function DividerFactory({ stylist, map, innerRef, ...props }: FactoryProps & DividerProps) {
@@ -11,25 +10,29 @@ function DividerFactory({ stylist, map, innerRef, ...props }: FactoryProps & Div
   const options = theme.components.Divider;
 
   // Extends from default props
-  let { color, opacity, size, vertical, ...rest } = factory(props, options.defaultProps);
+  let {
+    color,
+    opacity,
+    size,
+    vertical,
+    // Styles,
+    variants,
+    style,
+    ...rest
+  } = factory2(props, options);
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleSize = useStylist({
-    style: vertical ? { alignSelf: 'stretch', width: 1 } : { height: 1 },
-  });
-
-  const styleState = useStylist({
-    style: {
+  style = [
+    {
       backgroundColor: color,
       opacity,
     },
-  });
 
-  return <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, styleSize, styleState, stylist]} {...rest} />;
+    vertical ? { alignSelf: 'stretch', width: 1 } : { height: 1 },
+
+    style,
+  ];
+
+  return <BoxFactory map={map} innerRef={innerRef} style={style} stylist={[variants.root, stylist]} {...rest} />;
 }
 
 export default React.memo(DividerFactory);
