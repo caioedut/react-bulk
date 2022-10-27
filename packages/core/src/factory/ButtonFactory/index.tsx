@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import useStylist from '../../hooks/useStylist';
+import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { ButtonProps, FactoryProps } from '../../types';
-import useStylist from '../../useStylist';
 import pick from '../../utils/pick';
 import BadgeFactory from '../BadgeFactory';
 import BoxFactory from '../BoxFactory';

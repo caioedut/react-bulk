@@ -1,9 +1,9 @@
-import ReactBulk, { useTheme } from './ReactBulk';
+import ReactBulk from './ReactBulk';
 import { useForm } from './factory/FormFactory';
 
 // Hook
-export { useTheme };
 export { useForm };
+export { default as useTheme } from './hooks/useTheme';
 export { default as usePropState } from './hooks/usePropState';
 
 // Prop

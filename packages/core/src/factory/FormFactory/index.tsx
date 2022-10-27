@@ -1,6 +1,6 @@
 import React, { ReactNode, createContext, useContext, useEffect, useImperativeHandle, useRef } from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { FactoryProps, FormField, FormProps, FormRef } from '../../types';
 import BoxFactory from '../BoxFactory';

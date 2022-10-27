@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { FactoryProps, LabelProps } from '../../types';
 import TextFactory from '../TextFactory';

@@ -11,9 +11,10 @@ export type createStyle = {
   style: any;
   theme?: ThemeProps;
   global?: boolean;
+  prepend?: boolean;
 };
 
-export default function createStyle({ name, style, theme, global }: createStyle) {
+export default function createStyle({ name, style, theme, global, prepend }: createStyle) {
   const { web, native } = Platform;
 
   theme = theme || createTheme();
@@ -43,7 +44,7 @@ export default function createStyle({ name, style, theme, global }: createStyle)
     }
 
     if (element.parentElement !== document.head) {
-      document.head.append(element);
+      prepend ? document.head.prepend(element) : document.head.append(element);
     }
   }
 

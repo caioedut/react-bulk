@@ -129,7 +129,7 @@ export default function Main() {
               type="number"
               label="Spacing"
               name="shape.spacing"
-              endIcon="px"
+              endAddon="px"
               value={`${theme.shape.spacing}`}
               onChange={handleChangeTheme}
             />
@@ -139,7 +139,7 @@ export default function Main() {
               type="number"
               label="Border Radius"
               name="shape.borderRadius"
-              endIcon="px"
+              endAddon="px"
               value={`${theme.shape.borderRadius}`}
               onChange={handleChangeTheme}
             />
@@ -157,7 +157,7 @@ export default function Main() {
               type="number"
               label="Font Size"
               name="typography.fontSize"
-              endIcon="px"
+              endAddon="px"
               value={`${theme.typography.fontSize}`}
               onChange={handleChangeTheme}
             />
@@ -167,7 +167,7 @@ export default function Main() {
               type="number"
               label="Line Height"
               name="typography.lineHeight"
-              endIcon="float"
+              endAddon="float"
               value={`${theme.typography.lineHeight}`}
               onChange={handleChangeTheme}
             />
@@ -255,7 +255,7 @@ export default function Main() {
               <Button variant={variant} loading={loading} onPress={toggleLoading}>
                 Loading
               </Button>
-              <Button variant={variant} icon="⚙" rounded />
+              <Button variant={variant} icon="⚙" circular />
               <Button variant={variant} startIcon="⚙">
                 Start Icon
               </Button>
@@ -284,7 +284,7 @@ export default function Main() {
           <Button loading={loading} onPress={toggleLoading}>
             Loading
           </Button>
-          <Button icon="⚙" rounded />
+          <Button icon="⚙" circular />
           <Button startIcon="⚙">Start Icon</Button>
           <Button endIcon="⚙">End Icon</Button>
         </ButtonGroup>
@@ -301,7 +301,7 @@ export default function Main() {
         <Input mt={3} label="Read Only" placeholder="Read only input" readOnly />
         <Input mt={3} label="Disabled" placeholder="Disabled input" disabled />
         <Input mt={3} label="Invalid" placeholder="Input with error" error="Value is invalid!" />
-        <Input mt={3} label="Icons" placeholder="Input with icons" startIcon="$" endIcon="💳" />
+        <Input mt={3} label="Icons" placeholder="Input with icons" startAddon="$" endAddon="💳" />
 
         {sizes.map((size) => (
           <Input key={size} mt={3} size={size} label={getLabel(size)} placeholder={`This is a ${size} input`} />

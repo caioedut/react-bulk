@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
-import { useTheme } from '../../ReactBulk';
 import rect from '../../element/rect';
+import useHtmlId from '../../hooks/useHtmlId';
+import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { FactoryProps, FocusableProps, RbkRect, SliderProps } from '../../types';
-import useHtmlId from '../../useHtmlId';
 import event from '../../utils/event';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';

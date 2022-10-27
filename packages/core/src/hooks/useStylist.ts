@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
-import { useTheme } from './ReactBulk';
-import createStyle from './createStyle';
+import createStyle from '../createStyle';
+import useTheme from '../hooks/useTheme';
 
 export type useStylist = {
   name?: string;

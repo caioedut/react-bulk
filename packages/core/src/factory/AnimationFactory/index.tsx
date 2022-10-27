@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 
-import { useTheme } from '../../ReactBulk';
 import createStyle from '../../createStyle';
+import useHtmlId from '../../hooks/useHtmlId';
+import useStylist from '../../hooks/useStylist';
+import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import jss from '../../styles/jss';
 import { AnimationProps, FactoryProps, JssStyles } from '../../types';
-import useHtmlId from '../../useHtmlId';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function AnimationFactory({ stylist, children, component, map, innerRef, ...props }: FactoryProps & AnimationProps) {

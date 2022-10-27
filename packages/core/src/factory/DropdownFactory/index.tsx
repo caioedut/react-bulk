@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import useStylist from '../../hooks/useStylist';
+import useTheme from '../../hooks/useTheme';
 import factory from '../../props/factory';
 import { DropdownProps, FactoryProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import CardFactory from '../CardFactory';
 
