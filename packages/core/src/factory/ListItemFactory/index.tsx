@@ -11,6 +11,7 @@ import TextFactory from '../TextFactory';
 function ListItemFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & ListItemProps) {
   const theme = useTheme();
   const options = theme.components.ListItem;
+  const { View } = map;
 
   // Extends from default props
   let {
@@ -34,18 +35,18 @@ function ListItemFactory({ stylist, children, map, innerRef, ...props }: Factory
 
   return (
     <CardFactory map={map} innerRef={innerRef} p={gap} stylist={[variants?.root, stylist]} {...rest}>
-      <GridFactory map={map} row noWrap flex alignItems="center" gap={gap}>
+      <GridFactory map={map} row noWrap alignItems="center" gap={gap}>
         {Boolean(startIcon) && (
           <BoxFactory map={map} style={startIconStyle}>
             {startIcon}
           </BoxFactory>
         )}
 
-        <BoxFactory map={map} xs>
+        <View xs>
           <GridFactory map={map} row noWrap alignItems="center" gap={gap}>
             {children}
           </GridFactory>
-        </BoxFactory>
+        </View>
 
         {Boolean(endIcon) && (
           <BoxFactory map={map} style={endIconStyle}>

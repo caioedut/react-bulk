@@ -43,7 +43,7 @@ function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProp
 
             style.push({
               [key]: {
-                flex: isFlex ? '1' : undefined,
+                flex: isFlex ? 1 : undefined,
                 width: !isAuto && !isFlex ? `${width}%` : undefined,
               },
             });

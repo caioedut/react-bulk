@@ -1,6 +1,6 @@
 import ReactBulk from '@react-bulk/core';
 
-import Main from './app';
+import Main from './src';
 
 const theme = {
   typography: {
