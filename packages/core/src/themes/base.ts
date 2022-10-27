@@ -265,6 +265,7 @@ const base: ThemeProps & any = {
             alignContent: 'flex-start',
             justifyContent: 'flex-start',
             alignItems: 'stretch',
+            '-webkit-tap-highlight-color': 'transparent',
           },
         },
       },
@@ -683,6 +684,7 @@ const base: ThemeProps & any = {
         defaultProps: {
           accessibility: { role: 'progressbar' },
           color: 'primary',
+          size: 2,
         },
         defaultStyles: {
           root: {},
@@ -702,6 +704,30 @@ const base: ThemeProps & any = {
         defaultStyles: {
           root: {
             zIndex: (theme) => theme.mixins.zIndex.modal,
+          },
+        },
+        variants: {
+          halign: {
+            center: {
+              root: { alignItems: 'center' },
+            },
+            left: {
+              root: { alignItems: 'flex-start' },
+            },
+            right: {
+              root: { alignItems: 'flex-end' },
+            },
+          },
+          valign: {
+            center: {
+              root: { justifyContent: 'center' },
+            },
+            top: {
+              root: { justifyContent: 'flex-start' },
+            },
+            bottom: {
+              root: { justifyContent: 'flex-end' },
+            },
           },
         },
       },
@@ -725,6 +751,20 @@ const base: ThemeProps & any = {
             web: {
               overflow: 'hidden',
               scrollBehavior: 'smooth',
+            },
+          },
+          content: {
+            flexGrow: 1,
+            minWidth: '100%',
+          },
+        },
+        variants: {
+          direction: {
+            vertical: {
+              root: { web: { overflowY: 'auto' } },
+            },
+            horizontal: {
+              root: { web: { overflowX: 'auto' } },
             },
           },
         },
@@ -820,7 +860,6 @@ const base: ThemeProps & any = {
         defaultStyles: {
           root: {
             color: 'text.primary',
-            flexDirection: 'row',
             fontSize: '1rem',
             margin: 0,
             textAlign: 'left',
@@ -829,6 +868,22 @@ const base: ThemeProps & any = {
               display: 'block',
               '& .rbk-text': { display: 'inline' },
             },
+            native: {
+              flexDirection: 'row',
+            },
+          },
+        },
+        variants: {
+          variant: {
+            h1: { root: { fontSize: '2.6rem' } },
+            h2: { root: { fontSize: '2.1rem' } },
+            h3: { root: { fontSize: '1.8rem' } },
+            h4: { root: { fontSize: '1.4rem' } },
+            h5: { root: { fontSize: '1.2rem' } },
+            h6: { root: { fontSize: '1.1rem' } },
+            title: { root: { fontSize: '1.25rem' } },
+            subtitle: { root: { fontSize: '1.125rem' } },
+            caption: { root: { fontSize: '0.75rem' } },
           },
         },
       },
@@ -843,10 +898,6 @@ const base: ThemeProps & any = {
             position: 'absolute',
             zIndex: this.mixins.zIndex.tooltip,
 
-            native: {
-              display: 'none',
-            },
-
             web: {
               opacity: 0,
               pointerEvents: 'none',
@@ -854,16 +905,40 @@ const base: ThemeProps & any = {
               zIndex: -1,
               ...this.mixins.transitions.medium,
             },
-          },
-          visible: {
-            native: {
-              display: 'flex',
-            },
 
-            web: {
-              opacity: 1,
-              visibility: 'visible',
-              zIndex: this.mixins.zIndex.tooltip,
+            native: {
+              display: 'none',
+            },
+          },
+        },
+        variants: {
+          visible: {
+            true: {
+              root: {
+                web: {
+                  opacity: 1,
+                  visibility: 'visible',
+                  zIndex: this.mixins.zIndex.tooltip,
+                },
+
+                native: {
+                  display: 'flex',
+                },
+              },
+            },
+          },
+          position: {
+            top: {
+              root: { top: 0, left: '50%' },
+            },
+            bottom: {
+              root: { bottom: 0, left: '50%' },
+            },
+            left: {
+              root: { left: 0, top: '50%' },
+            },
+            right: {
+              root: { right: 0, top: '50%' },
             },
           },
         },

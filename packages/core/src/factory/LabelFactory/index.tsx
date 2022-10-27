@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { FactoryProps, LabelProps } from '../../types';
-import useStylist from '../../useStylist';
 import TextFactory from '../TextFactory';
 
 function LabelFactory({ stylist, map, innerRef, ...props }: FactoryProps & LabelProps) {
@@ -12,7 +11,13 @@ function LabelFactory({ stylist, map, innerRef, ...props }: FactoryProps & Label
   const { web, native, Label } = map;
 
   // Extends from default props
-  let { for: forProp, platform, ...rest } = factory(props, options.defaultProps);
+  let {
+    for: forProp,
+    platform,
+    // Styles
+    variants,
+    ...rest
+  } = factory2(props, options);
 
   const [focusProps, setFocusProps] = useState({});
 
@@ -33,14 +38,7 @@ function LabelFactory({ stylist, map, innerRef, ...props }: FactoryProps & Label
     }
   }, [forProp, platform]);
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  stylist = [styleRoot, stylist];
-
-  return <TextFactory map={map} innerRef={innerRef} component={Label} stylist={stylist} {...rest} {...focusProps} />;
+  return <TextFactory map={map} innerRef={innerRef} component={Label} stylist={[variants.root, stylist]} {...rest} {...focusProps} />;
 }
 
 export default React.memo(LabelFactory);

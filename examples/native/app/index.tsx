@@ -95,10 +95,6 @@ export default function Main() {
 
   return (
     <Scrollable bg="background.secondary" contentInset={3}>
-      <Card mb={3}>
-        <Image source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-      </Card>
-
       <Card>
         <Text variant="title">React Bulk</Text>
         <Text mt={3}>Open up App.tsx to start working on your app!</Text>

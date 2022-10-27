@@ -2,9 +2,8 @@ import React, { useRef, useState } from 'react';
 
 import { useTheme } from '../../ReactBulk';
 import usePropState from '../../hooks/usePropState';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { FactoryProps, TimeoutType, TooltipProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
@@ -14,7 +13,16 @@ function TooltipFactory({ stylist, children, map, innerRef, ...props }: FactoryP
   const { native, dimensions, Button } = map;
 
   // Extends from default props
-  let { color, position, title, visible, ...rest } = factory(props, options.defaultProps);
+  let {
+    color,
+    position,
+    title,
+    visible,
+    // Styles
+    variants,
+    style,
+    ...rest
+  } = factory2(props, options);
 
   const timeoutRef = useRef<TimeoutType>(null);
 
@@ -25,25 +33,7 @@ function TooltipFactory({ stylist, children, map, innerRef, ...props }: FactoryP
   const isHorizontal = ['left', 'right'].includes(position);
   const isControlled = typeof visible === 'boolean';
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleVisible = useStylist({
-    avoid: !shown,
-    name: options.name + '-visible',
-    style: options.defaultStyles.visible,
-  });
-
-  const styleState = useStylist({
-    style: [
-      position === 'top' && { top: 0, left: '50%' },
-      position === 'bottom' && { bottom: 0, left: '50%' },
-      position === 'left' && { left: 0, top: '50%' },
-      position === 'right' && { right: 0, top: '50%' },
-    ],
-  });
+  style = [shown && options.variants.visible.true.root, style];
 
   const handleTooltipShow = () => {
     if (timeoutRef.current) {
@@ -85,7 +75,7 @@ function TooltipFactory({ stylist, children, map, innerRef, ...props }: FactoryP
       }}
     >
       {children}
-      <BoxFactory map={map} innerRef={innerRef} stylist={[styleRoot, styleVisible, styleState, stylist]} {...rest}>
+      <BoxFactory map={map} innerRef={innerRef} style={style} stylist={[variants.root, stylist]} {...rest}>
         <TextFactory
           map={map}
           numberOfLines={1}
