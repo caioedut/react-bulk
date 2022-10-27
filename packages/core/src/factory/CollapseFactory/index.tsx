@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 
-import { useTheme } from '../../ReactBulk';
 import rect from '../../element/rect';
+import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { CollapseProps, FactoryProps } from '../../types';
 import event from '../../utils/event';

@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import useStylist from '../../hooks/useStylist';
+import useTheme from '../../hooks/useTheme';
 import factory from '../../props/factory';
 import { FactoryProps, ImageProps } from '../../types';
-import useStylist from '../../useStylist';
 import BoxFactory from '../BoxFactory';
 
 function ImageFactory({ stylist, map, innerRef, ...props }: FactoryProps & ImageProps) {

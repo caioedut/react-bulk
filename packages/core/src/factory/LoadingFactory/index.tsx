@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { FactoryProps, LoadingProps } from '../../types';
 import AnimationFactory from '../AnimationFactory';

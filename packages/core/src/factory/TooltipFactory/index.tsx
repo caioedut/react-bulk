@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
-import { useTheme } from '../../ReactBulk';
 import usePropState from '../../hooks/usePropState';
+import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { FactoryProps, TimeoutType, TooltipProps } from '../../types';
 import BoxFactory from '../BoxFactory';

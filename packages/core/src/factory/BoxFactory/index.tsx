@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 
-import { useTheme } from '../../ReactBulk';
 import createStyle from '../../createStyle';
+import useStylist from '../../hooks/useStylist';
+import useTheme from '../../hooks/useTheme';
 import bindings from '../../props/bindings';
 import factory from '../../props/factory';
 import get from '../../props/get';
 import merge from '../../props/merge';
 import { customStyleProps } from '../../styles/jss';
 import { BoxProps, FactoryProps } from '../../types';
-import useStylist from '../../useStylist';
 import clsx from '../../utils/clsx';
 
 function BoxFactory({ platform, className, stylist, children, map, innerRef, ...props }: FactoryProps & BoxProps) {

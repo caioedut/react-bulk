@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { BadgeProps, FactoryProps } from '../../types';
 import pick from '../../utils/pick';

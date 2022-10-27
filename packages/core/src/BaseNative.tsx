@@ -1,3 +1,4 @@
-export default function BaseNative({ children }) {
+// @ts-ignore
+export default function BaseNative({ theme, children }) {
   return children;
 }

@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import useHtmlId from '../../hooks/useHtmlId';
+import useStylist from '../../hooks/useStylist';
+import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory from '../../props/factory';
 import { spacings } from '../../styles/jss';
 import { CheckboxProps, FactoryProps } from '../../types';
-import useHtmlId from '../../useHtmlId';
-import useStylist from '../../useStylist';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
@@ -142,7 +142,7 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
         {...rest}
         id={id}
         variant="text"
-        rounded
+        circular
         onPress={handleChange}
         accessibility={{
           role: unique ? 'radio' : 'checkbox',

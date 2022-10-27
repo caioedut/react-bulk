@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useTheme } from '../../ReactBulk';
+import useHtmlId from '../../hooks/useHtmlId';
+import useStylist from '../../hooks/useStylist';
+import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
 import { FactoryProps, InputProps } from '../../types';
-import useHtmlId from '../../useHtmlId';
-import useStylist from '../../useStylist';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import { useForm } from '../FormFactory';

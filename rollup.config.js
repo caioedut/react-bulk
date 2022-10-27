@@ -33,6 +33,7 @@ export default {
       file: path.resolve(PACKAGE_ROOT_PATH, 'dist/index.js'),
       format: 'cjs',
       sourcemap: true,
+      exports: 'named',
     },
     {
       file: path.resolve(PACKAGE_ROOT_PATH, 'dist/index.es.js'),
@@ -56,7 +57,6 @@ export default {
       },
       rollupCommonJSResolveHack: true,
       useTsconfigDeclarationDir: true,
-      objectHashIgnoreUnknownHack: true,
     }),
     commonjs(),
     terser(),
