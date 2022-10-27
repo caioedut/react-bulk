@@ -1,11 +1,22 @@
 {
   "name": "@react-bulk/native",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "React Bulk for React Native",
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
-  "keywords": ["react", "react-native", "react-component", "web", "native", "android", "ios", "cross-platform", "ui", "ux"],
+  "keywords": [
+    "react",
+    "react-native",
+    "react-component",
+    "web",
+    "native",
+    "android",
+    "ios",
+    "cross-platform",
+    "ui",
+    "ux"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "typings/native/src/index.d.ts",
@@ -22,7 +33,7 @@
   },
   "scripts": {},
   "dependencies": {
-    "@react-bulk/core": "^0.2.4"
+    "@react-bulk/core": "^0.2.5"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
