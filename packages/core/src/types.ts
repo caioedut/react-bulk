@@ -214,7 +214,9 @@ export type ThemeColorsProps =
   | {
       main?: string;
       light?: string;
+      lighter?: string;
       dark?: string;
+      darker?: string;
     };
 
 export type ThemeComponentProps = {

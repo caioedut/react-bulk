@@ -4,6 +4,7 @@
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
   "license": "MIT",
+  "keywords": ["react", "react-native", "react-component", "web", "native", "android", "ios", "cross-platform", "ui", "ux"],
   "workspaces": {
     "packages": [
       "packages/*"

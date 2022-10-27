@@ -144,6 +144,12 @@ const base: ThemeProps & any = {
     return yiq >= 128 ? darkColor : lightColor;
   },
 
+  setTheme() {
+    if (process?.env?.NODE_ENV !== 'production') {
+      console.error('setTheme only works when the app is wrapped in the <ReactBulk /> context.');
+    }
+  },
+
   get components() {
     return {
       Animation: {

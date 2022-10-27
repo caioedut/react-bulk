@@ -73,6 +73,7 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
 
     createStyle({
       global: true,
+      theme,
       style: `
         @keyframes ${name} {
           from { ${fromCSS} }

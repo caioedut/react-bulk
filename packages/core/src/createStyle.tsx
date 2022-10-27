@@ -1,23 +1,22 @@
 import Platform from './Platform';
-import createTheme from './createTheme';
 import css from './styles/css';
 import jss from './styles/jss';
-import { ThemeProps } from './types';
+import { JssStyles, ThemeProps } from './types';
 import crypt from './utils/crypt';
 
 export type createStyle = {
+  style: string | JssStyles;
+  theme?: ThemeProps;
   name?: string;
   parent?: string;
-  style: any;
-  theme?: ThemeProps;
   global?: boolean;
   prepend?: boolean;
 };
 
-export default function createStyle({ name, style, theme, global, prepend }: createStyle) {
+export default function createStyle({ name, style, theme, global: isGlobal, prepend }: createStyle) {
   const { web, native } = Platform;
 
-  theme = theme || createTheme();
+  theme = (theme || global.theme || {}) as ThemeProps;
   style = typeof style === 'function' ? style(theme) : style;
 
   const isObject = style && typeof style === 'object';
@@ -32,7 +31,7 @@ export default function createStyle({ name, style, theme, global, prepend }: cre
 
   if (web) {
     const element = document.getElementById(id) || document.createElement('style');
-    const cssStyle = (typeof styleX === 'string' ? styleX : css(styleX, global ? '::root' : `.${id}`))
+    const cssStyle = (typeof styleX === 'string' ? styleX : css(styleX, isGlobal ? '::root' : `.${id}`))
       .replace(/[\n\r]|\s{2,}/g, ' ')
       .replace(/\s?{/g, '{')
       .replace(/}\s?/g, '} ')
