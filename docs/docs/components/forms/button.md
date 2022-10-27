@@ -122,6 +122,12 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 ---
 
+**`circular`**
+
+➤ Type: **`boolean`** <br/>
+
+---
+
 **`color`**
 
 ➤ Type: **`string`** <br/>
@@ -174,12 +180,6 @@ Render text label as child.
 **`labelStyle`**
 
 ➤ Type: **`object` `array`** <br/>
-
----
-
-**`rounded`**
-
-➤ Type: **`boolean`** <br/>
 
 ---
 
