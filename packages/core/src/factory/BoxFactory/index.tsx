@@ -96,7 +96,7 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
     alignItems && { alignItems },
 
     // Flex Item
-    flex && { flex: 1 },
+    typeof flex === 'boolean' && { flex: Number(flex) },
     order && { order },
     grow && { flexGrow: grow },
     shrink && { flexShrink: shrink },

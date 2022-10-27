@@ -265,7 +265,8 @@ const base: ThemeProps & any = {
             alignContent: 'flex-start',
             justifyContent: 'flex-start',
             alignItems: 'stretch',
-            '-webkit-tap-highlight-color': 'transparent',
+
+            web: { '-webkit-tap-highlight-color': 'transparent' },
           },
         },
       },
