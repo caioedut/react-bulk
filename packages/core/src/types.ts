@@ -311,6 +311,7 @@ export type ThemeProps = {
     Button: ThemeComponentProps;
     ButtonGroup: ThemeComponentProps;
     Card: ThemeComponentProps;
+    Carousel: ThemeComponentProps;
     Checkbox: ThemeComponentProps;
     Collapse: ThemeComponentProps;
     Divider: ThemeComponentProps;
@@ -550,9 +551,25 @@ export type SliderProps = {
 
 export type CardProps = BoxProps;
 
+export type CarouselProps = {
+  chevron?: 'auto' | 'visible' | 'hidden';
+  gap?: number;
+  swipe?: false;
+  // Column Count
+  xs?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
+} & BoxProps;
+
 export type ScrollableProps = {
-  direction?: 'vertical' | 'horizontal' | string;
   contentInset?: number;
+  direction?: 'vertical' | 'horizontal' | string;
+  hideScrollBar?: boolean;
+
+  /** Note: vertical pagination is not supported on Android. **/
+  pagingEnabled?: boolean;
+
   // Styles
   contentStyle?: JssStyles;
 } & BoxProps;

@@ -3,22 +3,22 @@ import React from 'react';
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
-import merge from '../../props/merge';
 import { flexContainerProps } from '../../styles/constants';
 import jss from '../../styles/jss';
 import { FactoryProps, ScrollableProps } from '../../types';
-import clone from '../../utils/clone';
 import BoxFactory from '../BoxFactory';
 
 function ScrollableFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & ScrollableProps) {
   const theme = useTheme();
   const options = theme.components.Scrollable;
-  const { web, native, ScrollView } = map;
+  const { native, ScrollView } = map;
 
   // Extends from default props
   let {
     contentInset,
     direction,
+    hideScrollBar,
+    pagingEnabled,
     platform,
     // Styles
     variants,
@@ -27,15 +27,36 @@ function ScrollableFactory({ stylist, children, map, innerRef, ...props }: Facto
     ...rest
   } = factory2(props, options);
 
-  const nativeProps: any = {};
-  const rootStyles = clone(options.defaultStyles.root);
-  const flexContainerStyles = extract(flexContainerProps, rootStyles, style);
+  const isHorizontal = direction === 'horizontal';
 
-  contentStyle = merge(theme.components.Box.defaultStyles.root, flexContainerStyles, { p: contentInset ?? 0 }, contentStyle);
+  contentStyle = [
+    extract(flexContainerProps, style),
+    { p: contentInset ?? 0 },
+    pagingEnabled && { web: { scrollSnapAlign: 'start' } },
+    contentStyle,
+  ];
+
+  style = [
+    pagingEnabled && {
+      web: { scrollSnapType: `${isHorizontal ? 'x' : 'y'} mandatory` },
+    },
+
+    style,
+  ];
 
   if (native) {
-    nativeProps.horizontal = direction === 'horizontal';
-    nativeProps.contentContainerStyle = jss({ theme }, contentStyle);
+    Object.assign(rest, {
+      horizontal: isHorizontal,
+      contentContainerStyle: jss({ theme }, variants.content, contentStyle),
+      pagingEnabled,
+    });
+
+    if (hideScrollBar) {
+      Object.assign(rest, {
+        showsVerticalScrollIndicator: false,
+        showsHorizontalScrollIndicator: false,
+      });
+    }
   }
 
   return (
@@ -47,14 +68,13 @@ function ScrollableFactory({ stylist, children, map, innerRef, ...props }: Facto
       stylist={[variants.root, stylist]}
       {...rest}
       noRootStyles
-      {...nativeProps}
     >
-      {web ? (
-        <BoxFactory map={map} style={contentStyle} stylist={[variants.content]}>
+      {native ? (
+        children
+      ) : (
+        <BoxFactory map={map} style={contentStyle} stylist={[variants.content]} noRootStyles>
           {children}
         </BoxFactory>
-      ) : (
-        children
       )}
     </BoxFactory>
   );
