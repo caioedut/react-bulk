@@ -80,6 +80,7 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
   }
 
   const fontSize = theme.rem(size);
+  const lineHeight = native ? fontSize : 1;
   const spacing = theme.rem(1, fontSize);
   const height = fontSize * +options.defaultStyles.root.minHeight.replace(/[^.\d]/g, '');
   const textColor = isBasic ? color : 'white';
@@ -110,7 +111,12 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
 
   if (typeof children === 'string') {
     children = (
-      <TextFactory map={map} transform={transform} style={[{ color: textColor, fontSize }, labelStyle]} stylist={[variants.label]}>
+      <TextFactory
+        map={map}
+        transform={transform}
+        style={[{ color: textColor, fontSize, lineHeight }, labelStyle]}
+        stylist={[variants.label]}
+      >
         {children}
       </TextFactory>
     );

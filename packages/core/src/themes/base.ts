@@ -234,18 +234,22 @@ const base: ThemeProps & any = {
             backgroundColor: 'error.dark',
             borderRadius: '0.625rem',
             border: '1px solid error.dark',
-            color: 'white',
-            fontSize: '0.75rem',
-            fontWeight: 'bold',
-            lineHeight: 1,
             overflow: 'hidden',
-            p: 1,
+            py: 1,
+            px: 1.5,
 
             minHeight: '1.25rem',
             minWidth: '1.25rem',
 
-            web: { display: 'inline-flex' },
-            native: { alignSelf: 'flex-start' },
+            alignSelf: 'center',
+            justifySelf: 'center',
+          },
+          label: {
+            color: 'white',
+            fontSize: '0.625rem',
+            fontWeight: 'bold',
+            web: { lineHeight: 1 },
+            native: { lineHeight: '0.625rem' },
           },
         },
         variants: {
@@ -254,6 +258,7 @@ const base: ThemeProps & any = {
               root: {
                 minWidth: 0,
                 minHeight: 0,
+                px: 1,
               },
             },
           },
@@ -324,6 +329,7 @@ const base: ThemeProps & any = {
             color: 'white',
             fontSize: '1rem',
             web: { lineHeight: 1 },
+            native: { lineHeight: '1rem' },
           },
         },
         variants: {

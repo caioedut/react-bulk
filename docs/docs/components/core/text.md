@@ -164,7 +164,7 @@ Sets `fontWeight` style.
 
 ## Styles
 
-**`style`** to the input element.
+**`style`** to the text element.
 
 ➤ Type: **`RbkStyle`** <br/>
 
