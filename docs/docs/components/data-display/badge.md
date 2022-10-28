@@ -96,3 +96,13 @@ Extends all [`Text`](/docs/components/core/text) props.
 ➤ Type: **`boolean`** <br/>
 
 ---
+
+## Styles
+
+**`style`** to the main element.
+
+**`labelStyle`** to the text element.
+
+➤ Type: **`RbkStyle`** <br/>
+
+---

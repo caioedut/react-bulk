@@ -623,6 +623,8 @@ export type BadgeProps = {
   bottom?: boolean;
   left?: boolean;
   right?: boolean;
+  // Styles
+  labelStyle?: JssStyles;
 } & TextProps;
 
 export type FormProps = {

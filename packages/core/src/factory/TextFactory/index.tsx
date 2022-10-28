@@ -35,7 +35,6 @@ function TextFactory({ stylist, map, innerRef, ...props }: FactoryProps & TextPr
 
   if (native) {
     rest.includeFontPadding = false;
-    rest.textAlignVertical = 'center';
 
     if (numberOfLines) {
       rest.numberOfLines = numberOfLines;
