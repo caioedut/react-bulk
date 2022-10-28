@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 
 import createStyle from '../../createStyle';
 import useHtmlId from '../../hooks/useHtmlId';
-import useStylist from '../../hooks/useStylist';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import jss from '../../styles/jss';
@@ -83,15 +82,13 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
     });
   }
 
-  const styleState = useStylist({
-    style: web && {
-      animation: `${name} ${speed}ms linear ${delay ? `${delay}ms` : ''} ${iterations === -1 ? 'infinite' : iterations} ${
-        run ? 'running' : 'paused'
-      } ${direction}`,
-    },
-  });
-
   const style: JssStyles = { position: 'relative' };
+
+  if (web) {
+    style.animation = `${name} ${speed}ms linear ${delay ? `${delay}ms` : ''} ${iterations === -1 ? 'infinite' : iterations} ${
+      run ? 'running' : 'paused'
+    } ${direction}`;
+  }
 
   if (native) {
     Object.entries(from).forEach(([attr, val], index) => {
@@ -117,13 +114,21 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
     });
   }
 
+  const child = (
+    <BoxFactory map={map} component={component}>
+      {children}
+    </BoxFactory>
+  );
+
   return (
-    <BoxFactory map={map} innerRef={innerRef} stylist={[variants.root, styleState, stylist]} row {...rest}>
-      <Animated.View style={style}>
-        <BoxFactory map={map} component={component}>
-          {children}
+    <BoxFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} row {...rest}>
+      {native ? (
+        <Animated.View style={style}>{child}</Animated.View>
+      ) : (
+        <BoxFactory map={map} component={Animated.View} style={style} noRootStyles>
+          {child}
         </BoxFactory>
-      </Animated.View>
+      )}
     </BoxFactory>
   );
 }

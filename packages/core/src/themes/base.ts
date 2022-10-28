@@ -496,6 +496,25 @@ const base: ThemeProps & any = {
               visibility: 'hidden',
               ...this.mixins.transitions.medium,
             },
+            native: {
+              display: 'none',
+            },
+          },
+        },
+        variants: {
+          visible: {
+            true: {
+              root: {
+                zIndex: this.mixins.zIndex.dropdown,
+                web: {
+                  opacity: 1,
+                  visibility: 'visible',
+                },
+                native: {
+                  display: 'flex',
+                },
+              },
+            },
           },
         },
       },
@@ -574,7 +593,7 @@ const base: ThemeProps & any = {
         },
         defaultStyles: {
           root: {
-            web: { display: 'inline-block' },
+            web: { display: 'block' },
           },
         },
       },
@@ -762,16 +781,23 @@ const base: ThemeProps & any = {
           },
           content: {
             flexGrow: 1,
+            minHeight: '100%',
             minWidth: '100%',
           },
         },
         variants: {
           direction: {
             vertical: {
-              root: { web: { overflowY: 'auto' } },
+              root: {
+                flexDirection: 'column',
+                web: { overflowY: 'auto' },
+              },
             },
             horizontal: {
-              root: { web: { overflowX: 'auto' } },
+              root: {
+                flexDirection: 'row',
+                web: { overflowX: 'auto' },
+              },
             },
           },
         },

@@ -1,43 +1,57 @@
 import React, { useRef } from 'react';
 
-import useStylist from '../../hooks/useStylist';
 import useTheme from '../../hooks/useTheme';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { FactoryProps, ImageProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
 function ImageFactory({ stylist, map, innerRef, ...props }: FactoryProps & ImageProps) {
   const theme = useTheme();
   const options = theme.components.Image;
-  const { web, Image } = map;
+  const { web, native, Image } = map;
 
   // Extends from default props
-  let { mode, height, width, ...rest } = factory(props, options.defaultProps);
+  let {
+    alt,
+    mode,
+    height,
+    width,
+    // Styles
+    variants,
+    style,
+    ...rest
+  } = factory2(props, options);
 
   const defaultRef: any = useRef(null);
   const imageRef = innerRef || defaultRef;
 
-  if (web) {
-    rest.alt = rest.alt ?? '';
+  alt = alt ?? '';
+
+  if (alt) {
+    rest.accessibility = rest.accessibility || {};
+    rest.accessibility.label = rest.accessibility.label ?? alt;
   }
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
+  if (web) {
+    rest.alt = alt;
+  }
 
-  const styleState = useStylist({
-    style: {
+  style = [
+    {
       height,
       width,
-      web: { objectFit: mode },
-      native: { resizeMode: mode === 'fill' ? 'stretch' : mode },
     },
-  });
 
-  stylist = [styleRoot, styleState, stylist];
+    web && { objectFit: mode },
 
-  return <BoxFactory map={map} innerRef={imageRef} component={Image} stylist={stylist} {...rest} noRootStyles />;
+    native && { resizeMode: mode === 'fill' ? 'stretch' : mode },
+
+    style,
+  ];
+
+  return (
+    <BoxFactory map={map} innerRef={imageRef} component={Image} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles />
+  );
 }
 
 export default React.memo(ImageFactory);
