@@ -440,6 +440,28 @@ const base: ThemeProps & any = {
           },
         },
       },
+      Carousel: {
+        name: 'rbk-carousel',
+        defaultProps: {
+          chevron: 'auto',
+          gap: 0,
+          swipe: false,
+          xs: 1,
+        },
+        defaultStyles: {
+          root: {
+            position: 'relative',
+          },
+          content: {},
+          chevron: {
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+        },
+      },
       Checkbox: {
         name: 'rbk-checkbox',
         defaultProps: {
@@ -780,29 +802,39 @@ const base: ThemeProps & any = {
         defaultStyles: {
           root: {
             flexGrow: 1,
+            flexShrink: 1,
+            flexDirection: 'column',
             web: {
+              display: 'flex',
               overflow: 'hidden',
+              overflowY: 'auto',
               scrollBehavior: 'smooth',
             },
           },
           content: {
-            flexGrow: 1,
-            minHeight: '100%',
-            minWidth: '100%',
+            flexDirection: 'column',
           },
         },
         variants: {
           direction: {
-            vertical: {
-              root: {
-                flexDirection: 'column',
-                web: { overflowY: 'auto' },
-              },
-            },
             horizontal: {
               root: {
                 flexDirection: 'row',
                 web: { overflowX: 'auto' },
+              },
+              content: {
+                flexDirection: 'row',
+              },
+            },
+          },
+          hideScrollBar: {
+            true: {
+              root: {
+                web: {
+                  '-ms-overflow-style': 'none',
+                  'scrollbar-width': 'none',
+                  '&::-webkit-scrollbar': { display: 'none' },
+                },
               },
             },
           },

@@ -15,6 +15,8 @@ import {
   ButtonProps,
   CardFactory,
   CardProps,
+  CarouselFactory,
+  CarouselProps,
   CheckboxFactory,
   CheckboxProps,
   CollapseFactory,
@@ -81,6 +83,10 @@ export const ButtonGroup: ForwardRefExoticComponent<ButtonGroupProps> = memo(
 
 export const Card: ForwardRefExoticComponent<CardProps> = memo(
   forwardRef((props, ref) => <CardFactory innerRef={ref} {...props} map={useMap()} />),
+);
+
+export const Carousel: ForwardRefExoticComponent<CarouselProps> = memo(
+  forwardRef((props, ref) => <CarouselFactory innerRef={ref} {...props} map={useMap()} />),
 );
 
 export const Checkbox: ForwardRefExoticComponent<CheckboxProps> = memo(

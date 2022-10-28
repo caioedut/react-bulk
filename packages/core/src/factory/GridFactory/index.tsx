@@ -31,7 +31,9 @@ function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProp
 
         const Component = child.type;
         const props = { ...(child?.props || {}) };
-        const style: JssStyles = [{ padding: spacing }];
+
+        const style: JssStyles = [{ padding: spacing }, props.itemStyle];
+        delete props.itemStyle;
 
         breakpoints.forEach((key: string) => {
           if (key in props) {
@@ -42,11 +44,14 @@ function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProp
             const isFlex = value === true || value === 'flex';
 
             style.push({
-              [key]: {
-                flex: isFlex ? 1 : undefined,
-                width: !isAuto && !isFlex ? `${width}%` : undefined,
-              },
+              [key]: { flex: isFlex ? 1 : undefined },
             });
+
+            if (!isAuto && !isFlex) {
+              style.push({
+                [key]: { width: `${width}%` },
+              });
+            }
           }
 
           delete props[key];

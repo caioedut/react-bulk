@@ -76,3 +76,13 @@ Number of columns.
 ➤ Default: **`12`** <br/>
 
 ---
+
+## Styles
+
+**`style`** to the main element.
+
+**`child.itemStyle`** to the wrapper element of the item.
+
+➤ Type: **`RbkStyle`** <br/>
+
+---
