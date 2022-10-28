@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import useHtmlId from '../../hooks/useHtmlId';
-import useStylist from '../../hooks/useStylist';
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
 import { AnyObject, FactoryProps, SelectProps } from '../../types';
 import pick from '../../utils/pick';
@@ -41,12 +40,13 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
     onChange,
     onFormChange,
     // Styles
+    variants,
     buttonStyle,
     errorStyle,
     labelStyle,
     style,
     ...rest
-  } = factory(props, options.defaultProps);
+  } = factory2(props, options);
 
   id = useHtmlId(id);
 
@@ -231,29 +231,12 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
     setActiveIndex(newIndex);
   };
 
-  const styleRoot = useStylist({
-    name: arrOptions.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styleLabel = useStylist({
-    name: options.name + '-label',
-    style: options.defaultStyles.label,
-  });
-
-  const styleError = useStylist({
-    name: options.name + '-error',
-    style: options.defaultStyles.error,
-  });
-
-  const styleState = useStylist({
-    style: extract(spacings, rest),
-  });
+  style = [extract(spacings, rest), style];
 
   return (
-    <BoxFactory map={map} style={style} stylist={[styleRoot, styleState, stylist]} onKeyDown={handleKeyDown}>
+    <BoxFactory map={map} style={style} stylist={[variants.root, stylist]} onKeyDown={handleKeyDown}>
       {Boolean(label) && (
-        <LabelFactory map={map} numberOfLines={1} for={buttonRef} style={labelStyle} stylist={[styleLabel]}>
+        <LabelFactory map={map} numberOfLines={1} for={buttonRef} style={labelStyle} stylist={[variants.label]}>
           {label}
         </LabelFactory>
       )}
@@ -284,7 +267,7 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
       </ButtonFactory>
 
       {Boolean(error) && typeof error === 'string' && (
-        <TextFactory map={map} variant="caption" style={errorStyle} stylist={[styleError]}>
+        <TextFactory map={map} variant="caption" style={errorStyle} stylist={[variants.error]}>
           {error}
         </TextFactory>
       )}

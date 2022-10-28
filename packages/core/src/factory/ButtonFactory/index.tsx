@@ -1,6 +1,5 @@
 import React from 'react';
 
-import useStylist from '../../hooks/useStylist';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { ButtonProps, FactoryProps } from '../../types';
@@ -35,6 +34,7 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
     variants,
     labelStyle,
     contentStyle,
+    style,
     ...rest
   } = factory2(props, options);
 
@@ -84,30 +84,29 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
   const height = fontSize * +options.defaultStyles.root.minHeight.replace(/[^.\d]/g, '');
   const textColor = isBasic ? color : 'white';
 
-  const styleColor = useStylist({
-    style: [
-      color && { borderColor: color },
-      color && !isBasic && { backgroundColor: color },
-      web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}` } },
-      web && color && { '&:hover': { bg: theme.hex2rgba(color, isBasic ? 0.1 : 0.8) } },
-    ],
-  });
+  style = [
+    {
+      minHeight: height,
+      minWidth: height,
+      paddingHorizontal: spacing,
+    },
 
-  const styleState = useStylist({
-    style: [
-      {
-        minHeight: height,
-        minWidth: height,
-        paddingHorizontal: spacing,
-      },
+    circular && {
+      borderRadius: height / 2,
+      height,
+      width: height,
+    },
 
-      circular && {
-        borderRadius: height / 2,
-        height,
-        width: height,
-      },
-    ],
-  });
+    color && { borderColor: color },
+
+    color && !isBasic && { backgroundColor: color },
+
+    web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}` } },
+
+    web && color && { '&:hover': { bg: theme.hex2rgba(color, isBasic ? 0.1 : 0.8) } },
+
+    style,
+  ];
 
   if (typeof children === 'string') {
     children = (
@@ -122,7 +121,8 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
       map={map}
       innerRef={innerRef}
       component={web && rest.href ? 'a' : Button}
-      stylist={[variants.root, styleColor, styleState, stylist]}
+      style={style}
+      stylist={[variants.root, stylist]}
       {...rest}
       disabled={disabled}
     >

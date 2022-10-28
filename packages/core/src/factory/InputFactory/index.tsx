@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import useHtmlId from '../../hooks/useHtmlId';
-import useStylist from '../../hooks/useStylist';
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
@@ -207,56 +206,50 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     dispatchEvent('blur', internal, nativeEvent);
   };
 
-  const styleFocus = useStylist({
-    avoid: !focused,
-    style: {
-      web: {
+  style = [
+    color &&
+      !disabled && {
+        borderColor: color,
+      },
+
+    web &&
+      focused && {
         boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}`,
       },
-      native: {
-        shadowColor: color,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-      },
+
+    style,
+  ];
+
+  inputStyle = [
+    {
+      fontSize,
+      height,
+      paddingVertical: 0,
+      paddingHorizontal: spacing,
     },
-  });
 
-  const styleColor = useStylist({
-    avoid: disabled,
-    style: color && { borderColor: color },
-  });
+    multiline && { height },
 
-  const styleInputState = useStylist({
-    style: [
-      {
-        fontSize,
-        height,
-        paddingVertical: 0,
-        paddingHorizontal: spacing,
+    textColor && { color: textColor },
+
+    web && { paddingVertical: spacing * 2 },
+
+    web && { caretColor: caretHidden ? theme.colors.common.trans : selectionColor },
+
+    web &&
+      placeholderColor && {
+        '&::-webkit-input-placeholder': { color: placeholderColor },
+        '&::-ms-input-placeholder': { color: placeholderColor },
+        '&::placeholder': { color: placeholderColor },
       },
 
-      multiline && { height },
+    web &&
+      selectionColor && {
+        '&::selection': { backgroundColor: selectionColor, color: theme.contrast(selectionColor) },
+      },
 
-      textColor && { color: textColor },
-
-      web && { paddingVertical: spacing * 2 },
-
-      web && { caretColor: caretHidden ? theme.colors.common.trans : selectionColor },
-
-      web &&
-        placeholderColor && {
-          '&::-webkit-input-placeholder': { color: placeholderColor },
-          '&::-ms-input-placeholder': { color: placeholderColor },
-          '&::placeholder': { color: placeholderColor },
-        },
-
-      web &&
-        selectionColor && {
-          '&::selection': { backgroundColor: selectionColor, color: theme.contrast(selectionColor) },
-        },
-    ],
-  });
+    inputStyle,
+  ];
 
   containerStyle = [extract(spacings, rest, style), containerStyle];
 
@@ -268,7 +261,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
         </LabelFactory>
       )}
 
-      <BoxFactory map={map} stylist={[variants.root, styleFocus, styleColor, stylist]} style={style}>
+      <BoxFactory map={map} stylist={[variants.root, stylist]} style={style}>
         <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
           {Boolean(startAddon) && (
             <BoxFactory map={map} style={{ marginLeft: spacing }} onPress={focus}>
@@ -281,7 +274,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
             innerRef={inputRef}
             component={multiline ? TextArea : Input}
             style={inputStyle}
-            stylist={[variants.input, styleInputState]}
+            stylist={[variants.input]}
             {...rest}
             id={id}
             disabled={disabled}

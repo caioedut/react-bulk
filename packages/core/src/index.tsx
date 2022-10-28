@@ -4,6 +4,7 @@ import { useForm } from './factory/FormFactory';
 // Hook
 export { useForm };
 export { default as useTheme } from './hooks/useTheme';
+export { default as useHtmlId } from './hooks/useHtmlId';
 export { default as usePropState } from './hooks/usePropState';
 
 // Prop

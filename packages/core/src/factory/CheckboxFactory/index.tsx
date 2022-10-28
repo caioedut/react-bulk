@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import useHtmlId from '../../hooks/useHtmlId';
-import useStylist from '../../hooks/useStylist';
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
 import { CheckboxProps, FactoryProps } from '../../types';
 import pick from '../../utils/pick';
@@ -36,11 +35,12 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
     // Events
     onFormChange,
     // Styles
+    variants,
     buttonStyle,
     labelStyle,
     style,
     ...rest
-  } = factory(props, options.defaultProps);
+  } = factory2(props, options);
 
   id = useHtmlId(id);
   color = theme.color(color);
@@ -112,31 +112,17 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
     dispatchEvent('change', checked, nativeEvent);
   };
 
-  const styleRoot = useStylist({
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
+  style = [style, extract(spacings, rest)];
 
-  const styleState = useStylist({
-    style: extract(spacings, rest),
-  });
-
-  const styleButton = useStylist({
-    name: options.name + 'button',
-    style: options.defaultStyles.button,
-  });
-
-  const styleButtonState = useStylist({
-    style: { marginLeft: -theme.rem(0.5, fontSize) },
-  });
+  buttonStyle = [{ marginLeft: -theme.rem(0.5, fontSize) }, buttonStyle];
 
   return (
-    <BoxFactory map={map} style={style} stylist={[styleRoot, styleState, stylist]}>
+    <BoxFactory map={map} style={style} stylist={[variants.root, stylist]}>
       <ButtonFactory
         innerRef={buttonRef}
         map={map}
         style={buttonStyle}
-        stylist={[styleButton, styleButtonState]}
+        stylist={[variants.button]}
         color={color}
         size={size}
         {...rest}

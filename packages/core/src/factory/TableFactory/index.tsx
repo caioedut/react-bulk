@@ -4,7 +4,6 @@ import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { FactoryProps, TableProps } from '../../types';
 import BoxFactory from '../BoxFactory';
-import ScrollableFactory from '../ScrollableFactory';
 import TextFactory from '../TextFactory';
 
 function TableFactory({ stylist, map, innerRef, ...props }: FactoryProps & TableProps) {
@@ -67,7 +66,7 @@ function TableFactory({ stylist, map, innerRef, ...props }: FactoryProps & Table
   style = [{ border }, style];
 
   return (
-    <ScrollableFactory innerRef={innerRef} map={map} style={style} stylist={[variants.root, stylist]} direction="horizontal" {...rest}>
+    <BoxFactory map={map} innerRef={innerRef} style={style} stylist={[variants.root, stylist]} {...rest}>
       <BoxFactory map={map} row noWrap>
         {columns?.map((column, index) => (
           <BoxFactory key={index} map={map} style={buildStyle(column, false, index > 0)}>
@@ -84,7 +83,7 @@ function TableFactory({ stylist, map, innerRef, ...props }: FactoryProps & Table
           ))}
         </BoxFactory>
       ))}
-    </ScrollableFactory>
+    </BoxFactory>
   );
 }
 

@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react';
 
 import createStyle from '../../createStyle';
-import useStylist from '../../hooks/useStylist';
 import useTheme from '../../hooks/useTheme';
 import bindings from '../../props/bindings';
-import factory from '../../props/factory';
+import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import merge from '../../props/merge';
 import { customStyleProps } from '../../styles/jss';
@@ -17,7 +16,7 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
   const { web, native, dimensions, Button, Text, View } = map;
 
   // Extends from default props
-  props = useMemo(() => factory(props, options.defaultProps), [props, options.defaultProps]);
+  props = useMemo(() => factory2(props, options), [props, options]);
 
   // Platform specific props
   if (platform) {
@@ -55,6 +54,8 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
     row,
     shrink,
     wrap,
+    // Styles
+    variants,
     style,
     rawStyle,
     ...rest
@@ -125,13 +126,7 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
     }
   }
 
-  const styleRoot = useStylist({
-    avoid: noRootStyles,
-    name: options.name,
-    style: options.defaultStyles.root,
-  });
-
-  const styles = [styleRoot, stylist];
+  const styles = [!noRootStyles && variants.root, stylist];
   const processed = useMemo(() => createStyle({ style, theme }), [style, theme]);
   styles.push(processed);
 
