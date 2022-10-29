@@ -31,16 +31,34 @@ import { Scrollable } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
+**`contentInset`**
+
+Add padding into content element. The set value will be multiplied by the `theme.shape.spacing`.
+
+➤ Type: **`number`** <br/>
+
+---
+
 **`direction`**
 
 ➤ Type: **`'vertical'` `'horizontal'`** <br/>
 
 ---
 
-**`contentInset`**
+**`hideScrollBar`**
 
-Add padding into content element. The set value will be multiplied by the `theme.shape.spacing`.
+➤ Type: **`boolean`** <br/>
 
-➤ Type: **`number`** <br/>
+---
+
+**`pagingEnabled`**
+
+When true, the scroll view stops on multiples of the scroll view's size when scrolling. This can be used for horizontal pagination.
+
+:::note
+Vertical pagination is not supported on Android.
+:::
+
+➤ Type: **`boolean`** <br/>
 
 ---
