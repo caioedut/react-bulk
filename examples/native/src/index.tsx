@@ -8,6 +8,7 @@ import {
   Button,
   ButtonGroup,
   Card,
+  Carousel,
   Checkbox,
   Collapse,
   Divider,
@@ -629,6 +630,21 @@ export default function Main() {
             </Box>
           </Grid>
         </Box>
+      </Card>
+
+      <Card mt={3}>
+        <Text variant="title" mb={3}>
+          Carousel
+        </Text>
+        <Carousel xs={1} sm={2} md={3} lg={4} xl={5} gap={3}>
+          {Array.from({ length: 11 }).map((i, index) => (
+            <Card key={index} corners={3} bg="background.secondary">
+              <Text bold>Item {index + 1}</Text>
+              <Image w="100%" corners={3} my={3} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+              <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos recusandae suscipit velit voluptate.</Text>
+            </Card>
+          ))}
+        </Carousel>
       </Card>
     </Scrollable>
   );
