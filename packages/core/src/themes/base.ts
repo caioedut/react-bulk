@@ -451,6 +451,7 @@ const base: ThemeProps & any = {
         name: 'rbk-carousel',
         defaultProps: {
           chevron: 'auto',
+          color: 'primary',
           gap: 0,
           swipe: false,
           xs: 1,
@@ -820,7 +821,9 @@ const base: ThemeProps & any = {
             },
           },
           content: {
+            display: 'flex',
             flexDirection: 'column',
+            flexWrap: 'nowrap',
           },
         },
         variants: {

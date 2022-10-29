@@ -37,6 +37,13 @@ Extends all [`Text`](/docs/components/core/text) props.
 
 ---
 
+**`color`**
+
+➤ Type: **`string`** <br/>
+➤ Default: **`primary`**
+
+---
+
 **`gap`**
 
 Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.typography.fontSize` value.

@@ -2,7 +2,11 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 
 import rect from '../../element/rect';
 import scrollTo from '../../element/scrollTo';
+import scrollToEnd from '../../element/scrollToEnd';
+import scrollToStart from '../../element/scrollToStart';
 import useTheme from '../../hooks/useTheme';
+import ChevronLeft from '../../icons/ChevronLeft';
+import ChevronRight from '../../icons/ChevronRight';
 import factory2 from '../../props/factory2';
 import { CarouselProps, FactoryProps } from '../../types';
 import event from '../../utils/event';
@@ -13,11 +17,12 @@ import ScrollableFactory from '../ScrollableFactory';
 function CarouselFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & CarouselProps) {
   const theme = useTheme();
   const options = theme.components.Carousel;
-  const { web, native } = map;
+  const { web, native, svg } = map;
 
   // Extends from default props
   let {
     chevron,
+    color,
     gap,
     swipe,
     // Column Count
@@ -48,13 +53,13 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
 
   const scrollByCount = useCallback(
     async (count) => {
-      let width = contentWidth ?? 0;
+      let size = contentWidth ?? 0;
 
       if (web) {
-        width = (await rect(itemRef.current)).width;
+        size = (await rect(itemRef.current)).width;
       }
 
-      scrollTo(contentRef.current, count * width + offsetRef.current);
+      scrollTo(contentRef.current, count * size + offsetRef.current);
     },
     [contentWidth],
   );
@@ -87,7 +92,7 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
       offsetRef.current = scrollLeft;
 
       setHasPrev(scrollLeft > 0);
-      setHasNext(scrollOverflowWidth !== scrollLeft);
+      setHasNext(scrollOverflowWidth > scrollLeft);
     },
     [contentRef],
   );
@@ -99,8 +104,8 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
 
   useEffect(() => {
     if (!contentRef.current || !contentWidth) return;
-    scrollTo(contentRef.current, 10, 10, false);
-    scrollTo(contentRef.current, 0, 0, false);
+    scrollToEnd(contentRef.current, false);
+    scrollToStart(contentRef.current, false);
   }, [contentRef, contentWidth]);
 
   useEffect(() => {
@@ -141,7 +146,12 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
     xl: { width: base / (xl ?? lg ?? md ?? sm ?? xs) },
   };
 
-  chevronStyle = [{ mt: -4, transform: [{ scale: 3 }] }, chevronStyle];
+  chevronStyle = [{ mt: -4 }, chevronStyle];
+
+  const chevronProps = {
+    color: theme.color(color),
+    size: theme.rem(2),
+  };
 
   return (
     <BoxFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} {...rest}>
@@ -154,29 +164,26 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
         direction="horizontal"
         onScroll={handleScroll}
       >
-        {contentWidth !== null && (
-          <BoxFactory map={map} row noWrap>
-            {React.Children.map(children, (child, index) => (
-              <BoxFactory key={index} map={map} innerRef={itemRef} style={itemStyle} pl={index ? gap : 0}>
-                {child}
-              </BoxFactory>
-            ))}
-          </BoxFactory>
-        )}
+        {contentWidth !== null &&
+          React.Children.map(children, (child, index) => (
+            <BoxFactory key={index} map={map} innerRef={itemRef} style={itemStyle} pl={index ? gap : 0}>
+              {child}
+            </BoxFactory>
+          ))}
       </ScrollableFactory>
 
       {hasChevron && hasPrev && (
         <BoxFactory map={map} l={0} invisible={!showChevron} stylist={[variants.chevron]}>
-          <ButtonFactory map={map} variant="text" size="large" circular labelStyle={chevronStyle} onClick={scrollToPrev}>
-            ‹
+          <ButtonFactory map={map} variant="text" color={color} circular onClick={scrollToPrev} style={chevronStyle}>
+            <ChevronLeft svg={svg} {...chevronProps} />
           </ButtonFactory>
         </BoxFactory>
       )}
 
       {hasChevron && hasNext && (
         <BoxFactory map={map} r={0} invisible={!showChevron} stylist={[variants.chevron]}>
-          <ButtonFactory map={map} variant="text" size="large" circular labelStyle={chevronStyle} onClick={scrollToNext}>
-            ›
+          <ButtonFactory map={map} variant="text" color={color} circular onClick={scrollToNext} style={chevronStyle}>
+            <ChevronRight svg={svg} {...chevronProps} />
           </ButtonFactory>
         </BoxFactory>
       )}
