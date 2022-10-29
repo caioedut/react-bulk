@@ -13,55 +13,33 @@ import { Input } from '@react-bulk/web'; // OR @react-bulk/native
 ### Basic
 
 ```jsx live
-function Home () {
-  return (
-    <Grid column center gap={3}>
-      <Box w={400}>
-        <Input label="Label" placeholder="Label + Input" />
-      </Box>
-      <Box w={400}>
-        <Input placeholder="Default" />
-      </Box>
-      <Box w={400}>
-        <Input placeholder="Secure" secure />
-      </Box>
-      <Box w={400}>
-        <Input placeholder="Read Only" readOnly />
-      </Box>
-      <Box w={400}>
-        <Input placeholder="Disabled" disabled />
-      </Box>
-    </Grid>
-  )
-}
+<Grid column gap={3} maxw={400}>
+  <Input label="Label" placeholder="Label + Input" />
+  <Input placeholder="Default" />
+  <Input placeholder="Secure" secure />
+  <Input placeholder="Read Only" readOnly />
+  <Input placeholder="Disabled" disabled />
+</Grid>
 ```
 
 ### Sizes
 
 ```jsx live
-<Grid column center gap={3}>
-  <Box w={400}>
-    <Input size="xsmall" placeholder="Input (xsmall)" />
-  </Box>
-  <Box w={400}>
-    <Input size="small" placeholder="Input (small)" />
-  </Box>
-  <Box w={400}>
-    <Input size="medium" placeholder="Input (medium)"/>
-  </Box>
-  <Box w={400}>
-    <Input size="large" placeholder="Input (large)"/>
-  </Box>
-  <Box w={400}>
-    <Input size="xlarge" placeholder="Input (xlarge)"/>
-  </Box>
+<Grid column gap={3} maxw={400}>
+  <Input size="xsmall" placeholder="Input (xsmall)" />
+  <Input size="small" placeholder="Input (small)" />
+  <Input size="medium" placeholder="Input (medium)"/>
+  <Input size="large" placeholder="Input (large)"/>
+  <Input size="xlarge" placeholder="Input (xlarge)"/>
 </Grid>
 ```
 
 ### Error
 
 ```jsx live
-<Input placeholder="Full Name" error="Please enter your full name." />
+<Box maxw={400}>
+    <Input placeholder="Full Name" error="Please enter your full name." />
+</Box>
 ```
 
 ### Addons
@@ -72,16 +50,10 @@ function Home () {
   const CustomIcon = () => <Text>👁</Text>
 
   return (
-    <Grid column center gap={3}>
-      <Box w={400}>
-        <Input placeholder="Username" startAddon="👤" />
-      </Box>
-      <Box w={400}>
-        <Input placeholder="Password" endAddon={<CustomIcon/>} />
-      </Box>
-      <Box w={400}>
-        <Input placeholder="reactbulk" startAddon="https://" endAddon=".com" />
-      </Box>
+    <Grid column gap={3} maxw={400}>
+      <Input placeholder="Username" startAddon="👤" />
+      <Input placeholder="Password" endAddon={<CustomIcon/>} />
+      <Input placeholder="reactbulk" startAddon="https://" endAddon=".com" />
     </Grid>
   )
 }
@@ -150,6 +122,12 @@ events and updating the value prop to keep the controlled state in sync.
 **`endAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
+
+---
+
+**`error`**
+
+➤ Type: **`string`** <br/>
 
 ---
 
@@ -289,6 +267,8 @@ The value to show for the text input.
 
 **`inputStyle`** to the input element.
 
+**`labelStyle`** to the label element.
+
 **`style`** to the inner wrapper.
 
 ➤ Type: **`RbkStyle`** <br/>
@@ -314,3 +294,13 @@ The value to show for the text input.
 ➤ Type: **`Function(RbkEvent)`** <br/>
 
 ---
+
+**`onFormChange`**
+
+Combined with [Form](/docs/components/forms/form), triggers every time when form data changes.
+Eg.: [Input](/docs/components/forms/input), [Select](/docs/components/forms/select), [Checkbox](/docs/components/forms/checkbox).
+
+➤ Type: **`Function(RbkEvent)`** <br/>
+
+---
+
