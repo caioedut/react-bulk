@@ -49,5 +49,5 @@ export default function css(style: any, selector?: string) {
     }
   }
 
-  return (result || '').replace(/[\r\n]/g, ' ').replace(/\s{2,}/g, ' ');
+  return (result || '').replace(/\r|\n/g, ' ').replace(/\s{2,}/g, ' ');
 }

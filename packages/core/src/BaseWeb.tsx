@@ -14,7 +14,7 @@ export default function BaseWeb({ theme, children }) {
 
   // Run on theme change before render
   useMemo(() => {
-    const scrollBarStyle = css(jss({ theme }, theme.mixins.scroll), '*');
+    const scrollBarStyle = css(jss({ theme }, theme.mixins.scroll), 'body');
 
     createMeta(
       '[name="theme-color"]',
