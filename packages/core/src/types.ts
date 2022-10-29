@@ -279,6 +279,8 @@ export type ThemeProps = {
       fast: AnyObject;
     };
 
+    scroll: AnyObject;
+
     zIndex: {
       backdrop: number;
       modal: number;
