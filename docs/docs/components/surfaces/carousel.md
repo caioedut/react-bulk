@@ -17,9 +17,15 @@ import { Carousel } from '@react-bulk/web'; // OR @react-bulk/native
 <Carousel xs={1} sm={2} md={3} lg={4} xl={5} gap={3}>
   {Array.from({ length: 7 }).map((i, index) => (
     <Card key={index} corners={3} bg="background.secondary">
-      <Text bold>Slide Item {index + 1}</Text>
+      <Text bold>
+        Slide Item {index + 1}
+      </Text>
+
       <Image w="100%" corners={3} my={3} source="https://i.imgur.com/CmPhDqA.png" />
-      <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos recusandae suscipit velit voluptate.</Text>
+
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos recusandae suscipit velit voluptate.
+      </Text>
     </Card>
   ))}
 </Carousel>
