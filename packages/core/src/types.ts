@@ -560,6 +560,7 @@ export type CarouselProps = {
   sm?: number;
   md?: number;
   lg?: number;
+  xl?: number;
 } & BoxProps;
 
 export type ScrollableProps = {
