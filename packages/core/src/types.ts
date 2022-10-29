@@ -501,15 +501,20 @@ export type SelectOption = {
   disabled?: boolean;
 };
 
-export type SelectProps = FormControlProps & {
+export type SelectProps = {
+  color?: ColorValues;
   defaultValue?: InputValue;
   disabled?: boolean;
+  endIcon?: ReactNode;
   error?: string;
+  label?: string;
   loading?: boolean;
   name?: string;
   options?: SelectOption[];
   placeholder?: string;
   readOnly?: boolean;
+  size?: SizeValues;
+  startIcon?: ReactNode;
   value?: InputValue;
   // Events
   onChange?: (event: RbkEvent, value: string, option: SelectOption) => void;
@@ -517,6 +522,7 @@ export type SelectProps = FormControlProps & {
   // Styles
   buttonStyle?: JssStyles;
   errorStyle?: JssStyles;
+  labelStyle?: JssStyles;
 } & FocusableProps &
   BoxProps;
 
@@ -532,6 +538,9 @@ export type CheckboxProps = {
   // Events
   onChange?: (event: { checked: boolean } & Omit<RbkEvent, 'value'>, checked: boolean) => void;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
+  // Styles
+  buttonStyle?: JssStyles;
+  labelStyle?: JssStyles;
 } & FocusableProps &
   BoxProps;
 

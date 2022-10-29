@@ -104,6 +104,8 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
   }
 
   const handleChange = (e) => {
+    if (readOnly) return;
+
     const nativeEvent = e?.nativeEvent ?? e;
     const checked = !internal;
 
