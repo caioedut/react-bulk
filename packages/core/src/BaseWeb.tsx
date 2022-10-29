@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import createMeta from './createMeta';
 import createStyle from './createStyle';
+import css from './styles/css';
+import jss from './styles/jss';
 
 export default function BaseWeb({ theme, children }) {
   // Run once before render
@@ -12,6 +14,8 @@ export default function BaseWeb({ theme, children }) {
 
   // Run on theme change before render
   useMemo(() => {
+    const scrollBarStyle = css(jss({ theme }, theme.mixins.scroll), '*');
+
     createMeta(
       '[name="theme-color"]',
       {
@@ -34,6 +38,8 @@ export default function BaseWeb({ theme, children }) {
           box-sizing: border-box;
           font-family: inherit;
         }
+
+        ${scrollBarStyle}
 
         html {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

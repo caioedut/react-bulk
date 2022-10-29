@@ -32,7 +32,7 @@ export default function css(style: any, selector?: string) {
 
       attr = attr.replace(/[A-Z]/g, (a) => '-' + a.toLowerCase());
 
-      result += `${attr}:${val}${suffix};\n`;
+      result += `${attr}:${val}${suffix};`;
     });
   }
 
@@ -49,5 +49,5 @@ export default function css(style: any, selector?: string) {
     }
   }
 
-  return result || '';
+  return (result || '').replace(/[\r\n]/g, ' ').replace(/\s{2,}/g, ' ');
 }

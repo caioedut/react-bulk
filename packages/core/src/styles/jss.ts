@@ -12,7 +12,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   const { web, native } = Platform;
 
   const args = clone(mixin);
-  const theme: ThemeProps = extract('theme', args).theme;
+  const theme: ThemeProps = extract('theme', args).theme ?? global.theme ?? {};
 
   // Extract all web styles
   let webStyle: any = [];

@@ -46,6 +46,13 @@ const base: ThemeProps & any = {
       },
     },
 
+    scroll: {
+      '&::-webkit-scrollbar': { height: '0.375rem', width: '0.375rem' },
+      '&::-webkit-scrollbar-track': { background: 'transparent' },
+      '&::-webkit-scrollbar-corner': { background: 'transparent' },
+      '&::-webkit-scrollbar-thumb': { bg: 'text.disabled', borderRadius: '0.1875rem' },
+    },
+
     zIndex: {
       backdrop: 900,
       modal: 901,
@@ -809,6 +816,7 @@ const base: ThemeProps & any = {
               overflow: 'hidden',
               overflowY: 'auto',
               scrollBehavior: 'smooth',
+              ...this.mixins.scroll,
             },
           },
           content: {
