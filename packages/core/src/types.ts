@@ -555,6 +555,7 @@ export type CardProps = BoxProps;
 
 export type CarouselProps = {
   chevron?: 'auto' | 'visible' | 'hidden';
+  color?: ColorValues;
   gap?: number;
   swipe?: false;
   // Column Count
@@ -563,6 +564,8 @@ export type CarouselProps = {
   md?: number;
   lg?: number;
   xl?: number;
+  // Styles
+  chevronStyle?: { color?: ColorValues; size?: number } & JssStyles;
 } & BoxProps;
 
 export type ScrollableProps = {
