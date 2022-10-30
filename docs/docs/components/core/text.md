@@ -57,7 +57,7 @@ The set value will be multiplied by the `theme.typography.fontSize` value.
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box) props.
+Extends all [`Box`](/docs/components/core/box#props) props.
 
 **`bold`**
 
