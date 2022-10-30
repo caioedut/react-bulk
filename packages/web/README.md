@@ -1,5 +1,3 @@
-<center>
-
 # <p style="color: #673ab7;">React Bulk</p>
 Complete and uniform UI for React Web and Native
 
@@ -10,8 +8,6 @@ Complete and uniform UI for React Web and Native
 </a>
 
 ---
-
-</center>
 
 ## Docs
 
