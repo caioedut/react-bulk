@@ -601,8 +601,8 @@ export type ImageProps = {
 
 export type DividerProps = {
   color?: ColorValues;
-  size?: number | string;
   opacity?: number;
+  size?: number | string;
   vertical?: boolean;
 } & BoxProps;
 
