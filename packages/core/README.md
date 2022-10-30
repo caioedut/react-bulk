@@ -5,9 +5,13 @@ Complete and uniform UI for React Web and Native
 
 [![npm](https://img.shields.io/npm/v/@react-bulk/core.svg?color=%23673ab7)](https://www.npmjs.com/package/@react-bulk/core)
 
-</center>
+<a href="https://www.buymeacoffee.com/caioedut" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" width="180" height="50">
+</a>
 
 ---
+
+</center>
 
 ## Docs
 
