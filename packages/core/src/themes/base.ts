@@ -511,7 +511,20 @@ const base: ThemeProps & any = {
         defaultStyles: {
           root: {
             backgroundColor: 'text.primary',
+            height: 1,
             opacity: 0.15,
+            width: 'auto',
+          },
+        },
+        variants: {
+          vertical: {
+            true: {
+              root: {
+                alignSelf: 'stretch',
+                height: 'auto',
+                width: 1,
+              },
+            },
           },
         },
       },
