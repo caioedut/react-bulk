@@ -1,0 +1,57 @@
+# Card
+
+used to encapsulate the content and actions of a single subject.
+
+## Import
+
+```jsx
+import { Card } from '@react-bulk/web'; // OR @react-bulk/native
+```
+
+## Examples
+
+### Basic
+
+```jsx live
+<Card>
+  <Text>Hello World!</Text>
+</Card>
+```
+
+### Composition
+
+```jsx live
+<Card maxw={240} mx="auto" bg="white" border="1px solid background.secondary">
+  <Text variant="caption" color="text.secondary">
+    Lib of the Year
+  </Text>
+  <Text variant="title" bold>
+    React Bulk
+  </Text>
+  <Box mx={-3} my={3}>
+    <Image source="https://i.imgur.com/CmPhDqA.png" bg="background.secondary" w="100%" />
+  </Box>
+  <Text>
+    Complete and uniform UI for React Web and Native
+  </Text>
+  <Button variant="outline" size="small" align="start" mt={3}>
+    Learn More
+  </Button>
+</Card>
+```
+
+## Props
+
+Extends all [`Box`](/docs/components/core/box) props.
+
+`Card` just adds `backgroundColor: background.primary` and `padding: theme.rem(3)` into a `Box`.
+
+---
+
+## Styles
+
+**`style`** to the main element.
+
+➤ Type: **`RbkStyle`** <br/>
+
+---
