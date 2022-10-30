@@ -174,7 +174,7 @@ The string that will be rendered before text input has been entered.
 
 **`style`** to the outer wrapper.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---
 

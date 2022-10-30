@@ -5,7 +5,7 @@ import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import jss from '../../styles/jss';
-import { AnimationProps, FactoryProps, JssStyles } from '../../types';
+import { AnimationProps, FactoryProps, RbkStyles } from '../../types';
 import BoxFactory from '../BoxFactory';
 
 function AnimationFactory({ stylist, children, component, map, innerRef, ...props }: FactoryProps & AnimationProps) {
@@ -82,7 +82,7 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
     });
   }
 
-  const style: JssStyles = { position: 'relative' };
+  const style: RbkStyles = { position: 'relative' };
 
   if (web) {
     style.animation = `${name} ${speed}ms linear ${delay ? `${delay}ms` : ''} ${iterations === -1 ? 'infinite' : iterations} ${

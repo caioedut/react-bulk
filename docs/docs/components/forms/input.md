@@ -271,7 +271,7 @@ The value to show for the text input.
 
 **`style`** to the inner wrapper.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---
 

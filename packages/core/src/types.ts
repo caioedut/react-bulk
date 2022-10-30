@@ -53,7 +53,7 @@ export type FactoryProps = {
   map: RbkFactoryMap;
   innerRef?: RefObject<any>;
   defaults?: AnyObject;
-  stylist?: JssStyles | string | string[];
+  stylist?: RbkStyles | string | string[];
 } & any;
 
 export type AccessibilityProps = {
@@ -156,7 +156,7 @@ export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warnin
 export type SizeValues = number | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | string;
 export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width' | string;
 
-export type CustomStyles = {
+export type RbkPropStyles = {
   position?: 'relative' | 'absolute' | string;
 
   h?: number | string;
@@ -196,13 +196,13 @@ export type CustomStyles = {
   py?: number | string;
 };
 
-export type JssStyles = (CSSProperties & CustomStyles) | Array<CSSProperties> | Array<CustomStyles> | Array<any> | any;
+export type RbkStyles = (CSSProperties & RbkPropStyles) | Array<CSSProperties> | Array<RbkPropStyles> | Array<any> | any;
 
 export type VariantProps = {
   [prop: string]: {
     [value: string]: {
-      root?: JssStyles;
-      [name: string]: JssStyles;
+      root?: RbkStyles;
+      [name: string]: RbkStyles;
     };
   };
 };
@@ -223,8 +223,8 @@ export type ThemeComponentProps = {
   name: string;
   defaultProps: AnyObject;
   defaultStyles: {
-    root?: JssStyles;
-    [key: string]: JssStyles;
+    root?: RbkStyles;
+    [key: string]: RbkStyles;
   };
   variants: VariantProps;
 };
@@ -356,8 +356,8 @@ export type BoxProps = {
   noRootStyles?: boolean;
 
   // Styles
-  style?: JssStyles;
-  rawStyle?: JssStyles;
+  style?: RbkStyles;
+  rawStyle?: RbkStyles;
 
   // Flexbox container
   direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse' | string;
@@ -389,7 +389,7 @@ export type BoxProps = {
   xl?: number | true | 'auto';
   xxl?: number | true | 'auto';
 } & PressableProps &
-  CustomStyles;
+  RbkPropStyles;
 
 export type TextProps = {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'caption' | string;
@@ -419,7 +419,7 @@ export type FormControlProps = {
   size?: SizeValues;
   startIcon?: ReactNode;
   // Styles
-  labelStyle?: JssStyles;
+  labelStyle?: RbkStyles;
 };
 
 export type ButtonProps = FormControlProps & {
@@ -433,7 +433,7 @@ export type ButtonProps = FormControlProps & {
   type?: 'button' | 'submit' | 'cancel' | 'clear' | string;
   variant?: 'solid' | 'outline' | 'text' | string;
   // Styles
-  contentStyle?: JssStyles;
+  contentStyle?: RbkStyles;
 } & PressableProps &
   FocusableProps &
   BoxProps;
@@ -445,7 +445,7 @@ export type ButtonGroupProps = {
   size?: SizeValues;
   variant?: 'solid' | 'outline' | 'text' | string;
   // Styles
-  contentStyle?: JssStyles;
+  contentStyle?: RbkStyles;
 } & BoxProps;
 
 export type InputProps = {
@@ -478,10 +478,10 @@ export type InputProps = {
   onChange?: (event: RbkEvent, value: string) => void;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
   // Styles
-  containerStyle?: JssStyles;
-  errorStyle?: JssStyles;
-  labelStyle?: JssStyles;
-  inputStyle?: JssStyles;
+  containerStyle?: RbkStyles;
+  errorStyle?: RbkStyles;
+  labelStyle?: RbkStyles;
+  inputStyle?: RbkStyles;
 
   /** @deprecated use endAddon instead */
   endIcon?: ReactNode;
@@ -520,9 +520,9 @@ export type SelectProps = {
   onChange?: (event: RbkEvent, value: string, option: SelectOption) => void;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
   // Styles
-  buttonStyle?: JssStyles;
-  errorStyle?: JssStyles;
-  labelStyle?: JssStyles;
+  buttonStyle?: RbkStyles;
+  errorStyle?: RbkStyles;
+  labelStyle?: RbkStyles;
 } & FocusableProps &
   BoxProps;
 
@@ -539,8 +539,8 @@ export type CheckboxProps = {
   onChange?: (event: { checked: boolean } & Omit<RbkEvent, 'value'>, checked: boolean) => void;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
   // Styles
-  buttonStyle?: JssStyles;
-  labelStyle?: JssStyles;
+  buttonStyle?: RbkStyles;
+  labelStyle?: RbkStyles;
 } & FocusableProps &
   BoxProps;
 
@@ -574,7 +574,7 @@ export type CarouselProps = {
   lg?: number;
   xl?: number;
   // Styles
-  chevronStyle?: { color?: ColorValues; size?: number } & JssStyles;
+  chevronStyle?: { color?: ColorValues; size?: number } & RbkStyles;
 } & BoxProps;
 
 export type ScrollableProps = {
@@ -586,7 +586,7 @@ export type ScrollableProps = {
   pagingEnabled?: boolean;
 
   // Styles
-  contentStyle?: JssStyles;
+  contentStyle?: RbkStyles;
 } & BoxProps;
 
 export type ImageProps = {
@@ -630,7 +630,7 @@ export type LoadingProps = {
   label?: string;
   size?: number;
   // Styles
-  labelStyle?: JssStyles;
+  labelStyle?: RbkStyles;
 } & AnimationProps;
 
 export type GridProps = {
@@ -642,7 +642,7 @@ export type TableProps = {
   columns: {
     header?: ReactNode | AnyCallback | string;
     content?: ReactNode | AnyCallback | string;
-    style?: JssStyles;
+    style?: RbkStyles;
   }[];
   rows: any[];
 } & BoxProps;
@@ -656,7 +656,7 @@ export type BadgeProps = {
   left?: boolean;
   right?: boolean;
   // Styles
-  labelStyle?: JssStyles;
+  labelStyle?: RbkStyles;
 } & TextProps;
 
 export type FormProps = {
@@ -677,11 +677,11 @@ export type TooltipProps = {
 export type AnimationProps = {
   delay?: number;
   direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | string;
-  from?: JssStyles;
+  from?: RbkStyles;
   in?: boolean;
   loop?: boolean | number;
   speed?: number;
-  to?: JssStyles;
+  to?: RbkStyles;
 } & BoxProps;
 
 export type ProgressProps = {
@@ -696,10 +696,10 @@ export type ListItemProps = {
   icon?: string | ReactNode;
   startIcon?: string | ReactNode;
   // Styles
-  chevronStyle?: JssStyles;
-  iconStyle?: JssStyles;
-  startIconStyle?: JssStyles;
-  endIconStyle?: JssStyles;
+  chevronStyle?: RbkStyles;
+  iconStyle?: RbkStyles;
+  startIconStyle?: RbkStyles;
+  endIconStyle?: RbkStyles;
 } & BoxProps;
 
 export type LinkProps = {

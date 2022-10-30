@@ -166,6 +166,6 @@ Sets `fontWeight` style.
 
 **`style`** to the text element.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---
