@@ -33,7 +33,7 @@ import { Carousel } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Text`](/docs/components/core/text) props.
+Extends all [`Box`](/docs/components/core/box#props) props.
 
 **`chevron`**
 
@@ -114,6 +114,6 @@ Number of items shown at breakpoint `xl`.
 
 **`chevronStyle`** to the chevrons.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---

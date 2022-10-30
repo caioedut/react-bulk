@@ -6,7 +6,7 @@ sidebar_position: 1
 Complete and uniform UI for React Web and Native
 
 <a href="https://www.buymeacoffee.com/caioedut" target="_blank">
-  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" width="180" height="50">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" width="180" height="50" />
 </a>
 
 ---

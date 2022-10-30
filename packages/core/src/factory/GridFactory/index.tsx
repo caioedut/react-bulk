@@ -2,7 +2,7 @@ import React from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { FactoryProps, GridProps, JssStyles } from '../../types';
+import { FactoryProps, GridProps, RbkStyles } from '../../types';
 import BoxFactory from '../BoxFactory';
 
 function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & GridProps) {
@@ -32,7 +32,7 @@ function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProp
         const Component = child.type;
         const props = { ...(child?.props || {}) };
 
-        const style: JssStyles = [{ padding: spacing }, props.itemStyle];
+        const style: RbkStyles = [{ padding: spacing }, props.itemStyle];
         delete props.itemStyle;
 
         breakpoints.forEach((key: string) => {

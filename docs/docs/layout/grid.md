@@ -51,7 +51,7 @@ import { Grid } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box) props.
+Extends all [`Box`](/docs/components/core/box#props) props.
 
 **`direction`**
 
@@ -83,6 +83,6 @@ Number of columns.
 
 **`child.itemStyle`** to the wrapper element of the item.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---

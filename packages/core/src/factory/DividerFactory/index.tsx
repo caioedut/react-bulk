@@ -27,7 +27,7 @@ function DividerFactory({ stylist, map, innerRef, ...props }: FactoryProps & Div
       opacity,
     },
 
-    vertical ? { alignSelf: 'stretch', width: 1 } : { height: 1 },
+    vertical ? { alignSelf: 'stretch', width: size } : { height: size },
 
     style,
   ];

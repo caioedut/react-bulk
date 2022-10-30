@@ -52,7 +52,7 @@ import { Badge } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Text`](/docs/components/core/text) props.
+Extends all [`Text`](/docs/components/core/text#props) props.
 
 **`bottom`**
 
@@ -103,6 +103,6 @@ Extends all [`Text`](/docs/components/core/text) props.
 
 **`labelStyle`** to the text element.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---
