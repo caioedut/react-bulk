@@ -42,7 +42,7 @@ import { Card } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box) props.
+Extends all [`Box`](/docs/components/core/box#props) props.
 
 `Card` just adds `backgroundColor: background.primary` and `padding: theme.rem(3)` into a `Box`.
 
