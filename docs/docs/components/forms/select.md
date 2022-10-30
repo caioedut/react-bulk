@@ -61,7 +61,7 @@ import { Select } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box) props.
+Extends all [`Box`](/docs/components/core/box#props) props.
 
 **`color`**
 
@@ -174,7 +174,7 @@ The string that will be rendered before text input has been entered.
 
 **`style`** to the outer wrapper.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---
 

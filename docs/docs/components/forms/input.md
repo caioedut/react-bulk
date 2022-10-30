@@ -61,7 +61,7 @@ function Home () {
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box) props.
+Extends all [`Box`](/docs/components/core/box#props) props.
 
 **`autoCapitalize`**
 
@@ -271,7 +271,7 @@ The value to show for the text input.
 
 **`style`** to the inner wrapper.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---
 

@@ -44,7 +44,7 @@ import { Checkbox } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box) props.
+Extends all [`Box`](/docs/components/core/box#props) props.
 
 **`disabled`**
 
@@ -95,7 +95,7 @@ If `true`, renders a radion button.
 
 **`style`** to the outer wrapper.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---
 
