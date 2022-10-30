@@ -166,7 +166,7 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
       >
         {contentWidth !== null &&
           React.Children.map(children, (child, index) => (
-            <BoxFactory key={index} map={map} innerRef={itemRef} style={itemStyle} pl={index ? gap : 0}>
+            <BoxFactory key={index} map={map} innerRef={itemRef} style={itemStyle} px={gap / 2}>
               {child}
             </BoxFactory>
           ))}
