@@ -103,6 +103,6 @@ Extends all [`Text`](/docs/components/core/text) props.
 
 **`labelStyle`** to the text element.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---

@@ -1,6 +1,6 @@
 # Card
 
-used to encapsulate the content and actions of a single subject.
+Used to encapsulate the content and actions of a single subject.
 
 ## Import
 
@@ -52,6 +52,6 @@ Extends all [`Box`](/docs/components/core/box) props.
 
 **`style`** to the main element.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---

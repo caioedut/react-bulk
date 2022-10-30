@@ -224,7 +224,7 @@ Sets `textTransform` style for label.
 
 **`contentStyle`** to the inner wrapper of `children` or `label`.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---
 

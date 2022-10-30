@@ -48,6 +48,6 @@ Extends all [`Text`](/docs/components/core/text) props.
 
 **`style`** to the main element.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---

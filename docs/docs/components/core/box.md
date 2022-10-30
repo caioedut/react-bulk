@@ -371,7 +371,7 @@ Sets `flexShrink` style.
 
 **`style`** to the current element.
 
-➤ Type: **`RbkStyle`** <br/>
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ---
 
