@@ -89,11 +89,11 @@ If `true`, renders a radion button.
 
 ## Styles
 
+**`style`** to the outer wrapper.
+
 **`buttonStyle`** to the button element.
 
 **`labelStyle`** to the label element.
-
-**`style`** to the outer wrapper.
 
 ➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 

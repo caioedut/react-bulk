@@ -50,7 +50,7 @@ export default function BaseWeb({ theme, children }) {
         body {
           background-color: ${theme.colors.background.secondary};
           color: ${theme.colors.text.primary};
-          line-height: 1.15;
+          line-height: ${theme.typography.lineHeight};
           margin: 0;
           padding: 0;
 

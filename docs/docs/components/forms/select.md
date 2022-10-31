@@ -166,13 +166,13 @@ The string that will be rendered before text input has been entered.
 
 ## Styles
 
+**`style`** to the outer wrapper.
+
 **`buttonStyle`** to the button element.
 
 **`errorStyle`** to the error element when has [`error`](#error) prop.
 
 **`labelStyle`** to the label element.
-
-**`style`** to the outer wrapper.
 
 ➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 

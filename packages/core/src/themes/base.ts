@@ -8,7 +8,7 @@ const base: ThemeProps & any = {
 
   typography: {
     fontSize: 16,
-    lineHeight: 1.15,
+    lineHeight: 1,
   },
 
   colors: {
@@ -255,8 +255,6 @@ const base: ThemeProps & any = {
             color: 'white',
             fontSize: '0.625rem',
             fontWeight: 'bold',
-            web: { lineHeight: 1 },
-            native: { lineHeight: '0.625rem' },
           },
         },
         variants: {
@@ -309,10 +307,10 @@ const base: ThemeProps & any = {
             border: '1px solid primary',
             borderRadius: this.shape.borderRadius,
             margin: 0,
-            minHeight: '2.5rem',
-            minWidth: '2.5rem',
+            minHeight: '2rem',
+            minWidth: '2rem',
             padding: 0,
-            paddingHorizontal: '1rem',
+            paddingHorizontal: '0.5rem',
 
             web: {
               backgroundImage: 'none',
@@ -335,14 +333,19 @@ const base: ThemeProps & any = {
           label: {
             color: 'white',
             fontSize: '1rem',
-            web: { lineHeight: 1 },
-            native: { lineHeight: '1rem' },
+            textAlign: 'center',
+            transform: [{ scale: 0.9 }],
           },
         },
         variants: {
           block: {
             true: {
               root: { width: '100%' },
+            },
+          },
+          circular: {
+            true: {
+              root: { borderRadius: '1rem' },
             },
           },
           disabled: {
@@ -394,6 +397,13 @@ const base: ThemeProps & any = {
                 fontSize: '1.625rem',
               },
             },
+          },
+          transform: {
+            none: { label: { textTransform: 'none' } },
+            capitalize: { label: { textTransform: 'capitalize' } },
+            uppercase: { label: { textTransform: 'uppercase' } },
+            lowercase: { label: { textTransform: 'lowercase' } },
+            'full-width': { label: { textTransform: 'full-width' } },
           },
           variant: {
             outline: {
@@ -656,7 +666,8 @@ const base: ThemeProps & any = {
           type: 'text',
         },
         defaultStyles: {
-          root: {
+          root: {},
+          content: {
             borderWidth: 1,
             borderStyle: 'solid',
             borderColor: 'primary',
@@ -665,7 +676,6 @@ const base: ThemeProps & any = {
             web: {
               ...this.mixins.transitions.fast,
               transitionProperty: 'box-shadow',
-
               touchAction: 'none',
               '-webkit-tap-highlight-color': 'transparent',
             },
@@ -680,18 +690,19 @@ const base: ThemeProps & any = {
             color: 'text.primary',
             flex: 1,
             fontSize: '1rem',
-            height: '2.5rem',
+            height: '1rem',
             margin: 0,
             paddingVertical: 0,
             paddingHorizontal: '0.5rem',
             textDecorationLine: 'none',
             width: '100%',
+
             web: {
               backgroundImage: 'none',
               boxShadow: 'none',
               cursor: 'inherit',
               outline: '0 !important',
-              paddingVertical: '1rem',
+              paddingVertical: '0.5rem',
               touchAction: 'none',
             },
           },
@@ -704,7 +715,7 @@ const base: ThemeProps & any = {
         variants: {
           disabled: {
             true: {
-              root: {
+              content: {
                 backgroundColor: (theme) => theme.hex2rgba('background.disabled', 0.125),
                 borderColor: (theme) => theme.hex2rgba('background.disabled', 0.25),
                 web: {

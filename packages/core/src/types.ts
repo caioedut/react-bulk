@@ -478,7 +478,7 @@ export type InputProps = {
   onChange?: (event: RbkEvent, value: string) => void;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
   // Styles
-  containerStyle?: RbkStyles;
+  contentStyle?: RbkStyles;
   errorStyle?: RbkStyles;
   labelStyle?: RbkStyles;
   inputStyle?: RbkStyles;

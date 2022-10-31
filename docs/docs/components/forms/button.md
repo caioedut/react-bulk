@@ -177,12 +177,6 @@ Render text label as child.
 
 ---
 
-**`labelStyle`**
-
-➤ Type: **`object` `array`** <br/>
-
----
-
 **`size`**
 
 ➤ Type: **`'small'` `'medium'` `'large'` `'xlarge'`** <br/>
