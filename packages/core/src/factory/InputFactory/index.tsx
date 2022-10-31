@@ -4,7 +4,7 @@ import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
-import { spacings } from '../../styles/jss';
+import { rbkPropStyles } from '../../styles/constants';
 import { FactoryProps, InputProps } from '../../types';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
@@ -52,7 +52,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     onFormChange,
     // Styles
     variants,
-    containerStyle,
+    contentStyle,
     errorStyle,
     inputStyle,
     labelStyle,
@@ -144,8 +144,8 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
   }
 
   const fontSize = theme.rem(size);
-  const spacing = theme.rem(0.5, fontSize);
-  const height = (multiline ? 3 : 1) * fontSize * +options.defaultStyles.input.height.replace(/[^.\d]/g, '');
+  const spacing = fontSize / 2;
+  const height = fontSize * (multiline ? 4 : 2);
 
   useEffect(() => {
     if (typeof value === 'undefined') return;
@@ -206,7 +206,9 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     dispatchEvent('blur', internal, nativeEvent);
   };
 
-  style = [
+  style = [extract(rbkPropStyles, rest), style];
+
+  contentStyle = [
     color &&
       !disabled && {
         borderColor: color,
@@ -217,14 +219,13 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
         boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}`,
       },
 
-    style,
+    contentStyle,
   ];
 
   inputStyle = [
     {
       fontSize,
       height,
-      paddingVertical: 0,
       paddingHorizontal: spacing,
     },
 
@@ -232,7 +233,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
     textColor && { color: textColor },
 
-    web && { paddingVertical: spacing * 2 },
+    web && { paddingVertical: spacing },
 
     web && { caretColor: caretHidden ? theme.colors.common.trans : selectionColor },
 
@@ -251,17 +252,15 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     inputStyle,
   ];
 
-  containerStyle = [extract(spacings, rest, style), containerStyle];
-
   return (
-    <BoxFactory map={map} style={containerStyle}>
+    <BoxFactory map={map} style={style} stylist={[variants.root, stylist]}>
       {Boolean(label) && (
         <LabelFactory map={map} numberOfLines={1} for={inputRef} style={labelStyle} stylist={[variants.label]}>
           {label}
         </LabelFactory>
       )}
 
-      <BoxFactory map={map} stylist={[variants.root, stylist]} style={style}>
+      <BoxFactory map={map} style={contentStyle} stylist={[variants.content]}>
         <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
           {Boolean(startAddon) && (
             <BoxFactory map={map} style={{ marginLeft: spacing }} onPress={focus}>

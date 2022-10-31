@@ -261,15 +261,15 @@ The value to show for the text input.
 
 ## Styles
 
-**`containerStyle`** to the outer wrapper.
+**`style`** to the outer wrapper.
+
+**`contentStyle`** to the inner wrapper.
 
 **`errorStyle`** to the error element when has [`error`](#error) prop.
 
 **`inputStyle`** to the input element.
 
 **`labelStyle`** to the label element.
-
-**`style`** to the inner wrapper.
 
 ➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 

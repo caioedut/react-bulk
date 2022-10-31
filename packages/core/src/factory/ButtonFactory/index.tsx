@@ -80,9 +80,8 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
   }
 
   const fontSize = theme.rem(size);
-  const lineHeight = native ? fontSize : 1;
-  const spacing = theme.rem(1, fontSize);
-  const height = fontSize * +options.defaultStyles.root.minHeight.replace(/[^.\d]/g, '');
+  const spacing = fontSize / 2;
+  const height = fontSize * 2;
   const textColor = isBasic ? color : 'white';
 
   style = [
@@ -94,8 +93,7 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
 
     circular && {
       borderRadius: height / 2,
-      height,
-      width: height,
+      paddingHorizontal: spacing / 2,
     },
 
     color && { borderColor: color },
@@ -109,14 +107,11 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
     style,
   ];
 
+  labelStyle = [{ color: textColor, fontSize }, labelStyle];
+
   if (typeof children === 'string') {
     children = (
-      <TextFactory
-        map={map}
-        transform={transform}
-        style={[{ color: textColor, fontSize, lineHeight }, labelStyle]}
-        stylist={[variants.label]}
-      >
+      <TextFactory map={map} style={labelStyle} stylist={[variants.label]}>
         {children}
       </TextFactory>
     );

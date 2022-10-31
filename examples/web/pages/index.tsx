@@ -256,6 +256,9 @@ export default function Main() {
               <Button variant={variant} loading={loading} onPress={toggleLoading}>
                 Loading
               </Button>
+              <Button variant={variant} circular>
+                Circular
+              </Button>
               <Button variant={variant} icon="⚙" circular />
               <Button variant={variant} startIcon="⚙">
                 Start Icon
@@ -266,7 +269,7 @@ export default function Main() {
               <Button variant={variant} transform="uppercase">
                 Transformed
               </Button>
-              <Box w="100%" />
+              <Box xs={12} />
               {sizes.map((size) => (
                 <Button key={size} variant={variant} size={size}>
                   {getLabel(size)}

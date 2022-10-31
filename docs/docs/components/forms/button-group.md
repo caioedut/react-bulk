@@ -123,4 +123,4 @@ import { ButtonGroup } from '@react-bulk/web'; // OR @react-bulk/native
 
 **`style`** to the outer wrapper element ([Scrollable](/docs/components/core/scrollable)).
 
-**`contentStyle`** to the inner wrapper of `children` or `label`.
+**`contentStyle`** to the inner wrapper.
