@@ -34,6 +34,7 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
     // Styles
     variants,
     chevronStyle,
+    style,
     ...rest
   } = factory2(props, options);
 
@@ -41,15 +42,13 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
   const itemRef = useRef<any>(null);
   const offsetRef = useRef(0);
 
-  const hasChevron = chevron !== 'hidden';
-  chevron = native && hasChevron ? 'visible' : chevron;
-
   // const [dragging, setDragging] = useState(false);
   const [contentWidth, setContentWidth] = useState<number | null>(null);
   const [hasPrev, setHasPrev] = useState(false);
   const [hasNext, setHasNext] = useState(false);
-  const [showChevron, setShowChevron] = useState(hasChevron);
   // const [paused, setPaused] = useState(true);
+
+  const showChevron = chevron !== 'hidden';
 
   const scrollByCount = useCallback(
     async (count) => {
@@ -124,13 +123,6 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
     });
   }, [contentRef, hasPrev, hasNext]);
 
-  if (web && chevron === 'auto') {
-    Object.assign(rest, {
-      onPointerOver: () => setShowChevron(true),
-      onPointerOut: () => setShowChevron(false),
-    });
-  }
-
   if (native) {
     Object.assign(rest, {
       onLayout: ({ nativeEvent }) => setContentWidth(nativeEvent.layout.width),
@@ -150,11 +142,11 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
 
   const chevronProps = {
     color: theme.color(color),
-    size: theme.rem(2),
+    size: theme.rem(),
   };
 
   return (
-    <BoxFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} {...rest}>
+    <BoxFactory map={map} innerRef={innerRef} style={style} stylist={[variants.root, stylist]} {...rest}>
       <ScrollableFactory
         map={map}
         innerRef={contentRef}
@@ -172,17 +164,17 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
           ))}
       </ScrollableFactory>
 
-      {hasChevron && hasPrev && (
-        <BoxFactory map={map} l={0} invisible={!showChevron} stylist={[variants.chevron]}>
-          <ButtonFactory map={map} variant="text" color={color} circular onClick={scrollToPrev} style={chevronStyle}>
+      {showChevron && hasPrev && (
+        <BoxFactory map={map} l={0} stylist={[variants.chevron]}>
+          <ButtonFactory map={map} variant="outline" color={color} circular onClick={scrollToPrev} style={chevronStyle}>
             <ChevronLeft svg={svg} {...chevronProps} />
           </ButtonFactory>
         </BoxFactory>
       )}
 
-      {hasChevron && hasNext && (
-        <BoxFactory map={map} r={0} invisible={!showChevron} stylist={[variants.chevron]}>
-          <ButtonFactory map={map} variant="text" color={color} circular onClick={scrollToNext} style={chevronStyle}>
+      {showChevron && hasNext && (
+        <BoxFactory map={map} r={0} stylist={[variants.chevron]}>
+          <ButtonFactory map={map} variant="outline" color={color} circular onClick={scrollToNext} style={chevronStyle}>
             <ChevronRight svg={svg} {...chevronProps} />
           </ButtonFactory>
         </BoxFactory>
