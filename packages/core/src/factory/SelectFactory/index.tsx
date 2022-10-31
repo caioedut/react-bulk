@@ -187,12 +187,12 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
 
     let newIndex = activeIndex;
 
-    if (!['Enter', 'Escape'].includes(code)) {
-      e?.preventDefault?.();
-    }
-
     if (code === 'Escape') {
       return setVisible(false);
+    }
+
+    if (code !== 'Enter') {
+      e?.preventDefault?.();
     }
 
     if (code === 'ArrowUp') {
@@ -234,7 +234,7 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
   style = [extract(spacings, rest), style];
 
   return (
-    <BoxFactory map={map} style={style} stylist={[variants.root, stylist]} onKeyDown={handleKeyDown}>
+    <BoxFactory map={map} style={style} stylist={[variants.root, stylist]} onKeyDown={visible ? handleKeyDown : undefined}>
       {Boolean(label) && (
         <LabelFactory map={map} numberOfLines={1} for={buttonRef} style={labelStyle} stylist={[variants.label]}>
           {label}
