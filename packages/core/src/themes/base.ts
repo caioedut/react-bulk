@@ -460,7 +460,7 @@ const base: ThemeProps & any = {
       Carousel: {
         name: 'rbk-carousel',
         defaultProps: {
-          chevron: 'auto',
+          chevron: 'visible',
           color: 'primary',
           gap: 0,
           swipe: false,

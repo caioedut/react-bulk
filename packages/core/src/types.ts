@@ -563,7 +563,7 @@ export type SliderProps = {
 export type CardProps = BoxProps;
 
 export type CarouselProps = {
-  chevron?: 'auto' | 'visible' | 'hidden';
+  chevron?: 'visible' | 'hidden';
   color?: ColorValues;
   gap?: number;
   swipe?: false;
