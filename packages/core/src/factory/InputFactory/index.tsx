@@ -4,7 +4,7 @@ import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
-import { rbkPropStyles } from '../../styles/constants';
+import { rbkStyleProps } from '../../styles/constants';
 import { FactoryProps, InputProps } from '../../types';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
@@ -206,7 +206,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     dispatchEvent('blur', internal, nativeEvent);
   };
 
-  style = [extract(rbkPropStyles, rest), style];
+  style = [extract(rbkStyleProps, rest), style];
 
   contentStyle = [
     color &&

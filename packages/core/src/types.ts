@@ -156,7 +156,7 @@ export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warnin
 export type SizeValues = number | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | string;
 export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width' | string;
 
-export type RbkPropStyles = {
+export type RbkStyleProps = {
   position?: 'relative' | 'absolute' | string;
 
   h?: number | string;
@@ -196,7 +196,7 @@ export type RbkPropStyles = {
   py?: number | string;
 };
 
-export type RbkStyles = (CSSProperties & RbkPropStyles) | Array<CSSProperties> | Array<RbkPropStyles> | Array<any> | any;
+export type RbkStyles = (CSSProperties & RbkStyleProps) | Array<CSSProperties> | Array<RbkStyleProps> | Array<any> | any;
 
 export type VariantProps = {
   [prop: string]: {
@@ -389,7 +389,7 @@ export type BoxProps = {
   xl?: number | true | 'auto';
   xxl?: number | true | 'auto';
 } & PressableProps &
-  RbkPropStyles;
+  RbkStyleProps;
 
 export type TextProps = {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'caption' | string;

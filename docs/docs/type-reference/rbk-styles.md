@@ -2,9 +2,9 @@
 
 The value can be a **single object** or an **array of** these types:
 
-➤ Type: **`React.CSSProperties` `RbkPropStyles`** <br/>
+➤ Type: **`React.CSSProperties` `RbkStyleProps`** <br/>
 
-```jsx title="RbkPropStyles"
+```jsx title="RbkStyleProps"
 {
   position: 'relative' | 'absolute' | string;
 

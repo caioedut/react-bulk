@@ -33,7 +33,6 @@ function Scrollable({ refreshing, onRefresh, refreshControl, ...props }: NativeS
   props = {
     // @ts-ignore
     contentInsetAdjustmentBehavior: 'scrollableAxes',
-    endFillColor: primaryColor,
     indicatorStyle: theme.mode === 'dark' ? 'white' : 'black',
     keyboardDismissMode: Platform.OS === 'ios' ? 'interactive' : 'on-drag',
     keyboardShouldPersistTaps: 'always',
