@@ -848,6 +848,7 @@ const base: ThemeProps & any = {
             display: 'flex',
             flexDirection: 'column',
             flexWrap: 'nowrap',
+            flexGrow: 1,
           },
         },
         variants: {
