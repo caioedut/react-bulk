@@ -40,10 +40,12 @@ function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProp
           props.itemStyle,
 
           {
+            flex: props.flex ? 1 : 0,
             padding: spacing,
           },
         ];
 
+        delete props.flex;
         delete props.itemStyle;
 
         breakpoints.forEach((key: string) => {
@@ -52,13 +54,15 @@ function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProp
             const width = (value / size) * 100;
 
             const isAuto = value === 'auto';
-            const isFlex = value === true || value === 'flex' || props.flex;
+            const isFlex = value === true || value === 'flex';
 
-            style.push({
-              [key]: { flex: isFlex ? 1 : undefined },
-            });
+            if (isFlex) {
+              style.push({
+                [key]: { flex: isFlex ? 1 : undefined },
+              });
+            }
 
-            if (!isAuto && !isFlex) {
+            if (!isFlex && !isAuto) {
               style.push({
                 [key]: { width: `${width}%` },
               });
