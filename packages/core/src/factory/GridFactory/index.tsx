@@ -39,10 +39,9 @@ function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProp
 
           props.itemStyle,
 
-          {
-            flex: props.flex ? 1 : 0,
-            padding: spacing,
-          },
+          { padding: spacing },
+
+          'flex' in props && { flex: Number(props.flex) },
         ];
 
         delete props.flex;

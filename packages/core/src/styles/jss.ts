@@ -2,7 +2,7 @@ import Platform from '../Platform';
 import extract from '../props/extract';
 import merge from '../props/merge';
 import remove from '../props/remove';
-import { ThemeProps } from '../types';
+import { RbkStyles, ThemeProps } from '../types';
 import clone from '../utils/clone';
 import { boxSizeProps, customSpacings, customStyleProps, flexAlignProps, spacings } from './constants';
 
@@ -35,11 +35,12 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   }
 
   // Merge styles with platform specific
-  const styles = merge(args, web && webStyle, native && nativeStyle);
+  const merged = merge(args, web && webStyle, native && nativeStyle);
+  const styles: RbkStyles = {};
 
-  for (const attr of Object.keys(styles)) {
+  for (const attr of Object.keys(merged)) {
     let prop: any = attr;
-    let value = styles[attr];
+    let value = merged[attr];
 
     // Parse "&" for css. Eg.: '&:hover'
     if (prop.startsWith('&')) {
@@ -49,8 +50,6 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
     const valueTrim = `${value ?? ''}`.trim();
     const valueSplit = valueTrim.split(/\s/g).filter((item: string) => item.trim());
-
-    delete styles[attr];
 
     // Call function with theme
     if (typeof value === 'function') {
