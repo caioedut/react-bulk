@@ -69,16 +69,15 @@ function Image({ source, width, height, w, h, corners, circular, onLayout, style
   const containerProps = extract([...spacings, ...customStyleProps], props, style);
 
   style = [
-    {
-      corners: corners ?? 0,
-      overflow: 'hidden',
-    },
+    { overflow: 'hidden' },
+
+    style,
+
+    corners && { corners },
 
     circular && {
       borderRadius: ((finalWidth ?? finalHeight ?? height ?? width) as number) / 2,
     },
-
-    style,
 
     width && { width },
 
