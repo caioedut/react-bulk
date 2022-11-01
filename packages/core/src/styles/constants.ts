@@ -2,21 +2,72 @@
  * Box Size *
  ************/
 
-export const boxSizeProps = ['w', 'h', 'maxw', 'maxh', 'minw', 'minh'];
+export const boxSizeProps = [
+  'width',
+  'height',
+  'maxWidth',
+  'maxHeight',
+  // Aliases
+  'w',
+  'h',
+  'maxw',
+  'maxh',
+  'minw',
+  'minh',
+];
 
 /***********
  * Flexbox *
  ***********/
 
-export const flexContainerAlignProps = ['placeContent', 'placeItems', 'alignContent', 'alignItems', 'justifyContent', 'justifyItems'];
+export const flexContainerAlignProps = [
+  'placeContent',
+  'placeItems',
+  'alignContent',
+  'alignItems',
+  'justifyContent',
+  'justifyItems',
+  // Aliases
+  'center',
+];
 
-export const flexChildAlignProps = ['placeSelf', 'alignSelf', 'justifySelf'];
+export const flexChildAlignProps = [
+  'placeSelf',
+  'alignSelf',
+  'justifySelf',
+  // Aliases
+  'align',
+  'justify',
+];
 
 export const flexAlignProps = [...flexContainerAlignProps, ...flexChildAlignProps];
 
-export const flexContainerProps = ['flexDirection', 'flexFlow', 'flexWrap', ...flexContainerAlignProps];
+export const flexContainerProps = [
+  'flexDirection',
+  'flexFlow',
+  'flexWrap',
+  ...flexContainerAlignProps,
+  // Aliases
+  'direction',
+  'row',
+  'column',
+  'reverse',
+  'wrap',
+  'noWrap',
+];
 
-export const flexChildProps = ['flex', 'flexBasis', 'flexGrow', 'flexShrink', 'order', ...flexChildAlignProps];
+export const flexChildProps = [
+  'flex',
+  'flexBasis',
+  'flexGrow',
+  'flexShrink',
+  'order',
+  ...flexChildAlignProps,
+  // Aliases
+  'grow',
+  'shrink',
+  'basis',
+];
 
 export const flexProps = [...flexAlignProps, ...flexContainerProps, ...flexChildProps];
 
@@ -69,6 +120,7 @@ export const spacings = [
   'paddingRight',
   'paddingHorizontal',
   'paddingVertical',
+  // Aliases
   ...customSpacings,
 ];
 
@@ -103,7 +155,7 @@ export const notPxProps = [
   'zoom',
 ];
 
-export const rbkPropStyles = [
+export const rbkStyleProps = [
   'position',
   'h',
   'w',

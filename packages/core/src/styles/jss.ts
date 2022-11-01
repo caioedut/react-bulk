@@ -57,6 +57,10 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       value = value(theme);
     }
 
+    if (boxSizeProps.includes(prop) && value === true) {
+      value = '100%';
+    }
+
     if (customSpacings.includes(prop)) {
       prop = attr
         .replace(/^i$/, 'inset')
@@ -94,10 +98,6 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       });
 
       value = parseUnit(value);
-    }
-
-    if (boxSizeProps.includes(prop) && value === true) {
-      value = '100%';
     }
 
     if (prop === 'w') {

@@ -31,6 +31,7 @@ function ScrollableFactory({ stylist, children, map, innerRef, ...props }: Facto
 
   contentStyle = [
     extract(flexContainerProps, style),
+
     { p: contentInset ?? 0 },
 
     pagingEnabled && {
