@@ -1,9 +1,7 @@
 import React from 'react';
 
 import useTheme from '../../hooks/useTheme';
-import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
-import { boxSizeProps, spacings } from '../../styles/constants';
 import { FactoryProps, GridProps, RbkStyles } from '../../types';
 import BoxFactory from '../BoxFactory';
 
@@ -31,50 +29,50 @@ function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProp
           return null;
         }
 
-        const Component = child.type;
-        const props = { ...(child?.props || {}) };
+        const props = { ...Object(child?.props) };
+        const itemStyle: RbkStyles = [props.style, { padding: spacing }];
 
-        const style: RbkStyles = [
-          extract([...spacings, ...boxSizeProps], props),
-
-          props.itemStyle,
-
-          { padding: spacing },
-
-          'flex' in props && { flex: Number(props.flex) },
-        ];
-
-        delete props.flex;
-        delete props.itemStyle;
-
-        breakpoints.forEach((key: string) => {
-          if (key in props) {
-            const value = props[key];
+        breakpoints.forEach((breakpoint: string) => {
+          if (breakpoint in props) {
+            const value = props[breakpoint];
             const width = (value / size) * 100;
 
             const isAuto = value === 'auto';
-            const isFlex = value === true || value === 'flex';
+            const isFlex = value === 'flex' || value === true;
+            const isHidden = value === 'hide' || value === 'hidden' || value === false;
 
-            if (isFlex) {
-              style.push({
-                [key]: { flex: isFlex ? 1 : undefined },
-              });
+            if (!isAuto) {
+              itemStyle.push({ [breakpoint]: { width: `${width}%` } });
             }
 
-            if (!isFlex && !isAuto) {
-              style.push({
-                [key]: { width: `${width}%` },
+            if (isFlex) {
+              itemStyle.push({ [breakpoint]: { flex: 1 } });
+            }
+
+            if (isHidden) {
+              itemStyle.push({
+                [breakpoint]: {
+                  display: 'none',
+                  opacity: 0,
+                  overflow: 'hidden',
+                },
               });
             }
           }
 
-          delete props[key];
+          delete props[breakpoint];
         });
 
         return (
-          <BoxFactory key={index} map={map} style={style} stylist={[variants.item]}>
-            <Component {...props} />
-          </BoxFactory>
+          <BoxFactory
+            key={index}
+            map={map}
+            component={child?.type}
+            componentProps={{ map }}
+            {...props}
+            style={itemStyle}
+            stylist={[variants.item]}
+          />
         );
       })}
     </BoxFactory>

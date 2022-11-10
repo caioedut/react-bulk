@@ -39,17 +39,30 @@ import { Grid } from '@react-bulk/web'; // OR @react-bulk/native
 ### Spacing
 
 ```jsx live
-<Grid size={3} gap={6}>
-  <Box xs={1}>
+<Grid size={3} gap={3}>
+  <Box>
     <Text border>Hello World!</Text>
   </Box>
-  <Box xs={1}>
+  <Box>
     <Text border>Welcome!</Text>
   </Box>
 </Grid>
 ```
 
-## Props
+### Auto/Flex Item
+
+```jsx live
+<Grid size={3}>
+  <Box xs={1} md="auto">
+    <Text border>Hello World!</Text>
+  </Box>
+  <Box xs={2} md="flex">
+    <Text border>Welcome!</Text>
+  </Box>
+</Grid>
+```
+
+## Container Props
 
 Extends all [`Box`](/docs/components/core/box#props) props.
 
@@ -77,11 +90,27 @@ Number of columns.
 
 ---
 
+## Item Breakpoints
+
+It is recommended to use the [`Box`](/docs/components/core/box) as a child.
+
+All [breakpoints](/docs/layout/breakpoints) are avalilable as prop of the children.
+
+Default breakpoints: **`xs` `sm` `md` `lg` `xl` `xxl`**
+
+- `number`: number of columns that the item will fill.
+- `'auto'`: the size will be calculated with the item content.
+- `'flex'` or `true`: item will grow or shrink to fit the space available in its container.
+- `'hide'` or `false`: hides the item.
+
+➤ Type: **`number` `boolean` `auto` `flex` `hide`** <br/>
+➤ Default: **`'auto'`** <br/>
+
+---
+
 ## Styles
 
 **`style`** to the main element.
-
-**`child.itemStyle`** to the wrapper element of the item.
 
 ➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 

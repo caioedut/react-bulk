@@ -33,6 +33,7 @@ const variants = ['solid', 'outline', 'text'];
 const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
 const tooltips = ['top', 'bottom', 'left', 'right'];
 const animations = ['Spin', 'FadeIn', 'FadeOut', 'ZoomIn', 'ZoomOut'];
+const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
 const formData = {
   firstName: 'Richard',
@@ -348,14 +349,20 @@ export default function Main() {
         <Text variant="subtitle" mt={3}>
           Checkbox / Radio Button
         </Text>
+
         <Grid alignItems="center" gap={3}>
           {sizes.map((size) => (
-            <Checkbox key={size} size={size} label={getLabel(size)} checked={checkbox} onChange={toggleCheckbox} />
+            <Box key={size}>
+              <Checkbox size={size} label={getLabel(size)} checked={checkbox} onChange={toggleCheckbox} />
+            </Box>
           ))}
         </Grid>
+
         <Grid alignItems="center" gap={3}>
           {sizes.map((size) => (
-            <Checkbox key={size} size={size} label={getLabel(size)} unique checked={radio === size} onChange={() => setRadio(size)} />
+            <Box key={size}>
+              <Checkbox key={size} size={size} label={getLabel(size)} unique checked={radio === size} onChange={() => setRadio(size)} />
+            </Box>
           ))}
         </Grid>
 
@@ -412,36 +419,42 @@ export default function Main() {
       <Card mt={3}>
         <Text variant="title">Badge</Text>
         <Grid alignItems="center" gap={3} mt={3}>
-          <Badge dot />
-          <Badge color="warning">2</Badge>
-          <Badge color="primary">30</Badge>
-          <Badge color="success">99+</Badge>
-          <Badge>Large Badge</Badge>
-          <Button badge={1}>Notifications</Button>
+          <Box>
+            <Badge dot />
+          </Box>
+          <Box>
+            <Badge color="warning">2</Badge>
+          </Box>
+          <Box>
+            <Badge color="primary">30</Badge>
+          </Box>
+          <Box>
+            <Badge color="success">99+</Badge>
+          </Box>
+          <Box>
+            <Badge>Large Badge</Badge>
+          </Box>
+          <Box>
+            <Button badge={1}>Notifications</Button>
+          </Box>
         </Grid>
       </Card>
 
       <Card mt={3}>
         <Text variant="title">Breakpoints</Text>
         <Grid gap={3} mt={3}>
-          <Button variant="outline" style={{ display: 'none', xs: { display: 'flex' } }}>
-            Visible on XS
-          </Button>
-          <Button variant="outline" style={{ display: 'none', sm: { display: 'flex' } }}>
-            Visible on SM
-          </Button>
-          <Button variant="outline" style={{ display: 'none', md: { display: 'flex' } }}>
-            Visible on MD
-          </Button>
-          <Button variant="outline" style={{ display: 'none', lg: { display: 'flex' } }}>
-            Visible on LG
-          </Button>
-          <Button variant="outline" style={{ display: 'none', xl: { display: 'flex' } }}>
-            Visible on XL
-          </Button>
-          <Button variant="outline" style={{ display: 'none', xxl: { display: 'flex' } }}>
-            Visible on XXL
-          </Button>
+          {breakpoints.map((bkp, index) => {
+            const bg = theme.hex2rgba('primary', (index + 1) / breakpoints.length);
+            const color = theme.contrast(bg);
+
+            return (
+              <Box key={bkp}>
+                <Card bg={bg} style={{ display: 'none', [bkp]: { display: 'flex' } }}>
+                  <Text color={color}>Visible on {bkp.toUpperCase()}+</Text>
+                </Card>
+              </Box>
+            );
+          })}
         </Grid>
       </Card>
 
