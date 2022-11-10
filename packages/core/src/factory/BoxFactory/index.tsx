@@ -98,12 +98,12 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
 
     // Flex Item
     typeof flex === 'boolean' && { flex: Number(flex) },
-    order && { order },
-    grow && { flexGrow: grow },
-    shrink && { flexShrink: shrink },
+    grow && { flexGrow: Number(grow) },
+    shrink && { flexShrink: Number(shrink) },
     basis && { flexBasis: basis },
     align && { alignSelf: align },
     justify && { justifySelf: justify },
+    order && { order },
 
     style,
 
