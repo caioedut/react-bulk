@@ -382,12 +382,12 @@ export type BoxProps = {
   justify?: FlexJustifyValues;
 
   // To use only on children of Grid
-  xs?: number | true | 'auto';
-  sm?: number | true | 'auto';
-  md?: number | true | 'auto';
-  lg?: number | true | 'auto';
-  xl?: number | true | 'auto';
-  xxl?: number | true | 'auto';
+  xs?: number | 'auto' | 'flex' | 'hide' | boolean;
+  sm?: number | 'auto' | 'flex' | 'hide' | boolean;
+  md?: number | 'auto' | 'flex' | 'hide' | boolean;
+  lg?: number | 'auto' | 'flex' | 'hide' | boolean;
+  xl?: number | 'auto' | 'flex' | 'hide' | boolean;
+  xxl?: number | 'auto' | 'flex' | 'hide' | boolean;
 } & PressableProps &
   RbkStyleProps;
 
