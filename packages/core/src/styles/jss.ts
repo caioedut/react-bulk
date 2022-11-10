@@ -145,7 +145,8 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         const styleIndex = valueSplit.findIndex((item: string) => types.includes(item));
         const borderStyle = styleIndex >= 0 ? valueSplit.splice(styleIndex, 1).shift() : 'solid';
 
-        const borderColor = theme.color(valueSplit.shift() || theme.colors.common.black);
+        const color = valueSplit?.shift()?.replace(/undefined|null|false|true/g, '');
+        const borderColor = theme.color(color || theme.colors.common.black);
 
         Object.assign(styles, { borderWidth, borderStyle, borderColor });
       }
