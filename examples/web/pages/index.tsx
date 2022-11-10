@@ -515,18 +515,19 @@ export default function Main() {
           <Button onPress={() => setModal({ visible: true, halign: 'right' })}>Right</Button>
         </Grid>
         <Modal {...modal} onBackdropPress={() => setModal((current) => ({ ...current, visible: false }))}>
-          <Card m={3} maxw={300}>
+          <Box maxw={300}>
             <Text bold size={1.25}>
               My Modal
             </Text>
-            <Text mt={1}>
+            <Divider my={3} mx={-3} />
+            <Text>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consectetur cupiditate deserunt dolorum eius et expedita qui
               repellendus voluptatibus! Accusamus consectetur deleniti fuga iure laborum quam quisquam quo ut, velit!
             </Text>
             <Button mt={3} onPress={() => setModal((current) => ({ ...current, visible: false }))}>
               Close
             </Button>
-          </Card>
+          </Box>
         </Modal>
       </Card>
 

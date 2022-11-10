@@ -69,7 +69,7 @@ function BackdropFactory({ stylist, children, map, innerRef, ...props }: Factory
 
   return (
     <BoxFactory map={map} innerRef={innerRef} component={Dialog} stylist={[variants.root, stylist]} {...rest}>
-      <BoxFactory map={map} {...containerProps}>
+      <BoxFactory map={map} maxh="100%" maxw="100%" {...containerProps}>
         {children}
       </BoxFactory>
     </BoxFactory>
