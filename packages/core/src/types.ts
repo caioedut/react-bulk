@@ -596,7 +596,6 @@ export type ImageProps = {
   mode?: 'cover' | 'contain' | 'fill' | string;
   width?: number | string;
   height?: number | string;
-  rounded?: boolean;
 } & BoxProps;
 
 export type DividerProps = {
