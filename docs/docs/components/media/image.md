@@ -19,9 +19,15 @@ import { Image } from '@react-bulk/web'; // OR @react-bulk/native
 
 ```jsx live
 <Grid center gap={3}>
-  <Image source="https://i.imgur.com/CmPhDqA.png" w={100} border />
-  <Image source="https://i.imgur.com/CmPhDqA.png" h={100} border />
-  <Image source="https://i.imgur.com/CmPhDqA.png" w={100} h={100} border />
+  <Box>
+    <Image source="https://i.imgur.com/CmPhDqA.png" w={100} border />
+  </Box>
+  <Box>
+    <Image source="https://i.imgur.com/CmPhDqA.png" h={100} border />
+  </Box>
+  <Box>
+    <Image source="https://i.imgur.com/CmPhDqA.png" w={100} h={100} border />
+  </Box>
 </Grid>
 ```
 
@@ -29,8 +35,12 @@ import { Image } from '@react-bulk/web'; // OR @react-bulk/native
 
 ```jsx live
 <Grid center gap={3}>
-  <Image source="https://i.imgur.com/CmPhDqA.png" w={100} h={100} corners={2} border />
-  <Image source="https://i.imgur.com/CmPhDqA.png" w={100} h={100} circular border />
+  <Box>
+    <Image source="https://i.imgur.com/CmPhDqA.png" w={100} h={100} corners={2} border />
+  </Box>
+  <Box>
+    <Image source="https://i.imgur.com/CmPhDqA.png" w={100} h={100} circular border />
+  </Box>
 </Grid>
 ```
 
