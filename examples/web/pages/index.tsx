@@ -250,31 +250,49 @@ export default function Main() {
               {variant}
             </Text>
             <Grid alignItems="center" gap={3} mt={3}>
-              <Button variant={variant}>Button</Button>
-              <Button variant={variant} disabled>
-                Disabled
-              </Button>
-              <Button variant={variant} loading={loading} onPress={toggleLoading}>
-                Loading
-              </Button>
-              <Button variant={variant} circular>
-                Circular
-              </Button>
-              <Button variant={variant} icon="⚙" circular />
-              <Button variant={variant} startIcon="⚙">
-                Start Icon
-              </Button>
-              <Button variant={variant} endIcon="⚙">
-                End Icon
-              </Button>
-              <Button variant={variant} transform="uppercase">
-                Transformed
-              </Button>
+              <Box>
+                <Button variant={variant}>Button</Button>
+              </Box>
+              <Box>
+                <Button variant={variant} disabled>
+                  Disabled
+                </Button>
+              </Box>
+              <Box>
+                <Button variant={variant} loading={loading} onPress={toggleLoading}>
+                  Loading
+                </Button>
+              </Box>
+              <Box>
+                <Button variant={variant} circular>
+                  Circular
+                </Button>
+              </Box>
+              <Box>
+                <Button variant={variant} icon="⚙" circular />
+              </Box>
+              <Box>
+                <Button variant={variant} startIcon="⚙">
+                  Start Icon
+                </Button>
+              </Box>
+              <Box>
+                <Button variant={variant} endIcon="⚙">
+                  End Icon
+                </Button>
+              </Box>
+              <Box>
+                <Button variant={variant} transform="uppercase">
+                  Transformed
+                </Button>
+              </Box>
               <Box xs={12} />
               {sizes.map((size) => (
-                <Button key={size} variant={variant} size={size}>
-                  {getLabel(size)}
-                </Button>
+                <Box key={size}>
+                  <Button variant={variant} size={size}>
+                    {getLabel(size)}
+                  </Button>
+                </Box>
               ))}
             </Grid>
             <Divider mx={-3} my={3} />
@@ -521,11 +539,21 @@ export default function Main() {
       <Card mt={3}>
         <Text variant="title">Modals</Text>
         <Grid gap={3} mt={3}>
-          <Button onPress={() => setModal({ visible: true, valign: 'top' })}>Top</Button>
-          <Button onPress={() => setModal({ visible: true, valign: 'bottom' })}>Bottom</Button>
-          <Button onPress={() => setModal({ visible: true, valign: 'center' })}>Center</Button>
-          <Button onPress={() => setModal({ visible: true, halign: 'left' })}>Left</Button>
-          <Button onPress={() => setModal({ visible: true, halign: 'right' })}>Right</Button>
+          <Box>
+            <Button onPress={() => setModal({ visible: true, valign: 'top' })}>Top</Button>
+          </Box>
+          <Box>
+            <Button onPress={() => setModal({ visible: true, valign: 'bottom' })}>Bottom</Button>
+          </Box>
+          <Box>
+            <Button onPress={() => setModal({ visible: true, valign: 'center' })}>Center</Button>
+          </Box>
+          <Box>
+            <Button onPress={() => setModal({ visible: true, halign: 'left' })}>Left</Button>
+          </Box>
+          <Box>
+            <Button onPress={() => setModal({ visible: true, halign: 'right' })}>Right</Button>
+          </Box>
         </Grid>
         <Modal {...modal} onBackdropPress={() => setModal((current) => ({ ...current, visible: false }))}>
           <Box maxw={300}>
