@@ -62,7 +62,25 @@ import { Grid } from '@react-bulk/web'; // OR @react-bulk/native
 </Grid>
 ```
 
-## Container Props
+## Breakpoints
+
+It is recommended to use the [`Box`](/docs/components/core/box) as a child.
+
+All [breakpoints](/docs/layout/breakpoints) are avalilable as prop of the children.
+
+Default breakpoints: **`xs` `sm` `md` `lg` `xl` `xxl`**
+
+- `number`: number of columns that the item will fill.
+- `'auto'`: the size will be calculated with the item content.
+- `'flex'` or `true`: item will grow or shrink to fit the space available in its container.
+- `'hide'` or `false`: hides the item.
+
+➤ Type: **`number` `boolean` `auto` `flex` `hide`** <br/>
+➤ Default: **`'auto'`** <br/>
+
+---
+
+## Props
 
 Extends all [`Box`](/docs/components/core/box#props) props.
 
@@ -87,24 +105,6 @@ Number of columns.
 
 ➤ Type: **`number`** <br/>
 ➤ Default: **`12`** <br/>
-
----
-
-## Item Breakpoints
-
-It is recommended to use the [`Box`](/docs/components/core/box) as a child.
-
-All [breakpoints](/docs/layout/breakpoints) are avalilable as prop of the children.
-
-Default breakpoints: **`xs` `sm` `md` `lg` `xl` `xxl`**
-
-- `number`: number of columns that the item will fill.
-- `'auto'`: the size will be calculated with the item content.
-- `'flex'` or `true`: item will grow or shrink to fit the space available in its container.
-- `'hide'` or `false`: hides the item.
-
-➤ Type: **`number` `boolean` `auto` `flex` `hide`** <br/>
-➤ Default: **`'auto'`** <br/>
 
 ---
 
