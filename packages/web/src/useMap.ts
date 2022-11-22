@@ -5,9 +5,11 @@ import { TimeoutType } from '@react-bulk/core';
 export default function useMap() {
   const timeoutRef = useRef<TimeoutType>(null);
 
+  const { innerHeight, innerWidth }: any = typeof window !== 'undefined' ? window : {};
+
   const [dimensions, setDimensions] = useState({
-    height: window?.innerHeight,
-    width: window?.innerWidth,
+    height: innerHeight,
+    width: innerWidth,
   });
 
   const handleResize = useCallback(() => {
@@ -16,15 +18,14 @@ export default function useMap() {
     }
 
     timeoutRef.current = setTimeout(() => {
-      setDimensions({ height: window?.innerHeight, width: window?.innerWidth });
+      setDimensions({ height: innerHeight, width: innerWidth });
     }, 10);
   }, [timeoutRef]);
 
   useEffect(() => {
     if (!window) return;
-
-    window?.addEventListener('resize', handleResize);
-    return () => window?.removeEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return useMemo(
