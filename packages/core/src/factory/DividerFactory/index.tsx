@@ -2,7 +2,6 @@ import React from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import different from '../../styles/different';
 import { DividerProps, FactoryProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
@@ -23,13 +22,14 @@ function DividerFactory({ stylist, map, innerRef, ...props }: FactoryProps & Div
   } = factory2(props, options);
 
   style = [
-    different(color, options.defaultProps.color, options.defaultStyles.root.backgroundColor) && {
+    {
       backgroundColor: color,
-    },
-
-    different(opacity, options.defaultProps.opacity, options.defaultStyles.root.opacity) && {
       opacity,
     },
+
+    vertical && { width: size },
+
+    !vertical && { height: size },
 
     style,
   ];

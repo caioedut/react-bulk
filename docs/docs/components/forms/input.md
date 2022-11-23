@@ -14,11 +14,21 @@ import { Input } from '@react-bulk/web'; // OR @react-bulk/native
 
 ```jsx live
 <Grid column gap={3} maxw={400}>
-  <Input label="Label" placeholder="Label + Input" />
-  <Input placeholder="Default" />
-  <Input placeholder="Secure" secure />
-  <Input placeholder="Read Only" readOnly />
-  <Input placeholder="Disabled" disabled />
+  <Box>
+    <Input label="Label" placeholder="Label + Input" />
+  </Box>
+  <Box>
+    <Input placeholder="Default" />
+  </Box>
+  <Box>
+    <Input placeholder="Secure" secure />
+  </Box>
+  <Box>
+    <Input placeholder="Read Only" readOnly />
+  </Box>
+  <Box>
+    <Input placeholder="Disabled" disabled />
+  </Box>
 </Grid>
 ```
 
@@ -26,11 +36,21 @@ import { Input } from '@react-bulk/web'; // OR @react-bulk/native
 
 ```jsx live
 <Grid column gap={3} maxw={400}>
-  <Input size="xsmall" placeholder="Input (xsmall)" />
-  <Input size="small" placeholder="Input (small)" />
-  <Input size="medium" placeholder="Input (medium)"/>
-  <Input size="large" placeholder="Input (large)"/>
-  <Input size="xlarge" placeholder="Input (xlarge)"/>
+  <Box>
+    <Input size="xsmall" placeholder="Input (xsmall)" />
+  </Box>
+  <Box>
+    <Input size="small" placeholder="Input (small)" />
+  </Box>
+  <Box>
+    <Input size="medium" placeholder="Input (medium)"/>
+  </Box>
+  <Box>
+    <Input size="large" placeholder="Input (large)"/>
+  </Box>
+  <Box>
+    <Input size="xlarge" placeholder="Input (xlarge)"/>
+  </Box>
 </Grid>
 ```
 
@@ -51,9 +71,15 @@ function Home () {
 
   return (
     <Grid column gap={3} maxw={400}>
-      <Input placeholder="Username" startAddon="👤" />
-      <Input placeholder="Password" endAddon={<CustomIcon/>} />
-      <Input placeholder="reactbulk" startAddon="https://" endAddon=".com" />
+      <Box>
+        <Input placeholder="Username" startAddon="👤" />
+      </Box>
+      <Box>
+        <Input placeholder="Password" endAddon={<CustomIcon/>} />
+      </Box>
+      <Box>
+        <Input placeholder="reactbulk" startAddon="https://" endAddon=".com" />
+      </Box>
     </Grid>
   )
 }
