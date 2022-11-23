@@ -17,13 +17,13 @@ import { Scrollable } from '@react-bulk/web'; // OR @react-bulk/native
   <Box>
     <Text>Vertical</Text>
     <Scrollable h={160} w={160}>
-      <Box bg="secondary" h={320} w={160} />
+      <Box bg="secondary" h={320} />
     </Scrollable>
   </Box>
   <Box>
     <Text>Horizontal</Text>
     <Scrollable h={160} w={160} direction="horizontal">
-      <Box bg="secondary" h={160} w={320} />
+      <Box bg="secondary" w={320} />
     </Scrollable>
   </Box>
 </Grid>
