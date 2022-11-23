@@ -459,6 +459,7 @@ Sets `width` style.
 
 ➤ Type: **`number` `string`** <br/>
 
+---
 
 ## Events
 
