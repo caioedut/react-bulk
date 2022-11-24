@@ -2,6 +2,8 @@
 
 A modal is a dialog box/popup window that is displayed on top of the current page.
 
+`Modal` just wraps a [`Card`](/docs/components/surfaces/card) in a [`Backdrop`](/docs/components/overlay/backdrop).
+
 ## Import
 
 ```jsx
@@ -22,7 +24,7 @@ function Home() {
         Open Modal
       </Button>
       <Modal visible={visible}>
-        Modal is amazing!
+        <Text>Modal is amazing!</Text>
       </Modal>
     </>
   );
