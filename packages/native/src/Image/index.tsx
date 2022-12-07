@@ -10,6 +10,7 @@ import useMap from '../useMap';
 function Image({ source, width, height, w, h, corners, circular, onLayout, style, ...props }: NativeImageProps, ref) {
   const map = useMap();
 
+  const [error, setError] = useState(false);
   const [imgWidth, setImgWidth] = useState<number | null>(null);
   const [aspectRatio, setAspectRatio] = useState<number | null>(null);
 
@@ -30,18 +31,24 @@ function Image({ source, width, height, w, h, corners, circular, onLayout, style
   useEffect(() => {
     if (!source) return;
 
-    if (typeof source === 'number') {
-      const image = RNImage.resolveAssetSource(source as any);
-      setImgWidth(image.width);
-      setAspectRatio(image.height / (image.width || 1));
-    } else {
-      // @ts-ignore
-      RNImage.getSize(source.uri, (width, height) => {
-        setImgWidth(width);
-        setAspectRatio(height / (width || 1));
-      });
+    setError(false);
+
+    try {
+      if (typeof source === 'number') {
+        const image = RNImage.resolveAssetSource(source as any);
+        setImgWidth(image.width);
+        setAspectRatio(image.height / (image.width || 1));
+      } else {
+        // @ts-ignore
+        RNImage.getSize(source.uri, (width, height) => {
+          setImgWidth(width);
+          setAspectRatio(height / (width || 1));
+        });
+      }
+    } catch (err) {
+      setError(true);
     }
-  }, [source]);
+  }, [source, width, height]);
 
   useEffect(() => {
     if (loading) return;
@@ -91,6 +98,10 @@ function Image({ source, width, height, w, h, corners, circular, onLayout, style
 
   // @ts-ignore
   props = { ...props, width: finalWidth, height: finalHeight, source };
+
+  if (error) {
+    return null;
+  }
 
   return (
     <BoxFactory {...containerProps} onLayout={handleLayout} style={style} map={map}>
