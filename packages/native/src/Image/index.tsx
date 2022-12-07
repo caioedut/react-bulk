@@ -39,11 +39,17 @@ function Image({ source, width, height, w, h, corners, circular, onLayout, style
         setImgWidth(image.width);
         setAspectRatio(image.height / (image.width || 1));
       } else {
-        // @ts-ignore
-        RNImage.getSize(source.uri, (width, height) => {
-          setImgWidth(width);
-          setAspectRatio(height / (width || 1));
-        });
+        RNImage.getSize(
+          // @ts-ignore
+          source.uri,
+          (width, height) => {
+            setImgWidth(width);
+            setAspectRatio(height / (width || 1));
+          },
+          () => {
+            setError(true);
+          },
+        );
       }
     } catch (err) {
       setError(true);
