@@ -112,7 +112,7 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
           // @ts-ignore
           selectedRef.current.measureLayout(scrollRef.current, (left, top) => {
             const y = Math.max(0, top - metrics?.maxHeight / 2);
-            scrollRef.current.scrollTo({ x: 0, y, animated: true });
+            scrollRef.current.scrollTo({ x: 0, y, animated: false });
           });
         }
       }, 100);
@@ -248,7 +248,7 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
         color={color}
         endIcon={
           loading ? (
-            <LoadingFactory map={map} />
+            <LoadingFactory map={map} size={size} />
           ) : (
             <TextFactory map={map} color={color} style={{ fontSize, transform: [{ scaleY: 0.65 }] }}>
               {visible ? '▲' : '▼'}

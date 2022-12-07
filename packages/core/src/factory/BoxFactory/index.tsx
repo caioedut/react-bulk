@@ -170,7 +170,7 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
 
   rest = bindings(rest);
 
-  pressable = pressable ?? Boolean(props.onPress || props.onPressIn || props.onPressOut || props.onClick);
+  pressable = pressable ?? Boolean(props.onPress || props.onLongPress || props.onPressIn || props.onPressOut || props.onClick);
 
   if (native && pressable && !component) {
     component = Button;
