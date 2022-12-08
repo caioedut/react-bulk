@@ -6,7 +6,7 @@ import bindings from '../../props/bindings';
 import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import merge from '../../props/merge';
-import { customStyleProps } from '../../styles/jss';
+import { styleProps } from '../../styles/constants';
 import { BoxProps, FactoryProps } from '../../types';
 import clsx from '../../utils/clsx';
 
@@ -29,30 +29,18 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
 
   let {
     accessibility,
-    align,
-    alignContent,
-    alignItems,
-    basis,
     center,
     column,
     component,
     componentProps,
-    direction,
     flex,
-    grow,
     hidden,
     invisible,
-    justify,
-    justifyContent,
-    justifyItems,
     noRootStyles,
     noWrap,
-    order,
     pressable,
-    position,
     reverse,
     row,
-    shrink,
     wrap,
     // Styles
     variants,
@@ -61,22 +49,19 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
     ...rest
   } = props;
 
-  // Extract style props
-  const styleProps: any[] = [];
-  for (const prop of customStyleProps) {
+  // Extract styles from props
+  const stylesFromProps: any[] = [];
+  for (const prop of styleProps) {
     if (prop in rest) {
-      styleProps.push({ [prop]: rest[prop] });
+      stylesFromProps.push({ [prop]: rest[prop] });
       delete rest[prop];
     }
   }
 
   style = [
-    position && { position },
-
     typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
 
     // Flex Container
-    direction && { flexDirection: direction },
     row && { flexDirection: reverse ? 'row-reverse' : 'row', flexWrap: 'wrap' },
     column && { flexDirection: reverse ? 'column-reverse' : 'column' },
 
@@ -91,23 +76,12 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
       alignItems: 'center',
     },
 
-    justifyContent && { justifyContent },
-    justifyItems && { alignItems },
-    alignContent && { alignContent },
-    alignItems && { alignItems },
-
     // Flex Item
     typeof flex === 'boolean' && { flex: Number(flex) },
-    grow && { flexGrow: Number(grow) },
-    shrink && { flexShrink: Number(shrink) },
-    basis && { flexBasis: basis },
-    align && { alignSelf: align },
-    justify && { justifySelf: justify },
-    order && { order },
 
     style,
 
-    styleProps,
+    stylesFromProps,
 
     hidden && {
       display: 'none',
