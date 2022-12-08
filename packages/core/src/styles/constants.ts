@@ -14,7 +14,7 @@ export const boxSizeProps = [
   'maxh',
   'minw',
   'minh',
-];
+] as const;
 
 /***********
  * Flexbox *
@@ -29,7 +29,7 @@ export const flexContainerAlignProps = [
   'justifyItems',
   // Aliases
   'center',
-];
+] as const;
 
 export const flexChildAlignProps = [
   'placeSelf',
@@ -38,9 +38,9 @@ export const flexChildAlignProps = [
   // Aliases
   'align',
   'justify',
-];
+] as const;
 
-export const flexAlignProps = [...flexContainerAlignProps, ...flexChildAlignProps];
+export const flexAlignProps = [...flexContainerAlignProps, ...flexChildAlignProps] as const;
 
 export const flexContainerProps = [
   'flexDirection',
@@ -54,7 +54,7 @@ export const flexContainerProps = [
   'reverse',
   'wrap',
   'noWrap',
-];
+] as const;
 
 export const flexChildProps = [
   'flex',
@@ -67,9 +67,9 @@ export const flexChildProps = [
   'grow',
   'shrink',
   'basis',
-];
+] as const;
 
-export const flexProps = [...flexAlignProps, ...flexContainerProps, ...flexChildProps];
+export const flexProps = [...flexAlignProps, ...flexContainerProps, ...flexChildProps] as const;
 
 /************
  * Spacings *
@@ -96,9 +96,26 @@ export const customSpacings = [
   'pr',
   'px',
   'py',
-];
+] as const;
 
-export const customStyleProps = ['w', 'h', 'maxw', 'maxh', 'minw', 'minh', 'bg', 'border', 'corners', 'shadow', ...customSpacings];
+export const customStyleProps = [
+  'w',
+  'h',
+  'maxw',
+  'maxh',
+  'minw',
+  'minh',
+  'bg',
+  'border',
+  'borderTop',
+  'borderBottom',
+  'borderLeft',
+  'borderRight',
+  'corners',
+  'direction',
+  'shadow',
+  ...customSpacings,
+] as const;
 
 export const spacings = [
   'position',
@@ -122,7 +139,7 @@ export const spacings = [
   'paddingVertical',
   // Aliases
   ...customSpacings,
-];
+] as const;
 
 // See https://react-cn.github.io/react/tips/style-props-value-px.html
 export const notPxProps = [
@@ -153,7 +170,7 @@ export const notPxProps = [
   'widows',
   'zIndex',
   'zoom',
-];
+] as const;
 
 export const rbkStyleProps = [
   'position',
@@ -188,4 +205,55 @@ export const rbkStyleProps = [
   'pr',
   'px',
   'py',
-];
+] as const;
+
+/************************
+ * All Supported Styles *
+ ************************/
+export const styleProps = [
+  ...boxSizeProps,
+  ...flexProps,
+  ...spacings,
+  ...customStyleProps,
+  'backfaceVisibility',
+  'backgroundColor',
+  'borderBottomColor',
+  'borderBottomEndRadius',
+  'borderBottomLeftRadius',
+  'borderBottomRightRadius',
+  'borderBottomStartRadius',
+  'borderBottomWidth',
+  'borderColor',
+  'borderEndColor',
+  'borderEndWidth',
+  'borderLeftColor',
+  'borderLeftWidth',
+  'borderRadius',
+  'borderRightColor',
+  'borderRightWidth',
+  'borderStartColor',
+  'borderStartWidth',
+  'borderStyle',
+  'borderTopColor',
+  'borderTopEndRadius',
+  'borderTopLeftRadius',
+  'borderTopRightRadius',
+  'borderTopStartRadius',
+  'borderTopWidth',
+  'borderWidth',
+  'color',
+  'direction',
+  'display',
+  'fontFamily',
+  'fontSize',
+  'fontStyle',
+  'fontVariant',
+  'fontWeight',
+  'letterSpacing',
+  'lineHeight',
+  'opacity',
+  'overflow',
+  'textAlign',
+  'textTransform',
+  'zIndex',
+] as const;

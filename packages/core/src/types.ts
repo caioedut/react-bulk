@@ -1,5 +1,7 @@
 import { CSSProperties, ReactNode, RefObject, SyntheticEvent } from 'react';
 
+import { styleProps } from './styles/constants';
+
 export type AnyObject = { [key: string]: any };
 export type TimeoutType = ReturnType<typeof setTimeout> | null;
 export type AnyCallback = (mixed: any) => any;
@@ -159,12 +161,25 @@ export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowerca
 export type RbkStyleProps = {
   position?: 'relative' | 'absolute' | string;
 
+  // Flexbox container
+  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse' | string;
+  justifyContent?: FlexJustifyValues;
+  alignContent?: FlexAlignValues;
+  justifyItems?: FlexJustifyValues;
+  alignItems?: FlexAlignValues | 'baseline';
+
+  // Flexbox item
+  order?: number;
+  grow?: number;
+  shrink?: number;
+  basis?: 'auto' | number | string;
+  align?: FlexAlignValues;
+  justify?: FlexJustifyValues;
+
   h?: number | string;
   w?: number | string;
-
   minw?: number | string;
   maxw?: number | string;
-
   minh?: number | string;
   maxh?: number | string;
 
@@ -194,7 +209,9 @@ export type RbkStyleProps = {
   pr?: number | string;
   px?: number | string;
   py?: number | string;
-};
+} & Partial<{
+  [K in typeof styleProps[number]]: any;
+}>;
 
 export type RbkStyles = (CSSProperties & RbkStyleProps) | Array<CSSProperties> | Array<RbkStyleProps> | Array<any> | any;
 
@@ -360,26 +377,15 @@ export type BoxProps = {
   rawStyle?: RbkStyles;
 
   // Flexbox container
-  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse' | string;
   row?: boolean;
   column?: boolean;
   reverse?: boolean;
   wrap?: boolean | 'wrap' | 'nowrap' | 'wrap-reverse' | string;
   noWrap?: boolean;
-  justifyContent?: FlexJustifyValues;
-  alignContent?: FlexAlignValues;
-  justifyItems?: FlexJustifyValues;
-  alignItems?: FlexAlignValues | 'baseline';
   center?: boolean;
 
   // Flexbox item
   flex?: boolean;
-  order?: number;
-  grow?: number;
-  shrink?: number;
-  basis?: 'auto' | number | string;
-  align?: FlexAlignValues;
-  justify?: FlexJustifyValues;
 
   // To use only on children of Grid
   xs?: number | 'auto' | 'flex' | 'hide' | boolean;

@@ -99,43 +99,39 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       value = parseUnit(value);
     }
 
-    if (prop === 'w') {
-      prop = 'width';
-    }
+    prop =
+      {
+        w: 'width',
+        h: 'height',
+        maxw: 'maxWidth',
+        maxh: 'maxHeight',
+        minw: 'minWidth',
+        minh: 'minHeight',
+        bg: 'backgroundColor',
 
-    if (prop === 'h') {
-      prop = 'height';
-    }
+        // Flex Container
+        direction: 'flexDirection',
 
-    if (prop === 'maxw') {
-      prop = 'maxWidth';
-    }
-
-    if (prop === 'maxh') {
-      prop = 'maxHeight';
-    }
-
-    if (prop === 'minw') {
-      prop = 'minWidth';
-    }
-
-    if (prop === 'minh') {
-      prop = 'minHeight';
-    }
-
-    if (prop === 'bg') {
-      prop = 'backgroundColor';
-    }
+        // Flex Item
+        grow: 'flexGrow',
+        shrink: 'flexShrink',
+        basis: 'flexBasis',
+        align: 'alignSelf',
+        justify: 'justifySelf',
+      }[prop] || prop;
 
     if (prop === 'corners') {
       prop = 'borderRadius';
       value = (theme.shape.borderRadius ?? 0) * value;
     }
 
-    if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(prop)) {
-      prop = null;
+    if (prop === 'borderTop') {
+      console.log(prop, value, `${prop}Width`);
+    }
 
+    if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(prop)) {
       if (value) {
+        const preffix = prop;
         const types = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset', 'initial', 'inherit'];
 
         const sizeIndex = valueSplit.findIndex((item: string) => /^\d\w*$/.test(item));
@@ -148,8 +144,14 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         const color = valueSplit?.shift()?.replace(/undefined|null|false|true/g, '');
         const borderColor = theme.color(color || theme.colors.common.black);
 
-        Object.assign(styles, { borderWidth, borderStyle, borderColor });
+        Object.assign(styles, {
+          [`${preffix}Width`]: borderWidth,
+          [`${preffix}Style`]: borderStyle,
+          [`${preffix}Color`]: borderColor,
+        });
       }
+
+      prop = null;
     }
 
     if (web) {
