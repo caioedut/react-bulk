@@ -14,7 +14,7 @@ export const boxSizeProps = [
   'maxh',
   'minw',
   'minh',
-] as const;
+];
 
 /***********
  * Flexbox *
@@ -29,7 +29,7 @@ export const flexContainerAlignProps = [
   'justifyItems',
   // Aliases
   'center',
-] as const;
+];
 
 export const flexChildAlignProps = [
   'placeSelf',
@@ -38,9 +38,9 @@ export const flexChildAlignProps = [
   // Aliases
   'align',
   'justify',
-] as const;
+];
 
-export const flexAlignProps = [...flexContainerAlignProps, ...flexChildAlignProps] as const;
+export const flexAlignProps = [...flexContainerAlignProps, ...flexChildAlignProps];
 
 export const flexContainerProps = [
   'flexDirection',
@@ -54,7 +54,7 @@ export const flexContainerProps = [
   'reverse',
   'wrap',
   'noWrap',
-] as const;
+];
 
 export const flexChildProps = [
   'flex',
@@ -67,9 +67,9 @@ export const flexChildProps = [
   'grow',
   'shrink',
   'basis',
-] as const;
+];
 
-export const flexProps = [...flexAlignProps, ...flexContainerProps, ...flexChildProps] as const;
+export const flexProps = [...flexAlignProps, ...flexContainerProps, ...flexChildProps];
 
 /************
  * Spacings *
@@ -96,26 +96,27 @@ export const customSpacings = [
   'pr',
   'px',
   'py',
-] as const;
+];
 
 export const customStyleProps = [
-  'w',
-  'h',
-  'maxw',
-  'maxh',
-  'minw',
-  'minh',
   'bg',
   'border',
-  'borderTop',
   'borderBottom',
   'borderLeft',
   'borderRight',
+  'borderTop',
   'corners',
   'direction',
+  'h',
+  'maxh',
+  'maxw',
+  'minh',
+  'minw',
+  'position',
   'shadow',
+  'w',
   ...customSpacings,
-] as const;
+];
 
 export const spacings = [
   'position',
@@ -139,7 +140,7 @@ export const spacings = [
   'paddingVertical',
   // Aliases
   ...customSpacings,
-] as const;
+];
 
 // See https://react-cn.github.io/react/tips/style-props-value-px.html
 export const notPxProps = [
@@ -170,42 +171,7 @@ export const notPxProps = [
   'widows',
   'zIndex',
   'zoom',
-] as const;
-
-export const rbkStyleProps = [
-  'position',
-  'h',
-  'w',
-  'minw',
-  'maxw',
-  'minh',
-  'maxh',
-  'bg',
-  'border',
-  'corners',
-  'shadow',
-  'i',
-  't',
-  'b',
-  'l',
-  'r',
-  'm',
-  'mt',
-  'mb',
-  'ml',
-  'mr',
-  'mh',
-  'mx',
-  'mv',
-  'my',
-  'p',
-  'pt',
-  'pb',
-  'pl',
-  'pr',
-  'px',
-  'py',
-] as const;
+];
 
 /************************
  * All Supported Styles *
@@ -256,4 +222,4 @@ export const styleProps = [
   'textAlign',
   'textTransform',
   'zIndex',
-] as const;
+];
