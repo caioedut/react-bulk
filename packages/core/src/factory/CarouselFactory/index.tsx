@@ -157,11 +157,23 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
         onScroll={handleScroll}
       >
         {contentWidth !== null &&
-          React.Children.map(children, (child, index) => (
-            <BoxFactory key={index} map={map} innerRef={itemRef} style={itemStyle} px={gap / 2}>
-              {child}
-            </BoxFactory>
-          ))}
+          React.Children.map(children, (child, index) => {
+            const isFirst = index === 0;
+            const isLast = index === children.length - 1;
+
+            return (
+              <BoxFactory
+                key={index}
+                map={map}
+                innerRef={itemRef}
+                style={itemStyle}
+                pl={isFirst ? gap : gap / 2}
+                pr={isLast ? gap : gap / 2}
+              >
+                {child}
+              </BoxFactory>
+            );
+          })}
       </ScrollableFactory>
 
       {showChevron && hasPrev && (
