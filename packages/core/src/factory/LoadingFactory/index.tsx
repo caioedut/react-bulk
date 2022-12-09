@@ -25,6 +25,7 @@ function LoadingFactory({ stylist, map, innerRef, ...props }: FactoryProps | Loa
   } = factory2(props, options);
 
   size = size ?? options.defaultProps.size;
+  const labelSize = size * 0.5625;
 
   labelStyle = [{ color, ml: size }, labelStyle];
 
@@ -34,7 +35,7 @@ function LoadingFactory({ stylist, map, innerRef, ...props }: FactoryProps | Loa
         <ProgressFactory map={map} size={size / 4} color={color} />
       </AnimationFactory>
       {Boolean(label) && (
-        <TextFactory map={map} size={size} style={labelStyle} stylist={[variants.label]}>
+        <TextFactory map={map} size={labelSize} style={labelStyle} stylist={[variants.label]}>
           {label}
         </TextFactory>
       )}
