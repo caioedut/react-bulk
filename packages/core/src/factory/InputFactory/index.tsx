@@ -23,6 +23,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     autoCorrect,
     caretHidden,
     color,
+    controlled,
     defaultValue,
     disabled,
     endAddon,
@@ -190,7 +191,10 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
     const nativeEvent = e?.nativeEvent ?? e;
     const value = unmaskValue(target?.value ?? e?.nativeEvent?.text);
 
-    setInternal(value);
+    if (!controlled) {
+      setInternal(value);
+    }
+
     dispatchEvent('change', value, nativeEvent);
   };
 

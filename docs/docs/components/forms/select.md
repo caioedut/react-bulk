@@ -70,6 +70,12 @@ Extends all [`Box`](/docs/components/core/box#props) props.
 
 ---
 
+**`controlled`**
+
+➤ Type: **`boolean`** <br/>
+
+---
+
 **`defaultValue`**
 
 Provides an initial value that will change when the user starts typing. Useful for use-cases where you do not want to deal with listening to
