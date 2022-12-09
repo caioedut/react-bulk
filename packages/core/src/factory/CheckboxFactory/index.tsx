@@ -22,17 +22,18 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
   let {
     checked,
     color,
+    controlled,
     defaultChecked,
     id,
     label,
     name,
-    onChange,
     placeholder,
     readOnly,
     size,
     unique,
     value,
     // Events
+    onChange,
     onFormChange,
     // Styles
     variants,
@@ -49,6 +50,8 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
   const defaultRef: any = useRef(null);
   const buttonRef = innerRef || defaultRef;
 
+  const [internal, setInternal] = useState(Boolean(+defaultChecked));
+
   if (typeof size === 'string') {
     size = pick(size, 'medium', {
       xsmall: 0.625,
@@ -62,12 +65,9 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
   const fontSize = theme.rem(size);
   const iconSize = fontSize * theme.typography.lineHeight;
 
-  const [internal, setInternal] = useState(Boolean(+defaultChecked));
-
   useEffect(() => {
-    if (typeof checked !== 'undefined') {
-      setInternal(checked);
-    }
+    if (typeof checked !== 'boolean') return;
+    setInternal(checked);
   }, [checked]);
 
   useEffect(() => {
@@ -107,11 +107,13 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
     if (readOnly) return;
 
     const nativeEvent = e?.nativeEvent ?? e;
-    const checked = !internal;
+    const newInternal = !internal;
 
-    setInternal(checked);
+    if (!controlled) {
+      setInternal(newInternal);
+    }
 
-    dispatchEvent('change', checked, nativeEvent);
+    dispatchEvent('change', newInternal, nativeEvent);
   };
 
   style = [style, extract(spacings, rest)];

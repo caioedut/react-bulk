@@ -27,6 +27,7 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
     defaultValue,
     id,
     color,
+    controlled,
     error,
     label,
     loading,
@@ -165,12 +166,18 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
   };
 
   const handleChange = (e, option, autoFocus = false) => {
-    const nativeEvent = e?.nativeEvent ?? e;
+    if (readOnly) return;
 
-    setInternal(arrOptions?.find((item) => item.value == option.value));
+    const nativeEvent = e?.nativeEvent ?? e;
+    const newInternal = arrOptions?.find((item) => item.value == option.value);
+
+    if (!controlled) {
+      setInternal(newInternal);
+    }
+
     setVisible(false);
 
-    dispatchEvent('change', option, nativeEvent);
+    dispatchEvent('change', newInternal, nativeEvent);
 
     if (autoFocus) {
       setTimeout(focus, 100);

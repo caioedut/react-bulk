@@ -459,6 +459,7 @@ export type InputProps = {
   autoCorrect?: boolean;
   caretHidden?: boolean;
   color?: ColorValues;
+  controlled?: boolean;
   defaultValue?: InputValue;
   disabled?: boolean;
   endAddon?: ReactNode;
@@ -509,6 +510,7 @@ export type SelectOption = {
 
 export type SelectProps = {
   color?: ColorValues;
+  controlled?: boolean;
   defaultValue?: InputValue;
   disabled?: boolean;
   endIcon?: ReactNode;
@@ -534,6 +536,7 @@ export type SelectProps = {
 
 export type CheckboxProps = {
   checked?: boolean;
+  controlled?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
   label?: string;
