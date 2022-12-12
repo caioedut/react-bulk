@@ -235,7 +235,7 @@ export default function Main() {
         </Grid>
       </Card>
 
-      <ListItem startIcon="❤" endIcon="⚙" chevron mt={3}>
+      <ListItem startAddon="❤" endAddon="⚙" chevron mt={3}>
         <Box>
           <Text bold>List Item</Text>
           <Text>Lorem ipsum dolor sit amet</Text>
@@ -269,15 +269,15 @@ export default function Main() {
                 </Button>
               </Box>
               <Box>
-                <Button variant={variant} icon="⚙" circular />
+                <Button variant={variant} startAddon="⚙" circular />
               </Box>
               <Box>
-                <Button variant={variant} startIcon="⚙">
+                <Button variant={variant} startAddon="⚙">
                   Start Icon
                 </Button>
               </Box>
               <Box>
-                <Button variant={variant} endIcon="⚙">
+                <Button variant={variant} endAddon="⚙">
                   End Icon
                 </Button>
               </Box>
@@ -307,9 +307,9 @@ export default function Main() {
           <Button loading={loading} onPress={toggleLoading}>
             Loading
           </Button>
-          <Button icon="⚙" circular />
-          <Button startIcon="⚙">Start Icon</Button>
-          <Button endIcon="⚙">End Icon</Button>
+          <Button startAddon="⚙" circular />
+          <Button startAddon="⚙">Start Icon</Button>
+          <Button endAddon="⚙">End Icon</Button>
         </ButtonGroup>
       </Card>
 
@@ -353,7 +353,7 @@ export default function Main() {
           mt={3}
           label="Payment"
           placeholder="[Select]"
-          startIcon="💳"
+          startAddon="💳"
           defaultValue="2"
           options={[
             { label: 'Money', value: '1' },

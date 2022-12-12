@@ -69,8 +69,8 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
 
   if (typeof size === 'string') {
     size = pick(size, 'medium', {
-      xsmall: 0.625,
-      small: 0.75,
+      xsmall: 0.75,
+      small: 0.875,
       medium: 1,
       large: 1.25,
       xlarge: 1.625,
@@ -253,7 +253,7 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
         map={map}
         block
         color={color}
-        endIcon={
+        endAddon={
           loading ? (
             <LoadingFactory map={map} size={size} />
           ) : (
@@ -308,7 +308,7 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
                   style={{ paddingHorizontal: spacing }}
                   contentStyle={{ flex: 1 }}
                   onPress={(e) => handleChange(e, option, true)}
-                  endIcon={
+                  endAddon={
                     <BoxFactory map={map} center w={fontSize} pl={1}>
                       {isSelected && (
                         <TextFactory map={map} color={color} style={{ fontSize: theme.rem(1.25, fontSize) }}>

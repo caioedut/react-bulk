@@ -359,42 +359,30 @@ const base: ThemeProps & any = {
           size: {
             xsmall: {
               root: {
-                minHeight: '1.5625rem',
-                minWidth: '1.5625rem',
-                paddingHorizontal: '0.625rem',
-              },
-              label: {
-                fontSize: '0.625rem',
+                minHeight: '1.5rem',
+                minWidth: '1.5rem',
+                paddingHorizontal: '0.375rem',
               },
             },
             small: {
               root: {
-                minHeight: '1.875rem',
-                minWidth: '1.875rem',
-                paddingHorizontal: '0.75rem',
-              },
-              label: {
-                fontSize: '0.75rem',
+                minHeight: '1.75rem',
+                minWidth: '1.75rem',
+                paddingHorizontal: '0.4375rem',
               },
             },
             large: {
               root: {
-                minHeight: '3.125rem',
-                minWidth: '3.125rem',
-                paddingHorizontal: '1.25rem',
-              },
-              label: {
-                fontSize: '1.25rem',
+                minHeight: '2.5rem',
+                minWidth: '2.5rem',
+                paddingHorizontal: '0.625rem',
               },
             },
             xlarge: {
               root: {
-                minHeight: '4.0625rem',
-                minWidth: '4.0625rem',
-                paddingHorizontal: '1.625rem',
-              },
-              label: {
-                fontSize: '1.625rem',
+                minHeight: '3.25rem',
+                minWidth: '3.25rem',
+                paddingHorizontal: '0.8125rem',
               },
             },
           },

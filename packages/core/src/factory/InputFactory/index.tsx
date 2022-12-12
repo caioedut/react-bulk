@@ -107,6 +107,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
         secure: 'password',
         phone: 'tel',
         url: 'url',
+        hidden: 'text',
       }),
     });
   }
@@ -130,23 +131,24 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
         email: 'email-address',
         phone: 'phone-pad',
         url: 'url',
+        hidden: 'default',
       }),
     });
   }
 
   if (typeof size === 'string') {
     size = pick(size, 'medium', {
-      xsmall: 0.625,
-      small: 0.75,
+      xsmall: 0.75,
+      small: 0.875,
       medium: 1,
       large: 1.25,
       xlarge: 1.625,
     });
   }
 
-  const fontSize = theme.rem(size);
-  const spacing = fontSize / 2;
-  const height = fontSize * (multiline ? 4 : 2);
+  const baseSize = theme.rem(size);
+  const spacing = baseSize / 2;
+  const height = baseSize * (multiline ? 6 : 2);
 
   useEffect(() => {
     if (typeof value === 'undefined') return;
@@ -228,7 +230,6 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
 
   inputStyle = [
     {
-      fontSize,
       height,
       paddingHorizontal: spacing,
     },
@@ -257,7 +258,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
   ];
 
   return (
-    <BoxFactory map={map} style={style} stylist={[variants.root, stylist]}>
+    <BoxFactory map={map} hidden={type === 'hidden'} style={style} stylist={[variants.root, stylist]}>
       {Boolean(label) && (
         <LabelFactory map={map} numberOfLines={1} for={inputRef} style={labelStyle} stylist={[variants.label]}>
           {label}

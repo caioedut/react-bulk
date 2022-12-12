@@ -31,8 +31,8 @@ function BadgeFactory({ stylist, children, map, innerRef, ...props }: FactoryPro
 
   if (typeof size === 'string') {
     size = pick(size, 'medium', {
-      xsmall: 0.625,
-      small: 0.75,
+      xsmall: 0.75,
+      small: 0.875,
       medium: 1,
       large: 1.25,
       xlarge: 1.625,

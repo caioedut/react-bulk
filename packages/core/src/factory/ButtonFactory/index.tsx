@@ -22,12 +22,14 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
     circular,
     color,
     disabled,
+    endAddon,
     endIcon,
     icon,
     label,
     loading,
     transform,
     size,
+    startAddon,
     startIcon,
     variant,
     // Styles
@@ -41,9 +43,10 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
   const form = useForm();
   const isBasic = ['outline', 'text'].includes(variant);
 
-  badge = typeof badge === 'number' ? { value: badge } : badge;
   children = children ?? label;
-  startIcon = startIcon ?? icon;
+  badge = typeof badge === 'number' ? { value: badge } : badge;
+  startAddon = startAddon ?? startIcon;
+  endAddon = endAddon ?? endIcon;
 
   if (web && !rest.type) {
     rest.type = 'button';
@@ -71,17 +74,17 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
 
   if (typeof size === 'string') {
     size = pick(size, 'medium', {
-      xsmall: 0.625,
-      small: 0.75,
+      xsmall: 0.75,
+      small: 0.875,
       medium: 1,
       large: 1.25,
       xlarge: 1.625,
     });
   }
 
-  const fontSize = theme.rem(size);
-  const spacing = fontSize / 2;
-  const height = fontSize * 2;
+  const baseSize = theme.rem(size);
+  const spacing = baseSize / 2;
+  const height = baseSize * 2;
   const textColor = isBasic ? color : 'white';
 
   style = [
@@ -107,7 +110,7 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
     style,
   ];
 
-  labelStyle = [{ color: textColor, fontSize }, labelStyle];
+  labelStyle = [{ color: textColor }, labelStyle];
 
   if (typeof children === 'string') {
     children = (
@@ -127,15 +130,18 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
       {...rest}
       disabled={disabled}
     >
-      {Boolean(startIcon) && <BoxFactory map={map}>{startIcon}</BoxFactory>}
+      {Boolean(startAddon) && <BoxFactory map={map}>{startAddon}</BoxFactory>}
 
       {Boolean(children || children?.length) && (
-        <BoxFactory map={map} style={[contentStyle, loading && { opacity: 0 }, startIcon && { ml: 2 }, endIcon && { mr: 2 }]}>
+        <BoxFactory
+          map={map}
+          style={[contentStyle, loading && { opacity: 0 }, startAddon && { marginLeft: spacing }, endAddon && { marginRight: spacing }]}
+        >
           {children}
         </BoxFactory>
       )}
 
-      {Boolean(endIcon) && <BoxFactory map={map}>{endIcon}</BoxFactory>}
+      {Boolean(endAddon) && <BoxFactory map={map}>{endAddon}</BoxFactory>}
 
       {loading && (
         <BoxFactory map={map} position="absolute" i={0} center>
