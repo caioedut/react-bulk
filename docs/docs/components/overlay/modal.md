@@ -25,6 +25,10 @@ function Home() {
       </Button>
       <Modal visible={visible}>
         <Text>Modal is amazing!</Text>
+
+        <Button mt={3} onPress={() => setVisible(false)}>
+          Close
+        </Button>
       </Modal>
     </>
   );
