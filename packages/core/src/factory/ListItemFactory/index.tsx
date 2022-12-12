@@ -1,7 +1,10 @@
 import React from 'react';
 
 import useTheme from '../../hooks/useTheme';
+import ChevronRight from '../../icons/ChevronRight';
 import factory2 from '../../props/factory2';
+import get from '../../props/get';
+import remove from '../../props/remove';
 import { FactoryProps, ListItemProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 import CardFactory from '../CardFactory';
@@ -11,36 +14,43 @@ import TextFactory from '../TextFactory';
 function ListItemFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & ListItemProps) {
   const theme = useTheme();
   const options = theme.components.ListItem;
-  const { View } = map;
+  const { svg, View } = map;
 
   // Extends from default props
   let {
     chevron,
+    endAddon,
     endIcon,
     gap,
     icon,
+    startAddon,
     startIcon,
     // Styles
     variants,
     chevronStyle,
-    iconStyle,
-    startIconStyle,
-    endIconStyle,
     ...rest
   } = factory2(props, options);
 
-  chevron = chevron === true ? 'caret-right' : chevron;
-  startIcon = startIcon ?? icon;
-  startIconStyle = startIconStyle ?? iconStyle;
+  startAddon = startAddon ?? startIcon;
+  endAddon = endAddon ?? endIcon;
+
+  const chevronSize = get('size', chevronStyle);
+  const chevronColor = get('color', chevronStyle) ?? 'primary';
+  remove(['size', 'color'], chevronStyle);
+
+  chevron =
+    chevron === true ? (
+      <ChevronRight svg={svg} color={theme.color(chevronColor)} size={theme.rem(chevronSize || 1)} />
+    ) : (
+      <TextFactory map={map} color={chevronColor} size={chevronSize}>
+        {chevron}
+      </TextFactory>
+    );
 
   return (
     <CardFactory map={map} innerRef={innerRef} p={gap} stylist={[variants?.root, stylist]} {...rest}>
       <GridFactory map={map} row noWrap alignItems="center" gap={gap}>
-        {Boolean(startIcon) && (
-          <BoxFactory map={map} style={startIconStyle}>
-            {startIcon}
-          </BoxFactory>
-        )}
+        {Boolean(startAddon) && <BoxFactory map={map}>{startAddon}</BoxFactory>}
 
         <View xs>
           <GridFactory map={map} row noWrap alignItems="center" gap={gap}>
@@ -48,17 +58,11 @@ function ListItemFactory({ stylist, children, map, innerRef, ...props }: Factory
           </GridFactory>
         </View>
 
-        {Boolean(endIcon) && (
-          <BoxFactory map={map} style={endIconStyle}>
-            {endIcon}
-          </BoxFactory>
-        )}
+        {Boolean(endAddon) && <BoxFactory map={map}>{endAddon}</BoxFactory>}
 
         {Boolean(chevron) && (
           <BoxFactory map={map} style={chevronStyle}>
-            <TextFactory map={map} color="primary" style={{ fontSize: theme.rem(2), marginTop: -theme.rem(0.5) }}>
-              ›
-            </TextFactory>
+            {chevron}
           </BoxFactory>
         )}
       </GridFactory>

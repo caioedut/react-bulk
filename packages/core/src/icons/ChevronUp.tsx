@@ -1,4 +1,4 @@
-export default function ChevronRight({ svg, color = '#000000', size = 16 }) {
+export default function ChevronUp({ svg, color = '#000000', size = 16 }) {
   const { Svg, Polyline } = svg;
 
   return (

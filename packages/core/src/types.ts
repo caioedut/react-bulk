@@ -418,28 +418,28 @@ export type LabelProps = {
   for?: string | RefObject<ReactNode>;
 } & TextProps;
 
-export type FormControlProps = {
-  color?: ColorValues;
-  endIcon?: ReactNode;
-  label?: string;
-  size?: SizeValues;
-  startIcon?: ReactNode;
-  // Styles
-  labelStyle?: RbkStyles;
-};
-
-export type ButtonProps = FormControlProps & {
+export type ButtonProps = {
   badge?: number | BadgeProps;
+  color?: ColorValues;
   disabled?: boolean;
+  endAddon?: ReactNode;
   href?: string;
-  icon?: boolean | string | ReactNode;
+  label?: string;
   loading?: boolean;
   circular?: boolean;
+  size?: SizeValues;
+  startAddon?: ReactNode;
   transform?: TextTransformValues;
   type?: 'button' | 'submit' | 'cancel' | 'clear' | string;
   variant?: 'solid' | 'outline' | 'text' | string;
   // Styles
   contentStyle?: RbkStyles;
+  labelStyle?: RbkStyles;
+
+  /** @deprecated use startAddon instead */
+  startIcon?: ReactNode;
+  /** @deprecated use endAddon instead */
+  endIcon?: ReactNode;
 } & PressableProps &
   FocusableProps &
   BoxProps;
@@ -478,7 +478,7 @@ export type InputProps = {
   size?: SizeValues;
   startAddon?: ReactNode;
   textColor?: ColorValues;
-  type?: 'text' | 'number' | 'email' | 'phone' | 'url' | string;
+  type?: 'text' | 'number' | 'email' | 'phone' | 'url' | 'hidden' | string;
   unmask?: (InputValue: string, data: AnyObject) => InputValue;
   value?: InputValue;
   // Events
@@ -490,10 +490,10 @@ export type InputProps = {
   labelStyle?: RbkStyles;
   inputStyle?: RbkStyles;
 
+  /** @deprecated use startAddon instead */
+  startIcon?: ReactNode;
   /** @deprecated use endAddon instead */
   endIcon?: ReactNode;
-  /** @deprecated use startIcon instead */
-  startIcon?: ReactNode;
 
   /** @deprecated use onChange(event, value) instead */
   onInput?: Function;
@@ -513,7 +513,7 @@ export type SelectProps = {
   controlled?: boolean;
   defaultValue?: InputValue;
   disabled?: boolean;
-  endIcon?: ReactNode;
+  endAddon?: ReactNode;
   error?: string;
   label?: string;
   loading?: boolean;
@@ -522,7 +522,7 @@ export type SelectProps = {
   placeholder?: string;
   readOnly?: boolean;
   size?: SizeValues;
-  startIcon?: ReactNode;
+  startAddon?: ReactNode;
   value?: InputValue;
   // Events
   onChange?: (event: RbkEvent, value: string, option: SelectOption) => void;
@@ -531,6 +531,11 @@ export type SelectProps = {
   buttonStyle?: RbkStyles;
   errorStyle?: RbkStyles;
   labelStyle?: RbkStyles;
+
+  /** @deprecated use startAddon instead */
+  startIcon?: ReactNode;
+  /** @deprecated use endAddon instead */
+  endIcon?: ReactNode;
 } & FocusableProps &
   BoxProps;
 
@@ -699,16 +704,20 @@ export type ProgressProps = {
 } & BoxProps;
 
 export type ListItemProps = {
-  chevron?: boolean | string | ReactNode;
-  endIcon?: string | ReactNode;
+  chevron?: boolean | ReactNode;
+  endAddon?: ReactNode;
   gap?: number;
-  icon?: string | ReactNode;
-  startIcon?: string | ReactNode;
+  startAddon?: ReactNode;
   // Styles
-  chevronStyle?: RbkStyles;
-  iconStyle?: RbkStyles;
-  startIconStyle?: RbkStyles;
-  endIconStyle?: RbkStyles;
+  chevronStyle?: {
+    size?: number;
+    color?: ColorValues;
+  } & RbkStyles;
+
+  /** @deprecated use startAddon instead */
+  startIcon?: ReactNode;
+  /** @deprecated use endAddon instead */
+  endIcon?: ReactNode;
 } & BoxProps;
 
 export type LinkProps = {
