@@ -45,21 +45,18 @@ function TableFactory({ stylist, map, innerRef, ...props }: FactoryProps & Table
     return [
       {
         border,
-        p: 1,
+        p: 3,
         borderBottomWidth: 0,
         borderRightWidth: 0,
+        width,
+        flexGrow: 0,
+        flexShrink: 0,
       },
 
       !borderTop && { borderTopWidth: 0 },
       !borderLeft && { borderLeftWidth: 0 },
 
       column.style,
-
-      {
-        width,
-        flexGrow: 0,
-        flexShrink: 0,
-      },
     ];
   };
 
@@ -74,6 +71,7 @@ function TableFactory({ stylist, map, innerRef, ...props }: FactoryProps & Table
           </BoxFactory>
         ))}
       </BoxFactory>
+
       {rows?.map((row, rowIndex) => (
         <BoxFactory key={rowIndex} map={map} row noWrap>
           {columns.map((column, index) => (
