@@ -168,6 +168,7 @@ export const notPxProps = [
   'strokeOpacity',
   'strokeWidth',
   'tabSize',
+  'transform',
   'widows',
   'zIndex',
   'zoom',
