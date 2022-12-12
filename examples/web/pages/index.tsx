@@ -661,15 +661,15 @@ export default function Main() {
           </Text>
           <Grid noWrap gap={6} alignItems="center">
             <Box>
-              <Animation component={Progress} loop in from={{ left: 50, opacity: 0 }} to={{ left: 0, opacity: 1 }} />
+              <Animation component={Progress} loop in from={{ top: -10, opacity: 0 }} to={{ top: 0, opacity: 1 }} />
             </Box>
             <Box>
-              <Animation loop in from={{ right: 50, opacity: 0 }} to={{ right: 0, opacity: 1 }}>
+              <Animation loop in from={{ top: -20, opacity: 0 }} to={{ top: 0, opacity: 1 }}>
                 <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
               </Animation>
             </Box>
             <Box>
-              <Animation loop in from={{ left: 50, opacity: 0 }} to={{ left: 0, opacity: 1 }}>
+              <Animation loop in from={{ top: -30, opacity: 0 }} to={{ top: 0, opacity: 1 }}>
                 Anything
               </Animation>
             </Box>

@@ -164,6 +164,7 @@ const base: ThemeProps & any = {
         defaultProps: {
           direction: 'normal',
           speed: 625,
+          timing: 'ease',
         },
         defaultStyles: {
           root: {

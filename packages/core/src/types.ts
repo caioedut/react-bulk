@@ -695,6 +695,7 @@ export type AnimationProps = {
   in?: boolean;
   loop?: boolean | number;
   speed?: number;
+  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | string;
   to?: RbkStyles;
 } & BoxProps;
 

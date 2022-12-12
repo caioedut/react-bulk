@@ -4,6 +4,7 @@ import createStyle from '../../createStyle';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
+import { notPxProps } from '../../styles/constants';
 import jss from '../../styles/jss';
 import { AnimationProps, FactoryProps, RbkStyles } from '../../types';
 import BoxFactory from '../BoxFactory';
@@ -22,6 +23,7 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
     loop,
     speed,
     to,
+    timing,
     // Styles
     variants,
     ...rest
@@ -41,12 +43,17 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
 
     animationValue.setValue(defaultValue);
 
+    const easing = timing
+      .split('-')
+      .map((str, index) => (!index ? str : str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase()))
+      .join('');
+
     const animation = Animated.loop(
       Animated.timing(animationValue, {
         delay,
         toValue: Number(!defaultValue),
         duration: speed,
-        easing: Easing.linear,
+        easing: Easing[easing],
         useNativeDriver: false,
       }),
       { iterations },
@@ -59,15 +66,15 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
     return () => {
       animation.stop();
     };
-  }, [run, iterations, defaultValue]);
+  }, [run, timing, iterations, defaultValue]);
 
   if (web) {
     const fromCSS = Object.entries(from)
-      .map(([attr, val]) => `${attr}: ${val};`)
+      .map(([attr, val]) => `${attr}: ${val}${notPxProps.includes(attr) ? '' : 'px'};`)
       .join('');
 
     const toCSS = Object.entries(to)
-      .map(([attr, val]) => `${attr}: ${val};`)
+      .map(([attr, val]) => `${attr}: ${val}${notPxProps.includes(attr) ? '' : 'px'};`)
       .join('');
 
     createStyle({
@@ -85,7 +92,7 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
   const style: RbkStyles = { position: 'relative' };
 
   if (web) {
-    style.animation = `${name} ${speed}ms linear ${delay ? `${delay}ms` : ''} ${iterations === -1 ? 'infinite' : iterations} ${
+    style.animation = `${name} ${speed}ms ${timing} ${delay ? `${delay}ms` : ''} ${iterations === -1 ? 'infinite' : iterations} ${
       run ? 'running' : 'paused'
     } ${direction}`;
   }
