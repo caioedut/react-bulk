@@ -55,7 +55,7 @@ import { Select } from '@react-bulk/web'; // OR @react-bulk/native
 
 ```jsx live
 <Box maxw={400}>
-  <Select placeholder="Username" icon="👤" />
+  <Select placeholder="Username" startAddon="👤" />
 </Box>
 ```
 
@@ -91,7 +91,7 @@ events and updating the value prop to keep the controlled state in sync.
 
 ---
 
-**`endIcon`**
+**`endAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
 
@@ -158,7 +158,7 @@ The string that will be rendered before text input has been entered.
 
 ---
 
-**`startIcon`**
+**`startAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
 
