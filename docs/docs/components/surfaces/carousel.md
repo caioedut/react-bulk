@@ -74,14 +74,6 @@ Number of items shown at breakpoint `xs`.
 
 ---
 
-**`xs`**
-
-Number of items shown at breakpoint `xs`.
-
-➤ Type: **`number`** <br/>
-
----
-
 **`sm`**
 
 Number of items shown at breakpoint `sm`.
