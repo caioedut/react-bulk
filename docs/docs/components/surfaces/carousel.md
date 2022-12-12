@@ -58,6 +58,12 @@ Spacing (horizontal and vertical) between children. The set value will be multip
 
 ---
 
+**`pagingEnabled`**
+
+➤ Type: **`boolean`** <br/>
+
+---
+
 ## Breakpoints
 
 **`xs`**
