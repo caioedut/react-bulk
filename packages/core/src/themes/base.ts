@@ -463,6 +463,7 @@ const base: ThemeProps & any = {
           chevron: 'visible',
           color: 'primary',
           gap: 0,
+          pagingEnabled: true,
           swipe: false,
           xs: 1,
         },

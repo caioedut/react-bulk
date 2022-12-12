@@ -24,6 +24,7 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
     chevron,
     color,
     gap,
+    pagingEnabled,
     swipe,
     // Column Count
     xs,
@@ -151,7 +152,7 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
         map={map}
         innerRef={contentRef}
         stylist={[variants.content]}
-        pagingEnabled
+        pagingEnabled={pagingEnabled}
         hideScrollBar
         direction="horizontal"
         onScroll={handleScroll}
