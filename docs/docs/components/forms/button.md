@@ -141,7 +141,7 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 ---
 
-**`endIcon`**
+**`endAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
 
@@ -152,14 +152,6 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 For web only.
 
 ➤ Type: **`string`** <br/>
-
----
-
-**`icon`**
-
-Alias for `startIcon`.
-
-➤ Type: **`string` `ReactNode`** <br/>
 
 ---
 
@@ -184,7 +176,7 @@ Render text label as child.
 
 ---
 
-**`startIcon`**
+**`startAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
 
