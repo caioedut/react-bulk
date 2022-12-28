@@ -109,4 +109,7 @@ function CollapseFactory({ stylist, map, innerRef, ...props }: FactoryProps & Co
   );
 }
 
-export default React.memo(CollapseFactory);
+const Memoized = React.memo(CollapseFactory);
+Memoized.displayName = 'CollapseFactory';
+
+export default Memoized;

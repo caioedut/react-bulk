@@ -62,4 +62,7 @@ function ButtonGroupFactory({ stylist, children, map, innerRef, ...props }: Fact
   );
 }
 
-export default React.memo(ButtonGroupFactory);
+const Memoized = React.memo(ButtonGroupFactory);
+Memoized.displayName = 'ButtonGroupFactory';
+
+export default Memoized;

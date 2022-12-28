@@ -32,4 +32,7 @@ function ModalFactory({ stylist, children, map, innerRef, ...props }: FactoryPro
   );
 }
 
-export default React.memo(ModalFactory);
+const Memoized = React.memo(ModalFactory);
+Memoized.displayName = 'ModalFactory';
+
+export default Memoized;

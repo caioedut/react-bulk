@@ -19,4 +19,7 @@ function CardFactory({ stylist, map, innerRef, ...props }: FactoryProps & CardPr
   return <BoxFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} {...rest} />;
 }
 
-export default React.memo(CardFactory);
+const Memoized = React.memo(CardFactory);
+Memoized.displayName = 'CardFactory';
+
+export default Memoized;

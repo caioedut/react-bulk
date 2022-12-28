@@ -148,4 +148,7 @@ function FormFactory({ stylist, map, innerRef, ...props }: FactoryProps & FormPr
   );
 }
 
-export default React.memo(FormFactory);
+const Memoized = React.memo(FormFactory);
+Memoized.displayName = 'FormFactory';
+
+export default Memoized;

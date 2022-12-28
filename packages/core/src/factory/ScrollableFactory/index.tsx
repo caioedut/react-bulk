@@ -8,7 +8,7 @@ import jss from '../../styles/jss';
 import { FactoryProps, ScrollableProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
-function ScrollableFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & ScrollableProps) {
+const ScrollableFactory = React.memo(({ stylist, children, map, innerRef, ...props }: FactoryProps & ScrollableProps) => {
   const theme = useTheme();
   const options = theme.components.Scrollable;
   const { native, ScrollView } = map;
@@ -87,6 +87,8 @@ function ScrollableFactory({ stylist, children, map, innerRef, ...props }: Facto
       )}
     </BoxFactory>
   );
-}
+});
 
-export default React.memo(ScrollableFactory);
+ScrollableFactory.displayName = 'ScrollableFactory';
+
+export default ScrollableFactory;

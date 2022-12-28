@@ -27,4 +27,7 @@ function DropdownFactory({ stylist, children, map, innerRef, ...props }: Factory
   );
 }
 
-export default React.memo(DropdownFactory);
+const Memoized = React.memo(DropdownFactory);
+Memoized.displayName = 'DropdownFactory';
+
+export default Memoized;

@@ -21,4 +21,7 @@ function LinkFactory({ stylist, map, innerRef, ...props }: FactoryProps & LinkPr
   return <TextFactory map={map} innerRef={innerRef} component={Link} stylist={[variants.root, stylist]} {...rest} />;
 }
 
-export default React.memo(LinkFactory);
+const Memoized = React.memo(LinkFactory);
+Memoized.displayName = 'LinkFactory';
+
+export default Memoized;

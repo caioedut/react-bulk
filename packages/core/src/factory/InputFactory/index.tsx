@@ -306,4 +306,7 @@ function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & Input
   );
 }
 
-export default React.memo(InputFactory);
+const Memoized = React.memo(InputFactory);
+Memoized.displayName = 'InputFactory';
+
+export default Memoized;

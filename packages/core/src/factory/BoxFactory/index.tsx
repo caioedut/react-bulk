@@ -10,7 +10,7 @@ import { styleProps } from '../../styles/constants';
 import { BoxProps, FactoryProps } from '../../types';
 import clsx from '../../utils/clsx';
 
-function BoxFactory({ platform, className, stylist, children, map, innerRef, ...props }: FactoryProps & BoxProps) {
+const BoxFactory = React.memo(({ platform, className, stylist, children, map, innerRef, ...props }: FactoryProps & BoxProps) => {
   const theme = useTheme();
   const options = theme.components.Box;
   const { web, native, dimensions, Button, Text, View } = map;
@@ -168,6 +168,8 @@ function BoxFactory({ platform, className, stylist, children, map, innerRef, ...
       })}
     </Component>
   );
-}
+});
 
-export default React.memo(BoxFactory);
+BoxFactory.displayName = 'BoxFactory';
+
+export default BoxFactory;

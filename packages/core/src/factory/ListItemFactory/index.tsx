@@ -70,4 +70,7 @@ function ListItemFactory({ stylist, children, map, innerRef, ...props }: Factory
   );
 }
 
-export default React.memo(ListItemFactory);
+const Memoized = React.memo(ListItemFactory);
+Memoized.displayName = 'ListItemFactory';
+
+export default Memoized;

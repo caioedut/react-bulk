@@ -5,7 +5,7 @@ import factory2 from '../../props/factory2';
 import { FactoryProps, TextProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
-function TextFactory({ stylist, map, innerRef, ...props }: FactoryProps & TextProps) {
+const TextFactory = React.memo(({ stylist, map, innerRef, ...props }: FactoryProps & TextProps) => {
   const theme = useTheme();
   const options = theme.components.Text;
   const { web, native, Text } = map;
@@ -70,6 +70,8 @@ function TextFactory({ stylist, map, innerRef, ...props }: FactoryProps & TextPr
   return (
     <BoxFactory map={map} innerRef={innerRef} component={Text} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles />
   );
-}
+});
 
-export default React.memo(TextFactory);
+TextFactory.displayName = 'TextFactory';
+
+export default TextFactory;

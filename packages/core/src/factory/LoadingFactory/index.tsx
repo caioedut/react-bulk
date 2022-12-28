@@ -52,4 +52,7 @@ function LoadingFactory({ stylist, map, innerRef, ...props }: FactoryProps | Loa
   );
 }
 
-export default React.memo(LoadingFactory);
+const Memoized = React.memo(LoadingFactory);
+Memoized.displayName = 'LoadingFactory';
+
+export default Memoized;
