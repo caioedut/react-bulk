@@ -2,15 +2,22 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { TimeoutType } from '@react-bulk/core';
 
+const getWindowDimensions = () => {
+  let width = 0;
+  let height = 0;
+
+  if (typeof window !== 'undefined') {
+    width = window.innerWidth;
+    height = window.innerHeight;
+  }
+
+  return { width, height };
+};
+
 export default function useMap() {
   const timeoutRef = useRef<TimeoutType>(null);
 
-  const { innerHeight, innerWidth }: any = typeof window !== 'undefined' ? window : {};
-
-  const [dimensions, setDimensions] = useState({
-    height: innerHeight,
-    width: innerWidth,
-  });
+  const [dimensions, setDimensions] = useState(getWindowDimensions());
 
   const handleResize = useCallback(() => {
     if (timeoutRef.current) {
@@ -18,8 +25,8 @@ export default function useMap() {
     }
 
     timeoutRef.current = setTimeout(() => {
-      setDimensions({ height: innerHeight, width: innerWidth });
-    }, 10);
+      setDimensions(getWindowDimensions());
+    }, 50);
   }, [timeoutRef]);
 
   useEffect(() => {
