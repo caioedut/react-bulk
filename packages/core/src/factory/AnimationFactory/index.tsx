@@ -140,4 +140,7 @@ function AnimationFactory({ stylist, children, component, map, innerRef, ...prop
   );
 }
 
-export default React.memo(AnimationFactory);
+const Memoized = React.memo(AnimationFactory);
+Memoized.displayName = 'AnimationFactory';
+
+export default Memoized;

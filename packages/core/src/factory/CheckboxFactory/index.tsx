@@ -189,4 +189,7 @@ function CheckboxFactory({ stylist, map, innerRef, ...props }: FactoryProps & Ch
   );
 }
 
-export default React.memo(CheckboxFactory);
+const Memoized = React.memo(CheckboxFactory);
+Memoized.displayName = 'CheckboxFactory';
+
+export default Memoized;

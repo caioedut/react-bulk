@@ -85,4 +85,7 @@ function TableFactory({ stylist, map, innerRef, ...props }: FactoryProps & Table
   );
 }
 
-export default React.memo(TableFactory);
+const Memoized = React.memo(TableFactory);
+Memoized.displayName = 'TableFactory';
+
+export default Memoized;

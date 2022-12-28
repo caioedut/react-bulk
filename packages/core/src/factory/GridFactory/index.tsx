@@ -79,4 +79,7 @@ function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProp
   );
 }
 
-export default React.memo(GridFactory);
+const Memoized = React.memo(GridFactory);
+Memoized.displayName = 'GridFactory';
+
+export default Memoized;

@@ -76,4 +76,7 @@ function BackdropFactory({ stylist, children, map, innerRef, ...props }: Factory
   );
 }
 
-export default React.memo(BackdropFactory);
+const Memoized = React.memo(BackdropFactory);
+Memoized.displayName = 'BackdropFactory';
+
+export default Memoized;

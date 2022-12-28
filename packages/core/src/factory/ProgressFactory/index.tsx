@@ -56,4 +56,7 @@ function ProgressFactory({ stylist, map, innerRef, ...props }: FactoryProps & Pr
   );
 }
 
-export default React.memo(ProgressFactory);
+const Memoized = React.memo(ProgressFactory);
+Memoized.displayName = 'ProgressFactory';
+
+export default Memoized;

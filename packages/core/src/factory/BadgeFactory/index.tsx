@@ -88,4 +88,7 @@ function BadgeFactory({ stylist, children, map, innerRef, ...props }: FactoryPro
   );
 }
 
-export default React.memo(BadgeFactory);
+const Memoized = React.memo(BadgeFactory);
+Memoized.displayName = 'BadgeFactory';
+
+export default Memoized;

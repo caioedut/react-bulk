@@ -54,4 +54,7 @@ function ImageFactory({ stylist, map, innerRef, ...props }: FactoryProps & Image
   );
 }
 
-export default React.memo(ImageFactory);
+const Memoized = React.memo(ImageFactory);
+Memoized.displayName = 'ImageFactory';
+
+export default Memoized;

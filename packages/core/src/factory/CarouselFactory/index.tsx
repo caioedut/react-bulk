@@ -196,4 +196,7 @@ function CarouselFactory({ stylist, children, map, innerRef, ...props }: Factory
   );
 }
 
-export default React.memo(CarouselFactory);
+const Memoized = React.memo(CarouselFactory);
+Memoized.displayName = 'CarouselFactory';
+
+export default Memoized;

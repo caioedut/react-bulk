@@ -37,4 +37,7 @@ function DividerFactory({ stylist, map, innerRef, ...props }: FactoryProps & Div
   return <BoxFactory map={map} innerRef={innerRef} style={style} stylist={[variants.root, stylist]} {...rest} />;
 }
 
-export default React.memo(DividerFactory);
+const Memoized = React.memo(DividerFactory);
+Memoized.displayName = 'DividerFactory';
+
+export default Memoized;

@@ -213,3 +213,31 @@ Animation.Spin = memo(
     />
   )),
 );
+
+Animation.displayName = 'Animation';
+Backdrop.displayName = 'Backdrop';
+Badge.displayName = 'Badge';
+Box.displayName = 'Box';
+ButtonGroup.displayName = 'ButtonGroup';
+Button.displayName = 'Button';
+Card.displayName = 'Card';
+Carousel.displayName = 'Carousel';
+Checkbox.displayName = 'Checkbox';
+Collapse.displayName = 'Collapse';
+Divider.displayName = 'Divider';
+Dropdown.displayName = 'Dropdown';
+Form.displayName = 'Form';
+Grid.displayName = 'Grid';
+Input.displayName = 'Input';
+Label.displayName = 'Label';
+Link.displayName = 'Link';
+ListItem.displayName = 'ListItem';
+Loading.displayName = 'Loading';
+Modal.displayName = 'Modal';
+Progress.displayName = 'Progress';
+Scrollable.displayName = 'Scrollable';
+Select.displayName = 'Select';
+Slider.displayName = 'Slider';
+Table.displayName = 'Table';
+Text.displayName = 'Text';
+Tooltip.displayName = 'Tooltip';

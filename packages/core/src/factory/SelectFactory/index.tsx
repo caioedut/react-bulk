@@ -344,4 +344,7 @@ function SelectFactory({ stylist, map, innerRef, ...props }: FactoryProps & Sele
   );
 }
 
-export default React.memo(SelectFactory);
+const Memoized = React.memo(SelectFactory);
+Memoized.displayName = 'SelectFactory';
+
+export default Memoized;

@@ -154,4 +154,7 @@ function ButtonFactory({ stylist, children, map, innerRef, ...props }: FactoryPr
   );
 }
 
-export default React.memo(ButtonFactory);
+const Memoized = React.memo(ButtonFactory);
+Memoized.displayName = 'ButtonFactory';
+
+export default Memoized;

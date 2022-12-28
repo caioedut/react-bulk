@@ -428,4 +428,7 @@ function SliderFactory({ stylist, map, innerRef, ...props }: FactoryProps & Slid
   );
 }
 
-export default React.memo(SliderFactory);
+const Memoized = React.memo(SliderFactory);
+Memoized.displayName = 'SliderFactory';
+
+export default Memoized;

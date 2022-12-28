@@ -41,4 +41,7 @@ function LabelFactory({ stylist, map, innerRef, ...props }: FactoryProps & Label
   return <TextFactory map={map} innerRef={innerRef} component={Label} stylist={[variants.root, stylist]} {...rest} {...focusProps} />;
 }
 
-export default React.memo(LabelFactory);
+const Memoized = React.memo(LabelFactory);
+Memoized.displayName = 'LabelFactory';
+
+export default Memoized;

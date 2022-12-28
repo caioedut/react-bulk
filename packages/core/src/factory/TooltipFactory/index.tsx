@@ -117,4 +117,7 @@ function TooltipFactory({ stylist, children, map, innerRef, ...props }: FactoryP
   );
 }
 
-export default React.memo(TooltipFactory);
+const Memoized = React.memo(TooltipFactory);
+Memoized.displayName = 'TooltipFactory';
+
+export default Memoized;
