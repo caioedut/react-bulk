@@ -126,10 +126,6 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       value = (theme.shape.borderRadius ?? 0) * value;
     }
 
-    if (prop === 'borderTop') {
-      console.log(prop, value, `${prop}Width`);
-    }
-
     if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(prop)) {
       if (value) {
         const preffix = prop;
