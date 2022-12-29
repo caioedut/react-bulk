@@ -5,6 +5,7 @@ import BaseWeb from './BaseWeb';
 import Platform from './Platform';
 import createTheme from './createTheme';
 import { RbkTheme, ThemeModeValues, ThemeOptionalProps, ThemeProps } from './types';
+import global from './utils/global';
 
 export const Context = createContext<RbkTheme | null>(null);
 

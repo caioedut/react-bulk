@@ -6,6 +6,7 @@ import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { FocusableProps, RbkRect, SliderProps } from '../../types';
 import event from '../../utils/event';
+import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
@@ -16,7 +17,7 @@ const SliderFactory = React.memo<SliderProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Slider;
-    const { web, native, Input, View } = global._rbk_mapping;
+    const { web, native, Input, View } = global.mapping;
 
     // Extends from default props
     let {

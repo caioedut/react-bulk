@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { ButtonProps } from '../../types';
+import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BadgeFactory from '../BadgeFactory';
 import BoxFactory from '../BoxFactory';
@@ -14,7 +15,7 @@ const ButtonFactory = React.memo<ButtonProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Button;
-    const { web, native, Button } = global._rbk_mapping;
+    const { web, native, Button } = global.mapping;
 
     // Extends from default props
     let {

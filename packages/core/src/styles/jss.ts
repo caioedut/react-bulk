@@ -4,6 +4,7 @@ import merge from '../props/merge';
 import remove from '../props/remove';
 import { RbkStyles, ThemeProps } from '../types';
 import clone from '../utils/clone';
+import global from '../utils/global';
 import { boxSizeProps, customSpacings, customStyleProps, flexAlignProps, spacings } from './constants';
 
 export { customSpacings, customStyleProps, spacings };

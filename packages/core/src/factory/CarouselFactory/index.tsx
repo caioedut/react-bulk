@@ -10,6 +10,7 @@ import ChevronRight from '../../icons/ChevronRight';
 import factory2 from '../../props/factory2';
 import { CarouselProps } from '../../types';
 import event from '../../utils/event';
+import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import ScrollableFactory from '../ScrollableFactory';
@@ -18,7 +19,7 @@ const CarouselFactory = React.memo<CarouselProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Carousel;
-    const { web, native, svg } = global._rbk_mapping;
+    const { web, native, svg } = global.mapping;
 
     // Extends from default props
     let {

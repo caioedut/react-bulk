@@ -3,6 +3,7 @@ import React, { ForwardedRef, ReactNode, createContext, forwardRef, useContext, 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { FormField, FormProps, FormRef } from '../../types';
+import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const Context = createContext<FormRef>(null as any);
@@ -13,7 +14,7 @@ const FormFactory = React.memo<FormProps>(
   forwardRef(({ stylist, ...props }, ref: ForwardedRef<FormRef>) => {
     const theme = useTheme();
     const options = theme.components.Form;
-    const { Form } = global._rbk_mapping;
+    const { Form } = global.mapping;
 
     // Extends from default props
     let {

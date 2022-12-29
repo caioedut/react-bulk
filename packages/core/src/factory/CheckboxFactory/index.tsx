@@ -6,6 +6,7 @@ import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
 import { CheckboxProps } from '../../types';
+import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
@@ -16,7 +17,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Checkbox;
-    const { web, svg, Input } = global._rbk_mapping;
+    const { web, svg, Input } = global.mapping;
     const { Svg, Circle, Polyline } = svg;
 
     // Extends from default props

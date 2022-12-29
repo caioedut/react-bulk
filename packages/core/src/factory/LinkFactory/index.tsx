@@ -3,13 +3,14 @@ import React, { forwardRef } from 'react';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { LinkProps } from '../../types';
+import global from '../../utils/global';
 import TextFactory from '../TextFactory';
 
 const LinkFactory = React.memo<LinkProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Link;
-    const { Link } = global._rbk_mapping;
+    const { Link } = global.mapping;
 
     // Extends from default props
     let {

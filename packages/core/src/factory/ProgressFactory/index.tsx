@@ -3,13 +3,14 @@ import React, { forwardRef } from 'react';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { ProgressProps } from '../../types';
+import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const ProgressFactory = React.memo<ProgressProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Progress;
-    const { Svg, Circle } = global._rbk_mapping.svg;
+    const { Svg, Circle } = global.mapping.svg;
 
     // Extends from default props
     let {

@@ -3,6 +3,7 @@ import React, { forwardRef, useRef } from 'react';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { BoxProps } from '../../types';
+import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 // TODO
@@ -10,7 +11,7 @@ const ImageFactory = React.memo<BoxProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Image;
-    const { web, native, Image } = global._rbk_mapping;
+    const { web, native, Image } = global.mapping;
 
     // Extends from default props
     let {

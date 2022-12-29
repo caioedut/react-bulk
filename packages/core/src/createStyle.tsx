@@ -3,6 +3,7 @@ import css from './styles/css';
 import jss from './styles/jss';
 import { RbkStyles, ThemeProps } from './types';
 import crypt from './utils/crypt';
+import global from './utils/global';
 
 export type createStyle = {
   style: string | RbkStyles;

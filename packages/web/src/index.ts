@@ -27,11 +27,12 @@ import {
   TableFactory,
   TextFactory,
   TooltipFactory,
+  global,
 } from '@react-bulk/core';
 
 import useDimensions from './useDimensions';
 
-global._rbk_mapping = {
+global.mapping = {
   web: true,
   native: false,
   ios: false,
