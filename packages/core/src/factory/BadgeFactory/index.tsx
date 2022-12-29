@@ -12,7 +12,7 @@ const BadgeFactory = React.memo<BadgeProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Badge;
-    const { native } = global.mapping;
+    const { web, native } = global.mapping;
 
     // Extends from default props
     let {
@@ -49,21 +49,23 @@ const BadgeFactory = React.memo<BadgeProps>(
     labelStyle = [
       {
         fontSize: halfSize,
+      },
+
+      web && {
         lineHeight: native ? halfSize : 1,
       },
+
       labelStyle,
     ];
 
     style = [
       {
         backgroundColor: color,
-        borderColor: color,
         borderRadius: halfSize,
       },
 
       absolute && {
         position: 'absolute',
-        borderColor: theme.colors.background.primary,
       },
 
       !dot && {
