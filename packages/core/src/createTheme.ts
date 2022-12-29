@@ -83,9 +83,7 @@ export default function createTheme(options?: ThemeOptionalProps, extendsTo?: Th
     });
   });
 
-  if (!global.theme) {
-    global.theme = newTheme;
-  }
+  global.theme = newTheme;
 
   return newTheme;
 }
