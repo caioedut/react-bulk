@@ -156,6 +156,7 @@ const CarouselFactory = React.memo<CarouselProps>(
           pagingEnabled={pagingEnabled}
           hideScrollBar
           direction="horizontal"
+          decelerationRate="fast"
           onScroll={handleScroll}
         >
           {contentWidth !== null &&
