@@ -6,6 +6,7 @@ import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
 import { AnyObject, SelectProps } from '../../types';
+import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
@@ -21,7 +22,7 @@ const SelectFactory = React.memo<SelectProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Select;
-    const { web, native, useDimensions, Input } = global._rbk_mapping;
+    const { web, native, useDimensions, Input } = global.mapping;
 
     const dimensions = useDimensions();
 

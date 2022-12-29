@@ -6,6 +6,7 @@ import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import remove from '../../props/remove';
 import { ListItemProps } from '../../types';
+import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 import CardFactory from '../CardFactory';
 import GridFactory from '../GridFactory';
@@ -15,7 +16,7 @@ const ListItemFactory = React.memo<ListItemProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.ListItem;
-    const { svg, View } = global._rbk_mapping;
+    const { svg, View } = global.mapping;
 
     // Extends from default props
     let {

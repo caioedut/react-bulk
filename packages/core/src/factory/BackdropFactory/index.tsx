@@ -3,13 +3,14 @@ import React, { forwardRef, useEffect } from 'react';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { BackdropProps } from '../../types';
+import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const BackdropFactory = React.memo<BackdropProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Backdrop;
-    const { web, native, Button, Dialog } = global._rbk_mapping;
+    const { web, native, Button, Dialog } = global.mapping;
 
     // Extends from default props
     let {

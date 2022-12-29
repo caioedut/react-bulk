@@ -9,12 +9,13 @@ import merge from '../../props/merge';
 import { styleProps } from '../../styles/constants';
 import { BoxProps } from '../../types';
 import clsx from '../../utils/clsx';
+import global from '../../utils/global';
 
 const BoxFactory = React.memo<BoxProps>(
   forwardRef(({ platform, className, stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Box;
-    const { web, native, useDimensions, Button, Text, View } = global._rbk_mapping;
+    const { web, native, useDimensions, Button, Text, View } = global.mapping;
 
     const dimensions = useDimensions();
 
@@ -24,7 +25,7 @@ const BoxFactory = React.memo<BoxProps>(
     // Platform specific props
     if (platform) {
       Object.keys(platform).forEach((item) => {
-        if (global._rbk_mapping[item] || item === '*') {
+        if (global.mapping[item] || item === '*') {
           Object.assign(props, merge({}, platform[item]));
         }
       });

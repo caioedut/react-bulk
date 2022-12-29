@@ -7,13 +7,14 @@ import factory2 from '../../props/factory2';
 import { notPxProps } from '../../styles/constants';
 import jss from '../../styles/jss';
 import { AnimationProps, RbkStyles } from '../../types';
+import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const AnimationFactory = React.memo<AnimationProps>(
   forwardRef(({ stylist, children, component, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Animation;
-    const { web, native, Animated, Easing } = global._rbk_mapping;
+    const { web, native, Animated, Easing } = global.mapping;
 
     // Extends from default props
     let {

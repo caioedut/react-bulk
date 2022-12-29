@@ -1,4 +1,5 @@
 import { ThemeComponentProps } from '../types';
+import global from '../utils/global';
 
 export default function factory2(props, options?: ThemeComponentProps) {
   let newProps = { ...options?.defaultProps, ...props };
@@ -9,7 +10,7 @@ export default function factory2(props, options?: ThemeComponentProps) {
     if (!options?.name) return;
 
     const name = options.name + (styleId === 'root' ? '' : `-${styleId}`);
-    variants[styleId] = [global._rbk_styles[name]];
+    variants[styleId] = [global.styles[name]];
   });
 
   Object.entries(options?.variants || {}).forEach(([varAttr, varOptions]: any) => {
@@ -24,7 +25,7 @@ export default function factory2(props, options?: ThemeComponentProps) {
     Object.keys(varStyles).forEach((styleId: any) => {
       const name = `${options?.name}-${varAttr}-${varValue}` + (styleId === 'root' ? '' : `-${styleId}`);
       variants[styleId] = variants[styleId] || [];
-      variants[styleId].push(global._rbk_styles[name]);
+      variants[styleId].push(global.styles[name]);
     });
   });
 

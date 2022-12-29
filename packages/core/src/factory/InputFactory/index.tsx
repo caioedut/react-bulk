@@ -6,6 +6,7 @@ import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { customStyleProps } from '../../styles/constants';
 import { InputProps } from '../../types';
+import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import { useForm } from '../FormFactory';
@@ -16,7 +17,7 @@ const InputFactory = React.memo<InputProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Input;
-    const { web, native, Input, TextArea } = global._rbk_mapping;
+    const { web, native, Input, TextArea } = global.mapping;
 
     // Extends from default props
     let {

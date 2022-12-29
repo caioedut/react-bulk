@@ -23,6 +23,7 @@ export { default as clone } from './utils/clone';
 export { default as clsx } from './utils/clsx';
 export { default as crypt } from './utils/crypt';
 export { default as event } from './utils/event';
+export { default as global } from './utils/global';
 export { default as pick } from './utils/pick';
 export { default as sleep } from './utils/sleep';
 export { default as uuid } from './utils/uuid';

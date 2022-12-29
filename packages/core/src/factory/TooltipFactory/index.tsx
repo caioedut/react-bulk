@@ -4,6 +4,7 @@ import usePropState from '../../hooks/usePropState';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { TimeoutType, TooltipProps } from '../../types';
+import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
@@ -11,7 +12,7 @@ const TooltipFactory = React.memo<TooltipProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Tooltip;
-    const { native, useDimensions, Button } = global._rbk_mapping;
+    const { native, useDimensions, Button } = global.mapping;
 
     const dimensions = useDimensions();
 

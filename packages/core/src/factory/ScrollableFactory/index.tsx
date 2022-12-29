@@ -6,13 +6,17 @@ import factory2 from '../../props/factory2';
 import { flexContainerProps } from '../../styles/constants';
 import jss from '../../styles/jss';
 import { ScrollableProps } from '../../types';
+import global2 from '../../utils/global';
+import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const ScrollableFactory = React.memo<ScrollableProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Scrollable;
-    const { native, ScrollView } = global._rbk_mapping;
+    const { native, ScrollView } = global.mapping;
+
+    console.log(global2);
 
     // Extends from default props
     let {

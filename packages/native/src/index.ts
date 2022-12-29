@@ -40,6 +40,7 @@ import {
   TableFactory,
   TextFactory,
   TooltipFactory,
+  global,
 } from '@react-bulk/core';
 import Svg, {
   Circle,
@@ -65,7 +66,7 @@ import Svg, {
   Use,
 } from 'react-native-svg';
 
-global._rbk_mapping = {
+global.mapping = {
   web: false,
   native: true,
   ios: Platform.OS === 'ios',

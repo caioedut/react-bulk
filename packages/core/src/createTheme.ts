@@ -6,10 +6,7 @@ import base from './themes/base';
 import dark from './themes/dark';
 import light from './themes/light';
 import { ThemeOptionalProps, ThemeProps } from './types';
-
-if (!global._rbk_styles) {
-  global._rbk_styles = {};
-}
+import global from './utils/global';
 
 export default function createTheme(options?: ThemeOptionalProps, extendsTo?: ThemeOptionalProps): ThemeProps | any {
   options = options || {};
@@ -72,7 +69,7 @@ export default function createTheme(options?: ThemeOptionalProps, extendsTo?: Th
     for (const prop in styles) {
       const style = styles?.[prop];
       const name = componentName + (prop === 'root' ? '' : `-${prop}`);
-      global._rbk_styles[name] = createStyle({ name, style, theme: newTheme });
+      global.styles[name] = createStyle({ name, style, theme: newTheme });
     }
 
     // Generate variant styles
@@ -80,7 +77,7 @@ export default function createTheme(options?: ThemeOptionalProps, extendsTo?: Th
       Object.entries(varOptions).map(([optionKey, optionVal]: any) => {
         Object.entries(optionVal || {}).forEach(([styleId, style]: any) => {
           const name = `${componentName}-${varAttr}-${optionKey}` + (styleId === 'root' ? '' : `-${styleId}`);
-          global._rbk_styles[name] = createStyle({ name, style, theme: newTheme });
+          global.styles[name] = createStyle({ name, style, theme: newTheme });
         });
       });
     });
