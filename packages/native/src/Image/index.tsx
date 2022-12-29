@@ -72,6 +72,10 @@ const Image = React.memo<NativeImageProps>(
         newWidth = newHeight / (aspectRatio ?? 1);
       }
 
+      if (typeof newWidth !== 'number' || typeof newHeight !== 'number') {
+        setError(true);
+      }
+
       setFinalWidth(newWidth);
       setFinalHeight(newHeight);
     }, [loading, width, height, containerWidth, imgWidth, aspectRatio]);
