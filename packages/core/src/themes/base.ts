@@ -228,7 +228,7 @@ const base: ThemeProps & any = {
       Badge: {
         name: 'rbk-badge',
         defaultProps: {
-          color: 'error.dark',
+          color: 'secondary',
           size: 'medium',
         },
         defaultStyles: {
@@ -239,9 +239,8 @@ const base: ThemeProps & any = {
             justifyContent: 'center',
             textAlign: 'center',
 
-            backgroundColor: 'error.dark',
+            backgroundColor: 'secondary',
             borderRadius: '0.625rem',
-            border: '1px solid error.dark',
             overflow: 'hidden',
             py: 1,
             px: 1.5,
