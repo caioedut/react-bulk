@@ -1,38 +1,39 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { FactoryProps, ModalProps } from '../../types';
+import { ModalProps } from '../../types';
 import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 import CardFactory from '../CardFactory';
 
-function ModalFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & ModalProps) {
-  const theme = useTheme();
-  const options = theme.components.Modal;
+const ModalFactory = React.memo<ModalProps>(
+  forwardRef(({ stylist, children, ...props }, ref) => {
+    const theme = useTheme();
+    const options = theme.components.Modal;
 
-  // Extends from default props
-  let {
-    halign,
-    valign,
-    onBackdropPress,
-    // Styles
-    variants,
-    ...rest
-  } = factory2(props, options);
+    // Extends from default props
+    let {
+      halign,
+      valign,
+      onBackdropPress,
+      // Styles
+      variants,
+      ...rest
+    } = factory2(props, options);
 
-  return (
-    <BackdropFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} {...rest} onPress={onBackdropPress}>
-      <BoxFactory map={map} maxh="100%" maxw="100%" p={3}>
-        <CardFactory map={map} maxh="100%" maxw="100%">
-          {children}
-        </CardFactory>
-      </BoxFactory>
-    </BackdropFactory>
-  );
-}
+    return (
+      <BackdropFactory ref={ref} stylist={[variants.root, stylist]} {...rest} onPress={onBackdropPress}>
+        <BoxFactory maxh="100%" maxw="100%" p={3}>
+          <CardFactory maxh="100%" maxw="100%">
+            {children}
+          </CardFactory>
+        </BoxFactory>
+      </BackdropFactory>
+    );
+  }),
+);
 
-const Memoized = React.memo(ModalFactory);
-Memoized.displayName = 'ModalFactory';
+ModalFactory.displayName = 'ModalFactory';
 
-export default Memoized;
+export default ModalFactory;

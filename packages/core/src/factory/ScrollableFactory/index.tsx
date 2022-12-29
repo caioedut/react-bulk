@@ -1,93 +1,87 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { flexContainerProps } from '../../styles/constants';
 import jss from '../../styles/jss';
-import { FactoryProps, ScrollableProps } from '../../types';
+import { ScrollableProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
-const ScrollableFactory = React.memo(({ stylist, children, map, innerRef, ...props }: FactoryProps & ScrollableProps) => {
-  const theme = useTheme();
-  const options = theme.components.Scrollable;
-  const { native, ScrollView } = map;
+const ScrollableFactory = React.memo<ScrollableProps>(
+  forwardRef(({ stylist, children, ...props }, ref) => {
+    const theme = useTheme();
+    const options = theme.components.Scrollable;
+    const { native, ScrollView } = global._rbk_mapping;
 
-  // Extends from default props
-  let {
-    contentInset,
-    direction,
-    hideScrollBar,
-    pagingEnabled,
-    platform,
-    // Styles
-    variants,
-    contentStyle,
-    style,
-    ...rest
-  } = factory2(props, options);
+    // Extends from default props
+    let {
+      contentInset,
+      direction,
+      hideScrollBar,
+      pagingEnabled,
+      platform,
+      // Styles
+      variants,
+      contentStyle,
+      style,
+      ...rest
+    } = factory2(props, options);
 
-  const isHorizontal = direction === 'horizontal';
+    const isHorizontal = direction === 'horizontal';
 
-  contentStyle = [
-    extract(flexContainerProps, style),
+    contentStyle = [
+      extract(flexContainerProps, style),
 
-    { p: contentInset ?? 0 },
+      { p: contentInset ?? 0 },
 
-    pagingEnabled && {
-      web: {
-        '&> *': {
-          scrollSnapAlign: 'start',
+      pagingEnabled && {
+        web: {
+          '&> *': {
+            scrollSnapAlign: 'start',
+          },
         },
       },
-    },
 
-    contentStyle,
-  ];
+      contentStyle,
+    ];
 
-  style = [
-    pagingEnabled && {
-      web: { scrollSnapType: `${isHorizontal ? 'x' : 'y'} mandatory` },
-    },
+    style = [
+      pagingEnabled && {
+        web: { scrollSnapType: `${isHorizontal ? 'x' : 'y'} mandatory` },
+      },
 
-    style,
-  ];
+      style,
+    ];
 
-  if (native) {
-    Object.assign(rest, {
-      horizontal: isHorizontal,
-      contentContainerStyle: jss({ theme }, variants.content, contentStyle),
-      pagingEnabled,
-    });
-
-    if (hideScrollBar) {
+    if (native) {
       Object.assign(rest, {
-        showsVerticalScrollIndicator: false,
-        showsHorizontalScrollIndicator: false,
+        horizontal: isHorizontal,
+        contentContainerStyle: jss({ theme }, variants.content, contentStyle),
+        pagingEnabled,
       });
-    }
-  }
 
-  return (
-    <BoxFactory
-      map={map}
-      innerRef={innerRef}
-      component={ScrollView}
-      style={style}
-      stylist={[variants.root, stylist]}
-      {...rest}
-      noRootStyles
-    >
-      {native ? (
-        children
-      ) : (
-        <BoxFactory map={map} style={contentStyle} stylist={[variants.content]} noRootStyles>
-          {children}
-        </BoxFactory>
-      )}
-    </BoxFactory>
-  );
-});
+      if (hideScrollBar) {
+        Object.assign(rest, {
+          showsVerticalScrollIndicator: false,
+          showsHorizontalScrollIndicator: false,
+        });
+      }
+    }
+
+    return (
+      <BoxFactory ref={ref} component={ScrollView} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles>
+        {native ? (
+          children
+        ) : (
+          <BoxFactory style={contentStyle} stylist={[variants.content]} noRootStyles>
+            {children}
+          </BoxFactory>
+        )}
+      </BoxFactory>
+    );
+  }),
+);
 
 ScrollableFactory.displayName = 'ScrollableFactory';
 

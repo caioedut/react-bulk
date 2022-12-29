@@ -4,10 +4,8 @@ import { Platform, RefreshControl } from 'react-native';
 import { ScrollableFactory, useTheme } from '@react-bulk/core';
 
 import { NativeScrollableProps } from '../types';
-import useMap from '../useMap';
 
 function Scrollable({ refreshing, onRefresh, refreshControl, ...props }: NativeScrollableProps, ref) {
-  const map = useMap();
   const theme = useTheme();
 
   // @ts-ignore
@@ -42,7 +40,7 @@ function Scrollable({ refreshing, onRefresh, refreshControl, ...props }: NativeS
     ...props,
   };
 
-  return <ScrollableFactory innerRef={ref} {...props} map={map} />;
+  return <ScrollableFactory ref={ref} {...props} />;
 }
 
 export default memo(forwardRef<typeof Scrollable, NativeScrollableProps>(Scrollable));

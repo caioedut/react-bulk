@@ -1,25 +1,26 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { CardProps, FactoryProps } from '../../types';
+import { CardProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
-function CardFactory({ stylist, map, innerRef, ...props }: FactoryProps & CardProps) {
-  const theme = useTheme();
-  const options = theme.components.Card;
+const CardFactory = React.memo<CardProps>(
+  forwardRef(({ stylist, ...props }, ref) => {
+    const theme = useTheme();
+    const options = theme.components.Card;
 
-  // Extends from default props
-  let {
-    // Styles
-    variants,
-    ...rest
-  } = factory2(props, options);
+    // Extends from default props
+    let {
+      // Styles
+      variants,
+      ...rest
+    } = factory2(props, options);
 
-  return <BoxFactory map={map} innerRef={innerRef} stylist={[variants.root, stylist]} {...rest} />;
-}
+    return <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest} />;
+  }),
+);
 
-const Memoized = React.memo(CardFactory);
-Memoized.displayName = 'CardFactory';
+CardFactory.displayName = 'CardFactory';
 
-export default Memoized;
+export default CardFactory;

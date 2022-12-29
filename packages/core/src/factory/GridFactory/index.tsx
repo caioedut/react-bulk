@@ -1,85 +1,78 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { FactoryProps, GridProps, RbkStyles } from '../../types';
+import { GridProps, RbkStyles } from '../../types';
 import BoxFactory from '../BoxFactory';
 
-function GridFactory({ stylist, children, map, innerRef, ...props }: FactoryProps & GridProps) {
-  const theme = useTheme();
-  const options = theme.components.Grid;
+const GridFactory = React.memo<GridProps>(
+  forwardRef(({ stylist, children, ...props }, ref) => {
+    const theme = useTheme();
+    const options = theme.components.Grid;
 
-  // Extends from default props
-  let {
-    gap,
-    size,
-    // Styles
-    variants,
-    style,
-    ...rest
-  } = factory2(props, options);
+    // Extends from default props
+    let {
+      gap,
+      size,
+      // Styles
+      variants,
+      style,
+      ...rest
+    } = factory2(props, options);
 
-  const breakpoints = Object.keys(theme.breakpoints);
-  const spacing = !gap ? 0 : theme.spacing(gap) / 2;
+    const breakpoints = Object.keys(theme.breakpoints);
+    const spacing = !gap ? 0 : theme.spacing(gap) / 2;
 
-  return (
-    <BoxFactory map={map} innerRef={innerRef} style={[{ margin: -spacing }, style]} stylist={[variants.root, stylist]} {...rest}>
-      {React.Children.map(children, (child, index) => {
-        if (!child && !['string', 'number'].includes(typeof child)) {
-          return null;
-        }
-
-        const props = { ...Object(child?.props) };
-        const itemStyle: RbkStyles = [props.style, { padding: spacing }];
-
-        breakpoints.forEach((breakpoint: string) => {
-          if (breakpoint in props) {
-            const value = props[breakpoint];
-            const width = (value / size) * 100;
-
-            const isAuto = value === 'auto';
-            const isFlex = value === 'flex' || value === true;
-            const isHidden = value === 'hide' || value === 'hidden' || value === false;
-
-            if (!isAuto) {
-              itemStyle.push({ [breakpoint]: { width: `${width}%` } });
-            }
-
-            if (isFlex) {
-              itemStyle.push({ [breakpoint]: { flex: 1 } });
-            }
-
-            if (isHidden) {
-              itemStyle.push({
-                [breakpoint]: {
-                  display: 'none',
-                  opacity: 0,
-                  overflow: 'hidden',
-                },
-              });
-            }
+    return (
+      <BoxFactory ref={ref} style={[{ margin: -spacing }, style]} stylist={[variants.root, stylist]} {...rest}>
+        {React.Children.map(children, (child, index) => {
+          if (!child && !['string', 'number'].includes(typeof child)) {
+            return null;
           }
 
-          delete props[breakpoint];
-        });
+          // @ts-ignore
+          const props = { ...Object(child?.props) };
+          const itemStyle: RbkStyles = [props.style, { padding: spacing }];
 
-        return (
-          <BoxFactory
-            key={index}
-            map={map}
-            component={child?.type}
-            componentProps={{ map }}
-            {...props}
-            style={itemStyle}
-            stylist={[variants.item]}
-          />
-        );
-      })}
-    </BoxFactory>
-  );
-}
+          breakpoints.forEach((breakpoint: string) => {
+            if (breakpoint in props) {
+              const value = props[breakpoint];
+              const width = (value / size) * 100;
 
-const Memoized = React.memo(GridFactory);
-Memoized.displayName = 'GridFactory';
+              const isAuto = value === 'auto';
+              const isFlex = value === 'flex' || value === true;
+              const isHidden = value === 'hide' || value === 'hidden' || value === false;
 
-export default Memoized;
+              if (!isAuto) {
+                itemStyle.push({ [breakpoint]: { width: `${width}%` } });
+              }
+
+              if (isFlex) {
+                itemStyle.push({ [breakpoint]: { flex: 1 } });
+              }
+
+              if (isHidden) {
+                itemStyle.push({
+                  [breakpoint]: {
+                    display: 'none',
+                    opacity: 0,
+                    overflow: 'hidden',
+                  },
+                });
+              }
+            }
+
+            delete props[breakpoint];
+          });
+
+          // @ts-ignore
+          return <BoxFactory key={index} component={child?.type} {...props} style={itemStyle} stylist={[variants.item]} />;
+        })}
+      </BoxFactory>
+    );
+  }),
+);
+
+GridFactory.displayName = 'GridFactory';
+
+export default GridFactory;

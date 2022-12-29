@@ -1,115 +1,117 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { forwardRef, useEffect, useMemo, useRef } from 'react';
 
 import rect from '../../element/rect';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { CollapseProps, FactoryProps } from '../../types';
+import { CollapseProps } from '../../types';
 import event from '../../utils/event';
 import sleep from '../../utils/sleep';
 import BoxFactory from '../BoxFactory';
 
-function CollapseFactory({ stylist, map, innerRef, ...props }: FactoryProps & CollapseProps) {
-  const theme = useTheme();
-  const options = theme.components.Collapse;
-  const { web, native } = map;
+const CollapseFactory = React.memo<CollapseProps>(
+  forwardRef(({ stylist, ...props }, ref) => {
+    const theme = useTheme();
+    const options = theme.components.Collapse;
+    const { web, native } = global._rbk_mapping;
 
-  // Extends from default props
-  let {
-    in: expanded,
-    // Styles
-    variants,
-    ...rest
-  } = factory2(props, options);
+    // Extends from default props
+    let {
+      in: expanded,
+      // Styles
+      variants,
+      ...rest
+    } = factory2(props, options);
 
-  const defaultRef: any = useRef(null);
-  innerRef = innerRef || defaultRef;
+    const defaultRef: any = useRef(null);
+    ref = ref || defaultRef;
 
-  const initialized = useRef(false);
-  const initExpanded = useMemo(() => expanded, []);
+    const initialized = useRef(false);
+    const initExpanded = useMemo(() => expanded, []);
 
-  const emptyValue = native ? 'auto' : '';
+    const emptyValue = native ? 'auto' : '';
 
-  // @ts-ignore
-  useEffect(() => {
-    if (!web || !innerRef.current) return;
+    useEffect(() => {
+      //@ts-ignore
+      if (!web || !ref?.current) return;
 
-    const $el = innerRef.current;
+      //@ts-ignore
+      const $el = ref?.current;
 
-    const complete = () => {
-      if ($el.offsetHeight <= 0) return;
-      setStyles($el, { height: emptyValue });
-    };
+      const complete = () => {
+        if ($el.offsetHeight <= 0) return;
+        setStyles($el, { height: emptyValue });
+      };
 
-    const remove = event($el, 'transitionend', complete);
+      const remove = event($el, 'transitionend', complete);
 
-    return () => {
-      remove();
-    };
-  }, [innerRef]);
+      return () => {
+        remove();
+      };
+    }, [ref]);
 
-  useEffect(() => {
-    if (!initialized.current) {
-      initialized.current = true;
-      return;
-    }
+    useEffect(() => {
+      if (!initialized.current) {
+        initialized.current = true;
+        return;
+      }
 
-    const $el = innerRef.current;
+      // @ts-ignore
+      const $el = ref.current;
 
-    (async () => {
-      // Reset CSS to get original size
-      setStyles($el, {
-        height: emptyValue,
-        opacity: native ? 0 : '0',
-      });
+      (async () => {
+        // Reset CSS to get original size
+        setStyles($el, {
+          height: emptyValue,
+          opacity: native ? 0 : '0',
+        });
 
-      native && (await sleep(10));
+        native && (await sleep(10));
 
-      const size = web ? $el.offsetHeight : (await rect($el)).height;
+        const size = web ? $el.offsetHeight : (await rect($el)).height;
 
-      let curSize = expanded ? 0 : size;
-      let newSize = expanded ? size : 0;
+        let curSize = expanded ? 0 : size;
+        let newSize = expanded ? size : 0;
 
-      setStyles($el, {
-        height: curSize,
-        opacity: native ? 1 : '1',
-      });
+        setStyles($el, {
+          height: curSize,
+          opacity: native ? 1 : '1',
+        });
 
+        if (web) {
+          setStyles($el, theme.mixins.transitions.medium);
+          await sleep(10);
+        }
+
+        setStyles($el, { height: newSize });
+      })();
+    }, [expanded]);
+
+    function setStyles($el, styles: any = {}) {
       if (web) {
-        setStyles($el, theme.mixins.transitions.medium);
-        await sleep(10);
+        for (let attr in styles) {
+          const value = styles[attr];
+          $el.style[attr] = value && !isNaN(value) ? `${value}px` : value;
+        }
       }
 
-      setStyles($el, { height: newSize });
-    })();
-  }, [expanded]);
-
-  function setStyles($el, styles: any = {}) {
-    if (web) {
-      for (let attr in styles) {
-        const value = styles[attr];
-        $el.style[attr] = value && !isNaN(value) ? `${value}px` : value;
+      if (native) {
+        $el.setNativeProps(styles);
       }
     }
 
-    if (native) {
-      $el.setNativeProps(styles);
-    }
-  }
+    return (
+      <BoxFactory
+        ref={ref}
+        platform={{ native: { collapsable: false } }}
+        stylist={[variants.root, stylist]}
+        rawStyle={!initExpanded && { height: 0 }}
+      >
+        <BoxFactory {...rest} />
+      </BoxFactory>
+    );
+  }),
+);
 
-  return (
-    <BoxFactory
-      map={map}
-      innerRef={innerRef}
-      platform={{ native: { collapsable: false } }}
-      stylist={[variants.root, stylist]}
-      rawStyle={!initExpanded && { height: 0 }}
-    >
-      <BoxFactory map={map} {...rest} />
-    </BoxFactory>
-  );
-}
+CollapseFactory.displayName = 'CollapseFactory';
 
-const Memoized = React.memo(CollapseFactory);
-Memoized.displayName = 'CollapseFactory';
-
-export default Memoized;
+export default CollapseFactory;

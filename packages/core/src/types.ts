@@ -8,6 +8,25 @@ export type AnyCallback = (mixed: any) => any;
 export type EventCallback = (event: any) => any;
 export type InputValue = string | number | boolean;
 
+export type RbkMap = {
+  web: boolean;
+  native: boolean;
+  ios: boolean;
+  android: boolean;
+
+  useDimensions: () => { width: number; height: number };
+
+  Animated: {
+    View: ReactNode;
+  };
+
+  svg: {
+    [key: string]: ReactNode;
+  };
+
+  [key: string]: ReactNode | any;
+};
+
 export interface RbkFormChangeEvent {
   type: string;
   data: AnyObject;
@@ -28,20 +47,6 @@ export interface RbkEvent {
   nativeEvent?: Event | SyntheticEvent;
 }
 
-export type RbkFactoryMap = {
-  web: boolean;
-  native: boolean;
-  ios: boolean;
-  android: boolean;
-
-  dimensions: {
-    height: number;
-    width: number;
-  };
-
-  [key: string]: ReactNode | any;
-};
-
 export type RbkRect = {
   width: number;
   height: number;
@@ -52,9 +57,6 @@ export type RbkRect = {
 };
 
 export type FactoryProps = {
-  map: RbkFactoryMap;
-  innerRef?: RefObject<any>;
-  defaults?: AnyObject;
   stylist?: RbkStyles | string | string[];
 } & any;
 
@@ -366,7 +368,7 @@ export type BoxProps = {
   className?: any;
   platform?: object;
   accessibility?: AccessibilityProps;
-  children?: ReactNode;
+  children?: ReactNode | any;
   invisible?: boolean;
   hidden?: boolean;
   componentProps?: AnyObject;

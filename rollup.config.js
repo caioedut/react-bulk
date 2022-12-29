@@ -7,7 +7,7 @@ import typescript from 'rollup-plugin-typescript2';
 import url from 'rollup-plugin-url';
 
 const PACKAGE_ROOT_PATH = process.cwd();
-const INPUT_FILE = path.join(PACKAGE_ROOT_PATH, 'src/index.tsx');
+const INPUT_FILE = path.join(PACKAGE_ROOT_PATH, 'src/index.ts');
 const pkg = require(path.join(PACKAGE_ROOT_PATH, 'package.json'));
 
 function makeExternalPredicate(externalArr) {

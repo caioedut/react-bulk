@@ -1,18 +1,18 @@
-import { forwardRef, memo, useMemo } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 
 import { ImageFactory, ImageProps } from '@react-bulk/core';
 
-import useMap from '../useMap';
+const Image = React.memo<ImageProps>(
+  forwardRef(({ source, circular, style, ...props }, ref) => {
+    style = [circular && { borderRadius: '50%' }, style];
 
-function Image({ source, circular, style, ...props }: ImageProps, ref) {
-  const map = useMap();
+    // @ts-ignore
+    props.src = useMemo(() => source?.uri ?? source, [source]);
 
-  style = [circular && { borderRadius: '50%' }, style];
+    return <ImageFactory ref={ref} {...props} style={style} />;
+  }),
+);
 
-  // @ts-ignore
-  props.src = useMemo(() => source?.uri ?? source, [source]);
+Image.displayName = 'Image';
 
-  return <ImageFactory innerRef={ref} {...props} map={map} style={style} />;
-}
-
-export default memo(forwardRef<typeof Image, ImageProps>(Image));
+export default Image;

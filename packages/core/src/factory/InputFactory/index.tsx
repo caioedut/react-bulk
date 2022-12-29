@@ -1,312 +1,312 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { customStyleProps } from '../../styles/constants';
-import { FactoryProps, InputProps } from '../../types';
+import { InputProps } from '../../types';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
-function InputFactory({ stylist, map, innerRef, ...props }: FactoryProps & InputProps) {
-  const theme = useTheme();
-  const options = theme.components.Input;
-  const { web, native, Input, TextArea } = map;
+const InputFactory = React.memo<InputProps>(
+  forwardRef(({ stylist, ...props }, ref) => {
+    const theme = useTheme();
+    const options = theme.components.Input;
+    const { web, native, Input, TextArea } = global._rbk_mapping;
 
-  // Extends from default props
-  let {
-    autoCapitalize,
-    autoCorrect,
-    caretHidden,
-    color,
-    controlled,
-    defaultValue,
-    disabled,
-    endAddon,
-    endIcon,
-    error,
-    id,
-    label,
-    mask,
-    multiline,
-    name,
-    placeholderColor,
-    readOnly,
-    returnKeyType,
-    secure,
-    selectionColor,
-    size,
-    startAddon,
-    startIcon,
-    textColor,
-    type,
-    unmask,
-    value,
-    // Events
-    onChange,
-    onFocus,
-    onBlur,
-    onFormChange,
-    // Styles
-    variants,
-    contentStyle,
-    errorStyle,
-    inputStyle,
-    labelStyle,
-    style,
-    ...rest
-  } = factory2(props, options);
-
-  id = useHtmlId(id);
-
-  const form = useForm();
-  const defaultRef: any = useRef(null);
-  const inputRef = innerRef || defaultRef;
-
-  const maskValue = useCallback(
-    (value) => {
-      value = typeof mask === 'function' ? mask(value) : value;
-      return value ?? '';
-    },
-    [mask],
-  );
-
-  const unmaskValue = useCallback(
-    (value) => {
-      value = typeof unmask === 'function' ? unmask(maskValue(value)) : value;
-      return value ?? '';
-    },
-    [unmask],
-  );
-
-  const [focused, setFocused] = useState(false);
-  const [internal, setInternal] = useState(defaultValue);
-
-  selectionColor = theme.color(selectionColor ?? color);
-  placeholderColor = theme.hex2rgba(placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary', 0.4);
-  autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
-
-  startAddon = startAddon ?? startIcon;
-  endAddon = endAddon ?? endIcon;
-
-  if (web) {
-    Object.assign(rest, {
-      autoCapitalize,
-      autoCorrect: autoCorrect ? 'on' : 'off',
-      enterKeyHint: returnKeyType,
-      disabled,
-      readOnly,
-      type: pick(secure ? 'secure' : type, 'text', {
-        text: 'text',
-        number: 'number',
-        email: 'email',
-        secure: 'password',
-        phone: 'tel',
-        url: 'url',
-        hidden: 'text',
-      }),
-    });
-  }
-
-  if (native) {
-    Object.assign(rest, {
+    // Extends from default props
+    let {
       autoCapitalize,
       autoCorrect,
       caretHidden,
+      color,
+      controlled,
+      defaultValue,
+      disabled,
+      endAddon,
+      endIcon,
+      error,
+      id,
+      label,
+      mask,
       multiline,
-      editable: disabled ? false : !readOnly,
-      keyboardAppearance: theme.mode,
-      placeholderTextColor: placeholderColor,
-      returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
-      secureTextEntry: secure,
-      selectionColor,
-      underlineColorAndroid: 'transparent',
-      keyboardType: pick(type, 'text', {
-        text: 'default',
-        number: 'number-pad',
-        email: 'email-address',
-        phone: 'phone-pad',
-        url: 'url',
-        hidden: 'default',
-      }),
-    });
-  }
-
-  if (typeof size === 'string') {
-    size = pick(size, 'medium', {
-      xsmall: 0.75,
-      small: 0.875,
-      medium: 1,
-      large: 1.25,
-      xlarge: 1.625,
-    });
-  }
-
-  const baseSize = theme.rem(size);
-  const spacing = baseSize / 2;
-  const height = baseSize * (multiline ? 6 : 2);
-
-  useEffect(() => {
-    if (typeof value === 'undefined') return;
-    setInternal(value);
-  }, [value]);
-
-  useEffect(() => {
-    if (!name || !form) return;
-
-    form.setField({
       name,
-      set: (value) => setInternal(unmaskValue(value)),
-      get: () => internal,
+      placeholderColor,
+      readOnly,
+      returnKeyType,
+      secure,
+      selectionColor,
+      size,
+      startAddon,
+      startIcon,
+      textColor,
+      type,
+      unmask,
+      value,
+      // Events
+      onChange,
+      onFocus,
+      onBlur,
       onFormChange,
-    });
+      // Styles
+      variants,
+      contentStyle,
+      errorStyle,
+      inputStyle,
+      labelStyle,
+      style,
+      ...rest
+    } = factory2(props, options);
 
-    return () => {
-      form.unsetField(name);
-    };
-  }, [name, form, onFormChange, internal]);
+    id = useHtmlId(id);
 
-  const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
-  const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
-  const clear = useCallback(() => setInternal(defaultValue), []);
-  const isFocused = useCallback(() => inputRef?.current?.isFocused?.() || inputRef?.current === document?.activeElement, [inputRef]);
+    const form = useForm();
+    const defaultRef: any = useRef(null);
+    const inputRef = ref || defaultRef;
 
-  function dispatchEvent(type: string, value: number, nativeEvent?: any) {
-    const callback = {
-      change: onChange,
-      focus: onFocus,
-      blur: onBlur,
-    }[type];
+    const maskValue = useCallback(
+      (value) => {
+        value = typeof mask === 'function' ? mask(value) : value;
+        return value ?? '';
+      },
+      [mask],
+    );
 
-    if (typeof callback === 'function') {
-      const target = inputRef.current;
-      callback({ type, value, name, target, focus, blur, clear, isFocused, nativeEvent }, value);
+    const unmaskValue = useCallback(
+      (value) => {
+        value = typeof unmask === 'function' ? unmask(maskValue(value)) : value;
+        return value ?? '';
+      },
+      [unmask],
+    );
+
+    const [focused, setFocused] = useState(false);
+    const [internal, setInternal] = useState(defaultValue);
+
+    selectionColor = theme.color(selectionColor ?? color);
+    placeholderColor = theme.hex2rgba(placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary', 0.4);
+    autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
+
+    startAddon = startAddon ?? startIcon;
+    endAddon = endAddon ?? endIcon;
+
+    if (web) {
+      Object.assign(rest, {
+        autoCapitalize,
+        autoCorrect: autoCorrect ? 'on' : 'off',
+        enterKeyHint: returnKeyType,
+        disabled,
+        readOnly,
+        type: pick(secure ? 'secure' : type, 'text', {
+          text: 'text',
+          number: 'number',
+          email: 'email',
+          secure: 'password',
+          phone: 'tel',
+          url: 'url',
+          hidden: 'text',
+        }),
+      });
     }
-  }
 
-  const handleChange = (e) => {
-    const target = inputRef?.current;
-    const nativeEvent = e?.nativeEvent ?? e;
-    const value = unmaskValue(target?.value ?? e?.nativeEvent?.text);
+    if (native) {
+      Object.assign(rest, {
+        autoCapitalize,
+        autoCorrect,
+        caretHidden,
+        multiline,
+        editable: disabled ? false : !readOnly,
+        keyboardAppearance: theme.mode,
+        placeholderTextColor: placeholderColor,
+        returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
+        secureTextEntry: secure,
+        selectionColor,
+        underlineColorAndroid: 'transparent',
+        keyboardType: pick(type, 'text', {
+          text: 'default',
+          number: 'number-pad',
+          email: 'email-address',
+          phone: 'phone-pad',
+          url: 'url',
+          hidden: 'default',
+        }),
+      });
+    }
 
-    if (!controlled) {
+    if (typeof size === 'string') {
+      size = pick(size, 'medium', {
+        xsmall: 0.75,
+        small: 0.875,
+        medium: 1,
+        large: 1.25,
+        xlarge: 1.625,
+      });
+    }
+
+    const baseSize = theme.rem(size);
+    const spacing = baseSize / 2;
+    const height = baseSize * (multiline ? 6 : 2);
+
+    useEffect(() => {
+      if (typeof value === 'undefined') return;
       setInternal(value);
+    }, [value]);
+
+    useEffect(() => {
+      if (!name || !form) return;
+
+      form.setField({
+        name,
+        set: (value) => setInternal(unmaskValue(value)),
+        get: () => internal,
+        onFormChange,
+      });
+
+      return () => {
+        form.unsetField(name);
+      };
+    }, [name, form, onFormChange, internal]);
+
+    const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
+    const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
+    const clear = useCallback(() => setInternal(defaultValue), []);
+    const isFocused = useCallback(() => inputRef?.current?.isFocused?.() || inputRef?.current === document?.activeElement, [inputRef]);
+
+    function dispatchEvent(type: string, value: number, nativeEvent?: any) {
+      const callback = {
+        change: onChange,
+        focus: onFocus,
+        blur: onBlur,
+      }[type];
+
+      if (typeof callback === 'function') {
+        const target = inputRef.current;
+        callback({ type, value, name, target, focus, blur, clear, isFocused, nativeEvent }, value);
+      }
     }
 
-    dispatchEvent('change', value, nativeEvent);
-  };
+    const handleChange = (e) => {
+      const target = inputRef?.current;
+      const nativeEvent = e?.nativeEvent ?? e;
+      const value = unmaskValue(target?.value ?? e?.nativeEvent?.text);
 
-  const handleFocus = (e) => {
-    const nativeEvent = e?.nativeEvent ?? e;
-    setFocused(true);
-    dispatchEvent('focus', internal, nativeEvent);
-  };
+      if (!controlled) {
+        setInternal(value);
+      }
 
-  const handleBlur = (e) => {
-    const nativeEvent = e?.nativeEvent ?? e;
-    setFocused(false);
-    dispatchEvent('blur', internal, nativeEvent);
-  };
+      dispatchEvent('change', value, nativeEvent);
+    };
 
-  style = [extract(customStyleProps, rest), style];
+    const handleFocus = (e) => {
+      const nativeEvent = e?.nativeEvent ?? e;
+      setFocused(true);
+      dispatchEvent('focus', internal, nativeEvent);
+    };
 
-  contentStyle = [
-    color &&
-      !disabled && {
-        borderColor: color,
+    const handleBlur = (e) => {
+      const nativeEvent = e?.nativeEvent ?? e;
+      setFocused(false);
+      dispatchEvent('blur', internal, nativeEvent);
+    };
+
+    style = [extract(customStyleProps, rest), style];
+
+    contentStyle = [
+      color &&
+        !disabled && {
+          borderColor: color,
+        },
+
+      web &&
+        focused && {
+          boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}`,
+        },
+
+      contentStyle,
+    ];
+
+    inputStyle = [
+      {
+        height,
+        paddingHorizontal: spacing,
       },
 
-    web &&
-      focused && {
-        boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}`,
-      },
+      multiline && { height },
 
-    contentStyle,
-  ];
+      textColor && { color: textColor },
 
-  inputStyle = [
-    {
-      height,
-      paddingHorizontal: spacing,
-    },
+      web && { paddingVertical: spacing },
 
-    multiline && { height },
+      web && { caretColor: caretHidden ? theme.colors.common.trans : selectionColor },
 
-    textColor && { color: textColor },
+      web &&
+        placeholderColor && {
+          '&::-webkit-input-placeholder': { color: placeholderColor },
+          '&::-ms-input-placeholder': { color: placeholderColor },
+          '&::placeholder': { color: placeholderColor },
+        },
 
-    web && { paddingVertical: spacing },
+      web &&
+        selectionColor && {
+          '&::selection': { backgroundColor: selectionColor, color: theme.contrast(selectionColor) },
+        },
 
-    web && { caretColor: caretHidden ? theme.colors.common.trans : selectionColor },
+      inputStyle,
+    ];
 
-    web &&
-      placeholderColor && {
-        '&::-webkit-input-placeholder': { color: placeholderColor },
-        '&::-ms-input-placeholder': { color: placeholderColor },
-        '&::placeholder': { color: placeholderColor },
-      },
+    return (
+      <BoxFactory hidden={type === 'hidden'} style={style} stylist={[variants.root, stylist]}>
+        {Boolean(label) && (
+          <LabelFactory numberOfLines={1} for={inputRef} style={labelStyle} stylist={[variants.label]}>
+            {label}
+          </LabelFactory>
+        )}
 
-    web &&
-      selectionColor && {
-        '&::selection': { backgroundColor: selectionColor, color: theme.contrast(selectionColor) },
-      },
+        <BoxFactory style={contentStyle} stylist={[variants.content]}>
+          <BoxFactory row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
+            {Boolean(startAddon) && (
+              <BoxFactory style={{ marginLeft: spacing }} onPress={focus}>
+                {startAddon}
+              </BoxFactory>
+            )}
 
-    inputStyle,
-  ];
+            <BoxFactory
+              ref={inputRef}
+              component={multiline ? TextArea : Input}
+              style={inputStyle}
+              stylist={[variants.input]}
+              {...rest}
+              id={id}
+              disabled={disabled}
+              name={name}
+              value={maskValue(internal)}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
 
-  return (
-    <BoxFactory map={map} hidden={type === 'hidden'} style={style} stylist={[variants.root, stylist]}>
-      {Boolean(label) && (
-        <LabelFactory map={map} numberOfLines={1} for={inputRef} style={labelStyle} stylist={[variants.label]}>
-          {label}
-        </LabelFactory>
-      )}
-
-      <BoxFactory map={map} style={contentStyle} stylist={[variants.content]}>
-        <BoxFactory map={map} row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
-          {Boolean(startAddon) && (
-            <BoxFactory map={map} style={{ marginLeft: spacing }} onPress={focus}>
-              {startAddon}
-            </BoxFactory>
-          )}
-
-          <BoxFactory
-            map={map}
-            innerRef={inputRef}
-            component={multiline ? TextArea : Input}
-            style={inputStyle}
-            stylist={[variants.input]}
-            {...rest}
-            id={id}
-            disabled={disabled}
-            name={name}
-            value={maskValue(internal)}
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
-
-          {Boolean(endAddon) && (
-            <BoxFactory map={map} style={{ marginRight: spacing }} onPress={focus}>
-              {endAddon}
-            </BoxFactory>
-          )}
+            {Boolean(endAddon) && (
+              <BoxFactory style={{ marginRight: spacing }} onPress={focus}>
+                {endAddon}
+              </BoxFactory>
+            )}
+          </BoxFactory>
         </BoxFactory>
+
+        {Boolean(error) && typeof error === 'string' && (
+          <TextFactory variant="caption" style={errorStyle} stylist={[variants.error]}>
+            {error}
+          </TextFactory>
+        )}
       </BoxFactory>
+    );
+  }),
+);
 
-      {Boolean(error) && typeof error === 'string' && (
-        <TextFactory map={map} variant="caption" style={errorStyle} stylist={[variants.error]}>
-          {error}
-        </TextFactory>
-      )}
-    </BoxFactory>
-  );
-}
+InputFactory.displayName = 'InputFactory';
 
-const Memoized = React.memo(InputFactory);
-Memoized.displayName = 'InputFactory';
-
-export default Memoized;
+export default InputFactory;
