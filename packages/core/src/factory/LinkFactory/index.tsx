@@ -1,27 +1,28 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { FactoryProps, LinkProps } from '../../types';
+import { LinkProps } from '../../types';
 import TextFactory from '../TextFactory';
 
-function LinkFactory({ stylist, map, innerRef, ...props }: FactoryProps & LinkProps) {
-  const theme = useTheme();
-  const options = theme.components.Link;
-  const { Link } = map;
+const LinkFactory = React.memo<LinkProps>(
+  forwardRef(({ stylist, ...props }, ref) => {
+    const theme = useTheme();
+    const options = theme.components.Link;
+    const { Link } = global._rbk_mapping;
 
-  // Extends from default props
-  let {
-    underline,
-    // Styles
-    variants,
-    ...rest
-  } = factory2(props, options);
+    // Extends from default props
+    let {
+      underline,
+      // Styles
+      variants,
+      ...rest
+    } = factory2(props, options);
 
-  return <TextFactory map={map} innerRef={innerRef} component={Link} stylist={[variants.root, stylist]} {...rest} />;
-}
+    return <TextFactory ref={ref} component={Link} stylist={[variants.root, stylist]} {...rest} />;
+  }),
+);
 
-const Memoized = React.memo(LinkFactory);
-Memoized.displayName = 'LinkFactory';
+LinkFactory.displayName = 'LinkFactory';
 
-export default Memoized;
+export default LinkFactory;

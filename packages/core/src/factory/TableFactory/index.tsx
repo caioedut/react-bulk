@@ -1,91 +1,92 @@
-import React, { isValidElement } from 'react';
+import React, { forwardRef, isValidElement } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { FactoryProps, TableProps } from '../../types';
+import { TableProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
-function TableFactory({ stylist, map, innerRef, ...props }: FactoryProps & TableProps) {
-  const theme = useTheme();
-  const options = theme.components.Table;
+const TableFactory = React.memo<TableProps>(
+  forwardRef(({ stylist, ...props }, ref) => {
+    const theme = useTheme();
+    const options = theme.components.Table;
 
-  // Extends from default props
-  let {
-    border,
-    columns,
-    rows,
-    // Styles,
-    variants,
-    style,
-    ...rest
-  } = factory2(props, options);
+    // Extends from default props
+    let {
+      border,
+      columns,
+      rows,
+      // Styles,
+      variants,
+      style,
+      ...rest
+    } = factory2(props, options);
 
-  const width = `${100 / columns?.length}%`;
+    const width = `${100 / columns?.length}%`;
 
-  const renderContent = (child: any, data: any = undefined, bold = false) => {
-    if (child) {
-      if (isValidElement(child)) {
-        return child;
+    const renderContent = (child: any, data: any = undefined, bold = false) => {
+      if (child) {
+        if (isValidElement(child)) {
+          return child;
+        }
+
+        if (typeof child === 'function') {
+          child = child(data);
+        }
+
+        if (['string', 'number'].includes(typeof child)) {
+          child = <TextFactory bold={bold} children={child} />;
+        }
       }
 
-      if (typeof child === 'function') {
-        child = child(data);
-      }
+      return child ?? null;
+    };
 
-      if (['string', 'number'].includes(typeof child)) {
-        child = <TextFactory map={map} bold={bold} children={child} />;
-      }
-    }
+    const buildStyle = (column, borderTop = false, borderLeft = false) => {
+      return [
+        {
+          border,
+          p: 3,
+          borderBottomWidth: 0,
+          borderRightWidth: 0,
+          width,
+          flexGrow: 0,
+          flexShrink: 0,
+        },
 
-    return child ?? null;
-  };
+        !borderTop && { borderTopWidth: 0 },
+        !borderLeft && { borderLeftWidth: 0 },
 
-  const buildStyle = (column, borderTop = false, borderLeft = false) => {
-    return [
-      {
-        border,
-        p: 3,
-        borderBottomWidth: 0,
-        borderRightWidth: 0,
-        width,
-        flexGrow: 0,
-        flexShrink: 0,
-      },
+        column.style,
+      ];
+    };
 
-      !borderTop && { borderTopWidth: 0 },
-      !borderLeft && { borderLeftWidth: 0 },
+    style = [{ border }, style];
 
-      column.style,
-    ];
-  };
-
-  style = [{ border }, style];
-
-  return (
-    <BoxFactory map={map} innerRef={innerRef} style={style} stylist={[variants.root, stylist]} {...rest}>
-      <BoxFactory map={map} row noWrap>
-        {columns?.map((column, index) => (
-          <BoxFactory key={index} map={map} style={buildStyle(column, false, index > 0)}>
-            {renderContent(column.header, column, true)}
-          </BoxFactory>
-        ))}
-      </BoxFactory>
-
-      {rows?.map((row, rowIndex) => (
-        <BoxFactory key={rowIndex} map={map} row noWrap>
-          {columns.map((column, index) => (
-            <BoxFactory key={index} map={map} style={buildStyle(column, true, index > 0)}>
-              {renderContent(column.content, row)}
+    return (
+      <BoxFactory ref={ref} style={style} stylist={[variants.root, stylist]} {...rest}>
+        <BoxFactory row noWrap>
+          {columns?.map((column, index) => (
+            <BoxFactory key={index} style={buildStyle(column, false, index > 0)}>
+              {renderContent(column.header, column, true)}
             </BoxFactory>
           ))}
         </BoxFactory>
-      ))}
-    </BoxFactory>
-  );
-}
 
-const Memoized = React.memo(TableFactory);
-Memoized.displayName = 'TableFactory';
+        {rows?.map((row, rowIndex) => (
+          <BoxFactory key={rowIndex} row noWrap>
+            {columns.map((column, index) => (
+              <BoxFactory key={index} style={buildStyle(column, true, index > 0)}>
+                {renderContent(column.content, row)}
+              </BoxFactory>
+            ))}
+          </BoxFactory>
+        ))}
+      </BoxFactory>
+    );
+  }),
+);
 
-export default Memoized;
+TableFactory.displayName = 'TableFactory';
+
+export default TableFactory;

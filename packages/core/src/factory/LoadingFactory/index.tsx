@@ -1,58 +1,58 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { FactoryProps, LoadingProps } from '../../types';
+import { LoadingProps } from '../../types';
 import AnimationFactory from '../AnimationFactory';
 import BoxFactory from '../BoxFactory';
 import ProgressFactory from '../ProgressFactory';
 import TextFactory from '../TextFactory';
 
-function LoadingFactory({ stylist, map, innerRef, ...props }: FactoryProps | LoadingProps) {
-  const theme = useTheme();
-  const options = theme.components.Loading;
+const LoadingFactory = React.memo<LoadingProps>(
+  forwardRef(({ stylist, ...props }, ref) => {
+    const theme = useTheme();
+    const options = theme.components.Loading;
 
-  // Extends from default props
-  let {
-    color,
-    label,
-    size,
-    speed,
-    // Styles,
-    variants,
-    labelStyle,
-    ...rest
-  } = factory2(props, options);
+    // Extends from default props
+    let {
+      color,
+      label,
+      size,
+      speed,
+      // Styles,
+      variants,
+      labelStyle,
+      ...rest
+    } = factory2(props, options);
 
-  size = size ?? options.defaultProps.size;
-  const labelSize = size * 0.5625;
+    size = size ?? options.defaultProps.size;
+    const labelSize = size * 0.5625;
 
-  labelStyle = [{ color, ml: size }, labelStyle];
+    labelStyle = [{ color, ml: size }, labelStyle];
 
-  return (
-    <BoxFactory innerRef={innerRef} map={map} stylist={[variants.root, stylist]} row center {...rest}>
-      <AnimationFactory
-        map={map}
-        loop
-        in
-        speed={500}
-        timing="linear"
-        from={{ transform: [{ rotate: '0deg' }] }}
-        to={{ transform: [{ rotate: '360deg' }] }}
-      >
-        <ProgressFactory map={map} size={size / 4} color={color} />
-      </AnimationFactory>
+    return (
+      <BoxFactory ref={ref} stylist={[variants.root, stylist]} row center {...rest}>
+        <AnimationFactory
+          loop
+          in
+          speed={500}
+          timing="linear"
+          from={{ transform: [{ rotate: '0deg' }] }}
+          to={{ transform: [{ rotate: '360deg' }] }}
+        >
+          <ProgressFactory size={size / 4} color={color} />
+        </AnimationFactory>
 
-      {Boolean(label) && (
-        <TextFactory map={map} size={labelSize} style={labelStyle} stylist={[variants.label]}>
-          {label}
-        </TextFactory>
-      )}
-    </BoxFactory>
-  );
-}
+        {Boolean(label) && (
+          <TextFactory size={labelSize} style={labelStyle} stylist={[variants.label]}>
+            {label}
+          </TextFactory>
+        )}
+      </BoxFactory>
+    );
+  }),
+);
 
-const Memoized = React.memo(LoadingFactory);
-Memoized.displayName = 'LoadingFactory';
+LoadingFactory.displayName = 'LoadingFactory';
 
-export default Memoized;
+export default LoadingFactory;
