@@ -64,16 +64,12 @@ const Image = React.memo<NativeImageProps>(
 
       // Calc height
       if (!heightBase) {
-        newHeight = newWidth * (aspectRatio ?? 0);
+        newHeight = newWidth * (aspectRatio || 0);
       }
 
       // Calc width
       if (!widthBase) {
-        newWidth = newHeight / (aspectRatio ?? 1);
-      }
-
-      if (typeof newWidth !== 'number' || typeof newHeight !== 'number') {
-        setError(true);
+        newWidth = newHeight / (aspectRatio || 1);
       }
 
       setFinalWidth(newWidth);
