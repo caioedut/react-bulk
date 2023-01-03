@@ -32,7 +32,7 @@ const ActionSheetFactory = React.memo<ActionSheetProps>(
     const defaultRef = useRef(null);
     ref = ref || defaultRef;
 
-    const animation = useAnimation({ marginBottom: dimensions.height });
+    const animation = useAnimation({ marginBottom: -dimensions.height });
 
     useEffect(() => {
       animation.start({ marginBottom: visible ? 0 : -dimensions.height });
