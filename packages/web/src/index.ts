@@ -14,6 +14,7 @@ import {
   DropdownFactory,
   FormFactory,
   GridFactory,
+  ImageFactory,
   InputFactory,
   LabelFactory,
   LinkFactory,
@@ -85,8 +86,6 @@ global.mapping = {
   },
 } as RbkMap;
 
-export { default as Image } from './Image';
-
 export const ActionSheet = ActionSheetFactory;
 export const Animation = AnimationFactory;
 export const Backdrop = BackdropFactory;
@@ -102,6 +101,7 @@ export const Divider = DividerFactory;
 export const Dropdown = DropdownFactory;
 export const Form = FormFactory;
 export const Grid = GridFactory;
+export const Image = ImageFactory;
 export const Input = InputFactory;
 export const Label = LabelFactory;
 export const Link = LinkFactory;
