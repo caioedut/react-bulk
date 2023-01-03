@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react';
 
 export type AnimationOptions = {
+  boomerang?: boolean;
   delay?: number;
   speed?: number;
   timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | string;
@@ -27,24 +28,28 @@ export default function useAnimation(initial = {}) {
 
   const [style, setStyle] = useState(initialStyle);
 
-  // function stop() {
-  //   if (web) {
-  //     setStyle(initialStyle);
-  //   }
-  // }
+  function stop() {
+    if (!animRef.current) return;
+
+    if (web) {
+      clearTimeout(animRef.current);
+    }
+
+    if (native) {
+      animRef.current.stop();
+    }
+  }
 
   function start(styles = {}, options: AnimationOptions = {}) {
-    let { delay = 0, speed = 350, timing = 'ease', iterations = 1 } = options;
+    let { boomerang = false, delay = 0, speed = 350, timing = 'ease', iterations = 1 } = options;
+
+    stop();
 
     if (iterations === 'infinite') {
       iterations = -1;
     }
 
     if (web) {
-      if (animRef.current) {
-        clearTimeout(animRef.current);
-      }
-
       if (iterations === -1) {
         iterations = Number.POSITIVE_INFINITY;
       }
@@ -58,9 +63,19 @@ export default function useAnimation(initial = {}) {
           transitionTimingFunction: timing,
         }));
 
+        let nextDelay = Math.max(0, speed - 3);
+
         animRef.current = setTimeout(() => {
           for (const attr of Object.keys(initialStyle)) {
             setStyle((current) => ({ ...current, [attr]: styles[attr] }));
+          }
+
+          if (boomerang) {
+            animRef.current = setTimeout(() => {
+              setStyle((current) => ({ ...current, ...initialStyle }));
+            }, nextDelay);
+
+            nextDelay *= 2;
           }
 
           // @ts-ignore
@@ -68,7 +83,7 @@ export default function useAnimation(initial = {}) {
             animRef.current = setTimeout(() => {
               setStyle({ ...initialStyle, transitionProperty: 'none' });
               animRef.current = setTimeout(animate, 0);
-            }, Math.max(0, speed - 3));
+            }, nextDelay);
           }
         }, 0);
       };
@@ -77,33 +92,35 @@ export default function useAnimation(initial = {}) {
     }
 
     if (native) {
+      if (boomerang) {
+        console.warn('"useAnimation" "boomerang" was not supported on native.');
+      }
+
       const easing = (timing || 'ease')
         .split('-')
         .map((str, index) => (!index ? str : str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase()))
         .join('');
 
       setTimeout(() => {
-        Animated.loop(
-          Animated.parallel(
-            Object.entries(style).map(([attr, animValue]) =>
-              Animated.timing(animValue, {
-                delay,
-                duration: speed,
-                easing: Easing[easing],
-                toValue: styles[attr],
-                useNativeDriver: false,
-              }),
-            ),
-          ),
+        const animations = Object.entries(style).map(([attr, animValue]) =>
+          Animated.timing(animValue, {
+            delay,
+            duration: speed,
+            easing: Easing[easing],
+            toValue: styles[attr],
+            useNativeDriver: false,
+          }),
+        );
 
-          { iterations },
-        ).start();
+        animRef.current = Animated.loop(Animated.parallel(animations), { iterations });
+        animRef.current.start();
       }, 0);
     }
   }
 
   return {
     start,
+    stop,
     style,
   };
 }
