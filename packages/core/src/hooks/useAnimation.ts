@@ -1,10 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
-import useTheme from './useTheme';
+export type AnimationOptions = {
+  delay?: number;
+  speed?: number;
+  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | string;
+  iterations?: number | 'infinite';
+};
 
 export default function useAnimation(initial = {}) {
-  const theme = useTheme();
-  const { web, native, Animated } = global._RBK.mapping;
+  const { web, native, Animated, Easing } = global._RBK.mapping;
+
+  const animRef: any = useRef();
 
   const initialStyle = useMemo(() => {
     const props = Object.keys(initial);
@@ -21,55 +27,83 @@ export default function useAnimation(initial = {}) {
 
   const [style, setStyle] = useState(initialStyle);
 
-  function start(styles = {}, options = {}) {
-    if (web) {
-      for (const attr of Object.keys(initialStyle)) {
-        setStyle((current) => ({ ...current, [attr]: styles[attr] }));
-      }
-    }
-
-    if (native) {
-      setTimeout(() => {
-        Animated.parallel(
-          Object.entries(style).map(([attr, animValue]) => {
-            return Animated.timing(animValue, {
-              duration: 350,
-              useNativeDriver: false,
-              ...options,
-              toValue: styles[attr],
-            });
-          }),
-        ).start();
-      }, 1);
-    }
-  }
-
-  // function loop(iterations = -1, options = {}) {
-  //   if (native) {
-  //     setTimeout(() => {
-  //       Animated.loop(
-  //         Animated.parallel(
-  //           Object.entries(style).map(([attr, animValue]) =>
-  //             Animated.timing(animValue, {
-  //               duration: 200,
-  //               useNativeDriver: false,
-  //               ...options,
-  //               toValue: to[attr] ?? 1,
-  //             }),
-  //           ),
-  //         ),
-  //
-  //         { iterations },
-  //       ).start();
-  //     }, 1);
+  // function stop() {
+  //   if (web) {
+  //     setStyle(initialStyle);
   //   }
   // }
 
+  function start(styles = {}, options: AnimationOptions = {}) {
+    let { delay = 0, speed = 350, timing = 'ease', iterations = 1 } = options;
+
+    if (iterations === 'infinite') {
+      iterations = -1;
+    }
+
+    if (web) {
+      if (animRef.current) {
+        clearTimeout(animRef.current);
+      }
+
+      if (iterations === -1) {
+        iterations = Number.POSITIVE_INFINITY;
+      }
+
+      const animate = () => {
+        setStyle((current) => ({
+          ...current,
+          transitionDelay: `${delay}ms`,
+          transitionDuration: `${speed}ms`,
+          transitionProperty: 'all',
+          transitionTimingFunction: timing,
+        }));
+
+        animRef.current = setTimeout(() => {
+          for (const attr of Object.keys(initialStyle)) {
+            setStyle((current) => ({ ...current, [attr]: styles[attr] }));
+          }
+
+          // @ts-ignore
+          if (--iterations > 0) {
+            animRef.current = setTimeout(() => {
+              setStyle({ ...initialStyle, transitionProperty: 'none' });
+              animRef.current = setTimeout(animate, 0);
+            }, Math.max(0, speed - 3));
+          }
+        }, 0);
+      };
+
+      animate();
+    }
+
+    if (native) {
+      const easing = (timing || 'ease')
+        .split('-')
+        .map((str, index) => (!index ? str : str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase()))
+        .join('');
+
+      setTimeout(() => {
+        Animated.loop(
+          Animated.parallel(
+            Object.entries(style).map(([attr, animValue]) =>
+              Animated.timing(animValue, {
+                delay,
+                duration: speed,
+                easing: Easing[easing],
+                toValue: styles[attr],
+                useNativeDriver: false,
+              }),
+            ),
+          ),
+
+          { iterations },
+        ).start();
+      }, 0);
+    }
+  }
+
   return {
     start,
-    style: {
-      ...theme.mixins.transitions.medium,
-      ...style,
-    },
+    style,
   };
 }
