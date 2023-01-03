@@ -42,7 +42,7 @@ const ActionSheetFactory = React.memo<ActionSheetProps>(
       <BackdropFactory visible={visible} justifyContent="end">
         <CardFactory ref={ref} component={Animated.View} stylist={[variants.root, stylist]} {...rest} rawStyle={animation.style}>
           <ButtonFactory variant="text" align="end" circular m={-1} mb={1} onPress={onClose}>
-            <Times svg={svg} color="primary" />
+            <Times svg={svg} color={theme.color('primary')} />
           </ButtonFactory>
 
           {children}
