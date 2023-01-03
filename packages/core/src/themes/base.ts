@@ -78,14 +78,26 @@ const base: ThemeProps & any = {
     return this.shape.spacing * multiplier;
   },
 
-  color(mixin) {
+  color(mixin, alpha?: number) {
     const [color, variation = 'main'] = `${mixin || ''}`.split('.');
 
-    return (
-      this?.colors[color]?.[variation] ?? this?.colors[color]?.primary ?? this?.colors[color] ?? this?.colors?.common?.[color] ?? mixin
-    );
+    let newColor =
+      this?.colors[color]?.[variation] ?? this?.colors[color]?.primary ?? this?.colors[color] ?? this?.colors?.common?.[color] ?? mixin;
+
+    if (typeof alpha === 'number') {
+      const [r, g, b] = newColor?.match(/\w\w/g)?.map((x) => parseInt(x, 16)) || [];
+
+      newColor = `rgba(${r || 0},${g || 0},${b || 0},${alpha})`;
+    }
+
+    return newColor;
   },
 
+  /**
+   * @deprecated Use theme.color(color, alpha) instead
+   * @param hex
+   * @param alpha
+   */
   hex2rgba(hex: string, alpha = 1) {
     const [r, g, b] =
       this.color(hex)
@@ -159,6 +171,19 @@ const base: ThemeProps & any = {
 
   get components() {
     return {
+      ActionSheet: {
+        name: 'rbk-action-sheet',
+        defaultProps: {},
+        defaultStyles: {
+          root: {
+            align: 'center',
+            corners: 3,
+            borderBottomLeftRadius: 0,
+            borderBottomRightRadius: 0,
+            maxh: '100%',
+          },
+        },
+      },
       Animation: {
         name: 'rbk-animation',
         defaultProps: {

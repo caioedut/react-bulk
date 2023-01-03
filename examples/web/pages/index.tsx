@@ -2,6 +2,7 @@ import React, { useReducer, useRef, useState } from 'react';
 
 import { AnyObject, FormRef, RbkEvent, RbkTheme, useTheme } from '@react-bulk/core';
 import {
+  ActionSheet,
   Animation,
   Badge,
   Box,
@@ -55,6 +56,7 @@ export default function Main() {
 
   const [radio, setRadio] = useState('medium');
   const [modal, setModal] = useState({});
+  const [actionSheet, setActionSheet] = useState(false);
 
   const [loading, toggleLoading] = useReducer((state) => !state, true);
   const [checkbox, toggleCheckbox] = useReducer((state) => !state, true);
@@ -570,6 +572,27 @@ export default function Main() {
             </Button>
           </Box>
         </Modal>
+      </Card>
+
+      <Card mt={3}>
+        <Text variant="title" mb={3}>
+          Action Sheet
+        </Text>
+        <Box row>
+          <Button onPress={() => setActionSheet(true)}>Action Sheet</Button>
+        </Box>
+
+        <ActionSheet visible={actionSheet} onClose={() => setActionSheet(false)} maxw={500}>
+          <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
+          <Text mt={3}>
+            A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae soluta. Incidunt labore
+            laboriosam maiores, praesentium quia tempore!
+          </Text>
+
+          <Button mt={3}>Option X</Button>
+          <Button mt={3}>Option Y</Button>
+          <Button mt={3}>Option Z</Button>
+        </ActionSheet>
       </Card>
 
       <Card mt={3}>

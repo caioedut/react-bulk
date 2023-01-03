@@ -39,6 +39,7 @@ export { default as createStyle } from './createStyle';
 export { default as createMeta } from './createMeta';
 
 // Factory
+export { default as ActionSheetFactory } from './factory/ActionSheetFactory';
 export { default as AnimationFactory } from './factory/AnimationFactory';
 export { default as BackdropFactory } from './factory/BackdropFactory';
 export { default as BadgeFactory } from './factory/BadgeFactory';

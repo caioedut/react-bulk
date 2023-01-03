@@ -128,6 +128,7 @@ const CarouselFactory = React.memo<CarouselProps>(
 
     if (native) {
       Object.assign(rest, {
+        decelerationRate: 'fast',
         onLayout: ({ nativeEvent }) => setContentWidth(nativeEvent.layout.width),
       });
     }
@@ -156,7 +157,6 @@ const CarouselFactory = React.memo<CarouselProps>(
           pagingEnabled={pagingEnabled}
           hideScrollBar
           direction="horizontal"
-          decelerationRate="fast"
           onScroll={handleScroll}
         >
           {contentWidth !== null &&

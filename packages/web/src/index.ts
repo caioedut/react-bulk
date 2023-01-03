@@ -1,4 +1,5 @@
 import {
+  ActionSheetFactory,
   AnimationFactory,
   BackdropFactory,
   BadgeFactory,
@@ -47,6 +48,7 @@ global.mapping = {
   Input: 'input',
   Label: 'label',
   Link: 'a',
+  SafeAreaView: 'div',
   ScrollView: 'div',
   Text: 'span',
   TextArea: 'textarea',
@@ -85,6 +87,7 @@ global.mapping = {
 
 export { default as Image } from './Image';
 
+export const ActionSheet = ActionSheetFactory;
 export const Animation = AnimationFactory;
 export const Backdrop = BackdropFactory;
 export const Badge = BadgeFactory;

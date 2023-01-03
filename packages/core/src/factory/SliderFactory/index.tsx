@@ -223,7 +223,7 @@ const SliderFactory = React.memo<SliderProps>(
     async function handleMove(e) {
       if (dotIniPosRef.current === null) return;
 
-      e.preventDefault();
+      e?.preventDefault?.();
       e?.persist?.();
 
       const nativeEvent = e?.nativeEvent ?? e;
@@ -248,7 +248,7 @@ const SliderFactory = React.memo<SliderProps>(
     async function handleRelease(e) {
       if (dotIniPosRef.current === null) return;
 
-      e.preventDefault();
+      e?.preventDefault?.();
       e?.persist?.();
 
       const nativeEvent = e?.nativeEvent ?? e;
