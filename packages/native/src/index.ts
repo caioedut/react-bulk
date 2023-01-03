@@ -1,8 +1,8 @@
 import {
   Animated,
   Easing,
-  Image,
   Platform,
+  Image as RNImage,
   Modal as RNModal,
   Text as RNText,
   SafeAreaView,
@@ -29,6 +29,7 @@ import {
   DropdownFactory,
   FormFactory,
   GridFactory,
+  ImageFactory,
   InputFactory,
   LabelFactory,
   LinkFactory,
@@ -79,7 +80,7 @@ global.mapping = {
   Button: TouchableOpacity,
   Dialog: RNModal,
   Form: View,
-  Image,
+  Image: RNImage,
   Input: TextInput,
   Label: RNText,
   Link: RNText,
@@ -120,7 +121,6 @@ global.mapping = {
   },
 } as RbkMap;
 
-export { default as Image } from './Image';
 export { default as Scrollable } from './Scrollable';
 
 export const ActionSheet = ActionSheetFactory;
@@ -138,6 +138,7 @@ export const Divider = DividerFactory;
 export const Dropdown = DropdownFactory;
 export const Form = FormFactory;
 export const Grid = GridFactory;
+export const Image = ImageFactory;
 export const Input = InputFactory;
 export const Label = LabelFactory;
 export const Link = LinkFactory;

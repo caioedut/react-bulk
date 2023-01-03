@@ -614,6 +614,9 @@ export type ImageProps = {
   mode?: 'cover' | 'contain' | 'fill' | string;
   width?: number | string;
   height?: number | string;
+  // Events
+  onLoad?: EventCallback;
+  onError?: EventCallback;
 } & BoxProps;
 
 export type DividerProps = {
