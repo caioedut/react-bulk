@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { AccessibilityActionEvent, GestureResponderEvent, LayoutChangeEvent, RefreshControlProps } from 'react-native';
 
-import { ImageProps, ScrollableProps } from '@react-bulk/core';
+import { ScrollableProps } from '@react-bulk/core';
 
 export type NativeBindingProps = {
   onLayout?: ((event: LayoutChangeEvent) => void) | undefined;
@@ -26,5 +26,3 @@ export type NativeScrollableProps = ScrollableProps & {
   /** @deprecated use direction instead */
   horizontal?: boolean;
 };
-
-export type NativeImageProps = ImageProps & NativeBindingProps;
