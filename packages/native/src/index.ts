@@ -5,6 +5,7 @@ import {
   Image as RNImage,
   Modal as RNModal,
   Text as RNText,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   TextInput,
@@ -38,6 +39,7 @@ import {
   ModalFactory,
   ProgressFactory,
   RbkMap,
+  ScrollableFactory,
   SelectFactory,
   SliderFactory,
   TableFactory,
@@ -84,6 +86,7 @@ global.mapping = {
   Input: TextInput,
   Label: RNText,
   Link: RNText,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   Text: RNText,
@@ -121,8 +124,6 @@ global.mapping = {
   },
 } as RbkMap;
 
-export { default as Scrollable } from './Scrollable';
-
 export const ActionSheet = ActionSheetFactory;
 export const Animation = AnimationFactory;
 export const Backdrop = BackdropFactory;
@@ -146,6 +147,7 @@ export const ListItem = ListItemFactory;
 export const Loading = LoadingFactory;
 export const Modal = ModalFactory;
 export const Progress = ProgressFactory;
+export const Scrollable = ScrollableFactory;
 export const Select = SelectFactory;
 export const Slider = SliderFactory;
 export const Table = TableFactory;

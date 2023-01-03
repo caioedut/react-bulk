@@ -13,7 +13,7 @@ const ScrollableFactory = React.memo<ScrollableProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Scrollable;
-    const { native, ScrollView } = global.mapping;
+    const { native, ios, RefreshControl, ScrollView } = global.mapping;
 
     // Extends from default props
     let {
@@ -21,7 +21,10 @@ const ScrollableFactory = React.memo<ScrollableProps>(
       direction,
       hideScrollBar,
       pagingEnabled,
-      platform,
+      // Refresh Control (Native)
+      refreshControl,
+      refreshing,
+      onRefresh,
       // Styles
       variants,
       contentStyle,
@@ -30,6 +33,7 @@ const ScrollableFactory = React.memo<ScrollableProps>(
     } = factory2(props, options);
 
     const isHorizontal = direction === 'horizontal';
+    const primaryColor = theme.color('primary');
 
     contentStyle = [
       extract(flexContainerProps, style),
@@ -38,9 +42,7 @@ const ScrollableFactory = React.memo<ScrollableProps>(
 
       pagingEnabled && {
         web: {
-          '&> *': {
-            scrollSnapAlign: 'start',
-          },
+          '&> *': { scrollSnapAlign: 'start' },
         },
       },
 
@@ -56,11 +58,22 @@ const ScrollableFactory = React.memo<ScrollableProps>(
     ];
 
     if (native) {
+      rest = {
+        contentInsetAdjustmentBehavior: 'scrollableAxes',
+        indicatorStyle: theme.mode === 'dark' ? 'white' : 'black',
+        keyboardDismissMode: ios ? 'interactive' : 'on-drag',
+        keyboardShouldPersistTaps: 'always',
+        nestedScrollEnabled: true,
+        pinchGestureEnabled: false,
+        scrollEventThrottle: theme.rem(),
+        scrollIndicatorInsets: isHorizontal ? { bottom: 1, left: 1 } : { top: 1, right: 1 },
+        ...rest,
+      };
+
       Object.assign(rest, {
         horizontal: isHorizontal,
         contentContainerStyle: jss({ theme }, variants.content, contentStyle),
         pagingEnabled,
-        scrollEventThrottle: theme.rem(),
       });
 
       if (hideScrollBar) {
@@ -68,6 +81,22 @@ const ScrollableFactory = React.memo<ScrollableProps>(
           showsVerticalScrollIndicator: false,
           showsHorizontalScrollIndicator: false,
         });
+      }
+
+      if (!refreshControl && (onRefresh || refreshing)) {
+        refreshControl = (
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={[primaryColor]}
+            tintColor={primaryColor}
+            progressBackgroundColor={theme.color('background.primary')}
+          />
+        );
+      }
+
+      if (refreshControl) {
+        rest.refreshControl = refreshControl;
       }
     }
 
