@@ -88,3 +88,19 @@ Extends all [`Box`](/docs/components/core/box#props) props.
 ## Styles
 
 **`style`** to the main element.
+
+---
+
+## Events
+
+**`onLoad`**
+
+➤ Type: **`Function(RbkEvent)`** <br/>
+
+---
+
+**`onError`**
+
+➤ Type: **`Function(RbkEvent)`** <br/>
+
+---
