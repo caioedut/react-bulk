@@ -5,6 +5,7 @@ import {
   Platform,
   Modal as RNModal,
   Text as RNText,
+  SafeAreaView,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -13,6 +14,7 @@ import {
 } from 'react-native';
 
 import {
+  ActionSheetFactory,
   AnimationFactory,
   BackdropFactory,
   BadgeFactory,
@@ -81,6 +83,7 @@ global.mapping = {
   Input: TextInput,
   Label: RNText,
   Link: RNText,
+  SafeAreaView,
   ScrollView,
   Text: RNText,
   TextArea: TextInput,
@@ -120,6 +123,7 @@ global.mapping = {
 export { default as Image } from './Image';
 export { default as Scrollable } from './Scrollable';
 
+export const ActionSheet = ActionSheetFactory;
 export const Animation = AnimationFactory;
 export const Backdrop = BackdropFactory;
 export const Badge = BadgeFactory;

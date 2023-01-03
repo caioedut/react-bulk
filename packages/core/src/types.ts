@@ -325,6 +325,7 @@ export type ThemeProps = {
   contrast: Readonly<Function>;
 
   components: {
+    ActionSheet: ThemeComponentProps & { defaultProps?: ActionSheetProps };
     Animation: ThemeComponentProps & { defaultProps?: AnimationProps };
     Backdrop: ThemeComponentProps & { defaultProps?: BackdropProps };
     Badge: ThemeComponentProps & { defaultProps?: BadgeProps };
@@ -688,6 +689,12 @@ export type TooltipProps = {
   position?: 'top' | 'bottom' | 'left' | 'right' | string;
   title?: string;
   visible?: boolean;
+} & BoxProps;
+
+export type ActionSheetProps = {
+  visible?: boolean;
+  // Events
+  onClose?: EventCallback;
 } & BoxProps;
 
 export type AnimationProps = {
