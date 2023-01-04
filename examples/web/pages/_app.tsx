@@ -1,4 +1,4 @@
-import ReactBulk from '@react-bulk/core';
+import ReactBulk from '@react-bulk/web';
 
 const theme = {
   typography: {

@@ -14,15 +14,12 @@ function ReactBulk({ theme, children }: any) {
 
   const [themeState, setThemeState] = useState<ThemeProps>();
 
+  global.theme = themeState;
+
   const setTheme = useCallback(
     (theme: ThemeModeValues | ThemeOptionalProps) => {
       theme = typeof theme === 'string' ? { mode: theme } : theme;
-
-      setThemeState((current) => {
-        const newTheme = createTheme(theme as ThemeProps, current);
-        global.theme = newTheme;
-        return newTheme;
-      });
+      setThemeState((current) => createTheme(theme as ThemeProps, current));
     },
     [theme],
   );
