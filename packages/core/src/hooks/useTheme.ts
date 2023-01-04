@@ -9,7 +9,7 @@ import global from '../utils/global';
 export default function useTheme(): RbkTheme {
   const context = useContext(Context);
 
-  if (!context && !global.theme) {
+  if (!context && !Object.keys(global.theme).length) {
     createTheme();
   }
 

@@ -1,4 +1,4 @@
-import {
+import ReactBulk, {
   ActionSheetFactory,
   AnimationFactory,
   BackdropFactory,
@@ -115,3 +115,5 @@ export const Slider = SliderFactory;
 export const Table = TableFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
+
+export default ReactBulk;
