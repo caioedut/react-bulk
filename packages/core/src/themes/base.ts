@@ -317,6 +317,7 @@ const base: ThemeProps & any = {
           accessibility: { role: 'button' },
           color: 'primary',
           size: 'medium',
+          transform: 'uppercase',
           variant: 'solid',
         },
         defaultStyles: {
@@ -358,20 +359,19 @@ const base: ThemeProps & any = {
           label: {
             color: 'white',
             fontSize: '1rem',
+            fontWeight: 'bold',
+            letterSpacing: 1,
             textAlign: 'center',
-            transform: [{ scale: 0.9 }],
+            transform: [{ scale: 0.75 }],
+            web: { lineHeight: '1rem' },
           },
         },
         variants: {
           block: {
-            true: {
-              root: { width: '100%' },
-            },
+            true: { root: { width: '100%' } },
           },
           circular: {
-            true: {
-              root: { borderRadius: '1rem' },
-            },
+            true: { root: { borderRadius: '1rem' } },
           },
           disabled: {
             true: {
@@ -465,7 +465,7 @@ const base: ThemeProps & any = {
         defaultStyles: {
           root: {
             backgroundColor: 'background.primary',
-            corners: 1,
+            corners: 2,
             p: 3,
           },
         },

@@ -49,6 +49,7 @@ const ButtonFactory = React.memo<ButtonProps>(
     badge = typeof badge === 'number' ? { value: badge } : badge;
     startAddon = startAddon ?? startIcon;
     endAddon = endAddon ?? endIcon;
+    size = size ?? 'medium';
 
     if (web && !rest.type) {
       rest.type = 'button';
@@ -74,6 +75,8 @@ const ButtonFactory = React.memo<ButtonProps>(
       delete rest.type;
     }
 
+    const isSizeNumber = typeof size === 'number';
+
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
         xsmall: 0.75,
@@ -85,20 +88,20 @@ const ButtonFactory = React.memo<ButtonProps>(
     }
 
     const baseSize = theme.rem(size);
-    const spacing = baseSize / 2;
-    const height = baseSize * 2;
+    const halfSize = baseSize / 2;
+    const doubleSize = baseSize * 2;
     const textColor = isBasic ? color : 'white';
 
     style = [
-      {
-        minHeight: height,
-        minWidth: height,
-        paddingHorizontal: spacing,
+      isSizeNumber && {
+        minHeight: doubleSize,
+        minWidth: doubleSize,
+        paddingHorizontal: halfSize,
       },
 
       circular && {
-        borderRadius: height / 2,
-        paddingHorizontal: spacing / 2,
+        borderRadius: doubleSize / 2,
+        paddingHorizontal: halfSize / 2,
       },
 
       color && { borderColor: color },
@@ -133,19 +136,13 @@ const ButtonFactory = React.memo<ButtonProps>(
       >
         {Boolean(startAddon) && <BoxFactory>{startAddon}</BoxFactory>}
 
-        {Boolean(children || children?.length) && (
-          <BoxFactory
-            style={[contentStyle, loading && { opacity: 0 }, startAddon && { marginLeft: spacing }, endAddon && { marginRight: spacing }]}
-          >
-            {children}
-          </BoxFactory>
-        )}
+        {Boolean(children || children?.length) && <BoxFactory style={[contentStyle, loading && { opacity: 0 }]}>{children}</BoxFactory>}
 
         {Boolean(endAddon) && <BoxFactory>{endAddon}</BoxFactory>}
 
         {loading && (
           <BoxFactory position="absolute" i={0} center>
-            <LoadingFactory color={textColor} size={size} />
+            <LoadingFactory color={textColor} size={size / 2} />
           </BoxFactory>
         )}
 

@@ -284,8 +284,8 @@ export default function Main() {
                 </Button>
               </Box>
               <Box>
-                <Button variant={variant} transform="uppercase">
-                  Transformed
+                <Button variant={variant} transform="none">
+                  No Transform
                 </Button>
               </Box>
               <Box xs={12} />

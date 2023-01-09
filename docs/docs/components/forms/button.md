@@ -187,6 +187,7 @@ Render text label as child.
 Sets `textTransform` style for label.
 
 ➤ Type: **`'none'` `'captalize'` `'uppercase'` `'lowercase'` `'full-width'`** <br/>
+➤ Default: **`'uppercase'` <br/>
 
 ---
 

@@ -46,6 +46,13 @@ import { Card } from '@react-bulk/web'; // OR @react-bulk/native
 
 Extends all [`Box`](/docs/components/core/box#props) props.
 
+**`corners`**
+
+Sets `borderRadius` style. The set value will be multiplied by the `theme.shape.borderRadius` value.
+
+➤ Type: **`number`** <br/>
+➤ Default: **`2`** <br/>
+
 ---
 
 ## Styles
