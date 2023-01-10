@@ -76,14 +76,9 @@ const ImageFactory = React.memo<ImageProps>(
     if (native) {
       source = typeof source === 'string' ? { uri: source } : source;
 
-      Object.assign(rest, {
-        width: finalWidth,
-        height: finalHeight,
-        resizeMode: mode === 'fill' ? 'stretch' : mode,
-      });
-
       Object.assign(imgProps, {
         source,
+        resizeMode: mode === 'fill' ? 'stretch' : mode,
         width: finalWidth,
         height: finalHeight,
       });
