@@ -88,6 +88,7 @@ const InputFactory = React.memo<InputProps>(
     const [focused, setFocused] = useState(false);
     const [internal, setInternal] = useState(defaultValue);
 
+    color = error ? 'error' : color || 'primary';
     selectionColor = theme.color(selectionColor ?? color);
     placeholderColor = theme.hex2rgba(placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary', 0.4);
     autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
@@ -215,6 +216,8 @@ const InputFactory = React.memo<InputProps>(
     };
 
     style = [extract(customStyleProps, rest), style];
+
+    labelStyle = [error && { color: 'error' }, labelStyle];
 
     contentStyle = [
       color &&

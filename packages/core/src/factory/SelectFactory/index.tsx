@@ -67,6 +67,8 @@ const SelectFactory = React.memo<SelectProps>(
     const [internal, setInternal] = useState(arrOptions?.find((item) => item.value == defaultValue));
     const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == defaultValue));
 
+    color = error ? 'error' : color || 'primary';
+
     const gutter = theme.spacing(3);
 
     const nativeProps = !native ? {} : { onRequestClose: () => setVisible(false) };
@@ -243,6 +245,8 @@ const SelectFactory = React.memo<SelectProps>(
     };
 
     style = [extract(spacings, rest), style];
+
+    labelStyle = [error && { color: 'error' }, labelStyle];
 
     return (
       <BoxFactory style={style} stylist={[variants.root, stylist]} onKeyDown={visible ? handleKeyDown : undefined}>
