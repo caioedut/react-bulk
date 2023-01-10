@@ -715,6 +715,7 @@ const base: ThemeProps & any = {
               backgroundImage: 'none',
               boxShadow: 'none',
               cursor: 'inherit',
+              lineHeight: '1rem',
               outline: '0 !important',
               paddingVertical: '0.5rem',
               touchAction: 'none',
