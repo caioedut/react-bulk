@@ -8,7 +8,7 @@ const base: ThemeProps & any = {
 
   typography: {
     fontSize: 16,
-    lineHeight: 1,
+    lineHeight: 1.15,
   },
 
   colors: {
@@ -353,7 +353,7 @@ const base: ThemeProps & any = {
               touchAction: 'none',
               '-webkit-tap-highlight-color': 'transparent',
 
-              '&:hover': { bg: this.hex2rgba('primary', 0.8) },
+              '&:hover': { bg: this.color('primary', 0.8) },
             },
           },
           label: {
@@ -362,8 +362,15 @@ const base: ThemeProps & any = {
             fontWeight: 'bold',
             letterSpacing: 1,
             textAlign: 'center',
-            transform: [{ scale: 0.75 }],
-            web: { lineHeight: '1rem' },
+
+            native: {
+              transform: [{ scale: 0.85 }],
+            },
+
+            web: {
+              lineHeight: '1rem',
+              transform: [{ scale: 0.75 }],
+            },
           },
         },
         variants: {
@@ -422,7 +429,7 @@ const base: ThemeProps & any = {
             outline: {
               root: {
                 bg: 'trans',
-                '&:hover': { bg: (theme) => theme.hex2rgba('primary', 0.1) },
+                '&:hover': { bg: (theme) => theme.color('primary', 0.1) },
               },
               label: {
                 color: 'primary',
@@ -432,7 +439,7 @@ const base: ThemeProps & any = {
               root: {
                 bg: 'trans',
                 borderWidth: 0,
-                '&:hover': { bg: this.hex2rgba('primary', 0.1) },
+                '&:hover': { bg: (theme) => theme.color('primary', 0.1) },
               },
               label: {
                 color: 'primary',
@@ -731,8 +738,8 @@ const base: ThemeProps & any = {
           disabled: {
             true: {
               content: {
-                backgroundColor: (theme) => theme.hex2rgba('background.disabled', 0.125),
-                borderColor: (theme) => theme.hex2rgba('background.disabled', 0.25),
+                backgroundColor: (theme) => theme.color('background.disabled', 0.125),
+                borderColor: (theme) => theme.color('background.disabled', 0.25),
                 web: {
                   cursor: 'not-allowed',
                   '& *': { cursor: 'not-allowed' },

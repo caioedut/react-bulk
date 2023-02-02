@@ -154,4 +154,6 @@ export const Table = TableFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 
+export { useDimensions };
+
 export default ReactBulk;

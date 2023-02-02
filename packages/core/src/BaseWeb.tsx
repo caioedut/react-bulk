@@ -43,14 +43,14 @@ export default function BaseWeb({ theme, children }) {
 
         html {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-          font-size: 16px;
+          font-size: ${theme.typography.fontSize}px;
+          line-height: ${theme.typography.lineHeight};
           height: 100%;
         }
 
         body {
           background-color: ${theme.colors.background.secondary};
           color: ${theme.colors.text.primary};
-          line-height: ${theme.typography.lineHeight};
           margin: 0;
           padding: 0;
 
