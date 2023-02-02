@@ -103,15 +103,15 @@ const InputFactory = React.memo<InputProps>(
         enterKeyHint: returnKeyType,
         disabled,
         readOnly,
-        type: pick(secure ? 'secure' : type, 'text', {
-          text: 'text',
-          number: 'number',
-          email: 'email',
-          secure: 'password',
-          phone: 'tel',
-          url: 'url',
-          hidden: 'text',
-        }),
+        type:
+          pick(secure ? 'secure' : type, 'default', {
+            default: null,
+            secure: 'password',
+            phone: 'tel',
+            hidden: 'text',
+          }) ||
+          type ||
+          'text',
       });
     }
 
