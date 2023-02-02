@@ -464,7 +464,7 @@ export default function Main() {
         <Text variant="title">Breakpoints</Text>
         <Grid gap={3} mt={3}>
           {breakpoints.map((bkp, index) => {
-            const bg = theme.hex2rgba('primary', (index + 1) / breakpoints.length);
+            const bg = theme.color('primary', (index + 1) / breakpoints.length);
             const color = theme.contrast(bg);
 
             return (
