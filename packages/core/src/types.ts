@@ -348,6 +348,7 @@ export type ThemeProps = {
     Loading: ThemeComponentProps & { defaultProps?: LoadingProps };
     Modal: ThemeComponentProps & { defaultProps?: ModalProps };
     Progress: ThemeComponentProps & { defaultProps?: ProgressProps };
+    Resizable: ThemeComponentProps & { defaultProps?: ResizableProps };
     Scrollable: ThemeComponentProps & { defaultProps?: ScrollableProps };
     Select: ThemeComponentProps & { defaultProps?: SelectProps };
     Slider: ThemeComponentProps & { defaultProps?: SliderProps };
@@ -735,4 +736,9 @@ export type ListItemProps = {
 
 export type LinkProps = {
   underline?: boolean;
+} & BoxProps;
+
+export type ResizableProps = {
+  horizontal?: boolean;
+  vertical?: boolean;
 } & BoxProps;
