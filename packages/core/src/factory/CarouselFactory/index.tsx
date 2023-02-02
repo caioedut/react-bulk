@@ -160,23 +160,16 @@ const CarouselFactory = React.memo<CarouselProps>(
           onScroll={handleScroll}
         >
           {contentWidth !== null &&
-            React.Children.map(children, (child, index) => {
-              const length = Array.isArray(children) ? children.length : children ? 1 : 0;
-
-              const isFirst = index === 0;
-              const isLast = index === length - 1;
-
-              return (
-                <BoxFactory key={index} ref={itemRef} style={itemStyle} pl={isFirst ? gap : gap / 2} pr={isLast ? gap : gap / 2}>
-                  {child}
-                </BoxFactory>
-              );
-            })}
+            React.Children.map(children, (child, index) => (
+              <BoxFactory key={index} ref={itemRef} style={itemStyle} px={gap / 2}>
+                {child}
+              </BoxFactory>
+            ))}
         </ScrollableFactory>
 
         {showChevron && hasPrev && (
           <BoxFactory l={0} stylist={[variants.chevron]}>
-            <ButtonFactory variant="outline" color={color} circular onPress={scrollToPrev} style={chevronStyle}>
+            <ButtonFactory variant="outline" color={color} onPress={scrollToPrev} style={chevronStyle}>
               <ChevronLeft svg={svg} {...chevronProps} />
             </ButtonFactory>
           </BoxFactory>
@@ -184,7 +177,7 @@ const CarouselFactory = React.memo<CarouselProps>(
 
         {showChevron && hasNext && (
           <BoxFactory r={0} stylist={[variants.chevron]}>
-            <ButtonFactory variant="outline" color={color} circular onPress={scrollToNext} style={chevronStyle}>
+            <ButtonFactory variant="outline" color={color} onPress={scrollToNext} style={chevronStyle}>
               <ChevronRight svg={svg} {...chevronProps} />
             </ButtonFactory>
           </BoxFactory>
