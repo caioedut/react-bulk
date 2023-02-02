@@ -80,13 +80,19 @@ const InputFactory = React.memo<InputProps>(
     const unmaskValue = useCallback(
       (value) => {
         value = typeof unmask === 'function' ? unmask(maskValue(value)) : value;
+
+        // Parse to number
+        if (type === 'number' && value) {
+          value = Number(value);
+        }
+
         return value ?? '';
       },
-      [unmask],
+      [unmask, type],
     );
 
     const [focused, setFocused] = useState(false);
-    const [internal, setInternal] = useState(defaultValue);
+    const [internal, setInternal] = useState(unmaskValue(defaultValue));
 
     color = error ? 'error' : color || 'primary';
     selectionColor = theme.color(selectionColor ?? color);
@@ -155,7 +161,7 @@ const InputFactory = React.memo<InputProps>(
 
     useEffect(() => {
       if (typeof value === 'undefined') return;
-      setInternal(value);
+      setInternal(unmaskValue(value));
     }, [value]);
 
     useEffect(() => {
@@ -175,10 +181,10 @@ const InputFactory = React.memo<InputProps>(
 
     const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
     const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
-    const clear = useCallback(() => setInternal(defaultValue), []);
+    const clear = useCallback(() => setInternal(unmaskValue(defaultValue)), []);
     const isFocused = useCallback(() => inputRef?.current?.isFocused?.() || inputRef?.current === document?.activeElement, [inputRef]);
 
-    function dispatchEvent(type: string, value: number, nativeEvent?: any) {
+    function dispatchEvent(type: string, value: string | number, nativeEvent?: any) {
       const callback = {
         change: onChange,
         focus: onFocus,
