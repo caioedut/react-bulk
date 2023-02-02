@@ -23,6 +23,7 @@ import ReactBulk, {
   ModalFactory,
   ProgressFactory,
   RbkMap,
+  ResizableFactory,
   ScrollableFactory,
   SelectFactory,
   SliderFactory,
@@ -109,6 +110,7 @@ export const ListItem = ListItemFactory;
 export const Loading = LoadingFactory;
 export const Modal = ModalFactory;
 export const Progress = ProgressFactory;
+export const Resizable = ResizableFactory;
 export const Scrollable = ScrollableFactory;
 export const Select = SelectFactory;
 export const Slider = SliderFactory;

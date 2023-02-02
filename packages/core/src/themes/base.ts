@@ -848,6 +848,19 @@ const base: ThemeProps & any = {
         },
         defaultStyles: {},
       },
+      Resizable: {
+        name: 'rbk-resizable',
+        defaultProps: {
+          horizontal: true,
+          vertical: true,
+        },
+        defaultStyles: {
+          root: {
+            position: 'relative',
+            overflow: 'hidden',
+          },
+        },
+      },
       Scrollable: {
         name: 'rbk-scrollable',
         defaultProps: {
