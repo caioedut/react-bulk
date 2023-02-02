@@ -53,6 +53,15 @@ const BoxFactory = React.memo<BoxProps>(
       ...rest
     } = props;
 
+    rest = bindings(rest);
+
+    pressable = pressable ?? Boolean(props.onPress || props.onLongPress || props.onPressIn || props.onPressOut || props.onClick);
+
+    if (native && pressable && !component) {
+      component = Button;
+      rest.activeOpacity = rest.activeOpacity ?? 0.75;
+    }
+
     // Extract styles from props
     const stylesFromProps: any[] = [];
     for (const prop of styleProps) {
@@ -82,6 +91,8 @@ const BoxFactory = React.memo<BoxProps>(
 
       // Flex Item
       typeof flex === 'boolean' && { flex: Number(flex) },
+
+      web && pressable && { cursor: 'pointer' },
 
       style,
 
@@ -144,15 +155,6 @@ const BoxFactory = React.memo<BoxProps>(
         rest.accessibilityState = accessibility?.state;
         rest.accessibilityValue = accessibility?.value;
       }
-    }
-
-    rest = bindings(rest);
-
-    pressable = pressable ?? Boolean(props.onPress || props.onLongPress || props.onPressIn || props.onPressOut || props.onClick);
-
-    if (native && pressable && !component) {
-      component = Button;
-      rest.activeOpacity = rest.activeOpacity ?? 0.75;
     }
 
     const Component = component || View;
