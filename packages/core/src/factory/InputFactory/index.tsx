@@ -90,7 +90,7 @@ const InputFactory = React.memo<InputProps>(
 
     color = error ? 'error' : color || 'primary';
     selectionColor = theme.color(selectionColor ?? color);
-    placeholderColor = theme.hex2rgba(placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary', 0.4);
+    placeholderColor = theme.color(placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary', 0.4);
     autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
 
     startAddon = startAddon ?? startIcon;
@@ -227,7 +227,7 @@ const InputFactory = React.memo<InputProps>(
 
       web &&
         focused && {
-          boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}`,
+          boxShadow: `0 0 0 4px ${theme.color(color, 0.3)}`,
         },
 
       contentStyle,

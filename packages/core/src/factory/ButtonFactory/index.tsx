@@ -108,9 +108,9 @@ const ButtonFactory = React.memo<ButtonProps>(
 
       color && !isBasic && { backgroundColor: color },
 
-      web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.hex2rgba(color, 0.3)}` } },
+      web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.color(color, 0.3)}` } },
 
-      web && color && { '&:hover': { bg: theme.hex2rgba(color, isBasic ? 0.1 : 0.8) } },
+      web && color && { '&:hover': { bg: theme.color(color, isBasic ? 0.1 : 0.8) } },
 
       style,
     ];
