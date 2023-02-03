@@ -6,7 +6,7 @@ export type AnyObject = { [key: string]: any };
 export type TimeoutType = ReturnType<typeof setTimeout> | null;
 export type AnyCallback = (mixed: any) => any;
 export type EventCallback = (event: any) => any;
-export type InputValue = string | number | boolean;
+export type InputValue = string | number | boolean | null | undefined;
 
 export type RbkMap = {
   web: boolean;
