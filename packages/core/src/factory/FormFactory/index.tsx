@@ -14,7 +14,7 @@ const FormFactory = React.memo<FormProps>(
   forwardRef(({ stylist, ...props }, ref: ForwardedRef<FormRef>) => {
     const theme = useTheme();
     const options = theme.components.Form;
-    const { Form } = global.mapping;
+    const { web, Form } = global.mapping;
 
     // Extends from default props
     let {
@@ -35,6 +35,10 @@ const FormFactory = React.memo<FormProps>(
     const dataRef = useRef<any>({});
 
     ref = ref || defaultRef;
+
+    if (web) {
+      rest.noValidate = true;
+    }
 
     const context = {
       submit,

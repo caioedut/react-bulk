@@ -199,6 +199,14 @@ If `true`, the text input can be multiple lines.
 
 ---
 
+**`notNull`**
+
+Final empty value will be empty string ("") or null depending on this prop.
+
+➤ Type: **`bool`** <br/>
+
+---
+
 **`placeholder`**
 
 The string that will be rendered before text input has been entered.
