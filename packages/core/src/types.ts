@@ -472,6 +472,7 @@ export type InputProps = {
   maxLength?: number;
   multiline?: boolean;
   name?: string;
+  notNull?: boolean;
   placeholder?: string;
   placeholderColor?: ColorValues;
   readOnly?: boolean;
