@@ -97,7 +97,7 @@ const SelectFactory = React.memo<SelectProps>(
       form.setField({
         name,
         set: (value) => setInternal(arrOptions?.find((item) => item.value == value)),
-        get: () => internal?.value,
+        get: () => internal?.value ?? null,
         onFormChange,
       });
 

@@ -510,6 +510,7 @@ export type SelectOption = {
   label: string;
   value: InputValue;
   disabled?: boolean;
+  [key: string]: any;
 };
 
 export type SelectProps = {
@@ -665,7 +666,7 @@ export type TableProps = {
     content?: ReactNode | AnyCallback | string;
     style?: RbkStyles;
   }[];
-  rows: any[];
+  rows?: any[] | any;
 } & BoxProps;
 
 export type BadgeProps = {
