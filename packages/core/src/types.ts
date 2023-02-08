@@ -483,10 +483,10 @@ export type InputProps = {
   startAddon?: ReactNode;
   textColor?: ColorValues;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url' | 'hidden' | string;
-  unmask?: (InputValue: string, data: AnyObject) => InputValue;
+  unmask?: (value: InputValue, data: AnyObject) => InputValue;
   value?: InputValue;
   // Events
-  onChange?: (event: RbkEvent, value: string) => void;
+  onChange?: (event: RbkEvent, value: InputValue) => void;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
   // Styles
   contentStyle?: RbkStyles;
@@ -530,7 +530,7 @@ export type SelectProps = {
   startAddon?: ReactNode;
   value?: InputValue;
   // Events
-  onChange?: (event: RbkEvent, value: string, option: SelectOption) => void;
+  onChange?: (event: RbkEvent, value: InputValue, option: SelectOption) => void;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
   // Styles
   buttonStyle?: RbkStyles;
