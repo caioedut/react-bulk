@@ -1,6 +1,6 @@
 {
   "name": "@react-bulk/web",
-  "version": "0.2.30",
+  "version": "0.2.31",
   "description": "React Bulk for React Web",
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
@@ -33,7 +33,7 @@
   },
   "scripts": {},
   "dependencies": {
-    "@react-bulk/core": "^0.2.30"
+    "@react-bulk/core": "^0.2.31"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
