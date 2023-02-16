@@ -71,8 +71,8 @@ When `number` value, it will be multiplied by the `theme.shape.spacing` value.
 `l` for `left`<br/>
 `r` for `right`
 
-`v` or `y` for `vertical` (combines only with `m` and `p`)<br/>
-`h` or `x` for `horizontal` (combines only with `m` and `p`)<br/>
+`y` or `v` for `vertical` (combines only with `m` and `p`)<br/>
+`x` or `h` for `horizontal` (combines only with `m` and `p`)<br/>
 
 Examples:
 
@@ -413,6 +413,14 @@ Sets `height` style.
 
 ---
 
+**`hh`**
+
+Sets `height`, `minHeight` and `maxHeight` styles.
+
+➤ Type: **`number` `string`** <br/>
+
+---
+
 **`maxh`**
 
 Sets `maxHeight` style.
@@ -456,6 +464,14 @@ Sets `position` style.
 **`w`**
 
 Sets `width` style.
+
+➤ Type: **`number` `string`** <br/>
+
+---
+
+**`ww`**
+
+Sets `width`, `minWidth` and `maxWidth` styles.
 
 ➤ Type: **`number` `string`** <br/>
 
