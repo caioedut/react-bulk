@@ -178,12 +178,14 @@ export type RbkStyleProps = {
   align?: FlexAlignValues;
   justify?: FlexJustifyValues;
 
-  h?: number | string;
-  w?: number | string;
-  minw?: number | string;
-  maxw?: number | string;
-  minh?: number | string;
-  maxh?: number | string;
+  h?: number | string | true;
+  w?: number | string | true;
+  minw?: number | string | true;
+  maxw?: number | string | true;
+  minh?: number | string | true;
+  maxh?: number | string | true;
+  hh?: number | string | true;
+  ww?: number | string | true;
 
   bg?: string;
   border?: string | number | boolean;
@@ -269,11 +271,26 @@ export type ThemeProps = {
     warning: ThemeColorsProps;
     error: ThemeColorsProps;
 
+    gray: ThemeColorsProps;
+    red: ThemeColorsProps;
+    orange: ThemeColorsProps;
+    amber: ThemeColorsProps;
+    yellow: ThemeColorsProps;
+    lime: ThemeColorsProps;
+    green: ThemeColorsProps;
+    teal: ThemeColorsProps;
+    cyan: ThemeColorsProps;
+    blue: ThemeColorsProps;
+    indigo: ThemeColorsProps;
+    violet: ThemeColorsProps;
+    purple: ThemeColorsProps;
+    fuchsia: ThemeColorsProps;
+    pink: ThemeColorsProps;
+
     common: {
       trans: string;
       black: string;
       white: string;
-      gray: string;
     };
 
     text: {
