@@ -95,10 +95,14 @@ const base: ThemeProps & any = {
   },
 
   color(mixin, alpha?: number) {
-    const [color, variation = 'main'] = `${mixin || ''}`.split('.');
+    const [color, variation = 'main', opacity] = `${mixin || ''}`.split('.');
 
     let newColor =
       this?.colors[color]?.[variation] ?? this?.colors[color]?.primary ?? this?.colors[color] ?? this?.colors?.common?.[color] ?? mixin;
+
+    if (typeof alpha !== 'number' && opacity) {
+      alpha = Number(opacity) / 100;
+    }
 
     if (typeof alpha === 'number') {
       const [r, g, b] = newColor?.match(/\w\w/g)?.map((x) => parseInt(x, 16)) || [];
