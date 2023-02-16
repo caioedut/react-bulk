@@ -128,6 +128,10 @@ const BoxFactory = React.memo<BoxProps>(
       rest.className = clsx(styles, className);
     }
 
+    if (pressable && !accessibility?.role) {
+      accessibility = { ...Object(accessibility), role: 'button' };
+    }
+
     // Aria / Accessibility
     if (accessibility) {
       if (web) {
@@ -135,16 +139,16 @@ const BoxFactory = React.memo<BoxProps>(
         rest['aria-label'] = accessibility?.label;
         rest['role'] = accessibility?.role;
 
-        rest['aria-checked'] = accessibility?.state?.checked;
-        rest['aria-disabled'] = accessibility?.state?.disabled;
-        rest['aria-expanded'] = accessibility?.state?.expanded;
-        rest['aria-selected'] = accessibility?.state?.selected;
-        rest['aria-busy'] = accessibility?.state?.busy;
+        rest['aria-checked'] = accessibility.state?.checked;
+        rest['aria-disabled'] = accessibility.state?.disabled;
+        rest['aria-expanded'] = accessibility.state?.expanded;
+        rest['aria-selected'] = accessibility.state?.selected;
+        rest['aria-busy'] = accessibility.state?.busy;
 
-        rest['aria-valuemax'] = accessibility?.value?.max;
-        rest['aria-valuemin'] = accessibility?.value?.min;
-        rest['aria-valuenow'] = accessibility?.value?.now;
-        rest['aria-valuetext'] = accessibility?.value?.text;
+        rest['aria-valuemax'] = accessibility.value?.max;
+        rest['aria-valuemin'] = accessibility.value?.min;
+        rest['aria-valuenow'] = accessibility.value?.now;
+        rest['aria-valuetext'] = accessibility.value?.text;
       }
 
       if (native) {
