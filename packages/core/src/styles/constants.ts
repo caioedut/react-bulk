@@ -14,6 +14,8 @@ export const boxSizeProps = [
   'maxh',
   'minw',
   'minh',
+  'ww',
+  'hh',
 ];
 
 /***********

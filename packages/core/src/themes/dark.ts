@@ -8,9 +8,9 @@ const dark = {
     },
 
     background: {
-      primary: '#1b1b1b',
-      secondary: '#333333',
-      disabled: '#000000',
+      primary: '#303030',
+      secondary: '#181818',
+      disabled: '#0C0C0C',
     },
   },
 };

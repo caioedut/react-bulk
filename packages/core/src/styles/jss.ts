@@ -126,6 +126,26 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       value = (theme.shape.borderRadius ?? 0) * value;
     }
 
+    if (prop === 'ww') {
+      prop = null;
+
+      Object.assign(styles, {
+        width: value,
+        minWidth: value,
+        maxWidth: value,
+      });
+    }
+
+    if (prop === 'hh') {
+      prop = null;
+
+      Object.assign(styles, {
+        height: value,
+        minHeight: value,
+        maxHeight: value,
+      });
+    }
+
     if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(prop)) {
       if (value) {
         const preffix = prop;
