@@ -17,11 +17,14 @@ const CollapseFactory = React.memo<CollapseProps>(
 
     // Extends from default props
     let {
+      visible,
       in: expanded,
       // Styles
       variants,
       ...rest
     } = factory2(props, options);
+
+    expanded = visible ?? expanded;
 
     const defaultRef: any = useRef(null);
     ref = ref || defaultRef;
