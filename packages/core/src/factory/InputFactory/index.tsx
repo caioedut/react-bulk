@@ -40,6 +40,7 @@ const InputFactory = React.memo<InputProps>(
       placeholderColor,
       readOnly,
       returnKeyType,
+      rows,
       secure,
       selectionColor,
       size,
@@ -160,7 +161,7 @@ const InputFactory = React.memo<InputProps>(
 
     const baseSize = theme.rem(size);
     const spacing = baseSize / 2;
-    const height = baseSize * (multiline ? 6 : 2);
+    const height = baseSize * (multiline ? rows ?? 6 : 2);
 
     useEffect(() => {
       if (typeof value === 'undefined') return;
@@ -247,8 +248,6 @@ const InputFactory = React.memo<InputProps>(
         height,
         paddingHorizontal: spacing,
       },
-
-      multiline && { height },
 
       textColor && { color: textColor },
 

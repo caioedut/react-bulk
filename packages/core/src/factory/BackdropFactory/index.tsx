@@ -71,7 +71,7 @@ const BackdropFactory = React.memo<BackdropProps>(
 
     return (
       <BoxFactory ref={ref} component={Dialog} stylist={[variants.root, stylist]} {...rest}>
-        <BoxFactory maxh="100%" maxw="100%" {...containerProps}>
+        <BoxFactory maxh="100%" maxw="100%" style={{ cursor: 'auto' }} {...containerProps}>
           {children}
         </BoxFactory>
       </BoxFactory>

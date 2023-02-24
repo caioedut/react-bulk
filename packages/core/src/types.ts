@@ -38,6 +38,7 @@ export interface RbkFormChangeEvent {
 export interface RbkEvent {
   type: string;
   value: InputValue;
+  checked: boolean;
   name?: string;
   target?: ReactNode | any;
   focus: () => void;
@@ -485,7 +486,7 @@ export type InputProps = {
   endAddon?: ReactNode;
   error?: string;
   label?: string;
-  mask?: (value: InputValue, data: AnyObject) => InputValue;
+  mask?: (value: InputValue, data: AnyObject) => any;
   maxLength?: number;
   multiline?: boolean;
   name?: string;
@@ -494,13 +495,14 @@ export type InputProps = {
   placeholderColor?: ColorValues;
   readOnly?: boolean;
   returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send' | string;
+  rows?: number;
   secure?: boolean;
   selectionColor?: ColorValues;
   size?: SizeValues;
   startAddon?: ReactNode;
   textColor?: ColorValues;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url' | 'hidden' | string;
-  unmask?: (value: InputValue, data: AnyObject) => InputValue;
+  unmask?: (value: InputValue, data: AnyObject) => any;
   value?: InputValue;
   // Events
   onChange?: (event: RbkEvent, value: InputValue) => void;
@@ -572,7 +574,7 @@ export type CheckboxProps = {
   size?: SizeValues;
   unique?: boolean;
   // Events
-  onChange?: (event: { checked: boolean } & Omit<RbkEvent, 'value'>, checked: boolean) => void;
+  onChange?: (event: RbkEvent, checked: boolean) => void;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
   // Styles
   buttonStyle?: RbkStyles;
@@ -657,6 +659,9 @@ export type ModalProps = {
 } & BoxProps;
 
 export type CollapseProps = {
+  visible?: boolean;
+
+  /** @deprecated use visible instead */
   in?: boolean;
 } & BoxProps;
 
