@@ -38,7 +38,7 @@ export default function Home() {
   const { siteConfig } = useDocusaurusContext();
 
   return (
-    <Layout title={`${siteConfig.tagline}`} description="Description will go into a meta tag in <head />">
+    <Layout title={`${siteConfig.tagline}`} description="Complete and uniform UI for React Web and Native">
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           {/*<h1 className="hero__title">{siteConfig.title}</h1>*/}

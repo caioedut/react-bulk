@@ -23,7 +23,7 @@ import { Card } from '@react-bulk/web'; // OR @react-bulk/native
 ### Composition
 
 ```jsx live
-<Card maxw={240} mx="auto" bg="white" border="1px solid background.secondary">
+<Card maxw={240} mx="auto" border="1px solid background">
   <Text variant="caption" color="text.secondary">
     Lib of the Year
   </Text>
