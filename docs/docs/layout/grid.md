@@ -75,7 +75,7 @@ Default breakpoints: **`xs` `sm` `md` `lg` `xl` `xxl`**
 - `'flex'` or `true`: item will grow or shrink to fit the space available in its container.
 - `'hide'` or `false`: hides the item.
 
-➤ Type: **`number` `boolean` `auto` `flex` `hide`** <br/>
+➤ Type: **`number` `boolean` `'auto'` `'flex'` `'hide'`** <br/>
 ➤ Default: **`'auto'`** <br/>
 
 ---

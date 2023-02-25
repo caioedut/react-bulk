@@ -53,20 +53,36 @@ export default {
 export default {
   // other options
   colors: {
-    primary: '#673ab7',
-    secondary: '#009688',
-    info: '#2196f3',
-    success: '#4caf50',
-    warning: '#ff9800',
-    error: '#f44336',
+    primary: '#8b5cf6',
+    secondary: '#f59e0b',
+
+    info: '#3b82f6',
+    success: '#22c55e',
+    warning: '#f59e0b',
+    error: '#ef4444',
 
     customColorToken: '#ff00ff',
+
+    gray: '#6b7280',
+    red: '#ef4444',
+    orange: '#f97316',
+    amber: '#f59e0b',
+    yellow: '#eab308',
+    lime: '#84cc16',
+    green: '#22c55e',
+    teal: '#14b8a6',
+    cyan: '#06b6d4',
+    blue: '#3b82f6',
+    indigo: '#6366f1',
+    violet: '#8b5cf6',
+    purple: '#a855f7',
+    fuchsia: '#d946ef',
+    pink: '#ec4899',
 
     common: {
       trans: 'rgba(0, 0, 0, 0)',
       black: '#000000',
       white: '#ffffff',
-      gray: '#808080',
     },
   },
 };
@@ -79,7 +95,7 @@ export default {
   // other options
   breakpoints: {
     xs: 0,
-    sm: 576,
+    sm: 320,
     md: 768,
     lg: 992,
     xl: 1200,

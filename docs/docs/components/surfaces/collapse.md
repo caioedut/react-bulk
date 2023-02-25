@@ -22,7 +22,7 @@ function Home() {
       <Button onPress={() => setVisible(!visible)}>
         Toggle Collapse
       </Button>
-      <Collapse in={visible} mt={3}>
+      <Collapse visible={visible} mt={3}>
         Collapse is amazing!
       </Collapse>
     </>
@@ -34,7 +34,7 @@ function Home() {
 
 Extends all [`Box`](/docs/components/core/box#props) props.
 
-**`in`**
+**`visible`**
 
 ➤ Type: **`boolean`** <br/>
 
