@@ -14,7 +14,7 @@ Used to create responsive design. Commonly used with [Grid](/docs/layout/grid).
 
 ## Custom
 
-[Read more about Theme](../layout/theme).
+[Read more about Theme](/docs/layout/theme).
 
 ```jsx
 const theme = {
@@ -33,7 +33,7 @@ const theme = {
 
 ### Grid
 
-See [Grid](../layout/grid.md)
+See [Grid](/docs/layout/grid.md)
 
 ### Components
 
