@@ -39,6 +39,8 @@ import { Text } from '@react-bulk/web'; // OR @react-bulk/native
   <Text variant="h6">H6</Text>
   <Text variant="title">Title</Text>
   <Text variant="subtitle">Subtitle</Text>
+  <Text variant="primary">Primary</Text>
+  <Text variant="secondary">Secondary</Text>
   <Text variant="caption">Caption</Text>
 </Box>
 ```
@@ -150,7 +152,7 @@ Sets `textTransform` style.
 
 **`variant`**
 
-➤ Type: **`'h1'` `'h2'` `'h3'` `'h4'` `'h5'` `'h6'` `'title'` `'subtitle'` `'caption'`** <br/>
+➤ Type: **`'h1'` `'h2'` `'h3'` `'h4'` `'h5'` `'h6'` `'title'` `'subtitle'` `'primary'` `'secondary'` `'caption'`** <br/>
 
 ---
 

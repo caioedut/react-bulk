@@ -419,7 +419,7 @@ export type BoxProps = {
   RbkStyleProps;
 
 export type TextProps = {
-  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'caption' | string;
+  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'primary' | 'secondary' | 'caption' | string;
   size?: number;
   color?: ColorValues;
   center?: boolean;
