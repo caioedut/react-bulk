@@ -1,6 +1,6 @@
 import React, { useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkEvent, RbkTheme, useTheme } from '@react-bulk/core';
+import { AnyObject, FormRef, RbkEvent, RbkTheme } from '@react-bulk/core';
 import {
   ActionSheet,
   Animation,
@@ -27,6 +27,7 @@ import {
   Table,
   Text,
   Tooltip,
+  useTheme,
 } from '@react-bulk/web';
 
 const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];

@@ -46,6 +46,7 @@ import ReactBulk, {
   TextFactory,
   TooltipFactory,
   global,
+  useTheme,
 } from '@react-bulk/core';
 import Svg, {
   Circle,
@@ -154,6 +155,6 @@ export const Table = TableFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 
-export { useDimensions };
+export { useDimensions, useTheme };
 
 export default ReactBulk;
