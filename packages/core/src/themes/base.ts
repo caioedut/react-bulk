@@ -378,18 +378,13 @@ const base: ThemeProps & any = {
           },
           label: {
             color: 'white',
-            fontSize: '1rem',
+            fontSize: '0.75rem',
             fontWeight: 'bold',
             letterSpacing: 1,
             textAlign: 'center',
 
-            native: {
-              transform: [{ scale: 0.85 }],
-            },
-
             web: {
-              lineHeight: '1rem',
-              transform: [{ scale: 0.75 }],
+              lineHeight: '0.75rem',
             },
           },
         },
@@ -1032,6 +1027,8 @@ const base: ThemeProps & any = {
             h6: { root: { fontSize: '1.1rem' } },
             title: { root: { fontSize: '1.25rem' } },
             subtitle: { root: { fontSize: '1.125rem' } },
+            primary: { root: { fontSize: '1rem' } },
+            secondary: { root: { fontSize: '0.875rem' } },
             caption: { root: { fontSize: '0.75rem' } },
           },
           bold: {
