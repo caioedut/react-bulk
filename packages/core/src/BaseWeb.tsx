@@ -16,16 +16,6 @@ export default function BaseWeb({ theme, children }) {
   useMemo(() => {
     const scrollBarStyle = css(jss({ theme }, theme.mixins.scroll), 'body');
 
-    createMeta(
-      '[name="theme-color"]',
-      {
-        name: 'theme-color',
-        media: `(prefers-color-scheme: ${theme.mode})`,
-        content: getComputedStyle(document.body).backgroundColor,
-      },
-      true,
-    );
-
     createStyle({
       theme,
       name: 'rbk-global',
