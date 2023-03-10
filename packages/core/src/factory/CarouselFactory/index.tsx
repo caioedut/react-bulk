@@ -19,7 +19,9 @@ const CarouselFactory = React.memo<CarouselProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Carousel;
-    const { web, native, svg } = global.mapping;
+    const { web, native, svg, useDimensions } = global.mapping;
+
+    const dimensions = useDimensions();
 
     // Extends from default props
     let {
@@ -102,7 +104,7 @@ const CarouselFactory = React.memo<CarouselProps>(
     useLayoutEffect(() => {
       if (!web || !contentRef.current) return;
       setContentWidth(contentRef.current.clientWidth);
-    }, []);
+    }, [dimensions.width]);
 
     useEffect(() => {
       if (!contentRef.current || !contentWidth) return;
