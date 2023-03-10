@@ -171,6 +171,34 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       prop = null;
     }
 
+    if (prop === 'shadow') {
+      prop = null;
+
+      if (value) {
+        const radius = Math.round(value * 1.5 + 2);
+        const offset = Math.round(value / 2);
+
+        if (web) {
+          Object.assign(styles, {
+            boxShadow: `${offset}px ${offset}px ${radius}px rgba(0, 0, 0, 0.15)`,
+          });
+        }
+
+        if (native) {
+          Object.assign(styles, {
+            elevation: offset,
+            shadowColor: 'rgba(0, 0, 0)',
+            shadowOpacity: 0.1,
+            shadowRadius: radius,
+            shadowOffset: {
+              width: offset,
+              height: offset,
+            },
+          });
+        }
+      }
+    }
+
     if (web) {
       if (prop === 'paddingVertical') {
         prop = null;
@@ -255,7 +283,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         }
       });
 
-      if (prop === 'shadow' || prop === 'boxShadow') {
+      if (prop === 'boxShadow') {
         prop = null;
 
         const colorIndex = value.search(/(\w+\(|#).+/g);

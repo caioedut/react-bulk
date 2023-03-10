@@ -210,6 +210,7 @@ export const styleProps = [
   'borderTopStartRadius',
   'borderTopWidth',
   'borderWidth',
+  'boxShadow',
   'color',
   'direction',
   'display',
