@@ -1,6 +1,6 @@
 {
   "name": "@react-bulk/native",
-  "version": "0.2.34",
+  "version": "0.2.35",
   "description": "React Bulk for React Native",
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
@@ -33,7 +33,7 @@
   },
   "scripts": {},
   "dependencies": {
-    "@react-bulk/core": "^0.2.34"
+    "@react-bulk/core": "^0.2.35"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -43,5 +43,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ca0a6d982125e68261ad3fa8a02981df24c7fd96"
+  "gitHead": "c8a62dac40420339358cfe3e7c76d3bcc6f20f81"
 }
