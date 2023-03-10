@@ -115,6 +115,8 @@ const ButtonFactory = React.memo<ButtonProps>(
       style,
     ];
 
+    contentStyle = [startAddon && { ml: 1.5 }, endAddon && { mr: 1.5 }, loading && { opacity: 0 }, contentStyle];
+
     labelStyle = [{ color: textColor }, labelStyle];
 
     if (typeof children === 'string') {
@@ -136,7 +138,7 @@ const ButtonFactory = React.memo<ButtonProps>(
       >
         {Boolean(startAddon) && <BoxFactory>{startAddon}</BoxFactory>}
 
-        {Boolean(children || children?.length) && <BoxFactory style={[contentStyle, loading && { opacity: 0 }]}>{children}</BoxFactory>}
+        {Boolean(children || children?.length) && <BoxFactory style={contentStyle}>{children}</BoxFactory>}
 
         {Boolean(endAddon) && <BoxFactory>{endAddon}</BoxFactory>}
 
