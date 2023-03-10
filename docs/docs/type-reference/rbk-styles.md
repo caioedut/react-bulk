@@ -20,7 +20,7 @@ The value can be a **single object** or an **array of** these types:
   bg: string;
   border: string | number | boolean;
   corners: number;
-  shadow: string;
+  shadow: number;
 
   i: number | string;
   t: number | string;
