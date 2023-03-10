@@ -1,6 +1,8 @@
 import { ThemeProps } from '../types';
 
 const base: ThemeProps & any = {
+  custom: {},
+
   shape: {
     borderRadius: 4,
     spacing: 4,

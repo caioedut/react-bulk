@@ -254,6 +254,8 @@ export type ThemeComponentProps = {
 export type ThemeProps = {
   mode: ThemeModeValues;
 
+  custom: AnyObject
+
   shape: {
     borderRadius: number;
     spacing: number;
