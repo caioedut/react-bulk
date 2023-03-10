@@ -30,7 +30,6 @@ const GridFactory = React.memo<GridProps>(
             return null;
           }
 
-          // @ts-ignore
           const props = { ...Object(child?.props) };
           const itemStyle: RbkStyles = [props.style, { padding: spacing }];
 
@@ -65,7 +64,6 @@ const GridFactory = React.memo<GridProps>(
             delete props[breakpoint];
           });
 
-          // @ts-ignore
           return <BoxFactory key={index} component={child?.type} {...props} style={itemStyle} stylist={[variants.item]} />;
         })}
       </BoxFactory>
