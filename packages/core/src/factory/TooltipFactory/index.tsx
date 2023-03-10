@@ -18,6 +18,7 @@ const TooltipFactory = React.memo<TooltipProps>(
 
     // Extends from default props
     let {
+      accessibility,
       color,
       position,
       title,
@@ -64,6 +65,7 @@ const TooltipFactory = React.memo<TooltipProps>(
     return (
       <BoxFactory
         component={native ? Button : null}
+        accessibility={{ label: title, ...Object(accessibility) }}
         style={{ position: 'relative' }}
         platform={{
           web: {
