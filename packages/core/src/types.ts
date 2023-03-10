@@ -191,7 +191,7 @@ export type RbkStyleProps = {
   bg?: string;
   border?: string | number | boolean;
   corners?: number;
-  shadow?: string;
+  shadow?: number;
 
   i?: number | string;
   t?: number | string;
@@ -254,7 +254,7 @@ export type ThemeComponentProps = {
 export type ThemeProps = {
   mode: ThemeModeValues;
 
-  custom: AnyObject
+  custom: AnyObject;
 
   shape: {
     borderRadius: number;
