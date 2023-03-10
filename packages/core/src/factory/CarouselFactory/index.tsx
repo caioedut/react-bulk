@@ -47,11 +47,9 @@ const CarouselFactory = React.memo<CarouselProps>(
     const itemRef = useRef<any>(null);
     const offsetRef = useRef(0);
 
-    // const [dragging, setDragging] = useState(false);
     const [contentWidth, setContentWidth] = useState<number | null>(null);
     const [hasPrev, setHasPrev] = useState(false);
     const [hasNext, setHasNext] = useState(false);
-    // const [paused, setPaused] = useState(true);
 
     const showChevron = chevron !== 'hidden';
 
