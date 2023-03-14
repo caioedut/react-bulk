@@ -1,6 +1,6 @@
 {
   "name": "@react-bulk/core",
-  "version": "0.2.37",
+  "version": "0.2.38",
   "description": "React Bulk Core",
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
@@ -29,5 +29,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "28f13dd5c9fff2236e35df2204790b7ccbbd9538"
+  "gitHead": "7db47d3f528c007f7a2424bfbabbe01e8f1a9700"
 }
