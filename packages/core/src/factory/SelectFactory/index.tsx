@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
@@ -64,8 +64,10 @@ const SelectFactory = React.memo<SelectProps>(
 
     const [metrics, setMetrics] = useState<AnyObject>({});
     const [visible, setVisible] = useState(false);
-    const [internal, setInternal] = useState(arrOptions?.find((item) => item.value == defaultValue));
+    const [internal, setInternal] = useState(defaultValue);
     const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == defaultValue));
+
+    const selected = arrOptions?.find((item) => item.value == internal);
 
     color = error ? 'error' : color || 'primary';
 
@@ -88,23 +90,23 @@ const SelectFactory = React.memo<SelectProps>(
 
     useEffect(() => {
       if (typeof value === 'undefined') return;
-      setInternal(arrOptions?.find((item) => item.value == value));
-    }, [value, arrOptions]);
+      setInternal(value);
+    }, [value]);
 
     useEffect(() => {
       if (!name || !form) return;
 
       form.setField({
         name,
-        set: (value) => setInternal(arrOptions?.find((item) => item.value == value)),
-        get: () => internal?.value ?? null,
+        set: setInternal,
+        get: () => selected?.value ?? null,
         onFormChange,
       });
 
       return () => {
         form.unsetField(name);
       };
-    }, [name, form, onFormChange, internal]);
+    }, [name, form, onFormChange, selected]);
 
     useEffect(() => {
       if (!visible || !selectedRef.current) return;
@@ -128,7 +130,7 @@ const SelectFactory = React.memo<SelectProps>(
 
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
-    const clear = useCallback(() => setInternal(arrOptions?.find((item) => item.value == defaultValue)), []);
+    const clear = useCallback(() => setInternal(defaultValue), []);
     const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
 
     function dispatchEvent(type: string, option, nativeEvent?: any) {
@@ -175,15 +177,14 @@ const SelectFactory = React.memo<SelectProps>(
       if (readOnly) return;
 
       const nativeEvent = e?.nativeEvent ?? e;
-      const newInternal = arrOptions?.find((item) => item.value == option.value);
+      const newSelected = arrOptions?.find((item) => item.value == option.value);
 
       if (!controlled) {
-        setInternal(newInternal);
+        setInternal(option.value);
       }
 
       setVisible(false);
-
-      dispatchEvent('change', newInternal, nativeEvent);
+      dispatchEvent('change', newSelected, nativeEvent);
 
       if (autoFocus) {
         setTimeout(focus, 100);
@@ -277,7 +278,7 @@ const SelectFactory = React.memo<SelectProps>(
           contentStyle={{ flex: 1 }}
           onPress={handleOpen}
         >
-          <TextFactory>{internal?.label ?? internal?.value ?? placeholder ?? ''}</TextFactory>
+          <TextFactory>{selected?.label ?? selected?.value ?? placeholder ?? ''}</TextFactory>
         </ButtonFactory>
 
         {Boolean(error) && typeof error === 'string' && (
@@ -292,7 +293,7 @@ const SelectFactory = React.memo<SelectProps>(
             type="text"
             name={name}
             readOnly={readOnly}
-            value={`${internal?.value ?? ''}`}
+            value={`${selected?.value ?? ''}`}
             onChange={handleChangeBrowser}
           />
         )}
@@ -301,7 +302,7 @@ const SelectFactory = React.memo<SelectProps>(
           <CardFactory position="absolute" p={0} style={[{ overflow: 'hidden' }, metrics]}>
             <ScrollableFactory ref={scrollRef} contentInset={1} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth}>
               {arrOptions?.map((option, index) => {
-                const isSelected = option.value == internal?.value;
+                const isSelected = option.value == selected?.value;
 
                 return (
                   <ButtonFactory
