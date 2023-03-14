@@ -1,6 +1,6 @@
 {
   "name": "@react-bulk/web",
-  "version": "0.2.37",
+  "version": "0.2.38",
   "description": "React Bulk for React Web",
   "author": "CaioEduT <caioedut@gmail.com>",
   "homepage": "https://github.com/caioedut/react-bulk",
@@ -33,7 +33,7 @@
   },
   "scripts": {},
   "dependencies": {
-    "@react-bulk/core": "^0.2.37"
+    "@react-bulk/core": "^0.2.38"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -42,5 +42,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "28f13dd5c9fff2236e35df2204790b7ccbbd9538"
+  "gitHead": "7db47d3f528c007f7a2424bfbabbe01e8f1a9700"
 }
