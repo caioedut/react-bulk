@@ -21,7 +21,7 @@ function Home() {
       <Button onPress={() => setVisible(true)}>
         Open Drawer
       </Button>
-      <Drawer visible={visible}>
+      <Drawer visible={visible} maxw={320}>
         <Card>
           <Text variant="title" bold>Drawer is amazing!</Text>
 
