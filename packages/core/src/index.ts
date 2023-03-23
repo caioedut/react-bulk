@@ -52,6 +52,7 @@ export { default as CarouselFactory } from './factory/CarouselFactory';
 export { default as CheckboxFactory } from './factory/CheckboxFactory';
 export { default as CollapseFactory } from './factory/CollapseFactory';
 export { default as DividerFactory } from './factory/DividerFactory';
+export { default as DrawerFactory } from './factory/DrawerFactory';
 export { default as DropdownFactory } from './factory/DropdownFactory';
 export { default as FormFactory } from './factory/FormFactory';
 export { default as GridFactory } from './factory/GridFactory';

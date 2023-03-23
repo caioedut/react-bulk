@@ -27,6 +27,7 @@ import ReactBulk, {
   CheckboxFactory,
   CollapseFactory,
   DividerFactory,
+  DrawerFactory,
   DropdownFactory,
   FormFactory,
   GridFactory,
@@ -137,6 +138,7 @@ export const Carousel = CarouselFactory;
 export const Checkbox = CheckboxFactory;
 export const Collapse = CollapseFactory;
 export const Divider = DividerFactory;
+export const Drawer = DrawerFactory;
 export const Dropdown = DropdownFactory;
 export const Form = FormFactory;
 export const Grid = GridFactory;

@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
@@ -21,6 +21,9 @@ const BackdropFactory = React.memo<BackdropProps>(
       ...rest
     } = factory2(props, options);
 
+    const defaultRef = useRef(null);
+    ref = ref || defaultRef;
+
     const containerProps: any = {};
 
     if (web) {
@@ -41,6 +44,9 @@ const BackdropFactory = React.memo<BackdropProps>(
       if (!web) return;
 
       if (visible) {
+        // @ts-ignore
+        setTimeout(() => ref?.current?.focus?.(), 10);
+
         const top = document.documentElement.scrollTop;
         const left = document.documentElement.scrollLeft;
 
@@ -70,7 +76,7 @@ const BackdropFactory = React.memo<BackdropProps>(
     }
 
     return (
-      <BoxFactory ref={ref} component={Dialog} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory ref={ref} component={Dialog} tabIndex="-1" stylist={[variants.root, stylist]} {...rest}>
         <BoxFactory maxh="100%" maxw="100%" style={{ cursor: 'auto' }} {...containerProps}>
           {children}
         </BoxFactory>

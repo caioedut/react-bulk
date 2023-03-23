@@ -576,6 +576,38 @@ const base: ThemeProps & any = {
           },
         },
       },
+      Drawer: {
+        name: 'rbk-drawer',
+        defaultProps: {
+          placement: 'right',
+        },
+        defaultStyles: {
+          root: {
+            position: 'absolute',
+            bg: 'background',
+            maxh: '100%',
+            maxw: '100%',
+            ...this.mixins.transitions.fast,
+          },
+          backdrop: {},
+        },
+        variants: {
+          placement: {
+            left: {
+              root: { top: 0, left: 0, height: '100%', ml: '-100%' },
+            },
+            right: {
+              root: { top: 0, right: 0, height: '100%', mr: '-100%' },
+            },
+            top: {
+              root: { top: 0, left: 0, width: '100%', mt: '-100%' },
+            },
+            bottom: {
+              root: { bottom: 0, left: 0, width: '100%', mb: '-100%' },
+            },
+          },
+        },
+      },
       Dropdown: {
         name: 'rbk-dropdown',
         defaultProps: {
@@ -591,7 +623,7 @@ const base: ThemeProps & any = {
               boxShadow: 'rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px',
               opacity: 0,
               visibility: 'hidden',
-              ...this.mixins.transitions.medium,
+              ...this.mixins.transitions.fast,
             },
             native: {
               display: 'none',
@@ -1079,7 +1111,7 @@ const base: ThemeProps & any = {
               pointerEvents: 'none',
               visibility: 'hidden',
               zIndex: -1,
-              ...this.mixins.transitions.medium,
+              ...this.mixins.transitions.fast,
             },
 
             native: {

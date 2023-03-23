@@ -13,6 +13,7 @@ import {
   Checkbox,
   Collapse,
   Divider,
+  Drawer,
   Dropdown,
   Form,
   Grid,
@@ -57,6 +58,7 @@ export default function Main() {
 
   const [radio, setRadio] = useState('medium');
   const [modal, setModal] = useState({});
+  const [drawer, setDrawer] = useState(false);
   const [actionSheet, setActionSheet] = useState(false);
 
   const [loading, toggleLoading] = useReducer((state) => !state, true);
@@ -577,6 +579,55 @@ export default function Main() {
 
       <Card mt={3}>
         <Text variant="title" mb={3}>
+          Collapse
+        </Text>
+        <Box row>
+          <Button onPress={toggleCollapse}>Toggle Collapse</Button>
+        </Box>
+        <Collapse in={collpase} mt={3}>
+          <Text>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis, dignissimos distinctio
+            earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam recusandae suscipit, tempora.
+          </Text>
+        </Collapse>
+      </Card>
+
+      <Card mt={3}>
+        <Text variant="title" mb={3}>
+          Drawer
+        </Text>
+        <Box row>
+          <Button onPress={() => setDrawer(true)}>Drawer</Button>
+        </Box>
+
+        <Drawer visible={drawer} placement="right" maxw={320} onBackdropPress={() => setDrawer(false)}>
+          <Card>
+            <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
+            <Text mt={3}>
+              A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae soluta. Incidunt
+              labore laboriosam maiores, praesentium quia tempore!
+            </Text>
+            <Button mt={3} onPress={() => setDrawer(false)}>
+              Close
+            </Button>
+          </Card>
+        </Drawer>
+
+        <ActionSheet visible={actionSheet} maxw={500} onClose={() => setActionSheet(false)}>
+          <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
+          <Text mt={3}>
+            A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae soluta. Incidunt labore
+            laboriosam maiores, praesentium quia tempore!
+          </Text>
+
+          <Button mt={3}>Option X</Button>
+          <Button mt={3}>Option Y</Button>
+          <Button mt={3}>Option Z</Button>
+        </ActionSheet>
+      </Card>
+
+      <Card mt={3}>
+        <Text variant="title" mb={3}>
           Action Sheet
         </Text>
         <Box row>
@@ -606,21 +657,6 @@ export default function Main() {
         <Dropdown visible={dropdown}>
           <Text>Lorem ipsum dolor sit amet</Text>
         </Dropdown>
-      </Card>
-
-      <Card mt={3}>
-        <Text variant="title" mb={3}>
-          Collapse
-        </Text>
-        <Box row>
-          <Button onPress={toggleCollapse}>Toggle Collapse</Button>
-        </Box>
-        <Collapse in={collpase} mt={3}>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis, dignissimos distinctio
-            earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam recusandae suscipit, tempora.
-          </Text>
-        </Collapse>
       </Card>
 
       <Card mt={3}>

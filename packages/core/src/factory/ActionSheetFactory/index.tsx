@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 
 import useAnimation from '../../hooks/useAnimation';
 import useTheme from '../../hooks/useTheme';
@@ -28,9 +28,6 @@ const ActionSheetFactory = React.memo<ActionSheetProps>(
       variants,
       ...rest
     } = factory2(props, options);
-
-    const defaultRef = useRef(null);
-    ref = ref || defaultRef;
 
     const animation = useAnimation({ marginBottom: -dimensions.height });
 

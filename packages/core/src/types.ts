@@ -357,6 +357,7 @@ export type ThemeProps = {
     Checkbox: ThemeComponentProps & { defaultProps?: CheckboxProps };
     Collapse: ThemeComponentProps & { defaultProps?: CollapseProps };
     Divider: ThemeComponentProps & { defaultProps?: DividerProps };
+    Drawer: ThemeComponentProps & { defaultProps?: DrawerProps };
     Dropdown: ThemeComponentProps & { defaultProps?: DropdownProps };
     Form: ThemeComponentProps & { defaultProps?: FormProps };
     Grid: ThemeComponentProps & { defaultProps?: GridProps };
@@ -761,4 +762,11 @@ export type ListItemProps = {
 
 export type LinkProps = {
   underline?: boolean;
+} & BoxProps;
+
+export type DrawerProps = {
+  placement?: 'left' | 'right' | 'top' | 'bottom';
+
+  // Styles
+  backdropStyle?: RbkStyles;
 } & BoxProps;
