@@ -1,6 +1,5 @@
 import ReactBulk from '@react-bulk/native';
-
-import Main from './src';
+import { Slot } from 'expo-router';
 
 const theme = {
   typography: {
@@ -8,10 +7,10 @@ const theme = {
   },
 };
 
-export default function App() {
+export default function Layout() {
   return (
     <ReactBulk theme={theme}>
-      <Main />
+      <Slot />
     </ReactBulk>
   );
 }
