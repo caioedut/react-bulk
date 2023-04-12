@@ -1,13 +1,14 @@
-import React, { forwardRef } from 'react';
+import React, { cloneElement, forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
+import get from '../../props/get';
 import { TextProps } from '../../types';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const TextFactory = React.memo<TextProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Text;
     const { web, native, Text } = global.mapping;
@@ -69,7 +70,20 @@ const TextFactory = React.memo<TextProps>(
       style,
     ];
 
-    return <BoxFactory ref={ref} component={Text} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles />;
+    const fontSize = get('fontSize', style, rest);
+
+    return (
+      <BoxFactory ref={ref} component={Text} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles>
+        {React.Children.map(children, (child) => {
+          // Fix inheritance
+          if (child?.type === TextFactory) {
+            child = cloneElement(child, { variant, color, fontSize, ...child.props });
+          }
+
+          return child;
+        })}
+      </BoxFactory>
+    );
   }),
 );
 
