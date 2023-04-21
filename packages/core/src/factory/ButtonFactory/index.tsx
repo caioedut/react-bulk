@@ -136,11 +136,11 @@ const ButtonFactory = React.memo<ButtonProps>(
         {...rest}
         disabled={disabled}
       >
-        {Boolean(startAddon) && <BoxFactory>{startAddon}</BoxFactory>}
+        {Boolean(startAddon) && <BoxFactory style={loading && { opacity: 0 }}>{startAddon}</BoxFactory>}
 
         {Boolean(children || children?.length) && <BoxFactory style={contentStyle}>{children}</BoxFactory>}
 
-        {Boolean(endAddon) && <BoxFactory>{endAddon}</BoxFactory>}
+        {Boolean(endAddon) && <BoxFactory style={loading && { opacity: 0 }}>{endAddon}</BoxFactory>}
 
         {loading && (
           <BoxFactory position="absolute" i={0} center>
