@@ -285,23 +285,23 @@ const base: ThemeProps & any = {
             alignContent: 'center',
             justifyContent: 'center',
             textAlign: 'center',
-
-            backgroundColor: 'secondary',
-            borderRadius: '0.625rem',
-            overflow: 'hidden',
-            py: 1,
-            px: 1.5,
-
-            minHeight: '1.25rem',
-            minWidth: '1.25rem',
-
             alignSelf: 'center',
             justifySelf: 'center',
+
+            backgroundColor: 'secondary',
+            borderRadius: '0.5625rem',
+            overflow: 'hidden',
+            minHeight: '1.125rem',
+            minWidth: '1.125rem',
+            paddingVertical: '0.25rem',
+            paddingHorizontal: '0.375rem',
           },
           label: {
             color: 'white',
-            fontSize: '0.625rem',
+            fontSize: '0.5625rem',
             fontWeight: 'bold',
+
+            web: { lineHeight: 1 },
           },
         },
         variants: {

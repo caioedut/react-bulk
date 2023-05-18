@@ -3,7 +3,6 @@ import React, { forwardRef } from 'react';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { BadgeProps } from '../../types';
-import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
@@ -12,7 +11,6 @@ const BadgeFactory = React.memo<BadgeProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Badge;
-    const { web } = global.mapping;
 
     // Extends from default props
     let {
@@ -51,10 +49,6 @@ const BadgeFactory = React.memo<BadgeProps>(
         fontSize: halfSize,
       },
 
-      web && {
-        lineHeight: 1,
-      },
-
       labelStyle,
     ];
 
@@ -71,6 +65,8 @@ const BadgeFactory = React.memo<BadgeProps>(
       !dot && {
         minHeight: baseSize,
         minWidth: baseSize,
+        paddingVertical: Math.round(baseSize * 0.222222),
+        paddingHorizontal: Math.round(baseSize * 0.333333),
       },
 
       top && { top: -halfSize },
