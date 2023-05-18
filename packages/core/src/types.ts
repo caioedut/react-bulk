@@ -2,9 +2,9 @@ import { CSSProperties, ReactNode, RefObject, SyntheticEvent } from 'react';
 
 import { styleProps } from './styles/constants';
 
-export type AnyObject = { [key: string]: any };
+export type AnyObject = { [key: string | number]: any };
 export type TimeoutType = ReturnType<typeof setTimeout> | null;
-export type AnyCallback = (mixed: any) => any;
+export type AnyCallback = (...args: any[]) => any;
 export type EventCallback = (event: any) => any;
 export type InputValue = string | number | boolean | null | undefined;
 
@@ -434,7 +434,6 @@ export type TextProps = {
   smallCaps?: boolean;
   weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | string;
   transform?: TextTransformValues;
-
   numberOfLines?: number;
 } & BoxProps;
 

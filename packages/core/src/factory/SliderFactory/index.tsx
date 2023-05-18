@@ -55,6 +55,7 @@ const SliderFactory = React.memo<SliderProps>(
     const pressIniPosRef = useRef<number | null>(null);
 
     if (typeof size === 'string') {
+      // TODO: standardize with other sizes
       size = pick(size, 'medium', {
         xsmall: 0.75,
         small: 0.875,

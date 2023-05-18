@@ -355,10 +355,10 @@ const base: ThemeProps & any = {
             border: '1px solid primary',
             borderRadius: this.shape.borderRadius,
             margin: 0,
-            minHeight: '2rem',
-            minWidth: '2rem',
+            minHeight: '2.25rem',
+            minWidth: '2.25rem',
             padding: 0,
-            paddingHorizontal: '0.5rem',
+            paddingHorizontal: '0.75rem',
 
             web: {
               backgroundImage: 'none',
@@ -408,30 +408,30 @@ const base: ThemeProps & any = {
           size: {
             xsmall: {
               root: {
-                minHeight: '1.5rem',
-                minWidth: '1.5rem',
-                paddingHorizontal: '0.375rem',
+                minHeight: '1.25rem',
+                minWidth: '1.25rem',
+                paddingHorizontal: '0.25rem',
               },
             },
             small: {
               root: {
                 minHeight: '1.75rem',
                 minWidth: '1.75rem',
-                paddingHorizontal: '0.4375rem',
+                paddingHorizontal: '0.5rem',
               },
             },
             large: {
               root: {
-                minHeight: '2.5rem',
-                minWidth: '2.5rem',
-                paddingHorizontal: '0.625rem',
+                minHeight: '2.75rem',
+                minWidth: '2.75rem',
+                paddingHorizontal: '1rem',
               },
             },
             xlarge: {
               root: {
                 minHeight: '3.25rem',
                 minWidth: '3.25rem',
-                paddingHorizontal: '0.8125rem',
+                paddingHorizontal: '1.25rem',
               },
             },
           },
@@ -760,10 +760,10 @@ const base: ThemeProps & any = {
             color: 'text.primary',
             flex: 1,
             fontSize: '1rem',
-            height: '1rem',
+            height: '2.25rem',
             margin: 0,
             paddingVertical: 0,
-            paddingHorizontal: '0.5rem',
+            paddingHorizontal: '0.625rem',
             textDecorationLine: 'none',
             width: '100%',
 
@@ -773,7 +773,7 @@ const base: ThemeProps & any = {
               cursor: 'inherit',
               lineHeight: '1rem',
               outline: '0 !important',
-              paddingVertical: '0.5rem',
+              paddingHorizontal: '0.625rem',
               touchAction: 'none',
             },
           },

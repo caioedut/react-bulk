@@ -151,17 +151,17 @@ const InputFactory = React.memo<InputProps>(
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
-        xsmall: 0.75,
-        small: 0.875,
-        medium: 1,
-        large: 1.25,
-        xlarge: 1.625,
+        xsmall: 1.25,
+        small: 1.75,
+        medium: 2.25,
+        large: 2.75,
+        xlarge: 3.25,
       });
     }
 
     const baseSize = theme.rem(size);
-    const spacing = baseSize / 2;
-    const height = baseSize * (multiline ? rows ?? 6 : 2);
+    const spacing = (baseSize - theme.rem()) / 2;
+    const height = baseSize * (multiline ? rows ?? 3 : 1);
 
     useEffect(() => {
       if (typeof value === 'undefined') return;

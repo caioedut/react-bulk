@@ -79,29 +79,28 @@ const ButtonFactory = React.memo<ButtonProps>(
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
-        xsmall: 0.75,
-        small: 0.875,
-        medium: 1,
-        large: 1.25,
-        xlarge: 1.625,
+        xsmall: 1.25,
+        small: 1.75,
+        medium: 2.25,
+        large: 2.75,
+        xlarge: 3.25,
       });
     }
 
     const baseSize = theme.rem(size);
-    const halfSize = baseSize / 2;
-    const doubleSize = baseSize * 2;
+    const spacing = (baseSize - theme.rem(0.75)) / 2;
     const textColor = isBasic ? color : 'white';
 
     style = [
       isSizeNumber && {
-        minHeight: doubleSize,
-        minWidth: doubleSize,
-        paddingHorizontal: halfSize,
+        minHeight: baseSize,
+        minWidth: baseSize,
+        paddingHorizontal: spacing,
       },
 
       circular && {
-        borderRadius: doubleSize / 2,
-        paddingHorizontal: halfSize / 2,
+        borderRadius: baseSize / 2,
+        paddingHorizontal: 0,
       },
 
       color && { borderColor: color },
