@@ -269,7 +269,7 @@ export default function Main() {
                 </Button>
               </Box>
               <Box>
-                <Button variant={variant} circular>
+                <Button variant={variant} circular px={3}>
                   Circular
                 </Button>
               </Box>

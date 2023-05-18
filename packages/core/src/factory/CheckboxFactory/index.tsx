@@ -56,15 +56,16 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
-        xsmall: 0.75,
-        small: 0.875,
-        medium: 1,
-        large: 1.25,
-        xlarge: 1.625,
+        xsmall: 1.25,
+        small: 1.75,
+        medium: 2.25,
+        large: 2.75,
+        xlarge: 3.25,
       });
     }
 
-    const fontSize = theme.rem(size);
+    const baseSize = theme.rem(size);
+    const fontSize = baseSize / 2;
     const iconSize = fontSize * theme.typography.lineHeight;
 
     useEffect(() => {
