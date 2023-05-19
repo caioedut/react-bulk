@@ -93,7 +93,10 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
     const clear = useCallback(() => setInternal(Boolean(+defaultChecked)), []);
-    const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
+    const isFocused = useCallback(
+      () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
+      [buttonRef],
+    );
 
     function dispatchEvent(type: string, checked: boolean, nativeEvent?: any) {
       const callback = {
