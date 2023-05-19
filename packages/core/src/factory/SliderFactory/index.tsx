@@ -130,7 +130,10 @@ const SliderFactory = React.memo<SliderProps>(
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
     const clear = useCallback(() => setPercent(getPercentByValue(defaultValue)), []);
-    const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
+    const isFocused = useCallback(
+      () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
+      [buttonRef],
+    );
 
     function dispatchEvent(type: string, value: number, nativeEvent?: any) {
       const callback = {

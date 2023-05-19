@@ -81,7 +81,7 @@ const InputFactory = React.memo<InputProps>(
     const maskValue = useCallback(
       (value) => {
         value = typeof mask === 'function' ? mask(value) : value;
-        return value ?? '';
+        return `${value ?? ''}`; // React Native only accepts STRING
       },
       [mask],
     );
@@ -190,7 +190,7 @@ const InputFactory = React.memo<InputProps>(
 
     const baseSize = theme.rem(size);
     const spacing = (baseSize - theme.rem()) / 2;
-    const height = baseSize * (multiline ? rows ?? 3 : 1);
+    const height = multiline ? theme.rem() * (rows ?? 6) + spacing * 2 : baseSize;
 
     useEffect(() => {
       if (typeof value === 'undefined') return;
@@ -215,7 +215,10 @@ const InputFactory = React.memo<InputProps>(
     const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
     const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
     const clear = useCallback(() => setInternal(defaultValue), []);
-    const isFocused = useCallback(() => inputRef?.current?.isFocused?.() || inputRef?.current === document?.activeElement, [inputRef]);
+    const isFocused = useCallback(
+      () => Boolean(inputRef?.current?.isFocused?.()) || inputRef?.current === document?.activeElement,
+      [inputRef],
+    );
 
     function dispatchEvent(type: string, value: number, nativeEvent?: any) {
       const callback = {
@@ -339,7 +342,7 @@ const InputFactory = React.memo<InputProps>(
             />
 
             {type === 'number' && (
-              <BoxFactory h="100%" style={{ marginRight: spacing / (endAddon ? 1 : 2) }}>
+              <BoxFactory h={baseSize} style={{ marginRight: spacing / (endAddon ? 1 : 2) }}>
                 {[+1, -1].map((item) => {
                   const isInc = item > 0;
                   const Icon = isInc ? ChevronUp : ChevronDown;

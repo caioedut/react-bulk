@@ -113,7 +113,11 @@ const SelectFactory = React.memo<SelectProps>(
       if (!visible || !selectedRef.current) return;
 
       if (web) {
-        selectedRef.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
+        selectedRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'start',
+        });
       }
 
       if (native) {
@@ -132,7 +136,10 @@ const SelectFactory = React.memo<SelectProps>(
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
     const clear = useCallback(() => setInternal(defaultValue), []);
-    const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
+    const isFocused = useCallback(
+      () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
+      [buttonRef],
+    );
 
     function dispatchEvent(type: string, option, nativeEvent?: any) {
       const callback = {
@@ -146,7 +153,18 @@ const SelectFactory = React.memo<SelectProps>(
       }
     }
 
+    function optionFocus(index) {
+      if (index < 0 || index > arrOptions.length - 1) {
+        index = 0;
+      }
+
+      optionsRef?.current?.[index]?.focus?.();
+      setActiveIndex(index);
+    }
+
     const handleOpen = () => {
+      optionFocus(arrOptions?.findIndex((item) => item.value == selected?.value));
+
       const callback = ({ top, left, height, width }) => {
         const newMetrics: any = { left, width };
 
@@ -188,7 +206,7 @@ const SelectFactory = React.memo<SelectProps>(
       dispatchEvent('change', newSelected, nativeEvent);
 
       if (autoFocus) {
-        setTimeout(focus, 100);
+        focus();
       }
     };
 
@@ -198,39 +216,39 @@ const SelectFactory = React.memo<SelectProps>(
     };
 
     const handleKeyDown = (e) => {
-      const { code } = e;
+      const { key } = e;
 
       let newIndex = activeIndex;
 
-      if (code === 'Escape') {
+      if (key === 'Escape') {
         return setVisible(false);
       }
 
-      if (code !== 'Enter') {
+      if (key !== 'Enter') {
         e?.preventDefault?.();
       }
 
-      if (code === 'ArrowUp') {
+      if (key === 'ArrowUp') {
         newIndex -= 1;
       }
 
-      if (code === 'ArrowDown') {
+      if (key === 'ArrowDown') {
         newIndex += 1;
       }
 
-      if (code === 'Home') {
+      if (key === 'Home') {
         newIndex = 0;
       }
 
-      if (code === 'End') {
+      if (key === 'End') {
         newIndex = arrOptions.length - 1;
       }
 
-      if (code === 'PageUp') {
+      if (key === 'PageUp') {
         newIndex = Math.max(newIndex - 3, 0);
       }
 
-      if (code === 'PageDown') {
+      if (key === 'PageDown') {
         newIndex = Math.min(newIndex + 3, arrOptions.length - 1);
       }
 
@@ -242,8 +260,7 @@ const SelectFactory = React.memo<SelectProps>(
         newIndex = arrOptions.length - 1;
       }
 
-      optionsRef?.current?.[newIndex]?.focus?.();
-      setActiveIndex(newIndex);
+      optionFocus(newIndex);
     };
 
     style = [extract(spacings, rest), style];
@@ -279,7 +296,7 @@ const SelectFactory = React.memo<SelectProps>(
           contentStyle={{ flex: 1, maxWidth: '100%' }}
           onPress={handleOpen}
         >
-          <TextFactory numberOfLines={1} flex>
+          <TextFactory numberOfLines={1} w="100%">
             {selected?.label ?? selected?.value ?? placeholder ?? ''}
           </TextFactory>
         </ButtonFactory>
