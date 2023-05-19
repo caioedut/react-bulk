@@ -57,7 +57,12 @@ export default function createTheme(options?: ThemeOptionalProps, extendsTo?: Th
   const newTheme: ThemeProps = deepmerge.all(all, { arrayMerge: (prev, next) => next });
 
   const components = { ...newTheme.components };
-  const ordered = extract(['Box', 'Text', 'Label', 'Backdrop', 'Scrollable', 'Card', 'Dropdown', 'Button', 'ButtonGroup'], components);
+
+  const ordered = extract(
+    ['Box', 'Text', 'Outline', 'Label', 'Backdrop', 'Scrollable', 'Card', 'Dropdown', 'Button', 'ButtonGroup'],
+    components,
+  );
+
   const list = [...Object.values(ordered), ...Object.values(components)];
 
   list.forEach((component: any) => {

@@ -166,11 +166,13 @@ const BoxFactory = React.memo<BoxProps>(
     return (
       <Component ref={ref} {...rest} {...componentProps}>
         {React.Children.map(children, (child) => {
-          if (!child && !['string', 'number'].includes(typeof child)) {
+          const isText = ['string', 'number'].includes(typeof child);
+
+          if (!child && !isText) {
             return null;
           }
 
-          if (typeof children === 'string') {
+          if (isText) {
             return <Text>{child}</Text>;
           }
 

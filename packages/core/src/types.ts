@@ -368,6 +368,7 @@ export type ThemeProps = {
     ListItem: ThemeComponentProps & { defaultProps?: ListItemProps };
     Loading: ThemeComponentProps & { defaultProps?: LoadingProps };
     Modal: ThemeComponentProps & { defaultProps?: ModalProps };
+    Outline: ThemeComponentProps & { defaultProps?: OutlineProps };
     Progress: ThemeComponentProps & { defaultProps?: ProgressProps };
     Scrollable: ThemeComponentProps & { defaultProps?: ScrollableProps };
     Select: ThemeComponentProps & { defaultProps?: SelectProps };
@@ -770,4 +771,10 @@ export type DrawerProps = {
 
   // Styles
   backdropStyle?: RbkStyles;
+} & BoxProps;
+
+export type OutlineProps = {
+  color?: ColorValues;
+  size?: number;
+  visible?: 'auto' | boolean;
 } & BoxProps;

@@ -38,6 +38,7 @@ import ReactBulk, {
   ListItemFactory,
   LoadingFactory,
   ModalFactory,
+  OutlineFactory,
   ProgressFactory,
   RbkMap,
   ScrollableFactory,
@@ -149,6 +150,7 @@ export const Link = LinkFactory;
 export const ListItem = ListItemFactory;
 export const Loading = LoadingFactory;
 export const Modal = ModalFactory;
+export const Outline = OutlineFactory;
 export const Progress = ProgressFactory;
 export const Scrollable = ScrollableFactory;
 export const Select = SelectFactory;
