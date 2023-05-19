@@ -177,9 +177,25 @@ To use as prop instead of children.
 
 ---
 
+**`max`**
+
+Combined with `type="number"`, limit the maximum number value.
+
+➤ Type: **`number`** <br/>
+
+---
+
 **`maxLength`**
 
 Limits the maximum number of characters that can be entered. Use this instead of implementing the logic in JS to avoid flicker.
+
+➤ Type: **`number`** <br/>
+
+---
+
+**`min`**
+
+Combined with `type="number"`, defines the minimum number value.
 
 ➤ Type: **`number`** <br/>
 
