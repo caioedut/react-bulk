@@ -2,13 +2,17 @@ import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'rea
 
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
+import ChevronDown from '../../icons/ChevronDown';
+import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { customStyleProps } from '../../styles/constants';
-import { InputProps } from '../../types';
+import { InputProps, InputValue } from '../../types';
+import defined from '../../utils/defined';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
+import ButtonFactory from '../ButtonFactory';
 import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
@@ -17,7 +21,7 @@ const InputFactory = React.memo<InputProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Input;
-    const { web, native, Input, TextArea } = global.mapping;
+    const { web, native, svg, Input, TextArea } = global.mapping;
 
     // Extends from default props
     let {
@@ -34,6 +38,9 @@ const InputFactory = React.memo<InputProps>(
       id,
       label,
       mask,
+      max,
+      maxLength,
+      min,
       multiline,
       name,
       notNull,
@@ -81,18 +88,42 @@ const InputFactory = React.memo<InputProps>(
 
     const unmaskValue = useCallback(
       (value) => {
-        if (typeof unmask === 'function') {
-          value = unmask(value);
-        } else {
-          // Parse to number
-          if (type === 'number' && value) {
+        let emptyValue: InputValue = '';
+
+        if (maxLength) {
+          value = `${value ?? ''}`.substring(0, maxLength);
+        }
+
+        // Number parser
+        if (type === 'number') {
+          emptyValue = 0;
+
+          if (value) {
             value = Number(value);
+          }
+
+          if (defined(value)) {
+            if (min && value < min) {
+              value = min;
+            }
+
+            if (max && value > max) {
+              value = max;
+            }
           }
         }
 
-        return !notNull && [undefined, null, ''].includes(value) ? null : value ?? '';
+        if (typeof unmask === 'function') {
+          value = unmask(value);
+        }
+
+        if (!notNull && [undefined, null, NaN, ''].includes(value)) {
+          return null;
+        }
+
+        return value ?? emptyValue;
       },
-      [unmask],
+      [unmask, type, min, max],
     );
 
     const [focused, setFocused] = useState(false);
@@ -115,13 +146,11 @@ const InputFactory = React.memo<InputProps>(
         readOnly,
         type:
           pick(secure ? 'secure' : type, 'default', {
-            default: null,
+            default: type,
             secure: 'password',
             phone: 'tel',
             hidden: 'text',
-          }) ||
-          type ||
-          'text',
+          }) || 'text',
       });
     }
 
@@ -201,10 +230,17 @@ const InputFactory = React.memo<InputProps>(
       }
     }
 
+    const handleIncDec = (e, signal) => {
+      handleChange({
+        nativeEvent: e,
+        value: Number(internal || 0) + (signal || 1),
+      });
+    };
+
     const handleChange = (e) => {
       const target = inputRef?.current;
       const nativeEvent = e?.nativeEvent ?? e;
-      const value = unmaskValue(target?.value ?? e?.nativeEvent?.text);
+      const value = unmaskValue(e?.value ?? target?.value ?? e?.nativeEvent?.text);
 
       if (!controlled) {
         setInternal(value);
@@ -301,6 +337,31 @@ const InputFactory = React.memo<InputProps>(
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
+
+            {type === 'number' && (
+              <BoxFactory h="100%" style={{ marginRight: spacing / (endAddon ? 1 : 2) }}>
+                {[+1, -1].map((item) => {
+                  const isInc = item > 0;
+                  const Icon = isInc ? ChevronUp : ChevronDown;
+
+                  return (
+                    <ButtonFactory
+                      key={item}
+                      variant="text"
+                      color={color}
+                      size={size / 2}
+                      h="50%"
+                      p={0}
+                      accessibility={{ label: isInc ? 'plus' : 'minus' }}
+                      contentStyle={{ align: isInc ? 'end' : 'start' }}
+                      onPress={(e) => handleIncDec(e, item)}
+                    >
+                      <Icon svg={svg} size={Math.round(baseSize * 0.45)} color={theme.color(color)} />
+                    </ButtonFactory>
+                  );
+                })}
+              </BoxFactory>
+            )}
 
             {Boolean(endAddon) && (
               <BoxFactory style={{ marginRight: spacing }} onPress={focus}>
