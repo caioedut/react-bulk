@@ -63,6 +63,7 @@ export { default as LinkFactory } from './factory/LinkFactory';
 export { default as ListItemFactory } from './factory/ListItemFactory';
 export { default as LoadingFactory } from './factory/LoadingFactory';
 export { default as ModalFactory } from './factory/ModalFactory';
+export { default as OutlineFactory } from './factory/OutlineFactory';
 export { default as ProgressFactory } from './factory/ProgressFactory';
 export { default as ScrollableFactory } from './factory/ScrollableFactory';
 export { default as SelectFactory } from './factory/SelectFactory';

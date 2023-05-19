@@ -446,7 +446,7 @@ const base: ThemeProps & any = {
             outline: {
               root: {
                 bg: 'trans',
-                '&:hover': { bg: (theme) => theme.color('primary', 0.1) },
+                web: { '&:hover': { bg: (theme) => theme.color('primary', 0.2) } },
               },
               label: {
                 color: 'primary',
@@ -456,7 +456,7 @@ const base: ThemeProps & any = {
               root: {
                 bg: 'trans',
                 borderWidth: 0,
-                '&:hover': { bg: (theme) => theme.color('primary', 0.1) },
+                web: { '&:hover': { bg: (theme) => theme.color('primary', 0.2) } },
               },
               label: {
                 color: 'primary',
@@ -797,8 +797,8 @@ const base: ThemeProps & any = {
                 backgroundColor: (theme) => theme.color('background.disabled', 0.125),
                 borderColor: (theme) => theme.color('background.disabled', 0.25),
                 web: {
-                  cursor: 'not-allowed',
-                  '& *': { cursor: 'not-allowed' },
+                  cursor: 'not-allowed !important',
+                  '& *': { cursor: 'not-allowed !important' },
                 },
               },
             },
@@ -891,6 +891,25 @@ const base: ThemeProps & any = {
             },
             bottom: {
               root: { justifyContent: 'flex-end' },
+            },
+          },
+        },
+      },
+      Outline: {
+        name: 'rbk-outline',
+        defaultProps: {
+          color: 'primary',
+          size: 4,
+          visible: 'auto',
+        },
+        defaultStyles: {
+          root: {
+            web: {
+              outline: '0 !important',
+              ...this.mixins.transitions.fast,
+              transitionProperty: 'box-shadow',
+              touchAction: 'none',
+              '-webkit-tap-highlight-color': 'transparent',
             },
           },
         },

@@ -109,7 +109,7 @@ const ButtonFactory = React.memo<ButtonProps>(
 
       web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.color(color, 0.3)}` } },
 
-      web && color && { '&:hover': { bg: theme.color(color, isBasic ? 0.1 : 0.8) } },
+      web && color && { '&:hover': { bg: theme.color(color, isBasic ? 0.2 : 0.8) } },
 
       style,
     ];
@@ -118,13 +118,15 @@ const ButtonFactory = React.memo<ButtonProps>(
 
     labelStyle = [{ color: textColor }, labelStyle];
 
-    if (typeof children === 'string') {
-      children = (
+    children = React.Children.map(children, (child) =>
+      ['string', 'number'].includes(typeof child) ? (
         <TextFactory style={labelStyle} stylist={[variants.label]}>
-          {children}
+          {child}
         </TextFactory>
-      );
-    }
+      ) : (
+        child
+      ),
+    );
 
     return (
       <BoxFactory
@@ -137,7 +139,7 @@ const ButtonFactory = React.memo<ButtonProps>(
       >
         {Boolean(startAddon) && <BoxFactory style={loading && { opacity: 0 }}>{startAddon}</BoxFactory>}
 
-        {Boolean(children || children?.length) && <BoxFactory style={contentStyle}>{children}</BoxFactory>}
+        {Boolean(children?.length) && <BoxFactory style={contentStyle}>{children}</BoxFactory>}
 
         {Boolean(endAddon) && <BoxFactory style={loading && { opacity: 0 }}>{endAddon}</BoxFactory>}
 
