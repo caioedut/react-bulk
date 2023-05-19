@@ -103,11 +103,11 @@ const InputFactory = React.memo<InputProps>(
           }
 
           if (defined(value)) {
-            if (min && value < min) {
+            if (defined(min) && value < min) {
               value = min;
             }
 
-            if (max && value > max) {
+            if (defined(max) && value > max) {
               value = max;
             }
           }
