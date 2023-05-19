@@ -775,6 +775,13 @@ const base: ThemeProps & any = {
               outline: '0 !important',
               paddingHorizontal: '0.625rem',
               touchAction: 'none',
+
+              '-moz-appearance': 'textfield',
+              appearance: 'textfield',
+              '&::-webkit-outer-spin-button,::-webkit-inner-spin-button': {
+                '-webkit-appearance': 'none',
+                appearance: 'none',
+              },
             },
           },
           error: {

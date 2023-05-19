@@ -489,7 +489,9 @@ export type InputProps = {
   error?: string;
   label?: string;
   mask?: (value: InputValue, data: AnyObject) => any;
+  max?: number;
   maxLength?: number;
+  min?: number;
   multiline?: boolean;
   name?: string;
   notNull?: boolean;
