@@ -37,14 +37,12 @@ const ImageFactory = React.memo<ImageProps>(
     const defaultRef: any = useRef(null);
     const imageRef = ref || defaultRef;
 
-    alt = alt ?? '';
-
     const [status, setStatus] = useState('loading');
 
     const [imgWidth, setImgWidth] = useState<number | null>(null);
     const [aspectRatio, setAspectRatio] = useState<number | null>(null);
 
-    const [containerWidth, setContainerWidth] = useState<number | null>(null);
+    const [containerWidth, setContainerWidth] = useState<number>();
     const [finalWidth, setFinalWidth] = useState<number | null>(0);
     const [finalHeight, setFinalHeight] = useState<number | null>(0);
 
@@ -68,7 +66,7 @@ const ImageFactory = React.memo<ImageProps>(
 
     if (web) {
       Object.assign(rest, {
-        alt,
+        alt: alt ?? '',
         src: source?.uri ?? source,
       });
     }
@@ -132,8 +130,24 @@ const ImageFactory = React.memo<ImageProps>(
       let widthBase = typeof width === 'number' ? width : null;
       let heightBase = typeof height === 'number' ? height : null;
 
-      let newWidth = (widthBase ?? Math.min(imgWidth ?? 0, containerWidth ?? 0)) as number;
-      let newHeight = (heightBase ?? 0) as number;
+      const widthStr = `${width}`.toLowerCase().trim();
+      const heightStr = `${height}`.toLowerCase().trim();
+
+      if (widthStr.endsWith('px')) {
+        widthBase = Number(widthStr.replace(/\D/g, ''));
+      }
+
+      if (heightStr.endsWith('px')) {
+        heightBase = Number(heightStr.replace(/\D/g, ''));
+      }
+
+      if (widthBase === null && widthStr.endsWith('%')) {
+        const multiplier = Number(widthStr.replace(/\D/g, '')) / 100;
+        widthBase = (containerWidth ?? 0) * multiplier;
+      }
+
+      let newWidth = Number(widthBase ?? imgWidth ?? 0);
+      let newHeight = Number(heightBase ?? 0);
 
       // Calc height
       if (!heightBase) {
