@@ -4,8 +4,10 @@ import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import { ImageProps } from '../../types';
+import defined from '../../utils/defined';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
+import TextFactory from '../TextFactory';
 
 const ImageFactory = React.memo<ImageProps>(
   forwardRef(({ stylist, ...props }, ref) => {
@@ -17,6 +19,7 @@ const ImageFactory = React.memo<ImageProps>(
     let {
       alt,
       circular,
+      fallback,
       mode,
       source,
       // Sizes
@@ -72,10 +75,8 @@ const ImageFactory = React.memo<ImageProps>(
     }
 
     if (native) {
-      source = typeof source === 'string' ? { uri: source } : source;
-
       Object.assign(imgProps, {
-        source,
+        source: typeof source === 'string' ? { uri: source } : source,
         resizeMode: mode === 'fill' ? 'stretch' : mode,
         width: finalWidth,
         height: finalHeight,
@@ -104,14 +105,16 @@ const ImageFactory = React.memo<ImageProps>(
     useEffect(() => {
       if (!native || !source) return;
 
+      const asset = source?.uri ?? source;
+
       try {
-        if (typeof source === 'number') {
-          const image = Image.resolveAssetSource(source as any);
+        if (typeof asset === 'number') {
+          const image = Image.resolveAssetSource(asset as any);
           setImgWidth(image.width);
           setAspectRatio(image.height / (image.width || 1));
         } else {
           Image.getSize(
-            source?.uri,
+            asset,
             (width, height) => {
               setImgWidth(width);
               setAspectRatio(height / (width || 1));
@@ -181,7 +184,11 @@ const ImageFactory = React.memo<ImageProps>(
     ];
 
     if (status === 'error') {
-      return null;
+      if (defined(fallback)) {
+        return typeof fallback === 'function' ? fallback() : fallback;
+      }
+
+      return defined(alt) ? <TextFactory>{alt}</TextFactory> : null;
     }
 
     if (native) {
