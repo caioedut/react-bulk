@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
@@ -18,29 +18,22 @@ const LabelFactory = React.memo<LabelProps>(
       platform,
       // Styles
       variants,
+      // Events
+      onPress,
       ...rest
     } = factory2(props, options);
 
-    const [focusProps, setFocusProps] = useState({});
+    if (web && forProp) {
+      Object.assign(rest, {
+        htmlFor: typeof forProp === 'string' ? forProp : forProp?.current?.id,
+      });
+    }
 
-    useEffect(() => {
-      if (web && forProp) {
-        setFocusProps({
-          htmlFor: typeof forProp === 'string' ? forProp : forProp?.current?.id,
-        });
-      }
+    if (native && !onPress) {
+      onPress = forProp?.current?.focus;
+    }
 
-      if (native && forProp?.current?.focus) {
-        setFocusProps({
-          platform: {
-            ...platform,
-            native: { ...platform?.native, onPress: forProp.current.focus },
-          },
-        });
-      }
-    }, [forProp, platform]);
-
-    return <TextFactory ref={ref} component={Label} stylist={[variants.root, stylist]} {...rest} {...focusProps} />;
+    return <TextFactory ref={ref} component={Label} stylist={[variants.root, stylist]} {...rest} onPress={onPress} />;
   }),
 );
 

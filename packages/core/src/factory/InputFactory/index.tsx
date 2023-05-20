@@ -312,7 +312,7 @@ const InputFactory = React.memo<InputProps>(
     return (
       <BoxFactory hidden={type === 'hidden'} style={style} stylist={[variants.root, stylist]}>
         {Boolean(label) && (
-          <LabelFactory numberOfLines={1} for={inputRef} style={labelStyle} stylist={[variants.label]}>
+          <LabelFactory numberOfLines={1} for={inputRef} style={labelStyle} stylist={[variants.label]} onPress={native ? focus : undefined}>
             {label}
           </LabelFactory>
         )}
