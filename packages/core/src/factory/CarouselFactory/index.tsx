@@ -106,8 +106,11 @@ const CarouselFactory = React.memo<CarouselProps>(
 
     useEffect(() => {
       if (!contentRef.current || !contentWidth) return;
-      scrollToEnd(contentRef.current, false);
-      scrollToStart(contentRef.current, false);
+
+      setTimeout(() => {
+        scrollToEnd(contentRef.current, false);
+        scrollToStart(contentRef.current, false);
+      }, 0);
     }, [contentRef, contentWidth]);
 
     useEffect(() => {
