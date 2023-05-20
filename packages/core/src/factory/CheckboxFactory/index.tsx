@@ -17,7 +17,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Checkbox;
-    const { web, svg, Input } = global.mapping;
+    const { web, native, svg, Input } = global.mapping;
     const { Svg, Circle, Polyline } = svg;
 
     // Extends from default props
@@ -173,7 +173,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
         </ButtonFactory>
 
         {Boolean(label) && (
-          <LabelFactory numberOfLines={1} for={buttonRef} style={[{ ml: 1, flex: 1 }, labelStyle]}>
+          <LabelFactory for={buttonRef} style={[{ ml: 1 }, labelStyle]} onPress={native ? handleChange : undefined}>
             {label}
           </LabelFactory>
         )}

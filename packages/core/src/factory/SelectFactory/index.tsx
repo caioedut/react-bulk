@@ -270,7 +270,13 @@ const SelectFactory = React.memo<SelectProps>(
     return (
       <BoxFactory style={style} stylist={[variants.root, stylist]} onKeyDown={visible ? handleKeyDown : undefined}>
         {Boolean(label) && (
-          <LabelFactory numberOfLines={1} for={buttonRef} style={labelStyle} stylist={[variants.label]}>
+          <LabelFactory
+            numberOfLines={1}
+            for={buttonRef}
+            style={labelStyle}
+            stylist={[variants.label]}
+            onPress={native ? handleOpen : undefined}
+          >
             {label}
           </LabelFactory>
         )}

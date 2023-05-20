@@ -393,7 +393,7 @@ export type BoxProps = {
   className?: any;
   platform?: object;
   accessibility?: AccessibilityProps;
-  children?: ReactElement;
+  children?: ReactElement | any;
   invisible?: boolean;
   hidden?: boolean;
   componentProps?: AnyObject;
