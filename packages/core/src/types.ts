@@ -8,6 +8,8 @@ export type AnyCallback = (...args: any[]) => any;
 export type EventCallback = (event: any) => any;
 export type InputValue = any;
 
+export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[];
+
 export type RbkMap = {
   web: boolean;
   native: boolean;
@@ -17,21 +19,21 @@ export type RbkMap = {
   useDimensions: () => { width: number; height: number };
 
   Animated: {
-    View: ReactNode;
+    View: ReactElement;
   };
 
   svg: {
-    [key: string]: ReactNode;
+    [key: string]: ReactElement;
   };
 
-  [key: string]: ReactNode | any;
+  [key: string]: ReactElement | any;
 };
 
 export interface RbkFormChangeEvent {
   type: string;
   data: AnyObject;
   name?: string;
-  target?: ReactNode | any;
+  target?: ReactElement | any;
   nativeEvent?: Event | SyntheticEvent;
 }
 
@@ -40,7 +42,7 @@ export interface RbkEvent {
   value: InputValue;
   checked: boolean;
   name?: string;
-  target?: ReactNode | any;
+  target?: ReactElement | any;
   focus: () => void;
   blur: () => void;
   clear: () => void;
@@ -141,7 +143,7 @@ export type FormRef = {
   getValue: (name: string) => InputValue | undefined;
   setValue: (name: string, value: InputValue) => void;
   submit: () => void;
-  target: ReactNode;
+  target: ReactElement;
   getField: (name: string) => FormField | null | undefined;
   setField: (options: FormField) => void;
   unsetField: (name: string) => void;
@@ -391,7 +393,7 @@ export type BoxProps = {
   className?: any;
   platform?: object;
   accessibility?: AccessibilityProps;
-  children?: ReactNode | any;
+  children?: ReactElement;
   invisible?: boolean;
   hidden?: boolean;
   componentProps?: AnyObject;
@@ -439,20 +441,20 @@ export type TextProps = {
 } & BoxProps;
 
 export type LabelProps = {
-  for?: string | RefObject<ReactNode>;
+  for?: string | RefObject<ReactElement>;
 } & TextProps;
 
 export type ButtonProps = {
   badge?: number | BadgeProps;
   color?: ColorValues;
   disabled?: boolean;
-  endAddon?: ReactNode;
+  endAddon?: ReactElement;
   href?: string;
   label?: string;
   loading?: boolean;
   circular?: boolean;
   size?: SizeValues;
-  startAddon?: ReactNode;
+  startAddon?: ReactElement;
   transform?: TextTransformValues;
   type?: 'button' | 'submit' | 'cancel' | 'clear' | string;
   variant?: 'solid' | 'outline' | 'text' | string;
@@ -461,9 +463,9 @@ export type ButtonProps = {
   labelStyle?: RbkStyles;
 
   /** @deprecated use startAddon instead */
-  startIcon?: ReactNode;
+  startIcon?: ReactElement;
   /** @deprecated use endAddon instead */
-  endIcon?: ReactNode;
+  endIcon?: ReactElement;
 } & PressableProps &
   FocusableProps &
   BoxProps;
@@ -486,7 +488,7 @@ export type InputProps = {
   controlled?: boolean;
   defaultValue?: InputValue;
   disabled?: boolean;
-  endAddon?: ReactNode;
+  endAddon?: ReactElement;
   error?: string;
   label?: string;
   mask?: (value: InputValue, data: AnyObject) => any;
@@ -504,7 +506,7 @@ export type InputProps = {
   secure?: boolean;
   selectionColor?: ColorValues;
   size?: SizeValues;
-  startAddon?: ReactNode;
+  startAddon?: ReactElement;
   textColor?: ColorValues;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url' | 'hidden' | string;
   unmask?: (value: InputValue, data: AnyObject) => any;
@@ -519,9 +521,9 @@ export type InputProps = {
   inputStyle?: RbkStyles;
 
   /** @deprecated use startAddon instead */
-  startIcon?: ReactNode;
+  startIcon?: ReactElement;
   /** @deprecated use endAddon instead */
-  endIcon?: ReactNode;
+  endIcon?: ReactElement;
 
   /** @deprecated use onChange(event, value) instead */
   onInput?: Function;
@@ -542,7 +544,7 @@ export type SelectProps = {
   controlled?: boolean;
   defaultValue?: InputValue;
   disabled?: boolean;
-  endAddon?: ReactNode;
+  endAddon?: ReactElement;
   error?: string;
   label?: string;
   loading?: boolean;
@@ -551,7 +553,7 @@ export type SelectProps = {
   placeholder?: string;
   readOnly?: boolean;
   size?: SizeValues;
-  startAddon?: ReactNode;
+  startAddon?: ReactElement;
   value?: InputValue;
   // Events
   onChange?: (event: RbkEvent, value: InputValue, option: SelectOption) => void;
@@ -562,9 +564,9 @@ export type SelectProps = {
   labelStyle?: RbkStyles;
 
   /** @deprecated use startAddon instead */
-  startIcon?: ReactNode;
+  startIcon?: ReactElement;
   /** @deprecated use endAddon instead */
-  endIcon?: ReactNode;
+  endIcon?: ReactElement;
 } & FocusableProps &
   BoxProps;
 
@@ -637,6 +639,7 @@ export type ImageProps = {
   source: { uri?: string } | string | number;
   alt?: string;
   circular?: boolean;
+  fallback?: ReactElement;
   mode?: 'cover' | 'contain' | 'fill' | string;
   width?: number | string;
   height?: number | string;
@@ -689,8 +692,8 @@ export type GridProps = {
 
 export type TableProps = {
   columns: {
-    header?: ReactNode | AnyCallback | string;
-    content?: ReactNode | AnyCallback | string;
+    header?: ReactElement | AnyCallback | string;
+    content?: ReactElement | AnyCallback | string;
     style?: RbkStyles;
   }[];
   rows?: any[] | any;
@@ -746,10 +749,10 @@ export type ProgressProps = {
 } & BoxProps;
 
 export type ListItemProps = {
-  chevron?: boolean | ReactNode;
-  endAddon?: ReactNode;
+  chevron?: boolean | ReactElement;
+  endAddon?: ReactElement;
   gap?: number;
-  startAddon?: ReactNode;
+  startAddon?: ReactElement;
   // Styles
   chevronStyle?: {
     size?: number;
@@ -757,9 +760,9 @@ export type ListItemProps = {
   } & RbkStyles;
 
   /** @deprecated use startAddon instead */
-  startIcon?: ReactNode;
+  startIcon?: ReactElement;
   /** @deprecated use endAddon instead */
-  endIcon?: ReactNode;
+  endIcon?: ReactElement;
 } & BoxProps;
 
 export type LinkProps = {
