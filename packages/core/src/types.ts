@@ -2,13 +2,21 @@ import { CSSProperties, ReactNode, RefObject, SyntheticEvent } from 'react';
 
 import { styleProps } from './styles/constants';
 
+export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[];
+
 export type AnyObject = { [key: string | number]: any };
+
 export type TimeoutType = ReturnType<typeof setTimeout> | null;
+
 export type AnyCallback = (...args: any[]) => any;
+
 export type EventCallback = (event: any) => any;
+
 export type InputValue = any;
 
-export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[];
+export type RecursivePartial<T> = {
+  [P in keyof T]?: T[P] extends (infer U)[] ? RecursivePartial<U>[] : T[P] extends object | undefined ? RecursivePartial<T[P]> : T[P];
+};
 
 export type RbkMap = {
   web: boolean;
@@ -43,10 +51,10 @@ export interface RbkEvent {
   checked: boolean;
   name?: string;
   target?: ReactElement | any;
-  focus: () => void;
-  blur: () => void;
-  clear: () => void;
-  isFocused: () => void;
+  focus: () => any;
+  blur: () => any;
+  clear: () => any;
+  isFocused: () => any;
   nativeEvent?: Event | SyntheticEvent;
 }
 
@@ -58,10 +66,6 @@ export type RbkRect = {
   pageOffsetX: number;
   pageOffsetY: number;
 };
-
-export type FactoryProps = {
-  stylist?: RbkStyles | string | string[];
-} & any;
 
 export type AccessibilityProps = {
   accessible?: boolean;
@@ -131,37 +135,55 @@ export type FocusableProps = {
 export type FormField = {
   name: string;
   get: () => InputValue | null | undefined;
-  set: (value: InputValue) => void;
-  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
+  set: (value: InputValue) => any;
+  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
 };
 
 export type FormRef = {
-  cancel: () => void;
-  clear: () => void;
+  cancel: () => any;
+  clear: () => any;
   getData: () => AnyObject;
-  setData: (data: AnyObject) => void;
+  setData: (data: AnyObject) => any;
   getValue: (name: string) => InputValue | undefined;
-  setValue: (name: string, value: InputValue) => void;
-  submit: () => void;
+  setValue: (name: string, value: InputValue) => any;
+  submit: () => any;
   target: ReactElement;
   getField: (name: string) => FormField | null | undefined;
-  setField: (options: FormField) => void;
-  unsetField: (name: string) => void;
+  setField: (options: FormField) => any;
+  unsetField: (name: string) => any;
 };
 
+export type RbkColor = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
+
+export type SizeValues = number | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | string;
+
+export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width' | string;
+
 export type FlexJustifyValues =
+  | 'center'
+  | 'stretch'
+  | 'flex-start'
+  | 'flex-end'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+  // Aliases
+  | 'start'
+  | 'end'
+  | 'between'
+  | 'around'
+  | 'evenly'
+  | string;
+
+export type FlexAlignValues =
   | 'flex-start'
   | 'flex-end'
   | 'center'
   | 'stretch'
-  | 'space-between'
-  | 'space-around'
-  | 'space-evenly'
+  // Aliases
+  | 'start'
+  | 'end'
   | string;
-export type FlexAlignValues = 'flex-start' | 'flex-end' | 'center' | 'stretch' | string;
-export type ColorValues = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
-export type SizeValues = number | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | string;
-export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width' | string;
 
 export type RbkStyleProps = {
   position?: 'relative' | 'absolute' | string;
@@ -220,16 +242,7 @@ export type RbkStyleProps = {
   [K in typeof styleProps[number]]: any;
 }>;
 
-export type RbkStyles = (CSSProperties & RbkStyleProps) | Array<CSSProperties> | Array<RbkStyleProps> | Array<any> | any;
-
-export type VariantProps = {
-  [prop: string]: {
-    [value: string]: {
-      root?: RbkStyles;
-      [name: string]: RbkStyles;
-    };
-  };
-};
+export type RbkStyles = (CSSProperties & RbkStyleProps) | (CSSProperties & RbkStyleProps)[] | any[] | any;
 
 export type ThemeModeValues = 'light' | 'dark' | string;
 
@@ -243,14 +256,19 @@ export type ThemeColorsProps =
       darker?: string;
     };
 
-export type ThemeComponentProps = {
+export type ThemeComponentStyleContexts<Contexts extends keyof any> = {
+  [context in Contexts | 'root']: RbkStyles;
+};
+
+export type ThemeComponentProps<Props, Contexts extends keyof any> = {
   name: string;
-  defaultProps: AnyObject;
-  defaultStyles: {
-    root?: RbkStyles;
-    [key: string]: RbkStyles;
+  defaultProps: Partial<Props>;
+  defaultStyles: ThemeComponentStyleContexts<Contexts>;
+  variants?: {
+    [prop: string]: {
+      [value: string]: Partial<ThemeComponentStyleContexts<Contexts>>;
+    };
   };
-  variants: VariantProps;
 };
 
 export type ThemeProps = {
@@ -271,6 +289,7 @@ export type ThemeProps = {
   colors: {
     primary: ThemeColorsProps;
     secondary: ThemeColorsProps;
+
     info: ThemeColorsProps;
     success: ThemeColorsProps;
     warning: ThemeColorsProps;
@@ -339,52 +358,55 @@ export type ThemeProps = {
     xxl: number;
   };
 
-  rem: Readonly<Function>;
-  spacing: Readonly<Function>;
-  color: Readonly<Function>;
-  hex2rgba: Readonly<Function>;
-  rgba2hex: Readonly<Function>;
-  contrast: Readonly<Function>;
+  rem: (multiplier?: number, base?: number | null) => number;
+  spacing: (multiplier?: number) => number;
+  color: (key: RbkColor, alpha?: number) => string;
+  hex2rgba: (hex: string, alpha?: number) => string;
+  rgba2hex: (rgba: string) => string;
+  contrast: (color: string, lightColor?: string | null, darkColor?: string | null) => string;
 
   components: {
-    ActionSheet: ThemeComponentProps & { defaultProps?: ActionSheetProps };
-    Animation: ThemeComponentProps & { defaultProps?: AnimationProps };
-    Backdrop: ThemeComponentProps & { defaultProps?: BackdropProps };
-    Badge: ThemeComponentProps & { defaultProps?: BadgeProps };
-    Box: ThemeComponentProps & { defaultProps?: BoxProps };
-    Button: ThemeComponentProps & { defaultProps?: ButtonProps };
-    ButtonGroup: ThemeComponentProps & { defaultProps?: ButtonGroupProps };
-    Card: ThemeComponentProps & { defaultProps?: CardProps };
-    Carousel: ThemeComponentProps & { defaultProps?: CarouselProps };
-    Checkbox: ThemeComponentProps & { defaultProps?: CheckboxProps };
-    Collapse: ThemeComponentProps & { defaultProps?: CollapseProps };
-    Divider: ThemeComponentProps & { defaultProps?: DividerProps };
-    Drawer: ThemeComponentProps & { defaultProps?: DrawerProps };
-    Dropdown: ThemeComponentProps & { defaultProps?: DropdownProps };
-    Form: ThemeComponentProps & { defaultProps?: FormProps };
-    Grid: ThemeComponentProps & { defaultProps?: GridProps };
-    Image: ThemeComponentProps & { defaultProps?: ImageProps };
-    Input: ThemeComponentProps & { defaultProps?: InputProps };
-    Label: ThemeComponentProps & { defaultProps?: LabelProps };
-    Link: ThemeComponentProps & { defaultProps?: LinkProps };
-    ListItem: ThemeComponentProps & { defaultProps?: ListItemProps };
-    Loading: ThemeComponentProps & { defaultProps?: LoadingProps };
-    Modal: ThemeComponentProps & { defaultProps?: ModalProps };
-    Outline: ThemeComponentProps & { defaultProps?: OutlineProps };
-    Progress: ThemeComponentProps & { defaultProps?: ProgressProps };
-    Scrollable: ThemeComponentProps & { defaultProps?: ScrollableProps };
-    Select: ThemeComponentProps & { defaultProps?: SelectProps };
-    Slider: ThemeComponentProps & { defaultProps?: SliderProps };
-    Table: ThemeComponentProps & { defaultProps?: TableProps };
-    Text: ThemeComponentProps & { defaultProps?: TextProps };
-    Tooltip: ThemeComponentProps & { defaultProps?: TooltipProps };
+    ActionSheet: ThemeComponentProps<ActionSheetProps, 'root'>;
+    Animation: ThemeComponentProps<AnimationProps, 'root'>;
+    Backdrop: ThemeComponentProps<BackdropProps, 'root'>;
+    Badge: ThemeComponentProps<BadgeProps, 'root' | 'label'>;
+    Box: ThemeComponentProps<BoxProps, 'root'>;
+    Button: ThemeComponentProps<ButtonProps, 'root' | 'label'>;
+    ButtonGroup: ThemeComponentProps<ButtonGroupProps, 'root' | 'content'>;
+    Card: ThemeComponentProps<CardProps, 'root'>;
+    Carousel: ThemeComponentProps<CarouselProps, 'root' | 'content' | 'chevron'>;
+    Checkbox: ThemeComponentProps<CheckboxProps, 'root' | 'button'>;
+    Collapse: ThemeComponentProps<CollapseProps, 'root'>;
+    Divider: ThemeComponentProps<DividerProps, 'root'>;
+    Drawer: ThemeComponentProps<DrawerProps, 'root' | 'backdrop'>;
+    Dropdown: ThemeComponentProps<DropdownProps, 'root'>;
+    Form: ThemeComponentProps<FormProps, 'root'>;
+    Grid: ThemeComponentProps<GridProps, 'root' | 'item'>;
+    Image: ThemeComponentProps<ImageProps, 'root'>;
+    Input: ThemeComponentProps<InputProps, 'root' | 'content' | 'label' | 'input' | 'error'>;
+    Label: ThemeComponentProps<LabelProps, 'root'>;
+    Link: ThemeComponentProps<LinkProps, 'root'>;
+    ListItem: ThemeComponentProps<ListItemProps, 'root'>;
+    Loading: ThemeComponentProps<LoadingProps, 'root' | 'label'>;
+    Modal: ThemeComponentProps<ModalProps, 'root'>;
+    Outline: ThemeComponentProps<OutlineProps, 'root'>;
+    Progress: ThemeComponentProps<ProgressProps, 'root'>;
+    Scrollable: ThemeComponentProps<ScrollableProps, 'root' | 'content'>;
+    Select: ThemeComponentProps<SelectProps, 'root' | 'label' | 'error'>;
+    Slider: ThemeComponentProps<SliderProps, 'root' | 'rule' | 'bar' | 'thumb'>;
+    Table: ThemeComponentProps<TableProps, 'root'>;
+    Text: ThemeComponentProps<TextProps, 'root'>;
+    Tooltip: ThemeComponentProps<TooltipProps, 'root'>;
   };
 };
 
-export type ThemeOptionalProps = Partial<ThemeProps>;
+export type ThemeEditProps = RecursivePartial<ThemeProps>;
+
+/** @deprecated use ThemeEditProps instead */
+export type ThemeOptionalProps = RecursivePartial<ThemeProps>;
 
 export type RbkTheme = ThemeProps & {
-  setTheme: (options: ThemeModeValues | ThemeOptionalProps) => void;
+  setTheme: (options: ThemeModeValues | ThemeEditProps) => any;
 };
 
 export type BoxProps = {
@@ -427,7 +449,7 @@ export type BoxProps = {
 export type TextProps = {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'primary' | 'secondary' | 'caption' | string;
   size?: number;
-  color?: ColorValues;
+  color?: RbkColor;
   center?: boolean;
   left?: boolean;
   right?: boolean;
@@ -446,7 +468,7 @@ export type LabelProps = {
 
 export type ButtonProps = {
   badge?: number | BadgeProps;
-  color?: ColorValues;
+  color?: RbkColor;
   disabled?: boolean;
   endAddon?: ReactElement;
   href?: string;
@@ -471,7 +493,7 @@ export type ButtonProps = {
   BoxProps;
 
 export type ButtonGroupProps = {
-  color?: ColorValues;
+  color?: RbkColor;
   disabled?: boolean;
   loading?: boolean;
   size?: SizeValues;
@@ -484,7 +506,7 @@ export type InputProps = {
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | string;
   autoCorrect?: boolean;
   caretHidden?: boolean;
-  color?: ColorValues;
+  color?: RbkColor;
   controlled?: boolean;
   defaultValue?: InputValue;
   disabled?: boolean;
@@ -499,21 +521,21 @@ export type InputProps = {
   name?: string;
   notNull?: boolean;
   placeholder?: string;
-  placeholderColor?: ColorValues;
+  placeholderColor?: RbkColor;
   readOnly?: boolean;
   returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send' | string;
   rows?: number;
   secure?: boolean;
-  selectionColor?: ColorValues;
+  selectionColor?: RbkColor;
   size?: SizeValues;
   startAddon?: ReactElement;
-  textColor?: ColorValues;
+  textColor?: RbkColor;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url' | 'hidden' | string;
   unmask?: (value: InputValue, data: AnyObject) => any;
   value?: InputValue;
   // Events
-  onChange?: (event: RbkEvent, value: InputValue) => void;
-  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
+  onChange?: (event: RbkEvent, value: InputValue) => any;
+  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
   // Styles
   contentStyle?: RbkStyles;
   errorStyle?: RbkStyles;
@@ -540,7 +562,7 @@ export type SelectOption = {
 };
 
 export type SelectProps = {
-  color?: ColorValues;
+  color?: RbkColor;
   controlled?: boolean;
   defaultValue?: InputValue;
   disabled?: boolean;
@@ -556,8 +578,8 @@ export type SelectProps = {
   startAddon?: ReactElement;
   value?: InputValue;
   // Events
-  onChange?: (event: RbkEvent, value: InputValue, option: SelectOption) => void;
-  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
+  onChange?: (event: RbkEvent, value: InputValue, option: SelectOption) => any;
+  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
   // Styles
   buttonStyle?: RbkStyles;
   errorStyle?: RbkStyles;
@@ -581,8 +603,8 @@ export type CheckboxProps = {
   size?: SizeValues;
   unique?: boolean;
   // Events
-  onChange?: (event: RbkEvent, checked: boolean) => void;
-  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
+  onChange?: (event: RbkEvent, checked: boolean) => any;
+  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
   // Styles
   buttonStyle?: RbkStyles;
   labelStyle?: RbkStyles;
@@ -601,7 +623,7 @@ export type SliderProps = {
   // Events
   onChange?: (event: AnyObject, value: number) => any;
   onSlide?: (event: AnyObject, value: number, percent: number) => any;
-  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => void;
+  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
 } & FocusableProps &
   BoxProps;
 
@@ -609,7 +631,7 @@ export type CardProps = BoxProps;
 
 export type CarouselProps = {
   chevron?: 'visible' | 'hidden';
-  color?: ColorValues;
+  color?: RbkColor;
   gap?: number;
   pagingEnabled?: boolean;
   swipe?: false;
@@ -620,7 +642,7 @@ export type CarouselProps = {
   lg?: number;
   xl?: number;
   // Styles
-  chevronStyle?: { color?: ColorValues; size?: number } & RbkStyles;
+  chevronStyle?: { color?: RbkColor; size?: number } & RbkStyles;
 } & BoxProps;
 
 export type ScrollableProps = {
@@ -649,7 +671,7 @@ export type ImageProps = {
 } & BoxProps;
 
 export type DividerProps = {
-  color?: ColorValues;
+  color?: RbkColor;
   opacity?: number;
   size?: number | string;
   vertical?: boolean;
@@ -678,7 +700,7 @@ export type DropdownProps = {
 } & BoxProps;
 
 export type LoadingProps = {
-  color?: ColorValues;
+  color?: RbkColor;
   label?: string;
   size?: number;
   // Styles
@@ -709,18 +731,18 @@ export type BadgeProps = {
   right?: boolean;
   // Styles
   labelStyle?: RbkStyles;
-} & TextProps;
+} & Omit<TextProps, 'size'>;
 
 export type FormProps = {
   data?: any;
   onSubmit?: (event: FormRef, data: AnyObject) => any;
   onCancel?: (event: FormRef) => any;
   onClear?: (event: FormRef, data: AnyObject) => any;
-  onChange?: (event: FormRef, data: AnyObject) => void;
+  onChange?: (event: FormRef, data: AnyObject) => any;
 } & BoxProps;
 
 export type TooltipProps = {
-  color?: 'black' | 'white' | ColorValues;
+  color?: 'black' | 'white' | RbkColor;
   position?: 'top' | 'bottom' | 'left' | 'right' | string;
   title?: string;
   visible?: boolean;
@@ -744,7 +766,7 @@ export type AnimationProps = {
 } & BoxProps;
 
 export type ProgressProps = {
-  color?: ColorValues;
+  color?: RbkColor;
   size?: number;
 } & BoxProps;
 
@@ -756,7 +778,7 @@ export type ListItemProps = {
   // Styles
   chevronStyle?: {
     size?: number;
-    color?: ColorValues;
+    color?: RbkColor;
   } & RbkStyles;
 
   /** @deprecated use startAddon instead */
@@ -777,7 +799,7 @@ export type DrawerProps = {
 } & BoxProps;
 
 export type OutlineProps = {
-  color?: ColorValues;
+  color?: RbkColor;
   size?: number;
   visible?: 'auto' | boolean;
 } & BoxProps;

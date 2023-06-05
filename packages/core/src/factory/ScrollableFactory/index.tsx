@@ -13,7 +13,7 @@ const ScrollableFactory = React.memo<ScrollableProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Scrollable;
-    const { native, ios, RefreshControl, ScrollView } = global.mapping;
+    const { web, native, ios, RefreshControl, ScrollView } = global.mapping;
 
     // Extends from default props
     let {
@@ -50,9 +50,10 @@ const ScrollableFactory = React.memo<ScrollableProps>(
     ];
 
     style = [
-      pagingEnabled && {
-        web: { scrollSnapType: `${isHorizontal ? 'x' : 'y'} mandatory` },
-      },
+      web &&
+        pagingEnabled && {
+          scrollSnapType: `${isHorizontal ? 'x' : 'y'} mandatory`,
+        },
 
       style,
     ];
