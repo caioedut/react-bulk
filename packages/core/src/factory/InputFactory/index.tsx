@@ -353,6 +353,7 @@ const InputFactory = React.memo<InputProps>(
                       variant="text"
                       color={color}
                       size={size / 2}
+                      disabled={disabled}
                       h="50%"
                       p={0}
                       accessibility={{ label: isInc ? 'plus' : 'minus' }}
