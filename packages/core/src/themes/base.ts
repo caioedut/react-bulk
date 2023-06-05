@@ -263,6 +263,7 @@ const base: ThemeProps = {
 
           web: {
             position: 'fixed',
+            cursor: 'auto !important',
             opacity: 0,
             visibility: 'hidden',
             zIndex: -1,
@@ -414,7 +415,10 @@ const base: ThemeProps = {
           true: {
             root: {
               opacity: 0.75,
-              web: { cursor: 'not-allowed', '& *': { cursor: 'not-allowed' } },
+              web: {
+                cursor: 'not-allowed !important',
+                '& *': { cursor: 'not-allowed !important' },
+              },
             },
           },
         },
