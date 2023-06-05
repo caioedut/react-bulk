@@ -88,6 +88,49 @@ export default {
 };
 ```
 
+```jsx live
+function App() {
+  const theme = useTheme();
+
+  const predefined = [
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'error',
+  ];
+
+  const other = [
+    'gray',
+    'red',
+    'orange',
+    'amber',
+    'yellow',
+    'lime',
+    'green',
+    'teal',
+    'cyan',
+    'blue',
+    'indigo',
+    'violet',
+    'purple',
+    'fuchsia',
+    'pink',
+  ];
+
+  return [predefined, other].map((colors, index) => (
+    <Grid key={index} gap={3} mb={6}>
+      {colors.map((color) => (
+        <Box key={color} bg={color}>
+          <Text color={theme.contrast(color)}>{color}</Text>
+        </Box>
+      ))}
+    </Grid>
+  ));
+}
+```
+
 ### Breakpoints
 
 ```jsx title="src/themes/main.js"
@@ -115,7 +158,7 @@ export default {
     Button: {
       defaultProps: {
         color: 'secondary',
-        size: 'xl',
+        size: 'xlarge',
       }
     }
   },
