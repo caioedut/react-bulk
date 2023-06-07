@@ -1,7 +1,7 @@
 import { ThemeComponentProps } from '../types';
 import global from '../utils/global';
 
-export default function factory2(props, options?: ThemeComponentProps) {
+export default function factory2<ComponentProps>(props, options?: ThemeComponentProps<any, any>): ComponentProps & { variants: any } {
   let newProps = { ...options?.defaultProps, ...props };
 
   const variants = {};

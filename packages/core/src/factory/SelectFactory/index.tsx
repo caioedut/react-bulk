@@ -337,7 +337,7 @@ const SelectFactory = React.memo<SelectProps>(
                     variant="text"
                     block
                     disabled={option.disabled}
-                    bg={isSelected && theme.color(color, 0.1)}
+                    bg={isSelected ? theme.color(color, 0.1) : undefined}
                     style={{ paddingHorizontal: spacing }}
                     contentStyle={{ flex: 1 }}
                     onPress={(e) => handleChange(e, option, true)}

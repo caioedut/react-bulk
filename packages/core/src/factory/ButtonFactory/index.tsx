@@ -103,13 +103,15 @@ const ButtonFactory = React.memo<ButtonProps>(
         paddingHorizontal: 0,
       },
 
-      color && { borderColor: color },
+      color && variant !== 'text' && { borderColor: color },
 
       color && !isBasic && { backgroundColor: color },
 
-      web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.color(color, 0.3)}` } },
-
-      web && color && { '&:hover': { bg: theme.color(color, isBasic ? 0.2 : 0.8) } },
+      web &&
+        color && {
+          '&:hover': { bg: theme.color(color, isBasic ? 0.2 : 0.8) },
+          '&:focus': { boxShadow: `0 0 0 4px ${theme.color(color, 0.3)}` },
+        },
 
       style,
     ];

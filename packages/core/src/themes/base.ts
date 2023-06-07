@@ -472,7 +472,7 @@ const base: ThemeProps = {
           text: {
             root: {
               bg: 'trans',
-              borderWidth: 0,
+              borderColor: 'trans',
               web: { '&:hover': { bg: (theme) => theme.color('primary', 0.2) } },
             },
             label: {
@@ -1048,6 +1048,51 @@ const base: ThemeProps = {
       defaultStyles: {
         root: {
           corners: 1,
+        },
+      },
+    },
+    Tabs: {
+      name: 'rbk-tabs',
+      defaultProps: {
+        variant: 'group',
+      },
+      defaultStyles: {
+        root: {
+          p: 1,
+          m: -1,
+        },
+        content: {
+          flexDirection: 'row',
+          flexWrap: 'nowrap',
+          alignItems: 'stretch',
+          justifyContent: 'start',
+        },
+        button: {
+          web: { transitionProperty: 'all' },
+        },
+        active: {},
+      },
+      variants: {
+        variant: {
+          group: {
+            root: {
+              pt: 2,
+            },
+            button: {
+              borderBottomWidth: 0,
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              marginLeft: -1,
+            },
+            active: {
+              mt: -1,
+            },
+          },
+          card: {
+            button: {
+              mr: 1.5,
+            },
+          },
         },
       },
     },

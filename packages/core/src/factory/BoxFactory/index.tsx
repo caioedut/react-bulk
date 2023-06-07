@@ -9,6 +9,7 @@ import merge from '../../props/merge';
 import { styleProps } from '../../styles/constants';
 import { BoxProps } from '../../types';
 import clsx from '../../utils/clsx';
+import defined from '../../utils/defined';
 import global from '../../utils/global';
 
 const BoxFactory = React.memo<BoxProps>(
@@ -90,7 +91,7 @@ const BoxFactory = React.memo<BoxProps>(
       },
 
       // Flex Item
-      typeof flex === 'boolean' && { flex: Number(flex) },
+      defined(flex) && { flex: Number(flex) },
 
       web && pressable && { cursor: 'pointer' },
 

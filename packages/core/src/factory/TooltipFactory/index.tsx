@@ -35,10 +35,10 @@ const TooltipFactory = React.memo<TooltipProps>(
     const [trans, setTrans] = useState(0);
 
     const translate = native ? -(trans / 2) : '-50%';
-    const isHorizontal = ['left', 'right'].includes(position);
+    const isHorizontal = ['left', 'right'].includes(position ?? '');
     const isControlled = typeof visible === 'boolean';
 
-    style = [shown && options.variants.visible.true.root, style];
+    style = [shown && options?.variants?.visible?.true?.root, style];
 
     const handleTooltipShow = () => {
       if (timeoutRef.current) {
