@@ -29,6 +29,7 @@ import ReactBulk, {
   SelectFactory,
   SliderFactory,
   TableFactory,
+  TabsFactory,
   TextFactory,
   TooltipFactory,
   global,
@@ -118,6 +119,7 @@ export const Scrollable = ScrollableFactory;
 export const Select = SelectFactory;
 export const Slider = SliderFactory;
 export const Table = TableFactory;
+export const Tabs = TabsFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 

@@ -94,7 +94,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     if (remRegex.test(valueTrim)) {
       value = valueTrim.replace(remRegex, ($x, $1) => {
         const parsed = $x ? theme.rem($1) : 0;
-        return native ? parsed : `${parsed}px`;
+        return native ? `${parsed}` : `${parsed}px`;
       });
 
       value = parseUnit(value);

@@ -94,17 +94,17 @@ export type AccessibilityProps = {
     | 'timer'
     | 'toolbar';
   state?: {
-    checked: boolean | any;
-    disabled: boolean;
-    expanded: boolean;
-    selected: boolean;
-    busy: boolean;
+    checked?: boolean | any;
+    disabled?: boolean;
+    expanded?: boolean;
+    selected?: boolean;
+    busy?: boolean;
   };
   value?: {
-    max: number;
-    min: number;
-    now: number;
-    text: string;
+    max?: number;
+    min?: number;
+    now?: number;
+    text?: string;
   };
 };
 
@@ -395,6 +395,7 @@ export type ThemeProps = {
     Select: ThemeComponentProps<SelectProps, 'root' | 'label' | 'error'>;
     Slider: ThemeComponentProps<SliderProps, 'root' | 'rule' | 'bar' | 'thumb'>;
     Table: ThemeComponentProps<TableProps, 'root'>;
+    Tabs: ThemeComponentProps<TabsProps, 'root' | 'content' | 'button' | 'active'>;
     Text: ThemeComponentProps<TextProps, 'root'>;
     Tooltip: ThemeComponentProps<TooltipProps, 'root'>;
   };
@@ -803,3 +804,20 @@ export type OutlineProps = {
   size?: number;
   visible?: 'auto' | boolean;
 } & BoxProps;
+
+export type TabsProps = {
+  color: RbkColor;
+  size?: SizeValues;
+  tabs: ({
+    label: string;
+    value?: string | number;
+  } & Omit<ButtonProps, 'children'>)[];
+  value?: string | number;
+  variant?: 'group' | 'card';
+  // Events
+  onChange?: (event: Function, value: string | number) => any;
+  // Styles
+  contentStyle?: RbkStyles;
+  buttonStyle?: RbkStyles;
+  activeStyle?: RbkStyles;
+} & Omit<ScrollableProps, 'direction'>;

@@ -26,6 +26,7 @@ import {
   Select,
   Slider,
   Table,
+  Tabs,
   Text,
   Tooltip,
   useTheme,
@@ -119,6 +120,10 @@ export default function Main() {
 
       <Card mt={3}>
         <DropdownExample />
+      </Card>
+
+      <Card mt={3}>
+        <TabsExample />
       </Card>
 
       <Card mt={3}>
@@ -284,6 +289,8 @@ function BreakpointExample() {
         {breakpoints.map((bkp, index) => {
           const bg = theme.color('primary', (index + 1) / breakpoints.length);
           const color = theme.contrast(bg);
+
+          // @ts-ignore
           const value = theme.breakpoints[bkp];
 
           return (
@@ -572,7 +579,6 @@ function BadgeExample() {
   return (
     <>
       <Text variant="title">Badge</Text>
-
       <Grid alignItems="center" gap={3} mt={3}>
         <Box>
           <Badge dot />
@@ -801,6 +807,36 @@ function DropdownExample() {
       <Dropdown visible={dropdown}>
         <Text>Lorem ipsum dolor sit amet</Text>
       </Dropdown>
+    </>
+  );
+}
+
+function TabsExample() {
+  const [tab, setTab] = useState<number | string>(1);
+
+  return (
+    <>
+      <Text variant="title">Tabs</Text>
+
+      <Card bg="background.secondary" mt={3}>
+        <Tabs
+          variant="group"
+          color="red"
+          value={tab}
+          onChange={(e, value) => setTab(value)}
+          tabs={[{ label: 'Tab 1' }, { label: 'Tab 2' }, { label: 'Tab 3' }, { label: 'Tab 4' }, { label: 'Tab 6' }]}
+        />
+      </Card>
+
+      <Card bg="background.secondary" mt={3}>
+        <Tabs
+          variant="card"
+          color="red"
+          value={tab}
+          onChange={(e, value) => setTab(value)}
+          tabs={[{ label: 'Tab 1' }, { label: 'Tab 2' }, { label: 'Tab 3' }, { label: 'Tab 4' }, { label: 'Tab 6' }]}
+        />
+      </Card>
     </>
   );
 }

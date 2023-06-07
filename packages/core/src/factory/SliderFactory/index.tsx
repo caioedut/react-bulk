@@ -399,7 +399,7 @@ const SliderFactory = React.memo<SliderProps>(
                   }
             }
             style={[
-              disabled && theme.components.Button.variants.disabled.true.styles.root,
+              disabled && theme.components.Button?.variants?.disabled?.true?.root,
               {
                 left: -iconSize / 2,
                 backgroundColor: color,
