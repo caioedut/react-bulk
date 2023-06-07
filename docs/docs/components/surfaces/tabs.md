@@ -34,7 +34,7 @@ function App() {
     <Tabs
       variant='group'
       value={tab}
-      onChange={(e, newValue) => setValue(newValue)}
+      onChange={(e, newValue) => setTab(newValue)}
       tabs={[
         { label: 'Tab 1' },
         { label: 'Tab 2' },
@@ -55,7 +55,7 @@ function App() {
     <Tabs
       variant='card'
       value={tab}
-      onChange={(e, newValue) => setValue(newValue)}
+      onChange={(e, newValue) => setTab(newValue)}
       tabs={[
         { label: 'Tab 1' },
         { label: 'Tab 2' },
