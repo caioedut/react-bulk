@@ -806,7 +806,7 @@ export type OutlineProps = {
 } & BoxProps;
 
 export type TabsProps = {
-  color: RbkColor;
+  color?: RbkColor;
   size?: SizeValues;
   tabs: ({
     label: string;
