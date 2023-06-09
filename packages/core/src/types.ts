@@ -239,7 +239,7 @@ export type RbkStyleProps = {
   px?: number | string;
   py?: number | string;
 } & Partial<{
-  [K in typeof styleProps[number]]: any;
+  [K in (typeof styleProps)[number]]: any;
 }>;
 
 export type RbkStyles = (CSSProperties & RbkStyleProps) | (CSSProperties & RbkStyleProps)[] | any[] | any;
@@ -411,7 +411,6 @@ export type RbkTheme = ThemeProps & {
 };
 
 export type BoxProps = {
-  component?: any;
   id?: string;
   className?: any;
   platform?: object;
@@ -419,6 +418,9 @@ export type BoxProps = {
   children?: ReactElement | any;
   invisible?: boolean;
   hidden?: boolean;
+
+  mount?: boolean;
+  component?: any;
   componentProps?: AnyObject;
   noRootStyles?: boolean;
 

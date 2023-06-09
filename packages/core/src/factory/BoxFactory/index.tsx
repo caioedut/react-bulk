@@ -41,6 +41,7 @@ const BoxFactory = React.memo<BoxProps>(
       flex,
       hidden,
       invisible,
+      mount,
       noRootStyles,
       noWrap,
       pressable,
@@ -53,6 +54,10 @@ const BoxFactory = React.memo<BoxProps>(
       rawStyle,
       ...rest
     } = props;
+
+    if (mount === false) {
+      return null;
+    }
 
     rest = bindings(rest);
 
