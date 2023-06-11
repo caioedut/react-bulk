@@ -12,6 +12,7 @@
   },
   "scripts": {
     "doc": "yarn --cwd ./docs",
+    "test": "tsx scripts/test.ts",
     "example:web": "yarn build && yarn --cwd ./examples/web dev",
     "example:native": "yarn build && yarn --cwd ./examples/native dev",
     "bootstrap": "lerna bootstrap",
@@ -38,6 +39,7 @@
     "rollup-plugin-terser": "7.0.2",
     "rollup-plugin-typescript2": "0.29.0",
     "rollup-plugin-url": "3.0.1",
+    "tsx": "^3.12.7",
     "typescript": "^4.7.4"
   },
   "dependencies": {}
