@@ -5,10 +5,10 @@ import extract from './props/extract';
 import base from './themes/base';
 import dark from './themes/dark';
 import light from './themes/light';
-import { ThemeOptionalProps, ThemeProps } from './types';
+import { ThemeEditProps, ThemeProps } from './types';
 import global from './utils/global';
 
-export default function createTheme(options?: ThemeOptionalProps, extendsTo?: ThemeOptionalProps): ThemeProps | any {
+export default function createTheme(options?: ThemeEditProps, extendsTo?: ThemeEditProps): ThemeProps | any {
   options = options || {};
   extendsTo = extendsTo || {};
 

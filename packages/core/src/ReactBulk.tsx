@@ -4,7 +4,7 @@ import BaseNative from './BaseNative';
 import BaseWeb from './BaseWeb';
 import Platform from './Platform';
 import createTheme from './createTheme';
-import { RbkTheme, ThemeModeValues, ThemeOptionalProps, ThemeProps } from './types';
+import { RbkTheme, ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
 import global from './utils/global';
 
 export const Context = createContext<RbkTheme | null>(null);
@@ -17,7 +17,7 @@ function ReactBulk({ theme, children }: any) {
   global.theme = themeState;
 
   const setTheme = useCallback(
-    (theme: ThemeModeValues | ThemeOptionalProps) => {
+    (theme: ThemeModeValues | ThemeEditProps) => {
       theme = typeof theme === 'string' ? { mode: theme } : theme;
       setThemeState((current) => createTheme(theme as ThemeProps, current));
     },
