@@ -1,7 +1,3 @@
----
-sidebar_position: 0
----
-
 # Form
 
 Context to manipulate and serialize forms.
