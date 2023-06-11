@@ -1,14 +1,7 @@
 import { useMemo, useRef, useState } from 'react';
 
+import { RbkAnimation } from '../types';
 import global from '../utils/global';
-
-export type AnimationOptions = {
-  boomerang?: boolean;
-  delay?: number;
-  speed?: number;
-  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | string;
-  iterations?: number | 'infinite';
-};
 
 export default function useAnimation(initial = {}) {
   const { web, native, Animated, Easing } = global.mapping;
@@ -30,19 +23,7 @@ export default function useAnimation(initial = {}) {
 
   const [style, setStyle] = useState(initialStyle);
 
-  function stop() {
-    if (!animRef.current) return;
-
-    if (web) {
-      clearTimeout(animRef.current);
-    }
-
-    if (native) {
-      animRef.current.stop();
-    }
-  }
-
-  function start(styles = {}, options: AnimationOptions = {}) {
+  function start(styles = {}, options: RbkAnimation = {}) {
     let { boomerang = false, delay = 0, speed = 350, timing = 'ease', iterations = 1 } = options;
 
     stop();
@@ -68,9 +49,13 @@ export default function useAnimation(initial = {}) {
         let nextDelay = Math.max(0, speed - 3);
 
         animRef.current = setTimeout(() => {
+          const toStyle = {};
+
           for (const attr of Object.keys(initialStyle)) {
-            setStyle((current) => ({ ...current, [attr]: styles[attr] }));
+            toStyle[attr] = styles[attr];
           }
+
+          setStyle((current) => ({ ...current, ...toStyle }));
 
           if (boomerang) {
             animRef.current = setTimeout(() => {
@@ -120,9 +105,28 @@ export default function useAnimation(initial = {}) {
     }
   }
 
+  function stop() {
+    if (!animRef.current) return;
+
+    if (web) {
+      clearTimeout(animRef.current);
+    }
+
+    if (native) {
+      animRef.current.stop();
+    }
+  }
+
+  function reset() {
+    stop();
+    setStyle(initialStyle);
+  }
+
   return {
     start,
     stop,
+    reset,
     style,
+    Component: Animated.View,
   };
 }

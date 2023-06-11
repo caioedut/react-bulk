@@ -67,6 +67,14 @@ export type RbkRect = {
   pageOffsetY: number;
 };
 
+export type RbkAnimation = {
+  boomerang?: boolean;
+  delay?: number;
+  speed?: number;
+  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | string;
+  iterations?: number | 'infinite';
+};
+
 export type AccessibilityProps = {
   accessible?: boolean;
   hint?: string;
