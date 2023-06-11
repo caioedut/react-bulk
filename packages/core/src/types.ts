@@ -390,7 +390,7 @@ export type ThemeProps = {
     Loading: ThemeComponentProps<LoadingProps, 'root' | 'label'>;
     Modal: ThemeComponentProps<ModalProps, 'root'>;
     Outline: ThemeComponentProps<OutlineProps, 'root'>;
-    Progress: ThemeComponentProps<ProgressProps, 'root'>;
+    Progress: ThemeComponentProps<ProgressProps, 'root' | 'bar'>;
     Scrollable: ThemeComponentProps<ScrollableProps, 'root' | 'content'>;
     Select: ThemeComponentProps<SelectProps, 'root' | 'label' | 'error'>;
     Slider: ThemeComponentProps<SliderProps, 'root' | 'rule' | 'bar' | 'thumb'>;
@@ -705,7 +705,7 @@ export type DropdownProps = {
 export type LoadingProps = {
   color?: RbkColor;
   label?: string;
-  size?: number;
+  size?: SizeValues;
   // Styles
   labelStyle?: RbkStyles;
 } & AnimationProps;
@@ -769,8 +769,11 @@ export type AnimationProps = {
 } & BoxProps;
 
 export type ProgressProps = {
+  value?: number;
   color?: RbkColor;
-  size?: number;
+  size?: SizeValues;
+  // Styles
+  barStyle?: RbkStyles;
 } & BoxProps;
 
 export type ListItemProps = {

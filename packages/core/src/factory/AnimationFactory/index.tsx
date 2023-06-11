@@ -4,7 +4,7 @@ import createStyle from '../../createStyle';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { notPxProps } from '../../styles/constants';
+import css from '../../styles/css';
 import jss from '../../styles/jss';
 import { AnimationProps, RbkStyles } from '../../types';
 import global from '../../utils/global';
@@ -31,19 +31,22 @@ const AnimationFactory = React.memo<AnimationProps>(
       ...rest
     } = factory2(props, options);
 
+    direction = direction ?? 'normal';
     from = jss({ theme }, from);
     to = jss({ theme }, to);
 
     const name = useHtmlId();
     const iterations = loop === true ? -1 : Number(loop ?? 1);
 
-    const defaultValue = Number(direction.includes('reverse'));
-    const { current: animationValue } = useRef(native ? new Animated.Value(defaultValue) : null);
+    const isBoomerang = direction.includes('alternate');
+    const initRangeValue = !direction.includes('reverse') ? 0 : isBoomerang ? 2 : 1;
+
+    const { current: animationValue } = useRef(native ? new Animated.Value(initRangeValue) : null);
 
     useEffect(() => {
       if (!native) return;
 
-      animationValue.setValue(defaultValue);
+      animationValue.setValue(initRangeValue);
 
       const easing = timing
         .split('-')
@@ -52,11 +55,11 @@ const AnimationFactory = React.memo<AnimationProps>(
 
       const animation = Animated.loop(
         Animated.timing(animationValue, {
+          useNativeDriver: false,
           delay,
-          toValue: Number(!defaultValue),
           duration: speed,
           easing: Easing[easing],
-          useNativeDriver: false,
+          toValue: initRangeValue ? 0 : isBoomerang ? 2 : 1,
         }),
         { iterations },
       );
@@ -68,24 +71,22 @@ const AnimationFactory = React.memo<AnimationProps>(
       return () => {
         animation.stop();
       };
-    }, [run, timing, iterations, defaultValue]);
+    }, [run, timing, iterations, initRangeValue]);
 
     if (web) {
-      const fromCSS = Object.entries(from)
-        .map(([attr, val]) => `${attr}: ${val}${notPxProps.includes(attr) ? '' : 'px'};`)
-        .join('');
+      const fromJSS = jss({ theme }, from);
+      const fromCSS = css(fromJSS, 'from');
 
-      const toCSS = Object.entries(to)
-        .map(([attr, val]) => `${attr}: ${val}${notPxProps.includes(attr) ? '' : 'px'};`)
-        .join('');
+      const toJSS = jss({ theme }, to);
+      const toCSS = css(toJSS, 'to');
 
       createStyle({
         global: true,
         theme,
         style: `
         @keyframes ${name} {
-          from { ${fromCSS} }
-          to { ${toCSS} }
+          ${fromCSS}
+          ${toCSS}
         }
       `,
       });
@@ -105,8 +106,8 @@ const AnimationFactory = React.memo<AnimationProps>(
           style[attr] = (val as any[]).map((obj) => {
             for (let objAttr in obj) {
               obj[objAttr] = animationValue.interpolate({
-                inputRange: [0, 1],
-                outputRange: [obj[objAttr], to[attr][index][objAttr]],
+                inputRange: [0, 1, 2],
+                outputRange: [obj[objAttr], to[attr][index][objAttr], obj[objAttr]],
               });
             }
 
@@ -117,8 +118,8 @@ const AnimationFactory = React.memo<AnimationProps>(
         }
 
         style[attr] = animationValue.interpolate({
-          inputRange: [0, 1],
-          outputRange: [val, to[attr]],
+          inputRange: [0, 1, 2],
+          outputRange: [val, to[attr], val],
         });
       });
     }
@@ -126,7 +127,7 @@ const AnimationFactory = React.memo<AnimationProps>(
     const child = <BoxFactory component={component}>{children}</BoxFactory>;
 
     return (
-      <BoxFactory ref={ref} stylist={[variants.root, stylist]} row {...rest}>
+      <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
         {native ? (
           <Animated.View style={style}>{child}</Animated.View>
         ) : (
