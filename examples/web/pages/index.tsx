@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 
 import { AnyObject, FormRef, RbkEvent } from '@react-bulk/core';
 import {
@@ -20,6 +20,7 @@ import {
   Image,
   Input,
   ListItem,
+  Loading,
   Modal,
   Progress,
   Scrollable,
@@ -124,6 +125,10 @@ export default function Main() {
 
       <Card mt={3}>
         <TabsExample />
+      </Card>
+
+      <Card mt={3}>
+        <ProgressExample />
       </Card>
 
       <Card mt={3}>
@@ -821,7 +826,6 @@ function TabsExample() {
       <Card bg="background.secondary" mt={3}>
         <Tabs
           variant="group"
-          color="red"
           value={tab}
           onChange={(e, value) => setTab(value)}
           tabs={[{ label: 'Tab 1' }, { label: 'Tab 2' }, { label: 'Tab 3' }, { label: 'Tab 4' }, { label: 'Tab 6' }]}
@@ -831,12 +835,48 @@ function TabsExample() {
       <Card bg="background.secondary" mt={3}>
         <Tabs
           variant="card"
-          color="red"
           value={tab}
           onChange={(e, value) => setTab(value)}
           tabs={[{ label: 'Tab 1' }, { label: 'Tab 2' }, { label: 'Tab 3' }, { label: 'Tab 4' }, { label: 'Tab 6' }]}
         />
       </Card>
+    </>
+  );
+}
+
+function ProgressExample() {
+  const [percent, setPercent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPercent((current) => {
+        const newValue = current + 1;
+        return newValue > 100 ? 0 : newValue;
+      });
+    }, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  return (
+    <>
+      <Text variant="title">Progress</Text>
+      <Divider my={3} mx={-3} />
+
+      <Text variant="subtitle">Loading</Text>
+      <Loading align="start" mt={3} />
+
+      <Divider my={3} mx={-3} />
+
+      <Text variant="subtitle">Bar indeterminate</Text>
+      <Progress mt={3} />
+
+      <Divider my={3} mx={-3} />
+
+      <Text variant="subtitle">Bar with value</Text>
+      <Progress value={percent} mt={3} />
     </>
   );
 }
@@ -907,9 +947,6 @@ function AnimationExample() {
                 {animation}
               </Text>
               <Grid noWrap alignItems="center" gap={6}>
-                <Component loop in>
-                  <Progress />
-                </Component>
                 <Component loop in>
                   <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
                 </Component>

@@ -838,14 +838,18 @@ const base: ThemeProps = {
       defaultProps: {
         accessibility: { role: 'progressbar' },
         color: 'primary',
-        size: 2,
+        size: 'medium',
       },
       defaultStyles: {
-        root: {},
+        root: {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
         label: {
           color: 'primary',
           fontSize: '1rem',
-          ml: 1,
+          ml: 1.25,
         },
       },
     },
@@ -907,12 +911,30 @@ const base: ThemeProps = {
     Progress: {
       name: 'rbk-progress',
       defaultProps: {
-        accessibility: { role: 'progressbar' },
+        accessibility: {
+          role: 'progressbar',
+          value: {
+            now: 0,
+            min: 0,
+            max: 100,
+          },
+        },
         color: 'primary',
-        size: 1,
+        corners: 2,
+        size: 'medium',
       },
       defaultStyles: {
-        root: {},
+        root: {
+          bg: 'text.main.25',
+          overflow: 'hidden',
+        },
+        bar: {
+          bg: 'primary',
+          h: '1.25rem',
+          web: {
+            ...mixins.transitions.fast,
+          },
+        },
       },
     },
     Scrollable: {

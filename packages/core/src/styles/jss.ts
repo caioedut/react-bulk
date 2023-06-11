@@ -229,7 +229,12 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
         value.forEach((item) => {
           for (const attr in item) {
-            const unit = Array.isArray(item[attr]) ? item[attr].join(', ') : item[attr];
+            let unit = Array.isArray(item[attr]) ? item[attr].join(', ') : item[attr];
+
+            if (web && unit && typeof unit === 'number') {
+              unit = `${unit}px`;
+            }
+
             values.push(`${attr}(${unit})`);
           }
         });

@@ -1,5 +1,7 @@
 import { useMemo, useRef, useState } from 'react';
 
+import global from '../utils/global';
+
 export type AnimationOptions = {
   boomerang?: boolean;
   delay?: number;
@@ -9,7 +11,7 @@ export type AnimationOptions = {
 };
 
 export default function useAnimation(initial = {}) {
-  const { web, native, Animated, Easing } = global._RBK.mapping;
+  const { web, native, Animated, Easing } = global.mapping;
 
   const animRef: any = useRef();
 
