@@ -8,6 +8,7 @@ import global from '../../utils/global';
 import pick from '../../utils/pick';
 import AnimationFactory from '../AnimationFactory';
 import BoxFactory from '../BoxFactory';
+import TextFactory from '../TextFactory';
 
 const ProgressFactory = React.memo<ProgressProps>(
   forwardRef(({ stylist, ...props }, ref) => {
@@ -18,6 +19,7 @@ const ProgressFactory = React.memo<ProgressProps>(
     // Extends from default props
     let {
       color,
+      label,
       size,
       value,
       // Events
@@ -25,6 +27,7 @@ const ProgressFactory = React.memo<ProgressProps>(
       // Styles
       variants,
       barStyle,
+      labelStyle,
       ...rest
     } = factory2(props, options);
 
@@ -40,6 +43,7 @@ const ProgressFactory = React.memo<ProgressProps>(
       });
     }
 
+    const fontSize = theme.rem(size * 0.7);
     const isIndeterminate = typeof value !== 'number';
     const height = theme.rem(size);
     const translateX = native ? containerWidth * 0.8 : 'calc(100% - 20%)';
@@ -80,7 +84,21 @@ const ProgressFactory = React.memo<ProgressProps>(
             <BoxFactory style={barStyle} stylist={[variants.bar]} />
           </AnimationFactory>
         ) : (
-          <BoxFactory style={barStyle} stylist={[variants.bar]} />
+          <>
+            <BoxFactory style={barStyle} stylist={[variants.bar]} />
+
+            {Boolean(label) && (
+              <BoxFactory position="absolute" i={0} center>
+                {typeof label === 'function' ? (
+                  label?.(value)
+                ) : (
+                  <TextFactory style={[{ fontSize }, labelStyle]} stylist={[variants.label]}>
+                    {Math.round(value)}%
+                  </TextFactory>
+                )}
+              </BoxFactory>
+            )}
+          </>
         )}
       </BoxFactory>
     );

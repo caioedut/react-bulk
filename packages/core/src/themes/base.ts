@@ -914,10 +914,12 @@ const base: ThemeProps = {
         accessibility: { role: 'progressbar' },
         color: 'primary',
         corners: 2,
+        label: true,
         size: 'medium',
       },
       defaultStyles: {
         root: {
+          position: 'relative',
           bg: 'text.main.25',
           overflow: 'hidden',
         },
@@ -927,6 +929,9 @@ const base: ThemeProps = {
           web: {
             ...mixins.transitions.fast,
           },
+        },
+        label: {
+          textAlign: 'center',
         },
       },
     },
