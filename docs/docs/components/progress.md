@@ -20,9 +20,9 @@ import { Progress } from '@react-bulk/web'; // OR @react-bulk/native
 
 ```jsx live
 <>
-  <Progress label={true} my={3} />
-  <Progress label={false} my={3} />
-  <Progress label={(value) => `Current percent is: ${value}.`} my={3} />
+  <Progress value={20} label={true} my={3} />
+  <Progress value={30} label={false} my={3} />
+  <Progress value={40} label={(value) => `Current percent is: ${value}.`} my={3} />
 </>
 ```
 
