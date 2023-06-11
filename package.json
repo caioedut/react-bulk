@@ -19,7 +19,7 @@
     "clean": "lerna exec --parallel -- rimraf dist typings",
     "prebuild": "npm run clean",
     "build": "lerna exec --parallel -- rollup -c ../../rollup.config.js",
-    "publish:stable": "npm run build && lerna publish --force-publish"
+    "publish:stable": "npm run test && npm run build && lerna publish --force-publish"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
