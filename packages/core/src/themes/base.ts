@@ -538,7 +538,7 @@ const base: ThemeProps = {
     Checkbox: {
       name: 'rbk-checkbox',
       defaultProps: {
-        accessibility: { role: 'combobox' },
+        accessibility: { role: 'checkbox' },
         color: 'primary',
         size: 'medium',
       },
@@ -911,14 +911,7 @@ const base: ThemeProps = {
     Progress: {
       name: 'rbk-progress',
       defaultProps: {
-        accessibility: {
-          role: 'progressbar',
-          value: {
-            now: 0,
-            min: 0,
-            max: 100,
-          },
-        },
+        accessibility: { role: 'progressbar' },
         color: 'primary',
         corners: 2,
         size: 'medium',
