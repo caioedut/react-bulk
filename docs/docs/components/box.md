@@ -121,6 +121,14 @@ Pass raw props to the `component` prop.
 
 ---
 
+**`mount`**
+
+Defines whether the component will be rendered
+
+➤ Type: **`boolean`** <br/>
+
+---
+
 **`hidden`**
 
 Fully hide element
