@@ -3,6 +3,7 @@ import React, { forwardRef, useState } from 'react';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { ProgressProps } from '../../types';
+import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import AnimationFactory from '../AnimationFactory';
@@ -16,7 +17,6 @@ const ProgressFactory = React.memo<ProgressProps>(
 
     // Extends from default props
     let {
-      accessibility,
       color,
       size,
       value,
@@ -45,10 +45,7 @@ const ProgressFactory = React.memo<ProgressProps>(
     const translateX = native ? containerWidth * 0.8 : 'calc(100% - 20%)';
 
     if (!isIndeterminate) {
-      accessibility = accessibility ?? {};
-      accessibility.label = accessibility.label ?? 'percentage';
-      accessibility.value = accessibility?.value ?? {};
-      accessibility.value.now = value;
+      rest.accessibility = deepmerge({ label: 'percentage' }, rest.accessibility, { value: { now: value } });
     }
 
     barStyle = [
@@ -70,7 +67,7 @@ const ProgressFactory = React.memo<ProgressProps>(
     }
 
     return (
-      <BoxFactory ref={ref} {...rest} accessibility={accessibility} stylist={[variants.root, stylist]}>
+      <BoxFactory ref={ref} {...rest} stylist={[variants.root, stylist]}>
         {isIndeterminate ? (
           <AnimationFactory //
             in

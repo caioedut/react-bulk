@@ -1,10 +1,15 @@
-import { ThemeComponentProps } from '../types';
+import { RbkStyles, ThemeComponentProps } from '../types';
+import deepmerge from '../utils/deepmerge';
 import global from '../utils/global';
 
-export default function factory2<ComponentProps>(props, options?: ThemeComponentProps<any, any>): ComponentProps & { variants: any } {
+type Variants = {
+  [key: string]: RbkStyles;
+};
+
+export default function factory2<ComponentProps>(props, options?: ThemeComponentProps<any, any>): ComponentProps & { variants: Variants } {
   let newProps = { ...options?.defaultProps, ...props };
 
-  const variants = {};
+  const variants: Variants = {};
 
   Object.keys(options?.defaultStyles || {}).forEach((styleId: any) => {
     if (!options?.name) return;
@@ -28,6 +33,9 @@ export default function factory2<ComponentProps>(props, options?: ThemeComponent
       variants[styleId].push(global.styles[name]);
     });
   });
+
+  // Extends accessibility
+  newProps.accessibility = deepmerge(options?.defaultProps?.accessibility, props?.accessibility);
 
   return { ...newProps, ...props, variants };
 }

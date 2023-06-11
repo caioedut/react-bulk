@@ -1076,6 +1076,7 @@ const base: ThemeProps = {
     Tabs: {
       name: 'rbk-tabs',
       defaultProps: {
+        accessibility: { role: 'tablist' },
         variant: 'group',
       },
       defaultStyles: {
