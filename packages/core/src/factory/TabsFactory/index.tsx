@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { TabsProps } from '../../types';
+import deepmerge from '../../utils/deepmerge';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import ScrollableFactory from '../ScrollableFactory';
@@ -30,14 +31,13 @@ const TabsFactory = React.memo<TabsProps>(
     } = factory2(props, options);
 
     return (
-      <ScrollableFactory ref={ref} stylist={[variants.root, stylist]} {...rest} direction="horizontal">
+      <ScrollableFactory ref={ref} {...rest} direction="horizontal" stylist={[variants.root, stylist]}>
         <BoxFactory style={contentStyle} stylist={[variants.content]}>
           {tabs?.map((tab, index) => {
             const { value: tabValue = index, style: tabStyle, ...rest } = tab;
 
             const isActive = value === tabValue;
-
-            const currentStyle = [buttonStyle, tabStyle, isActive && activeStyle];
+            rest.accessibility = deepmerge({ role: 'tab' }, rest.accessibility);
 
             return (
               <ButtonFactory
@@ -47,7 +47,7 @@ const TabsFactory = React.memo<TabsProps>(
                 size={size}
                 labelStyle={{ px: 1.5 }}
                 {...rest}
-                style={currentStyle}
+                style={[buttonStyle, tabStyle, isActive && activeStyle]}
                 stylist={[variants.button, isActive && variants.active]}
                 onPress={(e) => onChange?.(e, tabValue)}
               />
