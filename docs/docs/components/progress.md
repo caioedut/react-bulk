@@ -19,9 +19,11 @@ import { Progress } from '@react-bulk/web'; // OR @react-bulk/native
 ### Label
 
 ```jsx live
-<Progress label={true} my={3} />
-<Progress label={false} my={3} />
-<Progress label={(value) => `Current percent is: ${value}.`} my={3} />
+<>
+  <Progress label={true} my={3} />
+  <Progress label={false} my={3} />
+  <Progress label={(value) => `Current percent is: ${value}.`} my={3} />
+</>
 ```
 
 ### Composition
