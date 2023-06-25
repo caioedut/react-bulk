@@ -22,9 +22,14 @@ function Home() {
         Show Backdrop
       </Button>
       <Backdrop visible={visible} onPress={() => setVisible(false)}>
-        <Text color="background">
-          Children do not fire "Backdrop.onPress". Click on backdrop to close.
-        </Text>
+        <Card>
+          <Text center>
+            Children do not fire "Backdrop.onPress".
+          </Text>
+          <Text center>
+            Click on backdrop to close.
+          </Text>
+        </Card>
       </Backdrop>
     </>
   );
