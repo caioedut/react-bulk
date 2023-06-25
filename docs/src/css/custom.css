@@ -9,6 +9,10 @@ body {
   color: inherit;
 }
 
+code {
+  line-height: 1.875;
+}
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary-lightest: #ffb8ff;
