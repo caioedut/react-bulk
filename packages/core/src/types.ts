@@ -37,24 +37,31 @@ export type RbkMap = {
   [key: string]: ReactElement | any;
 };
 
-export interface RbkFormChangeEvent {
-  type: string;
-  data: AnyObject;
-  name?: string;
-  target?: ReactElement | any;
-  nativeEvent?: Event | SyntheticEvent;
-}
+/**
+ * @deprecated use RbkChangeEvent instead
+ */
+export interface RbkEvent extends RbkChangeEvent {}
 
-export interface RbkEvent {
+export interface RbkChangeEvent {
   type: string;
   value: InputValue;
   checked: boolean;
   name?: string;
   target?: ReactElement | any;
+  form?: FormRef;
   focus: () => any;
   blur: () => any;
   clear: () => any;
   isFocused: () => any;
+  nativeEvent?: Event | SyntheticEvent;
+}
+
+export interface RbkFormChangeEvent {
+  type: string;
+  data: AnyObject;
+  name?: string;
+  target?: ReactElement | any;
+  form: FormRef;
   nativeEvent?: Event | SyntheticEvent;
 }
 
@@ -545,7 +552,7 @@ export type InputProps = {
   unmask?: (value: InputValue, data: AnyObject) => any;
   value?: InputValue;
   // Events
-  onChange?: (event: RbkEvent, value: InputValue) => any;
+  onChange?: (event: RbkChangeEvent | RbkEvent, value: InputValue) => any;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
   // Styles
   contentStyle?: RbkStyles;
@@ -589,7 +596,7 @@ export type SelectProps = {
   startAddon?: ReactElement;
   value?: InputValue;
   // Events
-  onChange?: (event: RbkEvent, value: InputValue, option: SelectOption) => any;
+  onChange?: (event: RbkChangeEvent | RbkEvent, value: InputValue, option: SelectOption) => any;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
   // Styles
   buttonStyle?: RbkStyles;
@@ -614,7 +621,7 @@ export type CheckboxProps = {
   size?: SizeValues;
   unique?: boolean;
   // Events
-  onChange?: (event: RbkEvent, checked: boolean) => any;
+  onChange?: (event: RbkChangeEvent | RbkEvent, checked: boolean) => any;
   onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
   // Styles
   buttonStyle?: RbkStyles;

@@ -1,8 +1,7 @@
 import ReactBulk from './ReactBulk';
-import { useForm } from './factory/FormFactory';
 
 // Hook
-export { useForm };
+export { useForm } from './factory/FormFactory';
 export { default as useAnimation } from './hooks/useAnimation';
 export { default as useTheme } from './hooks/useTheme';
 export { default as useHtmlId } from './hooks/useHtmlId';

@@ -5,7 +5,7 @@ import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
-import { CheckboxProps } from '../../types';
+import { CheckboxProps, RbkChangeEvent } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
@@ -52,7 +52,15 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     const defaultRef: any = useRef(null);
     const buttonRef = ref || defaultRef;
 
-    const [internal, setInternal] = useState(Boolean(+defaultChecked));
+    const [internal, _setInternal] = useState(Boolean(+defaultChecked));
+
+    function setInternal(value: any, dispatch = true) {
+      _setInternal(value);
+
+      if (dispatch) {
+        dispatchEvent('change', value);
+      }
+    }
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
@@ -79,7 +87,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       if (!unique || internal) {
         form.setField({
           name,
-          set: setInternal as any,
+          set: setInternal,
           get: () => (internal ? value ?? internal : unique ? null : false),
           onFormChange,
         });
@@ -105,7 +113,21 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
       if (typeof callback === 'function') {
         const target = buttonRef.current;
-        callback({ type, checked, name, target, focus, blur, clear, isFocused, nativeEvent }, checked);
+
+        const event: Omit<RbkChangeEvent, 'value'> = {
+          type,
+          checked,
+          name,
+          target,
+          form,
+          focus,
+          blur,
+          clear,
+          isFocused,
+          nativeEvent,
+        };
+
+        callback(event, checked);
       }
     }
 
@@ -116,7 +138,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       const newInternal = !internal;
 
       if (!controlled) {
-        setInternal(newInternal);
+        setInternal(newInternal, false);
       }
 
       dispatchEvent('change', newInternal, nativeEvent);
