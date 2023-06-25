@@ -5,7 +5,7 @@ import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
-import { AnyObject, SelectProps } from '../../types';
+import { AnyObject, RbkChangeEvent, SelectProps } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
@@ -64,8 +64,20 @@ const SelectFactory = React.memo<SelectProps>(
 
     const [metrics, setMetrics] = useState<AnyObject>({});
     const [visible, setVisible] = useState(false);
-    const [internal, setInternal] = useState(defaultValue);
     const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == defaultValue));
+
+    const [internal, _setInternal] = useState(defaultValue);
+
+    function setInternal(value: any, dispatch = true) {
+      _setInternal(value);
+
+      if (dispatch) {
+        dispatchEvent(
+          'change',
+          arrOptions?.find((item) => item.value == value),
+        );
+      }
+    }
 
     const selected = arrOptions?.find((item) => item.value == internal);
 
@@ -149,7 +161,21 @@ const SelectFactory = React.memo<SelectProps>(
       if (typeof callback === 'function') {
         const target = buttonRef.current;
         const value = option?.value;
-        callback({ type, value, name, target, focus, blur, clear, isFocused, nativeEvent }, value, option);
+
+        const event: Omit<RbkChangeEvent, 'checked'> = {
+          type,
+          value,
+          name,
+          target,
+          form,
+          focus,
+          blur,
+          clear,
+          isFocused,
+          nativeEvent,
+        };
+
+        callback(event, value, option);
       }
     }
 
@@ -199,7 +225,7 @@ const SelectFactory = React.memo<SelectProps>(
       const newSelected = arrOptions?.find((item) => item.value == option.value);
 
       if (!controlled) {
-        setInternal(option.value);
+        setInternal(option.value, false);
       }
 
       setVisible(false);

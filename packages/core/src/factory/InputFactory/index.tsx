@@ -7,7 +7,7 @@ import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { customStyleProps } from '../../styles/constants';
-import { InputProps, InputValue } from '../../types';
+import { InputProps, InputValue, RbkChangeEvent } from '../../types';
 import defined from '../../utils/defined';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -127,7 +127,16 @@ const InputFactory = React.memo<InputProps>(
     );
 
     const [focused, setFocused] = useState(false);
-    const [internal, setInternal] = useState(defaultValue);
+
+    const [internal, _setInternal] = useState(defaultValue);
+
+    function setInternal(value: any, dispatch = true) {
+      _setInternal(value);
+
+      if (dispatch) {
+        dispatchEvent('change', value);
+      }
+    }
 
     color = error ? 'error' : color || 'primary';
     selectionColor = theme.color(selectionColor ?? color);
@@ -229,7 +238,21 @@ const InputFactory = React.memo<InputProps>(
 
       if (typeof callback === 'function') {
         const target = inputRef.current;
-        callback({ type, value, name, target, focus, blur, clear, isFocused, nativeEvent }, value);
+
+        const event: Omit<RbkChangeEvent, 'checked'> = {
+          type,
+          value,
+          name,
+          target,
+          form,
+          focus,
+          blur,
+          clear,
+          isFocused,
+          nativeEvent,
+        };
+
+        callback(event, value);
       }
     }
 
@@ -246,7 +269,7 @@ const InputFactory = React.memo<InputProps>(
       const value = unmaskValue(e?.value ?? target?.value ?? e?.nativeEvent?.text);
 
       if (!controlled) {
-        setInternal(value);
+        setInternal(value, false);
       }
 
       dispatchEvent('change', value, nativeEvent);
