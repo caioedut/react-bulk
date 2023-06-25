@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
@@ -66,17 +66,21 @@ const SelectFactory = React.memo<SelectProps>(
     const [visible, setVisible] = useState(false);
     const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == defaultValue));
 
-    const [internal, _setInternal] = useState(defaultValue);
+    const initialValue = useMemo(() => value ?? defaultValue, []);
+    const dispatchRef = useRef(typeof initialValue === 'undefined');
+    const [internal, _setInternal] = useState(initialValue);
 
     function setInternal(value: any, dispatch = true) {
       _setInternal(value);
 
-      if (dispatch) {
+      if (dispatch && dispatchRef.current) {
         dispatchEvent(
           'change',
           arrOptions?.find((item) => item.value == value),
         );
       }
+
+      dispatchRef.current = true;
     }
 
     const selected = arrOptions?.find((item) => item.value == internal);

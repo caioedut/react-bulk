@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
@@ -52,14 +52,18 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     const defaultRef: any = useRef(null);
     const buttonRef = ref || defaultRef;
 
-    const [internal, _setInternal] = useState(Boolean(+defaultChecked));
+    const initialChecked = useMemo(() => checked ?? defaultChecked, []);
+    const dispatchRef = useRef(typeof initialChecked === 'undefined');
+    const [internal, _setInternal] = useState(Boolean(Number(initialChecked)));
 
     function setInternal(value: any, dispatch = true) {
       _setInternal(value);
 
-      if (dispatch) {
+      if (dispatch && dispatchRef.current) {
         dispatchEvent('change', value);
       }
+
+      dispatchRef.current = true;
     }
 
     if (typeof size === 'string') {

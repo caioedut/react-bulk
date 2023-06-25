@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
@@ -128,14 +128,18 @@ const InputFactory = React.memo<InputProps>(
 
     const [focused, setFocused] = useState(false);
 
-    const [internal, _setInternal] = useState(defaultValue);
+    const initialValue = useMemo(() => value ?? defaultValue, []);
+    const dispatchRef = useRef(typeof initialValue === 'undefined');
+    const [internal, _setInternal] = useState(initialValue);
 
     function setInternal(value: any, dispatch = true) {
       _setInternal(value);
 
-      if (dispatch) {
+      if (dispatch && dispatchRef.current) {
         dispatchEvent('change', value);
       }
+
+      dispatchRef.current = true;
     }
 
     color = error ? 'error' : color || 'primary';
