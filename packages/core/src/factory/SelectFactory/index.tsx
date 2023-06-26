@@ -74,10 +74,10 @@ const SelectFactory = React.memo<SelectProps>(
       _setInternal(value);
 
       if (dispatch && dispatchRef.current) {
-        dispatchEvent(
-          'change',
-          arrOptions?.find((item) => item.value == value),
-        );
+        // dispatchEvent(
+        //   'change',
+        //   arrOptions?.find((item) => item.value == value),
+        // );
       }
 
       dispatchRef.current = true;
