@@ -385,8 +385,6 @@ const base: ThemeProps = {
             textDecorationLine: 'none !important',
             ...mixins.transitions.fast,
             transitionProperty: 'background-color, box-shadow',
-
-            touchAction: 'none',
             '-webkit-tap-highlight-color': 'transparent',
 
             '&:hover': { bg: (theme) => theme.color('primary', 0.8) },
@@ -734,7 +732,6 @@ const base: ThemeProps = {
           web: {
             ...mixins.transitions.fast,
             transitionProperty: 'box-shadow',
-            touchAction: 'none',
             '-webkit-tap-highlight-color': 'transparent',
           },
         },
@@ -762,7 +759,6 @@ const base: ThemeProps = {
             lineHeight: '1rem',
             outline: '0 !important',
             paddingHorizontal: '0.625rem',
-            touchAction: 'none',
 
             '-moz-appearance': 'textfield',
             appearance: 'textfield',
@@ -902,7 +898,6 @@ const base: ThemeProps = {
             outline: '0 !important',
             ...mixins.transitions.fast,
             transitionProperty: 'box-shadow',
-            touchAction: 'none',
             '-webkit-tap-highlight-color': 'transparent',
           },
         },
@@ -1020,7 +1015,6 @@ const base: ThemeProps = {
           marginHorizontal: '0.5rem',
           web: {
             cursor: 'pointer',
-            touchAction: 'none',
             '-webkit-tap-highlight-color': 'transparent',
           },
         },
