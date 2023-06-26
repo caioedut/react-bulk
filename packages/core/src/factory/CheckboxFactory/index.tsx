@@ -60,7 +60,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       _setInternal(value);
 
       if (dispatch && dispatchRef.current) {
-        dispatchEvent('change', value);
+        // dispatchEvent('change', value);
       }
 
       dispatchRef.current = true;
