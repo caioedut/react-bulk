@@ -385,7 +385,6 @@ const base: ThemeProps = {
             textDecorationLine: 'none !important',
             ...mixins.transitions.fast,
             transitionProperty: 'background-color, box-shadow',
-            '-webkit-tap-highlight-color': 'transparent',
 
             '&:hover': { bg: (theme) => theme.color('primary', 0.8) },
           },
@@ -732,7 +731,6 @@ const base: ThemeProps = {
           web: {
             ...mixins.transitions.fast,
             transitionProperty: 'box-shadow',
-            '-webkit-tap-highlight-color': 'transparent',
           },
         },
         label: {
@@ -898,7 +896,6 @@ const base: ThemeProps = {
             outline: '0 !important',
             ...mixins.transitions.fast,
             transitionProperty: 'box-shadow',
-            '-webkit-tap-highlight-color': 'transparent',
           },
         },
       },
@@ -1015,7 +1012,6 @@ const base: ThemeProps = {
           marginHorizontal: '0.5rem',
           web: {
             cursor: 'pointer',
-            '-webkit-tap-highlight-color': 'transparent',
           },
         },
         rule: {
