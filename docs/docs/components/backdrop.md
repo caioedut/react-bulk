@@ -58,6 +58,6 @@ Extends all [`Box`](/docs/components/core/box#props) props.
 
 When the backdrop is pressed directly. Children do not fire it.
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---

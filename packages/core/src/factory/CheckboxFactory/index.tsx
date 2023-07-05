@@ -5,7 +5,7 @@ import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
-import { CheckboxProps, RbkChangeEvent } from '../../types';
+import { CheckboxProps, RbkCheckboxEvent } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
@@ -118,7 +118,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       if (typeof callback === 'function') {
         const target = buttonRef.current;
 
-        const event: Omit<RbkChangeEvent, 'value'> = {
+        const event: RbkCheckboxEvent = {
           type,
           checked,
           name,

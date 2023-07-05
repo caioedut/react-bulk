@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkEvent } from '@react-bulk/core';
+import { AnyObject, FormRef, RbkInputEvent } from '@react-bulk/core';
 import {
   ActionSheet,
   Animation,
@@ -151,7 +151,7 @@ function ThemeExample() {
 
   const timeoutRef = useRef<any>({});
 
-  function handleChangeTheme(e: RbkEvent, value: number) {
+  function handleChangeTheme(e: RbkInputEvent, value: number) {
     const prop = e.name as string;
     const split = prop.split('.');
     const last = split.pop() as string;

@@ -215,30 +215,30 @@ Sets `textTransform` style for label.
 
 **`onBlur`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---
 
 **`onFocus`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---
 
 **`onPress`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---
 
 **`onPressIn`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---
 
 **`onPressOut`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---

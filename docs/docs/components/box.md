@@ -490,18 +490,18 @@ Sets `width`, `minWidth` and `maxWidth` styles.
 
 **`onPress`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---
 
 **`onPressIn`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---
 
 **`onPressOut`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---

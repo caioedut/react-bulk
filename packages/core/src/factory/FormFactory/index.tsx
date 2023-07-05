@@ -2,7 +2,7 @@ import React, { ForwardedRef, ReactNode, createContext, forwardRef, useContext, 
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { FormField, FormProps, FormRef, RbkFormChangeEvent } from '../../types';
+import { FormField, FormProps, FormRef, RbkFormEvent } from '../../types';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
@@ -68,15 +68,17 @@ const FormFactory = React.memo<FormProps>(
     function dispatchEvent(type: string, field?: FormField, nativeEvent?: any) {
       const callback = {
         change: onChange,
+        submit: onSubmit,
       }[type];
+
+      // onSubmit?.(ref?.current, getData());
 
       const target = formRef.current;
       const data = getData();
 
-      const event: RbkFormChangeEvent = {
+      const event: RbkFormEvent = {
         type,
         name: field?.name,
-        data,
         target,
         form: context,
         nativeEvent,
@@ -143,8 +145,8 @@ const FormFactory = React.memo<FormProps>(
 
     function submit(e: any = undefined) {
       e?.preventDefault?.();
-      // @ts-ignore
-      onSubmit?.(ref?.current, getData());
+      const nativeEvent = e?.nativeEvent ?? e;
+      dispatchEvent('submit', undefined, nativeEvent);
     }
 
     function cancel() {

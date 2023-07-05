@@ -188,19 +188,19 @@ The string that will be rendered before text input has been entered.
 
 **`onBlur`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(RbkInputEvent)`** <br/>
 
 ---
 
 **`onChange`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(RbkInputEvent)`** <br/>
 
 ---
 
 **`onFocus`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(RbkInputEvent)`** <br/>
 
 ---
 
@@ -209,6 +209,6 @@ The string that will be rendered before text input has been entered.
 Combined with [Form](/docs/components/forms/form), triggers every time when form data changes.
 Eg.: [Input](/docs/components/forms/input), [Select](/docs/components/forms/select), [Checkbox](/docs/components/forms/checkbox).
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(RbkFormEvent)`** <br/>
 
 ---

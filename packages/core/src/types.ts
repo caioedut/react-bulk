@@ -37,17 +37,28 @@ export type RbkMap = {
   [key: string]: ReactElement | any;
 };
 
-/**
- * @deprecated use RbkChangeEvent instead
- */
-export interface RbkEvent extends RbkChangeEvent {}
+/** @deprecated use RbkInputEvent instead */
+export interface RbkEvent extends RbkInputEvent {}
 
-export interface RbkChangeEvent {
+/** @deprecated use RbkInputEvent instead */
+export interface RbkChangeEvent extends RbkInputEvent {}
+
+/** @deprecated use RbkFormEvent instead */
+export interface RbkFormChangeEvent extends RbkFormEvent {}
+
+export interface RbkFormEvent {
+  name?: string;
+  type: string;
+  form: FormRef;
+  target: ReactElement | any;
+  nativeEvent?: Event | SyntheticEvent;
+}
+
+export interface RbkInputEvent {
   type: string;
   value: InputValue;
-  checked: boolean;
   name?: string;
-  target?: ReactElement | any;
+  target: ReactElement | any;
   form?: FormRef;
   focus: () => any;
   blur: () => any;
@@ -56,13 +67,8 @@ export interface RbkChangeEvent {
   nativeEvent?: Event | SyntheticEvent;
 }
 
-export interface RbkFormChangeEvent {
-  type: string;
-  data: AnyObject;
-  name?: string;
-  target?: ReactElement | any;
-  form: FormRef;
-  nativeEvent?: Event | SyntheticEvent;
+export interface RbkCheckboxEvent extends Omit<RbkInputEvent, 'value'> {
+  checked: boolean;
 }
 
 export type RbkRect = {
@@ -151,7 +157,7 @@ export type FormField = {
   name: string;
   get: () => InputValue | null | undefined;
   set: (value: InputValue) => any;
-  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
+  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
 };
 
 export type FormRef = {
@@ -552,8 +558,9 @@ export type InputProps = {
   unmask?: (value: InputValue, data: AnyObject) => any;
   value?: InputValue;
   // Events
-  onChange?: (event: RbkChangeEvent | RbkEvent, value: InputValue) => any;
-  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
+  onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue) => any;
+  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+  onSubmit?: (event: RbkInputEvent, value: InputValue) => any;
   // Styles
   contentStyle?: RbkStyles;
   errorStyle?: RbkStyles;
@@ -596,8 +603,8 @@ export type SelectProps = {
   startAddon?: ReactElement;
   value?: InputValue;
   // Events
-  onChange?: (event: RbkChangeEvent | RbkEvent, value: InputValue, option: SelectOption) => any;
-  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
+  onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue, option: SelectOption) => any;
+  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
   // Styles
   buttonStyle?: RbkStyles;
   errorStyle?: RbkStyles;
@@ -621,8 +628,8 @@ export type CheckboxProps = {
   size?: SizeValues;
   unique?: boolean;
   // Events
-  onChange?: (event: RbkChangeEvent | RbkEvent, checked: boolean) => any;
-  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
+  onChange?: (event: RbkCheckboxEvent | RbkChangeEvent | RbkEvent, checked: boolean) => any;
+  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
   // Styles
   buttonStyle?: RbkStyles;
   labelStyle?: RbkStyles;
@@ -641,7 +648,7 @@ export type SliderProps = {
   // Events
   onChange?: (event: AnyObject, value: number) => any;
   onSlide?: (event: AnyObject, value: number, percent: number) => any;
-  onFormChange?: (event: RbkFormChangeEvent, data: AnyObject) => any;
+  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
 } & FocusableProps &
   BoxProps;
 
@@ -751,12 +758,13 @@ export type BadgeProps = {
   labelStyle?: RbkStyles;
 } & Omit<TextProps, 'size'>;
 
+// TODO: remove event as "any" in next release
 export type FormProps = {
   data?: any;
-  onSubmit?: (event: FormRef, data: AnyObject) => any;
-  onCancel?: (event: FormRef) => any;
-  onClear?: (event: FormRef, data: AnyObject) => any;
-  onChange?: (event: FormRef, data: AnyObject) => any;
+  onSubmit?: (event: RbkFormEvent | any, data: AnyObject) => any;
+  onCancel?: (event: RbkFormEvent | any) => any;
+  onClear?: (event: RbkFormEvent | any, data: AnyObject) => any;
+  onChange?: (event: RbkFormEvent | any, data: AnyObject) => any;
 } & BoxProps;
 
 export type TooltipProps = {

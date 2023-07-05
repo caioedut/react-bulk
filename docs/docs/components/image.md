@@ -95,12 +95,12 @@ Extends all [`Box`](/docs/components/core/box#props) props.
 
 **`onLoad`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---
 
 **`onError`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---

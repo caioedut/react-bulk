@@ -5,7 +5,7 @@ import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
-import { AnyObject, RbkChangeEvent, SelectProps } from '../../types';
+import { AnyObject, RbkInputEvent, SelectProps } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
@@ -166,7 +166,7 @@ const SelectFactory = React.memo<SelectProps>(
         const target = buttonRef.current;
         const value = option?.value;
 
-        const event: Omit<RbkChangeEvent, 'checked'> = {
+        const event: RbkInputEvent = {
           type,
           value,
           name,

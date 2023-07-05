@@ -65,6 +65,6 @@ Extends all [`Box`](/docs/components/core/box#props) props.
 
 **`onBackdropPress`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---
