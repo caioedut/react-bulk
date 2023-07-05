@@ -102,6 +102,6 @@ Vertical alignment.
 
 **`onBackdropPress`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(Event)`** <br/>
 
 ---

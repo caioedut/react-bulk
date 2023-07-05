@@ -109,19 +109,19 @@ If `true`, renders a radion button.
 
 **`onBlur`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(RbkCheckboxEvent)`** <br/>
 
 ---
 
 **`onChange`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(RbkCheckboxEvent)`** <br/>
 
 ---
 
 **`onFocus`**
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(RbkCheckboxEvent)`** <br/>
 
 ---
 
@@ -130,7 +130,7 @@ If `true`, renders a radion button.
 Combined with [Form](/docs/components/forms/form), triggers every time when form data changes.
 Eg.: [Input](/docs/components/forms/input), [Select](/docs/components/forms/select), [Checkbox](/docs/components/forms/checkbox).
 
-➤ Type: **`Function(RbkEvent)`** <br/>
+➤ Type: **`Function(RbkFormEvent)`** <br/>
 
 ---
 

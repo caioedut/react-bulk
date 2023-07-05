@@ -7,7 +7,7 @@ import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { customStyleProps } from '../../styles/constants';
-import { InputProps, InputValue, RbkChangeEvent } from '../../types';
+import { InputProps, InputValue, RbkInputEvent } from '../../types';
 import defined from '../../utils/defined';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -62,6 +62,7 @@ const InputFactory = React.memo<InputProps>(
       onFocus,
       onBlur,
       onFormChange,
+      onSubmit,
       // Styles
       variants,
       contentStyle,
@@ -154,6 +155,12 @@ const InputFactory = React.memo<InputProps>(
             hidden: 'text',
           }) || 'text',
       });
+
+      if (typeof onSubmit === 'function') {
+        Object.assign(rest, {
+          onKeyDown: (e) => (e.key === 'Enter' || e.keyCode === 13) && handleSubmit(e),
+        });
+      }
     }
 
     if (native) {
@@ -178,6 +185,12 @@ const InputFactory = React.memo<InputProps>(
           hidden: 'default',
         }),
       });
+
+      if (typeof onSubmit === 'function') {
+        Object.assign(rest, {
+          onSubmitEditing: handleSubmit,
+        });
+      }
     }
 
     if (typeof size === 'string') {
@@ -227,12 +240,13 @@ const InputFactory = React.memo<InputProps>(
         change: onChange,
         focus: onFocus,
         blur: onBlur,
+        submit: onSubmit,
       }[type];
 
       if (typeof callback === 'function') {
         const target = inputRef.current;
 
-        const event: Omit<RbkChangeEvent, 'checked'> = {
+        const event: RbkInputEvent = {
           type,
           value,
           name,
@@ -279,6 +293,12 @@ const InputFactory = React.memo<InputProps>(
       setFocused(false);
       dispatchEvent('blur', internal, nativeEvent);
     };
+
+    function handleSubmit(e) {
+      e?.preventDefault();
+      const nativeEvent = e?.nativeEvent ?? e;
+      dispatchEvent('submit', internal, nativeEvent);
+    }
 
     style = [extract(customStyleProps, rest), style];
 
