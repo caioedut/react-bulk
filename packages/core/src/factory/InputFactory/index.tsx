@@ -129,18 +129,7 @@ const InputFactory = React.memo<InputProps>(
     const [focused, setFocused] = useState(false);
 
     const initialValue = useMemo(() => value ?? defaultValue, []);
-    const dispatchRef = useRef(typeof initialValue === 'undefined');
-    const [internal, _setInternal] = useState(initialValue);
-
-    function setInternal(value: any, dispatch = true) {
-      _setInternal(value);
-
-      if (dispatch && dispatchRef.current) {
-        // dispatchEvent('change', value);
-      }
-
-      dispatchRef.current = true;
-    }
+    const [internal, setInternal] = useState(initialValue);
 
     color = error ? 'error' : color || 'primary';
     selectionColor = theme.color(selectionColor ?? color);
@@ -273,7 +262,7 @@ const InputFactory = React.memo<InputProps>(
       const value = unmaskValue(e?.value ?? target?.value ?? e?.nativeEvent?.text);
 
       if (!controlled) {
-        setInternal(value, false);
+        setInternal(value);
       }
 
       dispatchEvent('change', value, nativeEvent);
