@@ -184,6 +184,7 @@ export const styleProps = [
   ...flexProps,
   ...spacings,
   ...customStyleProps,
+  'aspectRatio',
   'backfaceVisibility',
   'backgroundColor',
   'borderBottomColor',
