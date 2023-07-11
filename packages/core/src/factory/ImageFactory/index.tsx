@@ -40,25 +40,25 @@ const ImageFactory = React.memo<ImageProps>(
     const defaultRef: any = useRef(null);
     const imageRef = ref || defaultRef;
 
+    // Defaults
+    width = width ?? w ?? get('width', style) ?? get('w', style);
+    height = height ?? h ?? get('height', style) ?? get('h', style);
+
+    const isProcessed = defined(w) && defined(h);
+
     const [status, setStatus] = useState('loading');
 
+    const [containerWidth, setContainerWidth] = useState<number>();
     const [imgWidth, setImgWidth] = useState<number | null>(null);
     const [aspectRatio, setAspectRatio] = useState<number | null>(null);
 
-    const [containerWidth, setContainerWidth] = useState<number>();
-    const [finalWidth, setFinalWidth] = useState<number | null>(0);
-    const [finalHeight, setFinalHeight] = useState<number | null>(0);
-
-    const loading = [aspectRatio, containerWidth].some((item: any) => [undefined, null].includes(item));
+    const [finalWidth, setFinalWidth] = useState<number | null>(width ?? 0);
+    const [finalHeight, setFinalHeight] = useState<number | null>(height ?? 0);
 
     if (alt) {
       rest.accessibility = rest.accessibility || {};
       rest.accessibility.label = rest.accessibility.label ?? alt;
     }
-
-    // Defaults
-    width = width ?? w ?? get('width', style) ?? get('w', style);
-    height = height ?? h ?? get('height', style) ?? get('h', style);
 
     let imgProps = {};
 
@@ -103,7 +103,7 @@ const ImageFactory = React.memo<ImageProps>(
     }, [source]);
 
     useEffect(() => {
-      if (!native || !source) return;
+      if (isProcessed || !native || !source) return;
 
       const asset = source?.uri ?? source;
 
@@ -125,10 +125,10 @@ const ImageFactory = React.memo<ImageProps>(
       } catch (err) {
         handleError(err);
       }
-    }, [source, width, height]);
+    }, [source, width, height, isProcessed]);
 
     useEffect(() => {
-      if (!native || loading) return;
+      if (isProcessed || !native || !defined(aspectRatio) || !defined(containerWidth)) return;
 
       let widthBase = typeof width === 'number' ? width : null;
       let heightBase = typeof height === 'number' ? height : null;
@@ -164,7 +164,7 @@ const ImageFactory = React.memo<ImageProps>(
 
       setFinalWidth(newWidth);
       setFinalHeight(newHeight);
-    }, [loading, width, height, containerWidth, imgWidth, aspectRatio]);
+    }, [width, height, containerWidth, imgWidth, aspectRatio, isProcessed]);
 
     style = [
       { overflow: 'hidden' },
@@ -193,7 +193,7 @@ const ImageFactory = React.memo<ImageProps>(
 
     if (native) {
       return (
-        <BoxFactory style={style} stylist={[variants.root, stylist]} {...rest} onLayout={handleLayout}>
+        <BoxFactory style={style} stylist={[variants.root, stylist]} {...rest} onLayout={!isProcessed ? handleLayout : undefined}>
           <BoxFactory ref={imageRef} component={Image} {...imgProps} noRootStyles />
         </BoxFactory>
       );
