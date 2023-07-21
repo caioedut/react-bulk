@@ -2,6 +2,9 @@ import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } 
 
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
+import Check from '../../icons/Check';
+import ChevronDown from '../../icons/ChevronDown';
+import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
@@ -22,7 +25,7 @@ const SelectFactory = React.memo<SelectProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Select;
-    const { web, native, useDimensions, Input } = global.mapping;
+    const { web, native, svg, useDimensions, Input } = global.mapping;
 
     const dimensions = useDimensions();
 
@@ -318,10 +321,10 @@ const SelectFactory = React.memo<SelectProps>(
           endAddon={
             loading ? (
               <LoadingFactory size={size} />
+            ) : visible ? (
+              <ChevronUp svg={svg} color={theme.color(color)} />
             ) : (
-              <TextFactory color={color} style={{ fontSize, transform: [{ scaleY: 0.65 }] }}>
-                {visible ? '▲' : '▼'}
-              </TextFactory>
+              <ChevronDown svg={svg} color={theme.color(color)} />
             )
           }
           {...rest}
@@ -372,12 +375,8 @@ const SelectFactory = React.memo<SelectProps>(
                     contentStyle={{ flex: 1 }}
                     onPress={(e) => handleChange(e, option, true)}
                     endAddon={
-                      <BoxFactory center w={fontSize} pl={1}>
-                        {isSelected && (
-                          <TextFactory color={color} style={{ fontSize: theme.rem(1.25, fontSize) }}>
-                            ✓
-                          </TextFactory>
-                        )}
+                      <BoxFactory w={fontSize} pl={1}>
+                        {isSelected && <Check svg={svg} size={fontSize} color={theme.color(color)} />}
                       </BoxFactory>
                     }
                     ref={(el) => {
