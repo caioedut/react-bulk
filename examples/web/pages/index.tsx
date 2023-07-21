@@ -37,7 +37,7 @@ const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
 const variants = ['solid', 'outline', 'text'];
 const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
 const tooltips = ['top', 'bottom', 'left', 'right'];
-const animations = ['Spin', 'FadeIn', 'FadeOut', 'ZoomIn', 'ZoomOut'];
+const animations = ['spin', 'fade', 'zoom', { from: { top: -30, opacity: 0 }, to: { top: 0, opacity: 1 } }];
 const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
 const formData = {
@@ -937,49 +937,28 @@ function AnimationExample() {
       </Text>
 
       {animations.map((animation, key) => {
-        // @ts-ignore
-        const Component = Animation[animation];
+        const label = typeof animation === 'string' ? getLabel(animation) : 'Custom';
+        const props = typeof animation === 'string' ? { [animation]: true } : animation;
 
         return (
           <React.Fragment key={key}>
-            <Box key={key}>
+            {key > 0 && <Divider my={3} />}
+            <Box>
               <Text variant="subtitle" mb={3}>
-                {animation}
+                {label}
               </Text>
               <Grid noWrap alignItems="center" gap={6}>
-                <Component loop in>
+                <Animation loop in {...props}>
                   <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-                </Component>
-                <Component loop in>
+                </Animation>
+                <Animation loop in {...props}>
                   <Text>Anything</Text>
-                </Component>
+                </Animation>
               </Grid>
             </Box>
-            <Divider my={3} />
           </React.Fragment>
         );
       })}
-
-      <Box>
-        <Text variant="subtitle" mb={3}>
-          Custom
-        </Text>
-        <Grid noWrap gap={6} alignItems="center">
-          <Box>
-            <Animation component={Progress} loop in from={{ top: -10, opacity: 0 }} to={{ top: 0, opacity: 1 }} />
-          </Box>
-          <Box>
-            <Animation loop in from={{ top: -20, opacity: 0 }} to={{ top: 0, opacity: 1 }}>
-              <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-            </Animation>
-          </Box>
-          <Box>
-            <Animation loop in from={{ top: -30, opacity: 0 }} to={{ top: 0, opacity: 1 }}>
-              Anything
-            </Animation>
-          </Box>
-        </Grid>
-      </Box>
     </>
   );
 }

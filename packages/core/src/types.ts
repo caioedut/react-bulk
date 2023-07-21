@@ -789,6 +789,11 @@ export type AnimationProps = {
   speed?: number;
   timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | string;
   to?: RbkStyles;
+
+  // Pre-defined animations
+  fade?: boolean | 1 | -1;
+  zoom?: boolean | 1 | -1;
+  spin?: boolean | 1 | -1;
 } & BoxProps;
 
 export type ProgressProps = {
