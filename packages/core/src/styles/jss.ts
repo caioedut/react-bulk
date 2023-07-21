@@ -5,7 +5,7 @@ import remove from '../props/remove';
 import { RbkStyles, ThemeProps } from '../types';
 import clone from '../utils/clone';
 import global from '../utils/global';
-import { boxSizeProps, customSpacings, customStyleProps, flexAlignProps, spacings } from './constants';
+import { boxSizeProps, customSpacings, customStyleProps, flexAlignProps, notPxProps, spacings } from './constants';
 
 export { customSpacings, customStyleProps, spacings };
 
@@ -231,7 +231,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
           for (const attr in item) {
             let unit = Array.isArray(item[attr]) ? item[attr].join(', ') : item[attr];
 
-            if (web && unit && typeof unit === 'number') {
+            if (unit && typeof unit === 'number' && !notPxProps.includes(attr)) {
               unit = `${unit}px`;
             }
 

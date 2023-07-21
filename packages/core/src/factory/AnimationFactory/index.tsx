@@ -1,9 +1,10 @@
-import React, { forwardRef, memo, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 
 import createStyle from '../../createStyle';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
+import get from '../../props/get';
 import css from '../../styles/css';
 import jss from '../../styles/jss';
 import { AnimationProps, RbkStyles } from '../../types';
@@ -26,14 +27,50 @@ const AnimationFactory = React.memo<AnimationProps>(
       speed,
       to,
       timing,
+      // Animations
+      fade,
+      zoom,
+      spin,
       // Styles
       variants,
       ...rest
     } = factory2(props, options);
 
     direction = direction ?? 'normal';
-    from = jss({ theme }, from);
-    to = jss({ theme }, to);
+
+    let transformFrom = get('transform', from) ?? [];
+    let transformTo = get('transform', to) ?? [];
+
+    const opacityFrom = fade < 0 ? 1 : 0;
+    const scaleFrom = zoom < 0 ? 1 : 0;
+    const rotateFrom = spin < 0 ? '360deg' : '0deg';
+
+    const opacityTo = fade < 0 ? 0 : 1;
+    const scaleTo = zoom < 0 ? 0 : 1;
+    const rotateTo = spin < 0 ? '0deg' : '360deg';
+
+    if (Array.isArray(transformFrom)) {
+      zoom && transformFrom.push({ scale: scaleFrom });
+      spin && transformFrom.push({ rotate: rotateFrom });
+    }
+
+    if (typeof transformFrom === 'string') {
+      transformFrom += zoom ? ` scale(${scaleFrom})` : '';
+      transformFrom += spin ? ` rotate(${rotateFrom})` : '';
+    }
+
+    if (Array.isArray(transformTo)) {
+      zoom && transformTo.push({ scale: scaleTo });
+      spin && transformTo.push({ rotate: rotateTo });
+    }
+
+    if (typeof transformTo === 'string') {
+      transformTo += zoom ? ` scale(${scaleTo})` : '';
+      transformTo += spin ? ` rotate(${rotateTo})` : '';
+    }
+
+    from = jss({ theme }, fade && { opacity: opacityFrom }, { transform: transformFrom }, from);
+    to = jss({ theme }, fade && { opacity: opacityTo }, { transform: transformTo }, to);
 
     const name = useHtmlId();
     const iterations = loop === true ? -1 : Number(loop ?? 1);
@@ -101,15 +138,17 @@ const AnimationFactory = React.memo<AnimationProps>(
     }
 
     if (native) {
-      Object.entries(from).forEach(([attr, val], index) => {
-        if (attr === 'transform') {
-          style[attr] = (val as any[]).map((obj) => {
-            for (let objAttr in obj) {
-              obj[objAttr] = animationValue.interpolate({
+      Object.entries(from).forEach(([attr, val]) => {
+        if (attr === 'transform' && Array.isArray(val)) {
+          style.transform = (val as any[]).map((obj) => {
+            Object.entries(obj).map(([transfAttr, transfValue]) => {
+              const toValue = get(transfAttr, ...to.transform);
+
+              obj[transfAttr] = animationValue.interpolate({
                 inputRange: [0, 1, 2],
-                outputRange: [obj[objAttr], to[attr][index][objAttr], obj[objAttr]],
+                outputRange: [transfValue, toValue, transfValue],
               });
-            }
+            });
 
             return obj;
           });
@@ -138,45 +177,6 @@ const AnimationFactory = React.memo<AnimationProps>(
       </BoxFactory>
     );
   }),
-);
-
-/**************************
- * Pre-defined Animations *
- **************************/
-
-// @ts-ignore
-AnimationFactory.FadeIn = memo(
-  forwardRef<typeof AnimationFactory, AnimationProps>((props, ref) => (
-    <AnimationFactory ref={ref} {...props} from={{ opacity: 0 }} to={{ opacity: 1 }} />
-  )),
-);
-
-// @ts-ignore
-AnimationFactory.FadeOut = memo(
-  forwardRef<typeof AnimationFactory, AnimationProps>((props, ref) => (
-    <AnimationFactory ref={ref} {...props} from={{ opacity: 1 }} to={{ opacity: 0 }} />
-  )),
-);
-
-// @ts-ignore
-AnimationFactory.ZoomIn = memo(
-  forwardRef<typeof AnimationFactory, AnimationProps>((props, ref) => (
-    <AnimationFactory ref={ref} {...props} from={{ transform: [{ scale: 0 }] }} to={{ transform: [{ scale: 1 }] }} />
-  )),
-);
-
-// @ts-ignore
-AnimationFactory.ZoomOut = memo(
-  forwardRef<typeof AnimationFactory, AnimationProps>((props, ref) => (
-    <AnimationFactory ref={ref} {...props} from={{ transform: [{ scale: 1 }] }} to={{ transform: [{ scale: 0 }] }} />
-  )),
-);
-
-// @ts-ignore
-AnimationFactory.Spin = memo(
-  forwardRef<typeof AnimationFactory, AnimationProps>((props, ref) => (
-    <AnimationFactory ref={ref} {...props} from={{ transform: [{ rotate: '0deg' }] }} to={{ transform: [{ rotate: '360deg' }] }} />
-  )),
 );
 
 AnimationFactory.displayName = 'AnimationFactory';
