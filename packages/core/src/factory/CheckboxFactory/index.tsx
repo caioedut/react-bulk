@@ -2,6 +2,7 @@ import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } 
 
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
+import Check from '../../icons/Check';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
@@ -18,7 +19,6 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     const theme = useTheme();
     const options = theme.components.Checkbox;
     const { web, native, svg, Input } = global.mapping;
-    const { Svg, Circle, Polyline } = svg;
 
     // Extends from default props
     let {
@@ -78,7 +78,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
     const baseSize = theme.rem(size);
     const fontSize = baseSize / 2;
-    const iconSize = fontSize * theme.typography.lineHeight;
+    const halfSize = fontSize / 2;
 
     useEffect(() => {
       if (typeof checked !== 'boolean') return;
@@ -172,28 +172,22 @@ const CheckboxFactory = React.memo<CheckboxProps>(
         >
           <BoxFactory
             center
-            h={iconSize}
-            w={iconSize}
-            style={{
-              border: `2px solid ${color}`,
-              borderRadius: unique ? iconSize / 2 : theme.shape.borderRadius,
-            }}
+            h={fontSize}
+            w={fontSize}
+            border={`2px solid ${color}`}
+            borderRadius={unique ? halfSize : theme.shape.borderRadius}
+            bg={internal && !unique ? color : undefined}
           >
             {Boolean(internal) && (
-              <Svg viewBox="0 0 256 256" height="100%" width="100%">
+              <>
                 {unique ? (
-                  <Circle cx="128" cy="128" r="80" fill={color} />
+                  <svg.Svg viewBox="0 0 256 256" height="100%" width="100%">
+                    <svg.Circle cx="128" cy="128" r="80" fill={color} />
+                  </svg.Svg>
                 ) : (
-                  <Polyline
-                    points="216 72 104 184 48 128"
-                    fill="none"
-                    stroke={color}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="32"
-                  />
+                  <Check svg={svg} size={fontSize} color={theme.contrast('color')} />
                 )}
-              </Svg>
+              </>
             )}
           </BoxFactory>
         </ButtonFactory>
