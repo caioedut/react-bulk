@@ -165,8 +165,6 @@ events and updating the value prop to keep the controlled state in sync.
 
 **`label`**
 
-To use as prop instead of children.
-
 ➤ Type: **`string` `ReactNode`** <br/>
 
 ---
