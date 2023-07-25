@@ -1,13 +1,22 @@
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { MutableRefObject, createContext, createRef, useCallback, useEffect, useState } from 'react';
 
 import BaseNative from './BaseNative';
 import BaseWeb from './BaseWeb';
 import Platform from './Platform';
+import Snackbar, { SnackbarRef } from './Snackbar';
 import createTheme from './createTheme';
 import { RbkTheme, ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
 import global from './utils/global';
 
-export const Context = createContext<RbkTheme | null>(null);
+const snackbarRef = createRef<any>();
+
+export const Context = createContext<{
+  theme: RbkTheme;
+  snackbarRef: MutableRefObject<SnackbarRef>;
+}>({
+  theme: {} as RbkTheme,
+  snackbarRef,
+});
 
 function ReactBulk({ theme, children }: any) {
   const { web, native } = Platform;
@@ -33,9 +42,17 @@ function ReactBulk({ theme, children }: any) {
   }
 
   return (
-    <Context.Provider value={{ ...themeState, setTheme }}>
+    <Context.Provider
+      value={{
+        theme: { ...themeState, setTheme },
+        snackbarRef,
+      }}
+    >
       {web && <BaseWeb theme={themeState}>{children}</BaseWeb>}
+
       {native && <BaseNative theme={themeState}>{children}</BaseNative>}
+
+      <Snackbar ref={snackbarRef} theme={themeState} />
     </Context.Provider>
   );
 }

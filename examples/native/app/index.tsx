@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkInputEvent } from '@react-bulk/core';
+import { AnyObject, FormRef, RbkInputEvent, useSnackbar } from '@react-bulk/core';
 import {
   ActionSheet,
   Animation,
@@ -105,6 +105,10 @@ export default function Main() {
 
       <Card mt={3}>
         <ModalExample />
+      </Card>
+
+      <Card mt={3}>
+        <SnackbarExample />
       </Card>
 
       <Card mt={3}>
@@ -719,6 +723,21 @@ function ModalExample() {
           </Button>
         </Box>
       </Modal>
+    </>
+  );
+}
+
+function SnackbarExample() {
+  const snackbar = useSnackbar();
+
+  return (
+    <>
+      <Text variant="title" mb={3}>
+        Snackbar
+      </Text>
+      <Box row wrap>
+        <Button onPress={() => snackbar.open({ message: 'Example snackbar' })}>Press It</Button>
+      </Box>
     </>
   );
 }
