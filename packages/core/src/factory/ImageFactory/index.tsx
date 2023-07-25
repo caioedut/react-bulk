@@ -60,8 +60,6 @@ const ImageFactory = React.memo<ImageProps>(
       rest.accessibility.label = rest.accessibility.label ?? alt;
     }
 
-    let imgProps = {};
-
     Object.assign(rest, {
       onLoad: (e) => handleLoad(e),
       onError: (err) => handleError(err),
@@ -75,7 +73,7 @@ const ImageFactory = React.memo<ImageProps>(
     }
 
     if (native) {
-      Object.assign(imgProps, {
+      Object.assign(rest, {
         source: typeof source === 'string' ? { uri: source } : source,
         resizeMode: mode === 'fill' ? 'stretch' : mode,
         width: finalWidth,
@@ -193,8 +191,8 @@ const ImageFactory = React.memo<ImageProps>(
 
     if (native) {
       return (
-        <BoxFactory style={style} stylist={[variants.root, stylist]} {...rest} onLayout={!isProcessed ? handleLayout : undefined}>
-          <BoxFactory ref={imageRef} component={Image} {...imgProps} noRootStyles />
+        <BoxFactory style={style} stylist={[variants.root, stylist]} onLayout={!isProcessed ? handleLayout : undefined}>
+          <BoxFactory ref={imageRef} component={Image} {...rest} noRootStyles />
         </BoxFactory>
       );
     }
