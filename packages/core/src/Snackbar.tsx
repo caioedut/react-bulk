@@ -12,6 +12,8 @@ export type SnackbarProps = {
   color?: RbkColor;
   duration?: number;
   message?: string;
+  halign?: 'center' | 'left' | 'right';
+  valign?: 'center' | 'top' | 'bottom';
 };
 
 export type SnackbarRef = {
@@ -27,7 +29,23 @@ function Snackbar({ theme }: any, ref) {
 
   const [props, setProps] = useState<SnackbarProps>();
 
-  const { message, color = 'gray.dark', duration = 4000 } = props || {};
+  const {
+    //
+    message,
+    color = 'gray.dark',
+    duration = 4000,
+    halign = 'left',
+    valign = 'bottom',
+  } = props || {};
+
+  const boxProps = {
+    t: valign === 'top' ? 0 : undefined,
+    b: valign !== 'top' ? 0 : undefined,
+    r: halign === 'right' ? 0 : undefined,
+    l: halign !== 'right' ? 0 : undefined,
+  };
+
+  const translateY = 120 * (valign === 'top' ? -1 : 1);
 
   useImperativeHandle(
     ref,
@@ -52,21 +70,26 @@ function Snackbar({ theme }: any, ref) {
     }
   }, [props]);
 
+  // TODO
+  // CRIAR TOASTER EM VEZ DE SNACKBAR
+  // PERMITIR QUALQUER ELEMENTO NO TOASTER
+
   return (
-    <BoxFactory position={native ? 'absolute' : 'fixed'} b={0} l={0} maxw="100%" p={3} row zIndex={999}>
+    <BoxFactory position={native ? 'absolute' : 'fixed'} maxw="100%" row zIndex={999} {...boxProps}>
       {Boolean(props) && (
         <AnimationFactory
           key={idRef.current}
           in
+          m={3}
           speed={200}
-          from={{ transform: [{ translateY: 120 }] }}
+          from={{ transform: [{ translateY }] }}
           to={{ transform: [{ translateY: 0 }] }}
         >
           <CardFactory position="relative" overflow="hidden" bg={color} maxw={480} corners={2} px={5} py={3}>
             <TextFactory variant="secondary" color={theme.contrast(color)}>
               {message}
             </TextFactory>
-            <BoxFactory position="absolute" t={0} l={0} r={0}>
+            <BoxFactory position="absolute" b={0} l={0} r={0}>
               <AnimationFactory in timing="linear" speed={duration} from={{ w: '0%' }} to={{ w: '100%' }}>
                 <BoxFactory h={2} bg={theme.color(theme.contrast(color), 0.5)} />
               </AnimationFactory>
