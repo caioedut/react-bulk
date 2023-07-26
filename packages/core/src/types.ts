@@ -367,6 +367,7 @@ export type ThemeProps = {
       modal: number;
       dropdown: number;
       tooltip: number;
+      toaster: number;
     };
   };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkInputEvent, useSnackbar } from '@react-bulk/core';
+import { AnyObject, FormRef, RbkInputEvent, useToaster } from '@react-bulk/core';
 import {
   ActionSheet,
   Animation,
@@ -108,7 +108,7 @@ export default function Main() {
       </Card>
 
       <Card mt={3}>
-        <SnackbarExample />
+        <ToasterExample />
       </Card>
 
       <Card mt={3}>
@@ -527,7 +527,14 @@ function FormExample() {
       <Grid alignItems="center" gap={3}>
         {sizes.map((size) => (
           <Box key={size}>
-            <Checkbox key={size} size={size} label={getLabel(size)} unique checked={radio === size} onChange={() => setRadio(size)} />
+            <Checkbox
+              key={size}
+              size={size}
+              label={getLabel(size)}
+              unique
+              checked={radio === size}
+              onChange={() => setRadio(size)}
+            />
           </Box>
         ))}
       </Grid>
@@ -653,8 +660,19 @@ function ImageExample() {
       <Box row center>
         <Image mr={2} w={120} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
         <Image mr={2} w="15%" source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-        <Image mr={2} h={80} corners={3} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-        <Image mr={2} w={80} h={80} circular source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+        <Image
+          mr={2}
+          h={80}
+          corners={3}
+          source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg"
+        />
+        <Image
+          mr={2}
+          w={80}
+          h={80}
+          circular
+          source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg"
+        />
       </Box>
     </>
   );
@@ -715,8 +733,9 @@ function ModalExample() {
           </Text>
           <Divider my={3} mx={-3} />
           <Text>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consectetur cupiditate deserunt dolorum eius et expedita qui
-            repellendus voluptatibus! Accusamus consectetur deleniti fuga iure laborum quam quisquam quo ut, velit!
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consectetur cupiditate deserunt dolorum
+            eius et expedita qui repellendus voluptatibus! Accusamus consectetur deleniti fuga iure laborum quam
+            quisquam quo ut, velit!
           </Text>
           <Button mt={3} onPress={() => setModal((current) => ({ ...current, visible: false }))}>
             Close
@@ -727,16 +746,16 @@ function ModalExample() {
   );
 }
 
-function SnackbarExample() {
-  const snackbar = useSnackbar();
+function ToasterExample() {
+  const toaster = useToaster();
 
   return (
     <>
       <Text variant="title" mb={3}>
-        Snackbar
+        Toaster
       </Text>
       <Box row wrap>
-        <Button onPress={() => snackbar.open({ message: 'Example snackbar' })}>Press It</Button>
+        <Button onPress={() => toaster.open({ content: 'Example toaster' })}>Press It</Button>
       </Box>
     </>
   );
@@ -755,8 +774,9 @@ function CollapseExample() {
       </Box>
       <Collapse in={collpase} mt={3}>
         <Text>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis, dignissimos distinctio
-          earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam recusandae suscipit, tempora.
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis,
+          dignissimos distinctio earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam
+          recusandae suscipit, tempora.
         </Text>
       </Collapse>
     </>
@@ -778,8 +798,8 @@ function DrawerExample() {
         <Card>
           <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
           <Text mt={3}>
-            A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae soluta. Incidunt labore
-            laboriosam maiores, praesentium quia tempore!
+            A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae
+            soluta. Incidunt labore laboriosam maiores, praesentium quia tempore!
           </Text>
           <Button mt={3} onPress={() => setDrawer(false)}>
             Close
@@ -805,8 +825,8 @@ function ActionSheetExample() {
       <ActionSheet visible={actionSheet} maxw={500} onClose={() => setActionSheet(false)}>
         <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
         <Text mt={3}>
-          A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae soluta. Incidunt labore
-          laboriosam maiores, praesentium quia tempore!
+          A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae
+          soluta. Incidunt labore laboriosam maiores, praesentium quia tempore!
         </Text>
 
         <Button mt={3}>Option X</Button>
@@ -939,8 +959,15 @@ function CarouselExample() {
         {Array.from({ length: 11 }).map((i, index) => (
           <Card key={index} corners={3} bg="background.secondary">
             <Text bold>Item {index + 1}</Text>
-            <Image w="100%" corners={3} my={3} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-            <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos recusandae suscipit velit voluptate.</Text>
+            <Image
+              w="100%"
+              corners={3}
+              my={3}
+              source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg"
+            />
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos recusandae suscipit velit voluptate.
+            </Text>
           </Card>
         ))}
       </Carousel>

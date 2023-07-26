@@ -3,19 +3,19 @@ import { MutableRefObject, createContext, createRef, useCallback, useEffect, use
 import BaseNative from './BaseNative';
 import BaseWeb from './BaseWeb';
 import Platform from './Platform';
-import Snackbar, { SnackbarRef } from './Snackbar';
+import Toaster, { ToasterRef } from './Toaster';
 import createTheme from './createTheme';
 import { RbkTheme, ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
 import global from './utils/global';
 
-const snackbarRef = createRef<any>();
+const toasterRef = createRef<any>();
 
 export const Context = createContext<{
   theme: RbkTheme;
-  snackbarRef: MutableRefObject<SnackbarRef>;
+  toasterRef: MutableRefObject<ToasterRef>;
 }>({
   theme: {} as RbkTheme,
-  snackbarRef,
+  toasterRef,
 });
 
 function ReactBulk({ theme, children }: any) {
@@ -45,14 +45,14 @@ function ReactBulk({ theme, children }: any) {
     <Context.Provider
       value={{
         theme: { ...themeState, setTheme },
-        snackbarRef,
+        toasterRef,
       }}
     >
       {web && <BaseWeb theme={themeState}>{children}</BaseWeb>}
 
       {native && <BaseNative theme={themeState}>{children}</BaseNative>}
 
-      <Snackbar ref={snackbarRef} theme={themeState} />
+      <Toaster ref={toasterRef} theme={themeState} />
     </Context.Provider>
   );
 }

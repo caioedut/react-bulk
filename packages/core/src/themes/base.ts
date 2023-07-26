@@ -94,6 +94,7 @@ const mixins = {
     modal: 901,
     dropdown: 902,
     tooltip: 903,
+    toaster: 904,
   },
 };
 
