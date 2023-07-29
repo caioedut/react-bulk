@@ -27,6 +27,7 @@ function Toaster({ theme }: any, ref) {
 
   const idRef = useRef<string>();
   const timeoutRef = useRef<TimeoutType>();
+  const cardRef = useRef<any>();
 
   const [props, setProps] = useState<ToasterProps>();
 
@@ -73,6 +74,8 @@ function Toaster({ theme }: any, ref) {
     if (props) {
       idRef.current = uuid();
 
+      setTimeout(() => cardRef?.current?.focus?.(), 10);
+
       timeoutRef.current = setTimeout(() => {
         setProps(undefined);
       }, duration);
@@ -91,6 +94,7 @@ function Toaster({ theme }: any, ref) {
           to={{ transform: [{ translateY: 0 }] }}
         >
           <CardFactory
+            ref={cardRef}
             position="relative"
             overflow="hidden"
             bg={color}
@@ -99,6 +103,7 @@ function Toaster({ theme }: any, ref) {
             corners={2}
             p={3}
             accessibility={{ role: 'alert' }}
+            platform={{ web: { tabIndex: '-1' } }}
           >
             <BoxFactory row noWrap center>
               {typeof content === 'string' ? (
