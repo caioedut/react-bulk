@@ -85,7 +85,11 @@ const OutlineFactory = React.memo<OutlineProps>(
         onBlur={handleBlur ?? onBlur}
       >
         {(visible === true || focused) && (
-          <BoxFactory position="absolute" border={`${size}px solid ${color}`} style={[borderRadiusStyle, { inset: -size }]} />
+          <BoxFactory
+            position="absolute"
+            border={`${size}px solid ${color}`}
+            style={[borderRadiusStyle, { inset: -size }]}
+          />
         )}
 
         {children}
