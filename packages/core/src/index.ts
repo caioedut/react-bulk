@@ -18,6 +18,9 @@ export { default as remove } from './props/remove';
 
 // Element
 export { default as rect } from './element/rect';
+export { default as scrollTo } from './element/scrollTo';
+export { default as scrollToEnd } from './element/scrollToEnd';
+export { default as scrollToStart } from './element/scrollToStart';
 
 // Util
 export { default as Platform } from './Platform';

@@ -765,7 +765,7 @@ function ToasterExample() {
                 content: (
                   <>
                     <Text>⚠</Text>
-                    <Text color="warning" flex mx={3}>
+                    <Text color="warning" mx={3}>
                       Hello world!
                     </Text>
                     <Button variant="text" size="small">
