@@ -7,6 +7,7 @@ import scrollToStart from '../../element/scrollToStart';
 import useTheme from '../../hooks/useTheme';
 import ChevronLeft from '../../icons/ChevronLeft';
 import ChevronRight from '../../icons/ChevronRight';
+import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
 import { CarouselProps } from '../../types';
 import event from '../../utils/event';
@@ -163,7 +164,7 @@ const CarouselFactory = React.memo<CarouselProps>(
           onScroll={handleScroll}
         >
           {contentWidth !== null &&
-            React.Children.map(children, (child, index) => (
+            childrenize(children).map((child, index) => (
               <BoxFactory key={index} ref={itemRef} style={itemStyle} px={gap / 2}>
                 {child}
               </BoxFactory>

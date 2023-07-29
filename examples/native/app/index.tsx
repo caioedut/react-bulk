@@ -754,9 +754,32 @@ function ToasterExample() {
       <Text variant="title" mb={3}>
         Toaster
       </Text>
-      <Box row wrap>
-        <Button onPress={() => toaster.open({ content: 'Example toaster' })}>Press It</Button>
-      </Box>
+      <Grid gap={3}>
+        <Box>
+          <Button onPress={() => toaster.open({ content: 'Hello world!' })}>String</Button>
+        </Box>
+        <Box>
+          <Button
+            onPress={() =>
+              toaster.open({
+                content: (
+                  <>
+                    <Text>⚠</Text>
+                    <Text color="warning" mx={3}>
+                      Hello world!
+                    </Text>
+                    <Button variant="text" size="small">
+                      Undo
+                    </Button>
+                  </>
+                ),
+              })
+            }
+          >
+            Custom
+          </Button>
+        </Box>
+      </Grid>
     </>
   );
 }

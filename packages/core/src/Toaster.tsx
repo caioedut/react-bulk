@@ -3,12 +3,9 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 're
 import Platform from './Platform';
 import AnimationFactory from './factory/AnimationFactory';
 import BoxFactory from './factory/BoxFactory';
-import ButtonFactory from './factory/ButtonFactory';
 import CardFactory from './factory/CardFactory';
 import TextFactory from './factory/TextFactory';
-import Times from './icons/Times';
-import { EventCallback, RbkColor, ReactElement, TimeoutType } from './types';
-import global from './utils/global';
+import { RbkColor, ReactElement, TimeoutType } from './types';
 import uuid from './utils/uuid';
 
 export type ToasterProps = {
@@ -18,8 +15,6 @@ export type ToasterProps = {
   halign?: 'left' | 'right' | 'center';
   valign?: 'top' | 'bottom';
   width?: number | string;
-  // Events
-  onClose?: EventCallback;
 };
 
 export type ToasterRef = {
@@ -29,7 +24,6 @@ export type ToasterRef = {
 
 function Toaster({ theme }: any, ref) {
   const { native } = Platform;
-  const { svg } = global.mapping;
 
   const idRef = useRef<string>();
   const timeoutRef = useRef<TimeoutType>();
@@ -44,8 +38,6 @@ function Toaster({ theme }: any, ref) {
     width,
     halign = 'left',
     valign = 'bottom',
-    // Events
-    onClose,
   } = props || {};
 
   const containerStyle = {
@@ -108,32 +100,13 @@ function Toaster({ theme }: any, ref) {
             p={3}
             accessibility={{ role: 'alert' }}
           >
-            <BoxFactory row noWrap>
-              <BoxFactory row noWrap center flex>
-                {typeof content === 'string' ? (
-                  <TextFactory variant="secondary" color={textColor}>
-                    {content}
-                  </TextFactory>
-                ) : (
-                  content
-                )}
-              </BoxFactory>
-
-              {typeof onClose === 'function' && (
-                <BoxFactory>
-                  <BoxFactory mr={-3} my={-1.5}>
-                    <ButtonFactory
-                      circular
-                      variant="text"
-                      size="small"
-                      color={textColor}
-                      onPress={onClose}
-                      accessibility={{ label: 'close' }}
-                    >
-                      <Times svg={svg} color={textColor} />
-                    </ButtonFactory>
-                  </BoxFactory>
-                </BoxFactory>
+            <BoxFactory row noWrap center>
+              {typeof content === 'string' ? (
+                <TextFactory variant="secondary" color={textColor}>
+                  {content}
+                </TextFactory>
+              ) : (
+                content
               )}
             </BoxFactory>
 
