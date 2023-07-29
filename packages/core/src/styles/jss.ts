@@ -149,7 +149,20 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(prop)) {
       if (value) {
         const preffix = prop;
-        const types = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset', 'initial', 'inherit'];
+        const types = [
+          'none',
+          'hidden',
+          'dotted',
+          'dashed',
+          'solid',
+          'double',
+          'groove',
+          'ridge',
+          'inset',
+          'outset',
+          'initial',
+          'inherit',
+        ];
 
         const sizeIndex = valueSplit.findIndex((item: string) => /^\d\w*$/.test(item));
         // @ts-ignore

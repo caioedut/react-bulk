@@ -197,7 +197,16 @@ const ImageFactory = React.memo<ImageProps>(
       );
     }
 
-    return <BoxFactory ref={imageRef} component={Image} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles />;
+    return (
+      <BoxFactory
+        ref={imageRef}
+        component={Image}
+        style={style}
+        stylist={[variants.root, stylist]}
+        {...rest}
+        noRootStyles
+      />
+    );
   }),
 );
 

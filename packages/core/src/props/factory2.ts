@@ -6,7 +6,10 @@ type Variants = {
   [key: string]: RbkStyles;
 };
 
-export default function factory2<ComponentProps>(props, options?: ThemeComponentProps<any, any>): ComponentProps & { variants: Variants } {
+export default function factory2<ComponentProps>(
+  props,
+  options?: ThemeComponentProps<any, any>,
+): ComponentProps & { variants: Variants } {
   let newProps = { ...options?.defaultProps, ...props };
 
   const variants: Variants = {};

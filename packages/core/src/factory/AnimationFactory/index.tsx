@@ -132,9 +132,9 @@ const AnimationFactory = React.memo<AnimationProps>(
     const style: RbkStyles = { position: 'relative' };
 
     if (web) {
-      style.animation = `${name} ${speed}ms ${timing} ${delay ? `${delay}ms` : ''} ${iterations === -1 ? 'infinite' : iterations} ${
-        run ? 'running' : 'paused'
-      } ${direction}`;
+      style.animation = `${name} ${speed}ms ${timing} ${delay ? `${delay}ms` : ''} ${
+        iterations === -1 ? 'infinite' : iterations
+      } ${run ? 'running' : 'paused'} ${direction}`;
     }
 
     if (native) {

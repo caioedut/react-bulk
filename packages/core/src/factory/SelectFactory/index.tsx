@@ -357,7 +357,12 @@ const SelectFactory = React.memo<SelectProps>(
           />
         )}
 
-        <BackdropFactory visible={visible} style={{ bg: 'rgba(0, 0, 0, 0.2)' }} onPress={() => setVisible(false)} {...nativeProps}>
+        <BackdropFactory
+          visible={visible}
+          style={{ bg: 'rgba(0, 0, 0, 0.2)' }}
+          onPress={() => setVisible(false)}
+          {...nativeProps}
+        >
           <CardFactory position="absolute" p={0} style={[{ overflow: 'hidden' }, metrics]}>
             <ScrollableFactory ref={scrollRef} contentInset={1} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth}>
               {arrOptions?.map((option, index) => {

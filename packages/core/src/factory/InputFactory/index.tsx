@@ -134,7 +134,10 @@ const InputFactory = React.memo<InputProps>(
 
     color = error ? 'error' : color || 'primary';
     selectionColor = theme.color(selectionColor ?? color);
-    placeholderColor = theme.color(placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary', 0.4);
+    placeholderColor = theme.color(
+      placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary',
+      0.4,
+    );
     autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
 
     startAddon = startAddon ?? startIcon;
@@ -348,7 +351,13 @@ const InputFactory = React.memo<InputProps>(
     return (
       <BoxFactory hidden={type === 'hidden'} style={style} stylist={[variants.root, stylist]}>
         {Boolean(label) && (
-          <LabelFactory numberOfLines={1} for={inputRef} style={labelStyle} stylist={[variants.label]} onPress={native ? focus : undefined}>
+          <LabelFactory
+            numberOfLines={1}
+            for={inputRef}
+            style={labelStyle}
+            stylist={[variants.label]}
+            onPress={native ? focus : undefined}
+          >
             {label}
           </LabelFactory>
         )}

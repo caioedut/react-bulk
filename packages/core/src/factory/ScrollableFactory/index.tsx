@@ -102,7 +102,14 @@ const ScrollableFactory = React.memo<ScrollableProps>(
     }
 
     return (
-      <BoxFactory ref={ref} component={ScrollView} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles>
+      <BoxFactory
+        ref={ref}
+        component={ScrollView}
+        style={style}
+        stylist={[variants.root, stylist]}
+        {...rest}
+        noRootStyles
+      >
         {native ? (
           children
         ) : (

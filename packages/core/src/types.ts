@@ -15,7 +15,11 @@ export type EventCallback = (event: any) => any;
 export type InputValue = any;
 
 export type RecursivePartial<T> = {
-  [P in keyof T]?: T[P] extends (infer U)[] ? RecursivePartial<U>[] : T[P] extends object | undefined ? RecursivePartial<T[P]> : T[P];
+  [P in keyof T]?: T[P] extends (infer U)[]
+    ? RecursivePartial<U>[]
+    : T[P] extends object | undefined
+    ? RecursivePartial<T[P]>
+    : T[P];
 };
 
 export type RbkMap = {
@@ -472,7 +476,19 @@ export type BoxProps = {
   RbkStyleProps;
 
 export type TextProps = {
-  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'primary' | 'secondary' | 'caption' | string;
+  variant?:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'title'
+    | 'subtitle'
+    | 'primary'
+    | 'secondary'
+    | 'caption'
+    | string;
   size?: number;
   color?: RbkColor;
   center?: boolean;

@@ -118,7 +118,11 @@ const base: ThemeProps = {
     const [color, variation = 'main', opacity] = `${mixin || ''}`.split('.');
 
     let newColor =
-      this?.colors[color]?.[variation] ?? this?.colors[color]?.primary ?? this?.colors[color] ?? this?.colors?.common?.[color] ?? mixin;
+      this?.colors[color]?.[variation] ??
+      this?.colors[color]?.primary ??
+      this?.colors[color] ??
+      this?.colors?.common?.[color] ??
+      mixin;
 
     if (typeof alpha !== 'number' && opacity) {
       alpha = Number(opacity) / 100;
