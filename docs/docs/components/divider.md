@@ -52,7 +52,7 @@ Extends all [`Box`](/docs/components/core/box#props) props.
 
 **`color`**
 
-➤ Type: **`string` [`RbkColors`](/docs/type-reference/rbk-colors)** <br/>
+➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`text.primary`**
 
 ---
