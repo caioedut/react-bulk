@@ -10,6 +10,7 @@ export { default as useToaster } from './hooks/useToaster';
 
 // Prop
 export { default as bindings } from './props/bindings';
+export { default as childrenize } from './props/childrenize';
 export { default as extract } from './props/extract';
 export { default as get } from './props/get';
 export { default as merge } from './props/merge';
@@ -23,6 +24,8 @@ export { default as Platform } from './Platform';
 export { default as clone } from './utils/clone';
 export { default as clsx } from './utils/clsx';
 export { default as crypt } from './utils/crypt';
+export { default as deepmerge } from './utils/deepmerge';
+export { default as defined } from './utils/defined';
 export { default as event } from './utils/event';
 export { default as global } from './utils/global';
 export { default as pick } from './utils/pick';
