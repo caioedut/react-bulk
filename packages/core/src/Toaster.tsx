@@ -105,12 +105,11 @@ function Toaster({ theme }: any, ref) {
             w={width}
             maxw="100%"
             corners={2}
-            px={5}
-            py={3}
+            p={3}
             accessibility={{ role: 'alert' }}
           >
             <BoxFactory row noWrap>
-              <BoxFactory flex>
+              <BoxFactory row noWrap center flex>
                 {typeof content === 'string' ? (
                   <TextFactory variant="secondary" color={textColor}>
                     {content}
@@ -119,18 +118,21 @@ function Toaster({ theme }: any, ref) {
                   content
                 )}
               </BoxFactory>
+
               {typeof onClose === 'function' && (
-                <BoxFactory ml={3} mr={-3} my={-1.5}>
-                  <ButtonFactory
-                    circular
-                    variant="text"
-                    size="small"
-                    color={textColor}
-                    onPress={onClose}
-                    accessibility={{ label: 'close' }}
-                  >
-                    <Times svg={svg} color={textColor} />
-                  </ButtonFactory>
+                <BoxFactory>
+                  <BoxFactory mr={-3} my={-1.5}>
+                    <ButtonFactory
+                      circular
+                      variant="text"
+                      size="small"
+                      color={textColor}
+                      onPress={onClose}
+                      accessibility={{ label: 'close' }}
+                    >
+                      <Times svg={svg} color={textColor} />
+                    </ButtonFactory>
+                  </BoxFactory>
                 </BoxFactory>
               )}
             </BoxFactory>

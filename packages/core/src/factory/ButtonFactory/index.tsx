@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
+import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
 import { ButtonProps } from '../../types';
 import global from '../../utils/global';
@@ -120,15 +121,15 @@ const ButtonFactory = React.memo<ButtonProps>(
 
     labelStyle = [{ color: textColor }, labelStyle];
 
-    children = React.Children.map(children, (child) =>
-      ['string', 'number'].includes(typeof child) ? (
-        <TextFactory style={labelStyle} stylist={[variants.label]}>
-          {child}
-        </TextFactory>
-      ) : (
-        child
-      ),
-    );
+    children = childrenize(children);
+
+    if (children.every((child) => ['string', 'number'].includes(typeof child))) {
+      children = [
+        <TextFactory key={0} style={labelStyle} stylist={[variants.label]}>
+          {children.join('')}
+        </TextFactory>,
+      ];
+    }
 
     return (
       <BoxFactory

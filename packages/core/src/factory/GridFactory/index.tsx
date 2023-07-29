@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
+import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
 import { GridProps, RbkStyles } from '../../types';
 import BoxFactory from '../BoxFactory';
@@ -25,7 +26,7 @@ const GridFactory = React.memo<GridProps>(
 
     return (
       <BoxFactory ref={ref} style={[{ margin: -spacing }, style]} stylist={[variants.root, stylist]} {...rest}>
-        {React.Children.map(children, (child, index) => {
+        {childrenize(children).map((child, index) => {
           if (!child && !['string', 'number'].includes(typeof child)) {
             return null;
           }
@@ -64,7 +65,9 @@ const GridFactory = React.memo<GridProps>(
             delete props[breakpoint];
           });
 
-          return <BoxFactory key={index} component={child?.type} {...props} style={itemStyle} stylist={[variants.item]} />;
+          return (
+            <BoxFactory key={index} component={child?.type} {...props} style={itemStyle} stylist={[variants.item]} />
+          );
         })}
       </BoxFactory>
     );
