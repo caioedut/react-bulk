@@ -37,7 +37,7 @@ const TabsFactory = React.memo<TabsProps>(
             const { value: tabValue = index, style: tabStyle, ...rest } = tab;
 
             const isActive = value === tabValue;
-            rest.accessibility = deepmerge({ role: 'tab' }, rest.accessibility);
+            rest.accessibility = deepmerge({ role: 'tab', state: { selected: isActive } }, rest.accessibility);
 
             return (
               <ButtonFactory

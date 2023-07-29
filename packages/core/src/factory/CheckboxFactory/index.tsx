@@ -166,6 +166,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           circular
           onPress={handleChange}
           accessibility={{
+            label,
             role: unique ? 'radio' : 'checkbox',
             state: { checked: internal },
           }}

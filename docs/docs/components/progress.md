@@ -66,7 +66,7 @@ Extends all [`Box`](/docs/components/core/box#props) props.
 - `false`: don't display any label.
 - `function`: display returned custom label.
 
-➤ Type: **`boolean` | `(value: number) => string | ReactNode | JSX.Element`** <br/>
+➤ Type: **`boolean` | `(value: number) => string | ReactNode | ReactElement | JSX.Element`** <br/>
 ➤ Default: **`(value) => value + '%' `** <br/>
 
 ---
