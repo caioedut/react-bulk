@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAnimation, useTheme } from '@react-bulk/core';
+import { useAnimation, useTheme, useToaster } from '@react-bulk/core';
 import * as Rbk from '@react-bulk/web';
 
 const ReactBulk = Rbk.default;
@@ -10,6 +10,7 @@ const ReactLiveScope = {
   ReactBulk,
   useAnimation,
   useTheme,
+  useToaster,
   ...Rbk,
   React,
   ...React,
