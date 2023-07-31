@@ -26,6 +26,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       color,
       controlled,
       defaultChecked,
+      disabled,
       id,
       label,
       name,
@@ -136,7 +137,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     }
 
     const handleChange = (e) => {
-      if (readOnly) return;
+      if (disabled || readOnly) return;
 
       const nativeEvent = e?.nativeEvent ?? e;
       const newInternal = !internal;
@@ -164,6 +165,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           id={id}
           variant="text"
           circular
+          disabled={disabled}
           onPress={handleChange}
           accessibility={{
             label,
