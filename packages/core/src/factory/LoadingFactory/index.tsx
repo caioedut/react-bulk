@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { LoadingProps } from '../../types';
+import { LoadingProps, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import AnimationFactory from '../AnimationFactory';
@@ -25,7 +25,7 @@ const LoadingFactory = React.memo<LoadingProps>(
       variants,
       labelStyle,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<LoadingProps, 'color' | 'size'>>(props, options);
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
@@ -40,8 +40,8 @@ const LoadingFactory = React.memo<LoadingProps>(
     color = theme.color(color ?? 'primary');
     size = size ?? options.defaultProps.size ?? 1;
 
-    const fontSize = theme.rem(size - 0.25);
-    const base = theme.rem(size);
+    const fontSize = theme.rem((size as number) - 0.25);
+    const base = theme.rem(size as number);
     const c = base / 2;
     const w = c / 4;
     const r = c - w / 2;

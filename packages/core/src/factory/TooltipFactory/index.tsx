@@ -27,7 +27,7 @@ const TooltipFactory = React.memo<TooltipProps>(
       variants,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<TooltipProps>(props, options);
 
     const timeoutRef = useRef<TimeoutType>(null);
 
@@ -93,7 +93,7 @@ const TooltipFactory = React.memo<TooltipProps>(
                 position: 'absolute',
                 backgroundColor: color,
                 borderRadius: theme.shape.borderRadius,
-                color: theme.contrast(color),
+                color: theme.contrast(color as string),
                 fontSize: '0.75rem',
                 overflow: 'hidden',
                 py: 1,

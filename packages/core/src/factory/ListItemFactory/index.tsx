@@ -31,7 +31,7 @@ const ListItemFactory = React.memo<ListItemProps>(
       variants,
       chevronStyle,
       ...rest
-    } = factory2(props, options);
+    } = factory2<ListItemProps>(props, options);
 
     startAddon = startAddon ?? startIcon;
     endAddon = endAddon ?? endIcon;

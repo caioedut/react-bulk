@@ -21,15 +21,17 @@ const LabelFactory = React.memo<LabelProps>(
       // Events
       onPress,
       ...rest
-    } = factory2(props, options);
+    } = factory2<LabelProps>(props, options);
 
     if (web && forProp) {
       Object.assign(rest, {
+        // @ts-expect-error
         htmlFor: typeof forProp === 'string' ? forProp : forProp?.current?.id,
       });
     }
 
     if (native && !onPress) {
+      // @ts-expect-error
       onPress = forProp?.current?.focus;
     }
 

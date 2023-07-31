@@ -9,7 +9,7 @@ import ChevronLeft from '../../icons/ChevronLeft';
 import ChevronRight from '../../icons/ChevronRight';
 import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
-import { CarouselProps } from '../../types';
+import { CarouselProps, RequiredSome } from '../../types';
 import event from '../../utils/event';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
@@ -42,7 +42,10 @@ const CarouselFactory = React.memo<CarouselProps>(
       chevronStyle,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<CarouselProps, 'chevron' | 'color' | 'gap' | 'pagingEnabled' | 'swipe' | 'xs'>>(
+      props,
+      options,
+    );
 
     const contentRef = useRef<any>(null);
     const itemRef = useRef<any>(null);

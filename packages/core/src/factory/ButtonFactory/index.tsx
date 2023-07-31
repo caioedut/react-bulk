@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import useTheme from '../../hooks/useTheme';
 import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
-import { ButtonProps } from '../../types';
+import { ButtonProps, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BadgeFactory from '../BadgeFactory';
@@ -31,6 +31,7 @@ const ButtonFactory = React.memo<ButtonProps>(
       label,
       loading,
       transform,
+      type = 'button',
       size,
       startAddon,
       startIcon,
@@ -41,7 +42,7 @@ const ButtonFactory = React.memo<ButtonProps>(
       contentStyle,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<ButtonProps, 'color' | 'size' | 'transform' | 'variant'>>(props, options);
 
     const form = useForm();
     const isBasic = ['outline', 'text'].includes(variant);
@@ -51,10 +52,6 @@ const ButtonFactory = React.memo<ButtonProps>(
     startAddon = startAddon ?? startIcon;
     endAddon = endAddon ?? endIcon;
     size = size ?? 'medium';
-
-    if (web && !rest.type) {
-      rest.type = 'button';
-    }
 
     if (form && !props.onPress && !props.onClick) {
       if (rest.type === 'submit') {
@@ -88,7 +85,7 @@ const ButtonFactory = React.memo<ButtonProps>(
       });
     }
 
-    const baseSize = theme.rem(size);
+    const baseSize = theme.rem(size as number);
     const spacing = (baseSize - theme.rem(0.75)) / 2;
     const textColor = isBasic ? color : 'white';
 
@@ -138,6 +135,7 @@ const ButtonFactory = React.memo<ButtonProps>(
         style={style}
         stylist={[variants.root, stylist]}
         {...rest}
+        type={type}
         disabled={disabled}
       >
         {Boolean(startAddon) && <BoxFactory style={loading && { opacity: 0 }}>{startAddon}</BoxFactory>}
@@ -148,7 +146,7 @@ const ButtonFactory = React.memo<ButtonProps>(
 
         {loading && (
           <BoxFactory position="absolute" i={0} center>
-            <LoadingFactory color={textColor} size={size / 2} />
+            <LoadingFactory color={textColor} size={(size as number) / 2} />
           </BoxFactory>
         )}
 

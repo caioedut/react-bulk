@@ -9,7 +9,7 @@ import { boxSizeProps, customSpacings, customStyleProps, flexAlignProps, notPxPr
 
 export { customSpacings, customStyleProps, spacings };
 
-export default function jss(...mixin: (Object | Array<any> | Function)[]) {
+export default function jss(...mixin: any[]) {
   const { web, native } = Platform;
 
   const args = clone(mixin);

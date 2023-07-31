@@ -28,7 +28,7 @@ const TabsFactory = React.memo<TabsProps>(
       buttonStyle,
       activeStyle,
       ...rest
-    } = factory2(props, options);
+    } = factory2<TabsProps>(props, options);
 
     return (
       <ScrollableFactory ref={ref} {...rest} direction="horizontal" stylist={[variants.root, stylist]}>

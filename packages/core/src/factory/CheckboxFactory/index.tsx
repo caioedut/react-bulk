@@ -6,7 +6,7 @@ import Check from '../../icons/Check';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
-import { CheckboxProps, RbkCheckboxEvent } from '../../types';
+import { CheckboxProps, RbkCheckboxEvent, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
@@ -43,7 +43,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<CheckboxProps, 'color' | 'size'>>(props, options);
 
     id = useHtmlId(id);
     color = theme.color(color);
@@ -76,7 +76,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       });
     }
 
-    const baseSize = theme.rem(size);
+    const baseSize = theme.rem(size as number);
     const fontSize = baseSize / 2;
     const halfSize = fontSize / 2;
 
@@ -98,13 +98,13 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       }
 
       return () => {
-        form.unsetField(name);
+        form.unsetField(name as string);
       };
     }, [name, form, onFormChange, internal, value]);
 
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
-    const clear = useCallback(() => setInternal(Boolean(+defaultChecked)), []);
+    const clear = useCallback(() => setInternal(Boolean(Number(defaultChecked ?? 0))), []);
     const isFocused = useCallback(
       () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
       [buttonRef],

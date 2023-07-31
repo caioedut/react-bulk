@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 
-const dirs = ['packages/core', 'packages/web', 'packages/native', 'examples/web', 'examples/native'];
+const dirs = ['packages/core', 'packages/web', 'packages/native'];
 
 for (const dir of dirs) {
   const commands = [

@@ -3,7 +3,7 @@ import React, { forwardRef, useState } from 'react';
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
-import { OutlineProps } from '../../types';
+import { OutlineProps, RequiredSome } from '../../types';
 import clone from '../../utils/clone';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
@@ -28,7 +28,7 @@ const OutlineFactory = React.memo<OutlineProps>(
       onFocus,
       onBlur,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<OutlineProps, 'color' | 'size' | 'visible'>>(props, options);
 
     color = theme.color(color, 0.3);
     const boxShadow = `0 0 0 ${size}px ${color}`;

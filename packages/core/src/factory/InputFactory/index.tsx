@@ -7,7 +7,7 @@ import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { customStyleProps } from '../../styles/constants';
-import { InputProps, InputValue, RbkInputEvent } from '../../types';
+import { InputProps, InputValue, RbkInputEvent, RequiredSome } from '../../types';
 import defined from '../../utils/defined';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -71,7 +71,10 @@ const InputFactory = React.memo<InputProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<InputProps, 'autoCapitalize' | 'color' | 'returnKeyType' | 'size' | 'type'>>(
+      props,
+      options,
+    );
 
     id = useHtmlId(id);
 
@@ -104,11 +107,11 @@ const InputFactory = React.memo<InputProps>(
           }
 
           if (defined(value)) {
-            if (defined(min) && value < min) {
+            if (defined(min) && value < (min as number)) {
               value = min;
             }
 
-            if (defined(max) && value > max) {
+            if (defined(max) && value > (max as number)) {
               value = max;
             }
           }
@@ -206,7 +209,7 @@ const InputFactory = React.memo<InputProps>(
       });
     }
 
-    const baseSize = theme.rem(size);
+    const baseSize = theme.rem(size as number);
     const spacing = (baseSize - theme.rem()) / 2;
     const height = multiline ? theme.rem() * (rows ?? 6) + spacing * 2 : baseSize;
 
@@ -226,7 +229,7 @@ const InputFactory = React.memo<InputProps>(
       });
 
       return () => {
-        form.unsetField(name);
+        form.unsetField(name as string);
       };
     }, [name, form, onFormChange, internal]);
 
@@ -397,7 +400,7 @@ const InputFactory = React.memo<InputProps>(
                       key={item}
                       variant="text"
                       color={color}
-                      size={size / 2}
+                      size={(size as number) / 2}
                       disabled={disabled}
                       h="50%"
                       p={0}

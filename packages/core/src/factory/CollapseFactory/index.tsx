@@ -22,7 +22,7 @@ const CollapseFactory = React.memo<CollapseProps>(
       // Styles
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<CollapseProps>(props, options);
 
     expanded = visible ?? expanded;
 

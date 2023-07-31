@@ -27,7 +27,7 @@ const ActionSheetFactory = React.memo<ActionSheetProps>(
       // Styles
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<ActionSheetProps>(props, options);
 
     const animation = useAnimation({ marginBottom: -dimensions.height });
 

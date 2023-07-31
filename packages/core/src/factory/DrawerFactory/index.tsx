@@ -21,7 +21,7 @@ const DrawerFactory = React.memo<DrawerProps>(
       style,
       backdropStyle,
       ...rest
-    } = factory2(props, options);
+    } = factory2<DrawerProps>(props, options);
 
     style = [visible && { ml: 0, mr: 0, mt: 0, mb: 0 }, style];
 
