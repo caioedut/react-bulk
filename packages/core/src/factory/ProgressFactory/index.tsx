@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { ProgressProps } from '../../types';
+import { ProgressProps, RequiredSome } from '../../types';
 import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -29,7 +29,7 @@ const ProgressFactory = React.memo<ProgressProps>(
       barStyle,
       labelStyle,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<ProgressProps, 'color' | 'corners' | 'label' | 'size'>>(props, options);
 
     const [containerWidth, setContainerWidth] = useState<number>(0);
 
@@ -43,9 +43,9 @@ const ProgressFactory = React.memo<ProgressProps>(
       });
     }
 
-    const fontSize = theme.rem(size * 0.7);
+    const fontSize = theme.rem((size as number) * 0.7);
     const isIndeterminate = typeof value !== 'number';
-    const height = theme.rem(size);
+    const height = theme.rem(size as number);
     const translateX = native ? containerWidth * 0.8 : 'calc(100% - 20%)';
 
     if (!isIndeterminate) {
@@ -90,10 +90,10 @@ const ProgressFactory = React.memo<ProgressProps>(
             {Boolean(label) && (
               <BoxFactory position="absolute" i={0} center>
                 {typeof label === 'function' ? (
-                  label?.(value)
+                  label?.(value as number)
                 ) : (
                   <TextFactory style={[{ fontSize }, labelStyle]} stylist={[variants.label]}>
-                    {Math.round(value)}%
+                    {Math.round(value as number)}%
                   </TextFactory>
                 )}
               </BoxFactory>

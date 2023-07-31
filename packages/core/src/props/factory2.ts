@@ -8,7 +8,7 @@ type Variants = {
 
 export default function factory2<ComponentProps>(
   props,
-  options?: ThemeComponentProps<any, any>,
+  options: ThemeComponentProps<ComponentProps, any>,
 ): ComponentProps & { variants: Variants } {
   let newProps = { ...options?.defaultProps, ...props };
 
@@ -38,6 +38,7 @@ export default function factory2<ComponentProps>(
   });
 
   // Extends accessibility
+  // @ts-expect-error
   newProps.accessibility = deepmerge(options?.defaultProps?.accessibility, props?.accessibility);
 
   return { ...newProps, ...props, variants };

@@ -20,7 +20,7 @@ const ModalFactory = React.memo<ModalProps>(
       // Styles
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<ModalProps>(props, options);
 
     return (
       <BackdropFactory ref={ref} stylist={[variants.root, stylist]} {...rest} onPress={onBackdropPress}>

@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import useTheme from '../../hooks/useTheme';
 import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
-import { GridProps, RbkStyles } from '../../types';
+import { GridProps, RbkStyles, RequiredSome } from '../../types';
 import BoxFactory from '../BoxFactory';
 
 const GridFactory = React.memo<GridProps>(
@@ -19,7 +19,7 @@ const GridFactory = React.memo<GridProps>(
       variants,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<GridProps, 'size'>>(props, options);
 
     const breakpoints = Object.keys(theme.breakpoints);
     const spacing = !gap ? 0 : theme.spacing(gap) / 2;

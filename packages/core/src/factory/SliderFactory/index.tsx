@@ -4,7 +4,7 @@ import rect from '../../element/rect';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { FocusableProps, RbkRect, SliderProps } from '../../types';
+import { FocusableProps, RbkRect, RequiredSome, SliderProps } from '../../types';
 import event from '../../utils/event';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -39,7 +39,7 @@ const SliderFactory = React.memo<SliderProps>(
       // Styles
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<SliderProps, 'min' | 'max'>>(props, options);
 
     id = useHtmlId(id);
 
@@ -66,12 +66,12 @@ const SliderFactory = React.memo<SliderProps>(
     }
 
     const step = 1;
-    const iconSize = theme.rem(size);
+    const iconSize = theme.rem(size as number);
     const ruleSize = iconSize / 4;
 
     const ThumbFactory = web ? ButtonFactory : BoxFactory;
 
-    defaultValue = Math.min(max, Math.max(min, defaultValue ?? min));
+    defaultValue = Math.min(max, Math.max(min, defaultValue ?? min ?? 0));
     const [percent, setPercent] = useState(getPercentByValue(defaultValue));
     const [tooltip, setTooltip] = useState<number | null>(null);
     const internal = getValueByPercent(percent);
@@ -109,7 +109,7 @@ const SliderFactory = React.memo<SliderProps>(
       });
 
       return () => {
-        form.unsetField(name);
+        form.unsetField(name as string);
       };
     }, [name, form, onFormChange, getPercentByValue, getValueByPercent]);
 

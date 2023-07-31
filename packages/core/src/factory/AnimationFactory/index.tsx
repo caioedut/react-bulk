@@ -7,7 +7,7 @@ import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import css from '../../styles/css';
 import jss from '../../styles/jss';
-import { AnimationProps, RbkStyles } from '../../types';
+import { AnimationProps, RbkStyles, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
@@ -34,20 +34,20 @@ const AnimationFactory = React.memo<AnimationProps>(
       // Styles
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<AnimationProps, 'direction' | 'speed' | 'timing'>>(props, options);
 
     direction = direction ?? 'normal';
 
     let transformFrom = get('transform', from) ?? [];
     let transformTo = get('transform', to) ?? [];
 
-    const opacityFrom = fade < 0 ? 1 : 0;
-    const scaleFrom = zoom < 0 ? 1 : 0;
-    const rotateFrom = spin < 0 ? '360deg' : '0deg';
+    const opacityFrom = fade && fade < 0 ? 1 : 0;
+    const scaleFrom = zoom && zoom < 0 ? 1 : 0;
+    const rotateFrom = spin && spin < 0 ? '360deg' : '0deg';
 
-    const opacityTo = fade < 0 ? 0 : 1;
-    const scaleTo = zoom < 0 ? 0 : 1;
-    const rotateTo = spin < 0 ? '0deg' : '360deg';
+    const opacityTo = fade && fade < 0 ? 0 : 1;
+    const scaleTo = zoom && zoom < 0 ? 0 : 1;
+    const rotateTo = spin && spin < 0 ? '0deg' : '360deg';
 
     if (Array.isArray(transformFrom)) {
       zoom && transformFrom.push({ scale: scaleFrom });

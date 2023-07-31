@@ -21,7 +21,7 @@ const BoxFactory = React.memo<BoxProps>(
     const dimensions = useDimensions();
 
     // Extends from default props
-    props = useMemo(() => factory2(props, options), [props, options]);
+    props = useMemo(() => factory2<BoxProps>(props, options), [props, options]);
 
     // Platform specific props
     if (platform) {

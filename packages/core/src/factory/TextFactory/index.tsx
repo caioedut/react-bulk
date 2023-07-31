@@ -34,7 +34,7 @@ const TextFactory = React.memo<TextProps>(
       variants,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<TextProps>(props, options);
 
     if (native) {
       rest.includeFontPadding = false;
@@ -60,7 +60,7 @@ const TextFactory = React.memo<TextProps>(
         },
 
       web &&
-        numberOfLines > 1 && {
+        Number(numberOfLines) > 1 && {
           display: '-webkit-box',
           '-webkit-line-clamp': `${numberOfLines}`,
           '-webkit-box-orient': 'vertical',

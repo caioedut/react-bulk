@@ -17,7 +17,7 @@ const DropdownFactory = React.memo<DropdownProps>(
       // Styles,
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<DropdownProps>(props, options);
 
     return (
       <BoxFactory style={{ position: 'relative' }}>

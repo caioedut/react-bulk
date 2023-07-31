@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { BadgeProps } from '../../types';
+import { BadgeProps, RequiredSome } from '../../types';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
@@ -27,7 +27,7 @@ const BadgeFactory = React.memo<BadgeProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<BadgeProps, 'color' | 'size'>>(props, options);
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
@@ -41,7 +41,7 @@ const BadgeFactory = React.memo<BadgeProps>(
 
     const absolute = top || bottom || left || right;
 
-    const baseSize = theme.rem(size) / 2;
+    const baseSize = theme.rem(size as number) / 2;
     const halfSize = baseSize / 2;
 
     labelStyle = [

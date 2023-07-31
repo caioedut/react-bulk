@@ -19,7 +19,7 @@ const BackdropFactory = React.memo<BackdropProps>(
       // Styles
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<BackdropProps>(props, options);
 
     const defaultRef = useRef(null);
     ref = ref || defaultRef;

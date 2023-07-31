@@ -14,6 +14,8 @@ export type EventCallback = (event: any) => any;
 
 export type InputValue = any;
 
+export type RequiredSome<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>;
+
 export type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
     ? RecursivePartial<U>[]
@@ -554,7 +556,7 @@ export type InputProps = {
   endAddon?: ReactElement;
   error?: string;
   label?: string;
-  mask?: (value: InputValue, data: AnyObject) => any;
+  mask?: (value: InputValue) => any;
   max?: number;
   maxLength?: number;
   min?: number;
@@ -572,7 +574,7 @@ export type InputProps = {
   startAddon?: ReactElement;
   textColor?: RbkColor;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url' | 'hidden' | string;
-  unmask?: (value: InputValue, data: AnyObject) => any;
+  unmask?: (value: InputValue) => any;
   value?: InputValue;
   // Events
   onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue) => any;
@@ -664,7 +666,7 @@ export type SliderProps = {
   value?: number;
   // Events
   onChange?: (event: AnyObject, value: number) => any;
-  onSlide?: (event: AnyObject, value: number, percent: number) => any;
+  onSlide?: (event: AnyObject, value: number) => any;
   onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
 } & FocusableProps &
   BoxProps;
@@ -842,7 +844,7 @@ export type ListItemProps = {
 
 export type LinkProps = {
   underline?: boolean;
-} & BoxProps;
+} & TextProps;
 
 export type DrawerProps = {
   placement?: 'left' | 'right' | 'top' | 'bottom';

@@ -23,7 +23,7 @@ export type ToasterRef = {
 };
 
 function Toaster({ theme }: any, ref) {
-  const { native } = Platform;
+  const { web, native } = Platform;
 
   const idRef = useRef<string>();
   const timeoutRef = useRef<TimeoutType>();
@@ -74,7 +74,9 @@ function Toaster({ theme }: any, ref) {
     if (props) {
       idRef.current = uuid();
 
-      setTimeout(() => cardRef?.current?.focus?.(), 10);
+      if (web) {
+        setTimeout(() => cardRef?.current?.focus?.(), 10);
+      }
 
       timeoutRef.current = setTimeout(() => {
         setProps(undefined);

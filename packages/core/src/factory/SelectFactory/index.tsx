@@ -8,7 +8,7 @@ import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
-import { AnyObject, RbkInputEvent, SelectProps } from '../../types';
+import { AnyObject, RbkInputEvent, RequiredSome, SelectProps } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
@@ -39,7 +39,7 @@ const SelectFactory = React.memo<SelectProps>(
       label,
       loading,
       name,
-      options: arrOptions,
+      options: arrOptions = [],
       placeholder,
       readOnly,
       size,
@@ -54,7 +54,7 @@ const SelectFactory = React.memo<SelectProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<SelectProps, 'color' | 'size'>>(props, options);
 
     id = useHtmlId(id);
 
@@ -104,7 +104,7 @@ const SelectFactory = React.memo<SelectProps>(
       });
     }
 
-    const baseSize = theme.rem(size);
+    const baseSize = theme.rem(size as number);
     const fontSize = baseSize / 2;
     const spacing = (baseSize - theme.rem(0.75)) / 2;
 
@@ -124,7 +124,7 @@ const SelectFactory = React.memo<SelectProps>(
       });
 
       return () => {
-        form.unsetField(name);
+        form.unsetField(name as string);
       };
     }, [name, form, onFormChange, selected]);
 

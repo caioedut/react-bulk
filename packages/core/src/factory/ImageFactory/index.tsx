@@ -3,7 +3,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import get from '../../props/get';
-import { ImageProps } from '../../types';
+import { ImageProps, RequiredSome } from '../../types';
 import defined from '../../utils/defined';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
@@ -35,7 +35,7 @@ const ImageFactory = React.memo<ImageProps>(
       variants,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<ImageProps, 'mode'>>(props, options);
 
     const defaultRef: any = useRef(null);
     const imageRef = ref || defaultRef;
@@ -52,8 +52,8 @@ const ImageFactory = React.memo<ImageProps>(
     const [imgWidth, setImgWidth] = useState<number | null>(null);
     const [aspectRatio, setAspectRatio] = useState<number | null>(null);
 
-    const [finalWidth, setFinalWidth] = useState<number | null>(width ?? 0);
-    const [finalHeight, setFinalHeight] = useState<number | null>(height ?? 0);
+    const [finalWidth, setFinalWidth] = useState<number | string>(width ?? 0);
+    const [finalHeight, setFinalHeight] = useState<number | string>(height ?? 0);
 
     if (alt) {
       rest.accessibility = rest.accessibility || {};
@@ -68,6 +68,7 @@ const ImageFactory = React.memo<ImageProps>(
     if (web) {
       Object.assign(rest, {
         alt: alt ?? '',
+        // @ts-expect-error
         src: source?.uri ?? source,
       });
     }
@@ -103,6 +104,7 @@ const ImageFactory = React.memo<ImageProps>(
     useEffect(() => {
       if (isProcessed || !native || !source) return;
 
+      // @ts-expect-error
       const asset = source?.uri ?? source;
 
       try {

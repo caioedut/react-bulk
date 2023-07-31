@@ -6,4 +6,4 @@ execSync('yarn --cwd ../../packages/web link', { stdio: 'inherit' });
 
 execSync('yarn link "@react-bulk/core" "@react-bulk/web"', { stdio: 'inherit' });
 
-execSync('next dev', { stdio: 'inherit' });
+execSync('vite dev', { stdio: 'inherit' });
