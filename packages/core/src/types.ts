@@ -735,7 +735,7 @@ export type LoadingProps = {
   size?: SizeValues;
   // Styles
   labelStyle?: RbkStyles;
-} & AnimationProps;
+} & BoxProps;
 
 export type GridProps = {
   gap?: number;
@@ -799,7 +799,7 @@ export type AnimationProps = {
   fade?: boolean | 1 | -1;
   zoom?: boolean | 1 | -1;
   spin?: boolean | 1 | -1;
-} & BoxProps;
+} & Omit<BoxProps, 'direction'>;
 
 export type ProgressProps = {
   color?: RbkColor;
