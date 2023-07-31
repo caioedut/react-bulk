@@ -90,7 +90,7 @@ export type RbkAnimation = {
   boomerang?: boolean;
   delay?: number;
   speed?: number;
-  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | string;
+  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
   iterations?: number | 'infinite';
 };
 
@@ -180,11 +180,11 @@ export type FormRef = {
   unsetField: (name: string) => any;
 };
 
-export type RbkColor = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | string;
+export type RbkColor = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | (string & {});
 
-export type SizeValues = number | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | string;
+export type SizeValues = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | (number & {});
 
-export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width' | string;
+export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
 
 export type FlexJustifyValues =
   | 'center'
@@ -199,8 +199,7 @@ export type FlexJustifyValues =
   | 'end'
   | 'between'
   | 'around'
-  | 'evenly'
-  | string;
+  | 'evenly';
 
 export type FlexAlignValues =
   | 'flex-start'
@@ -209,14 +208,13 @@ export type FlexAlignValues =
   | 'stretch'
   // Aliases
   | 'start'
-  | 'end'
-  | string;
+  | 'end';
 
 export type RbkStyleProps = {
-  position?: 'relative' | 'absolute' | string;
+  position?: 'relative' | 'absolute' | (string & {});
 
   // Flexbox container
-  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse' | string;
+  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   justifyContent?: FlexJustifyValues;
   alignContent?: FlexAlignValues;
   justifyItems?: FlexJustifyValues;
@@ -226,7 +224,7 @@ export type RbkStyleProps = {
   order?: number;
   grow?: number;
   shrink?: number;
-  basis?: 'auto' | number | string;
+  basis?: 'auto' | (string & {}) | (number & {});
   align?: FlexAlignValues;
   justify?: FlexJustifyValues;
 
@@ -271,17 +269,17 @@ export type RbkStyleProps = {
 
 export type RbkStyles = (CSSProperties & RbkStyleProps) | (CSSProperties & RbkStyleProps)[] | any[] | any;
 
-export type ThemeModeValues = 'light' | 'dark' | string;
+export type ThemeModeValues = 'light' | 'dark';
 
 export type ThemeColorsProps =
-  | string
   | {
       main?: string;
       light?: string;
       lighter?: string;
       dark?: string;
       darker?: string;
-    };
+    }
+  | (string & {});
 
 export type ThemeComponentStyleContexts<Contexts extends keyof any> = {
   [context in Contexts | 'root']: RbkStyles;
@@ -460,7 +458,7 @@ export type BoxProps = {
   row?: boolean;
   column?: boolean;
   reverse?: boolean;
-  wrap?: boolean | 'wrap' | 'nowrap' | 'wrap-reverse' | string;
+  wrap?: boolean | 'wrap' | 'nowrap' | 'wrap-reverse';
   noWrap?: boolean;
   center?: boolean;
 
@@ -468,29 +466,17 @@ export type BoxProps = {
   flex?: boolean;
 
   // To use only on children of Grid
-  xs?: number | 'auto' | 'flex' | 'hide' | boolean;
-  sm?: number | 'auto' | 'flex' | 'hide' | boolean;
-  md?: number | 'auto' | 'flex' | 'hide' | boolean;
-  lg?: number | 'auto' | 'flex' | 'hide' | boolean;
-  xl?: number | 'auto' | 'flex' | 'hide' | boolean;
-  xxl?: number | 'auto' | 'flex' | 'hide' | boolean;
+  xs?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+  sm?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+  md?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+  lg?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+  xl?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+  xxl?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
 } & PressableProps &
   RbkStyleProps;
 
 export type TextProps = {
-  variant?:
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'h5'
-    | 'h6'
-    | 'title'
-    | 'subtitle'
-    | 'primary'
-    | 'secondary'
-    | 'caption'
-    | string;
+  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'primary' | 'secondary' | 'caption';
   size?: number;
   color?: RbkColor;
   center?: boolean;
@@ -500,7 +486,7 @@ export type TextProps = {
   bold?: boolean;
   italic?: boolean;
   smallCaps?: boolean;
-  weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | string;
+  weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | (string & {});
   transform?: TextTransformValues;
   numberOfLines?: number;
 } & BoxProps;
@@ -521,8 +507,8 @@ export type ButtonProps = {
   size?: SizeValues;
   startAddon?: ReactElement;
   transform?: TextTransformValues;
-  type?: 'button' | 'submit' | 'cancel' | 'clear' | string;
-  variant?: 'solid' | 'outline' | 'text' | string;
+  type?: 'button' | 'submit' | 'cancel' | 'clear';
+  variant?: 'solid' | 'outline' | 'text';
   // Styles
   contentStyle?: RbkStyles;
   labelStyle?: RbkStyles;
@@ -540,13 +526,13 @@ export type ButtonGroupProps = {
   disabled?: boolean;
   loading?: boolean;
   size?: SizeValues;
-  variant?: 'solid' | 'outline' | 'text' | string;
+  variant?: 'solid' | 'outline' | 'text';
   // Styles
   contentStyle?: RbkStyles;
 } & BoxProps;
 
 export type InputProps = {
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | string;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   autoCorrect?: boolean;
   caretHidden?: boolean;
   color?: RbkColor;
@@ -566,14 +552,14 @@ export type InputProps = {
   placeholder?: string;
   placeholderColor?: RbkColor;
   readOnly?: boolean;
-  returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send' | string;
+  returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
   rows?: number;
   secure?: boolean;
   selectionColor?: RbkColor;
   size?: SizeValues;
   startAddon?: ReactElement;
   textColor?: RbkColor;
-  type?: 'text' | 'number' | 'email' | 'phone' | 'url' | 'hidden' | string;
+  type?: 'text' | 'number' | 'email' | 'phone' | 'url' | 'hidden' | (string & {});
   unmask?: (value: InputValue) => any;
   value?: InputValue;
   // Events
@@ -691,7 +677,7 @@ export type CarouselProps = {
 
 export type ScrollableProps = {
   contentInset?: number;
-  direction?: 'vertical' | 'horizontal' | string;
+  direction?: 'vertical' | 'horizontal';
   hideScrollBar?: boolean;
 
   /** Note: vertical pagination is not supported on Android. **/
@@ -699,14 +685,14 @@ export type ScrollableProps = {
 
   // Styles
   contentStyle?: RbkStyles;
-} & BoxProps;
+} & Omit<BoxProps, 'direction'>;
 
 export type ImageProps = {
-  source: { uri?: string } | string | number;
+  source: { uri?: string } | (string & {}) | (number & {});
   alt?: string;
   circular?: boolean;
   fallback?: ReactElement;
-  mode?: 'cover' | 'contain' | 'fill' | string;
+  mode?: 'cover' | 'contain' | 'fill';
   width?: number | string;
   height?: number | string;
   // Events
@@ -726,8 +712,8 @@ export type BackdropProps = {
 } & BoxProps;
 
 export type ModalProps = {
-  halign?: 'center' | 'left' | 'right' | string;
-  valign?: 'center' | 'top' | 'bottom' | string;
+  halign?: 'center' | 'left' | 'right';
+  valign?: 'center' | 'top' | 'bottom';
   visible?: boolean;
   onBackdropPress?: EventCallback;
 } & BoxProps;
@@ -788,7 +774,7 @@ export type FormProps = {
 
 export type TooltipProps = {
   color?: 'black' | 'white' | RbkColor;
-  position?: 'top' | 'bottom' | 'left' | 'right' | string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
   title?: string;
   visible?: boolean;
 } & BoxProps;
@@ -801,12 +787,12 @@ export type ActionSheetProps = {
 
 export type AnimationProps = {
   delay?: number;
-  direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse' | string;
+  direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
   from?: RbkStyles;
   in?: boolean;
   loop?: boolean | number;
   speed?: number;
-  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out' | string;
+  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
   to?: RbkStyles;
 
   // Pre-defined animations
