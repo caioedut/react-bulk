@@ -16,7 +16,7 @@ const ButtonFactory = React.memo<ButtonProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Button;
-    const { web, native, Button } = global.mapping;
+    const { web, Button } = global.mapping;
 
     // Extends from default props
     let {
@@ -54,23 +54,19 @@ const ButtonFactory = React.memo<ButtonProps>(
     size = size ?? 'medium';
 
     if (form && !props.onPress && !props.onClick) {
-      if (rest.type === 'submit') {
+      if (type === 'submit') {
         rest.onPress = form.submit;
       }
 
-      if (rest.type === 'cancel') {
-        rest.type = 'button';
+      if (type === 'cancel') {
+        type = 'button';
         rest.onPress = form.cancel;
       }
 
-      if (['clear', 'reset'].includes(rest.type)) {
-        rest.type = 'button';
+      if (['clear', 'reset'].includes(type)) {
+        type = 'button';
         rest.onPress = form.clear;
       }
-    }
-
-    if (native) {
-      delete rest.type;
     }
 
     const isSizeNumber = typeof size === 'number';
