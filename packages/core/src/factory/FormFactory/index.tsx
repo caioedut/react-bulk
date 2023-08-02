@@ -3,6 +3,7 @@ import React, {
   ReactNode,
   createContext,
   forwardRef,
+  useCallback,
   useContext,
   useEffect,
   useImperativeHandle,
@@ -28,6 +29,7 @@ const FormFactory = React.memo<FormProps>(
     // Extends from default props
     let {
       data,
+      errors,
       // Events
       onSubmit,
       onCancel,
@@ -49,30 +51,74 @@ const FormFactory = React.memo<FormProps>(
       rest.noValidate = true;
     }
 
-    const context = {
-      submit,
-      cancel,
-      clear,
-      getData,
-      setData,
-      getValue,
-      setValue,
-      getField,
-      setField,
-      unsetField,
-      target: formRef.current,
-    };
+    const getField = useCallback(
+      (name: string): FormField | undefined => {
+        return fieldsRef.current.find((item) => item?.name === name);
+      },
+      [fieldsRef],
+    );
 
-    useImperativeHandle(ref, () => context, [context]);
+    const setField = useCallback(
+      (options: FormField) => {
+        const { name } = options;
+        let field = getField(name);
 
-    useEffect(() => {
-      setData(Object(data));
-    }, [data]);
+        if (field) {
+          Object.getOwnPropertyNames(field).forEach((prop) => delete field?.[prop]);
+          Object.assign(field, options);
+        } else {
+          field = options;
+          fieldsRef.current.push(options);
+        }
 
-    useEffect(() => {
-      // @ts-ignore
-      Object.assign(ref?.current, { target: formRef.current });
-    }, [formRef]);
+        const newValue = field.get();
+
+        if (dataRef.current[name] !== newValue) {
+          dataRef.current[name] = newValue;
+          dispatchEvent('change', field);
+        }
+      },
+      [dataRef, fieldsRef, getField, dispatchEvent],
+    );
+
+    const unsetField = useCallback(
+      (name: string) => {
+        const index = fieldsRef.current.findIndex((item) => item?.name === name);
+
+        if (index !== -1) {
+          fieldsRef.current.splice(index, 1);
+        }
+      },
+      [fieldsRef],
+    );
+
+    const getValue = useCallback((name: string): any => getField(name)?.get?.(), [getField]);
+
+    const setValue = useCallback((name: string, value: any) => getField(name)?.set?.(value), [getField]);
+
+    const getData = useCallback(() => {
+      const data = {};
+
+      fieldsRef.current.forEach(({ name, get }) => (data[name] = get()));
+
+      return data;
+    }, [fieldsRef]);
+
+    const setData = useCallback(
+      (data: any = {}) => {
+        Object.keys(Object(data)).forEach((attr) => getField(attr)?.set?.(data[attr]));
+      },
+      [getField],
+    );
+
+    const setErrors = useCallback(
+      (errors: FormProps['errors']) => {
+        fieldsRef.current.forEach((item) => {
+          item?.setError?.(errors?.[item.name] ?? false);
+        });
+      },
+      [fieldsRef],
+    );
 
     function dispatchEvent(type: string, field?: FormField, nativeEvent?: any) {
       const callback = {
@@ -100,58 +146,6 @@ const FormFactory = React.memo<FormProps>(
       fieldsRef.current.forEach(({ onFormChange }) => onFormChange?.(event, data));
     }
 
-    function getField(name: string): FormField | undefined {
-      return fieldsRef.current.find((item) => item?.name === name);
-    }
-
-    function setField(options: FormField) {
-      const { name } = options;
-      let field = getField(name);
-
-      if (field) {
-        Object.getOwnPropertyNames(field).forEach((prop) => delete field?.[prop]);
-        Object.assign(field, options);
-      } else {
-        field = options;
-        fieldsRef.current.push(options);
-      }
-
-      const newValue = field.get();
-
-      if (dataRef.current[name] !== newValue) {
-        dataRef.current[name] = newValue;
-        dispatchEvent('change', field);
-      }
-    }
-
-    function unsetField(name: string) {
-      const index = fieldsRef.current.findIndex((item) => item?.name === name);
-
-      if (index !== -1) {
-        fieldsRef.current.splice(index, 1);
-      }
-    }
-
-    function getValue(name: string): any {
-      return getField(name)?.get?.();
-    }
-
-    function setValue(name: string, value: any) {
-      return getField(name)?.set?.(value);
-    }
-
-    function getData() {
-      const data = {};
-
-      fieldsRef.current.forEach(({ name, get }) => (data[name] = get()));
-
-      return data;
-    }
-
-    function setData(data: any = {}) {
-      Object.keys(Object(data)).forEach((attr) => getField(attr)?.set?.(data[attr]));
-    }
-
     function submit(e: any = undefined) {
       e?.preventDefault?.();
       const nativeEvent = e?.nativeEvent ?? e;
@@ -166,9 +160,40 @@ const FormFactory = React.memo<FormProps>(
     function clear() {
       const data = getData();
       fieldsRef.current.forEach(({ set }) => set(''));
+      setErrors(null);
       // @ts-ignore
       onClear?.(ref?.current, data);
     }
+
+    const context = {
+      submit,
+      cancel,
+      clear,
+      getData,
+      setData,
+      setErrors,
+      getValue,
+      setValue,
+      getField,
+      setField,
+      unsetField,
+      target: formRef.current,
+    };
+
+    useImperativeHandle(ref, () => context, [context]);
+
+    useEffect(() => {
+      setData(Object(data));
+    }, [data]);
+
+    useEffect(() => {
+      setErrors(errors);
+    }, [errors]);
+
+    useEffect(() => {
+      // @ts-ignore
+      Object.assign(ref?.current, { target: formRef.current });
+    }, [formRef]);
 
     return (
       <Context.Provider value={context}>

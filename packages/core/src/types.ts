@@ -163,6 +163,7 @@ export type FormField = {
   name: string;
   get: () => InputValue | null | undefined;
   set: (value: InputValue) => any;
+  setError?: (error: boolean | string) => any;
   onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
 };
 
@@ -171,6 +172,7 @@ export type FormRef = {
   clear: () => any;
   getData: () => AnyObject;
   setData: (data: AnyObject) => any;
+  setErrors: (errors: FormProps['errors']) => any;
   getValue: (name: string) => InputValue | undefined;
   setValue: (name: string, value: InputValue) => any;
   submit: () => any;
@@ -540,7 +542,7 @@ export type InputProps = {
   defaultValue?: InputValue;
   disabled?: boolean;
   endAddon?: ReactElement;
-  error?: string;
+  error?: string | boolean;
   label?: string;
   mask?: (value: InputValue) => any;
   max?: number;
@@ -597,7 +599,7 @@ export type SelectProps = {
   defaultValue?: InputValue;
   disabled?: boolean;
   endAddon?: ReactElement;
-  error?: string;
+  error?: string | boolean;
   label?: string;
   loading?: boolean;
   name?: string;
@@ -766,6 +768,7 @@ export type BadgeProps = {
 // TODO: remove event as "any" in next release
 export type FormProps = {
   data?: any;
+  errors?: { [key: string]: string | boolean } | null;
   onSubmit?: (event: RbkFormEvent | any, data: AnyObject) => any;
   onCancel?: (event: RbkFormEvent | any) => any;
   onClear?: (event: RbkFormEvent | any, data: AnyObject) => any;

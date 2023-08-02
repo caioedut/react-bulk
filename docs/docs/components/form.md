@@ -109,6 +109,12 @@ Reset fields and dispatch `onClear` handler.
 
 ---
 
+**setErrors(errors: `object`)**
+
+`ref.current.setErrors({ age: 'Type your age' })`
+
+---
+
 **getValue(name: `string`) : `any`**
 
 `ref.current.getValue('age')`
