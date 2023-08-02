@@ -83,7 +83,7 @@ const ButtonFactory = React.memo<ButtonProps>(
 
     const baseSize = theme.rem(size as number);
     const spacing = (baseSize - theme.rem(0.75)) / 2;
-    const textColor = isBasic ? color : 'white';
+    const textColor = isBasic ? color : theme.contrast(color);
 
     style = [
       isSizeNumber && {

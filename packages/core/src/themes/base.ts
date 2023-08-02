@@ -12,12 +12,12 @@ const typography = {
 
 const colors = {
   primary: '#8b5cf6',
-  secondary: '#f59e0b',
+  secondary: '#b87107',
 
-  info: '#3b82f6',
-  success: '#22c55e',
-  warning: '#f59e0b',
-  error: '#ef4444',
+  info: '#007bff',
+  success: '#28a745',
+  warning: '#b87107',
+  error: '#dc3545',
 
   gray: '#6b7280',
   red: '#ef4444',
