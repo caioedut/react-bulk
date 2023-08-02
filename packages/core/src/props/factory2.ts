@@ -10,9 +10,13 @@ export default function factory2<ComponentProps>(
   props,
   options: ThemeComponentProps<ComponentProps, any>,
 ): ComponentProps & { variants: Variants } {
-  let newProps = { ...options?.defaultProps, ...props };
+  const fallbackProps = {};
 
   const variants: Variants = {};
+
+  Object.entries(options?.defaultProps || {}).forEach(([prop, value]) => {
+    fallbackProps[prop] = props?.[prop] ?? value;
+  });
 
   Object.keys(options?.defaultStyles || {}).forEach((styleId: any) => {
     if (!options?.name) return;
@@ -24,7 +28,7 @@ export default function factory2<ComponentProps>(
   Object.entries(options?.variants || {}).forEach(([varAttr, varOptions]: any) => {
     if (!options?.name) return;
 
-    const varValue = newProps[varAttr];
+    const varValue = props[varAttr] ?? fallbackProps[varAttr];
 
     if (typeof varValue === 'undefined') return;
 
@@ -39,7 +43,7 @@ export default function factory2<ComponentProps>(
 
   // Extends accessibility
   // @ts-expect-error
-  newProps.accessibility = deepmerge(options?.defaultProps?.accessibility, props?.accessibility);
+  fallbackProps.accessibility = deepmerge(fallbackProps.accessibility, props?.accessibility);
 
-  return { ...newProps, ...props, variants };
+  return { ...props, ...fallbackProps, variants };
 }
