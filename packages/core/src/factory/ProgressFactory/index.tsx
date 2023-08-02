@@ -81,8 +81,6 @@ const ProgressFactory = React.memo<ProgressProps>(
 
     return (
       <BoxFactory ref={ref} {...rest} style={style} stylist={[variants.root, stylist]}>
-        <BoxFactory rawStyle={{ width: isIndeterminate ? '20%' : `${value}%` }}></BoxFactory>
-
         {isIndeterminate ? (
           <AnimationFactory //
             in
