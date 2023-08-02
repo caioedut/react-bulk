@@ -122,6 +122,11 @@ const BoxFactory = React.memo<BoxProps>(
       }
     }
 
+    // #HACK: fix flex overflow
+    if (Number(get('flex', style) ?? 0)) {
+      style.unshift({ minWidth: 0 });
+    }
+
     const styles = [!noRootStyles && variants.root, stylist];
     const processed = useMemo(() => createStyle({ style, theme }), [style, theme]);
     styles.push(processed);

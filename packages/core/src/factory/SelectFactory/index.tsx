@@ -383,7 +383,7 @@ const SelectFactory = React.memo<SelectProps>(
                     disabled={option.disabled}
                     bg={isSelected ? theme.color(color, 0.1) : undefined}
                     style={{ paddingHorizontal: spacing }}
-                    contentStyle={{ flex: 1 }}
+                    contentStyle={{ flex: 1, maxWidth: '100%' }}
                     onPress={(e) => handleChange(e, option, true)}
                     endAddon={
                       <BoxFactory w={fontSize} pl={1}>
