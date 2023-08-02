@@ -89,9 +89,12 @@ export type RbkRect = {
 export type RbkAnimation = {
   boomerang?: boolean;
   delay?: number;
-  speed?: number;
+  duration?: number;
   timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
   iterations?: number | 'infinite';
+
+  /** @deprecated use duration instead */
+  speed?: number;
 };
 
 export type AccessibilityProps = {
@@ -791,10 +794,10 @@ export type ActionSheetProps = {
 export type AnimationProps = {
   delay?: number;
   direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+  duration?: number;
   from?: RbkStyles;
   in?: boolean;
   loop?: boolean | number;
-  speed?: number;
   timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
   to?: RbkStyles;
 
@@ -802,6 +805,9 @@ export type AnimationProps = {
   fade?: boolean | 1 | -1;
   zoom?: boolean | 1 | -1;
   spin?: boolean | 1 | -1;
+
+  /** @deprecated use duration instead */
+  speed?: number;
 } & Omit<BoxProps, 'direction'>;
 
 export type ProgressProps = {

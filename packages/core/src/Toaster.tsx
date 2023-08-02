@@ -91,7 +91,7 @@ function Toaster({ theme }: any, ref) {
           key={idRef.current}
           in
           m={3}
-          speed={200}
+          duration={200}
           from={{ transform: [{ translateY }] }}
           to={{ transform: [{ translateY: 0 }] }}
         >
@@ -118,7 +118,7 @@ function Toaster({ theme }: any, ref) {
             </BoxFactory>
 
             <BoxFactory position="absolute" b={0} l={0} r={0}>
-              <AnimationFactory in timing="linear" speed={duration} from={{ w: '0%' }} to={{ w: '100%' }}>
+              <AnimationFactory in timing="linear" duration={duration} from={{ w: '0%' }} to={{ w: '100%' }}>
                 <BoxFactory h={2} bg={theme.color(textColor, 0.5)} />
               </AnimationFactory>
             </BoxFactory>

@@ -21,6 +21,7 @@ const AnimationFactory = React.memo<AnimationProps>(
     let {
       delay,
       direction,
+      duration,
       from,
       in: run,
       loop,
@@ -34,7 +35,7 @@ const AnimationFactory = React.memo<AnimationProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<RequiredSome<AnimationProps, 'direction' | 'speed' | 'timing'>>(props, options);
+    } = factory2<RequiredSome<AnimationProps, 'direction' | 'duration' | 'timing'>>(props, options);
 
     direction = direction ?? 'normal';
 
@@ -94,7 +95,7 @@ const AnimationFactory = React.memo<AnimationProps>(
         Animated.timing(animationValue, {
           useNativeDriver: false,
           delay,
-          duration: speed,
+          duration: duration ?? speed,
           easing: Easing[easing],
           toValue: initRangeValue ? 0 : isBoomerang ? 2 : 1,
         }),
@@ -132,7 +133,7 @@ const AnimationFactory = React.memo<AnimationProps>(
     const style: RbkStyles = { position: 'relative' };
 
     if (web) {
-      style.animation = `${name} ${speed}ms ${timing} ${delay ? `${delay}ms` : ''} ${
+      style.animation = `${name} ${duration ?? speed}ms ${timing} ${delay ? `${delay}ms` : ''} ${
         iterations === -1 ? 'infinite' : iterations
       } ${run ? 'running' : 'paused'} ${direction}`;
     }

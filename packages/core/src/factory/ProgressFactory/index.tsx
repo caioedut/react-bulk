@@ -26,10 +26,11 @@ const ProgressFactory = React.memo<ProgressProps>(
       onLayout,
       // Styles
       variants,
+      style,
       barStyle,
       labelStyle,
       ...rest
-    } = factory2<RequiredSome<ProgressProps, 'color' | 'corners' | 'label' | 'size'>>(props, options);
+    } = factory2<RequiredSome<ProgressProps, 'color' | 'label' | 'size'>>(props, options);
 
     const [containerWidth, setContainerWidth] = useState<number>(0);
 
@@ -52,12 +53,20 @@ const ProgressFactory = React.memo<ProgressProps>(
       rest.accessibility = deepmerge({ label: 'percentage' }, rest.accessibility, { value: { now: value } });
     }
 
+    style = [
+      {
+        corners: (size as number) * 2,
+      },
+
+      style,
+    ];
+
     barStyle = [
       {
         bg: color,
         height,
-        width: isIndeterminate ? '20%' : `${value}%`,
       },
+
       barStyle,
     ];
 
@@ -71,7 +80,9 @@ const ProgressFactory = React.memo<ProgressProps>(
     }
 
     return (
-      <BoxFactory ref={ref} {...rest} stylist={[variants.root, stylist]}>
+      <BoxFactory ref={ref} {...rest} style={style} stylist={[variants.root, stylist]}>
+        <BoxFactory rawStyle={{ width: isIndeterminate ? '20%' : `${value}%` }}></BoxFactory>
+
         {isIndeterminate ? (
           <AnimationFactory //
             in
@@ -81,11 +92,11 @@ const ProgressFactory = React.memo<ProgressProps>(
             from={{ transform: [{ translateX: 0 }] }}
             to={{ transform: [{ translateX }] }}
           >
-            <BoxFactory style={barStyle} stylist={[variants.bar]} />
+            <BoxFactory w="20%" style={barStyle} stylist={[variants.bar]} />
           </AnimationFactory>
         ) : (
           <>
-            <BoxFactory style={barStyle} stylist={[variants.bar]} />
+            <BoxFactory style={barStyle} stylist={[variants.bar]} rawStyle={{ width: `${value}%` }} />
 
             {Boolean(label) && (
               <BoxFactory position="absolute" i={0} center>
