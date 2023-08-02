@@ -50,9 +50,9 @@ Delay in milliseconds to start the animation.
 
 ---
 
-**`speed`**
+**`duration`**
 
-Animation speed in milliseconds.
+Animation duration in milliseconds.
 
 ➤ Type: **`number`** <br/>
 
