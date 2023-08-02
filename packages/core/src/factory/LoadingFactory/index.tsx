@@ -60,7 +60,7 @@ const LoadingFactory = React.memo<LoadingProps>(
         <AnimationFactory
           in
           loop
-          speed={500}
+          duration={500}
           timing="linear"
           from={{ transform: [{ rotate: '0deg' }] }}
           to={{ transform: [{ rotate: '360deg' }] }}

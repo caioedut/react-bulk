@@ -24,7 +24,9 @@ export default function useAnimation(initial = {}) {
   const [style, setStyle] = useState(initialStyle);
 
   function start(styles = {}, options: RbkAnimation = {}) {
-    let { boomerang = false, delay = 0, speed = 350, timing = 'ease', iterations = 1 } = options;
+    let { boomerang = false, delay = 0, timing = 'ease', iterations = 1 } = options;
+
+    const duration = options.duration ?? options.speed ?? 350;
 
     stop();
 
@@ -41,12 +43,12 @@ export default function useAnimation(initial = {}) {
         setStyle((current) => ({
           ...current,
           transitionDelay: `${delay}ms`,
-          transitionDuration: `${speed}ms`,
+          transitionDuration: `${duration}ms`,
           transitionProperty: 'all',
           transitionTimingFunction: timing,
         }));
 
-        let nextDelay = Math.max(0, speed - 3);
+        let nextDelay = Math.max(0, duration - 3);
 
         animRef.current = setTimeout(() => {
           const toStyle = {};
@@ -92,7 +94,7 @@ export default function useAnimation(initial = {}) {
         const animations = Object.entries(style).map(([attr, animValue]) =>
           Animated.timing(animValue, {
             delay,
-            duration: speed,
+            duration,
             easing: Easing[easing],
             toValue: styles[attr],
             useNativeDriver: false,

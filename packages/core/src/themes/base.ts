@@ -228,7 +228,7 @@ const base: ThemeProps = {
       name: 'rbk-animation',
       defaultProps: {
         direction: 'normal',
-        speed: 625,
+        duration: 625,
         timing: 'ease',
       },
       defaultStyles: {
@@ -910,14 +910,15 @@ const base: ThemeProps = {
       defaultProps: {
         accessibility: { role: 'progressbar' },
         color: 'primary',
-        corners: 2,
         label: true,
         size: 'medium',
+        value: 0,
       },
       defaultStyles: {
         root: {
           position: 'relative',
           bg: 'text.main.25',
+          corners: 2.5,
           overflow: 'hidden',
         },
         bar: {
