@@ -34,7 +34,7 @@ const InputFactory = React.memo<InputProps>(
       disabled,
       endAddon,
       endIcon,
-      error,
+      error: errorProp,
       id,
       label,
       mask,
@@ -81,6 +81,8 @@ const InputFactory = React.memo<InputProps>(
     const form = useForm();
     const defaultRef: any = useRef(null);
     const inputRef = ref || defaultRef;
+
+    const [error, setError] = useState<InputProps['error']>();
 
     const maskValue = useCallback(
       (value) => {
@@ -219,12 +221,17 @@ const InputFactory = React.memo<InputProps>(
     }, [value]);
 
     useEffect(() => {
+      setError(errorProp);
+    }, [errorProp]);
+
+    useEffect(() => {
       if (!name || !form) return;
 
       form.setField({
         name,
         set: (value) => setInternal(value),
         get: () => unmaskValue(internal),
+        setError,
         onFormChange,
       });
 

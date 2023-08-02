@@ -35,7 +35,7 @@ const SelectFactory = React.memo<SelectProps>(
       id,
       color,
       controlled,
-      error,
+      error: errorProp,
       label,
       loading,
       name,
@@ -65,6 +65,7 @@ const SelectFactory = React.memo<SelectProps>(
     const selectedRef: any = useRef(null);
     const optionsRef: any = useRef([]);
 
+    const [error, setError] = useState<SelectProps['error']>();
     const [metrics, setMetrics] = useState<AnyObject>({});
     const [visible, setVisible] = useState(false);
     const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == defaultValue));
@@ -88,7 +89,7 @@ const SelectFactory = React.memo<SelectProps>(
 
     const selected = arrOptions?.find((item) => item.value == internal);
 
-    color = error ? 'error' : color || 'primary';
+    color = theme.color(error ? 'error' : color || 'primary');
 
     const gutter = theme.spacing(3);
 
@@ -114,12 +115,17 @@ const SelectFactory = React.memo<SelectProps>(
     }, [value]);
 
     useEffect(() => {
+      setError(errorProp);
+    }, [errorProp]);
+
+    useEffect(() => {
       if (!name || !form) return;
 
       form.setField({
         name,
         set: setInternal,
         get: () => selected?.value ?? null,
+        setError,
         onFormChange,
       });
 
@@ -320,11 +326,11 @@ const SelectFactory = React.memo<SelectProps>(
           color={color}
           endAddon={
             loading ? (
-              <LoadingFactory size={size} />
+              <LoadingFactory size={fontSize / theme.rem()} color={color} />
             ) : visible ? (
-              <ChevronUp svg={svg} color={theme.color(color)} />
+              <ChevronUp svg={svg} size={fontSize} color={color} />
             ) : (
-              <ChevronDown svg={svg} color={theme.color(color)} />
+              <ChevronDown svg={svg} size={fontSize} color={color} />
             )
           }
           {...rest}
@@ -381,7 +387,7 @@ const SelectFactory = React.memo<SelectProps>(
                     onPress={(e) => handleChange(e, option, true)}
                     endAddon={
                       <BoxFactory w={fontSize} pl={1}>
-                        {isSelected && <Check svg={svg} size={fontSize} color={theme.color(color)} />}
+                        {isSelected && <Check svg={svg} size={fontSize} color={color} />}
                       </BoxFactory>
                     }
                     ref={(el) => {
