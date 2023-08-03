@@ -17,44 +17,46 @@ export default function createTheme(options?: ThemeEditProps, extendsTo?: ThemeE
 
   const all = [base, extendsTo, reference, options, { mode }];
 
-  for (const theme of all) {
-    if (!theme.colors) continue;
+  // @ts-ignore
+  const newTheme: ThemeProps = deepmerge.all(all, { arrayMerge: (prev, next) => next });
 
-    for (let prop in theme.colors) {
-      const color = theme.colors[prop];
+  // Parse colors
+  if (newTheme.colors) {
+    for (let prop in newTheme.colors) {
+      const color = newTheme.colors[prop];
 
       if (typeof color === 'string') {
-        theme.colors[prop] = { main: color };
+        newTheme.colors[prop] = { main: color };
       }
 
-      const main = theme.colors?.[prop]?.main;
-      const light = theme.colors?.[prop]?.light;
-      const lighter = theme.colors?.[prop]?.lighter;
-      const dark = theme.colors?.[prop]?.dark;
-      const darker = theme.colors?.[prop]?.darker;
+      const main = newTheme.colors?.[prop]?.main;
 
-      if (main) {
-        if (!light) {
-          theme.colors[prop].light = base.color(main, null, '50%');
-        }
+      if (!main) {
+        continue;
+      }
 
-        if (!lighter) {
-          theme.colors[prop].lighter = base.color(main, null, '100%');
-        }
+      const light = newTheme.colors?.[prop]?.light;
+      const lighter = newTheme.colors?.[prop]?.lighter;
+      const dark = newTheme.colors?.[prop]?.dark;
+      const darker = newTheme.colors?.[prop]?.darker;
 
-        if (!dark) {
-          theme.colors[prop].dark = base.color(main, null, '-50%');
-        }
+      if (!light) {
+        newTheme.colors[prop].light = newTheme.color(main, null, '50%');
+      }
 
-        if (!darker) {
-          theme.colors[prop].darker = base.color(main, null, '-100%');
-        }
+      if (!lighter) {
+        newTheme.colors[prop].lighter = newTheme.color(main, null, '100%');
+      }
+
+      if (!dark) {
+        newTheme.colors[prop].dark = newTheme.color(main, null, '-50%');
+      }
+
+      if (!darker) {
+        newTheme.colors[prop].darker = newTheme.color(main, null, '-100%');
       }
     }
   }
-
-  // @ts-ignore
-  const newTheme: ThemeProps = deepmerge.all(all, { arrayMerge: (prev, next) => next });
 
   const components = { ...newTheme.components };
 
