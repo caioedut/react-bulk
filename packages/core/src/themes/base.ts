@@ -158,7 +158,9 @@ const base: ThemeProps = {
           b > 255 && (b = 255);
           b < 0 && (b = 0);
 
-          newColor = `#${(g | (b << 8) | (r << 16)).toString(16)}`;
+          newColor = `#${(g | (b << 8) | (r << 16)).toString(16).padStart(6, '0')}`;
+
+          console.log({ mixin, newColor });
         }
       }
     }

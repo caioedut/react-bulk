@@ -1,9 +1,10 @@
+import { ThemeEditProps } from '@react-bulk/core';
 import ReactBulk from '@react-bulk/native';
 import { registerRootComponent } from 'expo';
 
 import Main from './src/main';
 
-const theme = {
+const theme: ThemeEditProps = {
   typography: {
     fontSize: 16,
   },
