@@ -90,7 +90,7 @@ function Toaster({ theme }: any, ref) {
         <AnimationFactory
           key={idRef.current}
           in
-          m={3}
+          m={theme.shape.gap}
           duration={200}
           from={{ transform: [{ translateY }] }}
           to={{ transform: [{ translateY: 0 }] }}
@@ -103,7 +103,7 @@ function Toaster({ theme }: any, ref) {
             w={width}
             maxw="100%"
             corners={2}
-            p={3}
+            p={theme.shape.gap}
             accessibility={{ role: 'alert' }}
             platform={{ web: { tabIndex: '-1' } }}
           >

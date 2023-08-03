@@ -24,7 +24,7 @@ const ModalFactory = React.memo<ModalProps>(
 
     return (
       <BackdropFactory ref={ref} stylist={[variants.root, stylist]} {...rest} onPress={onBackdropPress}>
-        <BoxFactory maxh="100%" maxw="100%" p={3}>
+        <BoxFactory maxh="100%" maxw="100%" p={theme.shape.gap}>
           <CardFactory maxh="100%" maxw="100%">
             {children}
           </CardFactory>

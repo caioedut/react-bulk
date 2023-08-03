@@ -50,7 +50,7 @@ const LoadingFactory = React.memo<LoadingProps>(
       {
         color,
         fontSize,
-        ml: size,
+        ml: (size as number) * 1.6,
       },
       labelStyle,
     ];

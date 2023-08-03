@@ -54,96 +54,98 @@ const table = [
 const getLabel = (str: string) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 
 export default function Main() {
+  const theme = useTheme();
+
   return (
-    <Scrollable bg="background.secondary" contentInset={3}>
+    <Scrollable bg="background.secondary" contentInset={theme.shape.gap}>
       <Card>
         <Text variant="title">React Bulk</Text>
-        <Text mt={3}>Open up App.tsx to start working on your app!</Text>
+        <Text mt={theme.shape.gap}>Open up App.tsx to start working on your app!</Text>
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <ThemeExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <BreakpointExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <GridExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <TypographyExample />
       </Card>
 
       <ListItemExample />
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <ButtonExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <FormExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <BadgeExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <TableExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <ImageExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <DividerExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <ModalExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <ToasterExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <CollapseExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <DrawerExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <ActionSheetExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <DropdownExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <TabsExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <ProgressExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <TooltipExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <CarouselExample />
       </Card>
 
-      <Card mt={3}>
+      <Card mt={theme.shape.gap}>
         <AnimationExample />
       </Card>
     </Scrollable>
@@ -183,9 +185,9 @@ function ThemeExample() {
     <>
       <Text variant="title">Theme</Text>
 
-      <Divider mt={3} mx={-3} />
+      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
 
-      <Text variant="subtitle" my={3}>
+      <Text variant="subtitle" my={theme.shape.gap}>
         Mode
       </Text>
 
@@ -198,13 +200,13 @@ function ThemeExample() {
         </Button>
       </ButtonGroup>
 
-      <Divider mt={3} mx={-3} />
+      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
 
-      <Text variant="subtitle" my={3}>
+      <Text variant="subtitle" my={theme.shape.gap}>
         Shape
       </Text>
-      <Grid gap={3}>
-        <Box xs={6} md={3}>
+      <Grid gap={theme.shape.gap}>
+        <Box xs={6} md={theme.shape.gap}>
           <Input
             type="number"
             min={0}
@@ -216,7 +218,7 @@ function ThemeExample() {
             onChange={handleChangeTheme}
           />
         </Box>
-        <Box xs={6} md={3}>
+        <Box xs={6} md={theme.shape.gap}>
           <Input
             type="number"
             min={0}
@@ -230,13 +232,13 @@ function ThemeExample() {
         </Box>
       </Grid>
 
-      <Divider mt={3} mx={-3} />
+      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
 
-      <Text variant="subtitle" my={3}>
+      <Text variant="subtitle" my={theme.shape.gap}>
         Typography
       </Text>
-      <Grid gap={3}>
-        <Box xs={6} md={3}>
+      <Grid gap={theme.shape.gap}>
+        <Box xs={6} md={theme.shape.gap}>
           <Input
             type="number"
             min={8}
@@ -248,7 +250,7 @@ function ThemeExample() {
             onChange={handleChangeTheme}
           />
         </Box>
-        <Box xs={6} md={3}>
+        <Box xs={6} md={theme.shape.gap}>
           <Input
             type="number"
             min={0}
@@ -262,12 +264,12 @@ function ThemeExample() {
         </Box>
       </Grid>
 
-      <Divider mt={3} mx={-3} />
+      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
 
-      <Text variant="subtitle" my={3}>
+      <Text variant="subtitle" my={theme.shape.gap}>
         Colors
       </Text>
-      <Grid gap={3}>
+      <Grid gap={theme.shape.gap}>
         {Object.keys(theme.colors)
           .filter((item) => !['common', 'text', 'background'].includes(item))
           .map((color) => (
@@ -294,7 +296,7 @@ function BreakpointExample() {
     <>
       <Text variant="title">Breakpoints</Text>
 
-      <Grid gap={3} mt={3}>
+      <Grid gap={theme.shape.gap} mt={theme.shape.gap}>
         {breakpoints.map((bkp, index) => {
           const bg = theme.color('primary', (index + 1) / breakpoints.length);
           const color = theme.contrast(bg);
@@ -318,12 +320,14 @@ function BreakpointExample() {
 }
 
 function GridExample() {
+  const theme = useTheme();
+
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Grid
       </Text>
-      <Text variant="subtitle" mb={3}>
+      <Text variant="subtitle" mb={theme.shape.gap}>
         size={5}
       </Text>
       <Grid size={5}>
@@ -342,10 +346,12 @@ function GridExample() {
 }
 
 function TypographyExample() {
+  const theme = useTheme();
+
   return (
     <>
       <Text variant="title">Typography</Text>
-      <Grid alignItems="baseline" gap={3} mt={3}>
+      <Grid alignItems="baseline" gap={theme.shape.gap} mt={theme.shape.gap}>
         <Text variant="h1">H1</Text>
         <Text variant="h2">H2</Text>
         <Text variant="h3">H3</Text>
@@ -362,8 +368,10 @@ function TypographyExample() {
 }
 
 function ListItemExample() {
+  const theme = useTheme();
+
   return (
-    <ListItem startAddon="❤" endAddon="⚙" chevron mt={3}>
+    <ListItem startAddon="❤" endAddon="⚙" chevron mt={theme.shape.gap}>
       <Box>
         <Text bold>List Item</Text>
         <Text>Lorem ipsum dolor sit amet</Text>
@@ -373,6 +381,8 @@ function ListItemExample() {
 }
 
 function ButtonExample() {
+  const theme = useTheme();
+
   const [loading, toggleLoading] = useReducer((state) => !state, true);
 
   return (
@@ -381,10 +391,10 @@ function ButtonExample() {
 
       {variants.map((variant) => (
         <Box key={variant}>
-          <Text variant="subtitle" transform="capitalize" mt={3}>
+          <Text variant="subtitle" transform="capitalize" mt={theme.shape.gap}>
             {variant}
           </Text>
-          <Grid alignItems="center" gap={3} mt={3}>
+          <Grid alignItems="center" gap={theme.shape.gap} mt={theme.shape.gap}>
             <Box>
               <Button variant={variant}>Button</Button>
             </Box>
@@ -399,7 +409,7 @@ function ButtonExample() {
               </Button>
             </Box>
             <Box>
-              <Button variant={variant} circular px={3}>
+              <Button variant={variant} circular px={theme.shape.gap}>
                 Circular
               </Button>
             </Box>
@@ -430,14 +440,14 @@ function ButtonExample() {
               </Box>
             ))}
           </Grid>
-          <Divider mx={-3} my={3} />
+          <Divider mx={-theme.shape.gap} my={theme.shape.gap} />
         </Box>
       ))}
 
-      <Text mt={3} variant="subtitle">
+      <Text mt={theme.shape.gap} variant="subtitle">
         Group
       </Text>
-      <ButtonGroup mt={3} p={1} variant="outline">
+      <ButtonGroup mt={theme.shape.gap} p={1} variant="outline">
         <Button>Button</Button>
         <Button disabled>Disabled</Button>
         <Button loading={loading} onPress={toggleLoading}>
@@ -452,6 +462,8 @@ function ButtonExample() {
 }
 
 function FormExample() {
+  const theme = useTheme();
+
   const [radio, setRadio] = useState('medium');
   const [checkbox, toggleCheckbox] = useReducer((state) => !state, true);
 
@@ -463,31 +475,37 @@ function FormExample() {
     <>
       <Text variant="title">Forms</Text>
 
-      <Text mt={3} variant="subtitle">
+      <Text mt={theme.shape.gap} variant="subtitle">
         Text Field
       </Text>
 
-      <Input mt={3} label="Default Input" placeholder="This is the default input" />
-      <Input mt={3} label="Secure" placeholder="Secure input" secure />
-      <Input mt={3} label="Read Only" placeholder="Read only input" readOnly />
-      <Input mt={3} label="Disabled" placeholder="Disabled input" disabled />
-      <Input mt={3} label="Invalid" placeholder="Input with error" error="Value is invalid!" />
-      <Input mt={3} label="Icons" placeholder="Input with icons" startAddon="$" endAddon="💳" />
+      <Input mt={theme.shape.gap} label="Default Input" placeholder="This is the default input" />
+      <Input mt={theme.shape.gap} label="Secure" placeholder="Secure input" secure />
+      <Input mt={theme.shape.gap} label="Read Only" placeholder="Read only input" readOnly />
+      <Input mt={theme.shape.gap} label="Disabled" placeholder="Disabled input" disabled />
+      <Input mt={theme.shape.gap} label="Invalid" placeholder="Input with error" error="Value is invalid!" />
+      <Input mt={theme.shape.gap} label="Icons" placeholder="Input with icons" startAddon="$" endAddon="💳" />
 
       {sizes.map((size) => (
-        <Input key={size} mt={3} size={size} label={getLabel(size)} placeholder={`This is a ${size} input`} />
+        <Input
+          key={size}
+          mt={theme.shape.gap}
+          size={size}
+          label={getLabel(size)}
+          placeholder={`This is a ${size} input`}
+        />
       ))}
 
-      <Input mt={3} label="Multiline" placeholder="Multiline input" multiline />
+      <Input mt={theme.shape.gap} label="Multiline" placeholder="Multiline input" multiline />
 
-      <Divider mt={3} mx={-3} />
+      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
 
-      <Text mt={3} variant="subtitle">
+      <Text mt={theme.shape.gap} variant="subtitle">
         Combobox
       </Text>
 
       <Select
-        mt={3}
+        mt={theme.shape.gap}
         label="City"
         placeholder="[Select]"
         options={[
@@ -498,7 +516,7 @@ function FormExample() {
       />
 
       <Select
-        mt={3}
+        mt={theme.shape.gap}
         label="Payment"
         placeholder="[Select]"
         startAddon="💳"
@@ -510,13 +528,13 @@ function FormExample() {
         ]}
       />
 
-      <Divider mt={3} mx={-3} />
+      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
 
-      <Text variant="subtitle" mt={3}>
+      <Text variant="subtitle" mt={theme.shape.gap}>
         Checkbox / Radio Button
       </Text>
 
-      <Grid alignItems="center" gap={3}>
+      <Grid alignItems="center" gap={theme.shape.gap}>
         {sizes.map((size) => (
           <Box key={size}>
             <Checkbox size={size} label={getLabel(size)} checked={checkbox} onChange={toggleCheckbox} />
@@ -524,7 +542,7 @@ function FormExample() {
         ))}
       </Grid>
 
-      <Grid alignItems="center" gap={3}>
+      <Grid alignItems="center" gap={theme.shape.gap}>
         {sizes.map((size) => (
           <Box key={size}>
             <Checkbox
@@ -539,24 +557,24 @@ function FormExample() {
         ))}
       </Grid>
 
-      <Divider mt={3} mx={-3} />
+      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
 
-      <Text variant="subtitle" mt={3}>
+      <Text variant="subtitle" mt={theme.shape.gap}>
         Slider
       </Text>
-      <Box p={3}>
+      <Box p={theme.shape.gap}>
         {sizes.map((size) => (
-          <Slider key={size} size={size} defaultValue={Math.random() * 100} mt={3} />
+          <Slider key={size} size={size} defaultValue={Math.random() * 100} mt={theme.shape.gap} />
         ))}
       </Box>
 
-      <Divider mt={3} mx={-3} />
+      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
 
-      <Text variant="subtitle" mt={3}>
+      <Text variant="subtitle" mt={theme.shape.gap}>
         Serializable
       </Text>
-      <Form onSubmit={handleSubmitForm} data={formData} mt={3}>
-        <Grid size={6} gap={3}>
+      <Form onSubmit={handleSubmitForm} data={formData} mt={theme.shape.gap}>
+        <Grid size={6} gap={theme.shape.gap}>
           <Box xs={6} md={4}>
             <Input name="firstName" label="First Name" />
           </Box>
@@ -592,10 +610,12 @@ function FormExample() {
 }
 
 function BadgeExample() {
+  const theme = useTheme();
+
   return (
     <>
       <Text variant="title">Badge</Text>
-      <Grid alignItems="center" gap={3} mt={3}>
+      <Grid alignItems="center" gap={theme.shape.gap} mt={theme.shape.gap}>
         <Box>
           <Badge dot />
         </Box>
@@ -620,9 +640,11 @@ function BadgeExample() {
 }
 
 function TableExample() {
+  const theme = useTheme();
+
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Tables
       </Text>
       <Table
@@ -652,9 +674,11 @@ function TableExample() {
 }
 
 function ImageExample() {
+  const theme = useTheme();
+
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Images
       </Text>
       <Box row center>
@@ -679,23 +703,25 @@ function ImageExample() {
 }
 
 function DividerExample() {
+  const theme = useTheme();
+
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Dividers
       </Text>
       <Box row center>
         <Box flex>
           <Text>Horizontal</Text>
-          <Divider mt={3} />
-          <Divider mt={3} color="primary" />
-          <Divider mt={3} color="secondary" />
+          <Divider mt={theme.shape.gap} />
+          <Divider mt={theme.shape.gap} color="primary" />
+          <Divider mt={theme.shape.gap} color="secondary" />
         </Box>
         <Box row center w="50%" h={100}>
-          <Text my={3}>Vertical</Text>
-          <Divider ml={3} vertical />
-          <Divider ml={3} color="primary" vertical />
-          <Divider ml={3} color="secondary" vertical />
+          <Text my={theme.shape.gap}>Vertical</Text>
+          <Divider ml={theme.shape.gap} vertical />
+          <Divider ml={theme.shape.gap} color="primary" vertical />
+          <Divider ml={theme.shape.gap} color="secondary" vertical />
         </Box>
       </Box>
     </>
@@ -703,13 +729,15 @@ function DividerExample() {
 }
 
 function ModalExample() {
+  const theme = useTheme();
+
   const [modal, setModal] = useState({});
 
   return (
     <>
       <Text variant="title">Modals</Text>
 
-      <Grid gap={3} mt={3}>
+      <Grid gap={theme.shape.gap} mt={theme.shape.gap}>
         <Box>
           <Button onPress={() => setModal({ visible: true, valign: 'top' })}>Top</Button>
         </Box>
@@ -731,13 +759,13 @@ function ModalExample() {
           <Text bold size={1.25}>
             My Modal
           </Text>
-          <Divider my={3} mx={-3} />
+          <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
           <Text>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consectetur cupiditate deserunt dolorum
             eius et expedita qui repellendus voluptatibus! Accusamus consectetur deleniti fuga iure laborum quam
             quisquam quo ut, velit!
           </Text>
-          <Button mt={3} onPress={() => setModal((current) => ({ ...current, visible: false }))}>
+          <Button mt={theme.shape.gap} onPress={() => setModal((current) => ({ ...current, visible: false }))}>
             Close
           </Button>
         </Box>
@@ -747,14 +775,16 @@ function ModalExample() {
 }
 
 function ToasterExample() {
+  const theme = useTheme();
+
   const toaster = useToaster();
 
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Toaster
       </Text>
-      <Grid gap={3}>
+      <Grid gap={theme.shape.gap}>
         <Box>
           <Button onPress={() => toaster.open({ content: 'Hello world!' })}>String</Button>
         </Box>
@@ -765,7 +795,7 @@ function ToasterExample() {
                 content: (
                   <>
                     <Text>⚠</Text>
-                    <Text color="warning" mx={3}>
+                    <Text color="warning" mx={theme.shape.gap}>
                       Hello world!
                     </Text>
                     <Button variant="text" size="small">
@@ -785,17 +815,19 @@ function ToasterExample() {
 }
 
 function CollapseExample() {
+  const theme = useTheme();
+
   const [collpase, toggleCollapse] = useReducer((state) => !state, false);
 
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Collapse
       </Text>
       <Box row>
         <Button onPress={toggleCollapse}>Toggle Collapse</Button>
       </Box>
-      <Collapse in={collpase} mt={3}>
+      <Collapse in={collpase} mt={theme.shape.gap}>
         <Text>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis,
           dignissimos distinctio earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam
@@ -807,11 +839,13 @@ function CollapseExample() {
 }
 
 function DrawerExample() {
+  const theme = useTheme();
+
   const [drawer, setDrawer] = useState(false);
 
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Drawer
       </Text>
       <Box row>
@@ -820,11 +854,11 @@ function DrawerExample() {
       <Drawer visible={drawer} placement="right" maxw={320} onBackdropPress={() => setDrawer(false)}>
         <Card>
           <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-          <Text mt={3}>
+          <Text mt={theme.shape.gap}>
             A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae
             soluta. Incidunt labore laboriosam maiores, praesentium quia tempore!
           </Text>
-          <Button mt={3} onPress={() => setDrawer(false)}>
+          <Button mt={theme.shape.gap} onPress={() => setDrawer(false)}>
             Close
           </Button>
         </Card>
@@ -834,11 +868,13 @@ function DrawerExample() {
 }
 
 function ActionSheetExample() {
+  const theme = useTheme();
+
   const [actionSheet, setActionSheet] = useState(false);
 
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Action Sheet
       </Text>
       <Box row>
@@ -847,25 +883,27 @@ function ActionSheetExample() {
 
       <ActionSheet visible={actionSheet} maxw={500} onClose={() => setActionSheet(false)}>
         <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-        <Text mt={3}>
+        <Text mt={theme.shape.gap}>
           A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae
           soluta. Incidunt labore laboriosam maiores, praesentium quia tempore!
         </Text>
 
-        <Button mt={3}>Option X</Button>
-        <Button mt={3}>Option Y</Button>
-        <Button mt={3}>Option Z</Button>
+        <Button mt={theme.shape.gap}>Option X</Button>
+        <Button mt={theme.shape.gap}>Option Y</Button>
+        <Button mt={theme.shape.gap}>Option Z</Button>
       </ActionSheet>
     </>
   );
 }
 
 function DropdownExample() {
+  const theme = useTheme();
+
   const [dropdown, toggleDropdown] = useReducer((state) => !state, false);
 
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Dropdown
       </Text>
       <Box row>
@@ -879,13 +917,15 @@ function DropdownExample() {
 }
 
 function TabsExample() {
+  const theme = useTheme();
+
   const [tab, setTab] = useState<number | string>(1);
 
   return (
     <>
       <Text variant="title">Tabs</Text>
 
-      <Card bg="background.secondary" mt={3}>
+      <Card bg="background.secondary" mt={theme.shape.gap}>
         <Tabs
           variant="group"
           value={tab}
@@ -894,7 +934,7 @@ function TabsExample() {
         />
       </Card>
 
-      <Card bg="background.secondary" mt={3}>
+      <Card bg="background.secondary" mt={theme.shape.gap}>
         <Tabs
           variant="card"
           value={tab}
@@ -907,6 +947,8 @@ function TabsExample() {
 }
 
 function ProgressExample() {
+  const theme = useTheme();
+
   const [percent, setPercent] = useState(0);
 
   useEffect(() => {
@@ -925,43 +967,56 @@ function ProgressExample() {
   return (
     <>
       <Text variant="title">Progress</Text>
-      <Divider my={3} mx={-3} />
+      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
 
-      <Text variant="subtitle">Loading</Text>
-      <Loading align="start" mt={3} />
+      <Box row noWrap>
+        <Grid gap={theme.shape.gap}>
+          <Box xs={12}>
+            <Text variant="subtitle">Loading</Text>
+          </Box>
+          <Box>
+            <Loading align="start" />
+          </Box>
+          <Box>
+            <Loading align="start" label="Fetching data..." />
+          </Box>
+        </Grid>
+      </Box>
 
-      <Divider my={3} mx={-3} />
+      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
 
       <Text variant="subtitle">Bar indeterminate</Text>
-      <Progress mt={3} />
+      <Progress mt={theme.shape.gap} />
 
-      <Divider my={3} mx={-3} />
+      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
 
       <Text variant="subtitle">Bar with value</Text>
-      <Progress value={percent} mt={3} />
+      <Progress value={percent} mt={theme.shape.gap} />
     </>
   );
 }
 
 function TooltipExample() {
+  const theme = useTheme();
+
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Tooltip
       </Text>
-      <Text variant="subtitle" mb={3}>
+      <Text variant="subtitle" mb={theme.shape.gap}>
         Hover/press texts below
       </Text>
       <Box row center>
         {tooltips.map((pos) => (
-          <Box key={pos} p={3}>
+          <Box key={pos} p={theme.shape.gap}>
             <Tooltip title="My tooltip" position={pos}>
               <Text>{getLabel(pos)}</Text>
             </Tooltip>
           </Box>
         ))}
         {colors.map((color) => (
-          <Box key={color} p={3}>
+          <Box key={color} p={theme.shape.gap}>
             <Tooltip title="My tooltip" color={color}>
               <Text>{getLabel(color)}</Text>
             </Tooltip>
@@ -973,19 +1028,21 @@ function TooltipExample() {
 }
 
 function CarouselExample() {
+  const theme = useTheme();
+
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Carousel
       </Text>
-      <Carousel xs={1} sm={2} md={3} lg={4} xl={5} gap={3}>
+      <Carousel xs={1} sm={2} md={3} lg={4} xl={5} gap={theme.shape.gap}>
         {Array.from({ length: 11 }).map((i, index) => (
           <Card key={index} corners={3} bg="background.secondary">
             <Text bold>Item {index + 1}</Text>
             <Image
               w="100%"
               corners={3}
-              my={3}
+              my={theme.shape.gap}
               source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg"
             />
             <Text>
@@ -999,9 +1056,11 @@ function CarouselExample() {
 }
 
 function AnimationExample() {
+  const theme = useTheme();
+
   return (
     <>
-      <Text variant="title" mb={3}>
+      <Text variant="title" mb={theme.shape.gap}>
         Animations (Beta)
       </Text>
 
@@ -1011,9 +1070,9 @@ function AnimationExample() {
 
         return (
           <React.Fragment key={key}>
-            {key > 0 && <Divider my={3} />}
+            {key > 0 && <Divider my={theme.shape.gap} />}
             <Box>
-              <Text variant="subtitle" mb={3}>
+              <Text variant="subtitle" mb={theme.shape.gap}>
                 {label}
               </Text>
               <Grid noWrap alignItems="center" gap={6}>
