@@ -27,7 +27,7 @@ export default function createTheme(options?: ThemeEditProps, extendsTo?: ThemeE
         theme.colors[prop] = { main: color };
       }
 
-      let main = theme.colors?.[prop]?.main;
+      const main = theme.colors?.[prop]?.main;
       const light = theme.colors?.[prop]?.light;
       const lighter = theme.colors?.[prop]?.lighter;
       const dark = theme.colors?.[prop]?.dark;
@@ -35,19 +35,19 @@ export default function createTheme(options?: ThemeEditProps, extendsTo?: ThemeE
 
       if (main) {
         if (!light) {
-          theme.colors[prop].light = colorize(main, 0.5);
+          theme.colors[prop].light = base.color(main, null, '50%');
         }
 
         if (!lighter) {
-          theme.colors[prop].lighter = colorize(theme.colors[prop].light, 0.5);
+          theme.colors[prop].lighter = base.color(main, null, '100%');
         }
 
         if (!dark) {
-          theme.colors[prop].dark = colorize(main, -0.5);
+          theme.colors[prop].dark = base.color(main, null, '-50%');
         }
 
         if (!darker) {
-          theme.colors[prop].darker = colorize(theme.colors[prop].dark, 0.5);
+          theme.colors[prop].darker = base.color(main, null, '-100%');
         }
       }
     }
@@ -91,26 +91,4 @@ export default function createTheme(options?: ThemeEditProps, extendsTo?: ThemeE
   global.theme = newTheme;
 
   return newTheme;
-}
-
-function colorize(hex, luminosity = 0) {
-  // validate hex string
-  hex = String(hex).replace(/[^0-9a-f]/gi, '');
-
-  if (hex.length < 6) {
-    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-  }
-
-  // convert to decimal and change luminosity
-  let rgb = '#',
-    c,
-    i;
-
-  for (i = 0; i < 3; i++) {
-    c = parseInt(hex.substr(i * 2, 2), 16);
-    c = Math.round(Math.min(Math.max(0, c + c * luminosity), 255)).toString(16);
-    rgb += ('00' + c).substr(c.length);
-  }
-
-  return rgb;
 }

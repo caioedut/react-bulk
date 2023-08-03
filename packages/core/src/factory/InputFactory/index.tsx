@@ -148,6 +148,10 @@ const InputFactory = React.memo<InputProps>(
     startAddon = startAddon ?? startIcon;
     endAddon = endAddon ?? endIcon;
 
+    // if (color && !focused && !error) {
+    //   color = theme.color(color, null, '-50%');
+    // }
+
     if (web) {
       Object.assign(rest, {
         autoCapitalize,

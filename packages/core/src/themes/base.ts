@@ -1,8 +1,12 @@
+import { defined } from '@react-bulk/core';
+
 import { ThemeProps } from '../types';
+import string from '../utils/string';
 
 const shape = {
   borderRadius: 4,
   spacing: 4,
+  gap: 4, // gap is multiplied by spacing
 };
 
 const typography = {
@@ -36,7 +40,8 @@ const colors = {
   pink: '#ec4899',
 
   common: {
-    trans: 'rgba(0, 0, 0, 0)',
+    transparent: '#00000000',
+    trans: '#00000000',
     black: '#000000',
     white: '#ffffff',
   },
@@ -84,8 +89,8 @@ const mixins = {
 
   scroll: {
     '&::-webkit-scrollbar': { height: '0.375rem', width: '0.375rem' },
-    '&::-webkit-scrollbar-track': { background: 'transparent' },
-    '&::-webkit-scrollbar-corner': { background: 'transparent' },
+    '&::-webkit-scrollbar-track': { background: '#00000000' },
+    '&::-webkit-scrollbar-corner': { background: '#00000000' },
     '&::-webkit-scrollbar-thumb': { bg: 'text.disabled', borderRadius: '0.1875rem' },
   },
 
@@ -114,7 +119,7 @@ const base: ThemeProps = {
     return this.shape.spacing * multiplier;
   },
 
-  color(mixin, alpha?: number) {
+  color(mixin, alpha?, luminosity?) {
     const [color, variation = 'main', opacity] = `${mixin || ''}`.split('.');
 
     let newColor =
@@ -124,71 +129,100 @@ const base: ThemeProps = {
       this?.colors?.common?.[color] ??
       mixin;
 
-    if (typeof alpha !== 'number' && opacity) {
+    // Convert RGB(A) to HEX
+    if (string(newColor).startsWith('rgb')) {
+      newColor =
+        '#' +
+        newColor
+          .replace(/^rgba?\(|\s+|\)$/g, '') // Get's rgba / rgb string values
+          .split(',') // splits them at ","
+          .map((string) => parseFloat(string)) // Converts them to numbers
+          .map((number, index) => (index === 3 ? Math.round(number * 255) : number)) // Converts alpha to 255 number
+          .map((number: number) => number.toString(16)) // Converts numbers to hex
+          .map((string) => (string.length === 1 ? '0' + string : string)) // Adds 0 when length of one number is 1
+          .join('');
+    }
+
+    // 6-digit HEX
+    if (string(newColor).startsWith('#')) {
+      if (newColor.length < 7) {
+        newColor = `#${newColor[1]}${newColor[1]}${newColor[2]}${newColor[2]}${newColor[3]}${newColor[3]}`;
+      }
+    }
+
+    if (defined(luminosity)) {
+      if (!string(newColor).startsWith('#')) {
+        // if (process?.env?.NODE_ENV !== 'production') {
+        //   console.warn(`theme.color() cannot apply luminosity on color "${mixin}".`);
+        // }
+      } else {
+        if (typeof luminosity === 'string') {
+          luminosity = Number(luminosity.replace('%', ''));
+        }
+
+        if (typeof luminosity === 'number') {
+          const digits = newColor.replace(/[^0-9A-Fa-f]/gi, '');
+          const decimalColor = parseInt(digits, 16);
+
+          let r = (decimalColor >> 16) + luminosity;
+          r > 255 && (r = 255);
+          r < 0 && (r = 0);
+          let g = (decimalColor & 0x0000ff) + luminosity;
+          g > 255 && (g = 255);
+          g < 0 && (g = 0);
+          let b = ((decimalColor >> 8) & 0x00ff) + luminosity;
+          b > 255 && (b = 255);
+          b < 0 && (b = 0);
+
+          newColor = `#${(g | (b << 8) | (r << 16)).toString(16)}`;
+        }
+      }
+    }
+
+    if (!defined(alpha) && opacity) {
       alpha = Number(opacity) / 100;
     }
 
-    if (typeof alpha === 'number') {
-      const [r, g, b] = newColor?.match(/\w\w/g)?.map((x) => parseInt(x, 16)) || [];
+    if (defined(alpha)) {
+      if (!string(newColor).startsWith('#')) {
+        // if (process?.env?.NODE_ENV !== 'production') {
+        //   console.warn(`theme.color() cannot apply luminosity on color "${mixin}".`);
+        // }
+      } else {
+        if (typeof alpha === 'string') {
+          alpha = Number(alpha.replace('%', '')) / 100;
+        }
 
-      newColor = `rgba(${r || 0},${g || 0},${b || 0},${alpha})`;
+        if (typeof alpha === 'number') {
+          newColor = `${newColor}${Math.floor(alpha * 255)
+            .toString(16)
+            .padStart(2, '0')}`;
+        }
+      }
     }
 
     return newColor;
   },
 
-  hex2rgba(hex: string, alpha = 1) {
-    const [r, g, b] =
-      this.color(hex)
-        .match(/\w\w/g)
-        ?.map((x) => parseInt(x, 16)) || [];
-
-    return `rgba(${r || 0},${g || 0},${b || 0},${alpha})`;
-  },
-
-  rgba2hex(rgba: string) {
-    const sep = rgba.includes(',') ? ',' : ' ';
-    const split = rgba.substr(4).split(')')[0].split(sep);
-
-    let r = (+split[0]).toString(16),
-      g = (+split[1]).toString(16),
-      b = (+split[2]).toString(16);
-
-    if (r.length == 1) r = '0' + r;
-    if (g.length == 1) g = '0' + g;
-    if (b.length == 1) b = '0' + b;
-
-    return `#${r}${g}${b}`;
-  },
-
-  contrast(color, lightColor?: string | null, darkColor?: string | null) {
+  contrast(mixin, lightColor?: string | null, darkColor?: string | null) {
+    let color = this.color(mixin);
     lightColor = this.color(lightColor || this.colors.common.white);
     darkColor = this.color(darkColor || this.colors.common.black);
 
-    color = this.color(color);
-
     // Transparent
-    if (['transparent', this.colors.common.trans].includes(color)) {
+    if (color === 'transparent') {
       return darkColor;
     }
 
-    // Must be an HEX color
-    if (color.includes('rgb')) {
-      color = this.rgba2hex(color);
+    if (!string(color).startsWith('#')) {
+      // if (process?.env?.NODE_ENV !== 'production') {
+      //   console.warn(`theme.contrast() cannot check color "${mixin}".`);
+      // }
+
+      return darkColor;
     }
 
-    // If a leading # is provided, remove it
-    if (color.slice(0, 1) === '#') {
-      color = color.slice(1);
-    }
-
-    // If a three-character hexcode, make six-character
-    if (color.length === 3) {
-      color = color
-        .split('')
-        .map((hex) => `${hex}${hex}`)
-        .join('');
-    }
+    color = color.replace('#', '');
 
     // Convert to RGB value
     const r = parseInt(color.substr(0, 2), 16);
@@ -348,7 +382,7 @@ const base: ThemeProps = {
           justifyContent: 'flex-start',
           alignItems: 'stretch',
 
-          web: { '-webkit-tap-highlight-color': 'transparent' },
+          web: { '-webkit-tap-highlight-color': '#00000000' },
         },
       },
     },
