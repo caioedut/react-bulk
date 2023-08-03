@@ -205,7 +205,7 @@ function ThemeExample() {
       <Text variant="subtitle" my={theme.shape.gap}>
         Shape
       </Text>
-      <Grid gap={theme.shape.gap}>
+      <Grid gap>
         <Box xs={6} md={theme.shape.gap}>
           <Input
             type="number"
@@ -237,7 +237,7 @@ function ThemeExample() {
       <Text variant="subtitle" my={theme.shape.gap}>
         Typography
       </Text>
-      <Grid gap={theme.shape.gap}>
+      <Grid gap>
         <Box xs={6} md={theme.shape.gap}>
           <Input
             type="number"
@@ -269,7 +269,7 @@ function ThemeExample() {
       <Text variant="subtitle" my={theme.shape.gap}>
         Colors
       </Text>
-      <Grid gap={theme.shape.gap}>
+      <Grid gap>
         {Object.keys(theme.colors)
           .filter((item) => !['common', 'text', 'background'].includes(item))
           .map((color) => (
@@ -296,7 +296,7 @@ function BreakpointExample() {
     <>
       <Text variant="title">Breakpoints</Text>
 
-      <Grid gap={theme.shape.gap} mt={theme.shape.gap}>
+      <Grid gap mt={theme.shape.gap}>
         {breakpoints.map((bkp, index) => {
           const bg = theme.color('primary', (index + 1) / breakpoints.length);
           const color = theme.contrast(bg);
@@ -351,7 +351,7 @@ function TypographyExample() {
   return (
     <>
       <Text variant="title">Typography</Text>
-      <Grid alignItems="baseline" gap={theme.shape.gap} mt={theme.shape.gap}>
+      <Grid alignItems="baseline" gap mt={theme.shape.gap}>
         <Text variant="h1">H1</Text>
         <Text variant="h2">H2</Text>
         <Text variant="h3">H3</Text>
@@ -394,7 +394,7 @@ function ButtonExample() {
           <Text variant="subtitle" transform="capitalize" mt={theme.shape.gap}>
             {variant}
           </Text>
-          <Grid alignItems="center" gap={theme.shape.gap} mt={theme.shape.gap}>
+          <Grid alignItems="center" gap mt={theme.shape.gap}>
             <Box>
               <Button variant={variant}>Button</Button>
             </Box>
@@ -534,7 +534,7 @@ function FormExample() {
         Checkbox / Radio Button
       </Text>
 
-      <Grid alignItems="center" gap={theme.shape.gap}>
+      <Grid alignItems="center" gap>
         {sizes.map((size) => (
           <Box key={size}>
             <Checkbox size={size} label={getLabel(size)} checked={checkbox} onChange={toggleCheckbox} />
@@ -542,7 +542,7 @@ function FormExample() {
         ))}
       </Grid>
 
-      <Grid alignItems="center" gap={theme.shape.gap}>
+      <Grid alignItems="center" gap>
         {sizes.map((size) => (
           <Box key={size}>
             <Checkbox
@@ -574,7 +574,7 @@ function FormExample() {
         Serializable
       </Text>
       <Form onSubmit={handleSubmitForm} data={formData} mt={theme.shape.gap}>
-        <Grid size={6} gap={theme.shape.gap}>
+        <Grid size={6} gap>
           <Box xs={6} md={4}>
             <Input name="firstName" label="First Name" />
           </Box>
@@ -615,7 +615,7 @@ function BadgeExample() {
   return (
     <>
       <Text variant="title">Badge</Text>
-      <Grid alignItems="center" gap={theme.shape.gap} mt={theme.shape.gap}>
+      <Grid alignItems="center" gap mt={theme.shape.gap}>
         <Box>
           <Badge dot />
         </Box>
@@ -737,7 +737,7 @@ function ModalExample() {
     <>
       <Text variant="title">Modals</Text>
 
-      <Grid gap={theme.shape.gap} mt={theme.shape.gap}>
+      <Grid gap mt={theme.shape.gap}>
         <Box>
           <Button onPress={() => setModal({ visible: true, valign: 'top' })}>Top</Button>
         </Box>
@@ -784,7 +784,7 @@ function ToasterExample() {
       <Text variant="title" mb={theme.shape.gap}>
         Toaster
       </Text>
-      <Grid gap={theme.shape.gap}>
+      <Grid gap>
         <Box>
           <Button onPress={() => toaster.open({ content: 'Hello world!' })}>String</Button>
         </Box>
@@ -970,7 +970,7 @@ function ProgressExample() {
       <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
 
       <Box row noWrap>
-        <Grid gap={theme.shape.gap}>
+        <Grid gap>
           <Box xs={12}>
             <Text variant="subtitle">Loading</Text>
           </Box>
@@ -1035,7 +1035,7 @@ function CarouselExample() {
       <Text variant="title" mb={theme.shape.gap}>
         Carousel
       </Text>
-      <Carousel xs={1} sm={2} md={3} lg={4} xl={5} gap={theme.shape.gap}>
+      <Carousel xs={1} sm={2} md={3} lg={4} xl={5} gap>
         {Array.from({ length: 11 }).map((i, index) => (
           <Card key={index} corners={3} bg="background.secondary">
             <Text bold>Item {index + 1}</Text>
