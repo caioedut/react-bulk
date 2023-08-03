@@ -669,7 +669,7 @@ export type CardProps = BoxProps;
 export type CarouselProps = {
   chevron?: 'visible' | 'hidden';
   color?: RbkColor;
-  gap?: number;
+  gap?: number | true;
   pagingEnabled?: boolean;
   swipe?: false;
   // Column Count
@@ -745,7 +745,7 @@ export type LoadingProps = {
 } & BoxProps;
 
 export type GridProps = {
-  gap?: number;
+  gap?: number | true;
   size?: number;
 } & BoxProps;
 
@@ -825,7 +825,7 @@ export type ProgressProps = {
 export type ListItemProps = {
   chevron?: boolean | ReactElement;
   endAddon?: ReactElement;
-  gap?: number;
+  gap?: number | true;
   startAddon?: ReactElement;
   // Styles
   chevronStyle?: {

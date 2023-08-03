@@ -21,8 +21,9 @@ const GridFactory = React.memo<GridProps>(
       ...rest
     } = factory2<RequiredSome<GridProps, 'size'>>(props, options);
 
+    gap = gap === true ? theme.shape.gap : gap;
     const breakpoints = Object.keys(theme.breakpoints);
-    const spacing = !gap ? 0 : theme.spacing(gap) / 2;
+    const spacing = !gap ? 0 : theme.spacing(gap / 2);
 
     return (
       <BoxFactory ref={ref} style={[{ margin: -spacing }, style]} stylist={[variants.root, stylist]} {...rest}>

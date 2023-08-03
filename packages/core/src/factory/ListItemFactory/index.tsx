@@ -33,6 +33,7 @@ const ListItemFactory = React.memo<ListItemProps>(
       ...rest
     } = factory2<ListItemProps>(props, options);
 
+    gap = gap === true ? theme.shape.gap : gap;
     startAddon = startAddon ?? startIcon;
     endAddon = endAddon ?? endIcon;
 
