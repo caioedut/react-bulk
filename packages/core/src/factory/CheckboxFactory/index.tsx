@@ -188,7 +188,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
                     <svg.Circle cx="128" cy="128" r="80" fill={color} />
                   </svg.Svg>
                 ) : (
-                  <Check svg={svg} size={fontSize} color={theme.contrast('color')} />
+                  <Check svg={svg} size={fontSize} color={theme.contrast(color)} />
                 )}
               </>
             )}
