@@ -33,12 +33,12 @@ import {
   useTheme,
 } from '@react-bulk/native';
 
-const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'];
-const variants = ['solid', 'outline', 'text'];
-const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'];
-const tooltips = ['top', 'bottom', 'left', 'right'];
-const animations = ['spin', 'fade', 'zoom', { from: { top: -30, opacity: 0 }, to: { top: 0, opacity: 1 } }];
-const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
+const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const variants = ['solid', 'outline', 'text'] as const;
+const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
+const tooltips = ['top', 'bottom', 'left', 'right'] as const;
+const animations = ['spin', 'fade', 'zoom', { from: { top: -30, opacity: 0 }, to: { top: 0, opacity: 1 } }] as const;
+const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
 
 const formData = {
   firstName: 'Richard',

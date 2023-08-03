@@ -1,6 +1,7 @@
 import { defined } from '@react-bulk/core';
 
 import { ThemeProps } from '../types';
+import stdout from '../utils/stdout';
 import string from '../utils/string';
 
 const shape = {
@@ -152,9 +153,7 @@ const base: ThemeProps = {
 
     if (defined(luminosity)) {
       if (!string(newColor).startsWith('#')) {
-        // if (process?.env?.NODE_ENV !== 'production') {
-        //   console.warn(`theme.color() cannot apply luminosity on color "${mixin}".`);
-        // }
+        stdout.warn(`theme.color() cannot apply luminosity on color "${mixin}".`);
       } else {
         if (typeof luminosity === 'string') {
           luminosity = Number(luminosity.replace('%', ''));
@@ -185,9 +184,7 @@ const base: ThemeProps = {
 
     if (defined(alpha)) {
       if (!string(newColor).startsWith('#')) {
-        // if (process?.env?.NODE_ENV !== 'production') {
-        //   console.warn(`theme.color() cannot apply luminosity on color "${mixin}".`);
-        // }
+        stdout.warn(`theme.color() cannot apply luminosity on color "${mixin}".`);
       } else {
         if (typeof alpha === 'string') {
           alpha = Number(alpha.replace('%', '')) / 100;
@@ -215,10 +212,7 @@ const base: ThemeProps = {
     }
 
     if (!string(color).startsWith('#')) {
-      // if (process?.env?.NODE_ENV !== 'production') {
-      //   console.warn(`theme.contrast() cannot check color "${mixin}".`);
-      // }
-
+      stdout.warn(`theme.contrast() cannot check color "${mixin}".`);
       return darkColor;
     }
 
@@ -239,9 +233,7 @@ const base: ThemeProps = {
   // Warn user about ReactBulk context
   // @ts-ignore
   setTheme() {
-    if (process?.env?.NODE_ENV !== 'production') {
-      console.error('setTheme only works when the app is wrapped in the <ReactBulk /> context.');
-    }
+    stdout.error('setTheme() only works when the app is wrapped in the <ReactBulk /> context.');
   },
 
   components: {
