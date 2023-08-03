@@ -1070,7 +1070,7 @@ function AnimationExample() {
 
         return (
           <React.Fragment key={key}>
-            {key > 0 && <Divider my={theme.shape.gap} />}
+            {key > 0 && <Divider my={theme.shape.gap} mx={-theme.shape.gap} />}
             <Box>
               <Text variant="subtitle" mb={theme.shape.gap}>
                 {label}
