@@ -309,6 +309,7 @@ export type ThemeProps = {
   shape: {
     borderRadius: number;
     spacing: number;
+    gap: number;
   };
 
   typography: {
@@ -342,9 +343,12 @@ export type ThemeProps = {
     pink: ThemeColorsProps;
 
     common: {
-      trans: string;
+      transparent: string;
       black: string;
       white: string;
+
+      /** Alias for "transparent" */
+      trans: string;
     };
 
     text: {
