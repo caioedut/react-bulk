@@ -391,10 +391,8 @@ export type ThemeProps = {
 
   rem: (multiplier?: number, base?: number | null) => number;
   spacing: (multiplier?: number) => number;
-  color: (key: RbkColor, alpha?: number) => string;
-  hex2rgba: (hex: string, alpha?: number) => string;
-  rgba2hex: (rgba: string) => string;
-  contrast: (color: string, lightColor?: string | null, darkColor?: string | null) => string;
+  color: (color: RbkColor, alpha?: `${number}%` | number | null, luminosity?: `${number}%` | number | null) => string;
+  contrast: (color: RbkColor, lightColor?: string | null, darkColor?: string | null) => string;
 
   components: {
     ActionSheet: ThemeComponentProps<ActionSheetProps, 'root'>;
