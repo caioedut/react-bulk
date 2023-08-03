@@ -10,7 +10,7 @@ const base: ThemeProps = {
   shape: {
     borderRadius: 4,
     spacing: 4,
-    gap: 4, // gap is multiplied by spacing
+    gap: 4, // gap is generally multiplied by spacing
   },
 
   typography: { fontSize: 16, lineHeight: 1.15 },
@@ -860,7 +860,7 @@ const base: ThemeProps = {
           label: {
             color: 'primary',
             fontSize: '1rem',
-            ml: 1.25,
+            ml: this.shape.gap / 2,
           },
         },
       },
@@ -1119,7 +1119,7 @@ const base: ThemeProps = {
             },
             card: {
               button: {
-                mr: 1.5,
+                mr: this.shape.gap / 2,
               },
             },
           },
