@@ -228,7 +228,7 @@ const base: ThemeProps = {
       name: 'rbk-animation',
       defaultProps: {
         direction: 'normal',
-        duration: 625,
+        duration: 350,
         timing: 'ease',
       },
       defaultStyles: {
