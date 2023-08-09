@@ -432,6 +432,8 @@ export type ThemeProps = {
     Text: ThemeComponentProps<TextProps, 'root'>;
     Tooltip: ThemeComponentProps<TooltipProps, 'root'>;
   };
+
+  [key: string]: any;
 };
 
 export type ThemeEditProps = RecursivePartial<ThemeProps>;
@@ -504,6 +506,7 @@ export type LabelProps = {
 
 export type ButtonProps = {
   badge?: number | BadgeProps;
+  circular?: boolean;
   color?: RbkColor;
   contrastColor?: RbkColor;
   disabled?: boolean;
@@ -511,7 +514,6 @@ export type ButtonProps = {
   href?: string;
   label?: string;
   loading?: boolean;
-  circular?: boolean;
   size?: SizeValues;
   startAddon?: ReactElement;
   transform?: TextTransformValues;

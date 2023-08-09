@@ -114,11 +114,15 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 **`badge`**
 
-➤ Type: **`number`, [`BadgeProps`](/docs/components/data-display/badge#props)** <br/>
+A number or object representing the button's badge.
+
+➤ Type: **`number` | [`BadgeProps`](/docs/components/data-display/badge#props)** <br/>
 
 ---
 
 **`circular`**
+
+Indicates whether the button is circular.
 
 ➤ Type: **`boolean`** <br/>
 
@@ -126,18 +130,22 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 **`color`**
 
-➤ Type: **`string`** <br/>
+➤ Type: **`RbkColor`** <br/>
 ➤ Default: **`primary`**
 
 ---
 
 **`contrastColor`**
 
-➤ Type: **`string`** <br/>
+A color to use on labels and addons to contrast with the color of the button.
+
+➤ Type: **`RbkColor`** <br/>
 
 ---
 
 **`disabled`**
+
+Indicates whether the button is disabled.
 
 ➤ Type: **`boolean`** <br/>
 
@@ -145,21 +153,18 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 **`endAddon`**
 
-➤ Type: **`string` `ReactNode`** <br/>
+A React element that is added to the end of the button.
+
+➤ Type: **`string` | `ReactElement`** <br/>
 
 ---
 
 **`href`**
 
-For web only.
+For web only.<br/>
+The URL to which the button should redirect when clicked.
 
 ➤ Type: **`string`** <br/>
-
----
-
-**`loading`**
-
-➤ Type: **`boolean`** <br/>
 
 ---
 
@@ -168,6 +173,14 @@ For web only.
 Render text label as child.
 
 ➤ Type: **`string`** <br/>
+
+---
+
+**`loading`**
+
+Indicates whether the button is loading.
+
+➤ Type: **`boolean`** <br/>
 
 ---
 
@@ -180,13 +193,15 @@ Render text label as child.
 
 **`startAddon`**
 
-➤ Type: **`string` `ReactNode`** <br/>
+A React element that is added to the start of the button.
+
+➤ Type: **`string` `ReactElement`** <br/>
 
 ---
 
 **`transform`**
 
-Sets `textTransform` style for label.
+The text transform value of the label.
 
 ➤ Type: **`'none'` `'captalize'` `'uppercase'` `'lowercase'` `'full-width'`** <br/>
 ➤ Default: **`'uppercase'` <br/>
@@ -205,17 +220,15 @@ Sets `textTransform` style for label.
 ➤ Type: **`'solid'` `'outline'` `'text'`** <br/>
 ➤ Default: **`solid`**
 
----
-
 ## Styles
 
 **`style`** to the button element.
 
 **`contentStyle`** to the inner wrapper of `children` or `label`.
 
-➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
+**`labelStyle`** to the label of the button.
 
----
+➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
 
 ## Events
 
