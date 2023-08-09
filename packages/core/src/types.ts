@@ -432,8 +432,6 @@ export type ThemeProps = {
     Text: ThemeComponentProps<TextProps, 'root'>;
     Tooltip: ThemeComponentProps<TooltipProps, 'root'>;
   };
-
-  [key: string]: any;
 };
 
 export type ThemeEditProps = RecursivePartial<ThemeProps>;
