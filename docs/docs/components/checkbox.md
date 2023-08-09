@@ -44,7 +44,7 @@ import { Checkbox } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box#props) props.
+Extends all [`Box`](/docs/components/box#props) props.
 
 **`controlled`**
 

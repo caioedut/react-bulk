@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Box
 
-It is the primary component, factory for everything. All components extend the [`Box`](/docs/components/core/box).
+It is the primary component, factory for everything. All components extend the [`Box`](/docs/components/box).
 
 ## Import
 
