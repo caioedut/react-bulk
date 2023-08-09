@@ -131,6 +131,12 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 ---
 
+**`contrastColor`**
+
+➤ Type: **`string`** <br/>
+
+---
+
 **`disabled`**
 
 ➤ Type: **`boolean`** <br/>

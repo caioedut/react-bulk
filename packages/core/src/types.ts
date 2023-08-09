@@ -505,6 +505,7 @@ export type LabelProps = {
 export type ButtonProps = {
   badge?: number | BadgeProps;
   color?: RbkColor;
+  contrastColor?: RbkColor;
   disabled?: boolean;
   endAddon?: ReactElement;
   href?: string;

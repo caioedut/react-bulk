@@ -24,6 +24,7 @@ const ButtonFactory = React.memo<ButtonProps>(
       block,
       circular,
       color,
+      contrastColor,
       disabled,
       endAddon,
       endIcon,
@@ -48,6 +49,7 @@ const ButtonFactory = React.memo<ButtonProps>(
     const isBasic = ['outline', 'text'].includes(variant);
 
     children = children ?? label;
+    contrastColor = contrastColor ?? theme.contrast(color);
     badge = typeof badge === 'number' ? { value: badge } : badge;
     startAddon = startAddon ?? startIcon;
     endAddon = endAddon ?? endIcon;
@@ -83,7 +85,7 @@ const ButtonFactory = React.memo<ButtonProps>(
 
     const baseSize = theme.rem(size as number);
     const spacing = (baseSize - theme.rem(0.75)) / 2;
-    const textColor = isBasic ? color : theme.contrast(color);
+    const textColor = isBasic ? color : contrastColor;
 
     style = [
       isSizeNumber && {
