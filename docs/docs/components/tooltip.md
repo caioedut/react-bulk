@@ -82,7 +82,7 @@ import { Tooltip } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Text`](/docs/components/core/text#props) props.
+Extends all [`Text`](/docs/components/text#props) props.
 
 **`color`**
 
