@@ -1,10 +1,14 @@
 {
   "name": "@react-bulk/web",
-  "version": "0.4.8",
   "description": "React Bulk for React Web",
-  "author": "CaioEduT <caioedut@gmail.com>",
-  "homepage": "https://github.com/caioedut/react-bulk",
+  "version": "0.4.8",
+  "author": {
+    "name": "Caio Teixeira",
+    "email": "caioedut@gmail.com"
+  },
   "license": "MIT",
+  "repository": "https://github.com/caioedut/react-bulk",
+  "homepage": "https://rbk.caioedut.com",
   "keywords": [
     "react",
     "react-native",
@@ -27,10 +31,6 @@
     "dist",
     "typings"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/caioedut/react-bulk.git"
-  },
   "scripts": {},
   "dependencies": {
     "@react-bulk/core": "^0.4.8"
