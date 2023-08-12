@@ -2,7 +2,7 @@ import Platform from '../Platform';
 import extract from '../props/extract';
 import merge from '../props/merge';
 import remove from '../props/remove';
-import { RbkStyles, ThemeProps } from '../types';
+import { RbkStyle, ThemeProps } from '../types';
 import clone from '../utils/clone';
 import global from '../utils/global';
 import { boxSizeProps, customSpacings, customStyleProps, flexAlignProps, notPxProps, spacings } from './constants';
@@ -37,7 +37,7 @@ export default function jss(...mixin: any[]) {
 
   // Merge styles with platform specific
   const merged = merge(args, web && webStyle, native && nativeStyle);
-  const styles: RbkStyles = {};
+  const styles: RbkStyle = {};
 
   for (const attr of Object.keys(merged)) {
     let prop: any = attr;
