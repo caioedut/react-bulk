@@ -33,8 +33,10 @@ const SliderFactory = React.memo<SliderProps>(
       size,
       value,
       // Events
-      onChange,
+      onFocus,
+      onBlur,
       onSlide,
+      onChange,
       onFormChange,
       // Styles
       variants,
@@ -69,7 +71,8 @@ const SliderFactory = React.memo<SliderProps>(
     const iconSize = theme.rem(size as number);
     const ruleSize = iconSize / 4;
 
-    const ThumbFactory = web ? ButtonFactory : BoxFactory;
+    // const ThumbFactory = web ? ButtonFactory : BoxFactory;
+    const ThumbFactory = ButtonFactory;
 
     defaultValue = Math.min(max, Math.max(min, defaultValue ?? min ?? 0));
     const [percent, setPercent] = useState(getPercentByValue(defaultValue));
@@ -137,6 +140,8 @@ const SliderFactory = React.memo<SliderProps>(
 
     function dispatchEvent(type: string, value: number, nativeEvent?: any) {
       const callback = {
+        focus: onFocus,
+        blur: onBlur,
         slide: onSlide,
         change: onChange,
       }[type];
@@ -187,6 +192,14 @@ const SliderFactory = React.memo<SliderProps>(
 
       return { percent, value };
     }
+
+    const handleCommonEvent = useCallback(
+      (e) => {
+        const nativeEvent = e?.nativeEvent ?? e;
+        dispatchEvent(e.type, internal, nativeEvent);
+      },
+      [internal],
+    );
 
     async function handlePress(e) {
       e?.preventDefault?.();
@@ -385,6 +398,8 @@ const SliderFactory = React.memo<SliderProps>(
             variant="solid"
             disabled={disabled}
             readOnly={readOnly}
+            onFocus={handleCommonEvent}
+            onBlur={handleCommonEvent}
             platform={
               disabled || readOnly
                 ? {}

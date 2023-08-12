@@ -10,12 +10,18 @@ export type TimeoutType = ReturnType<typeof setTimeout> | null;
 
 export type AnyCallback = (...args: any[]) => any;
 
-export type EventCallback = (event: any) => any;
-
 export type InputValue = any;
 
+/** @internal */
+export type Overwrite<T, NewT> = NewT & Omit<T, keyof NewT>;
+
+/** @internal */
+export type Prettify<T> = { [K in keyof T]: T[K] } & {};
+
+/** @internal */
 export type RequiredSome<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>;
 
+/** @internal */
 export type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
     ? RecursivePartial<U>[]
@@ -30,7 +36,10 @@ export type RbkMap = {
   ios: boolean;
   android: boolean;
 
-  useDimensions: () => { width: number; height: number };
+  useDimensions: () => {
+    width: number;
+    height: number;
+  };
 
   Animated: {
     View: ReactElement;
@@ -42,21 +51,6 @@ export type RbkMap = {
 
   [key: string]: ReactElement | any;
 };
-
-/** @deprecated use RbkInputEvent instead */
-export interface RbkEvent extends RbkInputEvent {}
-
-/** @deprecated use RbkInputEvent instead */
-export interface RbkChangeEvent extends RbkInputEvent {}
-
-/** @deprecated use RbkFormEvent instead */
-export interface RbkFormChangeEvent extends RbkFormEvent {}
-
-/** @deprecated use RbkSize instead */
-export type SizeValues = RbkSize;
-
-/** @deprecated use RbkStyle instead */
-export type RbkStyles = RbkStyle;
 
 export interface RbkFormEvent {
   name?: string;
@@ -83,16 +77,16 @@ export interface RbkCheckboxEvent extends Omit<RbkInputEvent, 'value'> {
   checked: boolean;
 }
 
-export type RbkRect = {
+export interface RbkRect {
   width: number;
   height: number;
   offsetX: number;
   offsetY: number;
   pageOffsetX: number;
   pageOffsetY: number;
-};
+}
 
-export type RbkAnimation = {
+export interface RbkAnimation {
   boomerang?: boolean;
   delay?: number;
   duration?: number;
@@ -101,7 +95,7 @@ export type RbkAnimation = {
 
   /** @deprecated use duration instead */
   speed?: number;
-};
+}
 
 export type AccessibilityProps = {
   accessible?: boolean;
@@ -146,26 +140,26 @@ export type AccessibilityProps = {
 
 export type PressableProps = {
   pressable?: boolean;
-  onPress?: Function;
-  onPressIn?: Function;
-  onPressOut?: Function;
+  onPress?: (event: Event) => void;
+  onPressIn?: (event: Event) => void;
+  onPressOut?: (event: Event) => void;
 
   /** @deprecated use onPress(event) instead */
-  onClick?: EventCallback;
+  onClick?: (event: Event) => void;
   /** @deprecated use onPressIn(event) instead */
-  onMouseDown?: EventCallback;
+  onMouseDown?: (event: Event) => void;
   /** @deprecated use onPressOut(event) instead */
-  onMouseUp?: EventCallback;
+  onMouseUp?: (event: Event) => void;
 };
 
 export type FocusableProps = {
   autoFocus?: boolean;
-  blur?: Function;
-  focus?: Function;
+  blur?: () => void;
+  focus?: () => void;
   isFocused?: () => boolean;
   // Events
-  onBlur?: EventCallback;
-  onFocus?: EventCallback;
+  onBlur?: (event: Event) => void;
+  onFocus?: (event: Event) => void;
 };
 
 export type FormField = {
@@ -566,58 +560,62 @@ export type ButtonGroupProps = {
   contentStyle?: RbkStyle;
 } & BoxProps;
 
-export type InputProps = {
-  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
-  autoCorrect?: boolean;
-  caretHidden?: boolean;
-  color?: RbkColor;
-  controlled?: boolean;
-  defaultValue?: InputValue;
-  disabled?: boolean;
-  endAddon?: ReactElement;
-  error?: string | boolean;
-  label?: string;
-  mask?: (value: InputValue) => any;
-  max?: number;
-  maxLength?: number;
-  min?: number;
-  multiline?: boolean;
-  name?: string;
-  notNull?: boolean;
-  placeholder?: string;
-  placeholderColor?: RbkColor;
-  readOnly?: boolean;
-  returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
-  rows?: number;
-  secure?: boolean;
-  selectionColor?: RbkColor;
-  size?: RbkSize;
-  startAddon?: ReactElement;
-  textColor?: RbkColor;
-  type?: 'text' | 'number' | 'email' | 'phone' | 'url' | 'hidden' | (string & {});
-  unmask?: (value: InputValue) => any;
-  value?: InputValue;
-  // Events
-  onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue) => any;
-  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
-  onSubmit?: (event: RbkInputEvent, value: InputValue) => any;
-  // Styles
-  contentStyle?: RbkStyle;
-  errorStyle?: RbkStyle;
-  labelStyle?: RbkStyle;
-  inputStyle?: RbkStyle;
+export type InputProps = Overwrite<
+  FocusableProps & BoxProps,
+  {
+    autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+    autoCorrect?: boolean;
+    caretHidden?: boolean;
+    color?: RbkColor;
+    controlled?: boolean;
+    defaultValue?: InputValue;
+    disabled?: boolean;
+    endAddon?: ReactElement;
+    error?: string | boolean;
+    label?: string;
+    mask?: (value: InputValue) => any;
+    max?: number;
+    maxLength?: number;
+    min?: number;
+    multiline?: boolean;
+    name?: string;
+    notNull?: boolean;
+    placeholder?: string;
+    placeholderColor?: RbkColor;
+    readOnly?: boolean;
+    returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
+    rows?: number;
+    selectionColor?: RbkColor;
+    size?: RbkSize;
+    startAddon?: ReactElement;
+    textColor?: RbkColor;
+    type?: 'text' | 'number' | 'password' | 'email' | 'phone' | 'url' | 'hidden' | (string & {});
+    unmask?: (value: InputValue) => any;
+    value?: InputValue;
+    // Events
+    onFocus?: (event: RbkInputEvent, value: InputValue) => void;
+    onBlur?: (event: RbkInputEvent, value: InputValue) => void;
+    onSubmit?: (event: RbkInputEvent, value: InputValue) => any;
+    onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue) => any;
+    onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+    // Styles
+    contentStyle?: RbkStyle;
+    errorStyle?: RbkStyle;
+    labelStyle?: RbkStyle;
+    inputStyle?: RbkStyle;
 
-  /** @deprecated use startAddon instead */
-  startIcon?: ReactElement;
-  /** @deprecated use endAddon instead */
-  endIcon?: ReactElement;
-
-  /** @deprecated use onChange(event, value) instead */
-  onInput?: Function;
-  /** @deprecated use onChange(event, value) instead */
-  onChangeText?: Function;
-} & FocusableProps &
-  BoxProps;
+    /** @deprecated use startAddon instead */
+    startIcon?: ReactElement;
+    /** @deprecated use endAddon instead */
+    endIcon?: ReactElement;
+    /** @deprecated use type="password" instead */
+    secure?: boolean;
+    /** @deprecated use onChange(event, value) instead */
+    onInput?: (event: Event) => void;
+    /** @deprecated use onChange(event, value) instead */
+    onChangeText?: (event: Event) => void;
+  }
+>;
 
 export type SelectOption = {
   label: string;
@@ -626,71 +624,83 @@ export type SelectOption = {
   [key: string]: any;
 };
 
-export type SelectProps = {
-  color?: RbkColor;
-  controlled?: boolean;
-  defaultValue?: InputValue;
-  disabled?: boolean;
-  endAddon?: ReactElement;
-  error?: string | boolean;
-  label?: string;
-  loading?: boolean;
-  name?: string;
-  options?: SelectOption[];
-  placeholder?: string;
-  readOnly?: boolean;
-  size?: RbkSize;
-  startAddon?: ReactElement;
-  value?: InputValue;
-  // Events
-  onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue, option: SelectOption) => any;
-  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
-  // Styles
-  buttonStyle?: RbkStyle;
-  errorStyle?: RbkStyle;
-  labelStyle?: RbkStyle;
+export type SelectProps = Overwrite<
+  FocusableProps & BoxProps,
+  {
+    color?: RbkColor;
+    controlled?: boolean;
+    defaultValue?: InputValue;
+    disabled?: boolean;
+    endAddon?: ReactElement;
+    error?: string | boolean;
+    label?: string;
+    loading?: boolean;
+    name?: string;
+    options?: SelectOption[];
+    placeholder?: string;
+    readOnly?: boolean;
+    size?: RbkSize;
+    startAddon?: ReactElement;
+    value?: InputValue;
+    // Events
+    onFocus?: (event: RbkInputEvent, value: InputValue, option?: SelectOption) => void;
+    onBlur?: (event: RbkInputEvent, value: InputValue, option?: SelectOption) => void;
+    onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue, option?: SelectOption) => any;
+    onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+    // Styles
+    buttonStyle?: RbkStyle;
+    errorStyle?: RbkStyle;
+    labelStyle?: RbkStyle;
 
-  /** @deprecated use startAddon instead */
-  startIcon?: ReactElement;
-  /** @deprecated use endAddon instead */
-  endIcon?: ReactElement;
-} & FocusableProps &
-  BoxProps;
+    /** @deprecated use startAddon instead */
+    startIcon?: ReactElement;
+    /** @deprecated use endAddon instead */
+    endIcon?: ReactElement;
+  }
+>;
 
-export type CheckboxProps = {
-  checked?: boolean;
-  controlled?: boolean;
-  defaultChecked?: boolean;
-  disabled?: boolean;
-  label?: string;
-  name?: string;
-  readOnly?: boolean;
-  size?: RbkSize;
-  unique?: boolean;
-  // Events
-  onChange?: (event: RbkCheckboxEvent | RbkChangeEvent | RbkEvent, checked: boolean) => any;
-  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
-  // Styles
-  buttonStyle?: RbkStyle;
-  labelStyle?: RbkStyle;
-} & FocusableProps &
-  BoxProps;
+export type CheckboxProps = Overwrite<
+  FocusableProps & BoxProps,
+  {
+    checked?: boolean;
+    controlled?: boolean;
+    defaultChecked?: boolean;
+    disabled?: boolean;
+    label?: string;
+    name?: string;
+    readOnly?: boolean;
+    size?: RbkSize;
+    unique?: boolean;
+    // Events
+    onFocus?: (event: RbkCheckboxEvent, checked: boolean) => void;
+    onBlur?: (event: RbkCheckboxEvent, checked: boolean) => void;
+    onChange?: (event: RbkCheckboxEvent | RbkChangeEvent | RbkEvent, checked: boolean) => any;
+    onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+    // Styles
+    buttonStyle?: RbkStyle;
+    labelStyle?: RbkStyle;
+  }
+>;
 
-export type SliderProps = {
-  defaultValue?: number;
-  disabled?: boolean;
-  max?: number;
-  min?: number;
-  name?: string;
-  readOnly?: boolean;
-  size?: RbkSize;
-  value?: number;
-  // Events
-  onChange?: (event: AnyObject, value: number) => any;
-  onSlide?: (event: AnyObject, value: number) => any;
-  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
-} & FocusableProps &
-  BoxProps;
+export type SliderProps = Overwrite<
+  FocusableProps & BoxProps,
+  {
+    defaultValue?: number;
+    disabled?: boolean;
+    max?: number;
+    min?: number;
+    name?: string;
+    readOnly?: boolean;
+    size?: RbkSize;
+    value?: number;
+    // Events
+    onFocus?: (event: AnyObject, value: number) => any;
+    onBlur?: (event: AnyObject, value: number) => any;
+    onSlide?: (event: AnyObject, value: number) => any;
+    onChange?: (event: AnyObject, value: number) => any;
+    onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+  }
+>;
 
 export type CardProps = BoxProps;
 
@@ -731,8 +741,8 @@ export type ImageProps = {
   width?: number | string;
   height?: number | string;
   // Events
-  onLoad?: EventCallback;
-  onError?: EventCallback;
+  onLoad?: (event: Event) => void;
+  onError?: (event: Event) => void;
 } & BoxProps;
 
 export type DividerProps = {
@@ -750,7 +760,7 @@ export type ModalProps = {
   halign?: 'center' | 'left' | 'right';
   valign?: 'center' | 'top' | 'bottom';
   visible?: boolean;
-  onBackdropPress?: EventCallback;
+  onBackdropPress?: (event: Event) => void;
 } & BoxProps;
 
 export type CollapseProps = {
@@ -818,7 +828,7 @@ export type TooltipProps = {
 export type ActionSheetProps = {
   visible?: boolean;
   // Events
-  onClose?: EventCallback;
+  onClose?: (event: Event) => void;
 } & BoxProps;
 
 export type AnimationProps = {
@@ -894,9 +904,35 @@ export type TabsProps = {
   value?: string | number;
   variant?: 'group' | 'card';
   // Events
-  onChange?: (event: Function, value: string | number) => any;
+  onChange?: (event: Event, value: string | number) => any;
   // Styles
   contentStyle?: RbkStyle;
   buttonStyle?: RbkStyle;
   activeStyle?: RbkStyle;
 } & Omit<ScrollableProps, 'direction'>;
+
+/************************
+ * DEPRECATIONS (START) *
+ ************************/
+
+/** @deprecated use native Event instead */
+export type EventCallback = (event: any) => any;
+
+/** @deprecated use RbkInputEvent instead */
+export interface RbkEvent extends RbkInputEvent {}
+
+/** @deprecated use RbkInputEvent instead */
+export interface RbkChangeEvent extends RbkInputEvent {}
+
+/** @deprecated use RbkFormEvent instead */
+export interface RbkFormChangeEvent extends RbkFormEvent {}
+
+/** @deprecated use RbkSize instead */
+export type SizeValues = RbkSize;
+
+/** @deprecated use RbkStyle instead */
+export type RbkStyles = RbkStyle;
+
+/************************
+ * DEPRECATIONS (END) *
+ ************************/
