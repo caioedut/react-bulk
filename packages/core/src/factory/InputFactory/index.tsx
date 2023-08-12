@@ -160,9 +160,9 @@ const InputFactory = React.memo<InputProps>(
         disabled,
         readOnly,
         type:
-          pick(secure ? 'secure' : type, 'default', {
+          pick(secure ? 'password' : type, 'default', {
             default: type,
-            secure: 'password',
+            password: 'password',
             phone: 'tel',
             hidden: 'text',
           }) || 'text',
@@ -185,7 +185,7 @@ const InputFactory = React.memo<InputProps>(
         keyboardAppearance: theme.mode,
         placeholderTextColor: placeholderColor,
         returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
-        secureTextEntry: secure,
+        secureTextEntry: type === 'password' || secure,
         selectionColor,
         underlineColorAndroid: 'transparent',
         keyboardType: pick(type, 'text', {
@@ -254,10 +254,10 @@ const InputFactory = React.memo<InputProps>(
 
     function dispatchEvent(type: string, value: number, nativeEvent?: any) {
       const callback = {
-        change: onChange,
         focus: onFocus,
         blur: onBlur,
         submit: onSubmit,
+        change: onChange,
       }[type];
 
       if (typeof callback === 'function') {

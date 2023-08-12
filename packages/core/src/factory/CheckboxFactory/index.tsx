@@ -36,6 +36,8 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       unique,
       value,
       // Events
+      onFocus,
+      onBlur,
       onChange,
       onFormChange,
       // Styles
@@ -113,6 +115,8 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
     function dispatchEvent(type: string, checked: boolean, nativeEvent?: any) {
       const callback = {
+        focus: onFocus,
+        blur: onBlur,
         change: onChange,
       }[type];
 
@@ -135,6 +139,14 @@ const CheckboxFactory = React.memo<CheckboxProps>(
         callback(event, checked);
       }
     }
+
+    const handleCommonEvent = useCallback(
+      (e) => {
+        const nativeEvent = e?.nativeEvent ?? e;
+        dispatchEvent(e.type, internal, nativeEvent);
+      },
+      [internal],
+    );
 
     const handleChange = (e) => {
       if (disabled || readOnly) return;
@@ -167,6 +179,8 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           circular
           disabled={disabled}
           onPress={handleChange}
+          onFocus={handleCommonEvent}
+          onBlur={handleCommonEvent}
           accessibility={{
             label,
             role: unique ? 'radio' : 'checkbox',

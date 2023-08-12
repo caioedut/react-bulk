@@ -8,7 +8,7 @@ import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
-import { AnyObject, RbkInputEvent, RequiredSome, SelectProps } from '../../types';
+import { AnyObject, RbkInputEvent, RequiredSome, SelectOption, SelectProps } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
@@ -45,6 +45,8 @@ const SelectFactory = React.memo<SelectProps>(
       size,
       value,
       // Events
+      onFocus,
+      onBlur,
       onChange,
       onFormChange,
       // Styles
@@ -74,6 +76,8 @@ const SelectFactory = React.memo<SelectProps>(
     const dispatchRef = useRef(typeof initialValue === 'undefined');
     const [internal, _setInternal] = useState(initialValue);
 
+    const selected = useMemo(() => arrOptions?.find((item) => item.value == internal), [arrOptions, internal]);
+
     function setInternal(value: any, dispatch = true) {
       _setInternal(value);
 
@@ -86,8 +90,6 @@ const SelectFactory = React.memo<SelectProps>(
 
       dispatchRef.current = true;
     }
-
-    const selected = arrOptions?.find((item) => item.value == internal);
 
     color = theme.color(error ? 'error' : color || 'primary');
 
@@ -166,8 +168,10 @@ const SelectFactory = React.memo<SelectProps>(
       [buttonRef],
     );
 
-    function dispatchEvent(type: string, option, nativeEvent?: any) {
+    function dispatchEvent(type: string, option?: SelectOption, nativeEvent?: any) {
       const callback = {
+        focus: onFocus,
+        blur: onBlur,
         change: onChange,
       }[type];
 
@@ -200,6 +204,14 @@ const SelectFactory = React.memo<SelectProps>(
       optionsRef?.current?.[index]?.focus?.();
       setActiveIndex(index);
     }
+
+    const handleCommonEvent = useCallback(
+      (e) => {
+        const nativeEvent = e?.nativeEvent ?? e;
+        dispatchEvent(e.type, selected, nativeEvent);
+      },
+      [selected],
+    );
 
     const handleOpen = () => {
       optionFocus(arrOptions?.findIndex((item) => item.value == selected?.value));
@@ -340,6 +352,8 @@ const SelectFactory = React.memo<SelectProps>(
           style={buttonStyle}
           contentStyle={{ flex: 1, maxWidth: '100%' }}
           onPress={handleOpen}
+          onFocus={handleCommonEvent}
+          onBlur={handleCommonEvent}
         >
           <TextFactory numberOfLines={1} w="100%">
             {selected?.label ?? selected?.value ?? placeholder ?? ''}
