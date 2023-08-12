@@ -2,15 +2,9 @@ import { CSSProperties, ReactNode, RefObject, SyntheticEvent } from 'react';
 
 import { styleProps } from './styles/constants';
 
-export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[];
-
-export type AnyObject = { [key: string | number]: any };
-
-export type TimeoutType = ReturnType<typeof setTimeout> | null;
-
-export type AnyCallback = (...args: any[]) => any;
-
-export type InputValue = any;
+/****************************
+ * FOR INTERNAL USE (START) *
+ ****************************/
 
 /** @internal */
 export type Overwrite<T, NewT> = NewT & Omit<T, keyof NewT>;
@@ -30,188 +24,19 @@ export type RecursivePartial<T> = {
     : T[P];
 };
 
-export type RbkMap = {
-  web: boolean;
-  native: boolean;
-  ios: boolean;
-  android: boolean;
+/** @internal */
+export type ColorTypographyToken = 'text' | 'background';
 
-  useDimensions: () => {
-    width: number;
-    height: number;
-  };
+/** @internal */
+export type ColorTypographyTone = 'primary' | 'secondary' | 'disabled';
 
-  Animated: {
-    View: ReactElement;
-  };
+/** @internal */
+export type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
 
-  svg: {
-    [key: string]: ReactElement;
-  };
+/** @internal */
+export type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker';
 
-  [key: string]: ReactElement | any;
-};
-
-export interface RbkFormEvent {
-  name?: string;
-  type: string;
-  form: FormRef;
-  target: ReactElement | any;
-  nativeEvent?: Event | SyntheticEvent;
-}
-
-export interface RbkInputEvent {
-  type: string;
-  value: InputValue;
-  name?: string;
-  target: ReactElement | any;
-  form?: FormRef;
-  focus: () => any;
-  blur: () => any;
-  clear: () => any;
-  isFocused: () => any;
-  nativeEvent?: Event | SyntheticEvent;
-}
-
-export interface RbkCheckboxEvent extends Omit<RbkInputEvent, 'value'> {
-  checked: boolean;
-}
-
-export interface RbkRect {
-  width: number;
-  height: number;
-  offsetX: number;
-  offsetY: number;
-  pageOffsetX: number;
-  pageOffsetY: number;
-}
-
-export interface RbkAnimation {
-  boomerang?: boolean;
-  delay?: number;
-  duration?: number;
-  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
-  iterations?: number | 'infinite';
-
-  /** @deprecated use duration instead */
-  speed?: number;
-}
-
-export type AccessibilityProps = {
-  accessible?: boolean;
-  hint?: string;
-  label?: string;
-  role?:
-    | 'none'
-    | 'button'
-    | 'link'
-    | 'search'
-    | 'image'
-    | 'alert'
-    | 'checkbox'
-    | 'combobox'
-    | 'menu'
-    | 'menubar'
-    | 'menuitem'
-    | 'progressbar'
-    | 'radio'
-    | 'radiogroup'
-    | 'scrollbar'
-    | 'spinbutton'
-    | 'switch'
-    | 'tab'
-    | 'tablist'
-    | 'timer'
-    | 'toolbar';
-  state?: {
-    checked?: boolean | any;
-    disabled?: boolean;
-    expanded?: boolean;
-    selected?: boolean;
-    busy?: boolean;
-  };
-  value?: {
-    max?: number;
-    min?: number;
-    now?: number;
-    text?: string;
-  };
-};
-
-export type PressableProps = {
-  pressable?: boolean;
-  onPress?: (event: Event) => void;
-  onPressIn?: (event: Event) => void;
-  onPressOut?: (event: Event) => void;
-
-  /** @deprecated use onPress(event) instead */
-  onClick?: (event: Event) => void;
-  /** @deprecated use onPressIn(event) instead */
-  onMouseDown?: (event: Event) => void;
-  /** @deprecated use onPressOut(event) instead */
-  onMouseUp?: (event: Event) => void;
-};
-
-export type FocusableProps = {
-  autoFocus?: boolean;
-  blur?: () => void;
-  focus?: () => void;
-  isFocused?: () => boolean;
-  // Events
-  onBlur?: (event: Event) => void;
-  onFocus?: (event: Event) => void;
-};
-
-export type FormField = {
-  name: string;
-  get: () => InputValue | null | undefined;
-  set: (value: InputValue) => any;
-  setError?: (error: boolean | string) => any;
-  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
-};
-
-export type FormRef = {
-  cancel: () => any;
-  clear: () => any;
-  getData: () => AnyObject;
-  setData: (data: AnyObject) => any;
-  setErrors: (errors: FormProps['errors']) => any;
-  getValue: (name: string) => InputValue | undefined;
-  setValue: (name: string, value: InputValue) => any;
-  submit: () => any;
-  target: ReactElement;
-  getField: (name: string) => FormField | null | undefined;
-  setField: (options: FormField) => any;
-  unsetField: (name: string) => any;
-};
-
-type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
-type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker';
-
-export type RbkColor =
-  | ColorToken
-  | `${ColorToken}.${ColorTone}`
-  | `${ColorToken}.${ColorTone}.${number}`
-  | `text`
-  | `text.primary`
-  | `text.secondary`
-  | `text.disabled`
-  | `text.primary.${number}`
-  | `text.secondary.${number}`
-  | `text.disabled.${number}`
-  | `background`
-  | `background.primary`
-  | `background.secondary`
-  | `background.disabled`
-  | `background.primary.${number}`
-  | `background.secondary.${number}`
-  | `background.disabled.${number}`
-  | (string & {});
-
-export type RbkSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | (number & {});
-
-export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
-
+/** @internal */
 export type FlexJustifyValues =
   | 'center'
   | 'stretch'
@@ -227,6 +52,7 @@ export type FlexJustifyValues =
   | 'around'
   | 'evenly';
 
+/** @internal */
 export type FlexAlignValues =
   | 'flex-start'
   | 'flex-end'
@@ -236,7 +62,8 @@ export type FlexAlignValues =
   | 'start'
   | 'end';
 
-export type RbkStyleProps = {
+/** @internal */
+export type StyleProps = {
   position?: 'relative' | 'absolute' | (string & {});
 
   // Flexbox container
@@ -293,7 +120,211 @@ export type RbkStyleProps = {
   [K in (typeof styleProps)[number]]: any;
 }>;
 
-export type RbkStyle = (CSSProperties & RbkStyleProps) | (CSSProperties & RbkStyleProps)[] | any[] | any;
+/** @internal */
+export type SelectOption = {
+  label: string;
+  value: InputValue;
+  disabled?: boolean;
+  [key: string]: any;
+};
+
+/** @internal */
+export type TableColumn = {
+  header?: ReactElement | AnyCallback | string;
+  content?: ReactElement | AnyCallback | string;
+  style?: RbkStyle;
+};
+
+/** @internal */
+export type TabItem = Overwrite<
+  Omit<ButtonProps, 'children'>,
+  {
+    label: string;
+    value?: string | number;
+  }
+>;
+
+/****************************
+ * FOR INTERNAL USE (END) *
+ ****************************/
+
+export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[];
+
+export type AnyObject = { [key: string | number]: any };
+
+export type TimeoutType = ReturnType<typeof setTimeout> | null;
+
+export type AnyCallback = (...args: any[]) => any;
+
+export type InputValue = any;
+
+export interface RbkMap {
+  web: boolean;
+  native: boolean;
+  ios: boolean;
+  android: boolean;
+
+  useDimensions: () => {
+    width: number;
+    height: number;
+  };
+
+  Animated: {
+    View: ReactElement;
+  };
+
+  svg: {
+    [key: string]: ReactElement;
+  };
+
+  [key: string]: ReactElement | any;
+}
+
+export type RbkSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | (number & {});
+
+export type RbkColor =
+  | ColorTypographyToken
+  | ColorToken
+  | `${ColorTypographyToken}.${ColorTypographyTone}`
+  | `${ColorToken}.${ColorTone}`
+  | `${ColorTypographyToken}.${ColorTypographyTone}.${number}`
+  | `${ColorToken}.${ColorTone}.${number}`
+  | (string & {});
+
+export interface RbkRect {
+  width: number;
+  height: number;
+  offsetX: number;
+  offsetY: number;
+  pageOffsetX: number;
+  pageOffsetY: number;
+}
+
+export interface RbkAnimation {
+  boomerang?: boolean;
+  delay?: number;
+  duration?: number;
+  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+  iterations?: number | 'infinite';
+
+  /** @deprecated use duration instead */
+  speed?: number;
+}
+
+export interface RbkFormEvent {
+  name?: string;
+  type: string;
+  form: FormRef;
+  target: ReactElement | any;
+  nativeEvent?: Event | SyntheticEvent;
+}
+
+export interface RbkInputEvent {
+  type: string;
+  value: InputValue;
+  name?: string;
+  target: ReactElement | any;
+  form?: FormRef;
+  focus: () => any;
+  blur: () => any;
+  clear: () => any;
+  isFocused: () => any;
+  nativeEvent?: Event | SyntheticEvent;
+}
+
+export interface RbkCheckboxEvent extends Omit<RbkInputEvent, 'value'> {
+  checked: boolean;
+}
+
+export interface AccessibilityProps {
+  accessible?: boolean;
+  hint?: string;
+  label?: string;
+  role?:
+    | 'none'
+    | 'button'
+    | 'link'
+    | 'search'
+    | 'image'
+    | 'alert'
+    | 'checkbox'
+    | 'combobox'
+    | 'menu'
+    | 'menubar'
+    | 'menuitem'
+    | 'progressbar'
+    | 'radio'
+    | 'radiogroup'
+    | 'scrollbar'
+    | 'spinbutton'
+    | 'switch'
+    | 'tab'
+    | 'tablist'
+    | 'timer'
+    | 'toolbar';
+  state?: {
+    checked?: boolean | any;
+    disabled?: boolean;
+    expanded?: boolean;
+    selected?: boolean;
+    busy?: boolean;
+  };
+  value?: {
+    max?: number;
+    min?: number;
+    now?: number;
+    text?: string;
+  };
+}
+
+export interface PressableProps {
+  pressable?: boolean;
+  onPress?: (event: Event) => void;
+  onPressIn?: (event: Event) => void;
+  onPressOut?: (event: Event) => void;
+
+  /** @deprecated use onPress(event) instead */
+  onClick?: (event: Event) => void;
+  /** @deprecated use onPressIn(event) instead */
+  onMouseDown?: (event: Event) => void;
+  /** @deprecated use onPressOut(event) instead */
+  onMouseUp?: (event: Event) => void;
+}
+
+export interface FocusableProps {
+  autoFocus?: boolean;
+  blur?: () => void;
+  focus?: () => void;
+  isFocused?: () => boolean;
+  // Events
+  onBlur?: (event: Event) => void;
+  onFocus?: (event: Event) => void;
+}
+
+export type FormField = {
+  name: string;
+  get: () => InputValue | null | undefined;
+  set: (value: InputValue) => any;
+  setError?: (error: boolean | string) => any;
+  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+};
+
+export type FormRef = {
+  cancel: () => any;
+  clear: () => any;
+  getData: () => AnyObject;
+  setData: (data: AnyObject) => any;
+  setErrors: (errors: FormProps['errors']) => any;
+  getValue: (name: string) => InputValue | undefined;
+  setValue: (name: string, value: InputValue) => any;
+  submit: () => any;
+  target: ReactElement;
+  getField: (name: string) => FormField | null | undefined;
+  setField: (options: FormField) => any;
+  unsetField: (name: string) => any;
+};
+
+export type RbkStyle = Overwrite<CSSProperties, StyleProps> | Overwrite<CSSProperties, StyleProps>[] | any | any[];
 
 export type ThemeModeValues = 'light' | 'dark';
 
@@ -464,101 +495,113 @@ export type RbkTheme = ThemeProps & {
   setTheme: (options: ThemeModeValues | ThemeEditProps) => any;
 };
 
-export type BoxProps = {
-  id?: string;
-  className?: any;
-  platform?: object;
-  accessibility?: AccessibilityProps;
-  children?: ReactElement | any;
-  invisible?: boolean;
-  hidden?: boolean;
+export type BoxProps = Overwrite<
+  PressableProps & StyleProps,
+  {
+    id?: string;
+    className?: any;
+    platform?: object;
+    accessibility?: AccessibilityProps;
+    children?: ReactElement | any;
+    invisible?: boolean;
+    hidden?: boolean;
 
-  mount?: boolean;
-  component?: any;
-  componentProps?: AnyObject;
-  noRootStyles?: boolean;
+    mount?: boolean;
+    component?: any;
+    componentProps?: AnyObject;
+    noRootStyles?: boolean;
 
-  // Styles
-  style?: RbkStyle;
-  rawStyle?: RbkStyle;
+    // Styles
+    style?: RbkStyle;
+    rawStyle?: RbkStyle;
 
-  // Flexbox container
-  row?: boolean;
-  column?: boolean;
-  reverse?: boolean;
-  wrap?: boolean | 'wrap' | 'nowrap' | 'wrap-reverse';
-  noWrap?: boolean;
-  center?: boolean;
+    // Flexbox container
+    row?: boolean;
+    column?: boolean;
+    reverse?: boolean;
+    wrap?: boolean | 'wrap' | 'nowrap' | 'wrap-reverse';
+    noWrap?: boolean;
+    center?: boolean;
 
-  // Flexbox item
-  flex?: boolean;
+    // Flexbox item
+    flex?: boolean;
 
-  // To use only on children of Grid
-  xs?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
-  sm?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
-  md?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
-  lg?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
-  xl?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
-  xxl?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
-} & PressableProps &
-  RbkStyleProps;
+    // To use only on children of Grid
+    xs?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+    sm?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+    md?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+    lg?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+    xl?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+    xxl?: 'auto' | 'flex' | 'hide' | (number & {}) | (boolean | {});
+  }
+>;
 
-export type TextProps = {
-  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'primary' | 'secondary' | 'caption';
-  size?: number;
-  color?: RbkColor;
-  center?: boolean;
-  left?: boolean;
-  right?: boolean;
-  justify?: boolean;
-  bold?: boolean;
-  italic?: boolean;
-  smallCaps?: boolean;
-  weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | (string & {});
-  transform?: TextTransformValues;
-  numberOfLines?: number;
-} & BoxProps;
+export type TextProps = Overwrite<
+  BoxProps,
+  {
+    variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'primary' | 'secondary' | 'caption';
+    size?: number;
+    color?: RbkColor;
+    center?: boolean;
+    left?: boolean;
+    right?: boolean;
+    justify?: boolean;
+    bold?: boolean;
+    italic?: boolean;
+    smallCaps?: boolean;
+    weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | (string & {});
+    transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
+    numberOfLines?: number;
+  }
+>;
 
-export type LabelProps = {
-  for?: string | RefObject<ReactElement>;
-} & TextProps;
+export type LabelProps = Overwrite<
+  TextProps,
+  {
+    for?: string | RefObject<ReactElement>;
+  }
+>;
 
-export type ButtonProps = {
-  badge?: number | BadgeProps;
-  circular?: boolean;
-  color?: RbkColor;
-  contrastColor?: RbkColor;
-  disabled?: boolean;
-  endAddon?: ReactElement;
-  href?: string;
-  label?: string;
-  loading?: boolean;
-  size?: RbkSize;
-  startAddon?: ReactElement;
-  transform?: TextTransformValues;
-  type?: 'button' | 'submit' | 'cancel' | 'clear';
-  variant?: 'solid' | 'outline' | 'text';
-  // Styles
-  contentStyle?: RbkStyle;
-  labelStyle?: RbkStyle;
+export type ButtonProps = Overwrite<
+  FocusableProps & BoxProps,
+  {
+    badge?: number | BadgeProps;
+    circular?: boolean;
+    color?: RbkColor;
+    contrastColor?: RbkColor;
+    disabled?: boolean;
+    endAddon?: ReactElement;
+    href?: string;
+    label?: string;
+    loading?: boolean;
+    size?: RbkSize;
+    startAddon?: ReactElement;
+    transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
+    type?: 'button' | 'submit' | 'cancel' | 'clear';
+    variant?: 'solid' | 'outline' | 'text';
+    // Styles
+    contentStyle?: RbkStyle;
+    labelStyle?: RbkStyle;
 
-  /** @deprecated use startAddon instead */
-  startIcon?: ReactElement;
-  /** @deprecated use endAddon instead */
-  endIcon?: ReactElement;
-} & PressableProps &
-  FocusableProps &
-  BoxProps;
+    /** @deprecated use startAddon instead */
+    startIcon?: ReactElement;
+    /** @deprecated use endAddon instead */
+    endIcon?: ReactElement;
+  }
+>;
 
-export type ButtonGroupProps = {
-  color?: RbkColor;
-  disabled?: boolean;
-  loading?: boolean;
-  size?: RbkSize;
-  variant?: 'solid' | 'outline' | 'text';
-  // Styles
-  contentStyle?: RbkStyle;
-} & BoxProps;
+export type ButtonGroupProps = Overwrite<
+  BoxProps,
+  {
+    color?: RbkColor;
+    disabled?: boolean;
+    loading?: boolean;
+    size?: RbkSize;
+    variant?: 'solid' | 'outline' | 'text';
+    // Styles
+    contentStyle?: RbkStyle;
+  }
+>;
 
 export type InputProps = Overwrite<
   FocusableProps & BoxProps,
@@ -616,13 +659,6 @@ export type InputProps = Overwrite<
     onChangeText?: (event: Event) => void;
   }
 >;
-
-export type SelectOption = {
-  label: string;
-  value: InputValue;
-  disabled?: boolean;
-  [key: string]: any;
-};
 
 export type SelectProps = Overwrite<
   FocusableProps & BoxProps,
@@ -702,214 +738,270 @@ export type SliderProps = Overwrite<
   }
 >;
 
-export type CardProps = BoxProps;
+export type CardProps = Overwrite<BoxProps, {}>;
 
-export type CarouselProps = {
-  chevron?: 'visible' | 'hidden';
-  color?: RbkColor;
-  gap?: number | true;
-  pagingEnabled?: boolean;
-  swipe?: false;
-  // Column Count
-  xs?: number;
-  sm?: number;
-  md?: number;
-  lg?: number;
-  xl?: number;
-  // Styles
-  chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;
-} & BoxProps;
-
-export type ScrollableProps = {
-  contentInset?: number;
-  direction?: 'vertical' | 'horizontal';
-  hideScrollBar?: boolean;
-
-  /** Note: vertical pagination is not supported on Android. **/
-  pagingEnabled?: boolean;
-
-  // Styles
-  contentStyle?: RbkStyle;
-} & Omit<BoxProps, 'direction'>;
-
-export type ImageProps = {
-  source: { uri?: string } | (string & {}) | (number & {});
-  alt?: string;
-  circular?: boolean;
-  fallback?: ReactElement;
-  mode?: 'cover' | 'contain' | 'fill';
-  width?: number | string;
-  height?: number | string;
-  // Events
-  onLoad?: (event: Event) => void;
-  onError?: (event: Event) => void;
-} & BoxProps;
-
-export type DividerProps = {
-  color?: RbkColor;
-  opacity?: number;
-  size?: number | string;
-  vertical?: boolean;
-} & BoxProps;
-
-export type BackdropProps = {
-  visible?: boolean;
-} & BoxProps;
-
-export type ModalProps = {
-  halign?: 'center' | 'left' | 'right';
-  valign?: 'center' | 'top' | 'bottom';
-  visible?: boolean;
-  onBackdropPress?: (event: Event) => void;
-} & BoxProps;
-
-export type CollapseProps = {
-  visible?: boolean;
-
-  /** @deprecated use visible instead */
-  in?: boolean;
-} & BoxProps;
-
-export type DropdownProps = {
-  visible?: boolean;
-} & BoxProps;
-
-export type LoadingProps = {
-  color?: RbkColor;
-  label?: string;
-  size?: RbkSize;
-  // Styles
-  labelStyle?: RbkStyle;
-} & BoxProps;
-
-export type GridProps = {
-  gap?: number | true;
-  size?: number;
-} & BoxProps;
-
-export type TableProps = {
-  columns: {
-    header?: ReactElement | AnyCallback | string;
-    content?: ReactElement | AnyCallback | string;
-    style?: RbkStyle;
-  }[];
-  rows?: any[] | any;
-} & BoxProps;
-
-export type BadgeProps = {
-  value?: number;
-  size?: RbkSize;
-  dot?: boolean;
-  top?: boolean;
-  bottom?: boolean;
-  left?: boolean;
-  right?: boolean;
-  // Styles
-  labelStyle?: RbkStyle;
-} & Omit<TextProps, 'size'>;
-
-// TODO: remove event as "any" in next release
-export type FormProps = {
-  data?: any;
-  errors?: { [key: string]: string | boolean } | null;
-  onSubmit?: (event: RbkFormEvent | any, data: AnyObject) => any;
-  onCancel?: (event: RbkFormEvent | any) => any;
-  onClear?: (event: RbkFormEvent | any, data: AnyObject) => any;
-  onChange?: (event: RbkFormEvent | any, data: AnyObject) => any;
-} & BoxProps;
-
-export type TooltipProps = {
-  color?: 'black' | 'white' | RbkColor;
-  position?: 'top' | 'bottom' | 'left' | 'right';
-  title?: string;
-  visible?: boolean;
-} & BoxProps;
-
-export type ActionSheetProps = {
-  visible?: boolean;
-  // Events
-  onClose?: (event: Event) => void;
-} & BoxProps;
-
-export type AnimationProps = {
-  delay?: number;
-  direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
-  duration?: number;
-  from?: RbkStyle;
-  in?: boolean;
-  loop?: boolean | number;
-  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
-  to?: RbkStyle;
-
-  // Pre-defined animations
-  fade?: boolean | 1 | -1;
-  zoom?: boolean | 1 | -1;
-  spin?: boolean | 1 | -1;
-
-  /** @deprecated use duration instead */
-  speed?: number;
-} & Omit<BoxProps, 'direction'>;
-
-export type ProgressProps = {
-  color?: RbkColor;
-  label?: boolean | ((value: number) => ReactElement);
-  size?: RbkSize;
-  value?: number;
-  // Styles
-  barStyle?: RbkStyle;
-  labelStyle?: RbkStyle;
-} & BoxProps;
-
-export type ListItemProps = {
-  chevron?: boolean | ReactElement;
-  endAddon?: ReactElement;
-  gap?: number | true;
-  startAddon?: ReactElement;
-  // Styles
-  chevronStyle?: {
-    size?: number;
+export type CarouselProps = Overwrite<
+  BoxProps,
+  {
+    chevron?: 'visible' | 'hidden';
     color?: RbkColor;
-  } & RbkStyle;
+    gap?: number | true;
+    pagingEnabled?: boolean;
+    swipe?: false;
+    // Column Count
+    xs?: number;
+    sm?: number;
+    md?: number;
+    lg?: number;
+    xl?: number;
+    // Styles
+    chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;
+  }
+>;
 
-  /** @deprecated use startAddon instead */
-  startIcon?: ReactElement;
-  /** @deprecated use endAddon instead */
-  endIcon?: ReactElement;
-} & BoxProps;
+export type ScrollableProps = Overwrite<
+  BoxProps,
+  {
+    contentInset?: number;
+    direction?: 'vertical' | 'horizontal';
+    hideScrollBar?: boolean;
 
-export type LinkProps = {
-  underline?: boolean;
-} & TextProps;
+    /** Note: vertical pagination is not supported on Android. **/
+    pagingEnabled?: boolean;
 
-export type DrawerProps = {
-  placement?: 'left' | 'right' | 'top' | 'bottom';
+    // Styles
+    contentStyle?: RbkStyle;
+  }
+>;
 
-  // Styles
-  backdropStyle?: RbkStyle;
-} & BoxProps;
+export type ImageProps = Overwrite<
+  BoxProps,
+  {
+    source: { uri?: string } | (string & {}) | (number & {});
+    alt?: string;
+    circular?: boolean;
+    fallback?: ReactElement;
+    mode?: 'cover' | 'contain' | 'fill';
+    width?: number | string;
+    height?: number | string;
+    // Events
+    onLoad?: (event: Event) => void;
+    onError?: (event: Event) => void;
+  }
+>;
 
-export type OutlineProps = {
-  color?: RbkColor;
-  size?: number;
-  visible?: 'auto' | boolean;
-} & BoxProps;
+export type DividerProps = Overwrite<
+  BoxProps,
+  {
+    color?: RbkColor;
+    opacity?: number;
+    size?: number | string;
+    vertical?: boolean;
+  }
+>;
 
-export type TabsProps = {
-  color?: RbkColor;
-  size?: RbkSize;
-  tabs: ({
-    label: string;
+export type BackdropProps = Overwrite<
+  BoxProps,
+  {
+    visible?: boolean;
+  }
+>;
+
+export type ModalProps = Overwrite<
+  BoxProps,
+  {
+    halign?: 'center' | 'left' | 'right';
+    valign?: 'center' | 'top' | 'bottom';
+    visible?: boolean;
+    onBackdropPress?: (event: Event) => void;
+  }
+>;
+
+export type CollapseProps = Overwrite<
+  BoxProps,
+  {
+    visible?: boolean;
+
+    /** @deprecated use visible instead */
+    in?: boolean;
+  }
+>;
+
+export type DropdownProps = Overwrite<
+  BoxProps,
+  {
+    visible?: boolean;
+  }
+>;
+
+export type LoadingProps = Overwrite<
+  BoxProps,
+  {
+    color?: RbkColor;
+    label?: string;
+    size?: RbkSize;
+    // Styles
+    labelStyle?: RbkStyle;
+  }
+>;
+
+export type GridProps = Overwrite<
+  BoxProps,
+  {
+    gap?: number | true;
+    size?: number;
+  }
+>;
+
+export type TableProps = Overwrite<
+  BoxProps,
+  {
+    columns: TableColumn[];
+    rows?: any[] | any;
+  }
+>;
+
+export type BadgeProps = Overwrite<
+  TextProps,
+  {
+    value?: number;
+    size?: RbkSize;
+    dot?: boolean;
+    top?: boolean;
+    bottom?: boolean;
+    left?: boolean;
+    right?: boolean;
+    // Styles
+    labelStyle?: RbkStyle;
+  }
+>;
+
+// TODO: remove event as "any" in next major release
+export type FormProps = Overwrite<
+  BoxProps,
+  {
+    data?: any;
+    errors?: { [key: string]: string | boolean } | null;
+    onSubmit?: (event: RbkFormEvent | any, data: AnyObject) => any;
+    onCancel?: (event: RbkFormEvent | any) => any;
+    onClear?: (event: RbkFormEvent | any, data: AnyObject) => any;
+    onChange?: (event: RbkFormEvent | any, data: AnyObject) => any;
+  }
+>;
+
+export type TooltipProps = Overwrite<
+  BoxProps,
+  {
+    color?: 'black' | 'white' | RbkColor;
+    position?: 'top' | 'bottom' | 'left' | 'right';
+    title?: string;
+    visible?: boolean;
+  }
+>;
+
+export type ActionSheetProps = Overwrite<
+  BoxProps,
+  {
+    visible?: boolean;
+    // Events
+    onClose?: (event: Event) => void;
+  }
+>;
+
+export type AnimationProps = Overwrite<
+  BoxProps,
+  {
+    delay?: number;
+    direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+    duration?: number;
+    from?: RbkStyle;
+    in?: boolean;
+    loop?: boolean | number;
+    timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+    to?: RbkStyle;
+
+    // Pre-defined animations
+    fade?: boolean | 1 | -1;
+    zoom?: boolean | 1 | -1;
+    spin?: boolean | 1 | -1;
+
+    /** @deprecated use duration instead */
+    speed?: number;
+  }
+>;
+
+export type ProgressProps = Overwrite<
+  BoxProps,
+  {
+    color?: RbkColor;
+    label?: boolean | ((value: number) => ReactElement);
+    size?: RbkSize;
+    value?: number;
+    // Styles
+    barStyle?: RbkStyle;
+    labelStyle?: RbkStyle;
+  }
+>;
+
+export type ListItemProps = Overwrite<
+  BoxProps,
+  {
+    chevron?: boolean | ReactElement;
+    endAddon?: ReactElement;
+    gap?: number | true;
+    startAddon?: ReactElement;
+    // Styles
+    chevronStyle?: Overwrite<RbkStyle, { size?: number; color?: RbkColor }>;
+
+    /** @deprecated use startAddon instead */
+    startIcon?: ReactElement;
+    /** @deprecated use endAddon instead */
+    endIcon?: ReactElement;
+  }
+>;
+
+export type LinkProps = Overwrite<
+  TextProps,
+  {
+    underline?: boolean;
+  }
+>;
+
+export type DrawerProps = Overwrite<
+  BoxProps,
+  {
+    placement?: 'left' | 'right' | 'top' | 'bottom';
+
+    // Styles
+    backdropStyle?: RbkStyle;
+  }
+>;
+
+export type OutlineProps = Overwrite<
+  BoxProps,
+  {
+    color?: RbkColor;
+    size?: number;
+    visible?: 'auto' | boolean;
+  }
+>;
+
+export type TabsProps = Overwrite<
+  ScrollableProps,
+  {
+    color?: RbkColor;
+    size?: RbkSize;
+    tabs: TabItem[];
     value?: string | number;
-  } & Omit<ButtonProps, 'children'>)[];
-  value?: string | number;
-  variant?: 'group' | 'card';
-  // Events
-  onChange?: (event: Event, value: string | number) => any;
-  // Styles
-  contentStyle?: RbkStyle;
-  buttonStyle?: RbkStyle;
-  activeStyle?: RbkStyle;
-} & Omit<ScrollableProps, 'direction'>;
+    variant?: 'group' | 'card';
+    // Events
+    onChange?: (event: Event, value: string | number) => any;
+    // Styles
+    contentStyle?: RbkStyle;
+    buttonStyle?: RbkStyle;
+    activeStyle?: RbkStyle;
+  }
+>;
 
 /************************
  * DEPRECATIONS (START) *

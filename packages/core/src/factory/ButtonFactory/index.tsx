@@ -116,12 +116,12 @@ const ButtonFactory = React.memo<ButtonProps>(
 
     labelStyle = [{ color: textColor }, labelStyle];
 
-    children = childrenize(children);
+    let childrenArray = childrenize(children);
 
-    if (children.every((child) => ['string', 'number'].includes(typeof child))) {
-      children = [
+    if (childrenArray.every((child) => ['string', 'number'].includes(typeof child))) {
+      childrenArray = [
         <TextFactory key={0} style={labelStyle} stylist={[variants.label]}>
-          {children.join('')}
+          {childrenArray.join('')}
         </TextFactory>,
       ];
     }
@@ -138,7 +138,7 @@ const ButtonFactory = React.memo<ButtonProps>(
       >
         {Boolean(startAddon) && <BoxFactory style={loading && { opacity: 0 }}>{startAddon}</BoxFactory>}
 
-        {Boolean(children?.length) && <BoxFactory style={contentStyle}>{children}</BoxFactory>}
+        {Boolean(childrenArray?.length) && <BoxFactory style={contentStyle}>{childrenArray}</BoxFactory>}
 
         {Boolean(endAddon) && <BoxFactory style={loading && { opacity: 0 }}>{endAddon}</BoxFactory>}
 

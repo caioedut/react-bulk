@@ -1,6 +1,7 @@
 import React, { cloneElement, forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
+import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
 import { ButtonGroupProps } from '../../types';
 import BoxFactory from '../BoxFactory';
@@ -24,14 +25,12 @@ const ButtonGroupFactory = React.memo<ButtonGroupProps>(
       ...rest
     } = factory2<ButtonGroupProps>(props, options);
 
-    if (children && !Array.isArray(children)) {
-      children = [children];
-    }
+    const childrenArray = childrenize(children);
 
     return (
       <ScrollableFactory ref={ref} stylist={[variants.root, stylist]} {...rest} direction="horizontal">
         <BoxFactory style={contentStyle} stylist={[variants.content]}>
-          {children?.map((child, key) => {
+          {childrenArray.map((child, key) => {
             const length = Array.isArray(children) ? children.length : children ? 1 : 0;
 
             const isFirst = key === 0;
@@ -51,7 +50,10 @@ const ButtonGroupFactory = React.memo<ButtonGroupProps>(
               mr: 0,
               style: [
                 { borderLeftWidth, height: 'auto', width: 'auto' },
+
+                // @ts-expect-error
                 child.style,
+
                 !isFirst && !isLast && { borderRadius: 0 },
                 !isFirst && isLast && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 },
                 isFirst && !isLast && { borderTopRightRadius: 0, borderBottomRightRadius: 0 },

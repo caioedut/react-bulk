@@ -1,6 +1,7 @@
 import React, { cloneElement, forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
+import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import { TextProps } from '../../types';
@@ -70,14 +71,18 @@ const TextFactory = React.memo<TextProps>(
       style,
     ];
 
+    bold = get('bold', style) ?? bold;
+    color = get('color', style) ?? color;
+    weight = get('weight', style) ?? weight;
     const fontSize = get('fontSize', style, rest);
+    const fontWeight = get('fontWeight', style, rest);
 
     return (
       <BoxFactory ref={ref} component={Text} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles>
-        {React.Children.map(children, (child) => {
-          // Fix inheritance
+        {/* Inherite some styles for each text child  */}
+        {childrenize(children).map((child, key) => {
           if (child?.type === TextFactory) {
-            child = cloneElement(child, { variant, color, fontSize, ...child.props });
+            child = cloneElement(child, { key, variant, bold, color, weight, fontSize, fontWeight, ...child.props });
           }
 
           return child;

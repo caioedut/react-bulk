@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-export default function get(prop: string, ...mixin: (Object | Array<any> | Function)[]) {
+export default function get(prop: string, ...mixin: unknown[]) {
   let result: any;
 
   for (const item of mixin) {
