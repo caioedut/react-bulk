@@ -1,9 +1,9 @@
-import { RbkStyles, ThemeComponentProps } from '../types';
+import { RbkStyle, ThemeComponentProps } from '../types';
 import deepmerge from '../utils/deepmerge';
 import global from '../utils/global';
 
 type Variants = {
-  [key: string]: RbkStyles;
+  [key: string]: RbkStyle;
 };
 
 export default function factory2<ComponentProps>(

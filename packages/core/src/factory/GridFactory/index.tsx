@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import useTheme from '../../hooks/useTheme';
 import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
-import { GridProps, RbkStyles, RequiredSome } from '../../types';
+import { GridProps, RbkStyle, RequiredSome } from '../../types';
 import BoxFactory from '../BoxFactory';
 
 const GridFactory = React.memo<GridProps>(
@@ -33,7 +33,7 @@ const GridFactory = React.memo<GridProps>(
           }
 
           const props = { ...Object(child?.props) };
-          const itemStyle: RbkStyles = [props.style, { padding: spacing }];
+          const itemStyle: RbkStyle = [props.style, { padding: spacing }];
 
           breakpoints.forEach((breakpoint: string) => {
             if (breakpoint in props) {

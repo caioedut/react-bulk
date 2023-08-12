@@ -1,12 +1,12 @@
 import Platform from './Platform';
 import css from './styles/css';
 import jss from './styles/jss';
-import { RbkStyles, ThemeProps } from './types';
+import { RbkStyle, ThemeProps } from './types';
 import crypt from './utils/crypt';
 import global from './utils/global';
 
 export type createStyle = {
-  style: string | RbkStyles;
+  style: string | RbkStyle;
   theme?: ThemeProps;
   name?: string;
   parent?: string;

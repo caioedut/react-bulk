@@ -7,7 +7,7 @@ import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import css from '../../styles/css';
 import jss from '../../styles/jss';
-import { AnimationProps, RbkStyles, RequiredSome } from '../../types';
+import { AnimationProps, RbkStyle, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
@@ -42,13 +42,13 @@ const AnimationFactory = React.memo<AnimationProps>(
     let transformFrom = get('transform', from) ?? [];
     let transformTo = get('transform', to) ?? [];
 
-    const opacityFrom = fade && fade < 0 ? 1 : 0;
-    const scaleFrom = zoom && zoom < 0 ? 1 : 0;
-    const rotateFrom = spin && spin < 0 ? '360deg' : '0deg';
+    const opacityFrom = fade && Number(fade) < 0 ? 1 : 0;
+    const scaleFrom = zoom && Number(zoom) < 0 ? 1 : 0;
+    const rotateFrom = spin && Number(spin) < 0 ? '360deg' : '0deg';
 
-    const opacityTo = fade && fade < 0 ? 0 : 1;
-    const scaleTo = zoom && zoom < 0 ? 0 : 1;
-    const rotateTo = spin && spin < 0 ? '0deg' : '360deg';
+    const opacityTo = fade && Number(fade) < 0 ? 0 : 1;
+    const scaleTo = zoom && Number(zoom) < 0 ? 0 : 1;
+    const rotateTo = spin && Number(spin) < 0 ? '0deg' : '360deg';
 
     if (Array.isArray(transformFrom)) {
       zoom && transformFrom.push({ scale: scaleFrom });
@@ -130,7 +130,7 @@ const AnimationFactory = React.memo<AnimationProps>(
       });
     }
 
-    const style: RbkStyles = { position: 'relative' };
+    const style: RbkStyle = { position: 'relative' };
 
     if (web) {
       style.animation = `${name} ${duration ?? speed}ms ${timing} ${delay ? `${delay}ms` : ''} ${

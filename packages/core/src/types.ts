@@ -52,6 +52,12 @@ export interface RbkChangeEvent extends RbkInputEvent {}
 /** @deprecated use RbkFormEvent instead */
 export interface RbkFormChangeEvent extends RbkFormEvent {}
 
+/** @deprecated use RbkSize instead */
+export type SizeValues = RbkSize;
+
+/** @deprecated use RbkStyle instead */
+export type RbkStyles = RbkStyle;
+
 export interface RbkFormEvent {
   name?: string;
   type: string;
@@ -187,24 +193,28 @@ export type FormRef = {
 
 type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
 type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker';
-// prettier-ignore
-type ColorOpacity = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40 | 41 | 42 | 43 | 44 | 45 | 46 | 47 | 48 | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 | 81 | 82 | 83 | 84 | 85 | 86 | 87 | 88 | 89 | 90 | 91 | 92 | 93 | 94 | 95 | 96 | 97 | 98 | 99 | 100;
 
 export type RbkColor =
   | ColorToken
   | `${ColorToken}.${ColorTone}`
-  | `${ColorToken}.${ColorTone}.${ColorOpacity}`
+  | `${ColorToken}.${ColorTone}.${number}`
   | `text`
-  | `text.primary.${ColorOpacity}`
-  | `text.secondary.${ColorOpacity}`
-  | `text.disabled.${ColorOpacity}`
+  | `text.primary`
+  | `text.secondary`
+  | `text.disabled`
+  | `text.primary.${number}`
+  | `text.secondary.${number}`
+  | `text.disabled.${number}`
   | `background`
-  | `background.primary.${ColorOpacity}`
-  | `background.secondary.${ColorOpacity}`
-  | `background.disabled.${ColorOpacity}`
+  | `background.primary`
+  | `background.secondary`
+  | `background.disabled`
+  | `background.primary.${number}`
+  | `background.secondary.${number}`
+  | `background.disabled.${number}`
   | (string & {});
 
-export type SizeValues = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | (number & {});
+export type RbkSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | (number & {});
 
 export type TextTransformValues = 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
 
@@ -289,7 +299,7 @@ export type RbkStyleProps = {
   [K in (typeof styleProps)[number]]: any;
 }>;
 
-export type RbkStyles = (CSSProperties & RbkStyleProps) | (CSSProperties & RbkStyleProps)[] | any[] | any;
+export type RbkStyle = (CSSProperties & RbkStyleProps) | (CSSProperties & RbkStyleProps)[] | any[] | any;
 
 export type ThemeModeValues = 'light' | 'dark';
 
@@ -304,7 +314,7 @@ export type ThemeColorsProps =
   | (string & {});
 
 export type ThemeComponentStyleContexts<Contexts extends keyof any> = {
-  [context in Contexts | 'root']: RbkStyles;
+  [context in Contexts | 'root']: RbkStyle;
 };
 
 export type ThemeComponentProps<Props, Contexts extends keyof any> = {
@@ -475,8 +485,8 @@ export type BoxProps = {
   noRootStyles?: boolean;
 
   // Styles
-  style?: RbkStyles;
-  rawStyle?: RbkStyles;
+  style?: RbkStyle;
+  rawStyle?: RbkStyle;
 
   // Flexbox container
   row?: boolean;
@@ -529,14 +539,14 @@ export type ButtonProps = {
   href?: string;
   label?: string;
   loading?: boolean;
-  size?: SizeValues;
+  size?: RbkSize;
   startAddon?: ReactElement;
   transform?: TextTransformValues;
   type?: 'button' | 'submit' | 'cancel' | 'clear';
   variant?: 'solid' | 'outline' | 'text';
   // Styles
-  contentStyle?: RbkStyles;
-  labelStyle?: RbkStyles;
+  contentStyle?: RbkStyle;
+  labelStyle?: RbkStyle;
 
   /** @deprecated use startAddon instead */
   startIcon?: ReactElement;
@@ -550,10 +560,10 @@ export type ButtonGroupProps = {
   color?: RbkColor;
   disabled?: boolean;
   loading?: boolean;
-  size?: SizeValues;
+  size?: RbkSize;
   variant?: 'solid' | 'outline' | 'text';
   // Styles
-  contentStyle?: RbkStyles;
+  contentStyle?: RbkStyle;
 } & BoxProps;
 
 export type InputProps = {
@@ -581,7 +591,7 @@ export type InputProps = {
   rows?: number;
   secure?: boolean;
   selectionColor?: RbkColor;
-  size?: SizeValues;
+  size?: RbkSize;
   startAddon?: ReactElement;
   textColor?: RbkColor;
   type?: 'text' | 'number' | 'email' | 'phone' | 'url' | 'hidden' | (string & {});
@@ -592,10 +602,10 @@ export type InputProps = {
   onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
   onSubmit?: (event: RbkInputEvent, value: InputValue) => any;
   // Styles
-  contentStyle?: RbkStyles;
-  errorStyle?: RbkStyles;
-  labelStyle?: RbkStyles;
-  inputStyle?: RbkStyles;
+  contentStyle?: RbkStyle;
+  errorStyle?: RbkStyle;
+  labelStyle?: RbkStyle;
+  inputStyle?: RbkStyle;
 
   /** @deprecated use startAddon instead */
   startIcon?: ReactElement;
@@ -629,16 +639,16 @@ export type SelectProps = {
   options?: SelectOption[];
   placeholder?: string;
   readOnly?: boolean;
-  size?: SizeValues;
+  size?: RbkSize;
   startAddon?: ReactElement;
   value?: InputValue;
   // Events
   onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue, option: SelectOption) => any;
   onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
   // Styles
-  buttonStyle?: RbkStyles;
-  errorStyle?: RbkStyles;
-  labelStyle?: RbkStyles;
+  buttonStyle?: RbkStyle;
+  errorStyle?: RbkStyle;
+  labelStyle?: RbkStyle;
 
   /** @deprecated use startAddon instead */
   startIcon?: ReactElement;
@@ -655,14 +665,14 @@ export type CheckboxProps = {
   label?: string;
   name?: string;
   readOnly?: boolean;
-  size?: SizeValues;
+  size?: RbkSize;
   unique?: boolean;
   // Events
   onChange?: (event: RbkCheckboxEvent | RbkChangeEvent | RbkEvent, checked: boolean) => any;
   onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
   // Styles
-  buttonStyle?: RbkStyles;
-  labelStyle?: RbkStyles;
+  buttonStyle?: RbkStyle;
+  labelStyle?: RbkStyle;
 } & FocusableProps &
   BoxProps;
 
@@ -673,7 +683,7 @@ export type SliderProps = {
   min?: number;
   name?: string;
   readOnly?: boolean;
-  size?: SizeValues;
+  size?: RbkSize;
   value?: number;
   // Events
   onChange?: (event: AnyObject, value: number) => any;
@@ -697,7 +707,7 @@ export type CarouselProps = {
   lg?: number;
   xl?: number;
   // Styles
-  chevronStyle?: { color?: RbkColor; size?: number } & RbkStyles;
+  chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;
 } & BoxProps;
 
 export type ScrollableProps = {
@@ -709,7 +719,7 @@ export type ScrollableProps = {
   pagingEnabled?: boolean;
 
   // Styles
-  contentStyle?: RbkStyles;
+  contentStyle?: RbkStyle;
 } & Omit<BoxProps, 'direction'>;
 
 export type ImageProps = {
@@ -757,9 +767,9 @@ export type DropdownProps = {
 export type LoadingProps = {
   color?: RbkColor;
   label?: string;
-  size?: SizeValues;
+  size?: RbkSize;
   // Styles
-  labelStyle?: RbkStyles;
+  labelStyle?: RbkStyle;
 } & BoxProps;
 
 export type GridProps = {
@@ -771,21 +781,21 @@ export type TableProps = {
   columns: {
     header?: ReactElement | AnyCallback | string;
     content?: ReactElement | AnyCallback | string;
-    style?: RbkStyles;
+    style?: RbkStyle;
   }[];
   rows?: any[] | any;
 } & BoxProps;
 
 export type BadgeProps = {
   value?: number;
-  size?: SizeValues;
+  size?: RbkSize;
   dot?: boolean;
   top?: boolean;
   bottom?: boolean;
   left?: boolean;
   right?: boolean;
   // Styles
-  labelStyle?: RbkStyles;
+  labelStyle?: RbkStyle;
 } & Omit<TextProps, 'size'>;
 
 // TODO: remove event as "any" in next release
@@ -815,11 +825,11 @@ export type AnimationProps = {
   delay?: number;
   direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
   duration?: number;
-  from?: RbkStyles;
+  from?: RbkStyle;
   in?: boolean;
   loop?: boolean | number;
   timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
-  to?: RbkStyles;
+  to?: RbkStyle;
 
   // Pre-defined animations
   fade?: boolean | 1 | -1;
@@ -833,11 +843,11 @@ export type AnimationProps = {
 export type ProgressProps = {
   color?: RbkColor;
   label?: boolean | ((value: number) => ReactElement);
-  size?: SizeValues;
+  size?: RbkSize;
   value?: number;
   // Styles
-  barStyle?: RbkStyles;
-  labelStyle?: RbkStyles;
+  barStyle?: RbkStyle;
+  labelStyle?: RbkStyle;
 } & BoxProps;
 
 export type ListItemProps = {
@@ -849,7 +859,7 @@ export type ListItemProps = {
   chevronStyle?: {
     size?: number;
     color?: RbkColor;
-  } & RbkStyles;
+  } & RbkStyle;
 
   /** @deprecated use startAddon instead */
   startIcon?: ReactElement;
@@ -865,7 +875,7 @@ export type DrawerProps = {
   placement?: 'left' | 'right' | 'top' | 'bottom';
 
   // Styles
-  backdropStyle?: RbkStyles;
+  backdropStyle?: RbkStyle;
 } & BoxProps;
 
 export type OutlineProps = {
@@ -876,7 +886,7 @@ export type OutlineProps = {
 
 export type TabsProps = {
   color?: RbkColor;
-  size?: SizeValues;
+  size?: RbkSize;
   tabs: ({
     label: string;
     value?: string | number;
@@ -886,7 +896,7 @@ export type TabsProps = {
   // Events
   onChange?: (event: Function, value: string | number) => any;
   // Styles
-  contentStyle?: RbkStyles;
-  buttonStyle?: RbkStyles;
-  activeStyle?: RbkStyles;
+  contentStyle?: RbkStyle;
+  buttonStyle?: RbkStyle;
+  activeStyle?: RbkStyle;
 } & Omit<ScrollableProps, 'direction'>;

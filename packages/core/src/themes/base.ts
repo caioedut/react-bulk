@@ -13,7 +13,10 @@ const base: ThemeProps = {
     gap: 4, // gap is generally multiplied by spacing
   },
 
-  typography: { fontSize: 16, lineHeight: 1.15 },
+  typography: {
+    fontSize: 16,
+    lineHeight: 1.15,
+  },
 
   colors: {
     primary: '#8b5cf6',
@@ -60,7 +63,14 @@ const base: ThemeProps = {
     },
   },
 
-  breakpoints: { xs: 0, sm: 320, md: 768, lg: 992, xl: 1200, xxl: 1400 },
+  breakpoints: {
+    xs: 0,
+    sm: 320,
+    md: 768,
+    lg: 992,
+    xl: 1200,
+    xxl: 1400,
+  },
 
   mixins: {
     transitions: {
