@@ -1,10 +1,24 @@
 {
   "name": "root",
-  "private": true,
-  "author": "CaioEduT <caioedut@gmail.com>",
-  "homepage": "https://github.com/caioedut/react-bulk",
+  "keywords": [
+    "react",
+    "react-native",
+    "react-component",
+    "web",
+    "native",
+    "android",
+    "ios",
+    "cross-platform",
+    "ui",
+    "ux"
+  ],
   "license": "MIT",
-  "keywords": ["react", "react-native", "react-component", "web", "native", "android", "ios", "cross-platform", "ui", "ux"],
+  "repository": "https://github.com/caioedut/react-bulk",
+  "homepage": "https://www.rbk.caioedut.com",
+  "author": {
+    "name": "Caio Teixeira",
+    "email": "caioedut@gmail.com"
+  },
   "workspaces": {
     "packages": [
       "packages/*"
