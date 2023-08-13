@@ -16,7 +16,7 @@ export const boxSizeProps = [
   'minh',
   'ww',
   'hh',
-];
+] as const;
 
 /***********
  * Flexbox *
@@ -31,7 +31,7 @@ export const flexContainerAlignProps = [
   'justifyItems',
   // Aliases
   'center',
-];
+] as const;
 
 export const flexChildAlignProps = [
   'placeSelf',
@@ -40,9 +40,9 @@ export const flexChildAlignProps = [
   // Aliases
   'align',
   'justify',
-];
+] as const;
 
-export const flexAlignProps = [...flexContainerAlignProps, ...flexChildAlignProps];
+export const flexAlignProps = [...flexContainerAlignProps, ...flexChildAlignProps] as const;
 
 export const flexContainerProps = [
   'flexDirection',
@@ -56,7 +56,7 @@ export const flexContainerProps = [
   'reverse',
   'wrap',
   'noWrap',
-];
+] as const;
 
 export const flexChildProps = [
   'flex',
@@ -69,7 +69,7 @@ export const flexChildProps = [
   'grow',
   'shrink',
   'basis',
-];
+] as const;
 
 export const flexProps = [...flexAlignProps, ...flexContainerProps, ...flexChildProps];
 
@@ -98,7 +98,7 @@ export const customSpacings = [
   'pr',
   'px',
   'py',
-];
+] as const;
 
 export const customStyleProps = [
   'bg',
@@ -118,7 +118,7 @@ export const customStyleProps = [
   'shadow',
   'w',
   ...customSpacings,
-];
+] as const;
 
 export const spacings = [
   'position',
@@ -142,7 +142,7 @@ export const spacings = [
   'paddingVertical',
   // Aliases
   ...customSpacings,
-];
+] as const;
 
 // See https://react-cn.github.io/react/tips/style-props-value-px.html
 export const notPxProps = [
@@ -174,7 +174,7 @@ export const notPxProps = [
   'widows',
   'zIndex',
   'zoom',
-];
+] as const;
 
 /************************
  * All Supported Styles *
@@ -227,4 +227,4 @@ export const styleProps = [
   'textAlign',
   'textTransform',
   'zIndex',
-];
+] as const;

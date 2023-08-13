@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, RefObject, SyntheticEvent } from 'react';
+import { CSSProperties, ReactNode, Ref, RefObject, SyntheticEvent } from 'react';
 
 import { styleProps } from './styles/constants';
 
@@ -7,10 +7,10 @@ import { styleProps } from './styles/constants';
  ****************************/
 
 /** @internal */
-export type Overwrite<T, NewT> = NewT & Omit<T, keyof NewT>;
+export type DistributiveOmit<T, K extends PropertyKey> = T extends any ? Omit<T, K> : never;
 
 /** @internal */
-export type Prettify<T> = { [K in keyof T]: T[K] } & {};
+export type Overwrite<T, NewT> = DistributiveOmit<T, keyof NewT> & NewT;
 
 /** @internal */
 export type RequiredSome<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>;
@@ -63,62 +63,65 @@ export type FlexAlignValues =
   | 'end';
 
 /** @internal */
-export type StyleProps = {
-  position?: 'relative' | 'absolute' | (string & {});
+export type StyleProps = Overwrite<
+  Partial<{
+    [K in (typeof styleProps)[number]]: any;
+  }>,
+  {
+    position?: 'relative' | 'absolute' | (string & {});
 
-  // Flexbox container
-  direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
-  justifyContent?: FlexJustifyValues;
-  alignContent?: FlexAlignValues;
-  justifyItems?: FlexJustifyValues;
-  alignItems?: FlexAlignValues | 'baseline';
+    // Flexbox container
+    direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+    justifyContent?: FlexJustifyValues;
+    alignContent?: FlexAlignValues;
+    justifyItems?: FlexJustifyValues;
+    alignItems?: FlexAlignValues | 'baseline';
 
-  // Flexbox item
-  order?: number;
-  grow?: number;
-  shrink?: number;
-  basis?: 'auto' | (string & {}) | (number & {});
-  align?: FlexAlignValues;
-  justify?: FlexJustifyValues;
+    // Flexbox item
+    order?: number;
+    grow?: number;
+    shrink?: number;
+    basis?: 'auto' | (string & {}) | (number & {});
+    align?: FlexAlignValues;
+    justify?: FlexJustifyValues;
 
-  h?: number | string | true;
-  w?: number | string | true;
-  minw?: number | string | true;
-  maxw?: number | string | true;
-  minh?: number | string | true;
-  maxh?: number | string | true;
-  hh?: number | string | true;
-  ww?: number | string | true;
+    h?: number | string | true;
+    w?: number | string | true;
+    minw?: number | string | true;
+    maxw?: number | string | true;
+    minh?: number | string | true;
+    maxh?: number | string | true;
+    hh?: number | string | true;
+    ww?: number | string | true;
 
-  bg?: string;
-  border?: string | number | boolean;
-  corners?: number;
-  shadow?: number;
+    bg?: string;
+    border?: string | number | boolean;
+    corners?: number;
+    shadow?: number;
 
-  i?: number | string;
-  t?: number | string;
-  b?: number | string;
-  l?: number | string;
-  r?: number | string;
-  m?: number | string;
-  mt?: number | string;
-  mb?: number | string;
-  ml?: number | string;
-  mr?: number | string;
-  mh?: number | string;
-  mx?: number | string;
-  mv?: number | string;
-  my?: number | string;
-  p?: number | string;
-  pt?: number | string;
-  pb?: number | string;
-  pl?: number | string;
-  pr?: number | string;
-  px?: number | string;
-  py?: number | string;
-} & Partial<{
-  [K in (typeof styleProps)[number]]: any;
-}>;
+    i?: number | string;
+    t?: number | string;
+    b?: number | string;
+    l?: number | string;
+    r?: number | string;
+    m?: number | string;
+    mt?: number | string;
+    mb?: number | string;
+    ml?: number | string;
+    mr?: number | string;
+    mh?: number | string;
+    mx?: number | string;
+    mv?: number | string;
+    my?: number | string;
+    p?: number | string;
+    pt?: number | string;
+    pb?: number | string;
+    pl?: number | string;
+    pr?: number | string;
+    px?: number | string;
+    py?: number | string;
+  }
+>;
 
 /** @internal */
 export type SelectOption = {
@@ -137,7 +140,7 @@ export type TableColumn = {
 
 /** @internal */
 export type TabItem = Overwrite<
-  Omit<ButtonProps, 'children'>,
+  DistributiveOmit<ButtonProps, 'children'>,
   {
     label: string;
     value?: string | number;
@@ -282,6 +285,7 @@ export interface PressableProps {
   onPress?: (event: Event) => void;
   onPressIn?: (event: Event) => void;
   onPressOut?: (event: Event) => void;
+  onLongPress?: (event: Event) => void;
 
   /** @deprecated use onPress(event) instead */
   onClick?: (event: Event) => void;
@@ -324,7 +328,14 @@ export type FormRef = {
   unsetField: (name: string) => any;
 };
 
-export type RbkStyle = Overwrite<CSSProperties, StyleProps> | Overwrite<CSSProperties, StyleProps>[] | any | any[];
+export type RbkStyle =
+  | undefined
+  | null
+  | false
+  | AnyObject
+  | AnyObject[]
+  | (CSSProperties & StyleProps)
+  | (CSSProperties & StyleProps)[];
 
 export type ThemeModeValues = 'light' | 'dark';
 
@@ -498,11 +509,16 @@ export type RbkTheme = ThemeProps & {
 export type BoxProps = Overwrite<
   PressableProps & StyleProps,
   {
+    /** @internal */
+    stylist?: any[];
+
+    ref?: Ref<any>;
+    children?: ReactElement | any;
+
     id?: string;
     className?: any;
     platform?: object;
     accessibility?: AccessibilityProps;
-    children?: ReactElement | any;
     invisible?: boolean;
     hidden?: boolean;
 
@@ -707,6 +723,7 @@ export type CheckboxProps = Overwrite<
     readOnly?: boolean;
     size?: RbkSize;
     unique?: boolean;
+    value?: InputValue;
     // Events
     onFocus?: (event: RbkCheckboxEvent, checked: boolean) => void;
     onBlur?: (event: RbkCheckboxEvent, checked: boolean) => void;
@@ -862,7 +879,7 @@ export type TableProps = Overwrite<
 >;
 
 export type BadgeProps = Overwrite<
-  TextProps,
+  BoxProps,
   {
     value?: number;
     size?: RbkSize;

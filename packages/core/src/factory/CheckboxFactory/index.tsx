@@ -30,7 +30,6 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       id,
       label,
       name,
-      placeholder,
       readOnly,
       size,
       unique,
@@ -161,6 +160,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       dispatchEvent('change', newInternal, nativeEvent);
     };
 
+    // @ts-expect-error
     style = [style, extract(spacings, rest)];
 
     buttonStyle = [{ marginLeft: -theme.rem(0.5, fontSize) }, buttonStyle];

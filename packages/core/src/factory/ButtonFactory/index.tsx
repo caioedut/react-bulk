@@ -21,14 +21,12 @@ const ButtonFactory = React.memo<ButtonProps>(
     // Extends from default props
     let {
       badge,
-      block,
       circular,
       color,
       contrastColor,
       disabled,
       endAddon,
       endIcon,
-      icon,
       label,
       loading,
       transform,
