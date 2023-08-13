@@ -28,6 +28,7 @@ export default function createStyle({ name, style, theme, global: isGlobal, prep
     return native ? {} : '';
   }
 
+  // @ts-expect-error
   const id = name ?? 'rbk-' + crypt(isObject ? JSON.stringify(styleX) : styleX);
 
   if (web) {

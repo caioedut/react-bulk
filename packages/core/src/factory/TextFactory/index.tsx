@@ -24,7 +24,6 @@ const TextFactory = React.memo<TextProps>(
       justify,
       left,
       numberOfLines,
-      oblique,
       right,
       size,
       smallCaps,

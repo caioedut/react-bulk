@@ -15,7 +15,6 @@ const BackdropFactory = React.memo<BackdropProps>(
     // Extends from default props
     let {
       visible,
-      onRequestClose,
       // Styles
       variants,
       ...rest
@@ -66,7 +65,6 @@ const BackdropFactory = React.memo<BackdropProps>(
           visible={Boolean(visible)}
           animationType="fade"
           presentationStyle="overFullScreen"
-          onRequestClose={onRequestClose}
         >
           <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest} {...containerProps}>
             {children}

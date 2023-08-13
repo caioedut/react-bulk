@@ -143,7 +143,8 @@ const AnimationFactory = React.memo<AnimationProps>(
         if (attr === 'transform' && Array.isArray(val)) {
           style.transform = (val as any[]).map((obj) => {
             Object.entries(obj).map(([transfAttr, transfValue]) => {
-              const toValue = get(transfAttr, ...to.transform);
+              // @ts-expect-error
+              const toValue = get(transfAttr, ...to?.transform);
 
               obj[transfAttr] = animationValue.interpolate({
                 inputRange: [0, 1, 2],
@@ -159,7 +160,7 @@ const AnimationFactory = React.memo<AnimationProps>(
 
         style[attr] = animationValue.interpolate({
           inputRange: [0, 1, 2],
-          outputRange: [val, to[attr], val],
+          outputRange: [val, to?.[attr], val],
         });
       });
     }
