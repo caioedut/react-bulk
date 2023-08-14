@@ -22,6 +22,7 @@ export default function createStyle({ name, style, theme, global: isGlobal, prep
 
   const isObject = style && typeof style === 'object';
   const styleX = isObject ? jss({ theme }, style) : style;
+  // @ts-expect-error
   const isEmpty = (isObject ? Object.keys(styleX) : `${styleX || ''}`.trim()).length === 0;
 
   if (isEmpty) {

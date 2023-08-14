@@ -7,19 +7,19 @@ import { styleProps } from './styles/constants';
  ****************************/
 
 /** @internal */
-export type DistributiveOmit<T, K extends PropertyKey> = T extends any ? Omit<T, K> : never;
-
-/** @internal */
-export type Overwrite<T, NewT> = DistributiveOmit<T, keyof NewT> & NewT;
-
-/** @internal */
-export type PropsWithStyles<T1, T2 = {}> = Overwrite<BoxProps, Overwrite<StyleProps, Overwrite<T1, T2>>>;
-
-/** @internal */
 export type RequiredSome<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>;
 
 /** @internal */
-export type RecursivePartial<T> = {
+type DistributiveOmit<T, K extends PropertyKey> = T extends any ? Omit<T, K> : never;
+
+/** @internal */
+type Overwrite<T, NewT> = DistributiveOmit<T, keyof NewT> & NewT;
+
+/** @internal */
+type PropsWithStyles<T1, T2 = {}> = Overwrite<BoxProps, Overwrite<StyleProps, Overwrite<T1, T2>>>;
+
+/** @internal */
+type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
     ? RecursivePartial<U>[]
     : T[P] extends object | undefined
@@ -28,19 +28,19 @@ export type RecursivePartial<T> = {
 };
 
 /** @internal */
-export type ColorTypographyToken = 'text' | 'background';
+type ColorTypographyToken = 'text' | 'background';
 
 /** @internal */
-export type ColorTypographyTone = 'primary' | 'secondary' | 'disabled';
+type ColorTypographyTone = 'primary' | 'secondary' | 'disabled';
 
 /** @internal */
-export type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
+type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
 
 /** @internal */
-export type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker';
+type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker';
 
 /** @internal */
-export type FlexJustifyValues =
+type FlexJustifyValues =
   | 'center'
   | 'stretch'
   | 'flex-start'
@@ -56,7 +56,7 @@ export type FlexJustifyValues =
   | 'evenly';
 
 /** @internal */
-export type FlexAlignValues =
+type FlexAlignValues =
   | 'flex-start'
   | 'flex-end'
   | 'center'
@@ -66,7 +66,7 @@ export type FlexAlignValues =
   | 'end';
 
 /** @internal */
-export type StyleProps = Overwrite<
+type StyleProps = Overwrite<
   Partial<{
     [K in (typeof styleProps)[number]]: any;
   }>,
@@ -125,6 +125,9 @@ export type StyleProps = Overwrite<
     py?: number | string;
   }
 >;
+
+/** @internal */
+type RbkStyleVar = undefined | null | false | AnyObject | (CSSProperties & StyleProps);
 
 /** @internal */
 export type SelectOption = {
@@ -331,14 +334,7 @@ export type FormRef = {
   unsetField: (name: string) => any;
 };
 
-export type RbkStyle =
-  | undefined
-  | null
-  | false
-  | AnyObject
-  | AnyObject[]
-  | (CSSProperties & StyleProps)
-  | (CSSProperties & StyleProps)[];
+export type RbkStyle = RbkStyleVar | RbkStyleVar[];
 
 export type ThemeModeValues = 'light' | 'dark';
 
