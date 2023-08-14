@@ -244,6 +244,7 @@ export default function jss(...mixin: any[]) {
           for (const attr in item) {
             let unit = Array.isArray(item[attr]) ? item[attr].join(', ') : item[attr];
 
+            // @ts-expect-error
             if (unit && typeof unit === 'number' && !notPxProps.includes(attr)) {
               unit = `${unit}px`;
             }
