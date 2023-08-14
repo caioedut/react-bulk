@@ -3,7 +3,7 @@ import deepmerge from '../utils/deepmerge';
 import global from '../utils/global';
 
 type Variants = {
-  [key: string]: RbkStyle;
+  [key: string]: RbkStyle[];
 };
 
 export default function factory2<ComponentProps>(
@@ -37,7 +37,7 @@ export default function factory2<ComponentProps>(
     Object.keys(varStyles).forEach((styleId: any) => {
       const name = `${options?.name}-${varAttr}-${varValue}` + (styleId === 'root' ? '' : `-${styleId}`);
       variants[styleId] = variants[styleId] || [];
-      variants[styleId].push(global.styles[name]);
+      variants?.[styleId]?.push(global.styles[name]);
     });
   });
 

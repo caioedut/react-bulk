@@ -1,7 +1,5 @@
 import { MutableRefObject, createContext, createRef, useCallback, useEffect, useState } from 'react';
 
-import { Card, Text } from '@react-bulk/web';
-
 import BaseNative from './BaseNative';
 import BaseWeb from './BaseWeb';
 import Platform from './Platform';
@@ -50,10 +48,6 @@ function ReactBulk({ theme, children }: any) {
         toasterRef,
       }}
     >
-      <div style={{}} />
-      <Card />
-      <Text />
-
       {web && <BaseWeb theme={themeState}>{children}</BaseWeb>}
 
       {native && <BaseNative theme={themeState}>{children}</BaseNative>}

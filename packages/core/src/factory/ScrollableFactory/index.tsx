@@ -36,6 +36,7 @@ const ScrollableFactory = React.memo<ScrollableProps>(
     const primaryColor = theme.color('primary');
 
     contentStyle = [
+      // @ts-expect-error
       extract(flexContainerProps, style),
 
       { p: contentInset ?? 0 },

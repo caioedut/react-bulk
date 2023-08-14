@@ -140,7 +140,7 @@ const InputFactory = React.memo<InputProps>(
     color = error ? 'error' : color || 'primary';
     selectionColor = theme.color(selectionColor ?? color);
     placeholderColor = theme.color(
-      placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input.color ?? 'text.primary',
+      placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input?.color ?? 'text.primary',
       0.4,
     );
     autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
