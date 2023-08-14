@@ -314,6 +314,7 @@ const SelectFactory = React.memo<SelectProps>(
       optionFocus(newIndex);
     };
 
+    // @ts-expect-error
     style = [extract(spacings, rest), style];
 
     labelStyle = [error && { color: 'error' }, labelStyle];

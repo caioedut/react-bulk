@@ -140,6 +140,7 @@ const InputFactory = React.memo<InputProps>(
     color = error ? 'error' : color || 'primary';
     selectionColor = theme.color(selectionColor ?? color);
     placeholderColor = theme.color(
+      // @ts-expect-error
       placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input?.color ?? 'text.primary',
       0.4,
     );
@@ -317,6 +318,7 @@ const InputFactory = React.memo<InputProps>(
       dispatchEvent('submit', internal, nativeEvent);
     }
 
+    // @ts-expect-error
     style = [extract(customStyleProps, rest), style];
 
     labelStyle = [error && { color: 'error' }, labelStyle];
