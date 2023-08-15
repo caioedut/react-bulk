@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from 'react';
 
 import { RbkAnimation } from '../types';
 import global from '../utils/global';
+import sleep from '../utils/sleep';
 
 export default function useAnimation(initial = {}) {
   const { web, native, Animated, Easing } = global.mapping;
@@ -20,15 +21,15 @@ export default function useAnimation(initial = {}) {
     return values;
   }, []);
 
-  const [style, setStyle] = useState(initialStyle);
+  const [currentStyle, setCurrentStyle] = useState(initialStyle);
 
   async function start(styles = {}, options: RbkAnimation = {}) {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
       let { boomerang = false, delay = 0, timing = 'ease', iterations = 1 } = options;
 
       const duration = options.duration ?? options.speed ?? 350;
 
-      stop();
+      await stop();
 
       if (iterations === 'infinite') {
         iterations = -1;
@@ -40,7 +41,7 @@ export default function useAnimation(initial = {}) {
         }
 
         const animate = () => {
-          setStyle((current) => ({
+          setCurrentStyle((current) => ({
             ...current,
             transitionDelay: `${delay}ms`,
             transitionDuration: `${duration}ms`,
@@ -57,11 +58,11 @@ export default function useAnimation(initial = {}) {
               toStyle[attr] = styles[attr];
             }
 
-            setStyle((current) => ({ ...current, ...toStyle }));
+            setCurrentStyle((current) => ({ ...current, ...toStyle }));
 
             if (boomerang) {
               animRef.current = setTimeout(() => {
-                setStyle((current) => ({ ...current, ...initialStyle }));
+                setCurrentStyle((current) => ({ ...current, ...initialStyle }));
               }, nextDelay);
 
               nextDelay *= 2;
@@ -79,7 +80,7 @@ export default function useAnimation(initial = {}) {
             // @ts-ignore
             if (iterations > 0) {
               animRef.current = setTimeout(() => {
-                setStyle({ ...initialStyle, transitionProperty: 'none' });
+                setCurrentStyle({ ...initialStyle, transitionProperty: 'none' });
                 animRef.current = setTimeout(animate, 0);
               }, nextDelay);
             }
@@ -99,25 +100,28 @@ export default function useAnimation(initial = {}) {
           .map((str, index) => (!index ? str : str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase()))
           .join('');
 
-        setTimeout(() => {
-          const animations = Object.entries(style).map(([attr, animValue]) =>
-            Animated.timing(animValue, {
-              delay,
-              duration,
-              easing: Easing[easing],
-              toValue: styles[attr],
-              useNativeDriver: false,
-            }),
-          );
+        await sleep(0);
 
-          animRef.current = Animated.loop(Animated.parallel(animations), { iterations });
-          animRef.current.start(() => resolve(1));
-        }, 0);
+        const animations = Object.entries(styles).map(([attr, value]) => {
+          const animValue = currentStyle[attr];
+          animValue.setValue(animValue.__getValue());
+
+          return Animated.timing(animValue, {
+            useNativeDriver: false,
+            delay,
+            duration,
+            easing: Easing[easing],
+            toValue: value,
+          });
+        });
+
+        animRef.current = Animated.loop(Animated.parallel(animations), { iterations });
+        animRef.current.start(() => resolve(1));
       }
     });
   }
 
-  function stop() {
+  async function stop() {
     if (!animRef.current) return;
 
     if (web) {
@@ -129,16 +133,16 @@ export default function useAnimation(initial = {}) {
     }
   }
 
-  function reset() {
-    stop();
-    setStyle(initialStyle);
+  async function reset() {
+    await stop();
+    setCurrentStyle(initialStyle);
   }
 
   return {
     start,
     stop,
     reset,
-    style,
+    style: currentStyle,
     Component: Animated.View,
   };
 }
