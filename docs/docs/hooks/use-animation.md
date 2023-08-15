@@ -14,6 +14,9 @@ import { useAnimation } from '@react-bulk/core'; // OR @react-bulk/native
 function App() {
   const sizeAnim = useAnimation({ width: 10, height: 10 });
 
+  const from = { width: 40, height: 40 };
+  const to = { width: 200, height: 200 };
+
   return (
     <Grid gap>
       <Box>
