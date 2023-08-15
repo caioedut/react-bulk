@@ -76,6 +76,11 @@ const CollapseFactory = React.memo<CollapseProps>(
         let curSize = expanded ? 0 : size;
         let newSize = expanded ? size : 0;
 
+        // TODO: remove complete "if" and animate HEIGHT
+        if (native && expanded) {
+          newSize = 'auto';
+        }
+
         setStyles($el, {
           height: curSize,
           opacity: native ? 1 : '1',
