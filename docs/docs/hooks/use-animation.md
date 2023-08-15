@@ -14,20 +14,43 @@ import { useAnimation } from '@react-bulk/core'; // OR @react-bulk/native
 function App() {
   const sizeAnim = useAnimation({ width: 10, height: 10 });
 
-  function handleForward() {
-    sizeAnim.start({ width: 100, height: 100 })
-  }
-
-  function handleBackward() {
-    sizeAnim.start({ width: 10, height: 10 })
-  }
-
   return (
-    <Box center>
-      <Button mb={3} onPress={handleForward}>Animate Forward</Button>
-      <Button mb={3} onPress={handleBackward}>Animate Backward</Button>
-      <Box border='1px solid primary' style={sizeAnim.style} />
-    </Box>
+    <Grid gap>
+      <Box>
+        <Button onPress={() => sizeAnim.start(to)}>Forward</Button>
+      </Box>
+      <Box>
+        <Button onPress={() => sizeAnim.start(from)}>Backward</Button>
+      </Box>
+      <Box>
+        <Button onPress={() => sizeAnim.start(to, { iterations: 3 })}>Repeat 3x</Button>
+      </Box>
+      <Box>
+        <Button onPress={() => sizeAnim.start(to, { boomerang: true })}>Boomerang</Button>
+      </Box>
+      <Box>
+        <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 3 })}>3x Boomerang</Button>
+      </Box>
+      <Box>
+        <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 'infinite' })}>Inifite</Button>
+      </Box>
+      <Box>
+        <Button
+          color="error"
+          onPress={async () => {
+            await sizeAnim.start(from);
+            await sizeAnim.stop();
+          }}
+        >
+          Reset/Stop
+        </Button>
+      </Box>
+      <Box xs={12}>
+        <Box border="1px solid primary" align="start">
+          <sizeAnim.Component style={sizeAnim.style} />
+        </Box>
+      </Box>
+    </Grid>
   );
 }
 ```

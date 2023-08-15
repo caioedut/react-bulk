@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkInputEvent, useToaster } from '@react-bulk/core';
+import { AnyObject, FormRef, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
 import {
   ActionSheet,
   Animation,
@@ -1058,11 +1058,57 @@ function CarouselExample() {
 function AnimationExample() {
   const theme = useTheme();
 
+  const from = { width: 40, height: 40 };
+  const to = { width: 200, height: 200 };
+
+  const sizeAnim = useAnimation(from);
+
   return (
     <>
       <Text variant="title" mb={theme.shape.gap}>
         Animations (Beta)
       </Text>
+
+      <Text variant="subtitle" mb={theme.shape.gap}>
+        useAnimation
+      </Text>
+
+      <Grid gap>
+        <Box>
+          <Button onPress={() => sizeAnim.start(to)}>Forward</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => sizeAnim.start(from)}>Backward</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => sizeAnim.start(to, { iterations: 3 })}>Repeat 3x</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => sizeAnim.start(to, { boomerang: true })}>Boomerang</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 3 })}>3x Boomerang</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 'infinite' })}>Inifite</Button>
+        </Box>
+        <Box>
+          <Button
+            color="error"
+            onPress={async () => {
+              await sizeAnim.start(from);
+              await sizeAnim.stop();
+            }}
+          >
+            Reset/Stop
+          </Button>
+        </Box>
+        <Box xs={12}>
+          <Box border="1px solid primary" align="start">
+            <sizeAnim.Component style={sizeAnim.style} />
+          </Box>
+        </Box>
+      </Grid>
 
       {animations.map((animation, key) => {
         const label = typeof animation === 'string' ? getLabel(animation) : 'Custom';
@@ -1070,7 +1116,8 @@ function AnimationExample() {
 
         return (
           <React.Fragment key={key}>
-            {key > 0 && <Divider my={theme.shape.gap} mx={-theme.shape.gap} />}
+            <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+
             <Box>
               <Text variant="subtitle" mb={theme.shape.gap}>
                 {label}
