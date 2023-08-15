@@ -35,14 +35,13 @@ function App() {
         <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 'infinite' })}>Inifite</Button>
       </Box>
       <Box>
-        <Button
-          color="error"
-          onPress={async () => {
-            await sizeAnim.start(from);
-            await sizeAnim.stop();
-          }}
-        >
-          Reset/Stop
+        <Button color="warning" onPress={() => sizeAnim.stop()}>
+          Stop
+        </Button>
+      </Box>
+      <Box>
+        <Button color="error" onPress={() => sizeAnim.reset()}>
+          Reset
         </Button>
       </Box>
       <Box xs={12}>
