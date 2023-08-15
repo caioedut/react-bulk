@@ -335,7 +335,6 @@ const SelectFactory = React.memo<SelectProps>(
 
         <ButtonFactory
           ref={buttonRef}
-          block
           color={color}
           endAddon={
             loading ? (
@@ -394,7 +393,6 @@ const SelectFactory = React.memo<SelectProps>(
                     key={option.value}
                     size={size}
                     variant="text"
-                    block
                     disabled={option.disabled}
                     bg={isSelected ? theme.color(color, 0.1) : undefined}
                     style={{ paddingHorizontal: spacing }}
