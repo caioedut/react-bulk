@@ -288,17 +288,17 @@ export interface AccessibilityProps {
 
 export interface PressableProps {
   pressable?: boolean;
-  onPress?: (event: Event) => void;
-  onPressIn?: (event: Event) => void;
-  onPressOut?: (event: Event) => void;
-  onLongPress?: (event: Event) => void;
+  onPress?: Function;
+  onPressIn?: Function;
+  onPressOut?: Function;
+  onLongPress?: Function;
 
   /** @deprecated use onPress(event) instead */
-  onClick?: (event: Event) => void;
+  onClick?: Function;
   /** @deprecated use onPressIn(event) instead */
-  onMouseDown?: (event: Event) => void;
+  onMouseDown?: Function;
   /** @deprecated use onPressOut(event) instead */
-  onMouseUp?: (event: Event) => void;
+  onMouseUp?: Function;
 }
 
 export interface FocusableProps {
@@ -307,8 +307,8 @@ export interface FocusableProps {
   focus?: () => void;
   isFocused?: () => boolean;
   // Events
-  onBlur?: (event: Event) => void;
-  onFocus?: (event: Event) => void;
+  onBlur?: Function;
+  onFocus?: Function;
 }
 
 export type FormField = {
@@ -666,9 +666,9 @@ export type InputProps = PropsWithStyles<
     /** @deprecated use type="password" instead */
     secure?: boolean;
     /** @deprecated use onChange(event, value) instead */
-    onInput?: (event: Event) => void;
+    onInput?: Function;
     /** @deprecated use onChange(event, value) instead */
-    onChangeText?: (event: Event) => void;
+    onChangeText?: Function;
   }
 >;
 
@@ -790,8 +790,8 @@ export type ImageProps = PropsWithStyles<{
   width?: number | string;
   height?: number | string;
   // Events
-  onLoad?: (event: Event) => void;
-  onError?: (event: Event) => void;
+  onLoad?: Function;
+  onError?: Function;
 }>;
 
 export type DividerProps = PropsWithStyles<{
@@ -809,7 +809,7 @@ export type ModalProps = PropsWithStyles<{
   halign?: 'center' | 'left' | 'right';
   valign?: 'center' | 'top' | 'bottom';
   visible?: boolean;
-  onBackdropPress?: (event: Event) => void;
+  onBackdropPress?: Function;
 }>;
 
 export type CollapseProps = PropsWithStyles<{
@@ -873,7 +873,7 @@ export type TooltipProps = PropsWithStyles<{
 export type ActionSheetProps = PropsWithStyles<{
   visible?: boolean;
   // Events
-  onClose?: (event: Event) => void;
+  onClose?: Function;
 }>;
 
 export type AnimationProps = PropsWithStyles<{
