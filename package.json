@@ -1,5 +1,6 @@
 {
   "name": "root",
+  "private": true,
   "keywords": [
     "react",
     "react-native",
@@ -27,8 +28,8 @@
   "scripts": {
     "doc": "yarn --cwd ./docs",
     "test": "tsx scripts/test.ts",
-    "example:web": "yarn build && yarn --cwd ./examples/web dev",
-    "example:native": "yarn build && yarn --cwd ./examples/native dev",
+    "example:web": "tsx scripts/example.ts --web",
+    "example:native": "tsx scripts/example.ts --native",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna exec --parallel -- rimraf dist typings",
     "prebuild": "npm run clean",
@@ -41,6 +42,7 @@
     "@types/react": "^17.0.2",
     "@types/react-native": "^0.63.4",
     "lerna": "^5.1.4",
+    "pmex": "^0.0.35",
     "prettier": "^2.8.8",
     "react": "^17.0.2",
     "react-native": "^0.63.4",

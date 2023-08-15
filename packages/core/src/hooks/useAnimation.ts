@@ -10,7 +10,6 @@ export default function useAnimation(initial = {}) {
 
   const initialStyle = useMemo(() => {
     const props = Object.keys(initial);
-
     const values = {};
 
     for (const prop of props) {
@@ -19,92 +18,103 @@ export default function useAnimation(initial = {}) {
     }
 
     return values;
-  }, [initial]);
+  }, []);
 
   const [style, setStyle] = useState(initialStyle);
 
-  function start(styles = {}, options: RbkAnimation = {}) {
-    let { boomerang = false, delay = 0, timing = 'ease', iterations = 1 } = options;
+  async function start(styles = {}, options: RbkAnimation = {}) {
+    return new Promise((resolve) => {
+      let { boomerang = false, delay = 0, timing = 'ease', iterations = 1 } = options;
 
-    const duration = options.duration ?? options.speed ?? 350;
+      const duration = options.duration ?? options.speed ?? 350;
 
-    stop();
+      stop();
 
-    if (iterations === 'infinite') {
-      iterations = -1;
-    }
-
-    if (web) {
-      if (iterations === -1) {
-        iterations = Number.POSITIVE_INFINITY;
+      if (iterations === 'infinite') {
+        iterations = -1;
       }
 
-      const animate = () => {
-        setStyle((current) => ({
-          ...current,
-          transitionDelay: `${delay}ms`,
-          transitionDuration: `${duration}ms`,
-          transitionProperty: 'all',
-          transitionTimingFunction: timing,
-        }));
+      if (web) {
+        if (iterations === -1) {
+          iterations = Number.POSITIVE_INFINITY;
+        }
 
-        let nextDelay = Math.max(0, duration - 3);
+        const animate = () => {
+          setStyle((current) => ({
+            ...current,
+            transitionDelay: `${delay}ms`,
+            transitionDuration: `${duration}ms`,
+            transitionProperty: 'all',
+            transitionTimingFunction: timing,
+          }));
 
-        animRef.current = setTimeout(() => {
-          const toStyle = {};
+          let nextDelay = Math.max(0, duration - 3);
 
-          for (const attr of Object.keys(initialStyle)) {
-            toStyle[attr] = styles[attr];
-          }
+          animRef.current = setTimeout(() => {
+            const toStyle = {};
 
-          setStyle((current) => ({ ...current, ...toStyle }));
+            for (const attr of Object.keys(initialStyle)) {
+              toStyle[attr] = styles[attr];
+            }
 
-          if (boomerang) {
-            animRef.current = setTimeout(() => {
-              setStyle((current) => ({ ...current, ...initialStyle }));
-            }, nextDelay);
+            setStyle((current) => ({ ...current, ...toStyle }));
 
-            nextDelay *= 2;
-          }
+            if (boomerang) {
+              animRef.current = setTimeout(() => {
+                setStyle((current) => ({ ...current, ...initialStyle }));
+              }, nextDelay);
 
-          // @ts-ignore
-          if (--iterations > 0) {
-            animRef.current = setTimeout(() => {
-              setStyle({ ...initialStyle, transitionProperty: 'none' });
-              animRef.current = setTimeout(animate, 0);
-            }, nextDelay);
-          }
+              nextDelay *= 2;
+            }
+
+            // @ts-expect-error
+            iterations -= 1;
+
+            if (iterations === 0) {
+              animRef.current = setTimeout(() => {
+                resolve(1);
+              }, nextDelay);
+            }
+
+            // @ts-ignore
+            if (iterations > 0) {
+              animRef.current = setTimeout(() => {
+                setStyle({ ...initialStyle, transitionProperty: 'none' });
+                animRef.current = setTimeout(animate, 0);
+              }, nextDelay);
+            }
+          }, 0);
+        };
+
+        animate();
+      }
+
+      if (native) {
+        if (boomerang) {
+          console.warn('"useAnimation" "boomerang" was not supported on native.');
+        }
+
+        const easing = (timing || 'ease')
+          .split('-')
+          .map((str, index) => (!index ? str : str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase()))
+          .join('');
+
+        setTimeout(() => {
+          const animations = Object.entries(style).map(([attr, animValue]) =>
+            Animated.timing(animValue, {
+              delay,
+              duration,
+              easing: Easing[easing],
+              toValue: styles[attr],
+              useNativeDriver: false,
+            }),
+          );
+
+          animRef.current = Animated.loop(Animated.parallel(animations), { iterations });
+          animRef.current.start(() => resolve(1));
         }, 0);
-      };
-
-      animate();
-    }
-
-    if (native) {
-      if (boomerang) {
-        console.warn('"useAnimation" "boomerang" was not supported on native.');
       }
-
-      const easing = (timing || 'ease')
-        .split('-')
-        .map((str, index) => (!index ? str : str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase()))
-        .join('');
-
-      setTimeout(() => {
-        const animations = Object.entries(style).map(([attr, animValue]) =>
-          Animated.timing(animValue, {
-            delay,
-            duration,
-            easing: Easing[easing],
-            toValue: styles[attr],
-            useNativeDriver: false,
-          }),
-        );
-
-        animRef.current = Animated.loop(Animated.parallel(animations), { iterations });
-        animRef.current.start();
-      }, 0);
-    }
+    });
   }
 
   function stop() {
