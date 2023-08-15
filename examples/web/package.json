@@ -5,7 +5,7 @@
   "main": "index.tsx",
   "dependencies": {
     "@react-bulk/core": "file:../../packages/core",
-    "@react-bulk/native": "file:../../packages/native",
+    "@react-bulk/web": "file:../../packages/web",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

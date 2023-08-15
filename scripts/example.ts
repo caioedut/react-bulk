@@ -26,19 +26,19 @@ rmSync(`${cwd}/node_modules/@react-bulk/${platform}/dist`, {
 });
 
 cpSync('./packages/core/dist', `${cwd}/node_modules/@react-bulk/core/dist`, {
-  recursive: true,
   force: true,
+  recursive: true,
 });
 
 cpSync(`./packages/${platform}/dist`, `${cwd}/node_modules/@react-bulk/${platform}/dist`, {
-  recursive: true,
   force: true,
+  recursive: true,
 });
 
 if (isWeb) {
-  pmex(`yarn --cwd ${cwd} vite dev`);
+  pmex(`yarn --cwd ${cwd} vite dev --force`);
 }
 
 if (isNative) {
-  pmex(`yarn --cwd ${cwd} expo start`);
+  pmex(`yarn --cwd ${cwd} expo start -c`);
 }
