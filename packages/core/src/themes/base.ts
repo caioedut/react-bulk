@@ -934,7 +934,6 @@ const base: ThemeProps = {
           color: 'primary',
           label: true,
           size: 'medium',
-          value: 0,
         },
         defaultStyles: {
           root: {
