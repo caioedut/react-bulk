@@ -394,6 +394,7 @@ const SelectFactory = React.memo<SelectProps>(
                     size={size}
                     variant="text"
                     disabled={option.disabled}
+                    color={color}
                     bg={isSelected ? theme.color(color, 0.1) : undefined}
                     style={{ paddingHorizontal: spacing }}
                     contentStyle={{ flex: 1, maxWidth: '100%' }}

@@ -20,12 +20,12 @@ const base: ThemeProps = {
 
   colors: {
     primary: '#8b5cf6',
-    secondary: '#b87107',
+    secondary: '#0d542d',
 
     info: '#007bff',
-    success: '#28a745',
-    warning: '#b87107',
-    error: '#dc3545',
+    success: '#1c8a35',
+    warning: '#b0620e',
+    error: '#db1d1d',
 
     gray: '#6b7280',
     red: '#ef4444',
