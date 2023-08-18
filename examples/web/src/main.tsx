@@ -269,7 +269,19 @@ function ThemeExample() {
       <Text variant="subtitle" my={theme.shape.gap}>
         Colors
       </Text>
+
       <Grid gap>
+        {colors.map((color) => (
+          <Box key={color}>
+            <Card bg={color}>
+              <Text color={theme.contrast(color)}>Color: {color}</Text>
+              <Text color={theme.contrast(color)}>Contrast: {theme.contrast(color)}</Text>
+            </Card>
+          </Box>
+        ))}
+      </Grid>
+
+      <Grid gap mt={2}>
         {Object.keys(theme.colors)
           .filter((item) => !['common', 'text', 'background'].includes(item))
           .map((color) => (
