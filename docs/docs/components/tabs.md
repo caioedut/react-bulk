@@ -66,6 +66,27 @@ function App() {
 }
 ```
 
+Nav
+
+```jsx live
+function App() {
+  const [tab, setTab] = useState(0);
+
+  return (
+    <Tabs
+      variant='nav'
+      value={tab}
+      onChange={(e, newValue) => setTab(newValue)}
+      tabs={[
+        { label: 'Tab 1' },
+        { label: 'Tab 2' },
+        { label: 'Tab 3' },
+      ]}
+    />
+  )
+}
+```
+
 ## Props
 
 Extends all [`Scrollable`](/docs/components/core/scrollable#props) props.
