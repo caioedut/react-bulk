@@ -46,7 +46,7 @@ const TableFactory = React.memo<TableProps>(
       return [
         {
           border,
-          p: theme.shape.gap,
+          p: theme.shape.gap / 2,
           borderBottomWidth: 0,
           borderRightWidth: 0,
           width,
