@@ -1114,22 +1114,19 @@ const base: ThemeProps = {
         variants: {
           variant: {
             group: {
-              root: {
-                pt: 2,
-              },
               button: {
                 borderBottomWidth: 0,
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
                 marginLeft: -1,
               },
-              active: {
-                mt: -1,
-              },
             },
             card: {
+              root: {
+                mx: -2,
+              },
               button: {
-                mr: this.shape.gap / 2,
+                mx: 1,
               },
             },
           },

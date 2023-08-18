@@ -954,6 +954,15 @@ function TabsExample() {
           tabs={[{ label: 'Tab 1' }, { label: 'Tab 2' }, { label: 'Tab 3' }, { label: 'Tab 4' }, { label: 'Tab 6' }]}
         />
       </Card>
+
+      <Card bg="background.secondary" mt={theme.shape.gap}>
+        <Tabs
+          variant="nav"
+          value={tab}
+          onChange={(e, value) => setTab(value)}
+          tabs={[{ label: 'Tab 1' }, { label: 'Tab 2' }, { label: 'Tab 3' }, { label: 'Tab 4' }, { label: 'Tab 6' }]}
+        />
+      </Card>
     </>
   );
 }

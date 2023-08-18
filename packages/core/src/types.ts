@@ -949,7 +949,7 @@ export type TabsProps = PropsWithStyles<
     size?: RbkSize;
     tabs: TabItem[];
     value?: string | number;
-    variant?: 'group' | 'card';
+    variant?: 'group' | 'card' | 'nav';
     // Events
     onChange?: (event: Event, value: string | number) => any;
     // Styles
