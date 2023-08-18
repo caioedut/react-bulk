@@ -959,6 +959,16 @@ export type TabsProps = PropsWithStyles<
   }
 >;
 
+export type ToasterProps = {
+  content?: ReactElement;
+  color?: RbkColor;
+  duration?: number;
+  halign?: 'left' | 'right' | 'center';
+  offset?: { x?: number | string; y?: number | string };
+  valign?: 'top' | 'bottom';
+  width?: number | string;
+};
+
 /************************
  * DEPRECATIONS (START) *
  ************************/

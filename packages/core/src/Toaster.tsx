@@ -5,17 +5,8 @@ import AnimationFactory from './factory/AnimationFactory';
 import BoxFactory from './factory/BoxFactory';
 import CardFactory from './factory/CardFactory';
 import TextFactory from './factory/TextFactory';
-import { RbkColor, ReactElement, TimeoutType } from './types';
+import { TimeoutType, ToasterProps } from './types';
 import uuid from './utils/uuid';
-
-export type ToasterProps = {
-  content?: ReactElement;
-  color?: RbkColor;
-  duration?: number;
-  halign?: 'left' | 'right' | 'center';
-  valign?: 'top' | 'bottom';
-  width?: number | string;
-};
 
 export type ToasterRef = {
   props: ToasterProps;
@@ -38,6 +29,7 @@ function Toaster({ theme }: any, ref) {
     duration = 4000,
     width,
     halign = 'left',
+    offset,
     valign = 'bottom',
   } = props || {};
 
@@ -90,7 +82,9 @@ function Toaster({ theme }: any, ref) {
         <AnimationFactory
           key={idRef.current}
           in
-          m={theme.shape.gap}
+          p={theme.shape.gap}
+          mx={offset?.x}
+          my={offset?.y}
           duration={200}
           from={{ transform: [{ translateY }] }}
           to={{ transform: [{ translateY: 0 }] }}
