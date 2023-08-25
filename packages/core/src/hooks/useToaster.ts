@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import { Context } from '../ReactBulk';
-import { ToasterProps } from '../Toaster';
+import { ToasterProps } from '../types';
 
 export default function useToaster() {
   const { toasterRef } = useContext(Context);
