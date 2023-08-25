@@ -1,19 +1,11 @@
-import { execSync } from 'child_process';
+import pmex from 'pmex';
 
 const dirs = ['packages/core', 'packages/web', 'packages/native'];
 
 for (const dir of dirs) {
-  const commands = [
-    // Run sequence
-    `npx prettier --check "${dir}/{src,test,app,pages}/**/*.{js,jsx,ts,tsx}"`,
-    // `yarn --cwd ${dir} eslint "{src,test}/**/*.{js,jsx,ts,tsx}"`,
-    `yarn --cwd ${dir} tsc --noEmit --skipLibCheck`,
-  ];
+  pmex(`prettier "${dir}/src/**/*.{js,jsx,ts,tsx}" --check`);
 
-  for (const cmd of commands) {
-    console.log('-'.repeat(process.stdout.columns));
-    console.log(`$ ${cmd}`);
-    execSync(cmd, { stdio: 'inherit' });
-    console.log('Finished.');
-  }
+  // pmex(`eslint "${dir}/src/**/*.{js,jsx,ts,tsx}" --max-warnings=0`);
+
+  pmex(`yarn --cwd ${dir} tsc --noEmit --skipLibCheck`);
 }
