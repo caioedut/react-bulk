@@ -82,8 +82,14 @@ const BoxFactory = React.memo<BoxProps>(
       typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
 
       // Flex Container
-      row && { flexDirection: reverse ? 'row-reverse' : 'row', flexWrap: 'wrap' },
-      column && { flexDirection: reverse ? 'column-reverse' : 'column' },
+      row && {
+        flexDirection: reverse ? 'row-reverse' : 'row',
+        flexWrap: 'wrap',
+      },
+
+      column && {
+        flexDirection: reverse ? 'column-reverse' : 'column',
+      },
 
       wrap && typeof wrap !== 'boolean' && { flexWrap: wrap },
       typeof wrap === 'boolean' && { flexWrap: wrap ? 'wrap' : 'nowrap' },

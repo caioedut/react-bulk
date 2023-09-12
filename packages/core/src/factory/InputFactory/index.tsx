@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
@@ -134,8 +134,7 @@ const InputFactory = React.memo<InputProps>(
 
     const [focused, setFocused] = useState(false);
 
-    const initialValue = useMemo(() => value ?? defaultValue, []);
-    const [internal, setInternal] = useState(initialValue);
+    const [internal, setInternal] = useState(value ?? defaultValue);
 
     color = error ? 'error' : color || 'primary';
     selectionColor = theme.color(selectionColor ?? color);
