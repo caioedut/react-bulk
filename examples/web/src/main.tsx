@@ -343,15 +343,19 @@ function GridExample() {
         size={5}
       </Text>
       <Grid size={5}>
-        <Text xs={5} md={1}>
-          Column 1 xs={5} md={1}
-        </Text>
-        <Text xs={5} md={3}>
-          Column 2 xs={5} md={3}
-        </Text>
-        <Text xs={5} md="auto">
-          Column 3 xs={5} md="flex"
-        </Text>
+        <Box xs={5} md={1}>
+          <Text>
+            Column 1 xs={5} md={1}
+          </Text>
+        </Box>
+        <Box xs={5} md={3}>
+          <Text>
+            Column 2 xs={5} md={3}
+          </Text>
+        </Box>
+        <Box xs={5} md="auto">
+          <Text>Column 3 xs={5} md="flex"</Text>
+        </Box>
       </Grid>
     </>
   );
@@ -363,17 +367,38 @@ function TypographyExample() {
   return (
     <>
       <Text variant="title">Typography</Text>
+
       <Grid alignItems="baseline" gap mt={theme.shape.gap}>
-        <Text variant="h1">H1</Text>
-        <Text variant="h2">H2</Text>
-        <Text variant="h3">H3</Text>
-        <Text variant="h4">H4</Text>
-        <Text variant="h5">H5</Text>
-        <Text variant="h6">H6</Text>
-        <Text variant="title">Title</Text>
-        <Text variant="subtitle">Subtitle</Text>
-        <Text variant="caption">Caption</Text>
-        <Text>Text</Text>
+        <Box>
+          <Text variant="h1">H1</Text>
+        </Box>
+        <Box>
+          <Text variant="h2">H2</Text>
+        </Box>
+        <Box>
+          <Text variant="h3">H3</Text>
+        </Box>
+        <Box>
+          <Text variant="h4">H4</Text>
+        </Box>
+        <Box>
+          <Text variant="h5">H5</Text>
+        </Box>
+        <Box>
+          <Text variant="h6">H6</Text>
+        </Box>
+        <Box>
+          <Text variant="title">Title</Text>
+        </Box>
+        <Box>
+          <Text variant="subtitle">Subtitle</Text>
+        </Box>
+        <Box>
+          <Text variant="caption">Caption</Text>
+        </Box>
+        <Box>
+          <Text>Text</Text>
+        </Box>
       </Grid>
     </>
   );
@@ -479,7 +504,7 @@ function FormExample() {
   const [radio, setRadio] = useState('medium');
   const [checkbox, toggleCheckbox] = useReducer((state) => !state, true);
 
-  function handleSubmitForm(e: FormRef, data: AnyObject) {
+  function handleSubmitForm(_: FormRef, data: AnyObject) {
     alert(JSON.stringify(data, null, 2));
   }
 
@@ -839,7 +864,7 @@ function CollapseExample() {
       <Box row>
         <Button onPress={toggleCollapse}>Toggle Collapse</Button>
       </Box>
-      <Collapse in={collpase} mt={theme.shape.gap}>
+      <Collapse visible={collpase} mt={theme.shape.gap}>
         <Text>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis,
           dignissimos distinctio earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam
@@ -941,7 +966,7 @@ function TabsExample() {
         <Tabs
           variant="group"
           value={tab}
-          onChange={(e, value) => setTab(value)}
+          onChange={(_, value) => setTab(value)}
           tabs={[{ label: 'Tab 1' }, { label: 'Tab 2' }, { label: 'Tab 3' }, { label: 'Tab 4' }, { label: 'Tab 6' }]}
         />
       </Card>
@@ -950,7 +975,7 @@ function TabsExample() {
         <Tabs
           variant="card"
           value={tab}
-          onChange={(e, value) => setTab(value)}
+          onChange={(_, value) => setTab(value)}
           tabs={[{ label: 'Tab 1' }, { label: 'Tab 2' }, { label: 'Tab 3' }, { label: 'Tab 4' }, { label: 'Tab 6' }]}
         />
       </Card>
@@ -959,7 +984,7 @@ function TabsExample() {
         <Tabs
           variant="nav"
           value={tab}
-          onChange={(e, value) => setTab(value)}
+          onChange={(_, value) => setTab(value)}
           tabs={[{ label: 'Tab 1' }, { label: 'Tab 2' }, { label: 'Tab 3' }, { label: 'Tab 4' }, { label: 'Tab 6' }]}
         />
       </Card>
@@ -1057,7 +1082,7 @@ function CarouselExample() {
         Carousel
       </Text>
       <Carousel xs={1} sm={2} md={3} lg={4} xl={5} gap>
-        {Array.from({ length: 11 }).map((i, index) => (
+        {Array.from({ length: 11 }).map((_, index) => (
           <Card key={index} corners={3} bg="background.secondary">
             <Text bold>Item {index + 1}</Text>
             <Image
@@ -1143,12 +1168,16 @@ function AnimationExample() {
                 {label}
               </Text>
               <Grid noWrap alignItems="center" gap={6}>
-                <Animation loop in {...props}>
-                  <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-                </Animation>
-                <Animation loop in {...props}>
-                  <Text>Anything</Text>
-                </Animation>
+                <Box>
+                  <Animation loop in {...props}>
+                    <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
+                  </Animation>
+                </Box>
+                <Box>
+                  <Animation loop in {...props}>
+                    <Text>Anything</Text>
+                  </Animation>
+                </Box>
               </Grid>
             </Box>
           </React.Fragment>
