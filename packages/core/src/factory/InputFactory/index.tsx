@@ -27,6 +27,7 @@ const InputFactory = React.memo<InputProps>(
     let {
       autoCapitalize,
       autoCorrect,
+      autoComplete,
       caretHidden,
       color,
       controlled,
@@ -147,10 +148,6 @@ const InputFactory = React.memo<InputProps>(
 
     startAddon = startAddon ?? startIcon;
     endAddon = endAddon ?? endIcon;
-
-    // if (color && !focused && !error) {
-    //   color = theme.color(color, null, '-50%');
-    // }
 
     if (web) {
       Object.assign(rest, {
@@ -393,7 +390,9 @@ const InputFactory = React.memo<InputProps>(
               {...rest}
               noRootStyles
               id={id}
+              autoComplete={autoComplete}
               disabled={disabled}
+              maxLength={maxLength}
               name={name}
               value={maskValue(internal)}
               onChange={handleChange}
