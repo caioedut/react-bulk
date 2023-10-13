@@ -38,7 +38,6 @@ const GridFactory = React.memo<GridProps>(
           }
 
           const props = { ...Object(child?.props) };
-          const itemStyle: RbkStyle[] = [props.style, { padding: spacing }];
           let bkptStyle: RbkStyle = {};
 
           Object.entries(breakpoints || {})
@@ -67,10 +66,23 @@ const GridFactory = React.memo<GridProps>(
               delete props[breakpoint];
             });
 
-          itemStyle.push(bkptStyle);
+          if (
+            child?.type !== BoxFactory &&
+            Object.keys(props).filter((prop) => !['ref', 'key', 'children'].includes(prop)).length > 0
+          ) {
+            console.warn(
+              'It\'s recommended to wrap the grid child in a "Box" to pass props in addition to breakpoints.',
+            );
+          }
 
           return (
-            <BoxFactory key={index} component={child?.type} {...props} style={itemStyle} stylist={[variants.item]} />
+            <BoxFactory
+              key={index}
+              component={child?.type}
+              {...props}
+              style={[props.style, { padding: spacing }, bkptStyle]}
+              stylist={[variants.item]}
+            />
           );
         })}
       </BoxFactory>
