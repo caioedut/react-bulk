@@ -5,6 +5,7 @@ import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
 import { GridProps, RbkStyle, RequiredSome } from '../../types';
 import global from '../../utils/global';
+import stdout from '../../utils/stdout';
 import BoxFactory from '../BoxFactory';
 
 const GridFactory = React.memo<GridProps>(
@@ -70,7 +71,7 @@ const GridFactory = React.memo<GridProps>(
             child?.type !== BoxFactory &&
             Object.keys(props).filter((prop) => !['ref', 'key', 'children'].includes(prop)).length > 0
           ) {
-            console.warn(
+            stdout.warn(
               'It\'s recommended to wrap the grid child in a "Box" to pass props in addition to breakpoints.',
             );
           }
