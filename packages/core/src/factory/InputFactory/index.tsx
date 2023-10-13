@@ -252,7 +252,7 @@ const InputFactory = React.memo<InputProps>(
       [inputRef],
     );
 
-    function dispatchEvent(type: string, value: number, nativeEvent?: any) {
+    function dispatchEvent(type: string, value: InputValue, nativeEvent?: any) {
       const callback = {
         focus: onFocus,
         blur: onBlur,

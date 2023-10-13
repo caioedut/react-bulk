@@ -832,6 +832,7 @@ export type LoadingProps = PropsWithStyles<{
 }>;
 
 export type GridProps = PropsWithStyles<{
+  breakpoints?: Partial<ThemeProps['breakpoints']>;
   gap?: number | true;
   size?: number;
 }>;
