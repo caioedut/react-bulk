@@ -5,7 +5,8 @@ import AnimationFactory from './factory/AnimationFactory';
 import BoxFactory from './factory/BoxFactory';
 import CardFactory from './factory/CardFactory';
 import TextFactory from './factory/TextFactory';
-import { TimeoutType, ToasterProps } from './types';
+import factory2 from './props/factory2';
+import { RequiredSome, TimeoutType, ToasterProps } from './types';
 import uuid from './utils/uuid';
 
 export type ToasterRef = {
@@ -15,6 +16,7 @@ export type ToasterRef = {
 
 function Toaster({ theme }: any, ref) {
   const { web, native } = Platform;
+  const options = theme.components.Toaster;
 
   const idRef = useRef<string>();
   const timeoutRef = useRef<TimeoutType>();
@@ -22,16 +24,18 @@ function Toaster({ theme }: any, ref) {
 
   const [props, setProps] = useState<ToasterProps>();
 
-  const {
-    // Defaults
+  // Extends from default props
+  let {
     content,
-    color = 'gray.dark',
-    duration = 4000,
+    color,
+    duration,
     width,
-    halign = 'left',
+    halign,
     offset,
-    valign = 'bottom',
-  } = props || {};
+    valign,
+    // Styles
+    variants,
+  } = factory2<RequiredSome<ToasterProps, 'color' | 'duration' | 'halign' | 'valign' | 'offset'>>(props || {}, options);
 
   const translateY = 120 * (valign === 'top' ? -1 : 1);
   const textColor = theme.contrast(color);
@@ -97,9 +101,8 @@ function Toaster({ theme }: any, ref) {
         <AnimationFactory
           key={idRef.current}
           in
-          p={theme.shape.gap}
-          mx={offset?.x}
-          my={offset?.y}
+          px={offset?.x}
+          py={offset?.y}
           duration={200}
           from={{ transform: [{ translateY }] }}
           to={{ transform: [{ translateY: 0 }] }}
@@ -107,13 +110,10 @@ function Toaster({ theme }: any, ref) {
         >
           <CardFactory
             ref={cardRef}
-            position="relative"
-            overflow="hidden"
-            bg={color}
-            corners={2}
-            p={theme.shape.gap}
             accessibility={{ role: 'alert' }}
             platform={{ web: { tabIndex: '-1' } }}
+            bg={color}
+            stylist={[variants.root]}
           >
             <BoxFactory row noWrap center>
               {typeof content === 'string' ? (
