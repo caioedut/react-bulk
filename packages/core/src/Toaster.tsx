@@ -33,21 +33,36 @@ function Toaster({ theme }: any, ref) {
     valign = 'bottom',
   } = props || {};
 
-  const containerStyle = {
-    position: native ? 'absolute' : 'fixed',
-    zIndex: theme.mixins.zIndex.toaster,
-
-    maxw: '100%',
-    w: halign === 'center' ? '100%' : undefined,
-
-    t: valign === 'top' ? 0 : undefined,
-    b: valign !== 'top' ? 0 : undefined,
-    r: halign === 'right' ? 0 : undefined,
-    l: halign !== 'right' ? 0 : undefined,
-  };
-
   const translateY = 120 * (valign === 'top' ? -1 : 1);
   const textColor = theme.contrast(color);
+
+  const containerStyle = [
+    {
+      position: native ? 'absolute' : 'fixed',
+      zIndex: theme.mixins.zIndex.toaster,
+
+      h: 0,
+      w: '100%',
+      l: 0,
+      r: 0,
+    },
+
+    valign === 'top' && { t: 0 },
+    valign === 'bottom' && { b: 0 },
+  ];
+
+  const animationStyle = [
+    {
+      position: 'absolute',
+      maxw: '100%',
+      width,
+    },
+
+    valign === 'top' && { t: 0 },
+    valign === 'bottom' && { b: 0 },
+    halign === 'left' && { l: 0 },
+    halign === 'right' && { r: 0 },
+  ];
 
   useImperativeHandle(
     ref,
@@ -88,14 +103,13 @@ function Toaster({ theme }: any, ref) {
           duration={200}
           from={{ transform: [{ translateY }] }}
           to={{ transform: [{ translateY: 0 }] }}
+          style={animationStyle}
         >
           <CardFactory
             ref={cardRef}
             position="relative"
             overflow="hidden"
             bg={color}
-            w={width}
-            maxw="100%"
             corners={2}
             p={theme.shape.gap}
             accessibility={{ role: 'alert' }}
