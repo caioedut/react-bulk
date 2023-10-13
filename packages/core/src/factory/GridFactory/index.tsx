@@ -4,15 +4,20 @@ import useTheme from '../../hooks/useTheme';
 import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
 import { GridProps, RbkStyle, RequiredSome } from '../../types';
+import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const GridFactory = React.memo<GridProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Grid;
+    const { useDimensions } = global.mapping;
+
+    const dimensions = useDimensions();
 
     // Extends from default props
     let {
+      breakpoints,
       gap,
       size,
       // Styles
@@ -22,7 +27,7 @@ const GridFactory = React.memo<GridProps>(
     } = factory2<RequiredSome<GridProps, 'size'>>(props, options);
 
     gap = gap === true ? theme.shape.gap : gap;
-    const breakpoints = Object.keys(theme.breakpoints);
+    breakpoints = { ...theme.breakpoints, ...Object(breakpoints) };
     const spacing = !gap ? 0 : theme.spacing(gap / 2);
 
     return (
@@ -33,10 +38,13 @@ const GridFactory = React.memo<GridProps>(
           }
 
           const props = { ...Object(child?.props) };
-          const itemStyle: RbkStyle = [props.style, { padding: spacing }];
+          const itemStyle: RbkStyle[] = [props.style, { padding: spacing }];
+          let bkptStyle: RbkStyle = {};
 
-          breakpoints.forEach((breakpoint: string) => {
-            if (breakpoint in props) {
+          Object.entries(breakpoints || {})
+            .filter(([breakpoint, minWidth]) => breakpoint in props && dimensions.width >= minWidth)
+            .sort((a, b) => a[1] - b[1])
+            .forEach(([breakpoint]) => {
               const value = props[breakpoint];
               const width = (value / size) * 100;
 
@@ -44,27 +52,22 @@ const GridFactory = React.memo<GridProps>(
               const isFlex = value === 'flex' || value === true;
               const isHidden = value === 'hide' || value === 'hidden' || value === false;
 
-              if (!isAuto) {
-                itemStyle.push({ [breakpoint]: { width: `${width}%` } });
-              }
-
               if (isFlex) {
-                itemStyle.push({ [breakpoint]: { flex: 1 } });
+                bkptStyle = { flex: 1 };
+              } else if (!isAuto) {
+                bkptStyle = { width: `${width}%` };
+              } else if (isHidden) {
+                bkptStyle = {
+                  display: 'none',
+                  opacity: 0,
+                  overflow: 'hidden',
+                };
               }
 
-              if (isHidden) {
-                itemStyle.push({
-                  [breakpoint]: {
-                    display: 'none',
-                    opacity: 0,
-                    overflow: 'hidden',
-                  },
-                });
-              }
-            }
+              delete props[breakpoint];
+            });
 
-            delete props[breakpoint];
-          });
+          itemStyle.push(bkptStyle);
 
           return (
             <BoxFactory key={index} component={child?.type} {...props} style={itemStyle} stylist={[variants.item]} />
