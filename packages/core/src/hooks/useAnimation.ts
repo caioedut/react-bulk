@@ -3,6 +3,7 @@ import { useMemo, useRef, useState } from 'react';
 import { RbkAnimation } from '../types';
 import global from '../utils/global';
 import sleep from '../utils/sleep';
+import stdout from '../utils/stdout';
 
 export default function useAnimation(initial = {}) {
   const { web, native, Animated, Easing } = global.mapping;
@@ -92,7 +93,7 @@ export default function useAnimation(initial = {}) {
 
       if (native) {
         if (boomerang) {
-          console.warn('"useAnimation" "boomerang" was not supported on native.');
+          stdout.warn('"useAnimation" "boomerang" was not supported on native.');
         }
 
         const easing = (timing || 'ease')
