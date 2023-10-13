@@ -1194,6 +1194,28 @@ const base: ThemeProps = {
           },
         },
       },
+      Toaster: {
+        name: 'rbk-toaster',
+        defaultProps: {
+          color: 'gray.dark',
+          duration: 4000,
+          halign: 'left',
+          valign: 'bottom',
+          offset: {
+            x: this.shape.gap,
+            y: this.shape.gap,
+          },
+        },
+        defaultStyles: {
+          root: {
+            position: 'relative',
+            corners: 2,
+            p: this.shape.gap,
+            bg: 'gray.dark',
+            overflow: 'hidden',
+          },
+        },
+      },
       Tooltip: {
         name: 'rbk-tooltip',
         defaultProps: {

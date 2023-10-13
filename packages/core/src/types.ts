@@ -492,6 +492,7 @@ export type ThemeProps = {
     Table: ThemeComponentProps<TableProps, 'root'>;
     Tabs: ThemeComponentProps<TabsProps, 'root' | 'content' | 'button' | 'active'>;
     Text: ThemeComponentProps<TextProps, 'root'>;
+    Toaster: ThemeComponentProps<ToasterProps, 'root'>;
     Tooltip: ThemeComponentProps<TooltipProps, 'root'>;
   };
 };
