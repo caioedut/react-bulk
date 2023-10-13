@@ -619,6 +619,26 @@ export type InputProps = PropsWithStyles<
   FocusableProps,
   {
     autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+    autoComplete?:
+      | 'additional-name'
+      | 'address-line1'
+      | 'address-line2'
+      | 'cc-number'
+      | 'country'
+      | 'current-password'
+      | 'email'
+      | 'family-name'
+      | 'given-name'
+      | 'honorific-prefix'
+      | 'honorific-suffix'
+      | 'name'
+      | 'new-password'
+      | 'off'
+      | 'one-time-code'
+      | 'postal-code'
+      | 'street-address'
+      | 'tel'
+      | 'username';
     autoCorrect?: boolean;
     caretHidden?: boolean;
     color?: RbkColor;
