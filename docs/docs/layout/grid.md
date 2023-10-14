@@ -39,7 +39,7 @@ import { Grid } from '@react-bulk/web'; // OR @react-bulk/native
 ### Spacing
 
 ```jsx live
-<Grid size={3} gap={3}>
+<Grid size={3} gap={4}>
   <Box>
     <Text border>Hello World!</Text>
   </Box>
@@ -84,6 +84,25 @@ Default breakpoints: **`xs` `sm` `md` `lg` `xl` `xxl`**
 
 Extends all [`Box`](/docs/components/box#props) props.
 
+**`breakpoints`**
+
+An option to override [Layout Breakpoints](/docs/layout/breakpoints/#default) for a single `Grid`.
+
+➤ Type: **`object`** <br/>
+
+```js
+{
+  xs?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
+  xl?: number;
+  xxl?: number;
+}
+```
+
+---
+
 **`direction`**
 
 ➤ Type: **`'row'` `'column'` `'row-reverse'` `'column-reverse'`** <br/>
@@ -93,9 +112,10 @@ Extends all [`Box`](/docs/components/box#props) props.
 
 **`gap`**
 
-Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.typography.fontSize` value.
+Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.shape.spacing` value.
 
 ➤ Type: **`number`** <br/>
+➤ Default: **`theme.shape.gap`** <br/>
 
 ---
 
