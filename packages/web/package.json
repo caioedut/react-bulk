@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/web",
   "description": "React Bulk for React Web",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "author": {
     "name": "Caio Teixeira",
     "email": "caioedut@gmail.com"
@@ -33,7 +33,7 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@react-bulk/core": "^0.5.1"
+    "@react-bulk/core": "^0.5.2"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
