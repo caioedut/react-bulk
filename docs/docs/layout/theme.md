@@ -31,6 +31,7 @@ export default {
   shape: {
     borderRadius: 4,
     spacing: 4,
+    gap: 4 // gap is generally multiplied by spacing
   },
 };
 ```

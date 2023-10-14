@@ -103,6 +103,14 @@ Automatically capitalize certain characters.
 
 ---
 
+**`autoComplete`**
+
+Specifies autocomplete hints for the system, so it can provide autofill. On Android, the system will always attempt to offer autofill by using heuristics to identify the type of content. To disable autocomplete, set autoComplete to off.
+
+➤ Type: **`'off'` `'additional-name'` `'address-line1'` `'address-line2'` `'cc-number'` `'country'` `'current-password'` `'email'` `'family-name'` `'given-name'` `'honorific-prefix'` `'honorific-suffix'` `'name'` `'new-password'` `'one-time-code'` `'postal-code'` `'street-address'` `'tel'` `'username'`** <br/>
+
+---
+
 **`autoCorrect`**
 
 ➤ Type: **`boolean`** <br/>
@@ -160,6 +168,14 @@ events and updating the value prop to keep the controlled state in sync.
 **`error`**
 
 ➤ Type: **`string`** <br/>
+
+---
+
+**`inputMode`**
+
+It determines which keyboard to open.
+
+➤ Type: **`'none'` `'text'` `'decimal'` `'numeric'` `'tel'` `'search'` `'email'` `'url'`** <br/>
 
 ---
 
