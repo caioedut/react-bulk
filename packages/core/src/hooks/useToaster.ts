@@ -1,18 +1,38 @@
-import { useContext } from 'react';
+import { useCallback, useContext } from 'react';
 
 import { Context } from '../ReactBulk';
-import { ToasterProps } from '../types';
+import { RbkColor, ToasterProps } from '../types';
 
 export default function useToaster() {
   const { toasterRef } = useContext(Context);
 
-  function open(options: string | ToasterProps) {
-    toasterRef?.current?.setProps(typeof options === 'string' ? { content: options } : options);
-  }
+  const _open = useCallback(
+    (options: string | ToasterProps, color?: RbkColor) => {
+      const content = typeof options === 'string' ? options : options?.content;
+      const rest = typeof options === 'string' ? {} : options;
+      toasterRef?.current?.setProps({ ...rest, content, color });
+    },
+    [toasterRef],
+  );
 
-  function close() {
-    toasterRef?.current?.setProps(undefined);
-  }
+  const close = useCallback(() => toasterRef?.current?.setProps(undefined), [toasterRef]);
 
-  return { open, close };
+  const open = useCallback((options: string | ToasterProps) => _open(options), [_open]);
+
+  const info = useCallback((options: string | Omit<ToasterProps, 'color'>) => _open(options, 'info'), [_open]);
+
+  const success = useCallback((options: string | Omit<ToasterProps, 'color'>) => _open(options, 'success'), [_open]);
+
+  const warning = useCallback((options: string | Omit<ToasterProps, 'color'>) => _open(options, 'warning'), [_open]);
+
+  const error = useCallback((options: string | Omit<ToasterProps, 'color'>) => _open(options, 'error'), [_open]);
+
+  const primary = useCallback((options: string | Omit<ToasterProps, 'color'>) => _open(options, 'primary'), [_open]);
+
+  const secondary = useCallback(
+    (options: string | Omit<ToasterProps, 'color'>) => _open(options, 'secondary'),
+    [_open],
+  );
+
+  return { open, close, info, success, warning, error, primary, secondary };
 }
