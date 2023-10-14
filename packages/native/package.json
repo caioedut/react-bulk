@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/native",
   "description": "React Bulk for React Native",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": {
     "name": "Caio Teixeira",
     "email": "caioedut@gmail.com"
@@ -33,7 +33,7 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@react-bulk/core": "^0.5.0"
+    "@react-bulk/core": "^0.5.1"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
