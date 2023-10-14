@@ -74,3 +74,55 @@ Vertical alignment.
 
 ---
 
+## Methods
+
+**open(options: `string` | `object`)**
+
+`toaster.open(options)`
+
+---
+
+**close()**
+
+`toaster.close()`
+
+---
+
+### Default Colors
+
+**primary(options: `string` | `object`)**
+
+`toaster.primary(options)`
+
+---
+
+**secondary(options: `string` | `object`)**
+
+`toaster.secondary(options)`
+
+---
+
+**info(options: `string` | `object`)**
+
+`toaster.info(options)`
+
+---
+
+**success(options: `string` | `object`)**
+
+`toaster.success(options)`
+
+---
+
+**warning(options: `string` | `object`)**
+
+`toaster.warning(options)`
+
+---
+
+**error(options: `string` | `object`)**
+
+`toaster.error(options)`
+
+---
+
