@@ -37,6 +37,7 @@ const InputFactory = React.memo<InputProps>(
       endIcon,
       error: errorProp,
       id,
+      inputMode,
       label,
       mask,
       max,
@@ -392,6 +393,7 @@ const InputFactory = React.memo<InputProps>(
               id={id}
               autoComplete={autoComplete}
               disabled={disabled}
+              inputMode={inputMode}
               maxLength={maxLength}
               name={name}
               value={maskValue(internal)}

@@ -621,6 +621,7 @@ export type InputProps = PropsWithStyles<
   {
     autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
     autoComplete?:
+      | 'off'
       | 'additional-name'
       | 'address-line1'
       | 'address-line2'
@@ -634,12 +635,12 @@ export type InputProps = PropsWithStyles<
       | 'honorific-suffix'
       | 'name'
       | 'new-password'
-      | 'off'
       | 'one-time-code'
       | 'postal-code'
       | 'street-address'
       | 'tel'
-      | 'username';
+      | 'username'
+      | (string & {});
     autoCorrect?: boolean;
     caretHidden?: boolean;
     color?: RbkColor;
@@ -648,6 +649,7 @@ export type InputProps = PropsWithStyles<
     disabled?: boolean;
     endAddon?: ReactElement;
     error?: string | boolean;
+    inputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url' | (string & {});
     label?: string;
     mask?: (value: InputValue) => any;
     max?: number;
@@ -684,8 +686,6 @@ export type InputProps = PropsWithStyles<
     startIcon?: ReactElement;
     /** @deprecated use endAddon instead */
     endIcon?: ReactElement;
-    /** @deprecated use type="password" instead */
-    secure?: boolean;
     /** @deprecated use onChange(event, value) instead */
     onInput?: Function;
     /** @deprecated use onChange(event, value) instead */
