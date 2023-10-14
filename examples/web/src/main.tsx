@@ -823,8 +823,13 @@ function ToasterExample() {
       </Text>
       <Grid gap>
         <Box>
-          <Button onPress={() => toaster.open({ content: 'Hello world!' })}>String</Button>
+          <Button onPress={() => toaster.open('Hello world!')}>Default</Button>
         </Box>
+        {colors.map((color) => (
+          <Box key={color}>
+            <Button onPress={() => toaster[color]('Hello world!')}>{getLabel(color)}</Button>
+          </Box>
+        ))}
         <Box>
           <Button
             onPress={() =>
