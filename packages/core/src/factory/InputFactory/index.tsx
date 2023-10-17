@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
@@ -135,8 +135,18 @@ const InputFactory = React.memo<InputProps>(
     );
 
     const [focused, setFocused] = useState(false);
+    const [_internal, _setInternal] = useState(unmaskValue(maskValue(value ?? defaultValue)));
 
-    const [internal, setInternal] = useState(value ?? defaultValue);
+    const internal = useMemo(() => {
+      return unmaskValue(maskValue(_internal));
+    }, [maskValue, unmaskValue, _internal]);
+
+    const setInternal = useCallback(
+      (value) => {
+        _setInternal(unmaskValue(maskValue(value)));
+      },
+      [maskValue, unmaskValue, controlled, internal],
+    );
 
     color = error ? 'error' : color || 'primary';
     selectionColor = theme.color(selectionColor ?? color);
@@ -218,6 +228,7 @@ const InputFactory = React.memo<InputProps>(
     const height = multiline ? theme.rem() * (rows ?? 6) + spacing * 2 : baseSize;
 
     useEffect(() => {
+      // TODO: fix setInternal called twice when using form.setData with prop controlled=true
       if (typeof value === 'undefined') return;
       setInternal(value);
     }, [value]);
@@ -231,8 +242,8 @@ const InputFactory = React.memo<InputProps>(
 
       form.setField({
         name,
+        get: () => internal,
         set: (value) => setInternal(value),
-        get: () => unmaskValue(internal),
         setError,
         onFormChange,
       });
@@ -240,11 +251,11 @@ const InputFactory = React.memo<InputProps>(
       return () => {
         form.unsetField(name as string);
       };
-    }, [name, form, onFormChange, internal]);
+    }, [name, form, internal, setInternal, onFormChange]);
 
     const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
     const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
-    const clear = useCallback(() => setInternal(defaultValue), []);
+    const clear = useCallback(() => setInternal(defaultValue), [setInternal]);
     const isFocused = useCallback(
       () => Boolean(inputRef?.current?.isFocused?.()) || inputRef?.current === document?.activeElement,
       [inputRef],
@@ -278,23 +289,23 @@ const InputFactory = React.memo<InputProps>(
       }
     }
 
-    const handleIncDec = (e, signal) => {
-      handleChange({
-        nativeEvent: e,
-        value: Number(internal || 0) + (signal || 1),
-      });
-    };
-
     const handleChange = (e) => {
       const target = inputRef?.current;
       const nativeEvent = e?.nativeEvent ?? e;
-      const value = unmaskValue(e?.value ?? target?.value ?? e?.nativeEvent?.text);
+      const value = unmaskValue(maskValue(e?.value ?? target?.value ?? e?.nativeEvent?.text));
 
       if (!controlled) {
         setInternal(value);
       }
 
       dispatchEvent('change', value, nativeEvent);
+    };
+
+    const handleIncDec = (e, signal) => {
+      handleChange({
+        nativeEvent: e,
+        value: Number(internal || 0) + (signal || 1),
+      });
     };
 
     const handleFocus = (e) => {
