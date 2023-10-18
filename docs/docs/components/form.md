@@ -145,7 +145,9 @@ const [age, setAge] = useState('');
 ref.current.setField({
   name: 'age',
   get: () => age,
-  set: (value) => setAge(value)
+  set: (value) => setAge(value),
+  setError: (error) => setError(error),
+  onFormChange: (event, data) => handleFormChange(event, data)
 })
 ```
 
