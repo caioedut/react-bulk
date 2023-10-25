@@ -52,4 +52,4 @@ Extends all [`Box`](/docs/components/box#props) props.
 
 **`labelStyle`** to the label.
 
-➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>

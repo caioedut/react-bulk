@@ -228,7 +228,7 @@ The text transform value of the label.
 
 **`labelStyle`** to the label of the button.
 
-➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ## Events
 

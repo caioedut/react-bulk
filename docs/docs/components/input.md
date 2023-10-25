@@ -341,7 +341,7 @@ The value to show for the text input.
 
 **`labelStyle`** to the label element.
 
-➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 

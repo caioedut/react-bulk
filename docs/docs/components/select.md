@@ -180,7 +180,7 @@ The string that will be rendered before text input has been entered.
 
 **`labelStyle`** to the label element.
 
-➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 

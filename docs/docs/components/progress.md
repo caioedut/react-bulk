@@ -94,4 +94,4 @@ Current progress percentage.
 
 **`labelStyle`** to the percentage label.
 
-➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>

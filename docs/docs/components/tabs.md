@@ -141,7 +141,7 @@ Extends all [`Scrollable`](/docs/components/core/scrollable#props) props.
 
 **`activeStyle`** to the active tab button.
 
-➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 

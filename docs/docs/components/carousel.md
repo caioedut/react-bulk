@@ -112,6 +112,6 @@ Number of items shown at breakpoint `xl`.
 
 **`chevronStyle`** to the chevrons.
 
-➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
