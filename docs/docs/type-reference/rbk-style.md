@@ -1,4 +1,4 @@
-# RbkStyles
+# RbkStyle
 
 The value can be a **single object** or an **array of** these types:
 

@@ -44,6 +44,6 @@ Extends all [`Box`](/docs/components/box#props) props.
 
 **`style`** to the main element.
 
-➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
