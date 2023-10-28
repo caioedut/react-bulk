@@ -38,8 +38,8 @@ const GridFactory = React.memo<GridProps>(
           const props = { ...Object(child?.props) };
           let bkptStyle: RbkStyle = {};
 
-          Object.entries(checkBreakpoints).forEach(([breakpoint, isBkpActive]) => {
-            if (breakpoint in props && isBkpActive) {
+          Object.entries(checkBreakpoints).forEach(([breakpoint, isBkptActive]) => {
+            if (breakpoint in props && isBkptActive) {
               const value = props[breakpoint];
               const width = (value / size) * 100;
 
