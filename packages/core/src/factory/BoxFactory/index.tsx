@@ -1,6 +1,7 @@
 import React, { forwardRef, useMemo } from 'react';
 
 import createStyle from '../../createStyle';
+import useBreakpoints from '../../hooks/useBreakpoints';
 import useTheme from '../../hooks/useTheme';
 import bindings from '../../props/bindings';
 import factory2 from '../../props/factory2';
@@ -16,9 +17,9 @@ const BoxFactory = React.memo<BoxProps>(
   forwardRef(({ platform, className, stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Box;
-    const { web, native, useDimensions, Button, Text, View } = global.mapping;
+    const { web, native, Button, Text, View } = global.mapping;
 
-    const dimensions = useDimensions();
+    const breakpoints = useBreakpoints();
 
     // Extends from default props
     props = useMemo(() => factory2<BoxProps>(props, options), [props, options]);
@@ -119,11 +120,11 @@ const BoxFactory = React.memo<BoxProps>(
     ];
 
     // Apply responsive styles
-    for (const breakpoint of Object.entries(theme.breakpoints)) {
-      const [name, minWidth]: any = breakpoint;
+    for (const breakpoint of Object.entries(breakpoints)) {
+      const [name, isBkptActive] = breakpoint;
       const ptStyle = get(name, style);
 
-      if (ptStyle && dimensions.width >= minWidth) {
+      if (ptStyle && isBkptActive) {
         style.push(ptStyle);
       }
     }
