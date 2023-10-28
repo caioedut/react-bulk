@@ -3,6 +3,7 @@ import ReactBulk from './ReactBulk';
 // Hook
 export { useForm } from './factory/FormFactory';
 export { default as useAnimation } from './hooks/useAnimation';
+export { default as useBreakpoints } from './hooks/useBreakpoints';
 export { default as useHtmlId } from './hooks/useHtmlId';
 export { default as usePropState } from './hooks/usePropState';
 export { default as useTheme } from './hooks/useTheme';
