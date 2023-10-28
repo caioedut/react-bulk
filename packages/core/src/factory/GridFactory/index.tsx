@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 
+import useBreakpoints from '../../hooks/useBreakpoints';
 import useTheme from '../../hooks/useTheme';
 import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
 import { GridProps, RbkStyle, RequiredSome } from '../../types';
-import global from '../../utils/global';
 import stdout from '../../utils/stdout';
 import BoxFactory from '../BoxFactory';
 
@@ -12,9 +12,6 @@ const GridFactory = React.memo<GridProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Grid;
-    const { useDimensions } = global.mapping;
-
-    const dimensions = useDimensions();
 
     // Extends from default props
     let {
@@ -28,8 +25,8 @@ const GridFactory = React.memo<GridProps>(
     } = factory2<RequiredSome<GridProps, 'size'>>(props, options);
 
     gap = gap === true ? theme.shape.gap : gap;
-    breakpoints = { ...theme.breakpoints, ...Object(breakpoints) };
     const spacing = !gap ? 0 : theme.spacing(gap / 2);
+    const checkBreakpoints = useBreakpoints(breakpoints);
 
     return (
       <BoxFactory ref={ref} style={[{ margin: -spacing }, style]} stylist={[variants.root, stylist]} {...rest}>
@@ -41,10 +38,8 @@ const GridFactory = React.memo<GridProps>(
           const props = { ...Object(child?.props) };
           let bkptStyle: RbkStyle = {};
 
-          Object.entries(breakpoints || {})
-            .filter(([breakpoint, minWidth]) => breakpoint in props && dimensions.width >= minWidth)
-            .sort((a, b) => a[1] - b[1])
-            .forEach(([breakpoint]) => {
+          Object.entries(checkBreakpoints).forEach(([breakpoint, isBkpActive]) => {
+            if (breakpoint in props && isBkpActive) {
               const value = props[breakpoint];
               const width = (value / size) * 100;
 
@@ -63,9 +58,10 @@ const GridFactory = React.memo<GridProps>(
                   overflow: 'hidden',
                 };
               }
+            }
 
-              delete props[breakpoint];
-            });
+            delete props[breakpoint];
+          });
 
           if (
             child?.type !== BoxFactory &&
