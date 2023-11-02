@@ -22,10 +22,12 @@ import ReactBulk, {
   BoxFactory,
   ButtonFactory,
   ButtonGroupFactory,
+  CalendarFactory,
   CardFactory,
   CarouselFactory,
   CheckboxFactory,
   CollapseFactory,
+  DatePickerFactory,
   DividerFactory,
   DrawerFactory,
   DropdownFactory,
@@ -135,10 +137,12 @@ export const Badge = BadgeFactory;
 export const Box = BoxFactory;
 export const Button = ButtonFactory;
 export const ButtonGroup = ButtonGroupFactory;
+export const Calendar = CalendarFactory;
 export const Card = CardFactory;
 export const Carousel = CarouselFactory;
 export const Checkbox = CheckboxFactory;
 export const Collapse = CollapseFactory;
+export const DatePicker = DatePickerFactory;
 export const Divider = DividerFactory;
 export const Drawer = DrawerFactory;
 export const Dropdown = DropdownFactory;

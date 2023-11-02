@@ -524,6 +524,15 @@ const base: ThemeProps = {
           },
         },
       },
+      Calendar: {
+        name: 'rbk-calendar',
+        defaultProps: {
+          color: 'primary',
+        },
+        defaultStyles: {
+          root: {},
+        },
+      },
       Card: {
         name: 'rbk-card',
         defaultProps: {},
@@ -588,6 +597,21 @@ const base: ThemeProps = {
           root: {
             overflow: 'hidden',
           },
+        },
+      },
+      DatePicker: {
+        name: 'rbk-date-picker',
+        defaultProps: {
+          color: 'primary',
+          size: 'medium',
+          translate: {
+            cancel: 'Cancel',
+            clear: 'Clear',
+            today: 'Today',
+          },
+        },
+        defaultStyles: {
+          root: {},
         },
       },
       Divider: {

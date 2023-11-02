@@ -468,10 +468,12 @@ export type ThemeProps = {
     Box: ThemeComponentProps<BoxProps, 'root'>;
     Button: ThemeComponentProps<ButtonProps, 'root' | 'label'>;
     ButtonGroup: ThemeComponentProps<ButtonGroupProps, 'root' | 'content'>;
+    Calendar: ThemeComponentProps<CalendarProps, 'root'>;
     Card: ThemeComponentProps<CardProps, 'root'>;
     Carousel: ThemeComponentProps<CarouselProps, 'root' | 'content' | 'chevron'>;
     Checkbox: ThemeComponentProps<CheckboxProps, 'root' | 'button'>;
     Collapse: ThemeComponentProps<CollapseProps, 'root'>;
+    DatePicker: ThemeComponentProps<DatePickerProps, 'root'>;
     Divider: ThemeComponentProps<DividerProps, 'root'>;
     Drawer: ThemeComponentProps<DrawerProps, 'root' | 'backdrop'>;
     Dropdown: ThemeComponentProps<DropdownProps, 'root'>;
@@ -790,6 +792,21 @@ export type CarouselProps = PropsWithStyles<{
   chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;
 }>;
 
+export type DatePickerProps = PropsWithStyles<
+  InputProps,
+  {
+    max?: Date | string | number | null | undefined;
+    min?: Date | string | number | null | undefined;
+    value?: Date | string | number | null | undefined;
+    variant?: 'modal' | 'inline';
+    translate?: {
+      cancel?: string;
+      clear?: string;
+      today?: string;
+    };
+  }
+>;
+
 export type ScrollableProps = PropsWithStyles<{
   contentInset?: number;
   direction?: 'vertical' | 'horizontal';
@@ -990,6 +1007,15 @@ export type ToasterProps = {
   valign?: 'top' | 'bottom';
   width?: number | string;
 };
+
+export type CalendarProps = PropsWithStyles<{
+  color?: RbkColor;
+  date?: Date | string | number | null | undefined;
+  disableds?: (Date | string | number)[] | ((date: Date) => boolean);
+  events?: (Date | string | number)[];
+  // Events
+  onPressDate?: (event: AnyObject, date: Date) => any;
+}>;
 
 /************************
  * DEPRECATIONS (START) *

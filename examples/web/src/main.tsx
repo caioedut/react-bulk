@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
+import { AnyObject, FormRef, InputValue, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
 import {
   ActionSheet,
   Animation,
@@ -8,10 +8,12 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Calendar,
   Card,
   Carousel,
   Checkbox,
   Collapse,
+  DatePicker,
   Divider,
   Drawer,
   Dropdown,
@@ -32,26 +34,6 @@ import {
   Tooltip,
   useTheme,
 } from '@react-bulk/web';
-
-const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
-const variants = ['solid', 'outline', 'text'] as const;
-const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
-const tooltips = ['top', 'bottom', 'left', 'right'] as const;
-const animations = ['spin', 'fade', 'zoom', { from: { top: -30, opacity: 0 }, to: { top: 0, opacity: 1 } }] as const;
-const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
-
-const formData = {
-  firstName: 'Richard',
-  lastName: 'William',
-};
-
-const table = [
-  { dessert: 'Frozen yogurt', calories: '159', fat: '6.0', carbs: '24' },
-  { dessert: 'Ice cream sandwich', calories: '237', fat: '9.0', carbs: '37' },
-  { dessert: 'Eclair', calories: '262', fat: '16.0', carbs: '24' },
-];
-
-const getLabel = (str: string) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 
 export default function Main() {
   const theme = useTheme();
@@ -135,6 +117,10 @@ export default function Main() {
 
       <Card mt={theme.shape.gap}>
         <ProgressExample />
+      </Card>
+
+      <Card mt={theme.shape.gap}>
+        <CalendarExample />
       </Card>
 
       <Card mt={theme.shape.gap}>
@@ -1047,6 +1033,66 @@ function ProgressExample() {
   );
 }
 
+function CalendarExample() {
+  const theme = useTheme();
+
+  const [date, setDate] = useState(new Date());
+
+  return (
+    <>
+      <Text variant="title">Calendar</Text>
+      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+
+      <Text variant="subtitle">Component</Text>
+      <Box maxw={360} mx={-theme.shape.gap}>
+        <Calendar date={date} events={[date]} onPressDate={(_, date) => setDate(date)} />
+      </Box>
+
+      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+
+      <Grid gap maxw={360}>
+        <Box xs={12}>
+          <Text variant="subtitle">Date Picker</Text>
+        </Box>
+        <Box xs={12}>
+          <DatePicker
+            name="calendar"
+            label="Variant Modal (Default)"
+            value={date}
+            onChange={(_: RbkInputEvent, date: InputValue) => {
+              setDate(date);
+              console.log({ date });
+            }}
+          />
+        </Box>
+        <Box xs={12}>
+          <DatePicker
+            variant="inline"
+            name="calendar"
+            label="Variant Inline"
+            value={date}
+            onChange={(_: RbkInputEvent, date: InputValue) => {
+              setDate(date);
+              console.log({ date });
+            }}
+          />
+        </Box>
+        <Box xs={12}>
+          <Button
+            onPress={() => {
+              const from = new Date('2020-01-01T12:00:00');
+              const to = new Date();
+              setDate(new Date(from.getTime() + Math.random() * (to.getTime() - from.getTime())));
+            }}
+          >
+            Random Date
+          </Button>
+        </Box>
+      </Grid>
+    </>
+  );
+}
+
 function TooltipExample() {
   const theme = useTheme();
 
@@ -1191,3 +1237,23 @@ function AnimationExample() {
     </>
   );
 }
+
+const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const variants = ['solid', 'outline', 'text'] as const;
+const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
+const tooltips = ['top', 'bottom', 'left', 'right'] as const;
+const animations = ['spin', 'fade', 'zoom', { from: { top: -30, opacity: 0 }, to: { top: 0, opacity: 1 } }] as const;
+const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
+
+const formData = {
+  firstName: 'Richard',
+  lastName: 'William',
+};
+
+const table = [
+  { dessert: 'Frozen yogurt', calories: '159', fat: '6.0', carbs: '24' },
+  { dessert: 'Ice cream sandwich', calories: '237', fat: '9.0', carbs: '37' },
+  { dessert: 'Eclair', calories: '262', fat: '16.0', carbs: '24' },
+];
+
+const getLabel = (str: string) => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
