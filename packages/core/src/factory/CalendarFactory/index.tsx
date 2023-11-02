@@ -33,7 +33,7 @@ const CalendarFactory = React.memo<CalendarProps>(
       ...rest
     } = factory2<CalendarProps>(props, options);
 
-    const today = new Date();
+    const today = dateify();
     color = theme.color(color || 'primary');
 
     // TODO: usePropState
@@ -69,7 +69,7 @@ const CalendarFactory = React.memo<CalendarProps>(
 
     const handleYear = useCallback((year: number) => {
       setInternal((current) => {
-        const newDate = new Date(current.getTime());
+        const newDate = dateify(current.getTime());
         newDate.setFullYear(year);
         return newDate;
       });
@@ -77,7 +77,7 @@ const CalendarFactory = React.memo<CalendarProps>(
 
     const handleMonth = useCallback((sum: number) => {
       setInternal((current) => {
-        const newDate = new Date(current.getTime());
+        const newDate = dateify(current.getTime());
         newDate.setMonth(newDate.getMonth() + sum);
         return newDate;
       });
