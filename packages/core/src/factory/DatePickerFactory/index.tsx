@@ -158,7 +158,7 @@ const DatePickerFactory = React.memo<DatePickerProps>(
               <CalendarFactory
                 color={color}
                 date={internal}
-                events={[internal]}
+                events={internal ? [internal] : []}
                 onPressDate={handleChangeCalendar}
                 disableds={(date) => {
                   let currentDate = dateify(date);
@@ -210,7 +210,7 @@ const DatePickerFactory = React.memo<DatePickerProps>(
                   color={color}
                   size={size}
                   accessibility={{ label: translate?.today }}
-                  onPress={(e) => handleChangeCalendar(e, new Date())}
+                  onPress={(e) => handleChangeCalendar(e, dateify())}
                 >
                   {translate?.today}
                 </ButtonFactory>
