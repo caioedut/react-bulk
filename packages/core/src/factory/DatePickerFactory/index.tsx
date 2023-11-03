@@ -119,7 +119,7 @@ const DatePickerFactory = React.memo<DatePickerProps>(
           onChange={handleChangeInternal}
           endAddon={
             <ButtonFactory
-              variant={calendarVisible ? 'solid' : 'text'}
+              variant="text"
               color={color}
               size={size}
               disabled={disabled || readOnly}
@@ -128,11 +128,7 @@ const DatePickerFactory = React.memo<DatePickerProps>(
               accessibility={{ label: 'calendar' }}
               onPress={() => setCalendarVisible((current) => !current)}
             >
-              <Calendar
-                svg={svg}
-                size={Math.round(theme.rem(size / 2))}
-                color={calendarVisible ? 'white' : theme.color(color)}
-              />
+              <Calendar svg={svg} size={Math.round(theme.rem(size / 2))} color={color} />
             </ButtonFactory>
           }
         />
