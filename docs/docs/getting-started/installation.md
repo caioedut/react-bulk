@@ -9,7 +9,7 @@ Start by adding **React Bulk** as a dependency:
 ## React Web
 
 ```bash
-yarn add @react-bulk/core @react-bulk/web
+yarn add react react-dom @react-bulk/core @react-bulk/web
 ```
 
 :::note
@@ -19,7 +19,7 @@ Make sure you have `react` and `react-dom` correctly installed as dependencies w
 ## React Native
 
 ```bash
-yarn add @react-bulk/core @react-bulk/native
+yarn add react-native-svg @react-bulk/core @react-bulk/native
 ```
 
 :::note
