@@ -188,7 +188,7 @@ const SelectFactory = React.memo<SelectProps>(
       return () => {
         form.unsetField(name as string);
       };
-    }, [name, form, internal, dispatchEvent, onFormChange]);
+    }, [name, form, internal, dispatchEvent, onChange, onFormChange]);
 
     useEffect(() => {
       if (!visible || !selectedRef.current) return;

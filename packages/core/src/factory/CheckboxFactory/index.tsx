@@ -6,7 +6,7 @@ import Check from '../../icons/Check';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
-import { CheckboxProps, RbkCheckboxEvent, RequiredSome } from '../../types';
+import { AnyObject, CheckboxProps, RbkCheckboxEvent, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
@@ -54,19 +54,23 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     const defaultRef: any = useRef(null);
     const buttonRef = ref || defaultRef;
 
-    const initialChecked = useMemo(() => checked ?? defaultChecked, []);
-    const dispatchRef = useRef(typeof initialChecked === 'undefined');
-    const [internal, _setInternal] = useState(Boolean(Number(initialChecked)));
+    const [_internal, _setInternal] = useState(checked ?? defaultChecked);
 
-    function setInternal(value: any, dispatch = true) {
-      _setInternal(value);
+    const resolveValue = useCallback((value) => {
+      return Boolean(Number(value));
+    }, []);
 
-      if (dispatch && dispatchRef.current) {
-        // dispatchEvent('change', value);
-      }
+    const internal = useMemo(() => {
+      return resolveValue(_internal);
+    }, [_internal, resolveValue]);
 
-      dispatchRef.current = true;
-    }
+    const setInternal = useCallback(
+      (value) => {
+        if (controlled) return;
+        _setInternal(resolveValue(value));
+      },
+      [controlled, internal, resolveValue],
+    );
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
@@ -82,9 +86,55 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     const fontSize = baseSize / 2;
     const halfSize = fontSize / 2;
 
+    const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
+    const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
+    const clear = useCallback(() => setInternal(defaultChecked), [setInternal]);
+    const isFocused = useCallback(
+      () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
+      [buttonRef],
+    );
+
+    const dispatchEvent = useCallback(
+      (
+        type: string,
+        newChecked: boolean,
+        event: AnyObject | null,
+        eventHandler?: (event: RbkCheckboxEvent, checked: boolean) => void,
+      ) => {
+        const nativeEvent = event?.nativeEvent ?? event ?? null;
+        const checked = resolveValue(newChecked) ?? null;
+
+        if (type === 'change') {
+          setInternal(checked);
+        }
+
+        if (eventHandler instanceof Function) {
+          eventHandler(
+            {
+              type,
+              checked,
+              name,
+              target: buttonRef.current,
+              form,
+              focus,
+              blur,
+              clear,
+              isFocused,
+              nativeEvent,
+            },
+            checked,
+          );
+        }
+      },
+      [buttonRef, name, form, focus, blur, clear, isFocused, resolveValue, setInternal],
+    );
+
     useEffect(() => {
+      // TODO (?)
+      // dispatchEvent('change', value, null, onChange);
+
       if (typeof checked !== 'boolean') return;
-      setInternal(checked);
+      _setInternal(checked);
     }, [checked]);
 
     useEffect(() => {
@@ -93,8 +143,8 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       if (!unique || internal) {
         form.setField({
           name,
-          set: setInternal,
           get: () => (internal ? value ?? internal : unique ? null : false),
+          set: (checked) => dispatchEvent('change', checked, null, onChange),
           onFormChange,
         });
       }
@@ -102,62 +152,21 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       return () => {
         form.unsetField(name as string);
       };
-    }, [name, form, onFormChange, internal, value]);
+    }, [name, form, value, internal, dispatchEvent, onChange, onFormChange]);
 
-    const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
-    const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
-    const clear = useCallback(() => setInternal(Boolean(Number(defaultChecked ?? 0))), []);
-    const isFocused = useCallback(
-      () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
-      [buttonRef],
-    );
-
-    function dispatchEvent(type: string, checked: boolean, nativeEvent?: any) {
-      const callback = {
-        focus: onFocus,
-        blur: onBlur,
-        change: onChange,
-      }[type];
-
-      if (typeof callback === 'function') {
-        const target = buttonRef.current;
-
-        const event: RbkCheckboxEvent = {
-          type,
-          checked,
-          name,
-          target,
-          form,
-          focus,
-          blur,
-          clear,
-          isFocused,
-          nativeEvent,
-        };
-
-        callback(event, checked);
-      }
-    }
-
-    const handleCommonEvent = useCallback(
-      (e) => {
-        const nativeEvent = e?.nativeEvent ?? e;
-        dispatchEvent(e.type, internal, nativeEvent);
-      },
-      [internal],
-    );
-
-    const handleChange = (e) => {
+    const handleChange = (event) => {
       if (disabled || readOnly) return;
 
-      const nativeEvent = e?.nativeEvent ?? e;
-      const newInternal = !internal;
+      const checked = !internal;
+      dispatchEvent('change', checked, event, onChange);
+    };
 
-      if (!controlled) {
-        setInternal(newInternal, false);
-      }
+    const handleFocus = (event) => {
+      dispatchEvent('focus', internal, event, onFocus);
+    };
 
-      dispatchEvent('change', newInternal, nativeEvent);
+    const handleBlur = (event) => {
+      dispatchEvent('blur', internal, event, onBlur);
     };
 
     // @ts-expect-error
@@ -179,8 +188,8 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           circular
           disabled={disabled}
           onPress={handleChange}
-          onFocus={handleCommonEvent}
-          onBlur={handleCommonEvent}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           accessibility={{
             label,
             role: unique ? 'radio' : 'checkbox',

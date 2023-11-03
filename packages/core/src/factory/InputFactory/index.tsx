@@ -305,7 +305,7 @@ const InputFactory = React.memo<InputProps>(
       return () => {
         form.unsetField(name as string);
       };
-    }, [name, form, internal, dispatchEvent, onFormChange]);
+    }, [name, form, internal, dispatchEvent, onChange, onFormChange]);
 
     const handleChange = (event) => {
       if (disabled || readOnly) return;
