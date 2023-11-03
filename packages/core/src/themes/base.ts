@@ -817,6 +817,10 @@ const base: ThemeProps = {
               },
             },
           },
+          hint: {
+            mx: 1,
+            mt: 1,
+          },
           error: {
             color: 'error',
             mx: 1,

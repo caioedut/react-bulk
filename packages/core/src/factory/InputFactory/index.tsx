@@ -36,6 +36,7 @@ const InputFactory = React.memo<InputProps>(
       endAddon,
       endIcon,
       error: errorProp,
+      hint,
       id,
       inputMode,
       label,
@@ -69,6 +70,7 @@ const InputFactory = React.memo<InputProps>(
       variants,
       contentStyle,
       errorStyle,
+      hintStyle,
       inputStyle,
       labelStyle,
       style,
@@ -331,6 +333,8 @@ const InputFactory = React.memo<InputProps>(
 
     labelStyle = [error && { color: 'error' }, labelStyle];
 
+    hintStyle = [error && { color: 'error' }, hintStyle];
+
     contentStyle = [
       color &&
         !disabled && {
@@ -446,6 +450,12 @@ const InputFactory = React.memo<InputProps>(
             )}
           </BoxFactory>
         </BoxFactory>
+
+        {Boolean(hint) && (
+          <TextFactory variant="caption" style={hintStyle} stylist={[variants.hint]}>
+            {hint}
+          </TextFactory>
+        )}
 
         {Boolean(error) && typeof error === 'string' && (
           <TextFactory variant="caption" style={errorStyle} stylist={[variants.error]}>
