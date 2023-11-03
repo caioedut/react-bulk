@@ -480,7 +480,7 @@ export type ThemeProps = {
     Form: ThemeComponentProps<FormProps, 'root'>;
     Grid: ThemeComponentProps<GridProps, 'root' | 'item'>;
     Image: ThemeComponentProps<ImageProps, 'root'>;
-    Input: ThemeComponentProps<InputProps, 'root' | 'content' | 'label' | 'input' | 'error'>;
+    Input: ThemeComponentProps<InputProps, 'root' | 'content' | 'label' | 'input' | 'hint' | 'error'>;
     Label: ThemeComponentProps<LabelProps, 'root'>;
     Link: ThemeComponentProps<LinkProps, 'root'>;
     ListItem: ThemeComponentProps<ListItemProps, 'root'>;
@@ -651,6 +651,7 @@ export type InputProps = PropsWithStyles<
     disabled?: boolean;
     endAddon?: ReactElement;
     error?: string | boolean;
+    hint?: string;
     inputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url' | (string & {});
     label?: string;
     mask?: (value: InputValue) => any;
@@ -680,6 +681,7 @@ export type InputProps = PropsWithStyles<
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
     // Styles
     contentStyle?: RbkStyle;
+    hintStyle?: RbkStyle;
     errorStyle?: RbkStyle;
     labelStyle?: RbkStyle;
     inputStyle?: RbkStyle;
