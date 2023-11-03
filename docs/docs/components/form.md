@@ -123,6 +123,8 @@ Reset fields and dispatch `onClear` handler.
 
 **setValue(name: `string`, value: `any`)**
 
+Update input value and dispatch `onChange` event.
+
 `ref.current.setValue('age', '21')`
 
 ---

@@ -8,7 +8,7 @@ import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
-import { AnyObject, RbkInputEvent, RequiredSome, SelectOption, SelectProps } from '../../types';
+import { AnyObject, InputValue, RbkInputEvent, RequiredSome, SelectOption, SelectProps } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
@@ -32,6 +32,7 @@ const SelectFactory = React.memo<SelectProps>(
     // Extends from default props
     let {
       defaultValue,
+      disabled,
       id,
       color,
       controlled,
@@ -72,24 +73,21 @@ const SelectFactory = React.memo<SelectProps>(
     const [visible, setVisible] = useState(false);
     const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == defaultValue));
 
-    const initialValue = useMemo(() => value ?? defaultValue, []);
-    const dispatchRef = useRef(typeof initialValue === 'undefined');
-    const [internal, _setInternal] = useState(initialValue);
+    const [_internal, _setInternal] = useState(value ?? defaultValue);
+
+    const internal = useMemo(() => {
+      return _internal;
+    }, [_internal]);
+
+    const setInternal = useCallback(
+      (value) => {
+        if (controlled) return;
+        _setInternal(value);
+      },
+      [controlled, internal],
+    );
 
     const selected = useMemo(() => arrOptions?.find((item) => item.value == internal), [arrOptions, internal]);
-
-    function setInternal(value: any, dispatch = true) {
-      _setInternal(value);
-
-      if (dispatch && dispatchRef.current) {
-        // dispatchEvent(
-        //   'change',
-        //   arrOptions?.find((item) => item.value == value),
-        // );
-      }
-
-      dispatchRef.current = true;
-    }
 
     color = theme.color(error ? 'error' : color || 'primary');
 
@@ -111,9 +109,57 @@ const SelectFactory = React.memo<SelectProps>(
     const fontSize = baseSize / 2;
     const spacing = (baseSize - theme.rem(0.75)) / 2;
 
+    const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
+    const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
+    const clear = useCallback(() => setInternal(defaultValue), [setInternal]);
+    const isFocused = useCallback(
+      () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
+      [buttonRef],
+    );
+
+    const dispatchEvent = useCallback(
+      (
+        type: string,
+        newValue: InputValue,
+        event: AnyObject | null,
+        eventHandler?: (event: RbkInputEvent, value: InputValue, option: SelectOption | null) => void,
+      ) => {
+        const nativeEvent = event?.nativeEvent ?? event ?? null;
+        const value = newValue ?? null;
+        const option = arrOptions?.find((item) => item.value == value) ?? null;
+
+        if (type === 'change') {
+          setInternal(value);
+        }
+
+        if (eventHandler instanceof Function) {
+          eventHandler(
+            {
+              type,
+              value,
+              name,
+              target: buttonRef.current,
+              form,
+              focus,
+              blur,
+              clear,
+              isFocused,
+              nativeEvent,
+            },
+            value,
+            option,
+          );
+        }
+      },
+      [buttonRef, name, form, focus, blur, clear, isFocused, setInternal, arrOptions],
+    );
+
     useEffect(() => {
+      // TODO (?)
+      // dispatchEvent('change', value, null, onChange);
+
       if (typeof value === 'undefined') return;
-      setInternal(value);
+      _setInternal(value);
     }, [value]);
 
     useEffect(() => {
@@ -125,8 +171,8 @@ const SelectFactory = React.memo<SelectProps>(
 
       form.setField({
         name,
-        set: setInternal,
-        get: () => selected?.value ?? null,
+        get: () => internal ?? null,
+        set: (value) => dispatchEvent('change', value, null, onChange),
         setError,
         onFormChange,
       });
@@ -134,7 +180,7 @@ const SelectFactory = React.memo<SelectProps>(
       return () => {
         form.unsetField(name as string);
       };
-    }, [name, form, onFormChange, selected]);
+    }, [name, form, internal, dispatchEvent, onFormChange]);
 
     useEffect(() => {
       if (!visible || !selectedRef.current) return;
@@ -160,42 +206,6 @@ const SelectFactory = React.memo<SelectProps>(
       }
     }, [visible]);
 
-    const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
-    const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
-    const clear = useCallback(() => setInternal(defaultValue), []);
-    const isFocused = useCallback(
-      () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
-      [buttonRef],
-    );
-
-    function dispatchEvent(type: string, option?: SelectOption, nativeEvent?: any) {
-      const callback = {
-        focus: onFocus,
-        blur: onBlur,
-        change: onChange,
-      }[type];
-
-      if (typeof callback === 'function') {
-        const target = buttonRef.current;
-        const value = option?.value;
-
-        const event: RbkInputEvent = {
-          type,
-          value,
-          name,
-          target,
-          form,
-          focus,
-          blur,
-          clear,
-          isFocused,
-          nativeEvent,
-        };
-
-        callback(event, value, option);
-      }
-    }
-
     function optionFocus(index) {
       if (index < 0 || index > arrOptions.length - 1) {
         index = 0;
@@ -205,16 +215,8 @@ const SelectFactory = React.memo<SelectProps>(
       setActiveIndex(index);
     }
 
-    const handleCommonEvent = useCallback(
-      (e) => {
-        const nativeEvent = e?.nativeEvent ?? e;
-        dispatchEvent(e.type, selected, nativeEvent);
-      },
-      [selected],
-    );
-
     const handleOpen = () => {
-      optionFocus(arrOptions?.findIndex((item) => item.value == selected?.value));
+      optionFocus(arrOptions?.findIndex((item) => item.value == internal));
 
       const callback = ({ top, left, height, width }) => {
         const newMetrics: any = { left, width };
@@ -238,32 +240,29 @@ const SelectFactory = React.memo<SelectProps>(
       }
 
       if (native) {
-        // @ts-ignore
+        // @ts-expect-error
         buttonRef.current.measure((x, y, width, height, left, top) => callback({ top, left, height, width }));
       }
     };
 
-    const handleChange = (e, option, autoFocus = false) => {
-      if (readOnly) return;
+    const handleChange = (event, value: InputValue) => {
+      if (readOnly || disabled) return;
 
-      const nativeEvent = e?.nativeEvent ?? e;
-      const newSelected = arrOptions?.find((item) => item.value == option.value);
-
-      if (!controlled) {
-        setInternal(option.value, false);
-      }
-
-      setVisible(false);
-      dispatchEvent('change', newSelected, nativeEvent);
-
-      if (autoFocus) {
-        focus();
-      }
+      dispatchEvent('change', value, event, onChange);
     };
 
-    const handleChangeBrowser = (e) => {
-      const option = arrOptions.find((item) => item.value == e.target.value);
-      handleChange(e, option, false);
+    const handleSelect = (event, option: SelectOption) => {
+      handleChange(event, option.value);
+      setVisible(false);
+      focus();
+    };
+
+    const handleFocus = (event) => {
+      dispatchEvent('focus', internal, event, onFocus);
+    };
+
+    const handleBlur = (event) => {
+      dispatchEvent('blur', internal, event, onBlur);
     };
 
     const handleKeyDown = (e) => {
@@ -348,12 +347,13 @@ const SelectFactory = React.memo<SelectProps>(
           {...rest}
           id={id}
           size={size}
+          disabled={disabled}
           variant="outline"
           style={buttonStyle}
           contentStyle={{ flex: 1, maxWidth: '100%' }}
           onPress={handleOpen}
-          onFocus={handleCommonEvent}
-          onBlur={handleCommonEvent}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         >
           <TextFactory numberOfLines={1} w="100%">
             {selected?.label ?? selected?.value ?? placeholder ?? ''}
@@ -373,7 +373,7 @@ const SelectFactory = React.memo<SelectProps>(
             name={name}
             readOnly={readOnly}
             value={`${selected?.value ?? ''}`}
-            onChange={handleChangeBrowser}
+            onChange={(e) => handleChange(e, e.target.value)}
           />
         )}
 
@@ -398,7 +398,7 @@ const SelectFactory = React.memo<SelectProps>(
                     bg={isSelected ? theme.color(color, 0.1) : undefined}
                     style={{ paddingHorizontal: spacing }}
                     contentStyle={{ flex: 1, maxWidth: '100%' }}
-                    onPress={(e) => handleChange(e, option, true)}
+                    onPress={(e) => handleSelect(e, option)}
                     endAddon={
                       <BoxFactory w={fontSize} pl={1}>
                         {isSelected && <Check svg={svg} size={fontSize} color={color} />}

@@ -7,7 +7,7 @@ import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { customStyleProps } from '../../styles/constants';
-import { InputProps, InputValue, RbkInputEvent, RequiredSome } from '../../types';
+import { AnyObject, InputProps, InputValue, RbkInputEvent, RequiredSome } from '../../types';
 import defined from '../../utils/defined';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -136,18 +136,26 @@ const InputFactory = React.memo<InputProps>(
       [unmask, type, min, max],
     );
 
+    const resolveValue = useCallback(
+      (value) => {
+        return unmaskValue(maskValue(value));
+      },
+      [maskValue, unmaskValue],
+    );
+
     const [focused, setFocused] = useState(false);
-    const [_internal, _setInternal] = useState(unmaskValue(maskValue(value ?? defaultValue)));
+    const [_internal, _setInternal] = useState(value ?? defaultValue);
 
     const internal = useMemo(() => {
-      return unmaskValue(maskValue(_internal));
-    }, [maskValue, unmaskValue, _internal]);
+      return resolveValue(_internal);
+    }, [_internal, resolveValue]);
 
     const setInternal = useCallback(
       (value) => {
-        _setInternal(unmaskValue(maskValue(value)));
+        if (controlled) return;
+        _setInternal(resolveValue(value));
       },
-      [maskValue, unmaskValue, controlled, internal],
+      [controlled, internal, resolveValue],
     );
 
     color = error ? 'error' : color || 'primary';
@@ -229,10 +237,55 @@ const InputFactory = React.memo<InputProps>(
     const spacing = (baseSize - theme.rem()) / 2;
     const height = multiline ? theme.rem() * (rows ?? 6) + spacing * 2 : baseSize;
 
+    const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
+    const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
+    const clear = useCallback(() => setInternal(defaultValue), [setInternal]);
+    const isFocused = useCallback(
+      () => Boolean(inputRef?.current?.isFocused?.()) || inputRef?.current === document?.activeElement,
+      [inputRef],
+    );
+
+    const dispatchEvent = useCallback(
+      (
+        type: string,
+        newValue: InputValue,
+        event: AnyObject | null,
+        eventHandler?: (event: RbkInputEvent, value: InputValue) => void,
+      ) => {
+        const nativeEvent = event?.nativeEvent ?? event ?? null;
+        const value = resolveValue(newValue) ?? null;
+
+        if (type === 'change') {
+          setInternal(value);
+        }
+
+        if (eventHandler instanceof Function) {
+          eventHandler(
+            {
+              type,
+              value,
+              name,
+              target: inputRef.current,
+              form,
+              focus,
+              blur,
+              clear,
+              isFocused,
+              nativeEvent,
+            },
+            value,
+          );
+        }
+      },
+      [inputRef, name, form, focus, blur, clear, isFocused, resolveValue, setInternal],
+    );
+
     useEffect(() => {
-      // TODO: fix setInternal called twice when using form.setData with prop controlled=true
+      // TODO (?)
+      // dispatchEvent('change', value, null, onChange);
+
       if (typeof value === 'undefined') return;
-      setInternal(value);
+      _setInternal(value);
     }, [value]);
 
     useEffect(() => {
@@ -244,8 +297,8 @@ const InputFactory = React.memo<InputProps>(
 
       form.setField({
         name,
-        get: () => internal,
-        set: (value) => setInternal(value),
+        get: () => internal ?? null,
+        set: (value) => dispatchEvent('change', value, null, onChange),
         setError,
         onFormChange,
       });
@@ -253,79 +306,33 @@ const InputFactory = React.memo<InputProps>(
       return () => {
         form.unsetField(name as string);
       };
-    }, [name, form, internal, setInternal, onFormChange]);
+    }, [name, form, internal, dispatchEvent, onFormChange]);
 
-    const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
-    const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
-    const clear = useCallback(() => setInternal(defaultValue), [setInternal]);
-    const isFocused = useCallback(
-      () => Boolean(inputRef?.current?.isFocused?.()) || inputRef?.current === document?.activeElement,
-      [inputRef],
-    );
+    const handleChange = (event) => {
+      if (disabled || readOnly) return;
 
-    function dispatchEvent(type: string, value: InputValue, nativeEvent?: any) {
-      const callback = {
-        focus: onFocus,
-        blur: onBlur,
-        submit: onSubmit,
-        change: onChange,
-      }[type];
-
-      if (typeof callback === 'function') {
-        const target = inputRef.current;
-
-        const event: RbkInputEvent = {
-          type,
-          value,
-          name,
-          target,
-          form,
-          focus,
-          blur,
-          clear,
-          isFocused,
-          nativeEvent,
-        };
-
-        callback(event, value);
-      }
-    }
-
-    const handleChange = (e) => {
-      const target = inputRef?.current;
-      const nativeEvent = e?.nativeEvent ?? e;
-      const value = unmaskValue(maskValue(e?.value ?? target?.value ?? e?.nativeEvent?.text));
-
-      if (!controlled) {
-        setInternal(value);
-      }
-
-      dispatchEvent('change', value, nativeEvent);
+      const value = event?.value ?? event?.target?.value ?? event?.nativeEvent?.text;
+      dispatchEvent('change', value, event, onChange);
     };
 
-    const handleIncDec = (e, signal) => {
-      handleChange({
-        nativeEvent: e,
-        value: Number(internal || 0) + (signal || 1),
-      });
+    const handleIncDec = (event, signal) => {
+      const value = Number(internal || 0) + (signal || 1);
+      dispatchEvent('change', value, event, onChange);
     };
 
-    const handleFocus = (e) => {
-      const nativeEvent = e?.nativeEvent ?? e;
+    const handleFocus = (event) => {
       setFocused(true);
-      dispatchEvent('focus', internal, nativeEvent);
+      dispatchEvent('focus', internal, event, onFocus);
     };
 
-    const handleBlur = (e) => {
-      const nativeEvent = e?.nativeEvent ?? e;
+    const handleBlur = (event) => {
       setFocused(false);
-      dispatchEvent('blur', internal, nativeEvent);
+      dispatchEvent('blur', internal, event, onBlur);
     };
 
-    function handleSubmit(e) {
-      e?.preventDefault();
-      const nativeEvent = e?.nativeEvent ?? e;
-      dispatchEvent('submit', internal, nativeEvent);
+    function handleSubmit(event) {
+      event?.preventDefault();
+      dispatchEvent('submit', internal, event, onSubmit);
     }
 
     // @ts-expect-error
@@ -411,7 +418,7 @@ const InputFactory = React.memo<InputProps>(
               inputMode={inputMode}
               maxLength={maxLength}
               name={name}
-              value={maskValue(internal)}
+              value={maskValue(unmaskValue(internal))}
               onChange={handleChange}
               onFocus={handleFocus}
               onBlur={handleBlur}
