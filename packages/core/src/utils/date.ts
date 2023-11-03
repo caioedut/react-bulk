@@ -1,4 +1,4 @@
-export function dateify(input?: Date | number | string | null, avoidTimeZone = true) {
+export function dateify(input?: Date | number | string | null) {
   if (!input) {
     input = new Date();
   }
@@ -8,12 +8,12 @@ export function dateify(input?: Date | number | string | null, avoidTimeZone = t
   }
 
   if (input instanceof Date) {
-    input = input.toISOString();
+    input = [
+      input.getFullYear(),
+      `${input.getMonth() + 1}`.padStart(2, '0'),
+      `${input.getDate()}`.padStart(2, '0'),
+    ].join('-');
   }
 
-  if (avoidTimeZone) {
-    input = input.substring(0, 10);
-  }
-
-  return new Date(`${input}T12:00:00`);
+  return new Date(`${input.substring(0, 10)}T12:00:00`);
 }

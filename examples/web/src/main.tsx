@@ -1045,7 +1045,7 @@ function CalendarExample() {
 
       <Text variant="subtitle">Component</Text>
       <Box maxw={360} mx={-theme.shape.gap}>
-        <Calendar date={date} events={[date]} onPressDate={(_, date) => setDate(date)} />
+        <Calendar />
       </Box>
 
       <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
@@ -1055,27 +1055,10 @@ function CalendarExample() {
           <Text variant="subtitle">Date Picker</Text>
         </Box>
         <Box xs={12}>
-          <DatePicker
-            name="calendar"
-            label="Variant Modal (Default)"
-            value={date}
-            onChange={(_: RbkInputEvent, date: InputValue) => {
-              setDate(date);
-              console.log({ date });
-            }}
-          />
+          <DatePicker name="calendar" label="Variant Modal (Default)" value={date} />
         </Box>
         <Box xs={12}>
-          <DatePicker
-            variant="inline"
-            name="calendar"
-            label="Variant Inline"
-            value={date}
-            onChange={(_: RbkInputEvent, date: InputValue) => {
-              setDate(date);
-              console.log({ date });
-            }}
-          />
+          <DatePicker variant="inline" name="calendar" label="Variant Inline" value={date} />
         </Box>
         <Box xs={12}>
           <Button
