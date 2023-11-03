@@ -48,7 +48,7 @@ import { Divider } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Box`](/docs/components/box#props) props.
+Extends all [`Box`](/docs/core/box#props) props.
 
 **`color`**
 

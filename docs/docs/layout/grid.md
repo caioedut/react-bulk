@@ -64,7 +64,7 @@ import { Grid } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Breakpoints
 
-It is recommended to use the [`Box`](/docs/components/box) as a child.
+It is recommended to use the [`Box`](/docs/core/box) as a child.
 
 All [breakpoints](/docs/layout/breakpoints) are avalilable as prop of the children.
 
@@ -82,7 +82,7 @@ Default breakpoints: **`xs` `sm` `md` `lg` `xl` `xxl`**
 
 ## Props
 
-Extends all [`Box`](/docs/components/box#props) props.
+Extends all [`Box`](/docs/core/box#props) props.
 
 **`breakpoints`**
 
