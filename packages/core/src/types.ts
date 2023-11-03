@@ -646,6 +646,7 @@ export type InputProps = PropsWithStyles<
     autoCorrect?: boolean;
     caretHidden?: boolean;
     color?: RbkColor;
+    colorful?: boolean;
     controlled?: boolean;
     defaultValue?: InputValue;
     disabled?: boolean;

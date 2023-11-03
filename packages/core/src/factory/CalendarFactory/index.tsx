@@ -92,7 +92,12 @@ const CalendarFactory = React.memo<CalendarProps>(
       <CardFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
         <GridFactory gap noWrap>
           <BoxFactory>
-            <ButtonFactory variant="outline" color={color} onPress={() => handleMonth(-1)}>
+            <ButtonFactory
+              variant="outline"
+              color={color}
+              onPress={() => handleMonth(-1)}
+              accessibility={{ label: 'previous month' }}
+            >
               <ChevronLeft svg={svg} color={color} />
             </ButtonFactory>
           </BoxFactory>
@@ -103,7 +108,12 @@ const CalendarFactory = React.memo<CalendarProps>(
             </TextFactory>
           </BoxFactory>
           <BoxFactory>
-            <ButtonFactory variant="outline" color={color} onPress={() => handleMonth(1)}>
+            <ButtonFactory
+              variant="outline"
+              color={color}
+              onPress={() => handleMonth(1)}
+              accessibility={{ label: 'next month' }}
+            >
               <ChevronRight svg={svg} color={color} />
             </ButtonFactory>
           </BoxFactory>
@@ -111,6 +121,7 @@ const CalendarFactory = React.memo<CalendarProps>(
             <InputFactory
               readOnly
               controlled
+              colorful
               type="number"
               color={color}
               value={internal.getFullYear()}
@@ -160,8 +171,6 @@ const CalendarFactory = React.memo<CalendarProps>(
             );
           })}
         </GridFactory>
-
-        {/*<TextFactory>{internal.toISOString()}</TextFactory>*/}
       </CardFactory>
     );
   }),
