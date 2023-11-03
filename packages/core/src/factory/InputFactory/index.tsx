@@ -30,6 +30,7 @@ const InputFactory = React.memo<InputProps>(
       autoComplete,
       caretHidden,
       color,
+      colorful,
       controlled,
       defaultValue,
       disabled,
@@ -157,7 +158,7 @@ const InputFactory = React.memo<InputProps>(
       [controlled, internal, resolveValue],
     );
 
-    color = theme.color(error ? 'error' : focused ? color || 'primary' : 'gray.light');
+    color = theme.color(error ? 'error' : focused || colorful ? color || 'primary' : 'gray.light');
     selectionColor = theme.color(selectionColor ?? color);
     placeholderColor = theme.color(
       // @ts-expect-error
