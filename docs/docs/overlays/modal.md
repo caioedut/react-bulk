@@ -2,7 +2,7 @@
 
 A modal is a dialog box/popup window that is displayed on top of the current page.
 
-`Modal` just wraps a [`Card`](/docs/components/surfaces/card) in a [`Backdrop`](/docs/components/overlay/backdrop).
+`Modal` just wraps a [`Card`](/docs/contents/card) in a [`Backdrop`](/docs/overlays/backdrop).
 
 ## Import
 
@@ -66,7 +66,7 @@ function Home() {
 
 ## Props
 
-Extends all [`Box`](/docs/components/box#props) props.
+Extends all [`Box`](/docs/core/box#props) props.
 
 **`halign`**
 

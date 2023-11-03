@@ -32,7 +32,7 @@ function Home() {
 
 ## Props
 
-Extends all [`Box`](/docs/components/box#props) props.
+Extends all [`Box`](/docs/core/box#props) props.
 
 **`visible`**
 

@@ -121,6 +121,6 @@ import { ButtonGroup } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Styles
 
-**`style`** to the outer wrapper element ([Scrollable](/docs/components/core/scrollable)).
+**`style`** to the outer wrapper element ([Scrollable](/docs/core/scrollable)).
 
 **`contentStyle`** to the inner wrapper.

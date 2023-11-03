@@ -44,7 +44,7 @@ import { Checkbox } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Box`](/docs/components/box#props) props.
+Extends all [`Box`](/docs/core/box#props) props.
 
 **`controlled`**
 
@@ -127,8 +127,8 @@ If `true`, renders a radion button.
 
 **`onFormChange`**
 
-Combined with [Form](/docs/components/forms/form), triggers every time when form data changes.
-Eg.: [Input](/docs/components/forms/input), [Select](/docs/components/forms/select), [Checkbox](/docs/components/forms/checkbox).
+Combined with [Form](/docs/forms/form), triggers every time when form data changes.
+Eg.: [Input](/docs/forms/input), [Select](/docs/forms/select), [Checkbox](/docs/forms/checkbox).
 
 ➤ Type: **`Function(RbkFormEvent)`** <br/>
 

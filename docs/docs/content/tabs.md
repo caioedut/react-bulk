@@ -89,7 +89,7 @@ function App() {
 
 ## Props
 
-Extends all [`Scrollable`](/docs/components/core/scrollable#props) props.
+Extends all [`Scrollable`](/docs/core/scrollable#props) props.
 
 **`color`**
 

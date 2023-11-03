@@ -52,7 +52,7 @@ import { Badge } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-Extends all [`Text`](/docs/components/text#props) props.
+Extends all [`Text`](/docs/core/box/text#props) props.
 
 **`bottom`**
 

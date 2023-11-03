@@ -60,7 +60,7 @@ function Home () {
 
 ## Props
 
-Extends all [`Text`](/docs/components/text#props) props.
+Extends all [`Text`](/docs/core/text#props) props.
 
 **`for`**
 

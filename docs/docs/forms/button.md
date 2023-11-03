@@ -81,7 +81,7 @@ function Home () {
 
 ### Group and Toggle
 
-[Learn more about `ButtonGroup`](/docs/components/forms/button-group).
+[Learn more about `ButtonGroup`](/docs/forms/button-group).
 
 ```jsx live
 function Home() {
@@ -102,7 +102,7 @@ function Home() {
 
 ## Props
 
-Extends all [`Box`](/docs/components/box#props) props.
+Extends all [`Box`](/docs/core/box#props) props.
 
 **`autoFocus`**
 
@@ -116,7 +116,7 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 A number or object representing the button's badge.
 
-➤ Type: **`number` | [`BadgeProps`](/docs/components/data-display/badge#props)** <br/>
+➤ Type: **`number` | [`BadgeProps`](/docs/feedback/badge#props)** <br/>
 
 ---
 
