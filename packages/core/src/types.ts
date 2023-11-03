@@ -716,9 +716,13 @@ export type SelectProps = PropsWithStyles<
     startAddon?: ReactElement;
     value?: InputValue;
     // Events
-    onFocus?: (event: RbkInputEvent, value: InputValue, option?: SelectOption) => void;
-    onBlur?: (event: RbkInputEvent, value: InputValue, option?: SelectOption) => void;
-    onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue, option?: SelectOption) => any;
+    onFocus?: (event: RbkInputEvent, value: InputValue, option?: SelectOption | null) => void;
+    onBlur?: (event: RbkInputEvent, value: InputValue, option?: SelectOption | null) => void;
+    onChange?: (
+      event: RbkInputEvent | RbkChangeEvent | RbkEvent,
+      value: InputValue,
+      option?: SelectOption | null,
+    ) => any;
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
     // Styles
     buttonStyle?: RbkStyle;
