@@ -53,7 +53,7 @@ export default function Home() {
             <Link className="button button--lg" to="/docs/category/getting-started">
               ⇉ Getting Started
             </Link>
-            <Link className="button button--lg" to="/docs/category/components">
+            <Link className="button button--lg" to="/docs/category/core">
               ䷳ Components
             </Link>
           </div>
