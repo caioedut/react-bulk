@@ -68,9 +68,10 @@ const SelectFactory = React.memo<SelectProps>(
     const selectedRef: any = useRef(null);
     const optionsRef: any = useRef([]);
 
+    const [focused, setFocused] = useState(false);
     const [error, setError] = useState<SelectProps['error']>();
     const [metrics, setMetrics] = useState<AnyObject>({});
-    const [visible, setVisible] = useState(false);
+    const [visible, _setVisible] = useState(false);
     const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == defaultValue));
 
     const [_internal, _setInternal] = useState(value ?? defaultValue);
@@ -87,9 +88,16 @@ const SelectFactory = React.memo<SelectProps>(
       [controlled, internal],
     );
 
+    const setVisible = useCallback((value) => {
+      _setVisible(value);
+      if (!value) {
+        setFocused(false);
+      }
+    }, []);
+
     const selected = useMemo(() => arrOptions?.find((item) => item.value == internal), [arrOptions, internal]);
 
-    color = theme.color(error ? 'error' : color || 'primary');
+    color = theme.color(error ? 'error' : focused ? color || 'primary' : 'gray.light');
 
     const gutter = theme.spacing(3);
 
@@ -258,10 +266,12 @@ const SelectFactory = React.memo<SelectProps>(
     };
 
     const handleFocus = (event) => {
+      setFocused(true);
       dispatchEvent('focus', internal, event, onFocus);
     };
 
     const handleBlur = (event) => {
+      setFocused(visible || false);
       dispatchEvent('blur', internal, event, onBlur);
     };
 

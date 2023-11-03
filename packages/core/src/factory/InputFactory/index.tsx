@@ -86,7 +86,9 @@ const InputFactory = React.memo<InputProps>(
     const defaultRef: any = useRef(null);
     const inputRef = ref || defaultRef;
 
+    const [focused, setFocused] = useState(false);
     const [error, setError] = useState<InputProps['error']>();
+    const [_internal, _setInternal] = useState(value ?? defaultValue);
 
     const maskValue = useCallback(
       (value) => {
@@ -143,9 +145,6 @@ const InputFactory = React.memo<InputProps>(
       [maskValue, unmaskValue],
     );
 
-    const [focused, setFocused] = useState(false);
-    const [_internal, _setInternal] = useState(value ?? defaultValue);
-
     const internal = useMemo(() => {
       return resolveValue(_internal);
     }, [_internal, resolveValue]);
@@ -158,7 +157,7 @@ const InputFactory = React.memo<InputProps>(
       [controlled, internal, resolveValue],
     );
 
-    color = error ? 'error' : color || 'primary';
+    color = theme.color(error ? 'error' : focused ? color || 'primary' : 'gray.light');
     selectionColor = theme.color(selectionColor ?? color);
     placeholderColor = theme.color(
       // @ts-expect-error
