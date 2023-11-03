@@ -16,7 +16,7 @@ Complete and uniform UI for React Web and Native
 
 ## More
 - [Layout](https://rbk.caioedut.com/docs/category/layout)
-- [Components](https://rbk.caioedut.com/docs/category/components)
+- [Components](https://rbk.caioedut.com/docs/category/core)
 - [Hooks](https://rbk.caioedut.com/docs/category/hooks)
 
 [Read the full Docs.](https://rbk.caioedut.com/)
