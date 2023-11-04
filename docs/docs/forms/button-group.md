@@ -94,7 +94,7 @@ import { ButtonGroup } from '@react-bulk/web'; // OR @react-bulk/native
 
 **`color`**
 
-➤ Type: **`string`** <br/>
+➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`primary`**
 
 ---

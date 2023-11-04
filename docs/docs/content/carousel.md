@@ -45,7 +45,7 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 **`color`**
 
-➤ Type: **`string`** <br/>
+➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`primary`**
 
 ---

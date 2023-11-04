@@ -33,6 +33,8 @@ function Toaster({ theme }: any, ref) {
     halign,
     offset,
     valign,
+    // Events
+    onPress,
     // Styles
     variants,
   } = factory2<RequiredSome<ToasterProps, 'color' | 'duration' | 'halign' | 'valign' | 'offset'>>(props || {}, options);
@@ -114,6 +116,7 @@ function Toaster({ theme }: any, ref) {
             platform={{ web: { tabIndex: '-1' } }}
             bg={color}
             stylist={[variants.root]}
+            onPress={onPress}
           >
             <BoxFactory row noWrap alignItems="center">
               {typeof content === 'string' ? (

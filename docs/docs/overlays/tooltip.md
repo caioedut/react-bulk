@@ -86,7 +86,7 @@ Extends all [`Text`](/docs/core/text#props) props.
 
 **`color`**
 
-➤ Type: **`string`** <br/>
+➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`black`** <br/>
 
 ---

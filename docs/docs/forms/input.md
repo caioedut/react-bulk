@@ -13,10 +13,7 @@ import { Input } from '@react-bulk/web'; // OR @react-bulk/native
 ### Basic
 
 ```jsx live
-<Grid column gap={3} maxw={400}>
-  <Box>
-    <Input label="Label" placeholder="Label + Input" />
-  </Box>
+<Grid gap maxw={400}>
   <Box>
     <Input placeholder="Default" />
   </Box>
@@ -28,6 +25,12 @@ import { Input } from '@react-bulk/web'; // OR @react-bulk/native
   </Box>
   <Box>
     <Input placeholder="Disabled" disabled />
+  </Box>
+  <Box>
+    <Input label="Label" placeholder="Label + Input" />
+  </Box>
+  <Box>
+    <Input label="Colorful" placeholder="Label + Input + Colorful" colorful />
   </Box>
 </Grid>
 ```
@@ -133,8 +136,15 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 **`color`**
 
-➤ Type: **`boolean`** <br/>
+➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`'primary'`**
+
+---
+
+**`color`**
+
+➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
+➤ Default: **`false`**
 
 ---
 
