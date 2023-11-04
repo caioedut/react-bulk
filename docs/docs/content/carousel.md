@@ -52,7 +52,7 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 **`gap`**
 
-Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.typography.fontSize` value.
+Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.typography.spacing` value.
 
 ➤ Type: **`number`** <br/>
 
