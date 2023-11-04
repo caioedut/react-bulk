@@ -203,10 +203,10 @@ export type RbkColor =
 export interface RbkRect {
   width: number;
   height: number;
-  offsetX: number;
-  offsetY: number;
-  pageOffsetX: number;
-  pageOffsetY: number;
+  offsetX: number; // offset X relative to DOCUMENT
+  offsetY: number; // offset Y relative to DOCUMENT
+  pageOffsetX: number; // offset X relative to WINDOW
+  pageOffsetY: number; // offset Y relative to WINDOW
 }
 
 export interface RbkAnimation {
@@ -476,7 +476,7 @@ export type ThemeProps = {
     DatePicker: ThemeComponentProps<DatePickerProps, 'root'>;
     Divider: ThemeComponentProps<DividerProps, 'root'>;
     Drawer: ThemeComponentProps<DrawerProps, 'root' | 'backdrop'>;
-    Dropdown: ThemeComponentProps<DropdownProps, 'root'>;
+    Dropdown: ThemeComponentProps<DropdownProps, 'root' | 'backdrop'>;
     Form: ThemeComponentProps<FormProps, 'root'>;
     Grid: ThemeComponentProps<GridProps, 'root' | 'item'>;
     Image: ThemeComponentProps<ImageProps, 'root'>;
@@ -485,7 +485,7 @@ export type ThemeProps = {
     Link: ThemeComponentProps<LinkProps, 'root'>;
     ListItem: ThemeComponentProps<ListItemProps, 'root'>;
     Loading: ThemeComponentProps<LoadingProps, 'root' | 'label'>;
-    Modal: ThemeComponentProps<ModalProps, 'root'>;
+    Modal: ThemeComponentProps<ModalProps, 'root' | 'backdrop'>;
     Outline: ThemeComponentProps<OutlineProps, 'root'>;
     Progress: ThemeComponentProps<ProgressProps, 'root' | 'bar' | 'label'>;
     Scrollable: ThemeComponentProps<ScrollableProps, 'root' | 'content'>;
@@ -856,6 +856,7 @@ export type ModalProps = PropsWithStyles<{
   halign?: 'center' | 'left' | 'right';
   valign?: 'center' | 'top' | 'bottom';
   visible?: boolean;
+  // Events
   onBackdropPress?: Function;
 }>;
 
@@ -868,6 +869,8 @@ export type CollapseProps = PropsWithStyles<{
 
 export type DropdownProps = PropsWithStyles<{
   visible?: boolean;
+  // Events
+  onClose?: Function;
 }>;
 
 export type LoadingProps = PropsWithStyles<{
