@@ -2,7 +2,7 @@
 
 Used to encapsulate the content and actions of a single subject.
 
-`Card` just adds `backgroundColor: background.primary` and `padding: theme.rem(3)` into a `Box`.
+`Card` just adds `backgroundColor`, `borderRadius` and `padding` into a `Box`.
 
 ## Import
 
@@ -20,24 +20,34 @@ import { Card } from '@react-bulk/web'; // OR @react-bulk/native
 </Card>
 ```
 
+### Elevation
+
+Using prop `shadow`.
+
+```jsx live
+<Card shadow={2}>
+  <Text>Hello World!</Text>
+</Card>
+```
+
 ### Composition
 
 ```jsx live
-<Card maxw={240} mx="auto" border="1px solid background">
+<Card  shadow={2} maxw={240} mx="auto" >
   <Text variant="caption" color="text.secondary">
-    Lib of the Year
+    Lib of the Year ⭐
   </Text>
   <Text variant="title" bold>
     React Bulk
   </Text>
-  <Box mx={-3} my={3}>
-    <Image source="https://i.imgur.com/CmPhDqA.png" bg="background.secondary" w="100%" />
+  <Box mx={-4} mt={4}>
+    <Image source="https://i.imgur.com/HdIl3Ef.png" bg="background.secondary" w="100%" />
   </Box>
-  <Text>
+  <Text mt={4}>
     Complete and uniform UI for React Web and Native
   </Text>
-  <Button variant="outline" size="small" align="start" mt={3}>
-    Learn More
+  <Button variant="outline" align="start" mt={4}>
+    Learn More!
   </Button>
 </Card>
 ```
