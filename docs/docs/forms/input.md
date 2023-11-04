@@ -363,25 +363,25 @@ The value to show for the text input.
 
 ### **`onChange`**
 
-➤ Type: **`Function(RbkInputEvent)`** <br/>
+➤ Type: **`Function`([`RbkInputEvent`](/docs/type-reference/rbk-input-event))** <br/>
 
 ---
 
 ### **`onSubmit`**
 
-➤ Type: **`Function(RbkInputEvent)`** <br/>
+➤ Type: **`Function`([`RbkInputEvent`](/docs/type-reference/rbk-input-event))** <br/>
 
 ---
 
 ### **`onFocus`**
 
-➤ Type: **`Function(RbkInputEvent)`** <br/>
+➤ Type: **`Function`([`RbkInputEvent`](/docs/type-reference/rbk-input-event))** <br/>
 
 ---
 
 ### **`onBlur`**
 
-➤ Type: **`Function(RbkInputEvent)`** <br/>
+➤ Type: **`Function`([`RbkInputEvent`](/docs/type-reference/rbk-input-event))** <br/>
 
 ---
 
@@ -390,7 +390,7 @@ The value to show for the text input.
 Combined with [Form](/docs/forms/form), triggers every time when form data changes.
 Eg.: [Input](/docs/forms/input), [Select](/docs/forms/select), [Checkbox](/docs/forms/checkbox).
 
-➤ Type: **`Function(RbkFormEvent)`** <br/>
+➤ Type: **`Function`([`RbkFormEvent`](/docs/type-reference/rbk-form-event))** <br/>
 
 ---
 
