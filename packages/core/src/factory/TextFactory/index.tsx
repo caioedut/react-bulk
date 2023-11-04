@@ -53,13 +53,6 @@ const TextFactory = React.memo<TextProps>(
       transform && { textTransform: transform },
 
       web &&
-        Number(numberOfLines) === 1 && {
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        },
-
-      web &&
         Number(numberOfLines) > 1 && {
           display: '-webkit-box',
           '-webkit-line-clamp': `${numberOfLines}`,

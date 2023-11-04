@@ -6,6 +6,7 @@ import ChevronDown from '../../icons/ChevronDown';
 import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
+import get from '../../props/get';
 import { customStyleProps } from '../../styles/constants';
 import { AnyObject, InputProps, InputValue, RbkInputEvent, RequiredSome } from '../../types';
 import defined from '../../utils/defined';
@@ -158,11 +159,12 @@ const InputFactory = React.memo<InputProps>(
       [controlled, internal, resolveValue],
     );
 
-    color = theme.color(error ? 'error' : focused || colorful ? color || 'primary' : 'gray.light');
+    color = theme.color(error ? 'error' : color || 'primary');
+    const focusColor = focused || colorful ? color : 'gray.light';
     selectionColor = theme.color(selectionColor ?? color);
     placeholderColor = theme.color(
       // @ts-expect-error
-      placeholderColor ?? inputStyle?.color ?? options.defaultStyles.input?.color ?? 'text.primary',
+      placeholderColor ?? get('color', inputStyle) ?? options.defaultStyles.input?.color ?? 'text.primary',
       0.4,
     );
     autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
@@ -343,10 +345,9 @@ const InputFactory = React.memo<InputProps>(
     hintStyle = [error && { color: 'error' }, hintStyle];
 
     contentStyle = [
-      color &&
-        !disabled && {
-          borderColor: color,
-        },
+      !disabled && {
+        borderColor: focusColor,
+      },
 
       web &&
         focused && {
@@ -388,7 +389,8 @@ const InputFactory = React.memo<InputProps>(
         {Boolean(label) && (
           <LabelFactory
             numberOfLines={1}
-            for={inputRef}
+            for={id}
+            forRef={inputRef}
             style={labelStyle}
             stylist={[variants.label]}
             onPress={native ? focus : undefined}
@@ -434,7 +436,7 @@ const InputFactory = React.memo<InputProps>(
                     <ButtonFactory
                       key={item}
                       variant="text"
-                      color={color}
+                      color={focusColor}
                       size={(size as number) / 2}
                       disabled={disabled}
                       h="50%"
@@ -443,7 +445,7 @@ const InputFactory = React.memo<InputProps>(
                       contentStyle={{ align: isInc ? 'end' : 'start' }}
                       onPress={(e) => handleIncDec(e, item)}
                     >
-                      <Icon svg={svg} size={Math.round(baseSize * 0.45)} color={theme.color(color)} />
+                      <Icon svg={svg} size={Math.round(baseSize * 0.45)} color={focusColor} />
                     </ButtonFactory>
                   );
                 })}

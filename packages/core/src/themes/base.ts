@@ -776,7 +776,7 @@ const base: ThemeProps = {
           content: {
             borderWidth: 1,
             borderStyle: 'solid',
-            borderColor: 'primary',
+            borderColor: 'gray.light',
             borderRadius: (theme) => theme.shape.borderRadius,
             backgroundColor: (theme) => theme.color('trans'),
             web: {
@@ -807,7 +807,7 @@ const base: ThemeProps = {
               cursor: 'inherit',
               lineHeight: '1rem',
               outline: '0 !important',
-              paddingHorizontal: '0.625rem',
+              paddingVertical: '0.625rem',
 
               '-moz-appearance': 'textfield',
               appearance: 'textfield',
@@ -1219,6 +1219,16 @@ const base: ThemeProps = {
           smallCaps: {
             true: { root: { web: { fontVariant: 'small-caps' }, native: { fontVariant: ['small-caps'] } } },
             false: { root: { web: { fontVariant: 'initial' }, native: { fontVariant: [] } } },
+          },
+
+          numberOfLines: {
+            1: {
+              root: {
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              },
+            },
           },
         },
       },

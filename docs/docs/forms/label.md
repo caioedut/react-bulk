@@ -28,7 +28,7 @@ function Home () {
         <Input ref={inputRef} />
       </Box>
       <Box>
-        <Label for={inputRef} bold>Custom label "for". Press me!</Label>
+        <Label forRef={inputRef} bold>Custom label "for". Press me!</Label>
       </Box>
     </Grid>
   );
