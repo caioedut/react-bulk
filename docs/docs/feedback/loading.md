@@ -28,7 +28,7 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 **`color`**
 
-➤ Type: **`boolean`** <br/>
+➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`'primary'`**
 
 ---

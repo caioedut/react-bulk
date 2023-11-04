@@ -93,7 +93,7 @@ Extends all [`Scrollable`](/docs/core/scrollable#props) props.
 
 **`color`**
 
-➤ Type: **`string`** <br/>
+➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`primary`**
 
 ---

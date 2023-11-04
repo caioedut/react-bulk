@@ -130,7 +130,7 @@ Indicates whether the button is circular.
 
 **`color`**
 
-➤ Type: **`RbkColor`** <br/>
+➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`primary`**
 
 ---

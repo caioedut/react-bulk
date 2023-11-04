@@ -73,7 +73,7 @@ Sets `fontWeight` style to `bold`.
 
 Sets `color` style.
 
-➤ Type: **`string`** <br/>
+➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`'primary'`** <br/>
 
 ---

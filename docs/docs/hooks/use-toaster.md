@@ -74,6 +74,12 @@ Vertical alignment.
 
 ---
 
+**`onPress`**
+
+➤ Type: **`Function(Event)`** <br/>
+
+---
+
 ## Methods
 
 **open(options: `string` | `object`)**

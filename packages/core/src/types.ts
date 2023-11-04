@@ -1015,6 +1015,8 @@ export type ToasterProps = {
   offset?: { x?: number | string; y?: number | string };
   valign?: 'top' | 'bottom';
   width?: number | string;
+  // Events
+  onPress?: Function;
 };
 
 export type CalendarProps = PropsWithStyles<{
