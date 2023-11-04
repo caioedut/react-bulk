@@ -88,11 +88,30 @@ function Home () {
 }
 ```
 
+## Styles
+
+### **`style`**
+To the outer wrapper.
+
+### **`contentStyle`**
+To the inner wrapper.
+
+### **`errorStyle`**
+To the error element when has [`error`](#error) prop.
+
+### **`inputStyle`**
+To the input element.
+
+### **`labelStyle`**
+To the label element.
+
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
+
 ## Props
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`autoCapitalize`**
+### **`autoCapitalize`**
 
 Automatically capitalize certain characters.
 
@@ -106,7 +125,7 @@ Automatically capitalize certain characters.
 
 ---
 
-**`autoComplete`**
+### **`autoComplete`**
 
 Specifies autocomplete hints for the system, so it can provide autofill. On Android, the system will always attempt to offer autofill by using heuristics to identify the type of content. To disable autocomplete, set autoComplete to off.
 
@@ -114,13 +133,13 @@ Specifies autocomplete hints for the system, so it can provide autofill. On Andr
 
 ---
 
-**`autoCorrect`**
+### **`autoCorrect`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`autoFocus`**
+### **`autoFocus`**
 
 If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
@@ -128,33 +147,32 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 ---
 
-**`caretHidden`**
+### **`caretHidden`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`color`**
+### **`color`**
 
 ➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`'primary'`**
 
 ---
 
-**`color`**
-
-➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
-➤ Default: **`false`**
-
----
-
-**`controlled`**
+### **`colorful`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`defaultValue`**
+### **`controlled`**
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+### **`defaultValue`**
 
 Provides an initial value that will change when the user starts typing. Useful for use-cases where you do not want to deal with listening to
 events and updating the value prop to keep the controlled state in sync.
@@ -163,45 +181,47 @@ events and updating the value prop to keep the controlled state in sync.
 
 ---
 
-**`disabled`**
+### **`disabled`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`endAddon`**
+### **`endAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
 
 ---
 
-**`error`**
+### **`error`**
 
 ➤ Type: **`string`** <br/>
 
 ---
 
-**`inputMode`**
+### **`inputMode`**
 
-It determines which keyboard to open.
+Determines which keyboard to open, and has precedence over `type`.
+
+For better support cross-platform, prop `type` is recommended.
 
 ➤ Type: **`'none'` `'text'` `'decimal'` `'numeric'` `'tel'` `'search'` `'email'` `'url'`** <br/>
 
 ---
 
-**`label`**
+### **`label`**
 
 ➤ Type: **`string`** <br/>
 
 ---
 
-**`mask`**
+### **`mask`**
 
 ➤ Type: **`Function(value: string) => string`** <br/>
 
 ---
 
-**`max`**
+### **`max`**
 
 Combined with `type="number"`, limit the maximum number value.
 
@@ -209,7 +229,7 @@ Combined with `type="number"`, limit the maximum number value.
 
 ---
 
-**`maxLength`**
+### **`maxLength`**
 
 Limits the maximum number of characters that can be entered. Use this instead of implementing the logic in JS to avoid flicker.
 
@@ -217,7 +237,7 @@ Limits the maximum number of characters that can be entered. Use this instead of
 
 ---
 
-**`min`**
+### **`min`**
 
 Combined with `type="number"`, defines the minimum number value.
 
@@ -225,7 +245,7 @@ Combined with `type="number"`, defines the minimum number value.
 
 ---
 
-**`multiline`**
+### **`multiline`**
 
 If `true`, the text input can be multiple lines.
 
@@ -233,13 +253,13 @@ If `true`, the text input can be multiple lines.
 
 ---
 
-**`name`**
+### **`name`**
 
 ➤ Type: **`string`** <br/>
 
 ---
 
-**`notNull`**
+### **`notNull`**
 
 Final empty value will be empty string ("") or null depending on this prop.
 
@@ -247,7 +267,7 @@ Final empty value will be empty string ("") or null depending on this prop.
 
 ---
 
-**`placeholder`**
+### **`placeholder`**
 
 The string that will be rendered before text input has been entered.
 
@@ -255,14 +275,14 @@ The string that will be rendered before text input has been entered.
 
 ---
 
-**`placeholderColor`**
+### **`placeholderColor`**
 
 ➤ Type: **`string`** <br/>
 ➤ Default: **`'text.primary'`**
 
 ---
 
-**`readOnly`**
+### **`readOnly`**
 
 If `true`, text is not editable.
 
@@ -270,7 +290,7 @@ If `true`, text is not editable.
 
 ---
 
-**`returnKeyType`**
+### **`returnKeyType`**
 
 Determines how the return key should look.
 
@@ -279,7 +299,7 @@ Determines how the return key should look.
 
 ---
 
-**`secure`**
+### **`secure`**
 
 If `true`, the text input obscures the text entered so that sensitive text like passwords stay secure.
 
@@ -287,7 +307,7 @@ If `true`, the text input obscures the text entered so that sensitive text like 
 
 ---
 
-**`selectionColor`**
+### **`selectionColor`**
 
 The highlight and cursor color of the text input.
 
@@ -296,92 +316,76 @@ The highlight and cursor color of the text input.
 
 ---
 
-**`size`**
+### **`size`**
 
 ➤ Type: **`'xsmall'` `'small'` `'medium'` `'large'` `'xlarge'`** <br/>
 ➤ Default: **`'medium'`** <br/>
 
 ---
 
-**`startAddon`**
+### **`startAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
 
 ---
 
-**`textColor`**
+### **`textColor`**
 
 ➤ Type: **`boolean`** <br/>
 ➤ Default: **`'text.primary'`**
 
 ---
 
-**`type`**
+### **`type`**
 
 Determines which keyboard to open.
+
+See screenshots of all the types [here](/docs/examples/keyboard#input-type).
 
 ➤ Type: **`'text'` `'number'` `'email'` `'phone'` `'url'`** <br/>
 ➤ Default: **`'text'`** <br/>
 
 ---
 
-**`unmask`**
+### **`unmask`**
 
 ➤ Type: **`Function(value: string) => string`** <br/>
 
 ---
 
-**`value`**
+### **`value`**
 
 The value to show for the text input.
 
 ➤ Type: **`string`** <br/>
 
----
-
-## Styles
-
-**`style`** to the outer wrapper.
-
-**`contentStyle`** to the inner wrapper.
-
-**`errorStyle`** to the error element when has [`error`](#error) prop.
-
-**`inputStyle`** to the input element.
-
-**`labelStyle`** to the label element.
-
-➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
-
----
-
 ## Events
 
-**`onChange`**
+### **`onChange`**
 
 ➤ Type: **`Function(RbkInputEvent)`** <br/>
 
 ---
 
-**`onSubmit`**
+### **`onSubmit`**
 
 ➤ Type: **`Function(RbkInputEvent)`** <br/>
 
 ---
 
-**`onFocus`**
+### **`onFocus`**
 
 ➤ Type: **`Function(RbkInputEvent)`** <br/>
 
 ---
 
-**`onBlur`**
+### **`onBlur`**
 
 ➤ Type: **`Function(RbkInputEvent)`** <br/>
 
 ---
 
-**`onFormChange`**
+### **`onFormChange`**
 
 Combined with [Form](/docs/forms/form), triggers every time when form data changes.
 Eg.: [Input](/docs/forms/input), [Select](/docs/forms/select), [Checkbox](/docs/forms/checkbox).
