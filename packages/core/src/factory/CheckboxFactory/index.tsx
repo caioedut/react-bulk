@@ -219,7 +219,12 @@ const CheckboxFactory = React.memo<CheckboxProps>(
         </ButtonFactory>
 
         {Boolean(label) && (
-          <LabelFactory for={buttonRef} style={[{ ml: 1 }, labelStyle]} onPress={native ? handleChange : undefined}>
+          <LabelFactory
+            for={id}
+            forRef={buttonRef}
+            style={[{ ml: 1 }, labelStyle]}
+            onPress={native ? handleChange : undefined}
+          >
             {label}
           </LabelFactory>
         )}

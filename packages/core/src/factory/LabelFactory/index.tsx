@@ -15,6 +15,7 @@ const LabelFactory = React.memo<LabelProps>(
     // Extends from default props
     let {
       for: forProp,
+      forRef,
       platform,
       // Styles
       variants,
@@ -26,13 +27,13 @@ const LabelFactory = React.memo<LabelProps>(
     if (web && forProp) {
       Object.assign(rest, {
         // @ts-expect-error
-        htmlFor: typeof forProp === 'string' ? forProp : forProp?.current?.id,
+        htmlFor: forProp ?? forRef?.current?.id,
       });
     }
 
     if (native && !onPress) {
       // @ts-expect-error
-      onPress = forProp?.current?.focus;
+      onPress = forRef?.current?.focus;
     }
 
     return <TextFactory ref={ref} component={Label} stylist={[variants.root, stylist]} {...rest} onPress={onPress} />;

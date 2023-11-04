@@ -42,7 +42,7 @@ const CollapseFactory = React.memo<CollapseProps>(
         }
 
         const metrics = await rect(rootRef.current);
-        const size = web ? rootRef.current.scrollHeight : metrics.height;
+        const size = web ? rootRef.current?.scrollHeight : metrics.height;
 
         let curSize = isExpanded ? 0 : size;
         let newSize = isExpanded ? size : 0;

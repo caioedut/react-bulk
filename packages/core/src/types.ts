@@ -576,7 +576,8 @@ export type TextProps = PropsWithStyles<{
 export type LabelProps = PropsWithStyles<
   TextProps,
   {
-    for?: string | RefObject<ReactElement>;
+    for?: string;
+    forRef?: RefObject<ReactElement>;
   }
 >;
 
@@ -702,6 +703,7 @@ export type SelectProps = PropsWithStyles<
   FocusableProps,
   {
     color?: RbkColor;
+    colorful?: boolean;
     controlled?: boolean;
     defaultValue?: InputValue;
     disabled?: boolean;

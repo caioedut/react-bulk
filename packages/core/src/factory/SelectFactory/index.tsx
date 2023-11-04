@@ -9,6 +9,7 @@ import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { spacings } from '../../styles/jss';
 import { AnyObject, InputValue, RbkInputEvent, RequiredSome, SelectOption, SelectProps } from '../../types';
+import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
@@ -31,10 +32,12 @@ const SelectFactory = React.memo<SelectProps>(
 
     // Extends from default props
     let {
+      accessibility,
       defaultValue,
       disabled,
       id,
       color,
+      colorful,
       controlled,
       error: errorProp,
       label,
@@ -97,11 +100,14 @@ const SelectFactory = React.memo<SelectProps>(
 
     const selected = useMemo(() => arrOptions?.find((item) => item.value == internal), [arrOptions, internal]);
 
-    color = theme.color(error ? 'error' : focused ? color || 'primary' : 'gray.light');
+    color = theme.color(error ? 'error' : color || 'primary');
+    const focusColor = focused || colorful ? color : 'gray.light';
+
+    accessibility = deepmerge({ label: label ?? placeholder }, accessibility, { state: { expanded: visible } });
 
     const gutter = theme.spacing(3);
 
-    const nativeProps = !native ? {} : { onRequestClose: () => setVisible(false) };
+    const backdropProps = !native ? {} : { onRequestClose: () => setVisible(false) };
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
@@ -333,7 +339,8 @@ const SelectFactory = React.memo<SelectProps>(
         {Boolean(label) && (
           <LabelFactory
             numberOfLines={1}
-            for={buttonRef}
+            for={id}
+            forRef={buttonRef}
             style={labelStyle}
             stylist={[variants.label]}
             onPress={native ? handleOpen : undefined}
@@ -344,7 +351,7 @@ const SelectFactory = React.memo<SelectProps>(
 
         <ButtonFactory
           ref={buttonRef}
-          color={color}
+          color={focusColor}
           endAddon={
             loading ? (
               <LoadingFactory size={fontSize / theme.rem()} color={color} />
@@ -355,6 +362,7 @@ const SelectFactory = React.memo<SelectProps>(
             )
           }
           {...rest}
+          accessibility={accessibility}
           id={id}
           size={size}
           disabled={disabled}
@@ -391,7 +399,7 @@ const SelectFactory = React.memo<SelectProps>(
           visible={visible}
           style={{ bg: 'rgba(0, 0, 0, 0.2)' }}
           onPress={() => setVisible(false)}
-          {...nativeProps}
+          {...backdropProps}
         >
           <CardFactory position="absolute" p={0} style={[{ overflow: 'hidden' }, metrics]}>
             <ScrollableFactory ref={scrollRef} contentInset={1} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth}>
