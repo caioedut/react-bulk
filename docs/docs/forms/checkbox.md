@@ -13,122 +13,137 @@ import { Checkbox } from '@react-bulk/web'; // OR @react-bulk/native
 ### Basic
 
 ```jsx live
-<Grid column>
-  <Checkbox />
-  <Checkbox unique />
-</Grid>
+<>
+    <Checkbox />
+    <Checkbox unique />
+</>
 ```
 
 ### Composition
 
 ```jsx live
-<>
-  <Grid gap={3}>
-    <Checkbox label="Checkbox" />
-    <Checkbox label="Radio" unique />
+<Box maxw={400}>
+  <Grid gap>
+    <Box xs>
+        <Checkbox label="Checkbox" />
+    </Box>
+    <Box xs>
+        <Checkbox label="Radio" unique />
+    </Box>
   </Grid>
-  <Grid gap={3}>
-    <Checkbox label="Checked" checked />
-    <Checkbox label="Checked" unique checked />
+  <Grid gap>
+    <Box xs>
+        <Checkbox label="Checked" checked />
+    </Box>
+    <Box xs>
+        <Checkbox label="Checked" unique checked />
+    </Box>
   </Grid>
-  <Grid gap={3}>
-    <Checkbox label="Disabled" disabled />
-    <Checkbox label="Disabled" unique disabled />
+  <Grid gap>
+    <Box xs>
+        <Checkbox label="Disabled" disabled />
+    </Box>
+    <Box xs>
+        <Checkbox label="Disabled" unique disabled />
+    </Box>
   </Grid>
-  <Grid gap={3}>
-    <Checkbox label="Read Only" readOnly />
-    <Checkbox label="Read Only" unique readOnly />
+  <Grid gap>
+    <Box xs>
+        <Checkbox label="Read Only" readOnly />
+    </Box>
+    <Box xs>
+        <Checkbox label="Read Only" unique readOnly />
+    </Box>
   </Grid>
-</>
+</Box>
 ```
+
+## Styles
+
+### **`style`**
+To the outer wrapper.
+
+### **`buttonStyle`**
+To the button element.
+
+### **`labelStyle`**
+To the label element.
+
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ## Props
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`controlled`**
+### **`controlled`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`disabled`**
+### **`disabled`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`label`**
+### **`label`**
 
 ➤ Type: **`string`** <br/>
 
 ---
 
-**`name`**
+### **`name`**
 
 ➤ Type: **`string`** <br/>
 
 ---
 
-**`readOnly`**
+### **`readOnly`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`size`**
+### **`size`**
 
 ➤ Type: **`'xsmall'` `'small'` `'medium'` `'large'` `'xlarge'`** <br/>
 ➤ Default: **`'medium'`** <br/>
 
 ---
 
-**`unique`**
+### **`unique`**
 
 If `true`, renders a radion button.
 
 ➤ Type: **`boolean`** <br/>
 
----
-
-## Styles
-
-**`style`** to the outer wrapper.
-
-**`buttonStyle`** to the button element.
-
-**`labelStyle`** to the label element.
-
-➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
-
----
-
 ## Events
 
-**`onBlur`**
+### **`onBlur`**
 
-➤ Type: **`Function(RbkCheckboxEvent)`** <br/>
-
----
-
-**`onChange`**
-
-➤ Type: **`Function(RbkCheckboxEvent)`** <br/>
+➤ Type: **`Function`([`RbkCheckboxEvent`](/docs/type-reference/rbk-checkbox-event))** <br/>
 
 ---
 
-**`onFocus`**
+### **`onChange`**
 
-➤ Type: **`Function(RbkCheckboxEvent)`** <br/>
+➤ Type: **`Function`([`RbkCheckboxEvent`](/docs/type-reference/rbk-checkbox-event))** <br/>
 
 ---
 
-**`onFormChange`**
+### **`onFocus`**
+
+➤ Type: **`Function`([`RbkCheckboxEvent`](/docs/type-reference/rbk-checkbox-event))** <br/>
+
+---
+
+### **`onFormChange`**
 
 Combined with [Form](/docs/forms/form), triggers every time when form data changes.
 Eg.: [Input](/docs/forms/input), [Select](/docs/forms/select), [Checkbox](/docs/forms/checkbox).
 
-➤ Type: **`Function(RbkFormEvent)`** <br/>
+➤ Type: **`Function`([`RbkFormEvent`](/docs/type-reference/rbk-form-event))** <br/>
 
 ---
 

@@ -215,19 +215,19 @@ The string that will be rendered before text input has been entered.
 
 ### **`onBlur`**
 
-➤ Type: **`Function(RbkInputEvent)`** <br/>
+➤ Type: **`Function`([`RbkInputEvent`](/docs/type-reference/rbk-input-event))** <br/>
 
 ---
 
 ### **`onChange`**
 
-➤ Type: **`Function(RbkInputEvent)`** <br/>
+➤ Type: **`Function`([`RbkInputEvent`](/docs/type-reference/rbk-input-event))** <br/>
 
 ---
 
 ### **`onFocus`**
 
-➤ Type: **`Function(RbkInputEvent)`** <br/>
+➤ Type: **`Function`([`RbkInputEvent`](/docs/type-reference/rbk-input-event))** <br/>
 
 ---
 
@@ -236,6 +236,6 @@ The string that will be rendered before text input has been entered.
 Combined with [Form](/docs/forms/form), triggers every time when form data changes.
 Eg.: [Input](/docs/forms/input), [Select](/docs/forms/select), [Checkbox](/docs/forms/checkbox).
 
-➤ Type: **`Function(RbkFormEvent)`** <br/>
+➤ Type: **`Function`([`RbkFormEvent`](/docs/type-reference/rbk-form-event))** <br/>
 
 ---
