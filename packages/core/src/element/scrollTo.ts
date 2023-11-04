@@ -4,7 +4,7 @@ export default function scrollTo($el, x?: number, y?: number, animated: boolean 
   const { web, native } = Platform;
 
   if (web) {
-    $el.scrollTo({
+    $el?.scrollTo({
       top: y,
       left: x,
       behavior: animated ? 'smooth' : 'instant',
@@ -12,6 +12,6 @@ export default function scrollTo($el, x?: number, y?: number, animated: boolean 
   }
 
   if (native) {
-    $el.scrollTo({ x, y, animated });
+    $el?.scrollTo({ x, y, animated });
   }
 }
