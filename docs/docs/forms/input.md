@@ -191,7 +191,7 @@ It determines which keyboard to open.
 
 **`label`**
 
-➤ Type: **`string` `ReactNode`** <br/>
+➤ Type: **`string`** <br/>
 
 ---
 

@@ -60,9 +60,7 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 **`label`**
 
-To use as prop instead of children.
-
-➤ Type: **`string` `ReactNode`** <br/>
+➤ Type: **`string`** <br/>
 
 ---
 
