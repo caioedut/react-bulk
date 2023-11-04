@@ -224,6 +224,7 @@ export const styleProps = [
   'lineHeight',
   'opacity',
   'overflow',
+  'pointerEvents',
   'textAlign',
   'textTransform',
   'zIndex',

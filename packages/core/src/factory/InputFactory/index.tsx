@@ -160,15 +160,15 @@ const InputFactory = React.memo<InputProps>(
     );
 
     color = theme.color(error ? 'error' : color || 'primary');
-    const focusColor = focused || colorful ? color : 'gray.light';
     selectionColor = theme.color(selectionColor ?? color);
     placeholderColor = theme.color(
       // @ts-expect-error
       placeholderColor ?? get('color', inputStyle) ?? options.defaultStyles.input?.color ?? 'text.primary',
       0.4,
     );
-    autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
+    const shadowColor = theme.color(color, 0.3);
 
+    autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
     startAddon = startAddon ?? startIcon;
     endAddon = endAddon ?? endIcon;
 
@@ -346,12 +346,12 @@ const InputFactory = React.memo<InputProps>(
 
     contentStyle = [
       !disabled && {
-        borderColor: focusColor,
+        borderColor: !error && !focused && !colorful ? 'gray.light' : color,
       },
 
       web &&
         focused && {
-          boxShadow: `0 0 0 4px ${theme.color(color, 0.3)}`,
+          boxShadow: `0 0 0 4px ${shadowColor}`,
         },
 
       contentStyle,
@@ -400,6 +400,17 @@ const InputFactory = React.memo<InputProps>(
         )}
 
         <BoxFactory style={contentStyle} stylist={[variants.content]}>
+          {native && focused && (
+            <BoxFactory
+              position="absolute"
+              pointerEvents="none"
+              border={`4px solid ${shadowColor}`}
+              corners={get('corners', options.defaultStyles.content, contentStyle)}
+              borderRadius={get('borderRadius', options.defaultStyles.content, contentStyle)}
+              style={{ inset: -4 }}
+            />
+          )}
+
           <BoxFactory row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
             {Boolean(startAddon) && (
               <BoxFactory style={{ marginLeft: spacing }} onPress={focus}>
@@ -436,7 +447,7 @@ const InputFactory = React.memo<InputProps>(
                     <ButtonFactory
                       key={item}
                       variant="text"
-                      color={focusColor}
+                      color={color}
                       size={(size as number) / 2}
                       disabled={disabled}
                       h="50%"
@@ -445,7 +456,7 @@ const InputFactory = React.memo<InputProps>(
                       contentStyle={{ align: isInc ? 'end' : 'start' }}
                       onPress={(e) => handleIncDec(e, item)}
                     >
-                      <Icon svg={svg} size={Math.round(baseSize * 0.45)} color={focusColor} />
+                      <Icon svg={svg} size={Math.round(baseSize * 0.45)} color={color} />
                     </ButtonFactory>
                   );
                 })}
