@@ -105,3 +105,20 @@ Vertical alignment.
 ➤ Type: **`Function(Event)`** <br/>
 
 ---
+
+## Theming
+
+See [`Theme`](/docs/layout/theme#props).
+
+```jsx
+const theme = {
+  components: {
+    Modal: {
+      defaultStyles: {
+        root: { /* ...styles */ },
+        backdrop: { /* ...styles */ },
+      }
+    }
+  }
+}
+```
