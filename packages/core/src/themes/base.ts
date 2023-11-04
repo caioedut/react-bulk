@@ -774,6 +774,7 @@ const base: ThemeProps = {
         defaultStyles: {
           root: {},
           content: {
+            position: 'relative',
             borderWidth: 1,
             borderStyle: 'solid',
             borderColor: 'gray.light',
@@ -1224,9 +1225,11 @@ const base: ThemeProps = {
           numberOfLines: {
             1: {
               root: {
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
+                web: {
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                },
               },
             },
           },

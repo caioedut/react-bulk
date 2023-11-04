@@ -28,6 +28,8 @@ const DatePickerFactory = React.memo<DatePickerProps>(
       defaultValue,
       disabled,
       color,
+      colorful,
+      error,
       max,
       min,
       readOnly,
@@ -79,6 +81,8 @@ const DatePickerFactory = React.memo<DatePickerProps>(
       [_setInternal, resolveValue],
     );
 
+    color = theme.color(error ? 'error' : color || 'primary');
+
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
         xsmall: 1.25,
@@ -114,6 +118,9 @@ const DatePickerFactory = React.memo<DatePickerProps>(
           ref={ref}
           readOnly
           disabled={disabled}
+          error={error}
+          color={color}
+          colorful={colorful}
           {...rest}
           value={internal}
           onChange={handleChangeInternal}

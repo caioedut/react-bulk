@@ -85,6 +85,7 @@ const ProgressFactory = React.memo<ProgressProps>(
           <AnimationFactory //
             in
             loop
+            duration={1000}
             timing="linear"
             direction="alternate"
             from={{ transform: [{ translateX: 0 }] }}

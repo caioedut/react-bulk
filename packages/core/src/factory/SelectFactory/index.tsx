@@ -101,7 +101,6 @@ const SelectFactory = React.memo<SelectProps>(
     const selected = useMemo(() => arrOptions?.find((item) => item.value == internal), [arrOptions, internal]);
 
     color = theme.color(error ? 'error' : color || 'primary');
-    const focusColor = focused || colorful ? color : 'gray.light';
 
     accessibility = deepmerge({ label: label ?? placeholder }, accessibility, { state: { expanded: visible } });
 
@@ -351,7 +350,7 @@ const SelectFactory = React.memo<SelectProps>(
 
         <ButtonFactory
           ref={buttonRef}
-          color={focusColor}
+          color={!error && !focused && !colorful ? 'gray.light' : color}
           endAddon={
             loading ? (
               <LoadingFactory size={fontSize / theme.rem()} color={color} />
