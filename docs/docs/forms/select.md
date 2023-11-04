@@ -13,27 +13,50 @@ import { Select } from '@react-bulk/web'; // OR @react-bulk/native
 ### Basic
 
 ```jsx live
-<Box maxw={400}>
-  <Select
-    label="Theme"
-    placeholder="Select a theme"
-    options={[
-      {value: 1, label: 'Light'},
-      {value: 2, label: 'Dark'},
-    ]}
-  />
-</Box>
+<Grid column gap maxw={400}>
+    <Box>
+        <Select
+            label="Theme"
+            placeholder="Select a theme"
+            options={[
+                {value: 1, label: 'Light'},
+                {value: 2, label: 'Dark'},
+            ]}
+        />
+    </Box>
+    <Box>
+       <Select
+           colorful
+           label="Colorful"
+           placeholder="Select a theme"
+           options={[
+               {value: 1, label: 'Light'},
+               {value: 2, label: 'Dark'},
+           ]}
+       />
+   </Box>
+</Grid>
 ```
 
 ### Sizes
 
 ```jsx live
-<Grid column gap={3} maxw={400}>
-  <Select size="xsmall" placeholder="Select (xsmall)"  options={[{value: 1, label: 'Option 1'}]} />
-  <Select size="small" placeholder="Select (small)" options={[{value: 1, label: 'Option 1'}]} />
-  <Select size="medium" placeholder="Select (medium)" options={[{value: 1, label: 'Option 1'}]}/>
-  <Select size="large" placeholder="Select (large)" options={[{value: 1, label: 'Option 1'}]}/>
-  <Select size="xlarge" placeholder="Select (xlarge)" options={[{value: 1, label: 'Option 1'}]}/>
+<Grid column gap maxw={400}>
+  <Box>
+      <Select size="xsmall" placeholder="Select (xsmall)"  options={[{value: 1, label: 'Option 1'}]} />
+  </Box>
+  <Box>
+      <Select size="small" placeholder="Select (small)" options={[{value: 1, label: 'Option 1'}]} />
+  </Box>
+  <Box>
+      <Select size="medium" placeholder="Select (medium)" options={[{value: 1, label: 'Option 1'}]}/>
+  </Box>
+  <Box>
+      <Select size="large" placeholder="Select (large)" options={[{value: 1, label: 'Option 1'}]}/>
+  </Box>
+  <Box>
+      <Select size="xlarge" placeholder="Select (xlarge)" options={[{value: 1, label: 'Option 1'}]}/>
+  </Box>
 </Grid>
 ```
 
@@ -59,24 +82,46 @@ import { Select } from '@react-bulk/web'; // OR @react-bulk/native
 </Box>
 ```
 
+## Styles
+
+### **`style`**
+To the outer wrapper.
+
+### **`buttonStyle`**
+To the button element.
+
+### **`errorStyle`**
+To the error element when has [`error`](#error) prop.
+
+### **`labelStyle`**
+To the label element.
+
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
+
 ## Props
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`color`**
+### **`color`**
 
 ➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`'primary'`**
 
 ---
 
-**`controlled`**
+### **`colorful`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`defaultValue`**
+### **`controlled`**
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+### **`defaultValue`**
 
 Provides an initial value that will change when the user starts typing. Useful for use-cases where you do not want to deal with listening to
 events and updating the value prop to keep the controlled state in sync.
@@ -85,43 +130,43 @@ events and updating the value prop to keep the controlled state in sync.
 
 ---
 
-**`disabled`**
+### **`disabled`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`endAddon`**
+### **`endAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
 
 ---
 
-**`error`**
+### **`error`**
 
 ➤ Type: **`string`** <br/>
 
 ---
 
-**`label`**
+### **`label`**
 
 ➤ Type: **`string`** <br/>
 
 ---
 
-**`loading`**
+### **`loading`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`name`**
+### **`name`**
 
 ➤ Type: **`string`** <br/>
 
 ---
 
-**`options`**
+### **`options`**
 
 ➤ Type: **`Array<RbkSelectOption>`** <br/>
 
@@ -135,7 +180,7 @@ events and updating the value prop to keep the controlled state in sync.
 
 ---
 
-**`placeholder`**
+### **`placeholder`**
 
 The string that will be rendered before text input has been entered.
 
@@ -143,66 +188,50 @@ The string that will be rendered before text input has been entered.
 
 ---
 
-**`readOnly`**
+### **`readOnly`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`size`**
+### **`size`**
 
 ➤ Type: **`'xsmall'` `'small'` `'medium'` `'large'` `'xlarge'`** <br/>
 ➤ Default: **`'medium'`** <br/>
 
 ---
 
-**`startAddon`**
+### **`startAddon`**
 
 ➤ Type: **`string` `ReactNode`** <br/>
 
 ---
 
-**`value`**
+### **`value`**
 
 ➤ Type: **`string` `number`** <br/>
 
----
-
-## Styles
-
-**`style`** to the outer wrapper.
-
-**`buttonStyle`** to the button element.
-
-**`errorStyle`** to the error element when has [`error`](#error) prop.
-
-**`labelStyle`** to the label element.
-
-➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
-
----
-
 ## Events
 
-**`onBlur`**
+### **`onBlur`**
 
 ➤ Type: **`Function(RbkInputEvent)`** <br/>
 
 ---
 
-**`onChange`**
+### **`onChange`**
 
 ➤ Type: **`Function(RbkInputEvent)`** <br/>
 
 ---
 
-**`onFocus`**
+### **`onFocus`**
 
 ➤ Type: **`Function(RbkInputEvent)`** <br/>
 
 ---
 
-**`onFormChange`**
+### **`onFormChange`**
 
 Combined with [Form](/docs/forms/form), triggers every time when form data changes.
 Eg.: [Input](/docs/forms/input), [Select](/docs/forms/select), [Checkbox](/docs/forms/checkbox).
