@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, InputValue, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
+import { AnyObject, FormRef, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
 import {
   ActionSheet,
   Animation,
@@ -937,8 +937,10 @@ function DropdownExample() {
       <Box row>
         <Button onPress={toggleDropdown}>Toggle Dropdown</Button>
       </Box>
-      <Dropdown visible={dropdown}>
-        <Text>Lorem ipsum dolor sit amet</Text>
+      <Dropdown visible={dropdown} onClose={toggleDropdown}>
+        <Card>
+          <Text>Lorem ipsum dolor sit amet</Text>
+        </Card>
       </Dropdown>
     </>
   );

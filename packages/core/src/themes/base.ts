@@ -681,34 +681,10 @@ const base: ThemeProps = {
         defaultStyles: {
           root: {
             position: 'absolute',
-            maxWidth: '100%',
-            border: '1px solid background.secondary',
-            zIndex: -1,
-            web: {
-              boxShadow: 'rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px',
-              opacity: 0,
-              visibility: 'hidden',
-              ...this.mixins.transitions.fast,
-            },
-            native: {
-              display: 'none',
-            },
           },
-        },
-        variants: {
-          visible: {
-            true: {
-              root: {
-                zIndex: (theme) => theme.mixins.zIndex.dropdown,
-                web: {
-                  opacity: 1,
-                  visibility: 'visible',
-                },
-                native: {
-                  display: 'flex',
-                },
-              },
-            },
+          backdrop: {
+            bg: 'rgba(0, 0, 0, 0.2)',
+            zIndex: (theme) => theme.mixins.zIndex.dropdown,
           },
         },
       },
@@ -911,30 +887,35 @@ const base: ThemeProps = {
         },
         defaultStyles: {
           root: {
+            maxh: '100%',
+            maxw: '100%',
+          },
+          backdrop: {
+            p: this.shape.gap,
             zIndex: (theme) => theme.mixins.zIndex.modal,
           },
         },
         variants: {
           halign: {
             center: {
-              root: { alignItems: 'center' },
+              backdrop: { alignItems: 'center' },
             },
             left: {
-              root: { alignItems: 'flex-start' },
+              backdrop: { alignItems: 'flex-start' },
             },
             right: {
-              root: { alignItems: 'flex-end' },
+              backdrop: { alignItems: 'flex-end' },
             },
           },
           valign: {
             center: {
-              root: { justifyContent: 'center' },
+              backdrop: { justifyContent: 'center' },
             },
             top: {
-              root: { justifyContent: 'flex-start' },
+              backdrop: { justifyContent: 'flex-start' },
             },
             bottom: {
-              root: { justifyContent: 'flex-end' },
+              backdrop: { justifyContent: 'flex-end' },
             },
           },
         },
