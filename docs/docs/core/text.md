@@ -57,11 +57,18 @@ The set value will be multiplied by the `theme.typography.fontSize` value.
 </Box>
 ```
 
+## Styles
+
+### **`style`**
+To the text element.
+
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
+
 ## Props
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`bold`**
+### **`bold`**
 
 Sets `fontWeight` style to `bold`.
 
@@ -69,7 +76,7 @@ Sets `fontWeight` style to `bold`.
 
 ---
 
-**`color`**
+### **`color`**
 
 Sets `color` style.
 
@@ -78,7 +85,7 @@ Sets `color` style.
 
 ---
 
-**`center`**
+### **`center`**
 
 Sets `textAlign` style to `center`.
 
@@ -86,7 +93,7 @@ Sets `textAlign` style to `center`.
 
 ---
 
-**`italic`**
+### **`italic`**
 
 Sets `fontStyle` style to `italic`.
 
@@ -94,7 +101,7 @@ Sets `fontStyle` style to `italic`.
 
 ---
 
-**`justify`**
+### **`justify`**
 
 Sets `textAlign` style to `justify`.
 
@@ -102,7 +109,7 @@ Sets `textAlign` style to `justify`.
 
 ---
 
-**`left`**
+### **`left`**
 
 Sets `textAlign` style to `left`.
 
@@ -110,7 +117,7 @@ Sets `textAlign` style to `left`.
 
 ---
 
-**`numberOfLines`**
+### **`numberOfLines`**
 
 Sets the maximun lines of text.
 
@@ -118,7 +125,7 @@ Sets the maximun lines of text.
 
 ---
 
-**`right`**
+### **`right`**
 
 Sets `textAlign` style to `right`.
 
@@ -126,7 +133,7 @@ Sets `textAlign` style to `right`.
 
 ---
 
-**`smallCaps`**
+### **`smallCaps`**
 
 Sets `fontVariant` style to `small-caps`.
 
@@ -134,7 +141,7 @@ Sets `fontVariant` style to `small-caps`.
 
 ---
 
-**`size`**
+### **`size`**
 
 Sets `fontSize` style. The set value will be multiplied by the `theme.typography.fontSize` value.
 
@@ -142,7 +149,7 @@ Sets `fontSize` style. The set value will be multiplied by the `theme.typography
 
 ---
 
-**`transform`**
+### **`transform`**
 
 Sets `textTransform` style.
 
@@ -150,24 +157,14 @@ Sets `textTransform` style.
 
 ---
 
-**`variant`**
+### **`variant`**
 
 ➤ Type: **`'h1'` `'h2'` `'h3'` `'h4'` `'h5'` `'h6'` `'title'` `'subtitle'` `'primary'` `'secondary'` `'caption'`** <br/>
 
 ---
 
-**`weight`**
+### **`weight`**
 
 Sets `fontWeight` style.
 
 ➤ Type: **`'normal'` `'bold'` `'100'` `'200'` `'300'` `'400'` `'500'` `'600'` `'700'` `'800'` `'900'`** <br/>
-
----
-
-## Styles
-
-**`style`** to the text element.
-
-➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
-
----
