@@ -817,7 +817,18 @@ export type DatePickerProps = PropsWithStyles<
 >;
 
 export type ScrollableProps = PropsWithStyles<{
-  contentInset?: number;
+  contentInset?:
+    | number
+    | {
+        vertical?: number;
+        horizontal?: number;
+
+        top?: number;
+        bottom?: number;
+        left?: number;
+        right?: number;
+      };
+
   direction?: 'vertical' | 'horizontal';
   hideScrollBar?: boolean;
 
