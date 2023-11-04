@@ -12,7 +12,7 @@ import { Image } from '@react-bulk/web'; // OR @react-bulk/native
 
 ### Basic
 ```jsx live
-<Image source="https://i.imgur.com/CmPhDqA.png" />
+<Image source="https://i.imgur.com/HdIl3Ef.png" />
 ```
 
 ### Sizes
@@ -20,13 +20,13 @@ import { Image } from '@react-bulk/web'; // OR @react-bulk/native
 ```jsx live
 <Grid center gap={3}>
   <Box>
-    <Image source="https://i.imgur.com/CmPhDqA.png" w={100} border />
+    <Image source="https://i.imgur.com/HdIl3Ef.png" w={100} />
   </Box>
   <Box>
-    <Image source="https://i.imgur.com/CmPhDqA.png" h={100} border />
+    <Image source="https://i.imgur.com/HdIl3Ef.png" h={100} />
   </Box>
   <Box>
-    <Image source="https://i.imgur.com/CmPhDqA.png" w={100} h={100} border />
+    <Image source="https://i.imgur.com/HdIl3Ef.png" w={100} h={100} />
   </Box>
 </Grid>
 ```
@@ -36,10 +36,10 @@ import { Image } from '@react-bulk/web'; // OR @react-bulk/native
 ```jsx live
 <Grid center gap={3}>
   <Box>
-    <Image source="https://i.imgur.com/CmPhDqA.png" w={100} h={100} corners={2} border />
+    <Image source="https://i.imgur.com/HdIl3Ef.png" w={100} h={100} corners={2} />
   </Box>
   <Box>
-    <Image source="https://i.imgur.com/CmPhDqA.png" w={100} h={100} circular border />
+    <Image source="https://i.imgur.com/HdIl3Ef.png" w={100} h={100} circular />
   </Box>
 </Grid>
 ```

@@ -14,17 +14,17 @@ import { Carousel } from '@react-bulk/web'; // OR @react-bulk/native
 ### Basic
 
 ```jsx live
-<Carousel xs={1} sm={2} md={3} lg={4} xl={5} gap={3}>
-  {Array.from({ length: 7 }).map((i, index) => (
-    <Card key={index} corners={3} bg="background.secondary">
+<Carousel xs={1} sm={1} md={2} lg={2} xl={3} gap={4}>
+  {Array.from({ length: 4 }).map((i, index) => (
+    <Card key={index} bg="background.secondary">
       <Text bold>
         Slide Item {index + 1}
       </Text>
 
-      <Image w="100%" corners={3} my={3} source="https://i.imgur.com/CmPhDqA.png" />
+      <Image w="100%" corners={2} my={3} source="https://i.imgur.com/HdIl3Ef.png" />
 
       <Text>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos recusandae suscipit velit voluptate.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       </Text>
     </Card>
   ))}

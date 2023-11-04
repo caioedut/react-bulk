@@ -24,7 +24,7 @@ import { Tabs } from '@react-bulk/web'; // OR @react-bulk/native
 
 ### Variants
 
-Group
+#### Group
 
 ```jsx live
 function App() {
@@ -45,7 +45,7 @@ function App() {
 }
 ```
 
-Card
+#### Card
 
 ```jsx live
 function App() {
@@ -66,7 +66,7 @@ function App() {
 }
 ```
 
-Nav
+#### Nav
 
 ```jsx live
 function App() {
