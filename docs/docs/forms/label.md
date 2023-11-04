@@ -64,7 +64,17 @@ Extends all [`Text`](/docs/core/text#props) props.
 
 **`for`**
 
-➤ Type: **`string` `RefObject<ReactNode>`** <br/>
+Commonly used fo Web.
+
+➤ Type: **`string`** <br/>
+
+---
+
+**`forRef`**
+
+Commonly used fo Native.
+
+➤ Type: **`RefObject<ReactNode>`** <br/>
 
 ---
 
