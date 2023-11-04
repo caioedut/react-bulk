@@ -36,7 +36,7 @@ import { Box } from '@react-bulk/web'; // OR @react-bulk/native
 </Grid>
 ```
 
-## Component
+### Component
 
 ```jsx live
 function Home() {
@@ -90,11 +90,9 @@ Examples:
 
 ➤ Type: **`number` `string`** <br/>
 
-## Props
+## Core Props
 
-### Core
-
-**`className`**
+### **`className`**
 
 For web only. <br/>
 Defines the `class` attribute.
@@ -103,7 +101,7 @@ Defines the `class` attribute.
 
 ---
 
-**`component`**
+### **`component`**
 
 Defines which element will be rendered.
 
@@ -113,7 +111,7 @@ Defines which element will be rendered.
 
 ---
 
-**`componentProps`**
+### **`componentProps`**
 
 Pass raw props to the `component` prop.
 
@@ -121,7 +119,7 @@ Pass raw props to the `component` prop.
 
 ---
 
-**`mount`**
+### **`mount`**
 
 Defines whether the component will be rendered
 
@@ -130,7 +128,7 @@ Defines whether the component will be rendered
 
 ---
 
-**`hidden`**
+### **`hidden`**
 
 Fully hide element
 
@@ -138,7 +136,7 @@ Fully hide element
 
 ---
 
-**`invisible`**
+### **`invisible`**
 
 Hides element but keeps its box sizes
 
@@ -146,7 +144,7 @@ Hides element but keeps its box sizes
 
 ---
 
-**`noRootStyles`**
+### **`noRootStyles`**
 
 Does not applies the box default styles (flexbox).
 
@@ -154,7 +152,7 @@ Does not applies the box default styles (flexbox).
 
 ---
 
-**`platform`**
+### **`platform`**
 
 Apply props for a specific platform. For example:
 
@@ -180,18 +178,167 @@ Apply props for a specific platform. For example:
 
 ---
 
-**`rawStyle`**
+### **`rawStyle`**
 
 **Web:** create inline styles.<br/>
 **Native:** priorize styles.
 
 ➤ Type: **`object` `array`** <br/>
 
+## Flexbox Container Props
+
+### **`alignContent`**
+
+Sets `alignContent` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'`** <br/>
+➤ Default: **`'flex-start'`** <br/>
+
 ---
 
-### Accessibility
+### **`alignItems`**
 
-**`accessibility`**
+Sets `alignItems` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'` `'baseline'`** <br/>
+➤ Default: **`'stretch'`** <br/>
+
+---
+
+### **`center`**
+
+Sets `justifyContent`, `justifyItems`, `alignContent` and `alignItems` styles to `center`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+### **`column`**
+
+Sets `flexDirection` style to `column`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+### **`direction`**
+
+Sets `flexDirection` style.
+
+➤ Type: **`'column'` `'row'` `'column-reverse'` `'row-reverse'`** <br/>
+➤ Default: **`'column'`** <br/>
+
+---
+
+### **`justifyContent`**
+
+Sets `justifyContent` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'` `'space-between'` `'space-around'` `'space-evenly'`** <br/>
+➤ Default: **`'flex-start'`** <br/>
+
+---
+
+### **`justifyItems`**
+
+Sets `justifyItems` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'` `'space-between'` `'space-around'` `'space-evenly'`** <br/>
+➤ Default: **`'flex-start'`** <br/>
+
+---
+
+### **`noWrap`**
+
+Sets `flexWrap` style to `no-wrap`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+### **`reverse`**
+
+Sets `flexDirection` style to `row-reverse` or `column-reverse`, combined with props `row` or `column`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+### **`row`**
+
+Sets `flexDirection` style to `row`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+### **`wrap`**
+
+Sets `flexWrap` style. When `boolean`, the value will be `'wrap'`.
+
+➤ Type: **`boolean` `'wrap'` `'nowrap'` `'wrap-reverse'`** <br/>
+➤ Default: **`'nowrap'`** <br/>
+
+## Flexbox Child Props
+
+### **`align`**
+
+Sets `alignSelf` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'`** <br/>
+
+---
+
+### **`basis`**
+
+Sets `flexBasis` style.
+
+➤ Type: **`'auto'` `string` `number`** <br/>
+
+---
+
+### **`flex`**
+
+Sets `flex` style to `1`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+### **`grow`**
+
+Sets `flexGrow` style.
+
+➤ Type: **`number`** <br/>
+
+---
+
+### **`justify`**
+
+Sets `justifySelf` style.
+
+➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'space-between'` `'space-around'` `'space-evenly'` `'stretch'`** <br/>
+
+---
+
+### **`order`**
+
+Sets `order` style.
+
+➤ Type: **`number`** <br/>
+
+---
+
+### **`shrink`**
+
+Sets `flexShrink` style.
+
+➤ Type: **`number`** <br/>
+➤ Default: **`0`** <br/>
+
+## Accessibility
+
+### **`accessibility`**
 
 ➤ Type: **`object`** <br/>
 
@@ -223,168 +370,16 @@ Apply props for a specific platform. For example:
 }
 ```
 
----
-
-### Flexbox Container
-
-**`alignContent`**
-
-Sets `alignContent` style.
-
-➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'`** <br/>
-➤ Default: **`'flex-start'`** <br/>
-
----
-
-**`alignItems`**
-
-Sets `alignItems` style.
-
-➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'` `'baseline'`** <br/>
-➤ Default: **`'stretch'`** <br/>
-
----
-
-**`center`**
-
-Sets `justifyContent`, `justifyItems`, `alignContent` and `alignItems` styles to `center`.
-
-➤ Type: **`boolean`** <br/>
-
----
-
-**`column`**
-
-Sets `flexDirection` style to `column`.
-
-➤ Type: **`boolean`** <br/>
-
----
-
-**`direction`**
-
-Sets `flexDirection` style.
-
-➤ Type: **`'column'` `'row'` `'column-reverse'` `'row-reverse'`** <br/>
-➤ Default: **`'column'`** <br/>
-
----
-
-**`justifyContent`**
-
-Sets `justifyContent` style.
-
-➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'` `'space-between'` `'space-around'` `'space-evenly'`** <br/>
-➤ Default: **`'flex-start'`** <br/>
-
----
-
-**`justifyItems`**
-
-Sets `justifyItems` style.
-
-➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'` `'space-between'` `'space-around'` `'space-evenly'`** <br/>
-➤ Default: **`'flex-start'`** <br/>
-
----
-
-**`noWrap`**
-
-Sets `flexWrap` style to `no-wrap`.
-
-➤ Type: **`boolean`** <br/>
-
----
-
-**`reverse`**
-
-Sets `flexDirection` style to `row-reverse` or `column-reverse`, combined with props `row` or `column`.
-
-➤ Type: **`boolean`** <br/>
-
----
-
-**`row`**
-
-Sets `flexDirection` style to `row`.
-
-➤ Type: **`boolean`** <br/>
-
----
-
-**`wrap`**
-
-Sets `flexWrap` style. When `boolean`, the value will be `'wrap'`.
-
-➤ Type: **`boolean` `'wrap'` `'nowrap'` `'wrap-reverse'`** <br/>
-➤ Default: **`'nowrap'`** <br/>
-
-### Flexbox Child
-
-**`align`**
-
-Sets `alignSelf` style.
-
-➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'stretch'`** <br/>
-
----
-
-**`basis`**
-
-Sets `flexBasis` style.
-
-➤ Type: **`'auto'` `string` `number`** <br/>
-
----
-
-**`flex`**
-
-Sets `flex` style to `1`.
-
-➤ Type: **`boolean`** <br/>
-
----
-
-**`grow`**
-
-Sets `flexGrow` style.
-
-➤ Type: **`number`** <br/>
-
----
-
-**`justify`**
-
-Sets `justifySelf` style.
-
-➤ Type: **`'flex-start'` `'flex-end'` `'center'` `'space-between'` `'space-around'` `'space-evenly'` `'stretch'`** <br/>
-
----
-
-**`order`**
-
-Sets `order` style.
-
-➤ Type: **`number`** <br/>
-
----
-
-**`shrink`**
-
-Sets `flexShrink` style.
-
-➤ Type: **`number`** <br/>
-➤ Default: **`0`** <br/>
-
 ## Styles
 
-**`style`** to the current element.
+### **`style`**
+To the current element.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 
-**`bg`**
+### **`bg`**
 
 Sets `backgroundColor` style.
 
@@ -392,7 +387,7 @@ Sets `backgroundColor` style.
 
 ---
 
-**`border`**
+### **`border`**
 
 Sets `borderWidth`, `borderStyle` and `borderColor` styles. For example:
 ```jsx
@@ -406,7 +401,7 @@ Sets `borderWidth`, `borderStyle` and `borderColor` styles. For example:
 
 ---
 
-**`corners`**
+### **`corners`**
 
 Sets `borderRadius` style. The set value will be multiplied by the `theme.shape.borderRadius` value.
 
@@ -414,7 +409,7 @@ Sets `borderRadius` style. The set value will be multiplied by the `theme.shape.
 
 ---
 
-**`h`**
+### **`h`**
 
 Sets `height` style.
 
@@ -422,7 +417,7 @@ Sets `height` style.
 
 ---
 
-**`hh`**
+### **`hh`**
 
 Sets `height`, `minHeight` and `maxHeight` styles.
 
@@ -430,7 +425,7 @@ Sets `height`, `minHeight` and `maxHeight` styles.
 
 ---
 
-**`maxh`**
+### **`maxh`**
 
 Sets `maxHeight` style.
 
@@ -438,7 +433,7 @@ Sets `maxHeight` style.
 
 ---
 
-**`maxw`**
+### **`maxw`**
 
 Sets `maxWidth` style.
 
@@ -446,7 +441,7 @@ Sets `maxWidth` style.
 
 ---
 
-**`minh`**
+### **`minh`**
 
 Sets `minHeight` style.
 
@@ -454,7 +449,7 @@ Sets `minHeight` style.
 
 ---
 
-**`minw`**
+### **`minw`**
 
 Sets `minWidth` style.
 
@@ -462,7 +457,7 @@ Sets `minWidth` style.
 
 ---
 
-**`position`**
+### **`position`**
 
 Sets `position` style.
 
@@ -470,7 +465,7 @@ Sets `position` style.
 
 ---
 
-**`w`**
+### **`w`**
 
 Sets `width` style.
 
@@ -478,7 +473,7 @@ Sets `width` style.
 
 ---
 
-**`ww`**
+### **`ww`**
 
 Sets `width`, `minWidth` and `maxWidth` styles.
 
@@ -488,19 +483,19 @@ Sets `width`, `minWidth` and `maxWidth` styles.
 
 ## Events
 
-**`onPress`**
+### **`onPress`**
 
 ➤ Type: **`Function(Event)`** <br/>
 
 ---
 
-**`onPressIn`**
+### **`onPressIn`**
 
 ➤ Type: **`Function(Event)`** <br/>
 
 ---
 
-**`onPressOut`**
+### **`onPressOut`**
 
 ➤ Type: **`Function(Event)`** <br/>
 
