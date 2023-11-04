@@ -39,7 +39,16 @@ const ScrollableFactory = React.memo<ScrollableProps>(
       // @ts-expect-error
       extract(flexContainerProps, style),
 
-      { p: contentInset ?? 0 },
+      typeof contentInset === 'number' && {
+        p: contentInset,
+      },
+
+      typeof contentInset === 'object' && {
+        pt: contentInset?.top ?? contentInset?.vertical,
+        pb: contentInset?.bottom ?? contentInset?.vertical,
+        pl: contentInset?.left ?? contentInset?.horizontal,
+        pr: contentInset?.right ?? contentInset?.horizontal,
+      },
 
       pagingEnabled && {
         web: {

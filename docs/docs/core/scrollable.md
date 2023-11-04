@@ -39,7 +39,20 @@ import { Scrollable } from '@react-bulk/web'; // OR @react-bulk/native
 
 Add padding into content element. The set value will be multiplied by the `theme.shape.spacing`.
 
-➤ Type: **`number`** <br/>
+When `number`, inset will be applied to all edges.
+
+➤ Type: **`number` `object`** <br/>
+
+```ts
+{
+  horizontal?: number
+  vertical?: number
+  top:? number
+  bottom?: number
+  left?: number
+  right?: number
+}
+```
 
 ---
 
