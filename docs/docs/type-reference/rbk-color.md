@@ -1,6 +1,6 @@
 # RbkColor
 
-```jsx
+```jsx title="RbkColor"
 {
     text: {
       primary: string;
