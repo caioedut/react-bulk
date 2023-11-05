@@ -20,9 +20,9 @@ import { Carousel } from '@react-bulk/web'; // OR @react-bulk/native
       <Text bold>
         Slide Item {index + 1}
       </Text>
-
-      <Image w="100%" corners={2} my={3} source="https://i.imgur.com/HdIl3Ef.png" />
-
+      <Box aspectRatio="16/9" overflow="hidden" corners={2} my={3}>
+        <Image w="100%" h="100%" source="https://i.imgur.com/HdIl3Ef.png" />
+      </Box>
       <Text>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       </Text>

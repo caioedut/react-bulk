@@ -553,6 +553,7 @@ const base: ThemeProps = {
           pagingEnabled: true,
           swipe: false,
           xs: 1,
+          chevronStyle: { px: 0 },
         },
         defaultStyles: {
           root: {

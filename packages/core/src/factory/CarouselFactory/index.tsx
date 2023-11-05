@@ -150,8 +150,6 @@ const CarouselFactory = React.memo<CarouselProps>(
       xl: { width: base / (xl ?? lg ?? md ?? sm ?? xs) },
     };
 
-    chevronStyle = [{ mt: -4 }, chevronStyle];
-
     const chevronProps = {
       color: theme.color(color),
       size: theme.rem(),
