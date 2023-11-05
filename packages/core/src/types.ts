@@ -462,6 +462,7 @@ export type ThemeProps = {
 
   components: {
     ActionSheet: ThemeComponentProps<ActionSheetProps, 'root'>;
+    Avatar: ThemeComponentProps<AvatarProps, 'root' | 'content'>;
     Animation: ThemeComponentProps<AnimationProps, 'root'>;
     Backdrop: ThemeComponentProps<BackdropProps, 'root'>;
     Badge: ThemeComponentProps<BadgeProps, 'root' | 'label'>;
@@ -1040,6 +1041,17 @@ export type CalendarProps = PropsWithStyles<{
   events?: (Date | string | number)[];
   // Events
   onPressDate?: (event: AnyObject, date: Date) => any;
+}>;
+
+export type AvatarProps = PropsWithStyles<{
+  alt?: string;
+  color?: RbkColor;
+  corners?: number;
+  placeholder?: ReactElement;
+  size?: number;
+  source: { uri?: string } | (string & {}) | (number & {});
+  // Styles
+  contentStyle?: RbkStyle;
 }>;
 
 /************************

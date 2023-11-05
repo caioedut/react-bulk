@@ -4,6 +4,7 @@ import { AnyObject, FormRef, RbkInputEvent, useAnimation, useToaster } from '@re
 import {
   ActionSheet,
   Animation,
+  Avatar,
   Badge,
   Box,
   Button,
@@ -81,6 +82,10 @@ export default function Main() {
 
       <Card mt={theme.shape.gap}>
         <ImageExample />
+      </Card>
+
+      <Card mt={theme.shape.gap}>
+        <AvatarExample />
       </Card>
 
       <Card mt={theme.shape.gap}>
@@ -721,6 +726,49 @@ function ImageExample() {
           source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg"
         />
       </Box>
+    </>
+  );
+}
+
+function AvatarExample() {
+  const theme = useTheme();
+
+  return (
+    <>
+      <Text variant="title" mb={theme.shape.gap}>
+        Avatar
+      </Text>
+      <Grid gap>
+        <Box>
+          <Avatar
+            size={100}
+            placeholder={
+              <Text size={2} color="white">
+                RW
+              </Text>
+            }
+          />
+        </Box>
+        <Box>
+          <Avatar
+            border="3px solid red"
+            size={100}
+            color="primary"
+            placeholder={
+              <Text size={2} color="white">
+                RW
+              </Text>
+            }
+          />
+        </Box>
+        <Box>
+          <Avatar size={100} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg">
+            <Button circular color="secondary" position="absolute" b={0} r={0}>
+              ↺
+            </Button>
+          </Avatar>
+        </Box>
+      </Grid>
     </>
   );
 }
