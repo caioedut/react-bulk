@@ -17,6 +17,7 @@ import {
 import ReactBulk, {
   ActionSheetFactory,
   AnimationFactory,
+  AvatarFactory,
   BackdropFactory,
   BadgeFactory,
   BoxFactory,
@@ -131,6 +132,7 @@ global.mapping = {
 } as RbkMap;
 
 export const ActionSheet = ActionSheetFactory;
+export const Avatar = AvatarFactory;
 export const Animation = AnimationFactory;
 export const Backdrop = BackdropFactory;
 export const Badge = BadgeFactory;

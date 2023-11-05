@@ -246,6 +246,28 @@ const base: ThemeProps = {
           },
         },
       },
+      Avatar: {
+        name: 'rbk-avatar',
+        defaultProps: {
+          alt: 'Avatar',
+          color: 'gray',
+          size: 64,
+        },
+        defaultStyles: {
+          root: {
+            position: 'relative',
+            aspectRatio: '1/1',
+            borderRadius: 32,
+          },
+          content: {
+            position: 'absolute',
+            inset: 0,
+            bg: 'gray',
+            borderRadius: 32,
+            overflow: 'hidden',
+          },
+        },
+      },
       Animation: {
         name: 'rbk-animation',
         defaultProps: {

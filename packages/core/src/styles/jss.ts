@@ -43,6 +43,10 @@ export default function jss(...mixin: any[]) {
     let prop: any = attr;
     let value = merged[attr];
 
+    if (typeof value === 'undefined') {
+      continue;
+    }
+
     // Parse "&" for css. Eg.: '&:hover'
     if (prop.startsWith('&')) {
       styles[prop] = jss({ theme }, value);
