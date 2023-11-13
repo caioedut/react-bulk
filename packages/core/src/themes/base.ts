@@ -1141,6 +1141,23 @@ const base: ThemeProps = {
           },
         },
       },
+      Terminal: {
+        name: 'rbk-terminal',
+        defaultProps: {
+          commands: [],
+          prompt: '$',
+          version: '0.0.0',
+          welcomeMessage: 'Welcome to Terminal!',
+        },
+        defaultStyles: {
+          root: {
+            backgroundColor: 'background.primary',
+            border: '1px solid backgorund.secondary',
+            corners: 1,
+            cursor: 'text',
+          },
+        },
+      },
       Text: {
         name: 'rbk-text',
         defaultProps: {},

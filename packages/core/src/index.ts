@@ -79,6 +79,7 @@ export { default as SelectFactory } from './factory/SelectFactory';
 export { default as SliderFactory } from './factory/SliderFactory';
 export { default as TableFactory } from './factory/TableFactory';
 export { default as TabsFactory } from './factory/TabsFactory';
+export { default as TerminalFactory } from './factory/TerminalFactory';
 export { default as TextFactory } from './factory/TextFactory';
 export { default as TooltipFactory } from './factory/TooltipFactory';
 
