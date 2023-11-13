@@ -49,7 +49,11 @@ const CollapseFactory = React.memo<CollapseProps>(
 
         if (newSize === metrics.height) return;
 
-        await heightAnim.start({ height: curSize }, { duration: 0 });
+        // Set element height to animate (web doesnt support height auto animations)
+        if (newSize <= 0) {
+          await heightAnim.start({ height: curSize }, { duration: 0 });
+          await sleep(10);
+        }
 
         // TODO: check why animation dont work on native
         await heightAnim.start({ height: newSize });
