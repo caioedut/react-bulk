@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 export default function clone(mixin: Object | Array<any>) {
-  let result = Array.isArray(mixin) ? [] : {};
+  const result = Array.isArray(mixin) ? [] : {};
 
   for (const key in mixin) {
     const item = mixin[key];

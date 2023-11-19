@@ -16,7 +16,8 @@ export default function jss(...mixin: any[]) {
   const theme: ThemeProps = extract('theme', args).theme ?? global.theme ?? {};
 
   // Extract all web styles
-  let webStyle: any = [];
+  const webStyle: any = [];
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const extracted = extract('web', args);
     if (!extracted?.web) break;
@@ -24,7 +25,8 @@ export default function jss(...mixin: any[]) {
   }
 
   // Extract all native styles
-  let nativeStyle: any = [];
+  const nativeStyle: any = [];
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const extracted = extract('native', args);
     if (!extracted?.native) break;
@@ -338,11 +340,11 @@ export default function jss(...mixin: any[]) {
   return styles;
 }
 
-const parseUnit = (value) => {
+const parseUnit = (value: any) => {
   return isNaN(value) ? value : Number(value);
 };
 
-const parseFlexAlign = (value) => {
+const parseFlexAlign = (value: string) => {
   return value
     .replace(/^normal$/, 'stretch')
     .replace(/^start$/, 'flex-start')

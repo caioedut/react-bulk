@@ -27,7 +27,7 @@ const FormFactory = React.memo<FormProps>(
     const { web, Form } = global.mapping;
 
     // Extends from default props
-    let {
+    const {
       data,
       errors,
       // Events

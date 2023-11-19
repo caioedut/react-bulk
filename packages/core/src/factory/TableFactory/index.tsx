@@ -35,7 +35,7 @@ const TableFactory = React.memo<TableProps>(
         }
 
         if (['string', 'number'].includes(typeof child)) {
-          child = <TextFactory bold={bold} children={child} />;
+          child = <TextFactory bold={bold}>{child}</TextFactory>;
         }
       }
 

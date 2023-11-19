@@ -11,7 +11,7 @@ const CardFactory = React.memo<CardProps>(
     const options = theme.components.Card;
 
     // Extends from default props
-    let {
+    const {
       // Styles
       variants,
       ...rest

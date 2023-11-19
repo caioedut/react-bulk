@@ -1219,7 +1219,6 @@ const base: ThemeProps = {
             true: { root: { web: { fontVariant: 'small-caps' }, native: { fontVariant: ['small-caps'] } } },
             false: { root: { web: { fontVariant: 'initial' }, native: { fontVariant: [] } } },
           },
-
           numberOfLines: {
             1: {
               root: {
