@@ -26,7 +26,7 @@ const TerminalFactory = React.memo<TerminalProps>(
     const { web, native, ios, Input } = global.mapping;
 
     // Extends from default props
-    let {
+    const {
       prompt,
       commands: commandsProp,
       version,
@@ -119,7 +119,7 @@ const TerminalFactory = React.memo<TerminalProps>(
       };
 
       return allCommands;
-    }, [commandsProp, messages, addMessage]);
+    }, [commandsProp, version, addMessage, messages]);
 
     const execCommand = useCallback(
       async (command: string) => {
@@ -216,7 +216,7 @@ const TerminalFactory = React.memo<TerminalProps>(
 
         postFocus(inputRef.current);
       },
-      [inputRef, arrowIndex, messages, isLocked, prompt, execCommand],
+      [isLocked, arrowIndex, messages, addMessage, prompt, execCommand],
     );
 
     const handleSubmit = useCallback(

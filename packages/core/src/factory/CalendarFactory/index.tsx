@@ -83,10 +83,13 @@ const CalendarFactory = React.memo<CalendarProps>(
       });
     }, []);
 
-    const handleDate = useCallback((e: AnyObject, date: Date) => {
-      setInternal(date);
-      onPressDate?.(e, date);
-    }, []);
+    const handleDate = useCallback(
+      (e: AnyObject, date: Date) => {
+        setInternal(date);
+        onPressDate?.(e, date);
+      },
+      [onPressDate],
+    );
 
     return (
       <CardFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>

@@ -71,13 +71,14 @@ const SelectFactory = React.memo<SelectProps>(
     const selectedRef: any = useRef(null);
     const optionsRef: any = useRef([]);
 
+    const [initialValue] = useState(defaultValue);
     const [focused, setFocused] = useState(false);
     const [error, setError] = useState<SelectProps['error']>();
     const [metrics, setMetrics] = useState<AnyObject>({});
     const [visible, _setVisible] = useState(false);
-    const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == defaultValue));
+    const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == initialValue));
 
-    const [_internal, _setInternal] = useState(value ?? defaultValue);
+    const [_internal, _setInternal] = useState(value ?? initialValue);
 
     const internal = useMemo(() => {
       return _internal;
@@ -88,7 +89,7 @@ const SelectFactory = React.memo<SelectProps>(
         if (controlled) return;
         _setInternal(value);
       },
-      [controlled, internal],
+      [controlled],
     );
 
     const setVisible = useCallback((value) => {
@@ -124,7 +125,7 @@ const SelectFactory = React.memo<SelectProps>(
 
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
-    const clear = useCallback(() => setInternal(defaultValue), [setInternal]);
+    const clear = useCallback(() => setInternal(initialValue), [initialValue, setInternal]);
     const isFocused = useCallback(
       () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
       [buttonRef],
@@ -217,7 +218,7 @@ const SelectFactory = React.memo<SelectProps>(
           }
         }, 100);
       }
-    }, [visible]);
+    }, [metrics?.maxHeight, visible]);
 
     function optionFocus(index) {
       if (index < 0 || index > arrOptions.length - 1) {

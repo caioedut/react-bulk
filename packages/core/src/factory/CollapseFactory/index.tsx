@@ -16,7 +16,7 @@ const CollapseFactory = React.memo<CollapseProps>(
     const { web, native } = global.mapping;
 
     // Extends from default props
-    let {
+    const {
       visible,
       in: expanded,
       // Styles
@@ -44,8 +44,8 @@ const CollapseFactory = React.memo<CollapseProps>(
         const metrics = await rect(rootRef.current);
         const size = web ? rootRef.current?.scrollHeight : metrics.height;
 
-        let curSize = isExpanded ? 0 : size;
-        let newSize = isExpanded ? size : 0;
+        const curSize = isExpanded ? 0 : size;
+        const newSize = isExpanded ? size : 0;
 
         if (newSize === metrics.height) return;
 
@@ -62,6 +62,8 @@ const CollapseFactory = React.memo<CollapseProps>(
           await heightAnim.start({ height: emptyValue });
         }
       })();
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rootRef, isExpanded]);
 
     return (

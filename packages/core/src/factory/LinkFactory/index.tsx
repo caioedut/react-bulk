@@ -13,7 +13,7 @@ const LinkFactory = React.memo<LinkProps>(
     const { Link } = global.mapping;
 
     // Extends from default props
-    let {
+    const {
       underline,
       // Styles
       variants,

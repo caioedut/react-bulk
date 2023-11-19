@@ -13,7 +13,7 @@ const ButtonGroupFactory = React.memo<ButtonGroupProps>(
     const options = theme.components.ButtonGroup;
 
     // Extends from default props
-    let {
+    const {
       color,
       disabled,
       loading,

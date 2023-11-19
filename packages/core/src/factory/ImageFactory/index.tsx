@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
@@ -103,10 +103,13 @@ const ImageFactory = React.memo<ImageProps>(
       onLoad?.(e);
     };
 
-    const handleError = (e: any) => {
-      setStatus('error');
-      onError?.(e);
-    };
+    const handleError = useCallback(
+      (e: any) => {
+        setStatus('error');
+        onError?.(e);
+      },
+      [onError],
+    );
 
     useEffect(() => {
       setStatus('loading');
@@ -136,7 +139,7 @@ const ImageFactory = React.memo<ImageProps>(
       } catch (err) {
         handleError(err);
       }
-    }, [source, width, height, isProcessed]);
+    }, [source, width, height, isProcessed, Image, handleError]);
 
     useEffect(() => {
       if (isProcessed || !native || !defined(aspectRatio) || !defined(containerWidth) || !defined(containerHeight))
@@ -188,7 +191,7 @@ const ImageFactory = React.memo<ImageProps>(
 
       setFinalWidth(newWidth);
       setFinalHeight(newHeight);
-    }, [width, height, containerWidth, containerHeight, imgWidth, aspectRatio, isProcessed]);
+    }, [width, height, containerWidth, containerHeight, imgWidth, aspectRatio, isProcessed, native]);
 
     const borderRadius = finalWidth ?? finalHeight ?? height ?? width;
 

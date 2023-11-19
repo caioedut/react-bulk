@@ -4,8 +4,9 @@ import createMeta from './createMeta';
 import createStyle from './createStyle';
 import css from './styles/css';
 import jss from './styles/jss';
+import { AnyObject } from './types';
 
-function BaseWeb({ theme, children }) {
+function BaseWeb({ theme, children }: AnyObject) {
   const scrollBarStyle = css(jss({ theme }, theme.mixins.scroll), 'body');
 
   createMeta('[charset]', { charset: 'UTF-8' }, false);

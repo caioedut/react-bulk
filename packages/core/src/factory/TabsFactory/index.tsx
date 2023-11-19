@@ -15,7 +15,7 @@ const TabsFactory = React.memo<TabsProps>(
     const options = theme.components.Tabs;
 
     // Extends from default props
-    let {
+    const {
       color,
       size,
       tabs,

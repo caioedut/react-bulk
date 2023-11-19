@@ -13,7 +13,7 @@ const BackdropFactory = React.memo<BackdropProps>(
     const { web, native, Button, Dialog } = global.mapping;
 
     // Extends from default props
-    let {
+    const {
       visible,
       // Styles
       variants,
@@ -55,7 +55,7 @@ const BackdropFactory = React.memo<BackdropProps>(
       return () => {
         window.onscroll = null;
       };
-    }, [visible]);
+    }, [ref, visible]);
 
     if (native) {
       return (

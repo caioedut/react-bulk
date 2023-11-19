@@ -20,6 +20,8 @@ export default function useAnimation(initial = {}) {
     }
 
     return values;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [currentStyle, setCurrentStyle] = useState(initialStyle);
