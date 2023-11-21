@@ -92,10 +92,10 @@ const base: ThemeProps = {
     },
 
     scroll: {
-      '&::-webkit-scrollbar': { height: '0.375rem', width: '0.375rem' },
-      '&::-webkit-scrollbar-track': { background: '#00000000' },
-      '&::-webkit-scrollbar-corner': { background: '#00000000' },
-      '&::-webkit-scrollbar-thumb': { bg: 'text.disabled', borderRadius: '0.1875rem' },
+      '&::WebkitScrollbar': { height: '0.375rem', width: '0.375rem' },
+      '&::WebkitScrollbarTrack': { background: '#00000000' },
+      '&::WebkitScrollbarCorner': { background: '#00000000' },
+      '&::WebkitScrollbarThumb': { bg: 'text.disabled', borderRadius: '0.1875rem' },
     },
 
     zIndex: {
