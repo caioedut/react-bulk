@@ -51,8 +51,8 @@ const DatePickerFactory = React.memo<DatePickerProps>(
         }
 
         let dateValue = dateify(value);
-        let dateMin = min ? dateify(min) : null;
-        let dateMax = max ? dateify(max) : null;
+        const dateMin = min ? dateify(min) : null;
+        const dateMax = max ? dateify(max) : null;
 
         if (dateMin && dateValue < dateMin) {
           dateValue = dateMin;
@@ -94,15 +94,17 @@ const DatePickerFactory = React.memo<DatePickerProps>(
     }
 
     useEffect(() => {
-      // TODO: fix setInternal called twice when using form.setData with prop controlled=true
       if (typeof value === 'undefined') return;
-      setInternal(value);
+      _setInternal(value);
     }, [value]);
 
-    const handleChangeCalendar = useCallback((_, date) => {
-      setInternal(date);
-      setCalendarVisible(false);
-    }, []);
+    const handleChangeCalendar = useCallback(
+      (_, date) => {
+        setInternal(date);
+        setCalendarVisible(false);
+      },
+      [setInternal],
+    );
 
     const handleChangeInternal = useCallback(
       (e, date) => {
@@ -164,9 +166,9 @@ const DatePickerFactory = React.memo<DatePickerProps>(
                 events={internal ? [internal] : []}
                 onPressDate={handleChangeCalendar}
                 disableds={(date) => {
-                  let currentDate = dateify(date);
-                  let minDate = min ? dateify(min) : null;
-                  let maxDate = max ? dateify(max) : null;
+                  const currentDate = dateify(date);
+                  const minDate = min ? dateify(min) : null;
+                  const maxDate = max ? dateify(max) : null;
 
                   if (minDate && currentDate < minDate) {
                     return true;

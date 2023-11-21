@@ -33,6 +33,7 @@ import ReactBulk, {
   SliderFactory,
   TableFactory,
   TabsFactory,
+  TerminalFactory,
   TextFactory,
   TooltipFactory,
   global,
@@ -126,6 +127,7 @@ export const Select = SelectFactory;
 export const Slider = SliderFactory;
 export const Table = TableFactory;
 export const Tabs = TabsFactory;
+export const Terminal = TerminalFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 

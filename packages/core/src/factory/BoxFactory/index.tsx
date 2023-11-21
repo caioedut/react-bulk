@@ -56,10 +56,6 @@ const BoxFactory = React.memo<BoxProps>(
       ...rest
     } = props;
 
-    if (mount === false) {
-      return null;
-    }
-
     rest = bindings(rest);
 
     pressable =
@@ -181,6 +177,10 @@ const BoxFactory = React.memo<BoxProps>(
     }
 
     const Component = component || View;
+
+    if (mount === false) {
+      return null;
+    }
 
     return (
       <Component ref={ref} {...rest} {...componentProps}>

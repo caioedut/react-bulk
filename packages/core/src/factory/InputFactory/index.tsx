@@ -88,9 +88,10 @@ const InputFactory = React.memo<InputProps>(
     const defaultRef: any = useRef(null);
     const inputRef = ref || defaultRef;
 
+    const [initialValue] = useState(defaultValue);
     const [focused, setFocused] = useState(false);
     const [error, setError] = useState<InputProps['error']>();
-    const [_internal, _setInternal] = useState(value ?? defaultValue);
+    const [_internal, _setInternal] = useState(value ?? initialValue);
 
     const maskValue = useCallback(
       (value) => {
@@ -137,7 +138,7 @@ const InputFactory = React.memo<InputProps>(
 
         return value ?? emptyValue;
       },
-      [unmask, type, min, max],
+      [maxLength, type, unmask, notNull, min, max],
     );
 
     const resolveValue = useCallback(
@@ -156,7 +157,7 @@ const InputFactory = React.memo<InputProps>(
         if (controlled) return;
         _setInternal(resolveValue(value));
       },
-      [controlled, internal, resolveValue],
+      [controlled, resolveValue],
     );
 
     color = theme.color(error ? 'error' : color || 'primary');
@@ -241,7 +242,7 @@ const InputFactory = React.memo<InputProps>(
 
     const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
     const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
-    const clear = useCallback(() => setInternal(defaultValue), [setInternal]);
+    const clear = useCallback(() => setInternal(initialValue), [initialValue, setInternal]);
     const isFocused = useCallback(
       () => Boolean(inputRef?.current?.isFocused?.()) || inputRef?.current === document?.activeElement,
       [inputRef],

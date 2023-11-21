@@ -114,7 +114,7 @@ const SliderFactory = React.memo<SliderProps>(
       return () => {
         form.unsetField(name as string);
       };
-    }, [name, form, onFormChange, getPercentByValue, getValueByPercent]);
+    }, [name, form, onFormChange, getPercentByValue, getValueByPercent, percent]);
 
     useEffect(() => {
       if (!web) return;
@@ -154,7 +154,7 @@ const SliderFactory = React.memo<SliderProps>(
 
     function setStyles($el, styles = {}) {
       if (web) {
-        for (let attr in styles) {
+        for (const attr in styles) {
           const value = styles[attr];
           $el.style[attr] = value && !isNaN(value) ? `${value}px` : value;
         }

@@ -13,7 +13,7 @@ const DropdownFactory = React.memo<DropdownProps>(
     const options = theme.components.Dropdown;
 
     // Extends from default props
-    let {
+    const {
       visible,
       // Events
       onClose,
