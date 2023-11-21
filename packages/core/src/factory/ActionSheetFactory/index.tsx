@@ -19,7 +19,7 @@ const ActionSheetFactory = React.memo<ActionSheetProps>(
     const dimensions = useDimensions();
 
     // Extends from default props
-    let {
+    const {
       contentInset,
       visible,
       // Events
@@ -33,7 +33,9 @@ const ActionSheetFactory = React.memo<ActionSheetProps>(
 
     useEffect(() => {
       animation.start({ marginBottom: visible ? 0 : -dimensions.height });
-    }, [visible]);
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dimensions.height, visible]);
 
     return (
       <BackdropFactory visible={visible} justifyContent="end">

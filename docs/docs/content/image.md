@@ -75,6 +75,8 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 **`source`**
 
+URL or Source of the image.
+
 ➤ Type: **`string` [`ImageSource`](https://reactnative.dev/docs/image#source)** <br/>
 
 ---

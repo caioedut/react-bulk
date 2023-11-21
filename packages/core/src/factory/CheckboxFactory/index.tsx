@@ -54,7 +54,8 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     const defaultRef: any = useRef(null);
     const buttonRef = ref || defaultRef;
 
-    const [_internal, _setInternal] = useState(checked ?? defaultChecked);
+    const [initialChecked] = useState(defaultChecked);
+    const [_internal, _setInternal] = useState(checked ?? initialChecked);
 
     const resolveValue = useCallback((value) => {
       return Boolean(Number(value));
@@ -69,7 +70,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
         if (controlled) return;
         _setInternal(resolveValue(value));
       },
-      [controlled, internal, resolveValue],
+      [controlled, resolveValue],
     );
 
     if (typeof size === 'string') {
@@ -88,7 +89,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
-    const clear = useCallback(() => setInternal(defaultChecked), [setInternal]);
+    const clear = useCallback(() => setInternal(initialChecked), [initialChecked, setInternal]);
     const isFocused = useCallback(
       () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
       [buttonRef],
@@ -152,7 +153,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       return () => {
         form.unsetField(name as string);
       };
-    }, [name, form, value, internal, dispatchEvent, onChange, onFormChange]);
+    }, [name, form, value, internal, dispatchEvent, onChange, onFormChange, unique]);
 
     const handleChange = (event) => {
       if (disabled || readOnly) return;

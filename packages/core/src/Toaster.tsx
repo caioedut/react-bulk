@@ -25,7 +25,7 @@ function Toaster({ theme }: any, ref) {
   const [props, setProps] = useState<ToasterProps>();
 
   // Extends from default props
-  let {
+  const {
     content,
     color,
     duration,
@@ -70,20 +70,9 @@ function Toaster({ theme }: any, ref) {
     halign === 'right' && { r: 0 },
   ];
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      props,
-      setProps,
-    }),
-    [],
-  );
+  useImperativeHandle(ref, () => ({ props, setProps }), [props]);
 
   useEffect(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
     if (props) {
       idRef.current = uuid();
 
@@ -95,7 +84,13 @@ function Toaster({ theme }: any, ref) {
         setProps(undefined);
       }, duration);
     }
-  }, [props]);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [duration, props]);
 
   return (
     <BoxFactory row center style={containerStyle}>

@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useMemo, useRef } from 'react';
 
 import createStyle from '../../createStyle';
 import useHtmlId from '../../hooks/useHtmlId';
@@ -74,17 +74,19 @@ const AnimationFactory = React.memo<AnimationProps>(
     to = jss({ theme }, fade && { opacity: opacityTo }, { transform: transformTo }, to);
 
     const name = useHtmlId();
-    const iterations = loop === true ? -1 : Number(loop ?? 1);
+    const iterations = useMemo(() => (loop === true ? -1 : Number(loop ?? 1)), [loop]);
+    const isBoomerang = useMemo(() => direction.includes('alternate'), [direction]);
+    const initRangeValue = useMemo(
+      () => (!direction.includes('reverse') ? 0 : isBoomerang ? 2 : 1),
+      [direction, isBoomerang],
+    );
 
-    const isBoomerang = direction.includes('alternate');
-    const initRangeValue = !direction.includes('reverse') ? 0 : isBoomerang ? 2 : 1;
-
-    const { current: animationValue } = useRef(native ? new Animated.Value(initRangeValue) : null);
+    const animationRef = useRef(native ? new Animated.Value(initRangeValue) : null);
 
     useEffect(() => {
       if (!native) return;
 
-      animationValue.setValue(initRangeValue);
+      animationRef.current.setValue(initRangeValue);
 
       const easing = timing
         .split('-')
@@ -92,7 +94,7 @@ const AnimationFactory = React.memo<AnimationProps>(
         .join('');
 
       const animation = Animated.loop(
-        Animated.timing(animationValue, {
+        Animated.timing(animationRef.current, {
           useNativeDriver: false,
           delay,
           duration: duration ?? speed,
@@ -109,7 +111,9 @@ const AnimationFactory = React.memo<AnimationProps>(
       return () => {
         animation.stop();
       };
-    }, [run, timing, iterations, initRangeValue]);
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [run, timing, delay, duration, speed, iterations, isBoomerang, initRangeValue]);
 
     if (web) {
       const fromJSS = jss({ theme }, from);
@@ -144,9 +148,9 @@ const AnimationFactory = React.memo<AnimationProps>(
           style.transform = (val as any[]).map((obj) => {
             Object.entries(obj).map(([transfAttr, transfValue]) => {
               // @ts-expect-error
-              const toValue = get(transfAttr, ...to?.transform);
+              const toValue = get(transfAttr, ...(to?.transform || []));
 
-              obj[transfAttr] = animationValue.interpolate({
+              obj[transfAttr] = animationRef.current.interpolate({
                 inputRange: [0, 1, 2],
                 outputRange: [transfValue, toValue, transfValue],
               });
@@ -158,7 +162,7 @@ const AnimationFactory = React.memo<AnimationProps>(
           return;
         }
 
-        style[attr] = animationValue.interpolate({
+        style[attr] = animationRef.current.interpolate({
           inputRange: [0, 1, 2],
           outputRange: [val, to?.[attr], val],
         });

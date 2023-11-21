@@ -31,6 +31,7 @@ import {
   Slider,
   Table,
   Tabs,
+  Terminal,
   Text,
   Tooltip,
   useTheme,
@@ -137,6 +138,10 @@ export default function Main() {
       </Card>
 
       <Card mt={theme.shape.gap}>
+        <TerminalExample />
+      </Card>
+
+      <Card mt={theme.shape.gap}>
         <AnimationExample />
       </Card>
     </Scrollable>
@@ -156,7 +161,7 @@ function ThemeExample() {
     const data: AnyObject = {};
     let ref = data;
 
-    for (let attr of split) {
+    for (const attr of split) {
       ref[attr] = {};
       ref = ref[attr];
     }
@@ -345,7 +350,7 @@ function GridExample() {
           </Text>
         </Box>
         <Box xs={5} md="auto">
-          <Text>Column 3 xs={5} md="flex"</Text>
+          <Text>Column 3 xs={5} md=&quot;flex&quot;</Text>
         </Box>
       </Grid>
     </>
@@ -1181,6 +1186,19 @@ function CarouselExample() {
           </Card>
         ))}
       </Carousel>
+    </>
+  );
+}
+
+function TerminalExample() {
+  const theme = useTheme();
+
+  return (
+    <>
+      <Text variant="title" mb={theme.shape.gap}>
+        Terminal
+      </Text>
+      <Terminal h={240} />
     </>
   );
 }

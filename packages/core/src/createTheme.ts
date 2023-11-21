@@ -22,7 +22,7 @@ export default function createTheme(options?: ThemeEditProps, extendsTo?: ThemeE
 
   // Parse colors
   if (newTheme.colors) {
-    for (let prop in newTheme.colors) {
+    for (const prop in newTheme.colors) {
       const color = newTheme.colors[prop];
 
       if (typeof color === 'string') {

@@ -12,7 +12,7 @@ const ModalFactory = React.memo<ModalProps>(
     const options = theme.components.Modal;
 
     // Extends from default props
-    let {
+    const {
       halign,
       valign,
       visible,

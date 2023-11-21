@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
@@ -44,16 +44,26 @@ const ImageFactory = React.memo<ImageProps>(
     width = width ?? w ?? get('width', style) ?? get('w', style);
     height = height ?? h ?? get('height', style) ?? get('h', style);
 
-    const isProcessed = defined(w) && defined(h);
+    if (typeof width === 'string' && width.endsWith('px')) {
+      width = Number(width.replace(/px$/g, ''));
+    }
+
+    if (typeof height === 'string' && height.endsWith('px')) {
+      height = Number(height.replace(/px$/g, ''));
+    }
 
     const [status, setStatus] = useState('loading');
-
     const [containerWidth, setContainerWidth] = useState<number>();
+    const [containerHeight, setContainerHeight] = useState<number>();
     const [imgWidth, setImgWidth] = useState<number | null>(null);
     const [aspectRatio, setAspectRatio] = useState<number | null>(null);
 
-    const [finalWidth, setFinalWidth] = useState<number | string>(width ?? 0);
-    const [finalHeight, setFinalHeight] = useState<number | string>(height ?? 0);
+    const [finalWidth, setFinalWidth] = useState<number | undefined>(typeof width === 'number' ? width : undefined);
+    const [finalHeight, setFinalHeight] = useState<number | undefined>(typeof height === 'number' ? height : undefined);
+
+    const isProcessed =
+      [width, height].every((value) => typeof value === 'number') ||
+      [finalWidth, finalHeight].every((value) => typeof value === 'number');
 
     if (alt) {
       rest.accessibility = rest.accessibility || {};
@@ -84,6 +94,7 @@ const ImageFactory = React.memo<ImageProps>(
 
     const handleLayout = (e: any) => {
       setContainerWidth(e.nativeEvent.layout.width);
+      setContainerHeight(e.nativeEvent.layout.height);
       onLayout?.(e);
     };
 
@@ -92,10 +103,13 @@ const ImageFactory = React.memo<ImageProps>(
       onLoad?.(e);
     };
 
-    const handleError = (e: any) => {
-      setStatus('error');
-      onError?.(e);
-    };
+    const handleError = useCallback(
+      (e: any) => {
+        setStatus('error');
+        onError?.(e);
+      },
+      [onError],
+    );
 
     useEffect(() => {
       setStatus('loading');
@@ -125,59 +139,81 @@ const ImageFactory = React.memo<ImageProps>(
       } catch (err) {
         handleError(err);
       }
-    }, [source, width, height, isProcessed]);
+    }, [source, width, height, isProcessed, Image, handleError]);
 
     useEffect(() => {
-      if (isProcessed || !native || !defined(aspectRatio) || !defined(containerWidth)) return;
+      if (isProcessed || !native || !defined(aspectRatio) || !defined(containerWidth) || !defined(containerHeight))
+        return;
 
       let widthBase = typeof width === 'number' ? width : null;
       let heightBase = typeof height === 'number' ? height : null;
 
-      const widthStr = `${width}`.toLowerCase().trim();
-      const heightStr = `${height}`.toLowerCase().trim();
+      const widthStr = `${width ?? ''}`.toLowerCase().trim();
+      const heightStr = `${height ?? ''}`.toLowerCase().trim();
 
-      if (widthStr.endsWith('px')) {
-        widthBase = Number(widthStr.replace(/\D/g, ''));
+      if (widthBase === null) {
+        if (widthStr.endsWith('px')) {
+          widthBase = Number(widthStr.replace(/px$/g, ''));
+        }
+
+        if (widthStr.endsWith('%')) {
+          const multiplier = Number(widthStr.replace(/%$/g, '')) / 100;
+          widthBase = (containerWidth ?? 0) * multiplier;
+        }
       }
 
-      if (heightStr.endsWith('px')) {
-        heightBase = Number(heightStr.replace(/\D/g, ''));
+      if (heightBase === null) {
+        if (heightStr.endsWith('px')) {
+          heightBase = Number(heightStr.replace(/px$/g, ''));
+        }
+
+        if (heightStr.endsWith('%')) {
+          const multiplier = Number(heightStr.replace(/%$/g, '')) / 100;
+          heightBase = (containerHeight ?? 0) * multiplier;
+        }
       }
 
-      if (widthBase === null && widthStr.endsWith('%')) {
-        const multiplier = Number(widthStr.replace(/\D/g, '')) / 100;
-        widthBase = (containerWidth ?? 0) * multiplier;
+      if (widthBase === null && heightBase === null) {
+        widthBase = containerWidth ?? imgWidth;
       }
 
-      let newWidth = Number(widthBase ?? imgWidth ?? 0);
-      let newHeight = Number(heightBase ?? 0);
-
-      // Calc height
-      if (!heightBase) {
-        newHeight = newWidth * (aspectRatio || 0);
+      if (heightBase === null && widthBase !== null) {
+        heightBase = widthBase * (aspectRatio || 0);
       }
 
-      // Calc width
-      if (!widthBase) {
-        newWidth = newHeight / (aspectRatio || 1);
+      // TODO: NATIVE: fix CONTAINER WIDTH when have only height value
+      if (widthBase === null && heightBase !== null) {
+        widthBase = heightBase / (aspectRatio || 1);
       }
+
+      const newWidth = Number(widthBase ?? 0);
+      const newHeight = Number(heightBase ?? 0);
 
       setFinalWidth(newWidth);
       setFinalHeight(newHeight);
-    }, [width, height, containerWidth, imgWidth, aspectRatio, isProcessed]);
+    }, [width, height, containerWidth, containerHeight, imgWidth, aspectRatio, isProcessed, native]);
+
+    const borderRadius = finalWidth ?? finalHeight ?? height ?? width;
 
     style = [
       { overflow: 'hidden' },
 
-      height && { height },
+      web && {
+        objectFit: mode,
+        height: height ?? undefined,
+        width: width ?? undefined,
+      },
 
-      width && { width },
+      native && !isProcessed && { flex: 1 },
 
-      web && { objectFit: mode },
+      native && {
+        height: isProcessed ? finalHeight : undefined,
+        width: isProcessed ? finalWidth : undefined,
+      },
 
       circular && {
         web: { borderRadius: '50%' },
-        native: { borderRadius: ((finalWidth ?? finalHeight ?? height ?? width) as number) / 2 },
+        native: { borderRadius: (typeof borderRadius === 'number' ? borderRadius : 0) / 2 },
       },
 
       style,

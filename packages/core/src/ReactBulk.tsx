@@ -25,17 +25,14 @@ function ReactBulk({ theme, children }: any) {
 
   global.theme = themeState;
 
-  const setTheme = useCallback(
-    (theme: ThemeModeValues | ThemeEditProps) => {
-      theme = typeof theme === 'string' ? { mode: theme } : theme;
-      setThemeState((current) => createTheme(theme as ThemeProps, current));
-    },
-    [theme],
-  );
+  const setTheme = useCallback((theme: ThemeModeValues | ThemeEditProps) => {
+    theme = typeof theme === 'string' ? { mode: theme } : theme;
+    setThemeState((current) => createTheme(theme as ThemeProps, current));
+  }, []);
 
   useEffect(() => {
     setTheme(theme);
-  }, [theme]);
+  }, [theme, setTheme]);
 
   if (!themeState) {
     return null;

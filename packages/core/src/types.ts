@@ -494,6 +494,7 @@ export type ThemeProps = {
     Slider: ThemeComponentProps<SliderProps, 'root' | 'rule' | 'bar' | 'thumb'>;
     Table: ThemeComponentProps<TableProps, 'root'>;
     Tabs: ThemeComponentProps<TabsProps, 'root' | 'content' | 'button' | 'active'>;
+    Terminal: ThemeComponentProps<TabsProps, 'root'>;
     Text: ThemeComponentProps<TextProps, 'root'>;
     Toaster: ThemeComponentProps<ToasterProps, 'root'>;
     Tooltip: ThemeComponentProps<TooltipProps, 'root'>;
@@ -1053,6 +1054,18 @@ export type AvatarProps = PropsWithStyles<{
   // Styles
   contentStyle?: RbkStyle;
 }>;
+
+export type TerminalProps = PropsWithStyles<
+  ScrollableProps,
+  {
+    prompt?: string;
+    version?: string;
+    welcomeMessage?: string;
+    commands?: {
+      [key: string]: string | (() => Promise<string | void>);
+    }[];
+  }
+>;
 
 /************************
  * DEPRECATIONS (START) *

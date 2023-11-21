@@ -31,7 +31,7 @@ const TooltipFactory = React.memo<TooltipProps>(
 
     const timeoutRef = useRef<TimeoutType>(null);
 
-    const [shown, setShown] = usePropState(false, visible);
+    const [shown, setShown] = usePropState(visible, false);
     const [trans, setTrans] = useState(0);
 
     const translate = native ? -(trans / 2) : '-50%';
