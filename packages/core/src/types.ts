@@ -37,7 +37,7 @@ type ColorTypographyTone = 'primary' | 'secondary' | 'disabled';
 type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
 
 /** @internal */
-type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker';
+type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker' | 'contrast';
 
 /** @internal */
 type FlexJustifyValues =

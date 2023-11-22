@@ -39,6 +39,7 @@ export default function createTheme(options?: ThemeEditProps, extendsTo?: ThemeE
       const lighter = newTheme.colors?.[prop]?.lighter;
       const dark = newTheme.colors?.[prop]?.dark;
       const darker = newTheme.colors?.[prop]?.darker;
+      const contrast = newTheme.colors?.[prop]?.contrast;
 
       if (!light) {
         newTheme.colors[prop].light = newTheme.color(main, null, '50%');
@@ -54,6 +55,10 @@ export default function createTheme(options?: ThemeEditProps, extendsTo?: ThemeE
 
       if (!darker) {
         newTheme.colors[prop].darker = newTheme.color(main, null, '-100%');
+      }
+
+      if (!contrast) {
+        newTheme.colors[prop].contrast = newTheme.contrast(main);
       }
     }
   }
