@@ -870,6 +870,9 @@ export type ModalProps = PropsWithStyles<{
   valign?: 'center' | 'top' | 'bottom';
   visible?: boolean;
   // Events
+  onClose?: Function;
+
+  /** @deprecated use onClose instead */
   onBackdropPress?: Function;
 }>;
 
