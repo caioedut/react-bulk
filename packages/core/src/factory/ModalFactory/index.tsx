@@ -16,6 +16,7 @@ const ModalFactory = React.memo<ModalProps>(
       halign,
       valign,
       visible,
+      onClose,
       onBackdropPress,
       // Styles
       variants,
@@ -24,7 +25,7 @@ const ModalFactory = React.memo<ModalProps>(
     } = factory2<ModalProps>(props, options);
 
     return (
-      <BackdropFactory visible={visible} stylist={[variants.backdrop]} onPress={onBackdropPress}>
+      <BackdropFactory visible={visible} stylist={[variants.backdrop]} onPress={onClose ?? onBackdropPress}>
         <CardFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
           {children}
         </CardFactory>
