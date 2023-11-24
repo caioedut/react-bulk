@@ -37,7 +37,7 @@ type ColorTypographyTone = 'primary' | 'secondary' | 'disabled';
 type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
 
 /** @internal */
-type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker';
+type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker' | 'contrast';
 
 /** @internal */
 type FlexJustifyValues =
@@ -203,10 +203,18 @@ export type RbkColor =
 export interface RbkRect {
   width: number;
   height: number;
-  offsetX: number; // offset X relative to DOCUMENT
-  offsetY: number; // offset Y relative to DOCUMENT
-  pageOffsetX: number; // offset X relative to WINDOW
-  pageOffsetY: number; // offset Y relative to WINDOW
+
+  /** Left offset relative to the Document */
+  offsetX: number;
+
+  /** Top offset relative to the Document */
+  offsetY: number;
+
+  /** Left offset relative to the Window */
+  pageOffsetX: number;
+
+  /** Top offset relative to the Window */
+  pageOffsetY: number;
 }
 
 export interface RbkAnimation {
@@ -881,6 +889,7 @@ export type CollapseProps = PropsWithStyles<{
 }>;
 
 export type DropdownProps = PropsWithStyles<{
+  placement?: 'top' | 'bottom';
   visible?: boolean;
   // Events
   onClose?: Function;

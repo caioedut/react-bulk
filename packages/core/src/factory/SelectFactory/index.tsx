@@ -1,5 +1,7 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import rect from '../../element/rect';
+import scrollIntoView from '../../element/scrollIntoView';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
@@ -7,15 +9,16 @@ import ChevronDown from '../../icons/ChevronDown';
 import ChevronUp from '../../icons/ChevronUp';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
+import only from '../../props/only';
 import { spacings } from '../../styles/jss';
 import { AnyObject, InputValue, RbkInputEvent, RequiredSome, SelectOption, SelectProps } from '../../types';
 import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
-import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import CardFactory from '../CardFactory';
+import DropdownFactory from '../DropdownFactory';
 import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
 import LoadingFactory from '../LoadingFactory';
@@ -74,7 +77,7 @@ const SelectFactory = React.memo<SelectProps>(
     const [initialValue] = useState(defaultValue);
     const [focused, setFocused] = useState(false);
     const [error, setError] = useState<SelectProps['error']>();
-    const [metrics, setMetrics] = useState<AnyObject>({});
+    const [metrics, setMetrics] = useState<AnyObject>({ placement: 'bottom' });
     const [visible, _setVisible] = useState(false);
     const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == initialValue));
 
@@ -104,10 +107,6 @@ const SelectFactory = React.memo<SelectProps>(
     color = theme.color(error ? 'error' : color || 'primary');
 
     accessibility = deepmerge({ label: label ?? placeholder }, accessibility, { state: { expanded: visible } });
-
-    const gutter = theme.spacing(3);
-
-    const backdropProps = !native ? {} : { onRequestClose: () => setVisible(false) };
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
@@ -199,25 +198,9 @@ const SelectFactory = React.memo<SelectProps>(
     useEffect(() => {
       if (!visible || !selectedRef.current) return;
 
-      if (web) {
-        selectedRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-          inline: 'start',
-        });
-      }
-
-      if (native) {
-        setTimeout(() => {
-          if (selectedRef.current && scrollRef.current) {
-            // @ts-ignore
-            selectedRef.current.measureLayout(scrollRef.current, (left, top) => {
-              const y = Math.max(0, top - metrics?.maxHeight / 2);
-              scrollRef.current.scrollTo({ x: 0, y, animated: false });
-            });
-          }
-        }, 100);
-      }
+      setTimeout(() => {
+        scrollIntoView(scrollRef.current, selectedRef.current, true);
+      }, 100);
     }, [metrics?.maxHeight, visible]);
 
     function optionFocus(index) {
@@ -229,34 +212,18 @@ const SelectFactory = React.memo<SelectProps>(
       setActiveIndex(index);
     }
 
-    const handleOpen = () => {
+    const handleOpen = async () => {
       optionFocus(arrOptions?.findIndex((item) => item.value == internal));
 
-      const callback = ({ top, left, height, width }) => {
-        const newMetrics: any = { left, width };
+      const { pageOffsetY, height, width } = await rect(buttonRef.current);
 
-        if (top <= dimensions.height / 2) {
-          newMetrics.top = Math.max(gutter, top + height);
-        } else {
-          newMetrics.bottom = Math.max(gutter, dimensions.height - top);
-        }
+      const placement = pageOffsetY <= dimensions.height / 2 ? 'bottom' : 'top';
+      const marginBottom = placement === 'top' ? height : 0;
+      const maxWidth = dimensions.width;
+      const maxHeight = Math.min(theme.rem(20), dimensions.height - pageOffsetY);
 
-        const sub = (newMetrics.top || 0) + (newMetrics.bottom || 0);
-        newMetrics.maxHeight = Math.min(theme.rem(20), dimensions.height - gutter - sub);
-        newMetrics.maxWidth = dimensions.width - gutter * 2;
-
-        setMetrics(newMetrics);
-        setVisible((current) => (readOnly ? false : !current));
-      };
-
-      if (web) {
-        callback(buttonRef.current.getBoundingClientRect());
-      }
-
-      if (native) {
-        // @ts-expect-error
-        buttonRef.current.measure((x, y, width, height, left, top) => callback({ top, left, height, width }));
-      }
+      setMetrics({ placement, width, maxHeight, maxWidth, marginBottom });
+      setVisible((current) => (readOnly ? false : !current));
     };
 
     const handleChange = (event, value: InputValue) => {
@@ -395,13 +362,8 @@ const SelectFactory = React.memo<SelectProps>(
           />
         )}
 
-        <BackdropFactory
-          visible={visible}
-          style={{ bg: 'rgba(0, 0, 0, 0.2)' }}
-          onPress={() => setVisible(false)}
-          {...backdropProps}
-        >
-          <CardFactory position="absolute" p={0} style={[{ overflow: 'hidden' }, metrics]}>
+        <DropdownFactory visible={visible} onClose={() => setVisible(false)} placement={metrics.placement}>
+          <CardFactory p={0} style={[{ overflow: 'hidden' }, only(['width', 'marginBottom'], metrics)]}>
             <ScrollableFactory ref={scrollRef} contentInset={1} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth}>
               {arrOptions?.map((option, index) => {
                 const isSelected = option.value == selected?.value;
@@ -444,7 +406,7 @@ const SelectFactory = React.memo<SelectProps>(
               })}
             </ScrollableFactory>
           </CardFactory>
-        </BackdropFactory>
+        </DropdownFactory>
       </BoxFactory>
     );
   }),

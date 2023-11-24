@@ -27,6 +27,8 @@ module.exports = {
 
     'import/order': 'off',
 
+    'react/jsx-curly-brace-presence': ['error', 'never'],
+
     'no-async-promise-executor': 'off',
 
     'no-empty': ['error', { allowEmptyCatch: true }],
