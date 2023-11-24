@@ -155,9 +155,9 @@ const InputFactory = React.memo<InputProps>(
     const setInternal = useCallback(
       (value) => {
         if (controlled) return;
-        _setInternal(resolveValue(value));
+        _setInternal(value);
       },
-      [controlled, resolveValue],
+      [controlled],
     );
 
     color = theme.color(error ? 'error' : color || 'primary');
