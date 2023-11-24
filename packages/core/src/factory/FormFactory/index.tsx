@@ -190,15 +190,15 @@ const FormFactory = React.memo<FormProps>(
     useEffect(() => {
       // @ts-ignore
       Object.assign(ref?.current || {}, { target: formRef.current });
-    }, [formRef]);
+    }, [ref, formRef]);
 
     useEffect(() => {
       setData(data || {});
-    }, [data]);
+    }, [data, setData]);
 
     useEffect(() => {
       setErrors(errors);
-    }, [errors]);
+    }, [errors, setErrors]);
 
     return (
       <Context.Provider value={context}>
