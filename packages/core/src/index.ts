@@ -21,11 +21,15 @@ export { default as get } from './props/get';
 /** @internal */
 export { default as merge } from './props/merge';
 /** @internal */
+export { default as only } from './props/only';
+/** @internal */
 export { default as remove } from './props/remove';
 
 // Element
 /** @internal */
 export { default as rect } from './element/rect';
+/** @internal */
+export { default as scrollIntoView } from './element/scrollIntoView';
 /** @internal */
 export { default as scrollTo } from './element/scrollTo';
 /** @internal */
@@ -53,6 +57,10 @@ export { default as global } from './utils/global';
 export { default as pick } from './utils/pick';
 /** @internal */
 export { default as sleep } from './utils/sleep';
+/** @internal */
+export { default as stdout } from './utils/stdout';
+/** @internal */
+export { default as string } from './utils/string';
 /** @internal */
 export { default as uuid } from './utils/uuid';
 

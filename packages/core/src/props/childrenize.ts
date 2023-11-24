@@ -5,11 +5,7 @@ export default function childrenize(children) {
 
   Children.forEach(children, (child) => {
     if (child?.type === Fragment) {
-      if (Array.isArray(child.props.children)) {
-        items.push(...child.props.children);
-      } else {
-        items.push(child.props.children);
-      }
+      items.push(...childrenize(child.props.children));
     } else {
       items.push(child);
     }

@@ -700,6 +700,7 @@ const base: ThemeProps = {
         name: 'rbk-dropdown',
         defaultProps: {
           accessibility: { role: 'menu' },
+          placement: 'bottom',
         },
         defaultStyles: {
           root: {
