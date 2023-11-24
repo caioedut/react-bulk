@@ -35,6 +35,13 @@ function Home() {
 
 Extends all [`Box`](/docs/core/box#props) props.
 
+**`placement`**
+
+➤ Type: **`'top'` `'bottom'`** <br/>
+➤ Default: **`'bottom'`** <br/>
+
+---
+
 **`visible`**
 
 ➤ Type: **`boolean`** <br/>
