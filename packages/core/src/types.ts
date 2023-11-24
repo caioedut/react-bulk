@@ -935,7 +935,7 @@ export type FormProps = PropsWithStyles<{
   data?: any;
   errors?: { [key: string]: string | boolean } | null;
   onSubmit?: (event: RbkFormEvent | any, data: AnyObject) => any;
-  onCancel?: (event: RbkFormEvent | any) => any;
+  onCancel?: (event: RbkFormEvent | any, data: AnyObject) => any;
   onClear?: (event: RbkFormEvent | any, data: AnyObject) => any;
   onChange?: (event: RbkFormEvent | any, data: AnyObject) => any;
 }>;

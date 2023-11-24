@@ -124,9 +124,9 @@ const FormFactory = React.memo<FormProps>(
       const callback = {
         change: onChange,
         submit: onSubmit,
+        cancel: onCancel,
+        clear: onClear,
       }[type];
-
-      // onSubmit?.(ref?.current, getData());
 
       const target = formRef.current;
       const data = getData();
@@ -139,30 +139,35 @@ const FormFactory = React.memo<FormProps>(
         nativeEvent,
       };
 
+      if (type === 'change') {
+        fieldsRef.current.forEach(({ onFormChange }) => onFormChange?.(event, data));
+      }
+
       if (typeof callback === 'function') {
         callback(event, data);
       }
-
-      fieldsRef.current.forEach(({ onFormChange }) => onFormChange?.(event, data));
     }
 
-    function submit(e: any = undefined) {
+    function submit(e?: any) {
       e?.preventDefault?.();
       const nativeEvent = e?.nativeEvent ?? e;
       dispatchEvent('submit', undefined, nativeEvent);
     }
 
-    function cancel() {
-      // @ts-ignore
-      onCancel?.(ref?.current);
+    function cancel(e?: any) {
+      e?.preventDefault?.();
+      const nativeEvent = e?.nativeEvent ?? e;
+      dispatchEvent('cancel', undefined, nativeEvent);
     }
 
-    function clear() {
-      const data = getData();
+    function clear(e?: any) {
+      e?.preventDefault?.();
+      const nativeEvent = e?.nativeEvent ?? e;
+
       fieldsRef.current.forEach(({ set }) => set(''));
       setErrors(null);
-      // @ts-ignore
-      onClear?.(ref?.current, data);
+
+      dispatchEvent('clear', undefined, nativeEvent);
     }
 
     const context = {
@@ -183,17 +188,17 @@ const FormFactory = React.memo<FormProps>(
     useImperativeHandle(ref, () => context, [context]);
 
     useEffect(() => {
-      setData(Object(data));
+      // @ts-ignore
+      Object.assign(ref?.current || {}, { target: formRef.current });
+    }, [formRef]);
+
+    useEffect(() => {
+      setData(data || {});
     }, [data]);
 
     useEffect(() => {
       setErrors(errors);
     }, [errors]);
-
-    useEffect(() => {
-      // @ts-ignore
-      Object.assign(ref?.current, { target: formRef.current });
-    }, [formRef]);
 
     return (
       <Context.Provider value={context}>
