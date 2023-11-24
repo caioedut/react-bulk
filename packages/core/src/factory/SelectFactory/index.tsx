@@ -2,6 +2,7 @@ import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } 
 
 import rect from '../../element/rect';
 import scrollIntoView from '../../element/scrollIntoView';
+import useDeferredValue from '../../hooks/useDeferredValue';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
@@ -20,6 +21,7 @@ import ButtonFactory from '../ButtonFactory';
 import CardFactory from '../CardFactory';
 import DropdownFactory from '../DropdownFactory';
 import { useForm } from '../FormFactory';
+import InputFactory from '../InputFactory';
 import LabelFactory from '../LabelFactory';
 import LoadingFactory from '../LoadingFactory';
 import ScrollableFactory from '../ScrollableFactory';
@@ -49,6 +51,7 @@ const SelectFactory = React.memo<SelectProps>(
       options: arrOptions = [],
       placeholder,
       readOnly,
+      searchCount,
       size,
       value,
       // Events
@@ -63,7 +66,7 @@ const SelectFactory = React.memo<SelectProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<SelectProps, 'color' | 'size'>>(props, options);
+    } = factory2<RequiredSome<SelectProps, 'color' | 'size' | 'searchCount'>>(props, options);
 
     id = useHtmlId(id);
 
@@ -81,6 +84,10 @@ const SelectFactory = React.memo<SelectProps>(
     const [visible, _setVisible] = useState(false);
     const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == initialValue));
 
+    const [search, setSearch] = useState('');
+    const searchValue = useDeferredValue(search);
+    const hasSearch = Number(arrOptions?.length ?? 0) > searchCount;
+
     const [_internal, _setInternal] = useState(value ?? initialValue);
 
     const internal = useMemo(() => {
@@ -97,6 +104,7 @@ const SelectFactory = React.memo<SelectProps>(
 
     const setVisible = useCallback((value) => {
       _setVisible(value);
+      setSearch('');
       if (!value) {
         setFocused(false);
       }
@@ -251,14 +259,14 @@ const SelectFactory = React.memo<SelectProps>(
     const handleKeyDown = (e) => {
       const { key } = e;
 
+      const hasHandler = ['Escape', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(key);
+
+      console.log(key, hasHandler);
+
       let newIndex = activeIndex;
 
       if (key === 'Escape') {
         return setVisible(false);
-      }
-
-      if (key !== 'Enter') {
-        e?.preventDefault?.();
       }
 
       if (key === 'ArrowUp') {
@@ -293,7 +301,10 @@ const SelectFactory = React.memo<SelectProps>(
         newIndex = arrOptions.length - 1;
       }
 
-      optionFocus(newIndex);
+      if (hasHandler) {
+        e?.preventDefault?.();
+        optionFocus(newIndex);
+      }
     };
 
     // @ts-expect-error
@@ -364,46 +375,70 @@ const SelectFactory = React.memo<SelectProps>(
 
         <DropdownFactory visible={visible} onClose={() => setVisible(false)} placement={metrics.placement}>
           <CardFactory p={0} style={[{ overflow: 'hidden' }, only(['width', 'marginBottom'], metrics)]}>
+            {hasSearch && (
+              <BoxFactory p={1}>
+                <InputFactory
+                  color={color}
+                  size={size}
+                  value={searchValue}
+                  onChange={(_, value: string) => setSearch(value)}
+                />
+              </BoxFactory>
+            )}
             <ScrollableFactory ref={scrollRef} contentInset={1} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth}>
-              {arrOptions?.map((option, index) => {
-                const isSelected = option.value == selected?.value;
+              {(arrOptions || [])
+                .filter((option) => {
+                  if (!hasSearch) {
+                    return true;
+                  }
 
-                return (
-                  <ButtonFactory
-                    key={option.value}
-                    size={size}
-                    variant="text"
-                    disabled={option.disabled}
-                    color={color}
-                    bg={isSelected ? theme.color(color, 0.1) : undefined}
-                    style={{ paddingHorizontal: spacing }}
-                    contentStyle={{ flex: 1, maxWidth: '100%' }}
-                    onPress={(e) => handleSelect(e, option)}
-                    endAddon={
-                      <BoxFactory w={fontSize} pl={1}>
-                        {isSelected && <Check svg={svg} size={fontSize} color={color} />}
-                      </BoxFactory>
-                    }
-                    ref={(el) => {
-                      optionsRef.current[index] = el;
+                  const search = `${searchValue ?? ''}`.trim();
 
-                      if (isSelected) {
-                        selectedRef.current = el;
+                  if (!search) {
+                    return true;
+                  }
+
+                  return option.label.toLowerCase().includes(search.toLowerCase());
+                })
+                .map((option, index) => {
+                  const isSelected = option.value == selected?.value;
+
+                  return (
+                    <ButtonFactory
+                      key={option.value}
+                      size={size}
+                      variant="text"
+                      disabled={option.disabled}
+                      color={color}
+                      bg={isSelected ? theme.color(color, 0.1) : undefined}
+                      style={{ paddingHorizontal: spacing }}
+                      contentStyle={{ flex: 1, maxWidth: '100%' }}
+                      onPress={(e) => handleSelect(e, option)}
+                      endAddon={
+                        <BoxFactory w={fontSize} pl={1}>
+                          {isSelected && <Check svg={svg} size={fontSize} color={color} />}
+                        </BoxFactory>
                       }
-                    }}
-                    platform={{
-                      web: {
-                        accessibility: {
-                          role: 'option',
-                          state: { selected: isSelected },
+                      ref={(el) => {
+                        optionsRef.current[index] = el;
+
+                        if (isSelected) {
+                          selectedRef.current = el;
+                        }
+                      }}
+                      platform={{
+                        web: {
+                          accessibility: {
+                            role: 'option',
+                            state: { selected: isSelected },
+                          },
                         },
-                      },
-                    }}
-                  >
-                    <TextFactory>{option.label}</TextFactory>
-                  </ButtonFactory>
-                );
-              })}
+                      }}
+                    >
+                      <TextFactory>{option.label}</TextFactory>
+                    </ButtonFactory>
+                  );
+                })}
             </ScrollableFactory>
           </CardFactory>
         </DropdownFactory>

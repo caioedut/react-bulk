@@ -194,6 +194,15 @@ The string that will be rendered before text input has been entered.
 
 ---
 
+### **`searchCount`**
+
+Minimum number of options to appear the search input
+
+➤ Type: **`number`** <br/>
+➤ Default: **`20`** <br/>
+
+---
+
 ### **`size`**
 
 ➤ Type: **`'xsmall'` `'small'` `'medium'` `'large'` `'xlarge'`** <br/>

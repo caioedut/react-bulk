@@ -725,6 +725,7 @@ export type SelectProps = PropsWithStyles<
     options?: SelectOption[];
     placeholder?: string;
     readOnly?: boolean;
+    searchCount?: number;
     size?: RbkSize;
     startAddon?: ReactElement;
     value?: InputValue;

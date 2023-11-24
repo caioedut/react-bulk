@@ -1042,6 +1042,7 @@ const base: ThemeProps = {
         defaultProps: {
           accessibility: { role: 'combobox' },
           color: 'primary',
+          searchCount: 20,
           size: 'medium',
         },
         defaultStyles: {
