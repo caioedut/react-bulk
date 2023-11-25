@@ -31,18 +31,20 @@ function Home() {
 }
 ```
 
+---
+
 ## Props
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`placement`**
+### **`placement`**
 
 ➤ Type: **`'top'` `'bottom'`** <br/>
 ➤ Default: **`'bottom'`** <br/>
 
 ---
 
-**`visible`**
+### **`visible`**
 
 ➤ Type: **`boolean`** <br/>
 
@@ -50,13 +52,14 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 ## Styles
 
-**`style`** to the main element.
+### **`style`**
+To the main element.
 
 ---
 
 ## Events
 
-**`onClose`**
+### **`onClose`**
 
 ➤ Type: **`Function(Event)`** <br/>
 

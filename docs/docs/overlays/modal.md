@@ -68,7 +68,7 @@ function Home() {
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`halign`**
+### **`halign`**
 
 Horizontal alignment.
 
@@ -77,7 +77,7 @@ Horizontal alignment.
 
 ---
 
-**`valign`**
+### **`valign`**
 
 Vertical alignment.
 
@@ -86,25 +86,20 @@ Vertical alignment.
 
 ---
 
-**`visible`**
+### **`visible`**
 
 ➤ Type: **`boolean`** <br/>
 
----
-
 ## Styles
 
-**`style`** to the main element.
-
----
+### **`style`**
+To the main element.
 
 ## Events
 
-**`onBackdropPress`**
+### **`onBackdropPress`**
 
 ➤ Type: **`Function(Event)`** <br/>
-
----
 
 ## Theming
 

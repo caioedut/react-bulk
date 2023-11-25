@@ -53,14 +53,14 @@ function App() {
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`color`**
+### **`color`**
 
 ➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`'primary'`**
 
 ---
 
-**`label`**
+### **`label`**
 
 - `true` (default): display progress percent label.
 - `false`: don't display any label.
@@ -71,27 +71,28 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 ---
 
-**`size`**
+### **`size`**
 
 ➤ Type: **`number` `'xsmall'` `'small'` `'medium'` `'large'` `'xlarge'`** <br/>
 ➤ Default: **`'medium'`** <br/>
 
 ---
 
-**`value`**
+### **`value`**
 
 Current progress percentage.
 
 ➤ Type: **`number`** <br/>
 
----
-
 ## Styles
 
-**`style`** to the main element.
+### **`style`**
+To the main element.
 
-**`barStyle`** to the completion bar.
+### **`barStyle`**
+To the completion bar.
 
-**`labelStyle`** to the percentage label.
+### **`labelStyle`**
+To the percentage label.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>

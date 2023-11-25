@@ -78,13 +78,11 @@ Default breakpoints: **`xs` `sm` `md` `lg` `xl` `xxl`**
 ➤ Type: **`number` `boolean` `'auto'` `'flex'` `'hide'`** <br/>
 ➤ Default: **`'auto'`** <br/>
 
----
-
 ## Props
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`breakpoints`**
+### **`breakpoints`**
 
 An option to override [Layout Breakpoints](/docs/layout/breakpoints/#default) for a single `Grid`.
 
@@ -103,14 +101,14 @@ An option to override [Layout Breakpoints](/docs/layout/breakpoints/#default) fo
 
 ---
 
-**`direction`**
+### **`direction`**
 
 ➤ Type: **`'row'` `'column'` `'row-reverse'` `'column-reverse'`** <br/>
 ➤ Default: **`'row'`** <br/>
 
 ---
 
-**`gap`**
+### **`gap`**
 
 Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.shape.spacing` value.
 
@@ -119,19 +117,9 @@ Spacing (horizontal and vertical) between children. The set value will be multip
 
 ---
 
-**`size`**
+### **`size`**
 
 Number of columns.
 
 ➤ Type: **`number`** <br/>
 ➤ Default: **`12`** <br/>
-
----
-
-## Styles
-
-**`style`** to the main element.
-
-➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
-
----

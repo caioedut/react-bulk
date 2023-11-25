@@ -62,7 +62,7 @@ function Home () {
 
 Extends all [`Text`](/docs/core/text#props) props.
 
-**`for`**
+### **`for`**
 
 Commonly used fo Web.
 
@@ -70,7 +70,7 @@ Commonly used fo Web.
 
 ---
 
-**`forRef`**
+### **`forRef`**
 
 Commonly used fo Native.
 
@@ -80,7 +80,8 @@ Commonly used fo Native.
 
 ## Styles
 
-**`style`** to the main element.
+### **`style`**
+To the main element.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 

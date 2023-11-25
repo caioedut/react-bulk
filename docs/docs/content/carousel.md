@@ -35,7 +35,7 @@ import { Carousel } from '@react-bulk/web'; // OR @react-bulk/native
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`chevron`**
+### **`chevron`**
 
 `auto` is not supported on native.
 
@@ -43,14 +43,14 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 ---
 
-**`color`**
+### **`color`**
 
 ➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`primary`**
 
 ---
 
-**`gap`**
+### **`gap`**
 
 Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.typography.spacing` value.
 
@@ -58,7 +58,7 @@ Spacing (horizontal and vertical) between children. The set value will be multip
 
 ---
 
-**`pagingEnabled`**
+### **`pagingEnabled`**
 
 ➤ Type: **`boolean`** <br/>
 
@@ -66,7 +66,7 @@ Spacing (horizontal and vertical) between children. The set value will be multip
 
 ## Breakpoints
 
-**`xs`**
+### **`xs`**
 
 Number of items shown at breakpoint `xs`.
 
@@ -74,7 +74,7 @@ Number of items shown at breakpoint `xs`.
 
 ---
 
-**`sm`**
+### **`sm`**
 
 Number of items shown at breakpoint `sm`.
 
@@ -82,7 +82,7 @@ Number of items shown at breakpoint `sm`.
 
 ---
 
-**`md`**
+### **`md`**
 
 Number of items shown at breakpoint `md`.
 
@@ -90,7 +90,7 @@ Number of items shown at breakpoint `md`.
 
 ---
 
-**`lg`**
+### **`lg`**
 
 Number of items shown at breakpoint `lg`.
 
@@ -98,7 +98,7 @@ Number of items shown at breakpoint `lg`.
 
 ---
 
-**`xl`**
+### **`xl`**
 
 Number of items shown at breakpoint `xl`.
 
@@ -108,9 +108,11 @@ Number of items shown at breakpoint `xl`.
 
 ## Styles
 
-**`style`** to the main element.
+### **`style`**
+To the main element.
 
-**`chevronStyle`** to the chevrons.
+### **`chevronStyle`**
+To the chevrons.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
