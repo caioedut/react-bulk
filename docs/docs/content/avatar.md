@@ -38,16 +38,18 @@ import { Avatar } from '@react-bulk/web'; // OR @react-bulk/native
 ```jsx live
 <Grid gap>
   <Box>
-    <Avatar color="primary" placeholder={<Text size={2} color="white">AB</Text>}  />
+    <Avatar color="primary" placeholder={<Text variant="title" color="white">AB</Text>}  />
   </Box>
   <Box>
-    <Avatar color="secondary" placeholder={<Text size={2} color="white">CD</Text>}  />
+    <Avatar color="secondary" placeholder={<Text variant="title" color="white">CD</Text>}  />
   </Box>
-  <Avatar source="https://i.imgur.com/HdIl3Ef.png">
-     <Button circular color="secondary" position="absolute" b={0} r={0}>
-        ↺
-     </Button>
-  </Avatar>
+  <Box>
+    <Avatar source="https://i.imgur.com/HdIl3Ef.png">
+       <Button circular color="secondary" position="absolute" b={0} r={0}>
+          ↺
+       </Button>
+    </Avatar>
+  </Box>
 </Grid>
 ```
 
