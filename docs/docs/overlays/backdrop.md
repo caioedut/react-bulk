@@ -40,21 +40,18 @@ function Home() {
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`visible`**
+### **`visible`**
 
 ➤ Type: **`boolean`** <br/>
 
----
-
 ## Styles
 
-**`style`** to the main element.
-
----
+### **`style`**
+To the main element.
 
 ## Events
 
-**`onPress`**
+### **`onPress`**
 
 When the backdrop is pressed directly. Children do not fire it.
 

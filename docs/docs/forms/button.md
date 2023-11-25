@@ -104,7 +104,7 @@ function Home() {
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`autoFocus`**
+### **`autoFocus`**
 
 If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
@@ -112,7 +112,7 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 ---
 
-**`badge`**
+### **`badge`**
 
 A number or object representing the button's badge.
 
@@ -120,7 +120,7 @@ A number or object representing the button's badge.
 
 ---
 
-**`circular`**
+### **`circular`**
 
 Indicates whether the button is circular.
 
@@ -128,14 +128,14 @@ Indicates whether the button is circular.
 
 ---
 
-**`color`**
+### **`color`**
 
 ➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`primary`**
 
 ---
 
-**`contrastColor`**
+### **`contrastColor`**
 
 A color to use on labels and addons to contrast with the color of the button.
 
@@ -143,7 +143,7 @@ A color to use on labels and addons to contrast with the color of the button.
 
 ---
 
-**`disabled`**
+### **`disabled`**
 
 Indicates whether the button is disabled.
 
@@ -151,7 +151,7 @@ Indicates whether the button is disabled.
 
 ---
 
-**`endAddon`**
+### **`endAddon`**
 
 A React element that is added to the end of the button.
 
@@ -159,7 +159,7 @@ A React element that is added to the end of the button.
 
 ---
 
-**`href`**
+### **`href`**
 
 For web only.<br/>
 The URL to which the button should redirect when clicked.
@@ -168,7 +168,7 @@ The URL to which the button should redirect when clicked.
 
 ---
 
-**`label`**
+### **`label`**
 
 Render text label as child.
 
@@ -176,7 +176,7 @@ Render text label as child.
 
 ---
 
-**`loading`**
+### **`loading`**
 
 Indicates whether the button is loading.
 
@@ -184,14 +184,14 @@ Indicates whether the button is loading.
 
 ---
 
-**`size`**
+### **`size`**
 
 ➤ Type: **`'small'` `'medium'` `'large'` `'xlarge'`** <br/>
 ➤ Default: **`medium`**
 
 ---
 
-**`startAddon`**
+### **`startAddon`**
 
 A React element that is added to the start of the button.
 
@@ -199,7 +199,7 @@ A React element that is added to the start of the button.
 
 ---
 
-**`transform`**
+### **`transform`**
 
 The text transform value of the label.
 
@@ -208,55 +208,58 @@ The text transform value of the label.
 
 ---
 
-**`type`**
+### **`type`**
 
 ➤ Type: **`'button'` `'submit'` `'cancel'` `'clear'`** <br/>
 ➤ Default: **`button`**
 
 ---
 
-**`variant`**
+### **`variant`**
 
 ➤ Type: **`'solid'` `'outline'` `'text'`** <br/>
 ➤ Default: **`solid`**
 
 ## Styles
 
-**`style`** to the button element.
+### **`style`**
+To the button element.
 
-**`contentStyle`** to the inner wrapper of `children` or `label`.
+### **`contentStyle`**
+To the inner wrapper of `children` or `label`.
 
-**`labelStyle`** to the label of the button.
+### **`labelStyle`**
+To the label of the button.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ## Events
 
-**`onBlur`**
+### **`onBlur`**
 
 ➤ Type: **`Function(Event)`** <br/>
 
 ---
 
-**`onFocus`**
+### **`onFocus`**
 
 ➤ Type: **`Function(Event)`** <br/>
 
 ---
 
-**`onPress`**
+### **`onPress`**
 
 ➤ Type: **`Function(Event)`** <br/>
 
 ---
 
-**`onPressIn`**
+### **`onPressIn`**
 
 ➤ Type: **`Function(Event)`** <br/>
 
 ---
 
-**`onPressOut`**
+### **`onPressOut`**
 
 ➤ Type: **`Function(Event)`** <br/>
 

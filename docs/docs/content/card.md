@@ -33,7 +33,7 @@ Using prop `shadow`.
 ### Composition
 
 ```jsx live
-<Card  shadow={2} maxw={240} mx="auto" >
+<Card shadow={2} maxw={240} mx="auto">
   <Text variant="caption" color="text.secondary">
     Lib of the Year ⭐
   </Text>
@@ -56,7 +56,7 @@ Using prop `shadow`.
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`corners`**
+### **`corners`**
 
 Sets `borderRadius` style. The set value will be multiplied by the `theme.shape.borderRadius` value.
 
@@ -67,7 +67,8 @@ Sets `borderRadius` style. The set value will be multiplied by the `theme.shape.
 
 ## Styles
 
-**`style`** to the main element.
+### **`style`**
+To the main element.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 

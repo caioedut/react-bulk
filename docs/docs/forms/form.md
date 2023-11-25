@@ -43,7 +43,7 @@ function Home() {
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`data`**
+### **`data`**
 
 Fill inputs with these values.
 
@@ -53,31 +53,31 @@ Fill inputs with these values.
 
 ## Events
 
-**`onSubmit`**
+### **`onSubmit`**
 
 ➤ Type: **`Function(FormRef, data)`** <br/>
 
 ---
 
-**`onCancel`**
+### **`onCancel`**
 
 ➤ Type: **`Function(FormRef)`** <br/>
 
 ---
 
-**`onClear`**
+### **`onClear`**
 
 ➤ Type: **`Function(FormRef, data)`** <br/>
 
 ## Reference
 
-**target : `ReactNode`**
+### **target : `ReactNode`**
 
 `ref.current.target`
 
 ---
 
-**submit()**
+### **submit()**
 
 Dispatch `onSubmit` handler.
 
@@ -85,7 +85,7 @@ Dispatch `onSubmit` handler.
 
 ---
 
-**cancel()**
+### **cancel()**
 
 Dispatch `onCancel` handler.
 
@@ -93,7 +93,7 @@ Dispatch `onCancel` handler.
 
 ---
 
-**clear()**
+### **clear()**
 
 Reset fields and dispatch `onClear` handler.
 
@@ -101,31 +101,31 @@ Reset fields and dispatch `onClear` handler.
 
 ---
 
-**getData() : `object`**
+### **getData() : `object`**
 
 `ref.current.getData()`
 
 ---
 
-**setData(data: `object`)**
+### **setData(data: `object`)**
 
 `ref.current.setData({ age: 21 })`
 
 ---
 
-**setErrors(errors: `object`)**
+### **setErrors(errors: `object`)**
 
 `ref.current.setErrors({ age: 'Type your age' })`
 
 ---
 
-**getValue(name: `string`) : `any`**
+### **getValue(name: `string`) : `any`**
 
 `ref.current.getValue('age')`
 
 ---
 
-**setValue(name: `string`, value: `any`)**
+### **setValue(name: `string`, value: `any`)**
 
 Update input value and dispatch `onChange` event.
 
@@ -133,7 +133,7 @@ Update input value and dispatch `onChange` event.
 
 ---
 
-**getField(name: `string`) : `{ name: string, get: Function, set: Function }`**
+### **getField(name: `string`) : `{ name: string, get: Function, set: Function }`**
 
 Commonly used by libraries that implements some components. Maybe you are looking for [`getValue`](#getValue).
 
@@ -141,7 +141,7 @@ Commonly used by libraries that implements some components. Maybe you are lookin
 
 ---
 
-**setField(data: `object`)**
+### **setField(data: `object`)**
 
 Commonly used by libraries that implements some components. Maybe you are looking for [`setValue`](#setValue).
 
@@ -159,7 +159,7 @@ ref.current.setField({
 
 ---
 
-**unsetField(name: `string`)**
+### **unsetField(name: `string`)**
 
 Commonly used by libraries that implements some components. Remove the field from `Form` track.
 

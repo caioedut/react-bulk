@@ -41,14 +41,14 @@ function Home() {
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`placement`**
+### **`placement`**
 
 ➤ Type: **`'right'` `'left'` `'top'` `'bottom'`** <br/>
 ➤ Default: **`'right'`** <br/>
 
 ---
 
-**`visible`**
+### **`visible`**
 
 ➤ Type: **`boolean`** <br/>
 
@@ -56,14 +56,17 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 ## Styles
 
-**`style`** to the main element.
-**`backdropStyle`** to the backdrop element.
+### **`style`**
+To the main element.
+
+### **`backdropStyle`**
+To the backdrop element.
 
 ---
 
 ## Events
 
-**`onBackdropPress`**
+### **`onBackdropPress`**
 
 ➤ Type: **`Function(Event)`** <br/>
 

@@ -84,26 +84,26 @@ import { Tooltip } from '@react-bulk/web'; // OR @react-bulk/native
 
 Extends all [`Text`](/docs/core/text#props) props.
 
-**`color`**
+### **`color`**
 
 ➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`black`** <br/>
 
 ---
 
-**`position`**
+### **`position`**
 
 ➤ Type: **`'top'` `'bottom'` `'left'` `'right'`** <br/>
 
 ---
 
-**`title`**
+### **`title`**
 
 ➤ Type: **`string`** <br/>
 
 ---
 
-**`visible`**
+### **`visible`**
 
 ➤ Type: **`boolean`** <br/>
 
@@ -111,7 +111,8 @@ Extends all [`Text`](/docs/core/text#props) props.
 
 ## Styles
 
-**`style`** to the main element.
+### **`style`**
+To the main element.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 

@@ -48,32 +48,32 @@ import { Image } from '@react-bulk/web'; // OR @react-bulk/native
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`alt`**
+### **`alt`**
 
 ➤ Type: **`string`** <br/>
 
 ---
 
-**`height`** or **`h`**
+### **`height`** or **`h`**
 
 ➤ Type: **`number` `string`** <br/>
 
 ---
 
-**`circular`**
+### **`circular`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`mode`**
+### **`mode`**
 
 ➤ Type: **`'cover'` `'contain'` `'fill'`** <br/>
 ➤ Default: **`'cover'`** <br/>
 
 ---
 
-**`source`**
+### **`source`**
 
 URL or Source of the image.
 
@@ -81,27 +81,25 @@ URL or Source of the image.
 
 ---
 
-**`width`** or **`w`**
+### **`width`** or **`w`**
 
 ➤ Type: **`number` `string`** <br/>
 
----
 
 ## Styles
 
-**`style`** to the main element.
-
----
+### **`style`**
+To the main element.
 
 ## Events
 
-**`onLoad`**
+### **`onLoad`**
 
 ➤ Type: **`Function(Event)`** <br/>
 
 ---
 
-**`onError`**
+### **`onError`**
 
 ➤ Type: **`Function(Event)`** <br/>
 

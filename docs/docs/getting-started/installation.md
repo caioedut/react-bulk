@@ -9,7 +9,7 @@ Start by adding **React Bulk** as a dependency:
 ## React Web
 
 ```bash
-yarn add react react-dom @react-bulk/core @react-bulk/web
+yarn add react-dom @react-bulk/core @react-bulk/web
 ```
 
 :::note

@@ -91,21 +91,21 @@ function App() {
 
 Extends all [`Scrollable`](/docs/core/scrollable#props) props.
 
-**`color`**
+### **`color`**
 
 ➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`primary`**
 
 ---
 
-**`size`**
+### **`size`**
 
 ➤ Type: **`'small'` `'medium'` `'large'` `'xlarge'`** <br/>
 ➤ Default: **`medium`**
 
 ---
 
-**`tabs`**
+### **`tabs`**
 
 ➤ Type: **`Array<RbkTab>`** <br/>
 
@@ -118,36 +118,36 @@ Extends all [`Scrollable`](/docs/core/scrollable#props) props.
 
 ---
 
-**`value`**
+### **`value`**
 
 ➤ Type: **`string` `number`** <br/>
 
 ---
 
-**`variant`**
+### **`variant`**
 
 ➤ Type: **`'group'` `'card'`** <br/>
 ➤ Default: **`group`**
 
----
-
 ## Styles
 
-**`style`** to the main element.
+### **`style`**
+To the main element.
 
-**`contentStyle`** to the inner wrapper.
+### **`contentStyle`**
+To the inner wrapper.
 
-**`buttonStyle`** to the tabs buttons.
+### **`buttonStyle`**
+To the tabs buttons.
 
-**`activeStyle`** to the active tab button.
+### **`activeStyle`**
+To the active tab button.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
----
-
 ## Events
 
-**`onChange`**
+### **`onChange`**
 
 ➤ Type: **`function onChange(event: Event, newValue: string | number)`** <br/>
 

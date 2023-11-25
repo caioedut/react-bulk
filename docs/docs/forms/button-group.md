@@ -92,27 +92,27 @@ import { ButtonGroup } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Props
 
-**`color`**
+### **`color`**
 
 ➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
 ➤ Default: **`primary`**
 
 ---
 
-**`disabled`**
+### **`disabled`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`size`**
+### **`size`**
 
 ➤ Type: **`'small'` `'medium'` `'large'` `'xlarge'`** <br/>
 ➤ Default: **`medium`**
 
 ---
 
-**`variant`**
+### **`variant`**
 
 ➤ Type: **`'solid'` `'outline'` `'text'`** <br/>
 ➤ Default: **`solid`**
@@ -121,6 +121,8 @@ import { ButtonGroup } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Styles
 
-**`style`** to the outer wrapper element ([Scrollable](/docs/core/scrollable)).
+### **`style`**
+To the outer wrapper element ([Scrollable](/docs/core/scrollable)).
 
-**`contentStyle`** to the inner wrapper.
+### **`contentStyle`**
+To the inner wrapper.

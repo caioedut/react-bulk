@@ -54,44 +54,44 @@ import { Badge } from '@react-bulk/web'; // OR @react-bulk/native
 
 Extends all [`Text`](/docs/core/box/text#props) props.
 
-**`bottom`**
+### **`bottom`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`dot`**
+### **`dot`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`left`**
+### **`left`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`right`**
+### **`right`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`size`**
+### **`size`**
 
 ➤ Type: **`'small'` `'medium'` `'large'`** <br/>
 ➤ Default: **`'medium'`** <br/>
 
 ---
 
-**`top`**
+### **`top`**
 
 ➤ Type: **`boolean`** <br/>
 
 ---
 
-**`value`**
+### **`value`**
 
 ➤ Type: **`boolean`** <br/>
 
@@ -99,9 +99,11 @@ Extends all [`Text`](/docs/core/box/text#props) props.
 
 ## Styles
 
-**`style`** to the main element.
+### **`style`**
+To the main element.
 
-**`labelStyle`** to the text element.
+### **`labelStyle`**
+To the text element.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 

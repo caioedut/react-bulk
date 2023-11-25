@@ -34,7 +34,7 @@ function Home() {
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-**`visible`**
+### **`visible`**
 
 ➤ Type: **`boolean`** <br/>
 
@@ -42,7 +42,8 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 ## Styles
 
-**`style`** to the main element.
+### **`style`**
+To the main element.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
