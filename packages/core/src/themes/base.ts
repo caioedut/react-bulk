@@ -873,6 +873,13 @@ const base: ThemeProps = {
           },
         },
       },
+      List: {
+        name: 'rbk-list',
+        defaultProps: {},
+        defaultStyles: {
+          root: {},
+        },
+      },
       ListItem: {
         name: 'rbk-list-item',
         defaultProps: {

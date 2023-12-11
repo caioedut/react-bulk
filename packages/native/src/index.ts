@@ -38,6 +38,7 @@ import ReactBulk, {
   InputFactory,
   LabelFactory,
   LinkFactory,
+  ListFactory,
   ListItemFactory,
   LoadingFactory,
   ModalFactory,
@@ -155,6 +156,7 @@ export const Image = ImageFactory;
 export const Input = InputFactory;
 export const Label = LabelFactory;
 export const Link = LinkFactory;
+export const List = ListFactory;
 export const ListItem = ListItemFactory;
 export const Loading = LoadingFactory;
 export const Modal = ModalFactory;

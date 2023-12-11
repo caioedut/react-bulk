@@ -123,6 +123,8 @@ export { default as LabelFactory } from './factory/LabelFactory';
 /** @internal */
 export { default as LinkFactory } from './factory/LinkFactory';
 /** @internal */
+export { default as ListFactory } from './factory/ListFactory';
+/** @internal */
 export { default as ListItemFactory } from './factory/ListItemFactory';
 /** @internal */
 export { default as LoadingFactory } from './factory/LoadingFactory';

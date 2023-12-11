@@ -200,15 +200,15 @@ const ImageFactory = React.memo<ImageProps>(
 
       web && {
         objectFit: mode,
-        height: height ?? 0,
-        width: width ?? 0,
+        height: height ?? undefined,
+        width: width ?? undefined,
       },
 
       native && !isProcessed && { flex: 1 },
 
       native && {
-        height: isProcessed ? finalHeight : 0,
-        width: isProcessed ? finalWidth : 0,
+        height: isProcessed ? finalHeight : undefined,
+        width: isProcessed ? finalWidth : undefined,
       },
 
       circular && {
