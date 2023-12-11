@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, Ref, RefObject, SyntheticEvent } from 'react';
+import { CSSProperties, JSXElementConstructor, ReactNode, Ref, RefObject, SyntheticEvent } from 'react';
 
 import { styleProps } from './styles/constants';
 
@@ -492,6 +492,7 @@ export type ThemeProps = {
     Input: ThemeComponentProps<InputProps, 'root' | 'content' | 'label' | 'input' | 'hint' | 'error'>;
     Label: ThemeComponentProps<LabelProps, 'root'>;
     Link: ThemeComponentProps<LinkProps, 'root'>;
+    List: ThemeComponentProps<ListProps, 'root'>;
     ListItem: ThemeComponentProps<ListItemProps, 'root'>;
     Loading: ThemeComponentProps<LoadingProps, 'root' | 'label'>;
     Modal: ThemeComponentProps<ModalProps, 'root' | 'backdrop'>;
@@ -1077,6 +1078,14 @@ export type TerminalProps = PropsWithStyles<
     commands?: {
       [key: string]: string | (() => Promise<string | void>);
     }[];
+  }
+>;
+
+export type ListProps = PropsWithStyles<
+  ScrollableProps,
+  {
+    rowHeight?: number;
+    rowFallbackComponent?: JSXElementConstructor<any> | string;
   }
 >;
 
