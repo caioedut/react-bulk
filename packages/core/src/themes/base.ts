@@ -93,7 +93,7 @@ const base: ThemeProps = {
 
     scroll: {
       '&::-webkit-scrollbar': { height: '0.375rem', width: '0.375rem' },
-      '&::-webkit-scrollbar-track': { background: '#00000000' },
+      '&::-webkit-scrollbar-track': { background: '#0000000D' },
       '&::-webkit-scrollbar-corner': { background: '#00000000' },
       '&::-webkit-scrollbar-thumb': { bg: 'text.disabled', borderRadius: '0.1875rem' },
     },
@@ -1006,7 +1006,6 @@ const base: ThemeProps = {
             flexDirection: 'column',
             web: {
               display: 'flex',
-              overflow: 'hidden',
               overflowY: 'auto',
               scrollBehavior: 'smooth',
               ...this.mixins.scroll,

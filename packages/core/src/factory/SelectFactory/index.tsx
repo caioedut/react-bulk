@@ -24,8 +24,8 @@ import DropdownFactory from '../DropdownFactory';
 import { useForm } from '../FormFactory';
 import InputFactory from '../InputFactory';
 import LabelFactory from '../LabelFactory';
+import ListFactory from '../ListFactory';
 import LoadingFactory from '../LoadingFactory';
-import ScrollableFactory from '../ScrollableFactory';
 import TextFactory from '../TextFactory';
 
 const SelectFactory = React.memo<SelectProps>(
@@ -405,7 +405,14 @@ const SelectFactory = React.memo<SelectProps>(
                 />
               </BoxFactory>
             )}
-            <ScrollableFactory ref={scrollRef} contentInset={1} maxh={metrics?.maxHeight} maxw={metrics?.maxWidth}>
+            <ListFactory
+              ref={scrollRef}
+              key={`${metrics?.maxHeight ?? 0}${metrics?.maxWidth ?? 0}`}
+              rowHeight={baseSize}
+              contentInset={1}
+              maxh={metrics?.maxHeight ?? 0}
+              maxw={metrics?.maxWidth ?? 0}
+            >
               {filteredOptions.map((option, index) => {
                 const isSelected = option.value == selected?.value;
 
@@ -445,7 +452,7 @@ const SelectFactory = React.memo<SelectProps>(
                   </ButtonFactory>
                 );
               })}
-            </ScrollableFactory>
+            </ListFactory>
           </CardFactory>
         </DropdownFactory>
       </BoxFactory>
