@@ -106,7 +106,17 @@ const FormFactory = React.memo<FormProps>(
 
     const setData = useCallback(
       (data: any = {}) => {
-        Object.keys(Object(data)).forEach((attr) => getField(attr)?.set?.(data[attr]));
+        Object.keys(Object(data)).forEach((attr) => {
+          const field = getField(attr);
+
+          if (field) {
+            const value = data[attr];
+
+            if (value !== field.get()) {
+              field.set(value);
+            }
+          }
+        });
       },
       [getField],
     );
