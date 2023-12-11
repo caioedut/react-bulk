@@ -22,6 +22,7 @@ import {
   Grid,
   Image,
   Input,
+  List,
   ListItem,
   Loading,
   Modal,
@@ -79,6 +80,10 @@ export default function Main() {
 
       <Card mt={theme.shape.gap}>
         <TableExample />
+      </Card>
+
+      <Card mt={theme.shape.gap}>
+        <ListExample />
       </Card>
 
       <Card mt={theme.shape.gap}>
@@ -702,6 +707,29 @@ function TableExample() {
           },
         ]}
       />
+    </>
+  );
+}
+
+function ListExample() {
+  const theme = useTheme();
+
+  return (
+    <>
+      <Text variant="title" mb={theme.shape.gap}>
+        Lists
+      </Text>
+
+      <List h={240} border="primary">
+        <Text height={36} bg="background.secondary">
+          Header
+        </Text>
+        {Array.from({ length: 1000 }).map((_, index) => (
+          <Text key={index} height={18}>
+            Item Child {index + 1}
+          </Text>
+        ))}
+      </List>
     </>
   );
 }
