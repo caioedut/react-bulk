@@ -12,7 +12,7 @@ const DropdownFactory = React.memo<DropdownProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Dropdown;
-    const { native, useDimensions } = global.mapping;
+    const { useDimensions } = global.mapping;
 
     // Extends from default props
     const {
@@ -32,8 +32,6 @@ const DropdownFactory = React.memo<DropdownProps>(
 
     const [positions, setPositions] = useState({ top: 0, left: 0 });
 
-    const backdropProps = !native ? {} : { onRequestClose: onClose };
-
     useEffect(() => {
       if (!visible || !boxRef?.current) return;
 
@@ -49,7 +47,7 @@ const DropdownFactory = React.memo<DropdownProps>(
 
     return (
       <BoxFactory ref={boxRef}>
-        <BackdropFactory visible={visible} stylist={[variants.backdrop]} onPress={onClose} {...backdropProps}>
+        <BackdropFactory visible={visible} stylist={[variants.backdrop]} onPress={onClose}>
           <BoxFactory ref={ref} stylist={[variants.root, stylist]} style={[positions, style]} {...rest}>
             <BoxFactory position="absolute" l={0} style={placement === 'top' ? { bottom: 0 } : { top: 0 }}>
               {children}

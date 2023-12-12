@@ -115,8 +115,6 @@ const SelectFactory = React.memo<SelectProps>(
 
     accessibility = deepmerge({ label: label ?? placeholder }, accessibility, { state: { expanded: visible } });
 
-    const backdropProps = !native ? {} : { onRequestClose: () => setVisible(false) };
-
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
         xsmall: 1.25,
@@ -222,11 +220,11 @@ const SelectFactory = React.memo<SelectProps>(
       if (!visible || !selectedRef.current) return;
 
       setTimeout(() => {
-        scrollIntoView(scrollRef.current, selectedRef.current, true);
+        scrollIntoView(scrollRef.current, selectedRef.current, false);
       }, 100);
     }, [metrics?.maxHeight, visible]);
 
-    function optionFocus(index) {
+    function optionFocus(index: number) {
       if (index < 0 || index > filteredOptions.length - 1) {
         index = 0;
       }
@@ -400,12 +398,7 @@ const SelectFactory = React.memo<SelectProps>(
           />
         )}
 
-        <BackdropFactory
-          visible={visible}
-          style={{ bg: 'rgba(0, 0, 0, 0.2)' }}
-          onPress={() => setVisible(false)}
-          {...backdropProps}
-        >
+        <BackdropFactory visible={visible} style={{ bg: 'rgba(0, 0, 0, 0.2)' }} onPress={() => setVisible(false)}>
           <CardFactory position="absolute" p={0} style={[{ overflow: 'hidden' }, metrics]}>
             {hasSearch && (
               <BoxFactory p={1}>
