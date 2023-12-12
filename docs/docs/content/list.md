@@ -50,7 +50,7 @@ Extends all [`Scrollable`](/docs/core/scrollable#props) props.
 
 ### **`rowFallbackComponent`**
 
-➤ Type: **`'small'` `'medium'` `'large'` `'xlarge'`** <br/>
+➤ Type: **`string` `Component`** <br/>
 ➤ Default Web: **`'div'`** <br/>
 ➤ Default Native: **`View`** <br/>
 
