@@ -144,3 +144,22 @@ Combined with [Form](/docs/forms/form), triggers every time when form data chang
 Eg.: [Input](/docs/forms/input), [Select](/docs/forms/select), [Checkbox](/docs/forms/checkbox).
 
 ➤ Type: **`Function`([`RbkFormEvent`](/docs/type-reference/rbk-form-event))** <br/>
+
+## Theming
+
+See [`Theme`](/docs/layout/theme#props).
+
+```jsx
+const theme = {
+  components: {
+    DatePicker: {
+      defaultProps: {
+        /* ...props */
+      },
+      defaultStyles: {
+        root: { /* ...styles */ },
+      }
+    }
+  }
+}
+```
