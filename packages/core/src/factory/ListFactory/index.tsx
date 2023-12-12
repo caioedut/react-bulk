@@ -15,6 +15,7 @@ import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
 import { ListProps, ReactElement } from '../../types';
 import global from '../../utils/global';
+import sleep from '../../utils/sleep';
 import ScrollableFactory from '../ScrollableFactory';
 
 const ListFactory = React.memo<ListProps>(
@@ -25,6 +26,7 @@ const ListFactory = React.memo<ListProps>(
 
     // Extends from default props
     const {
+      renderDelay,
       rowHeight,
       rowFallbackComponent = View,
       // Events
@@ -66,9 +68,15 @@ const ListFactory = React.memo<ListProps>(
     useEffect(() => {
       if (!scrollRef.current) return;
 
-      rect(scrollRef.current).then(({ height }) => {
+      (async () => {
+        if (renderDelay) {
+          await sleep(renderDelay);
+        }
+
+        const { height } = await rect(scrollRef.current);
+
         render({ clientHeight: height });
-      });
+      })();
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [scrollRef, childrenArray.length]);

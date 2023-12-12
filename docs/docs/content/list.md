@@ -2,7 +2,6 @@
 
 Used to display virtual list, rendering items on-demand.
 
-
 ## Import
 
 ```jsx
@@ -41,6 +40,14 @@ import { List } from '@react-bulk/web'; // OR @react-bulk/native
 ## Props
 
 Extends all [`Scrollable`](/docs/core/scrollable#props) props.
+
+### **`renderDelay`**
+
+Delay in milliseconds for rendering children after component mounting.
+
+➤ Type: **`number`** <br/>
+
+---
 
 ### **`rowHeight`**
 
