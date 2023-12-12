@@ -55,6 +55,7 @@ const InputFactory = React.memo<InputProps>(
       rows,
       secure,
       selectionColor,
+      selectTextOnFocus,
       size,
       startAddon,
       startIcon,
@@ -208,6 +209,8 @@ const InputFactory = React.memo<InputProps>(
         returnKeyType: returnKeyType === 'default' ? 'done' : returnKeyType,
         secureTextEntry: type === 'password' || secure,
         selectionColor,
+        selectTextOnFocus,
+        cursorColor: selectionColor,
         underlineColorAndroid: 'transparent',
         keyboardType: pick(type, 'text', {
           text: 'default',
@@ -325,6 +328,11 @@ const InputFactory = React.memo<InputProps>(
 
     const handleFocus = (event) => {
       setFocused(true);
+
+      if (web && selectTextOnFocus) {
+        inputRef.current?.select();
+      }
+
       dispatchEvent('focus', internal, event, onFocus);
     };
 

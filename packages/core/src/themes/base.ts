@@ -840,6 +840,13 @@ const base: ThemeProps = {
               },
             },
           },
+          multiline: {
+            true: {
+              input: {
+                textAlignVertical: 'top',
+              },
+            },
+          },
         },
       },
       Label: {

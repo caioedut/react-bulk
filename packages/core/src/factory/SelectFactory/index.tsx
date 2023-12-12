@@ -234,6 +234,8 @@ const SelectFactory = React.memo<SelectProps>(
     }
 
     const handleOpen = async () => {
+      if (!buttonRef.current) return;
+
       optionFocus(arrOptions?.findIndex((item) => item.value == internal));
 
       const { pageOffsetX, pageOffsetY, width, height } = await rect(buttonRef.current);
