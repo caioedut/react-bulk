@@ -687,6 +687,7 @@ export type InputProps = PropsWithStyles<
     returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
     rows?: number;
     selectionColor?: RbkColor;
+    selectTextOnFocus?: boolean;
     size?: RbkSize;
     startAddon?: ReactElement;
     textColor?: RbkColor;

@@ -21,7 +21,7 @@ function Home() {
       <Button onPress={() => setVisible(true)}>
         Open Dropdown
       </Button>
-      <Dropdown visible={visible} onClose={() => setVisible(false)}>
+      <Dropdown visible={visible} w={400} onClose={() => setVisible(false)}>
         <Card>
           <Text>Dropdown is amazing!</Text>
         </Card>
