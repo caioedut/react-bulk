@@ -2,7 +2,6 @@ import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } 
 
 import rect from '../../element/rect';
 import scrollIntoView from '../../element/scrollIntoView';
-import useDeferredValue from '../../hooks/useDeferredValue';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
@@ -11,16 +10,15 @@ import ChevronUp from '../../icons/ChevronUp';
 import MagnifyingGlass from '../../icons/MagnifyingGlass';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
-import only from '../../props/only';
 import { spacings } from '../../styles/jss';
 import { AnyObject, InputValue, RbkInputEvent, RequiredSome, SelectOption, SelectProps } from '../../types';
 import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
+import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import CardFactory from '../CardFactory';
-import DropdownFactory from '../DropdownFactory';
 import { useForm } from '../FormFactory';
 import InputFactory from '../InputFactory';
 import LabelFactory from '../LabelFactory';
@@ -81,12 +79,11 @@ const SelectFactory = React.memo<SelectProps>(
     const [initialValue] = useState(defaultValue);
     const [focused, setFocused] = useState(false);
     const [error, setError] = useState<SelectProps['error']>();
-    const [metrics, setMetrics] = useState<AnyObject>({ placement: 'bottom' });
+    const [metrics, setMetrics] = useState<AnyObject>({});
     const [visible, _setVisible] = useState(false);
     const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == initialValue));
 
     const [search, setSearch] = useState('');
-    const searchValue = useDeferredValue(search);
     const hasSearch = Number(arrOptions?.length ?? 0) >= searchCount;
 
     const [_internal, _setInternal] = useState(value ?? initialValue);
@@ -106,6 +103,7 @@ const SelectFactory = React.memo<SelectProps>(
     const setVisible = useCallback((value) => {
       _setVisible(value);
       setSearch('');
+
       if (!value) {
         setFocused(false);
       }
@@ -116,6 +114,8 @@ const SelectFactory = React.memo<SelectProps>(
     color = theme.color(error ? 'error' : color || 'primary');
 
     accessibility = deepmerge({ label: label ?? placeholder }, accessibility, { state: { expanded: visible } });
+
+    const backdropProps = !native ? {} : { onRequestClose: () => setVisible(false) };
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
@@ -144,13 +144,13 @@ const SelectFactory = React.memo<SelectProps>(
         return true;
       }
 
-      const search = `${searchValue ?? ''}`.trim();
+      const searchValue = `${search ?? ''}`.trim();
 
-      if (!search) {
+      if (!searchValue) {
         return true;
       }
 
-      return option.label.toLowerCase().includes(search.toLowerCase());
+      return option.label.toLowerCase().includes(searchValue.toLowerCase());
     });
 
     const dispatchEvent = useCallback(
@@ -238,15 +238,23 @@ const SelectFactory = React.memo<SelectProps>(
     const handleOpen = async () => {
       optionFocus(arrOptions?.findIndex((item) => item.value == internal));
 
-      const { pageOffsetY, height, width } = await rect(buttonRef.current);
+      const { pageOffsetX, pageOffsetY, width, height } = await rect(buttonRef.current);
 
-      const placement = pageOffsetY <= dimensions.height / 2 ? 'bottom' : 'top';
-      const marginBottom = placement === 'top' ? height : 0;
-      const maxWidth = dimensions.width;
-      const maxHeight = Math.min(theme.rem(20), dimensions.height - pageOffsetY);
+      const gutter = theme.spacing(3);
+      const newMetrics: AnyObject = { left: pageOffsetX, width };
 
-      setMetrics({ placement, width, maxHeight, maxWidth, marginBottom });
-      setVisible((current) => (readOnly ? false : !current));
+      if (pageOffsetY <= dimensions.height / 2) {
+        newMetrics.top = Math.max(gutter, pageOffsetY + height);
+      } else {
+        newMetrics.bottom = Math.max(gutter, dimensions.height - pageOffsetY);
+      }
+
+      const sub = (newMetrics.top || 0) + (newMetrics.bottom || 0);
+      newMetrics.maxHeight = Math.min(theme.rem(20), dimensions.height - gutter - sub);
+      newMetrics.maxWidth = dimensions.width - gutter * 2;
+
+      setMetrics(newMetrics);
+      setVisible((current: boolean) => (readOnly ? false : !current));
     };
 
     const handleChange = (event, value: InputValue) => {
@@ -392,14 +400,19 @@ const SelectFactory = React.memo<SelectProps>(
           />
         )}
 
-        <DropdownFactory visible={visible} onClose={() => setVisible(false)} placement={metrics.placement}>
-          <CardFactory p={0} style={[{ overflow: 'hidden' }, only(['width', 'marginBottom'], metrics)]}>
+        <BackdropFactory
+          visible={visible}
+          style={{ bg: 'rgba(0, 0, 0, 0.2)' }}
+          onPress={() => setVisible(false)}
+          {...backdropProps}
+        >
+          <CardFactory position="absolute" p={0} style={[{ overflow: 'hidden' }, metrics]}>
             {hasSearch && (
               <BoxFactory p={1}>
                 <InputFactory
                   color={color}
                   size={size}
-                  value={searchValue}
+                  value={search}
                   onChange={handleSearch}
                   startAddon={<MagnifyingGlass svg={svg} size={fontSize} color={color} />}
                 />
@@ -407,13 +420,13 @@ const SelectFactory = React.memo<SelectProps>(
             )}
             <ListFactory
               ref={scrollRef}
-              key={`${metrics?.maxHeight ?? 0}${metrics?.maxWidth ?? 0}`}
               rowHeight={baseSize}
+              renderDelay={10}
               contentInset={1}
               maxh={metrics?.maxHeight ?? 0}
               maxw={metrics?.maxWidth ?? 0}
             >
-              {filteredOptions.map((option, index) => {
+              {filteredOptions?.map((option, index) => {
                 const isSelected = option.value == selected?.value;
 
                 return (
@@ -454,7 +467,7 @@ const SelectFactory = React.memo<SelectProps>(
               })}
             </ListFactory>
           </CardFactory>
-        </DropdownFactory>
+        </BackdropFactory>
       </BoxFactory>
     );
   }),
