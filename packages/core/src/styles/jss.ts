@@ -14,6 +14,7 @@ export default function jss(...mixin: any[]) {
 
   const args = clone(mixin);
   const theme: ThemeProps = extract('theme', args).theme ?? global.theme ?? {};
+  const dimensions = global.mapping.dimensions.window();
 
   // Extract all web styles
   const webStyle: any = [];
@@ -95,7 +96,7 @@ export default function jss(...mixin: any[]) {
       value = parseFlexAlign(valueTrim);
     }
 
-    // Cast REM
+    // Cast unit: rem
     const remRegex = /([+-]?([0-9]*[.])?[0-9]+)rem/gi;
     if (remRegex.test(valueTrim)) {
       value = valueTrim.replace(remRegex, ($x, $1) => {
@@ -265,6 +266,26 @@ export default function jss(...mixin: any[]) {
     }
 
     if (native) {
+      // Cast unit: vw
+      const vwRegex = /([+-]?([0-9]*[.])?[0-9]+)vw/gi;
+      if (vwRegex.test(valueTrim)) {
+        value = valueTrim.replace(vwRegex, ($x, $1) => {
+          return `${$x ? (dimensions.width * $1) / 100 : 0}`;
+        });
+
+        value = parseUnit(value);
+      }
+
+      // Cast unit: vh
+      const vhRegex = /([+-]?([0-9]*[.])?[0-9]+)vh/gi;
+      if (vhRegex.test(valueTrim)) {
+        value = valueTrim.replace(vhRegex, ($x, $1) => {
+          return `${$x ? (dimensions.height * $1) / 100 : 0}`;
+        });
+
+        value = parseUnit(value);
+      }
+
       if (prop === 'inset') {
         const [v1, v2, v3, v4] = valueSplit;
 
