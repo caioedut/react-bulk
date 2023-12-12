@@ -391,6 +391,3 @@ Combined with [Form](/docs/forms/form), triggers every time when form data chang
 Eg.: [Input](/docs/forms/input), [Select](/docs/forms/select), [Checkbox](/docs/forms/checkbox).
 
 ➤ Type: **`Function`([`RbkFormEvent`](/docs/type-reference/rbk-form-event))** <br/>
-
----
-
