@@ -1084,6 +1084,7 @@ export type TerminalProps = PropsWithStyles<
 export type ListProps = PropsWithStyles<
   ScrollableProps,
   {
+    renderDelay?: number;
     rowHeight?: number;
     rowFallbackComponent?: JSXElementConstructor<any> | string;
   }
