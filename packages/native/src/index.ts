@@ -1,5 +1,6 @@
 import {
   Animated,
+  Dimensions,
   Easing,
   Platform,
   Image as RNImage,
@@ -87,6 +88,12 @@ global.mapping = {
   android: Platform.OS === 'android',
 
   useDimensions,
+
+  dimensions: {
+    window() {
+      return Dimensions.get('window');
+    },
+  },
 
   Button: TouchableOpacity,
   Dialog: RNModal,

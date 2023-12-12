@@ -178,6 +178,13 @@ export interface RbkMap {
     height: number;
   };
 
+  dimensions: {
+    window: () => {
+      width: number;
+      height: number;
+    };
+  };
+
   Animated: {
     View: ReactElement;
   };
