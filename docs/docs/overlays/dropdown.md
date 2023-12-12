@@ -31,8 +31,6 @@ function Home() {
 }
 ```
 
----
-
 ## Props
 
 Extends all [`Box`](/docs/core/box#props) props.
@@ -48,22 +46,16 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 ➤ Type: **`boolean`** <br/>
 
----
-
 ## Styles
 
 ### **`style`**
 To the main element.
-
----
 
 ## Events
 
 ### **`onClose`**
 
 ➤ Type: **`Function(Event)`** <br/>
-
----
 
 ## Theming
 
@@ -73,6 +65,9 @@ See [`Theme`](/docs/layout/theme#props).
 const theme = {
   components: {
     Dropdown: {
+      defaultProps: {
+        /* ...props */
+      },
       defaultStyles: {
         root: { /* ...styles */ },
         backdrop: { /* ...styles */ },
