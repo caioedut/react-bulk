@@ -413,54 +413,57 @@ const SelectFactory = React.memo<SelectProps>(
                 />
               </BoxFactory>
             )}
-            <ListFactory
-              ref={scrollRef}
-              rowHeight={baseSize}
-              renderDelay={10}
-              contentInset={1}
-              maxh={metrics?.maxHeight ?? 0}
-              maxw={metrics?.maxWidth ?? 0}
-            >
-              {filteredOptions?.map((option, index) => {
-                const isSelected = option.value == selected?.value;
 
-                return (
-                  <ButtonFactory
-                    key={option.value}
-                    size={size}
-                    variant="text"
-                    disabled={option.disabled}
-                    color={color}
-                    bg={isSelected ? theme.color(color, 0.1) : undefined}
-                    style={{ paddingHorizontal: spacing }}
-                    contentStyle={{ flex: 1, maxWidth: '100%' }}
-                    onPress={(e) => handleSelect(e, option)}
-                    endAddon={
-                      <BoxFactory w={fontSize} pl={1}>
-                        {isSelected && <Check svg={svg} size={fontSize} color={color} />}
-                      </BoxFactory>
-                    }
-                    ref={(el) => {
-                      optionsRef.current[index] = el;
+            {visible && (
+              <ListFactory
+                ref={scrollRef}
+                rowHeight={baseSize}
+                renderDelay={10}
+                contentInset={1}
+                maxh={metrics?.maxHeight ?? 0}
+                maxw={metrics?.maxWidth ?? 0}
+              >
+                {filteredOptions?.map((option, index) => {
+                  const isSelected = option.value == selected?.value;
 
-                      if (isSelected) {
-                        selectedRef.current = el;
+                  return (
+                    <ButtonFactory
+                      key={option.value}
+                      size={size}
+                      variant="text"
+                      disabled={option.disabled}
+                      color={color}
+                      bg={isSelected ? theme.color(color, 0.1) : undefined}
+                      style={{ paddingHorizontal: spacing }}
+                      contentStyle={{ flex: 1, maxWidth: '100%' }}
+                      onPress={(e) => handleSelect(e, option)}
+                      endAddon={
+                        <BoxFactory w={fontSize} pl={1}>
+                          {isSelected && <Check svg={svg} size={fontSize} color={color} />}
+                        </BoxFactory>
                       }
-                    }}
-                    platform={{
-                      web: {
-                        accessibility: {
-                          role: 'option',
-                          state: { selected: isSelected },
+                      ref={(el) => {
+                        optionsRef.current[index] = el;
+
+                        if (isSelected) {
+                          selectedRef.current = el;
+                        }
+                      }}
+                      platform={{
+                        web: {
+                          accessibility: {
+                            role: 'option',
+                            state: { selected: isSelected },
+                          },
                         },
-                      },
-                    }}
-                  >
-                    <TextFactory>{option.label}</TextFactory>
-                  </ButtonFactory>
-                );
-              })}
-            </ListFactory>
+                      }}
+                    >
+                      <TextFactory>{option.label}</TextFactory>
+                    </ButtonFactory>
+                  );
+                })}
+              </ListFactory>
+            )}
           </CardFactory>
         </BackdropFactory>
       </BoxFactory>
