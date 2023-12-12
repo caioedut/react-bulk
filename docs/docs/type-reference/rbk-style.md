@@ -11,14 +11,19 @@ The value can be a **single object** or an **array of** these types:
   h: number | string;
   w: number | string;
 
+  hh: number | string;
+  ww: number | string;
+
   minw: number | string;
   maxw: number | string;
 
   minh: number | string;
   maxh: number | string;
 
+  lh: number | string;
+
   bg: string;
-  border: string | number | boolean;
+  border: string | number | boolean | RbkColor;
   corners: number;
   shadow: number;
 

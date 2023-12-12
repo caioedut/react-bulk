@@ -425,6 +425,14 @@ Sets `height`, `minHeight` and `maxHeight` styles.
 
 ---
 
+### **`lh`**
+
+Sets `lineHeight` style.
+
+➤ Type: **`number` `string`** <br/>
+
+---
+
 ### **`maxh`**
 
 Sets `maxHeight` style.

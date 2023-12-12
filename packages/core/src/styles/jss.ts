@@ -114,6 +114,7 @@ export default function jss(...mixin: any[]) {
         maxh: 'maxHeight',
         minw: 'minWidth',
         minh: 'minHeight',
+        lh: 'lineHeight',
         bg: 'backgroundColor',
 
         // Flex Container

@@ -110,6 +110,7 @@ export const customStyleProps = [
   'corners',
   'direction',
   'h',
+  'lh',
   'maxh',
   'maxw',
   'minh',
