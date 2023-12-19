@@ -96,6 +96,8 @@ export const customSpacings = [
   'pb',
   'pl',
   'pr',
+  'ph',
+  'pv',
   'px',
   'py',
 ] as const;

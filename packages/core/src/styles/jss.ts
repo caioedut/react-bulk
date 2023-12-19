@@ -172,12 +172,12 @@ export default function jss(...mixin: any[]) {
           'inherit',
         ];
 
-        const sizeIndex = valueSplit.findIndex((item: string) => /^\d\w*$/.test(item));
-        // @ts-ignore
-        const borderWidth = sizeIndex >= 0 ? +valueSplit.splice(sizeIndex, 1).shift().replace(/\D/g, '') : 1;
-
         const styleIndex = valueSplit.findIndex((item: string) => types.includes(item));
         const borderStyle = styleIndex >= 0 ? valueSplit.splice(styleIndex, 1).shift() : 'solid';
+
+        const sizeIndex = valueSplit.findIndex((item: string) => /^\d\w*$/.test(item));
+        const borderWidth =
+          sizeIndex >= 0 ? Number(valueSplit.splice(sizeIndex, 1).shift()?.replace(/\D/g, '') ?? 1) : 1;
 
         const color = valueSplit?.shift()?.replace(/undefined|null|false|true/g, '');
         const borderColor = theme.color(color || theme.colors.common.black);
