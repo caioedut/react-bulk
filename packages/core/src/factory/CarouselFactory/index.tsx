@@ -98,8 +98,8 @@ const CarouselFactory = React.memo<CarouselProps>(
 
         offsetRef.current = scrollLeft;
 
-        setHasPrev(scrollLeft > 0);
-        setHasNext(scrollOverflowWidth > scrollLeft);
+        setHasPrev(scrollLeft - 10 > 0);
+        setHasNext(scrollOverflowWidth > scrollLeft + 10);
       },
       [contentRef],
     );
