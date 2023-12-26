@@ -118,6 +118,9 @@ Number of items shown at breakpoint `xl`.
 ### **`style`**
 To the main element.
 
+### **`itemStyle`**
+To each child element.
+
 ### **`chevronStyle`**
 To the chevrons.
 
