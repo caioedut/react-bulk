@@ -810,7 +810,7 @@ export type CarouselProps = PropsWithStyles<{
   color?: RbkColor;
   gap?: number | true;
   pagingEnabled?: boolean;
-  swipe?: false;
+  pointerScroll?: boolean;
   // Column Count
   xs?: number;
   sm?: number;

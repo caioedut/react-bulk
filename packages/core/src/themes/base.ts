@@ -572,7 +572,7 @@ const base: ThemeProps = {
           color: 'primary',
           gap: 0,
           pagingEnabled: true,
-          swipe: false,
+          pointerScroll: true,
           xs: 1,
           chevronStyle: { px: 0 },
         },
