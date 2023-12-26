@@ -69,6 +69,7 @@ Spacing (horizontal and vertical) between children. The set value will be multip
 Enable/disable pointer scroll event (eg.: mouse wheel).
 
 ➤ Type: **`boolean`** <br/>
+➤ Default: **`true`** <br/>
 
 ## Breakpoints
 
