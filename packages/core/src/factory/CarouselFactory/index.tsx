@@ -39,6 +39,7 @@ const CarouselFactory = React.memo<CarouselProps>(
       xl,
       // Styles
       variants,
+      itemStyle,
       chevronStyle,
       style,
       ...rest
@@ -142,13 +143,17 @@ const CarouselFactory = React.memo<CarouselProps>(
     }
 
     const base = contentWidth ?? 100;
-    const itemStyle = {
-      xs: { width: base / xs },
-      sm: { width: base / (sm ?? xs) },
-      md: { width: base / (md ?? sm ?? xs) },
-      lg: { width: base / (lg ?? md ?? sm ?? xs) },
-      xl: { width: base / (xl ?? lg ?? md ?? sm ?? xs) },
-    };
+
+    itemStyle = [
+      itemStyle,
+      {
+        xs: { width: base / xs },
+        sm: { width: base / (sm ?? xs) },
+        md: { width: base / (md ?? sm ?? xs) },
+        lg: { width: base / (lg ?? md ?? sm ?? xs) },
+        xl: { width: base / (xl ?? lg ?? md ?? sm ?? xs) },
+      },
+    ];
 
     const chevronProps = {
       color: theme.color(color),

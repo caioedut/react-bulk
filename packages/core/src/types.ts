@@ -818,6 +818,7 @@ export type CarouselProps = PropsWithStyles<{
   lg?: number;
   xl?: number;
   // Styles
+  itemStyle?: RbkStyle;
   chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;
 }>;
 
