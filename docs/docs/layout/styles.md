@@ -4,9 +4,26 @@ sidebar_position: 1
 
 # Styles
 
+## Nested
+
+Use `&` combined with the CSS selector to style it however you want. It only works on the **web**.
+
+```jsx live
+<Box
+  style={{
+    '& small': {
+      fontSize: 12
+    }
+  }}
+>
+  Hello
+  <small>World!</small>
+</Box>
+```
+
 ## Pseudo-classes
 
-Use `&` combined with the pseudo-class (like `:hover`) to style it however you want. It only works on the web.
+Use `&` combined with the pseudo-class (like `:hover`) to style it however you want. It only works on the **web**.
 
 ### Hover
 
@@ -14,7 +31,7 @@ Use `&` combined with the pseudo-class (like `:hover`) to style it however you w
 <Box
   style={{
     '&:hover': {
-      backgroundColor: '#DDDDDD'
+      backgroundColor: '#CCCCCC'
     }
   }}
 >
