@@ -30,7 +30,7 @@ const CarouselFactory = React.memo<CarouselProps>(
       color,
       gap,
       pagingEnabled,
-      swipe,
+      pointerScroll,
       // Column Count
       xs,
       sm,
@@ -42,7 +42,7 @@ const CarouselFactory = React.memo<CarouselProps>(
       chevronStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<CarouselProps, 'chevron' | 'color' | 'gap' | 'pagingEnabled' | 'swipe' | 'xs'>>(
+    } = factory2<RequiredSome<CarouselProps, 'chevron' | 'color' | 'gap' | 'pagingEnabled' | 'pointerScroll' | 'xs'>>(
       props,
       options,
     );
@@ -101,13 +101,13 @@ const CarouselFactory = React.memo<CarouselProps>(
         setHasPrev(scrollLeft > 0);
         setHasNext(scrollOverflowWidth > scrollLeft);
       },
-      [contentRef, native, web],
+      [contentRef],
     );
 
     useLayoutEffect(() => {
       if (!web || !contentRef.current) return;
       setContentWidth(contentRef.current.clientWidth);
-    }, [dimensions.width, web]);
+    }, [dimensions.width]);
 
     useEffect(() => {
       if (!contentRef.current || !contentWidth) return;
@@ -119,7 +119,7 @@ const CarouselFactory = React.memo<CarouselProps>(
     }, [contentRef, contentWidth]);
 
     useEffect(() => {
-      if (!web || !contentRef.current) return;
+      if (!web || !pointerScroll || !contentRef.current) return;
 
       return event(contentRef.current, 'wheel', (e) => {
         if (e.deltaY > 0 && hasNext) {
@@ -132,7 +132,7 @@ const CarouselFactory = React.memo<CarouselProps>(
           scrollToPrev();
         }
       });
-    }, [contentRef, hasPrev, hasNext, web, scrollToNext, scrollToPrev]);
+    }, [contentRef, hasPrev, hasNext, scrollToNext, scrollToPrev, pointerScroll]);
 
     if (native) {
       Object.assign(rest, {
