@@ -74,6 +74,7 @@ export { default as css } from './styles/css';
 export { default as createTheme } from './createTheme';
 export { default as createStyle } from './createStyle';
 export { default as createMeta } from './createMeta';
+export { default as createPortal } from './createPortal';
 
 // Factory
 /** @internal */
