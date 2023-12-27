@@ -73,43 +73,41 @@ Enable/disable pointer scroll event (eg.: mouse wheel).
 
 ## Breakpoints
 
+When `numeric`, defines the number of items to be shown on respective breakpoint.
+
+When `'auto'`, does not calculate the size of items.
+
+When `RbkStyle`, applies the style **ONLY** on respective breakpoint.
+
+---
+
 ### **`xs`**
 
-Number of items shown at breakpoint `xs`.
-
-➤ Type: **`number`** <br/>
+➤ Type: **`number` `'auto'` [`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 
 ### **`sm`**
 
-Number of items shown at breakpoint `sm`.
-
-➤ Type: **`number`** <br/>
+➤ Type: **`number` `'auto'` [`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 
 ### **`md`**
 
-Number of items shown at breakpoint `md`.
-
-➤ Type: **`number`** <br/>
+➤ Type: **`number` `'auto'` [`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 
 ### **`lg`**
 
-Number of items shown at breakpoint `lg`.
-
-➤ Type: **`number`** <br/>
+➤ Type: **`number` `'auto'` [`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 
 ### **`xl`**
 
-Number of items shown at breakpoint `xl`.
-
-➤ Type: **`number`** <br/>
+➤ Type: **`number` `'auto'` [`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 

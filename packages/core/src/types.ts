@@ -812,11 +812,11 @@ export type CarouselProps = PropsWithStyles<{
   pagingEnabled?: boolean;
   pointerScroll?: boolean;
   // Column Count
-  xs?: number;
-  sm?: number;
-  md?: number;
-  lg?: number;
-  xl?: number;
+  xs?: number | 'auto' | RbkStyle;
+  sm?: number | 'auto' | RbkStyle;
+  md?: number | 'auto' | RbkStyle;
+  lg?: number | 'auto' | RbkStyle;
+  xl?: number | 'auto' | RbkStyle;
   // Styles
   itemStyle?: RbkStyle;
   chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;
