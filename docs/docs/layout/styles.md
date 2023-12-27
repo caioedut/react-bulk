@@ -59,96 +59,92 @@ Use `&` combined with the pseudo-class (like `:hover`) to style it however you w
 
 Some styles can be applied using props. See all of them below:
 
-```jsx
-[
- "alignContent",
- "alignItems",
- "alignSelf",
- "aspectRatio",
- "backfaceVisibility",
- "backgroundColor",
- "border",
- "borderBottom",
- "borderBottomColor",
- "borderBottomEndRadius",
- "borderBottomLeftRadius",
- "borderBottomRightRadius",
- "borderBottomStartRadius",
- "borderBottomWidth",
- "borderColor",
- "borderEndColor",
- "borderEndWidth",
- "borderLeft",
- "borderLeftColor",
- "borderLeftWidth",
- "borderRadius",
- "borderRight",
- "borderRightColor",
- "borderRightWidth",
- "borderStartColor",
- "borderStartWidth",
- "borderStyle",
- "borderTop",
- "borderTopColor",
- "borderTopEndRadius",
- "borderTopLeftRadius",
- "borderTopRightRadius",
- "borderTopStartRadius",
- "borderTopWidth",
- "borderWidth",
- "bottom",
- "boxShadow",
- "color",
- "display",
- "flex",
- "flexBasis",
- "flexDirection",
- "flexFlow",
- "flexGrow",
- "flexShrink",
- "flexWrap",
- "fontFamily",
- "fontSize",
- "fontStyle",
- "fontVariant",
- "fontWeight",
- "height",
- "justifyContent",
- "justifyItems",
- "justifySelf",
- "justifySelf",
- "left",
- "letterSpacing",
- "lineHeight",
- "margin",
- "marginBottom",
- "marginHorizontal",
- "marginLeft",
- "marginRight",
- "marginTop",
- "marginVertical",
- "maxHeight",
- "maxWidth",
- "opacity",
- "order",
- "overflow",
- "padding",
- "paddingBottom",
- "paddingHorizontal",
- "paddingLeft",
- "paddingRight",
- "paddingTop",
- "paddingVertical",
- "placeContent",
- "placeItems",
- "placeSelf",
- "pointerEvents",
- "position",
- "right",
- "textAlign",
- "textTransform",
- "top",
- "width",
- "zIndex",
-]
-```
+alignContent<br/>
+alignItems<br/>
+alignSelf<br/>
+aspectRatio<br/>
+backfaceVisibility<br/>
+backgroundColor<br/>
+border<br/>
+borderBottom<br/>
+borderBottomColor<br/>
+borderBottomEndRadius<br/>
+borderBottomLeftRadius<br/>
+borderBottomRightRadius<br/>
+borderBottomStartRadius<br/>
+borderBottomWidth<br/>
+borderColor<br/>
+borderEndColor<br/>
+borderEndWidth<br/>
+borderLeft<br/>
+borderLeftColor<br/>
+borderLeftWidth<br/>
+borderRadius<br/>
+borderRight<br/>
+borderRightColor<br/>
+borderRightWidth<br/>
+borderStartColor<br/>
+borderStartWidth<br/>
+borderStyle<br/>
+borderTop<br/>
+borderTopColor<br/>
+borderTopEndRadius<br/>
+borderTopLeftRadius<br/>
+borderTopRightRadius<br/>
+borderTopStartRadius<br/>
+borderTopWidth<br/>
+borderWidth<br/>
+bottom<br/>
+boxShadow<br/>
+color<br/>
+display<br/>
+flex<br/>
+flexBasis<br/>
+flexDirection<br/>
+flexFlow<br/>
+flexGrow<br/>
+flexShrink<br/>
+flexWrap<br/>
+fontFamily<br/>
+fontSize<br/>
+fontStyle<br/>
+fontVariant<br/>
+fontWeight<br/>
+height<br/>
+justifyContent<br/>
+justifyItems<br/>
+justifySelf<br/>
+justifySelf<br/>
+left<br/>
+letterSpacing<br/>
+lineHeight<br/>
+margin<br/>
+marginBottom<br/>
+marginHorizontal<br/>
+marginLeft<br/>
+marginRight<br/>
+marginTop<br/>
+marginVertical<br/>
+maxHeight<br/>
+maxWidth<br/>
+opacity<br/>
+order<br/>
+overflow<br/>
+padding<br/>
+paddingBottom<br/>
+paddingHorizontal<br/>
+paddingLeft<br/>
+paddingRight<br/>
+paddingTop<br/>
+paddingVertical<br/>
+placeContent<br/>
+placeItems<br/>
+placeSelf<br/>
+pointerEvents<br/>
+position<br/>
+right<br/>
+textAlign<br/>
+textTransform<br/>
+top<br/>
+width<br/>
+zIndex<br/>
