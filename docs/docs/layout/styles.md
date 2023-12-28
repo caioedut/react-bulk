@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## Breakpoints
 
-Use the breakpoint name to apply styles to the respective breakpoint.
+Use the breakpoint name to apply styles to the respective breakpoint. [Read more about Breakpoints](/docs/layout/breakpoints).
 
 ```jsx live
 <Text
@@ -89,7 +89,7 @@ Works with all pseudo-classes, like `:focus`, `:first-child`, `:not()` [...].
 Some styles can be applied using props.
 
 ```jsx live
-<Card aspectRatio="16/9" overflow="hidden">
+<Card center aspectRatio="16/9" maxWidth={320} overflow="hidden">
   Hello World!
 </Card>
 ```
