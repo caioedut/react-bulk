@@ -1,14 +1,13 @@
 import { Fragment } from 'react';
 
-import { portalsRef } from './createPortal';
-import useGlobalState from './hooks/useGlobalState';
+import usePortals from './hooks/usePortals';
 
 export default function Portal() {
-  useGlobalState('rbk-portals');
+  const [portals] = usePortals();
 
   return (
     <Fragment>
-      {Object.entries(portalsRef.current).map(([key, children]) => (
+      {Object.entries(portals).map(([key, children]) => (
         <Fragment key={key}>{children}</Fragment>
       ))}
     </Fragment>

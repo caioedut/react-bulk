@@ -1,26 +1,30 @@
-import { Fragment, MutableRefObject, createRef, useEffect } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
 
-import useGlobalState from './hooks/useGlobalState';
+import usePortals from './hooks/usePortals';
 import { ReactElement } from './types';
 
-export const portalsRef: MutableRefObject<any> = createRef();
-
-portalsRef.current = {};
-
 function PortalItem({ portalKey, children }) {
-  const [_, setState] = useGlobalState('rbk-portals');
+  const [, setPortals] = usePortals();
+
+  // #hack first render
+  useMemo(() => {
+    setPortals((current) => ({ ...current, [portalKey]: children }));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    portalsRef.current[portalKey] = children;
-    setState(Date.now());
-  }, [portalKey, children]);
+    setPortals((current) => ({ ...current, [portalKey]: children }));
+  }, [portalKey, children, setPortals]);
 
   useEffect(() => {
     return () => {
-      delete portalsRef.current[portalKey];
-      setState(Date.now());
+      setPortals((current) => {
+        delete current[portalKey];
+        return { ...current };
+      });
     };
-  }, [portalKey]);
+  }, [portalKey, setPortals]);
 
   return <Fragment />;
 }
