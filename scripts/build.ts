@@ -3,7 +3,7 @@ import pmex from 'pmex';
 
 pmex('clean');
 
-pmex('lerna exec --parallel -- tsc --build');
+pmex('lerna exec --parallel -- tsc --build --force');
 
 const packages = readdirSync('packages', { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
@@ -15,7 +15,6 @@ packages.forEach((dir) => {
   const subDir = `${distDir}/${dir}/src`;
 
   if (existsSync(subDir)) {
-    console.log('exists', subDir);
     cpSync(subDir, distDir, { recursive: true, force: true });
 
     packages.forEach((item) => {
