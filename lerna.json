@@ -1,13 +1,10 @@
 {
-  "command": {
-    "publish": {
-      "allowBranch": "main"
-    }
-  },
   "npmClient": "yarn",
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "registry": "https://registry.npmjs.org",
   "useNx": false,
   "useWorkspaces": true,
-  "version": "0.6.7"
+  "version": "0.7.0-alpha3"
 }
