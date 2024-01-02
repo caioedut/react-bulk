@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/native",
   "description": "React Bulk for React Native",
-  "version": "0.7.0-alpha3",
+  "version": "0.7.0-alpha4",
   "license": "MIT",
   "author": {
     "name": "Caio Teixeira",
@@ -26,7 +26,7 @@
     "dist"
   ],
   "dependencies": {
-    "@react-bulk/core": "^0.7.0-alpha3"
+    "@react-bulk/core": "^0.7.0-alpha4"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
