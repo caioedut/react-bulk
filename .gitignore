@@ -1,3 +1,6 @@
+# monorepo sync files
+packages/**/*.md
+
 # ide
 .idea/
 .vscode/
