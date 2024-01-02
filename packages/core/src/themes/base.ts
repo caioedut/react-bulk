@@ -1,6 +1,5 @@
-import { defined } from '@react-bulk/core';
-
 import { ThemeProps } from '../types';
+import defined from '../utils/defined';
 import stdout from '../utils/stdout';
 import string from '../utils/string';
 
