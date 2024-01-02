@@ -1,5 +1,5 @@
 <div align="center">
-  <h1 style="color: #673AB7;">
+  <h1 style="color: #8B5CF6;">
     <br>
     React Bulk
     <br>
@@ -25,7 +25,7 @@
   | [Components](https://rbk.caioedut.com/docs/category/core)
   | [Hooks](https://rbk.caioedut.com/docs/category/hooks)
 
-  <h3>[Read the full Documentation.](https://rbk.caioedut.com/)</h3>
+  ([📖Read the full Documentation](https://rbk.caioedut.com/))
 
   <br>
   <br>
