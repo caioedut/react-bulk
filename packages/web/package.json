@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/web",
   "description": "React Bulk for React Web",
-  "version": "0.7.0-alpha6",
+  "version": "0.7.1",
   "license": "MIT",
   "author": {
     "name": "Caio Teixeira",
@@ -26,7 +26,7 @@
     "dist"
   ],
   "dependencies": {
-    "@react-bulk/core": "^0.7.0-alpha6"
+    "@react-bulk/core": "^0.7.1"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
