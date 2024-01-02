@@ -16,15 +16,19 @@
   </a>
 
   <br>
+  ---
   <br>
 
   ## Getting Started
-  - [Installation](https://rbk.caioedut.com/docs/getting-started/installation)
-  - [Configuration](https://rbk.caioedut.com/docs/getting-started/configuration)
+  [Installation](https://rbk.caioedut.com/docs/getting-started/installation)
+  | [Configuration](https://rbk.caioedut.com/docs/getting-started/configuration)
+  | [Components](https://rbk.caioedut.com/docs/category/core)
+  | [Hooks](https://rbk.caioedut.com/docs/category/hooks)
 
   ### [Read the full Documentation.](https://rbk.caioedut.com/)
 
   <br>
+  ---
   <br>
 
   <a href="https://www.buymeacoffee.com/caioedut" target="_blank">
