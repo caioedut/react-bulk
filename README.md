@@ -16,20 +16,21 @@
   </a>
 
   <br>
-  ---
   <br>
 
-  ## Getting Started
+  <h2>Getting Started</h2>
+
   [Installation](https://rbk.caioedut.com/docs/getting-started/installation)
   | [Configuration](https://rbk.caioedut.com/docs/getting-started/configuration)
   | [Components](https://rbk.caioedut.com/docs/category/core)
   | [Hooks](https://rbk.caioedut.com/docs/category/hooks)
 
-  ### [Read the full Documentation.](https://rbk.caioedut.com/)
+  <h3>[Read the full Documentation.](https://rbk.caioedut.com/)</h3>
 
   <br>
-  ---
   <br>
+
+  <h2>Sponsor</h2>
 
   <a href="https://www.buymeacoffee.com/caioedut" target="_blank">
     <img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" width="180" height="50">
