@@ -13,9 +13,8 @@ const packages = readdirSync('packages', { withFileTypes: true })
 packages.forEach((dir) => {
   const baseDir = `packages/${dir}`;
   const distDir = `${baseDir}/dist`;
-  const subDir = `${distDir}/${dir}/src`;
 
-  globSync(subDir).forEach((dir) => {
+  globSync(`${distDir}/${dir}/src`).forEach((dir) => {
     cpSync(dir, distDir, { recursive: true, force: true });
     rmSync(dir, { recursive: true, force: true });
   });
