@@ -1,6 +1,14 @@
 {
   "name": "root",
+  "description": "Complete and uniform UI for React Web and Native",
+  "license": "MIT",
   "private": true,
+  "author": {
+    "name": "Caio Teixeira",
+    "email": "caioedut@gmail.com"
+  },
+  "homepage": "https://rbk.caioedut.com",
+  "repository": "https://github.com/caioedut/react-bulk",
   "keywords": [
     "react",
     "react-native",
@@ -13,13 +21,6 @@
     "ui",
     "ux"
   ],
-  "license": "MIT",
-  "repository": "https://github.com/caioedut/react-bulk",
-  "homepage": "https://rbk.caioedut.com",
-  "author": {
-    "name": "Caio Teixeira",
-    "email": "caioedut@gmail.com"
-  },
   "workspaces": {
     "packages": [
       "packages/*"
@@ -31,11 +32,11 @@
     "example:web": "tsx scripts/example.ts --web",
     "example:native": "tsx scripts/example.ts --native",
     "bootstrap": "lerna bootstrap",
-    "clean": "lerna exec --parallel -- rimraf dist typings",
-    "prebuild": "npm run clean",
-    "build": "lerna exec --parallel -- rollup -c ../../rollup.config.js",
-    "publish:stable": "npm run test && npm run build && lerna publish --force-publish"
+    "clean": "lerna exec --parallel -- rimraf dist",
+    "build": "tsx scripts/build.ts",
+    "publish:stable": "tsx scripts/publish.ts"
   },
+  "dependencies": {},
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/node": "^18.7.6",
@@ -63,6 +64,5 @@
     "rollup-plugin-url": "3.0.1",
     "tsx": "^3.12.7",
     "typescript": "^5.2.2"
-  },
-  "dependencies": {}
+  }
 }
