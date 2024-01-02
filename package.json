@@ -32,7 +32,7 @@
     "example:web": "tsx scripts/example.ts --web",
     "example:native": "tsx scripts/example.ts --native",
     "bootstrap": "lerna bootstrap",
-    "clean": "lerna exec --parallel -- rimraf dist",
+    "clean": "lerna exec --parallel -- rimraf dist README.md",
     "build": "tsx scripts/build.ts",
     "publish:stable": "tsx scripts/publish.ts"
   },
@@ -48,6 +48,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react": "^7.33.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "glob": "^10.3.10",
     "lerna": "^5.1.4",
     "pmex": "^0.0.35",
     "prettier": "^2.8.8",
