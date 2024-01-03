@@ -479,7 +479,7 @@ export type ThemeProps = {
     ActionSheet: ThemeComponentProps<ActionSheetProps, 'root'>;
     Avatar: ThemeComponentProps<AvatarProps, 'root' | 'content'>;
     Animation: ThemeComponentProps<AnimationProps, 'root'>;
-    Backdrop: ThemeComponentProps<BackdropProps, 'root'>;
+    Backdrop: ThemeComponentProps<BackdropProps, 'root' | 'container'>;
     Badge: ThemeComponentProps<BadgeProps, 'root' | 'label'>;
     Box: ThemeComponentProps<BoxProps, 'root'>;
     Button: ThemeComponentProps<ButtonProps, 'root' | 'label'>;
@@ -828,7 +828,7 @@ export type DatePickerProps = PropsWithStyles<
     max?: Date | string | number | null | undefined;
     min?: Date | string | number | null | undefined;
     value?: Date | string | number | null | undefined;
-    variant?: 'modal' | 'inline';
+    variant?: 'modal' | 'inline' | 'dropdown';
     translate?: {
       cancel?: string;
       clear?: string;
@@ -882,6 +882,8 @@ export type DividerProps = PropsWithStyles<{
 
 export type BackdropProps = PropsWithStyles<{
   visible?: boolean;
+  // Styles
+  containerStyle?: RbkStyle;
 }>;
 
 export type ModalProps = PropsWithStyles<{
@@ -904,6 +906,7 @@ export type CollapseProps = PropsWithStyles<{
 
 export type DropdownProps = PropsWithStyles<{
   placement?: 'top' | 'bottom';
+  triggerRef?: RefObject<ReactElement>;
   visible?: boolean;
   // Events
   onClose?: Function;

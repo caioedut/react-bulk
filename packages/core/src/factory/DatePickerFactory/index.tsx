@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import Calendar from '../../icons/Calendar';
@@ -14,6 +14,7 @@ import CalendarFactory from '../CalendarFactory';
 import CardFactory from '../CardFactory';
 import CollapseFactory from '../CollapseFactory';
 import DividerFactory from '../DividerFactory';
+import DropdownFactory from '../DropdownFactory';
 import GridFactory from '../GridFactory';
 import InputFactory from '../InputFactory';
 
@@ -67,6 +68,8 @@ const DatePickerFactory = React.memo<DatePickerProps>(
       [min, max],
     );
 
+    const triggerRef = useRef();
+
     const [calendarVisible, setCalendarVisible] = useState(false);
     const [_internal, _setInternal] = useState(value ?? defaultValue);
 
@@ -82,6 +85,9 @@ const DatePickerFactory = React.memo<DatePickerProps>(
     );
 
     color = theme.color(error ? 'error' : color || 'primary');
+
+    const Component =
+      variant === 'dropdown' ? DropdownFactory : variant === 'inline' ? CollapseFactory : BackdropFactory;
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
@@ -115,7 +121,7 @@ const DatePickerFactory = React.memo<DatePickerProps>(
     );
 
     return (
-      <>
+      <BoxFactory position="relative">
         <InputFactory
           ref={ref}
           readOnly
@@ -128,6 +134,7 @@ const DatePickerFactory = React.memo<DatePickerProps>(
           onChange={handleChangeInternal}
           endAddon={
             <ButtonFactory
+              ref={triggerRef}
               variant="text"
               color={color}
               size={size}
@@ -142,21 +149,18 @@ const DatePickerFactory = React.memo<DatePickerProps>(
           }
         />
 
-        <BoxFactory
-          center
+        <Component
           visible={calendarVisible}
-          {...(variant === 'inline'
+          {...(variant === 'dropdown'
             ? {
-                component: CollapseFactory,
-                padding: 3,
-                mt: theme.shape.gap / 2,
-                alignItems: 'end',
+                triggerRef: triggerRef,
+                r: 0,
+                pt: 0.5,
+                onClose: () => setCalendarVisible(false),
               }
-            : {
-                component: BackdropFactory,
-                p: theme.shape.gap,
-                onPress: () => setCalendarVisible(false),
-              })}
+            : variant === 'inline'
+            ? { alignItems: 'end', p: 1 }
+            : { onPress: () => setCalendarVisible(false) })}
         >
           <CardFactory minw={320} maxw={360} shadow={1} p={0}>
             <BoxFactory h={380}>
@@ -222,8 +226,8 @@ const DatePickerFactory = React.memo<DatePickerProps>(
               </BoxFactory>
             </GridFactory>
           </CardFactory>
-        </BoxFactory>
-      </>
+        </Component>
+      </BoxFactory>
     );
   }),
 );

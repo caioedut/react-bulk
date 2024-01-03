@@ -1141,6 +1141,9 @@ function CalendarExample() {
           <DatePicker name="calendar" label="Variant Modal (Default)" value={date} />
         </Box>
         <Box xs={12}>
+          <DatePicker variant="dropdown" name="calendar" label="Variant Dropdown" value={date} />
+        </Box>
+        <Box xs={12}>
           <DatePicker variant="inline" name="calendar" label="Variant Inline" value={date} />
         </Box>
         <Box xs={12}>
