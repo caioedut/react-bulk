@@ -159,7 +159,7 @@ const DatePickerFactory = React.memo<DatePickerProps>(
               })}
         >
           <CardFactory minw={320} maxw={360} shadow={1} p={0}>
-            <BoxFactory h={365}>
+            <BoxFactory h={380}>
               <CalendarFactory
                 color={color}
                 date={internal}

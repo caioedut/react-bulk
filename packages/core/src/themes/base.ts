@@ -442,6 +442,7 @@ const base: ThemeProps = {
             fontSize: '0.75rem',
             fontWeight: 'bold',
             letterSpacing: 1,
+            textAlign: 'center',
 
             web: {
               lineHeight: '0.75rem',
