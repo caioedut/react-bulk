@@ -45,7 +45,7 @@ function Home() {
       <Button ref={triggerRef} onPress={() => setVisible(true)}>
         Open to Right
       </Button>
-      <Dropdown visible={visible} t={0} b="auto" l="100%" onClose={() => setVisible(false)}>
+      <Dropdown visible={visible} triggerRef={triggerRef} t={0} b="auto" l="100%" onClose={() => setVisible(false)}>
         <Card>
           <Text>Dropdown is amazing!</Text>
         </Card>
