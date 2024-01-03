@@ -3,12 +3,12 @@
   "description": "Complete and uniform UI for React Web and Native",
   "license": "MIT",
   "private": true,
+  "homepage": "https://rbk.caioedut.com",
+  "repository": "https://github.com/caioedut/react-bulk",
   "author": {
     "name": "Caio Teixeira",
     "email": "caioedut@gmail.com"
   },
-  "homepage": "https://rbk.caioedut.com",
-  "repository": "https://github.com/caioedut/react-bulk",
   "keywords": [
     "react",
     "react-native",
@@ -32,7 +32,7 @@
     "example:web": "tsx scripts/example.ts --web",
     "example:native": "tsx scripts/example.ts --native",
     "bootstrap": "lerna bootstrap",
-    "clean": "lerna exec --parallel -- rimraf dist README.md",
+    "clean": "lerna exec --parallel -- rimraf dist",
     "build": "tsx scripts/build.ts",
     "publish:stable": "tsx scripts/publish.ts"
   },
