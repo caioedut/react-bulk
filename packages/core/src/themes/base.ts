@@ -291,47 +291,17 @@ const base: ThemeProps = {
         },
         defaultStyles: {
           root: {
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-
+            position: 'absolute',
+            inset: 0,
             height: '100%',
             width: '100%',
-
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
             justifyContent: 'center',
+            justifyItems: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
-
-            native: {
-              position: 'absolute',
-            },
-
-            web: {
-              position: 'fixed',
-              cursor: 'auto !important',
-              opacity: 0,
-              visibility: 'hidden',
-              zIndex: -1,
-              ...this.mixins.transitions.medium,
-              transitionProperty: 'all',
-            },
           },
-        },
-        variants: {
-          visible: {
-            true: {
-              root: {
-                web: {
-                  opacity: 1,
-                  visibility: 'visible',
-                  zIndex: (theme) => theme.mixins.zIndex.backdrop,
-                },
-              },
-            },
-          },
+          container: {},
         },
       },
       Badge: {
@@ -706,6 +676,10 @@ const base: ThemeProps = {
             position: 'absolute',
           },
           backdrop: {
+            justifyContent: 'flex-start',
+            justifyItems: 'flex-start',
+            alignContent: 'flex-start',
+            alignItems: 'flex-start',
             bg: 'rgba(0, 0, 0, 0.2)',
             zIndex: (theme) => theme.mixins.zIndex.dropdown,
           },
