@@ -25,7 +25,7 @@
   | [Components](https://rbk.caioedut.com/docs/category/core)
   | [Hooks](https://rbk.caioedut.com/docs/category/hooks)
 
-  ([📖Read the full Documentation](https://rbk.caioedut.com/))
+  ([📖 Read the full Documentation](https://rbk.caioedut.com/))
 
   <br>
   <br>
