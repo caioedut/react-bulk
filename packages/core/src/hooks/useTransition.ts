@@ -7,16 +7,16 @@ import global from '../utils/global';
 import sleep from '../utils/sleep';
 import uuid from '../utils/uuid';
 
-export default function useTransition(initialStyle: RbkStyleProps = {}) {
+export default function useTransition(style?: RbkStyleProps) {
   const { web, native } = global.mapping;
 
   const elRef = useRef<any>();
-  const styleRef = useRef(clone(initialStyle || {}));
+  const styleRef = useRef(clone(style || {}));
   const timeoutRef = useRef<TimeoutType[]>([]);
   const runIdRef = useRef<string>();
 
-  const immutableInitialStyle = useMemo(
-    () => initialStyle || {},
+  const immutableStyle = useMemo(
+    () => style || {},
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
@@ -70,81 +70,90 @@ export default function useTransition(initialStyle: RbkStyleProps = {}) {
     timeoutRef.current = [];
   }, []);
 
+  const reset = useCallback(() => {
+    stop();
+
+    Object.entries(immutableStyle).forEach(([attr, value]) => {
+      setStyle(attr, value);
+    });
+  }, [immutableStyle, setStyle, stop]);
+
   const start = useCallback(
-    async (toStyle: RbkStyleProps = {}, options: RbkTransition = {}) => {
+    async (options: RbkTransition) => {
       stop();
 
       const runId = uuid();
       runIdRef.current = runId;
 
-      let { boomerang = false, delay = 0, duration = 200, iterations = 1, step = 1 } = options;
-
-      const from = clone(styleRef.current);
-      const to = toStyle;
+      let { to, from = styleRef.current, boomerang = false, delay = 0, duration = 200, iterations = 1 } = options;
 
       if (delay > 0) {
         await sleep(delay);
       }
 
-      const animate = async () => {
-        if (runId !== runIdRef.current) {
-          return;
-        }
+      const meta = Object.fromEntries(
+        Object.keys(to).map((attr) => {
+          const [fromValue] = resolveValue(from?.[attr] || 0);
+          const [toValue] = resolveValue(to[attr]);
 
+          const diffValue = toValue - fromValue;
+          const incValuePerMs = diffValue / duration;
+
+          return [
+            attr,
+            {
+              inc: incValuePerMs,
+              from: fromValue,
+              to: toValue,
+            },
+          ];
+        }),
+      );
+
+      const animate = async () => {
         if (typeof iterations === 'number' && iterations > 0) {
           iterations--;
         }
 
-        for (let pos = step; pos <= duration; pos += step) {
-          if (runId !== runIdRef.current) {
-            return;
-          }
+        // Reset styles
+        Object.keys(to).forEach((attr) => {
+          setStyle(attr, meta[attr].from);
+        });
 
-          timeoutRef.current.push(
-            setTimeout(() => {
-              Object.keys(toStyle).forEach((attr) => {
-                const [fromValue, unit] = resolveValue(from[attr]);
-                const [toValue] = resolveValue(to[attr]);
+        const baseCalc = boomerang ? 2 : 1;
 
-                const diffValue = toValue - fromValue;
-                const newValue = fromValue + (diffValue / duration) * pos;
+        setTimeout(async () => {
+          for (let i = 1; i <= baseCalc; i++) {
+            const isBoomerangIteration = i % 2 === 0;
 
-                setStyle(attr, newValue, unit);
-              });
-            }, pos),
-          );
-        }
-
-        await sleep(duration);
-
-        if (boomerang) {
-          const backFrom = toStyle;
-          const backTo = immutableInitialStyle;
-
-          for (let pos = step; pos <= duration; pos += step) {
-            if (runId !== runIdRef.current) {
-              return;
+            for (let pos = 1; pos <= duration; pos++) {
+              timeoutRef.current.push(
+                setTimeout(() => {
+                  Object.keys(to).forEach((attr) => {
+                    const [currValue, unit] = resolveValue(styleRef.current[attr]);
+                    const newValue = isBoomerangIteration ? currValue - meta[attr].inc : currValue + meta[attr].inc;
+                    setStyle(attr, newValue, unit);
+                  });
+                }, pos),
+              );
             }
 
+            // Set exact target value on last iteration
             timeoutRef.current.push(
               setTimeout(() => {
-                Object.keys(toStyle).forEach((attr) => {
-                  const [fromValue, unit] = resolveValue(backFrom[attr]);
-                  const [toValue] = resolveValue(backTo[attr]);
-
-                  const diffValue = toValue - fromValue;
-                  const newValue = fromValue + (diffValue / duration) * pos;
-
-                  setStyle(attr, newValue, unit);
+                Object.keys(to).forEach((attr) => {
+                  setStyle(attr, isBoomerangIteration ? meta[attr].from : meta[attr].to);
                 });
-              }, pos),
+              }, duration),
             );
+
+            await sleep(duration);
           }
+        }, 0);
 
-          await sleep(duration);
-        }
+        await sleep(duration * baseCalc + 20);
 
-        if (iterations) {
+        if (iterations && runId === runIdRef.current) {
           await animate();
         }
       };
@@ -153,21 +162,13 @@ export default function useTransition(initialStyle: RbkStyleProps = {}) {
         await animate();
       }
     },
-    [immutableInitialStyle, resolveValue, setStyle, stop],
+    [resolveValue, setStyle, stop],
   );
-
-  const reset = useCallback(() => {
-    stop();
-
-    Object.entries(immutableInitialStyle).forEach(([attr, value]) => {
-      setStyle(attr, value);
-    });
-  }, [immutableInitialStyle, setStyle, stop]);
 
   return {
     start,
     stop,
     reset,
-    props: { ref: elRef, style: initialStyle },
+    props: { ref: elRef, style },
   };
 }
