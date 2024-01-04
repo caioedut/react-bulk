@@ -236,11 +236,13 @@ export interface RbkAnimation {
 }
 
 export interface RbkTransition {
+  to: RbkStyleProps;
+  from?: RbkStyleProps;
+
   boomerang?: boolean;
   delay?: number;
   duration?: number;
   iterations?: number | 'infinite';
-  step?: number;
 }
 
 export interface RbkFormEvent {
