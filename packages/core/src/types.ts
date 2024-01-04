@@ -237,6 +237,7 @@ export interface RbkAnimation {
 
 export interface RbkTransition {
   boomerang?: boolean;
+  delay?: number;
   duration?: number;
   iterations?: number | 'infinite';
   step?: number;
