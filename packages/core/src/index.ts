@@ -9,6 +9,7 @@ export { default as useHtmlId } from './hooks/useHtmlId';
 export { default as usePropState } from './hooks/usePropState';
 export { default as useTheme } from './hooks/useTheme';
 export { default as useToaster } from './hooks/useToaster';
+export { default as unstable_useTransition } from './hooks/useTransition';
 
 // Prop
 /** @internal */

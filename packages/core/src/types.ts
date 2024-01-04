@@ -235,6 +235,13 @@ export interface RbkAnimation {
   speed?: number;
 }
 
+export interface RbkTransition {
+  boomerang?: boolean;
+  duration?: number;
+  iterations?: number | 'infinite';
+  step?: number;
+}
+
 export interface RbkFormEvent {
   name?: string;
   type: string;
@@ -350,6 +357,8 @@ export type FormRef = {
 };
 
 export type RbkStyle = RbkStyleVar | RbkStyleVar[];
+
+export type RbkStyleProps = CSSProperties & StyleProps;
 
 export type ThemeModeValues = 'light' | 'dark';
 
