@@ -77,10 +77,14 @@ export default function useTransition(initialStyle: RbkStyleProps = {}) {
       const runId = uuid();
       runIdRef.current = runId;
 
-      let { duration = 200, step = 1, boomerang = false, iterations = 1 } = options;
+      let { boomerang = false, delay = 0, duration = 200, iterations = 1, step = 1 } = options;
 
       const from = clone(styleRef.current);
       const to = toStyle;
+
+      if (delay > 0) {
+        await sleep(delay);
+      }
 
       const animate = async () => {
         if (runId !== runIdRef.current) {
