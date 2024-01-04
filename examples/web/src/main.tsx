@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
+import { AnyObject, FormRef, RbkInputEvent, unstable_useTransition, useAnimation, useToaster } from '@react-bulk/core';
 import {
   ActionSheet,
   Animation,
@@ -1241,6 +1241,7 @@ function AnimationExample() {
   const to = { width: 200, height: 200 };
 
   const sizeAnim = useAnimation(from);
+  const transition = unstable_useTransition({ overflow: 'hidden', ...from });
 
   return (
     <>
@@ -1266,10 +1267,15 @@ function AnimationExample() {
           <Button onPress={() => sizeAnim.start(to, { boomerang: true })}>Boomerang</Button>
         </Box>
         <Box>
-          <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 3 })}>3x Boomerang</Button>
+          <Button onPress={() => sizeAnim.start(to, { iterations: 'infinite' })}>Infinite</Button>
         </Box>
         <Box>
-          <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 'infinite' })}>Inifite</Button>
+          <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 'infinite' })}>
+            Boomerang Infinite
+          </Button>
         </Box>
         <Box>
           <Button color="warning" onPress={() => sizeAnim.stop()}>
@@ -1285,6 +1291,48 @@ function AnimationExample() {
           <Box border="1px solid primary" align="start">
             <sizeAnim.Component style={sizeAnim.style} />
           </Box>
+        </Box>
+      </Grid>
+
+      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+
+      <Text variant="subtitle" mb={theme.shape.gap}>
+        unstable_useTransition
+      </Text>
+      <Grid gap>
+        <Box>
+          <Button onPress={() => transition.start(to)}>Forward</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => transition.start(from)}>Backward</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => transition.start(to, { iterations: 3 })}>Repeat 3x</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => transition.start(to, { boomerang: true })}>Boomerang</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => transition.start(to, { iterations: -1 })}>Infinite</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => transition.start(to, { boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
+        </Box>
+        <Box>
+          <Button onPress={() => transition.start(to, { boomerang: true, iterations: -1 })}>Boomerang Infinite</Button>
+        </Box>
+        <Box>
+          <Button color="warning" onPress={() => transition.stop()}>
+            Stop
+          </Button>
+        </Box>
+        <Box>
+          <Button color="error" onPress={() => transition.reset()}>
+            Reset
+          </Button>
+        </Box>
+        <Box xs={12}>
+          <Box border="1px solid primary" align="start" {...transition.props} />
         </Box>
       </Grid>
 

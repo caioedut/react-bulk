@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
+import { AnyObject, FormRef, RbkInputEvent, unstable_useTransition, useAnimation, useToaster } from '@react-bulk/core';
 import {
   ActionSheet,
   Animation,
@@ -40,6 +40,32 @@ import {
 
 export default function Main() {
   const theme = useTheme();
+
+  const from = { width: 0, height: 0 };
+  const to = { width: 320, height: 320 };
+
+  const anim = unstable_useTransition({ overflow: 'hidden', ...from });
+
+  return (
+    <Box px={8} py={16}>
+      <Box row>
+        <Button onPress={() => anim.start(to)}>Forward</Button>
+        <Button onPress={() => anim.start(from)}>Backward</Button>
+        <Button onPress={() => anim.start(to, { iterations: 3 })}>Repeat 3x</Button>
+        <Button onPress={() => anim.start(to, { boomerang: true })}>Boomerang</Button>
+        <Button onPress={() => anim.start(to, { boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
+        <Button onPress={() => anim.start(to, { iterations: -1 })}>Infinite</Button>
+        <Button onPress={() => anim.start(to, { boomerang: true, iterations: -1 })}>Boomerang Infinite</Button>
+        <Button color="warning" onPress={() => anim.stop()}>
+          Stop
+        </Button>
+        <Button color="error" onPress={() => anim.reset()}>
+          Reset
+        </Button>
+      </Box>
+      <Box border {...anim.props} />
+    </Box>
+  );
 
   return (
     <Scrollable bg="background.secondary" contentInset={theme.shape.gap}>
