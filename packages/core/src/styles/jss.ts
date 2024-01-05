@@ -6,6 +6,7 @@ import { RbkStyle, ThemeProps } from '../types';
 import clone from '../utils/clone';
 import global from '../utils/global';
 import { boxSizeProps, customSpacings, customStyleProps, flexAlignProps, notPxProps, spacings } from './constants';
+import transform from './transform';
 
 export { customSpacings, customStyleProps, spacings };
 
@@ -218,6 +219,10 @@ export default function jss(...mixin: any[]) {
           });
         }
       }
+    }
+
+    if (prop === 'transform') {
+      value = transform(value);
     }
 
     if (web) {

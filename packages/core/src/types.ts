@@ -161,9 +161,11 @@ export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[]
 
 export type AnyObject = { [key: string | number]: any };
 
+export type AnyCallback = (...args: any[]) => any;
+
 export type TimeoutType = ReturnType<typeof setTimeout> | null;
 
-export type AnyCallback = (...args: any[]) => any;
+export type IntervalType = ReturnType<typeof setInterval> | null;
 
 export type InputValue = any;
 
@@ -236,13 +238,14 @@ export interface RbkAnimation {
 }
 
 export interface RbkTransition {
-  to: RbkStyleProps;
-  from?: RbkStyleProps;
+  to: Omit<RbkStyleProps, 'transform'>;
+  from?: Omit<RbkStyleProps, 'transform'>;
 
   boomerang?: boolean;
   delay?: number;
   duration?: number;
   iterations?: number | 'infinite';
+  throttle?: number;
   timing?: 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out';
 }
 
@@ -986,6 +989,7 @@ export type AnimationProps = PropsWithStyles<{
   from?: RbkStyle;
   in?: boolean;
   loop?: boolean | number;
+  throttle?: number;
   timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
   to?: RbkStyle;
 

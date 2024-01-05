@@ -147,6 +147,22 @@ export const spacings = [
   ...customSpacings,
 ] as const;
 
+export const transformProps = [
+  'matrix',
+  'perspective',
+  'rotate',
+  'rotateX',
+  'rotateY',
+  'rotateZ',
+  'scale',
+  'scaleX',
+  'scaleY',
+  'translateX',
+  'translateY',
+  'skewX',
+  'skewY',
+] as const;
+
 // See https://react-cn.github.io/react/tips/style-props-value-px.html
 export const notPxProps = [
   'animationIterationCount',
