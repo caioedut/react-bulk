@@ -1,57 +1,66 @@
 import { useCallback, useMemo, useRef } from 'react';
 
 import { notPxProps } from '../styles/constants';
+import jss from '../styles/jss';
 import { RbkStyleProps, RbkTransition, TimeoutType } from '../types';
 import clone from '../utils/clone';
+import defined from '../utils/defined';
 import global from '../utils/global';
 import sleep from '../utils/sleep';
 import uuid from '../utils/uuid';
+import useTheme from './useTheme';
 
 export default function useTransition(style?: RbkStyleProps) {
+  const theme = useTheme();
   const { web, native } = global.mapping;
 
+  const baseStyle = useMemo(() => jss({ theme }, style), [theme, style]);
+
   const elRef = useRef<any>();
-  const styleRef = useRef(clone(style || {}));
+  const styleRef = useRef(clone(baseStyle));
   const timeoutRef = useRef<TimeoutType[]>([]);
   const runIdRef = useRef<string>();
 
-  const immutableStyle = useMemo(
-    () => style || {},
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+  const setStyle = useCallback(
+    (attr: string, value: any, unit = null) => {
+      if (!elRef.current) return;
+
+      if (web) {
+        if (defined(value)) {
+          if (!unit && !notPxProps.includes(attr as any)) {
+            unit = 'px';
+          }
+
+          if (unit) {
+            value = `${value}${unit}`;
+          }
+        }
+
+        requestAnimationFrame(() => {
+          elRef.current.style[attr] = value;
+        });
+      }
+
+      if (native) {
+        if (defined(value)) {
+          if (unit === 'px') {
+            unit = null;
+          }
+
+          if (unit) {
+            value = `${value}${unit}`;
+          }
+        }
+
+        requestAnimationFrame(() => {
+          elRef.current.setNativeProps({ [attr]: value });
+        });
+      }
+
+      styleRef.current[attr] = value;
+    },
+    [native, web],
   );
-
-  const setStyle = useCallback((attr, value, unit = null) => {
-    if (!elRef.current) return;
-
-    if (web) {
-      if (!unit && !notPxProps.includes(attr)) {
-        unit = 'px';
-      }
-
-      if (unit) {
-        value = `${value}${unit}`;
-      }
-
-      elRef.current.style[attr] = value;
-    }
-
-    if (native) {
-      if (unit === 'px') {
-        unit = null;
-      }
-
-      if (unit) {
-        value = `${value}${unit}`;
-      }
-
-      elRef.current.setNativeProps({ [attr]: value });
-    }
-
-    styleRef.current[attr] = value;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const resolveValue = useCallback((value) => {
     const match = `${value}`.match(/^(-?[\d.]+)([a-z%]*)/i);
@@ -73,96 +82,118 @@ export default function useTransition(style?: RbkStyleProps) {
   const reset = useCallback(() => {
     stop();
 
-    Object.entries(immutableStyle).forEach(([attr, value]) => {
-      setStyle(attr, value);
+    Object.keys(styleRef.current).forEach((attr) => {
+      setStyle(attr, baseStyle?.[attr] ?? undefined);
     });
-  }, [immutableStyle, setStyle, stop]);
+  }, [baseStyle, setStyle, stop]);
 
   const start = useCallback(
-    async (options: RbkTransition) => {
+    (options: RbkTransition) => {
       stop();
 
       const runId = uuid();
       runIdRef.current = runId;
 
-      let { to, from = styleRef.current, boomerang = false, delay = 0, duration = 200, iterations = 1 } = options;
+      let { to, from = styleRef.current, boomerang = false, delay = 0, duration = 1000, iterations = 1 } = options;
 
-      if (delay > 0) {
-        await sleep(delay);
-      }
+      from = jss({ theme }, from);
+      to = jss({ theme }, to);
 
-      const meta = Object.fromEntries(
-        Object.keys(to).map((attr) => {
-          const [fromValue] = resolveValue(from?.[attr] || 0);
-          const [toValue] = resolveValue(to[attr]);
-
-          const diffValue = toValue - fromValue;
-          const incValuePerMs = diffValue / duration;
-
-          return [
-            attr,
-            {
-              inc: incValuePerMs,
-              from: fromValue,
-              to: toValue,
-            },
-          ];
-        }),
-      );
-
-      const animate = async () => {
-        if (typeof iterations === 'number' && iterations > 0) {
-          iterations--;
+      (async () => {
+        if (delay > 0) {
+          await sleep(delay);
         }
 
-        // Reset styles
-        Object.keys(to).forEach((attr) => {
-          setStyle(attr, meta[attr].from);
-        });
+        const meta = Object.fromEntries(
+          Object.keys(to).map((attr) => {
+            const [fromValue, fromUnit] = resolveValue(from?.[attr] || 0);
+            const [toValue, toUnit] = resolveValue(to[attr]);
 
-        const baseCalc = boomerang ? 2 : 1;
+            const diffValue = toValue - fromValue;
+            const incValuePerMs = diffValue / duration;
 
-        setTimeout(async () => {
-          for (let i = 1; i <= baseCalc; i++) {
-            const isBoomerangIteration = i % 2 === 0;
+            return [
+              attr,
+              {
+                inc: incValuePerMs,
+                from: fromValue,
+                to: toValue,
+                unit: toUnit || fromUnit,
+              },
+            ];
+          }),
+        );
+
+        const animate = () => {
+          if (typeof iterations === 'number' && iterations > 0) {
+            iterations--;
+          }
+
+          // Reset styles
+          Object.keys(to).forEach((attr) => {
+            setStyle(attr, meta[attr].from);
+          });
+
+          requestAnimationFrame(() => {
+            let wait = 0;
 
             for (let pos = 1; pos <= duration; pos++) {
               timeoutRef.current.push(
                 setTimeout(() => {
                   Object.keys(to).forEach((attr) => {
-                    const [currValue, unit] = resolveValue(styleRef.current[attr]);
-                    const newValue = isBoomerangIteration ? currValue - meta[attr].inc : currValue + meta[attr].inc;
-                    setStyle(attr, newValue, unit);
+                    const [currValue] = resolveValue(styleRef.current[attr]);
+                    const newValue = currValue + meta[attr].inc;
+                    setStyle(attr, newValue, meta[attr].unit);
                   });
-                }, pos),
+                }, wait++),
               );
             }
 
-            // Set exact target value on last iteration
             timeoutRef.current.push(
               setTimeout(() => {
+                // Set exact target value on last iteration
                 Object.keys(to).forEach((attr) => {
-                  setStyle(attr, isBoomerangIteration ? meta[attr].from : meta[attr].to);
+                  setStyle(attr, meta[attr].to);
                 });
-              }, duration),
+              }, wait++),
             );
 
-            await sleep(duration);
-          }
-        }, 0);
+            // Repeat actions (reversed) when used boomerang
+            if (boomerang) {
+              for (let pos = 1; pos <= duration; pos++) {
+                timeoutRef.current.push(
+                  setTimeout(() => {
+                    Object.keys(to).forEach((attr) => {
+                      const [currValue] = resolveValue(styleRef.current[attr]);
+                      const newValue = currValue - meta[attr].inc;
+                      setStyle(attr, newValue, meta[attr].unit);
+                    });
+                  }, wait++),
+                );
+              }
 
-        await sleep(duration * baseCalc + 20);
+              timeoutRef.current.push(
+                setTimeout(() => {
+                  // Set exact target value on last iteration
+                  Object.keys(to).forEach((attr) => {
+                    setStyle(attr, meta[attr].from);
+                  });
+                }, wait++),
+              );
+            }
 
-        if (iterations && runId === runIdRef.current) {
-          await animate();
+            if (iterations && runId === runIdRef.current) {
+              timeoutRef.current.push(setTimeout(animate, wait++));
+            }
+          });
+        };
+
+        if (iterations) {
+          animate();
         }
-      };
-
-      if (iterations) {
-        await animate();
-      }
+      })();
     },
-    [resolveValue, setStyle, stop],
+    [resolveValue, setStyle, stop, theme],
   );
 
   return {
