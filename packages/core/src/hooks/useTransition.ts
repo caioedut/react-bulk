@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { notPxProps, transformProps } from '../styles/constants';
 import jss from '../styles/jss';
@@ -10,13 +10,15 @@ import stdout from '../utils/stdout';
 import uuid from '../utils/uuid';
 import useTheme from './useTheme';
 
-export default function useTransition(style?: RbkStyleProps) {
+export default function useTransition(style?: RbkStyleProps, ref?: MutableRefObject<any>) {
   const theme = useTheme();
   const { web, native } = global.mapping;
 
   const baseStyle = useMemo(() => jss({ theme }, style), [theme, style]);
 
-  const elRef = useRef<any>();
+  const defaultRef = useRef();
+  const elRef = ref ?? defaultRef;
+
   const styleRef = useRef(clone(baseStyle));
   const runIdRef = useRef<string>();
   const timeoutRef = useRef<TimeoutType>();
