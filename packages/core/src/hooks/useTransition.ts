@@ -1,12 +1,12 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
-import { notPxProps } from '../styles/constants';
+import { notPxProps, transformProps } from '../styles/constants';
 import jss from '../styles/jss';
-import { RbkStyleProps, RbkTransition, TimeoutType } from '../types';
+import { IntervalType, RbkStyleProps, RbkTransition, TimeoutType } from '../types';
 import clone from '../utils/clone';
 import defined from '../utils/defined';
 import global from '../utils/global';
-import sleep from '../utils/sleep';
+import stdout from '../utils/stdout';
 import uuid from '../utils/uuid';
 import useTheme from './useTheme';
 
@@ -18,13 +18,12 @@ export default function useTransition(style?: RbkStyleProps) {
 
   const elRef = useRef<any>();
   const styleRef = useRef(clone(baseStyle));
-  const timeoutRef = useRef<TimeoutType[]>([]);
   const runIdRef = useRef<string>();
+  const timeoutRef = useRef<TimeoutType>();
+  const intervalRef = useRef<IntervalType>();
 
   const setStyle = useCallback(
     (attr: string, value: any, unit = null) => {
-      if (!elRef.current) return;
-
       if (web) {
         if (defined(value)) {
           if (!unit && !notPxProps.includes(attr as any)) {
@@ -37,7 +36,9 @@ export default function useTransition(style?: RbkStyleProps) {
         }
 
         requestAnimationFrame(() => {
-          elRef.current.style[attr] = value;
+          if (elRef.current) {
+            elRef.current.style[attr] = value;
+          }
         });
       }
 
@@ -52,8 +53,16 @@ export default function useTransition(style?: RbkStyleProps) {
           }
         }
 
+        // Parse "transform" props
+        if (transformProps.includes(attr as any)) {
+          value = [{ [attr]: value }];
+          attr = 'transform';
+        }
+
         requestAnimationFrame(() => {
-          elRef.current.setNativeProps({ [attr]: value });
+          if (elRef.current) {
+            elRef.current.setNativeProps({ [attr]: value });
+          }
         });
       }
 
@@ -70,13 +79,16 @@ export default function useTransition(style?: RbkStyleProps) {
   const stop = useCallback(() => {
     runIdRef.current = undefined;
 
-    for (const timeout of timeoutRef.current) {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
     }
 
-    timeoutRef.current = [];
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    timeoutRef.current = null;
+    intervalRef.current = null;
   }, []);
 
   const reset = useCallback(() => {
@@ -102,7 +114,13 @@ export default function useTransition(style?: RbkStyleProps) {
         duration = 350,
         iterations = 1,
         timing = 'linear',
+        throttle = 10,
       } = options;
+
+      if (throttle < 1) {
+        throttle = 1;
+        stdout.warn('"useTransition" "throttle" must be greater than 0.');
+      }
 
       from = jss({ theme }, from);
       to = jss({ theme }, to);
@@ -132,6 +150,10 @@ export default function useTransition(style?: RbkStyleProps) {
       );
 
       const animate = () => {
+        if (!iterations || runId !== runIdRef.current) {
+          return;
+        }
+
         if (typeof iterations === 'number' && iterations > 0) {
           iterations--;
         }
@@ -141,68 +163,74 @@ export default function useTransition(style?: RbkStyleProps) {
           setStyle(attr, meta[attr].from);
         });
 
-        requestAnimationFrame(() => {
-          let wait = 0;
+        let startAt = Date.now();
+        let endAt = startAt + duration;
 
-          for (let pos = 1; pos <= duration; pos++) {
-            timeoutRef.current.push(
-              setTimeout(() => {
+        intervalRef.current = setInterval(() => {
+          const pos = duration - (endAt - Date.now());
+
+          Object.keys(to).forEach((attr) => {
+            const [startValue] = resolveValue(from[attr]);
+            const [endValue] = resolveValue(to[attr]);
+            const newValue = timingFn(pos, startValue, endValue - startValue, duration);
+            setStyle(attr, newValue, meta[attr].unit);
+          });
+
+          if (endAt < Date.now() && intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+
+            // Set exact target value on last iteration
+            Object.keys(to).forEach((attr) => {
+              setStyle(attr, meta[attr].to);
+            });
+
+            // Create forward interval for boomerang
+            if (boomerang) {
+              startAt = Date.now();
+              endAt = startAt + duration;
+
+              intervalRef.current = setInterval(() => {
+                const pos = duration - (endAt - Date.now());
+
                 Object.keys(to).forEach((attr) => {
-                  const [startValue] = resolveValue(from[attr]);
-                  const [endValue] = resolveValue(to[attr]);
+                  const [startValue] = resolveValue(to[attr]);
+                  const [endValue] = resolveValue(from[attr]);
                   const newValue = timingFn(pos, startValue, endValue - startValue, duration);
                   setStyle(attr, newValue, meta[attr].unit);
                 });
-              }, wait++),
-            );
-          }
 
-          timeoutRef.current.push(
-            setTimeout(() => {
-              // Set exact target value on last iteration
-              Object.keys(to).forEach((attr) => {
-                setStyle(attr, meta[attr].to);
-              });
-            }, wait++),
-          );
+                if (endAt < Date.now() && intervalRef.current) {
+                  clearInterval(intervalRef.current);
+                  intervalRef.current = null;
 
-          // Repeat actions (reversed) when used boomerang
-          if (boomerang) {
-            for (let pos = 1; pos <= duration; pos++) {
-              timeoutRef.current.push(
-                setTimeout(() => {
+                  // Set exact target value on last iteration
                   Object.keys(to).forEach((attr) => {
-                    const [startValue] = resolveValue(to[attr]);
-                    const [endValue] = resolveValue(from[attr]);
-                    const newValue = timingFn(pos, startValue, endValue - startValue, duration);
-                    setStyle(attr, newValue, meta[attr].unit);
+                    setStyle(attr, meta[attr].from);
                   });
-                }, wait++),
-              );
+
+                  // Loop?
+                  animate();
+                }
+              }, throttle);
+            } else {
+              // Loop?
+              animate();
             }
-
-            timeoutRef.current.push(
-              setTimeout(() => {
-                // Set exact target value on last iteration
-                Object.keys(to).forEach((attr) => {
-                  setStyle(attr, meta[attr].from);
-                });
-              }, wait++),
-            );
           }
-
-          if (iterations && runId === runIdRef.current) {
-            timeoutRef.current.push(setTimeout(animate, wait++));
-          }
-        });
+        }, throttle);
       };
 
-      if (iterations) {
-        timeoutRef.current.push(setTimeout(animate, Math.max(delay || 0, 0)));
-      }
+      timeoutRef.current = setTimeout(animate, Math.max(delay || 0, 0));
     },
     [resolveValue, setStyle, stop, theme],
   );
+
+  useEffect(() => {
+    return () => {
+      stop();
+    };
+  }, [stop]);
 
   return {
     start,
