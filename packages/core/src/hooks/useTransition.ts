@@ -115,46 +115,65 @@ export default function useTransition(style?: RbkStyleProps) {
           'ease-in-out': easeInOutQuad,
         }[timing] || easeLinear;
 
-      (async () => {
-        if (delay > 0) {
-          await sleep(delay);
+      const meta = Object.fromEntries(
+        Object.keys(to).map((attr) => {
+          const [fromValue, fromUnit] = resolveValue(from?.[attr] || 0);
+          const [toValue, toUnit] = resolveValue(to[attr]);
+
+          return [
+            attr,
+            {
+              from: fromValue,
+              to: toValue,
+              unit: toUnit || fromUnit,
+            },
+          ];
+        }),
+      );
+
+      const animate = () => {
+        if (typeof iterations === 'number' && iterations > 0) {
+          iterations--;
         }
 
-        const meta = Object.fromEntries(
-          Object.keys(to).map((attr) => {
-            const [fromValue, fromUnit] = resolveValue(from?.[attr] || 0);
-            const [toValue, toUnit] = resolveValue(to[attr]);
+        // Reset styles
+        Object.keys(to).forEach((attr) => {
+          setStyle(attr, meta[attr].from);
+        });
 
-            return [
-              attr,
-              {
-                from: fromValue,
-                to: toValue,
-                unit: toUnit || fromUnit,
-              },
-            ];
-          }),
-        );
+        requestAnimationFrame(() => {
+          let wait = 0;
 
-        const animate = () => {
-          if (typeof iterations === 'number' && iterations > 0) {
-            iterations--;
+          for (let pos = 1; pos <= duration; pos++) {
+            timeoutRef.current.push(
+              setTimeout(() => {
+                Object.keys(to).forEach((attr) => {
+                  const [startValue] = resolveValue(from[attr]);
+                  const [endValue] = resolveValue(to[attr]);
+                  const newValue = timingFn(pos, startValue, endValue - startValue, duration);
+                  setStyle(attr, newValue, meta[attr].unit);
+                });
+              }, wait++),
+            );
           }
 
-          // Reset styles
-          Object.keys(to).forEach((attr) => {
-            setStyle(attr, meta[attr].from);
-          });
+          timeoutRef.current.push(
+            setTimeout(() => {
+              // Set exact target value on last iteration
+              Object.keys(to).forEach((attr) => {
+                setStyle(attr, meta[attr].to);
+              });
+            }, wait++),
+          );
 
-          requestAnimationFrame(() => {
-            let wait = 0;
-
+          // Repeat actions (reversed) when used boomerang
+          if (boomerang) {
             for (let pos = 1; pos <= duration; pos++) {
               timeoutRef.current.push(
                 setTimeout(() => {
                   Object.keys(to).forEach((attr) => {
-                    const [startValue] = resolveValue(from[attr]);
-                    const [endValue] = resolveValue(to[attr]);
+                    const [startValue] = resolveValue(to[attr]);
+                    const [endValue] = resolveValue(from[attr]);
                     const newValue = timingFn(pos, startValue, endValue - startValue, duration);
                     setStyle(attr, newValue, meta[attr].unit);
                   });
@@ -166,46 +185,21 @@ export default function useTransition(style?: RbkStyleProps) {
               setTimeout(() => {
                 // Set exact target value on last iteration
                 Object.keys(to).forEach((attr) => {
-                  setStyle(attr, meta[attr].to);
+                  setStyle(attr, meta[attr].from);
                 });
               }, wait++),
             );
+          }
 
-            // Repeat actions (reversed) when used boomerang
-            if (boomerang) {
-              for (let pos = 1; pos <= duration; pos++) {
-                timeoutRef.current.push(
-                  setTimeout(() => {
-                    Object.keys(to).forEach((attr) => {
-                      const [startValue] = resolveValue(to[attr]);
-                      const [endValue] = resolveValue(from[attr]);
-                      const newValue = timingFn(pos, startValue, endValue - startValue, duration);
-                      setStyle(attr, newValue, meta[attr].unit);
-                    });
-                  }, wait++),
-                );
-              }
+          if (iterations && runId === runIdRef.current) {
+            timeoutRef.current.push(setTimeout(animate, wait++));
+          }
+        });
+      };
 
-              timeoutRef.current.push(
-                setTimeout(() => {
-                  // Set exact target value on last iteration
-                  Object.keys(to).forEach((attr) => {
-                    setStyle(attr, meta[attr].from);
-                  });
-                }, wait++),
-              );
-            }
-
-            if (iterations && runId === runIdRef.current) {
-              timeoutRef.current.push(setTimeout(animate, wait++));
-            }
-          });
-        };
-
-        if (iterations) {
-          animate();
-        }
-      })();
+      if (iterations) {
+        timeoutRef.current.push(setTimeout(animate, Math.max(delay || 0, 0)));
+      }
     },
     [resolveValue, setStyle, stop, theme],
   );
