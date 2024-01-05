@@ -243,6 +243,7 @@ export interface RbkTransition {
   delay?: number;
   duration?: number;
   iterations?: number | 'infinite';
+  timing?: 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out';
 }
 
 export interface RbkFormEvent {
