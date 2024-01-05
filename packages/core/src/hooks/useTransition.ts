@@ -99,7 +99,7 @@ export default function useTransition(style?: RbkStyleProps) {
         from = styleRef.current,
         boomerang = false,
         delay = 0,
-        duration = 2000,
+        duration = 350,
         iterations = 1,
         timing = 'linear',
       } = options;

@@ -1301,25 +1301,27 @@ function AnimationExample() {
       </Text>
       <Grid gap>
         <Box>
-          <Button onPress={() => transition.start(to)}>Forward</Button>
+          <Button onPress={() => transition.start({ to, from })}>Forward</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start(from)}>Backward</Button>
+          <Button onPress={() => transition.start({ to: from, from: to })}>Backward</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start(to, { iterations: 3 })}>Repeat 3x</Button>
+          <Button onPress={() => transition.start({ to, from, iterations: 3 })}>Repeat 3x</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start(to, { boomerang: true })}>Boomerang</Button>
+          <Button onPress={() => transition.start({ to, from, boomerang: true })}>Boomerang</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start(to, { iterations: -1 })}>Infinite</Button>
+          <Button onPress={() => transition.start({ to, from, iterations: -1 })}>Infinite</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start(to, { boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
+          <Button onPress={() => transition.start({ to, from, boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start(to, { boomerang: true, iterations: -1 })}>Boomerang Infinite</Button>
+          <Button onPress={() => transition.start({ to, from, boomerang: true, iterations: -1 })}>
+            Boomerang Infinite
+          </Button>
         </Box>
         <Box>
           <Button color="warning" onPress={() => transition.stop()}>
