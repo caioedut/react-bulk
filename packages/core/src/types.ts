@@ -495,7 +495,7 @@ export type ThemeProps = {
     ActionSheet: ThemeComponentProps<ActionSheetProps, 'root'>;
     Avatar: ThemeComponentProps<AvatarProps, 'root' | 'content'>;
     Animation: ThemeComponentProps<AnimationProps, 'root'>;
-    Backdrop: ThemeComponentProps<BackdropProps, 'root' | 'container'>;
+    Backdrop: ThemeComponentProps<BackdropProps, 'root'>;
     Badge: ThemeComponentProps<BadgeProps, 'root' | 'label'>;
     Box: ThemeComponentProps<BoxProps, 'root'>;
     Button: ThemeComponentProps<ButtonProps, 'root' | 'label'>;
@@ -898,8 +898,6 @@ export type DividerProps = PropsWithStyles<{
 
 export type BackdropProps = PropsWithStyles<{
   visible?: boolean;
-  // Styles
-  containerStyle?: RbkStyle;
 }>;
 
 export type ModalProps = PropsWithStyles<{
