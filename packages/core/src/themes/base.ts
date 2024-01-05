@@ -295,13 +295,8 @@ const base: ThemeProps = {
             inset: 0,
             height: '100%',
             width: '100%',
-            justifyContent: 'center',
-            justifyItems: 'center',
-            alignContent: 'center',
-            alignItems: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
           },
-          container: {},
         },
       },
       Badge: {

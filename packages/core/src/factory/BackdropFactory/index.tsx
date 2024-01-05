@@ -47,9 +47,7 @@ const BackdropFactory = React.memo<BackdropProps>(
     const Child = (
       <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
         <BoxFactory position="absolute" i={0} zIndex={0} style={{ cursor: 'auto' }} onPress={onPress} />
-        <BoxFactory stylist={[variants.container]} style={containerStyle}>
-          {children}
-        </BoxFactory>
+        {children}
       </BoxFactory>
     );
 
