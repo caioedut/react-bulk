@@ -41,6 +41,86 @@ import {
 export default function Main() {
   const theme = useTheme();
 
+  const from = { width: 40, height: 40 };
+  const to = { width: 200, height: 200 };
+
+  const transition = unstable_useTransition(from);
+
+  // setTimeout(() => {
+  //   const duration = 500;
+  //   const startAt = Date.now();
+  //   const endAt = startAt + duration;
+  //
+  //   console.log({ startAt, endAt });
+  //
+  //   const interval = setInterval(() => {
+  //     if (endAt < Date.now()) {
+  //       return clearInterval(interval);
+  //     }
+  //
+  //     const pos = duration - (endAt - Date.now());
+  //
+  //     console.log(pos);
+  //   }, 10);
+  //
+  //
+  // }, 0);
+
+  // const transform = 'scale(1) rotate(360deg)';
+  //
+  // console.log(
+  //   transform
+  //     .split(/\s/g)
+  //     .filter((item) => item.trim())
+  //     .map((item) => {
+  //       const match = item.match(/(.*)\((.*)\)(\[([^\]]*)\])?/);
+  //       return { [match?.[1]]: match?.[2] };
+  //     }),
+  // );
+
+  // return (
+  //   <Box p={16}>
+  //     <Grid gap>
+  //       <Box>
+  //         <Button onPress={() => transition.start({ to, from, duration: 1000 })}>Forward</Button>
+  //       </Box>
+  //       <Box>
+  //         <Button onPress={() => transition.start({ to: from, from: to, duration: 1000 })}>Backward</Button>
+  //       </Box>
+  //       <Box>
+  //         <Button onPress={() => transition.start({ to, from, iterations: 3 })}>Repeat 3x</Button>
+  //       </Box>
+  //       <Box>
+  //         <Button onPress={() => transition.start({ to, from, boomerang: true })}>Boomerang</Button>
+  //       </Box>
+  //       <Box>
+  //         <Button onPress={() => transition.start({ to, from, iterations: -1 })}>Infinite</Button>
+  //       </Box>
+  //       <Box>
+  //         <Button onPress={() => transition.start({ to, from, boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
+  //       </Box>
+  //       <Box>
+  //         <Button onPress={() => transition.start({ to, from, boomerang: true, iterations: -1 })}>
+  //           Boomerang Infinite
+  //         </Button>
+  //       </Box>
+  //       <Box>
+  //         <Button color="warning" onPress={() => transition.stop()}>
+  //           Stop
+  //         </Button>
+  //       </Box>
+  //       <Box>
+  //         <Button color="error" onPress={() => transition.reset()}>
+  //           Reset
+  //         </Button>
+  //       </Box>
+  //       <Box xs={12}>
+  //         <Box border="1px solid primary" align="start" {...transition.props} />
+  //       </Box>
+  //     </Grid>
+  //   </Box>
+  // );
+
   return (
     <Scrollable bg="background.secondary" contentInset={theme.shape.gap}>
       <Card>
@@ -1241,7 +1321,7 @@ function AnimationExample() {
   const to = { width: 200, height: 200 };
 
   const sizeAnim = useAnimation(from);
-  const transition = unstable_useTransition({ overflow: 'hidden', ...from });
+  const transition = unstable_useTransition(from);
 
   return (
     <>
@@ -1301,10 +1381,10 @@ function AnimationExample() {
       </Text>
       <Grid gap>
         <Box>
-          <Button onPress={() => transition.start({ to, from })}>Forward</Button>
+          <Button onPress={() => transition.start({ to, from, duration: 1000 })}>Forward</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start({ to: from, from: to })}>Backward</Button>
+          <Button onPress={() => transition.start({ to: from, from: to, duration: 1000 })}>Backward</Button>
         </Box>
         <Box>
           <Button onPress={() => transition.start({ to, from, iterations: 3 })}>Repeat 3x</Button>
@@ -1352,12 +1432,12 @@ function AnimationExample() {
               </Text>
               <Grid noWrap alignItems="center" gap={6}>
                 <Box>
-                  <Animation loop in {...props}>
+                  <Animation loop in {...props} duration={1000}>
                     <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
                   </Animation>
                 </Box>
                 <Box>
-                  <Animation loop in {...props}>
+                  <Animation loop in {...props} duration={1000}>
                     <Text>Anything</Text>
                   </Animation>
                 </Box>
@@ -1374,8 +1454,8 @@ const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] a
 const variants = ['solid', 'outline', 'text'] as const;
 const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
 const tooltips = ['top', 'bottom', 'left', 'right'] as const;
-const animations = ['spin', 'fade', 'zoom', { from: { top: -30, opacity: 0 }, to: { top: 0, opacity: 1 } }] as const;
 const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
+const animations = ['spin', 'fade', 'zoom', { from: { opacity: 0, ml: -4 }, to: { opacity: 1, ml: 0 } }] as const;
 
 const formData = {
   firstName: 'Richard',
