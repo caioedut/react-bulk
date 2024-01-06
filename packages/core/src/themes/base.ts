@@ -639,23 +639,22 @@ const base: ThemeProps = {
             bg: 'background',
             maxh: '100%',
             maxw: '100%',
-            ...this.mixins.transitions.fast,
           },
           backdrop: {},
         },
         variants: {
           placement: {
             left: {
-              root: { top: 0, left: 0, height: '100%', ml: '-100%' },
+              root: { top: 0, left: 0, height: '100%' },
             },
             right: {
-              root: { top: 0, right: 0, height: '100%', mr: '-100%' },
+              root: { top: 0, right: 0, height: '100%' },
             },
             top: {
-              root: { top: 0, left: 0, width: '100%', mt: '-100%' },
+              root: { top: 0, left: 0, width: '100%' },
             },
             bottom: {
-              root: { bottom: 0, left: 0, width: '100%', mb: '-100%' },
+              root: { bottom: 0, left: 0, width: '100%' },
             },
           },
         },
