@@ -499,7 +499,6 @@ const base: ThemeProps = {
         },
         defaultStyles: {
           root: {
-            p: 1,
             m: -1,
           },
           content: {
@@ -507,6 +506,7 @@ const base: ThemeProps = {
             flexDirection: 'row',
             flexWrap: 'nowrap',
             alignItems: 'stretch',
+            p: 1,
           },
         },
       },
@@ -1111,7 +1111,6 @@ const base: ThemeProps = {
         },
         defaultStyles: {
           root: {
-            p: 1,
             m: -1,
           },
           content: {
@@ -1119,6 +1118,7 @@ const base: ThemeProps = {
             flexWrap: 'nowrap',
             alignItems: 'stretch',
             justifyContent: 'start',
+            p: 1,
           },
           button: {
             web: { transitionProperty: 'all' },
