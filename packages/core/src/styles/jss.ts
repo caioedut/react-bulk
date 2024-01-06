@@ -227,10 +227,6 @@ export default function jss(...mixin: any[]) {
       }
     }
 
-    if (prop === 'transform') {
-      value = transform(value);
-    }
-
     if (web) {
       if (prop === 'paddingVertical') {
         prop = 'paddingBlock';
@@ -283,6 +279,10 @@ export default function jss(...mixin: any[]) {
 
       if (prop === 'marginInline') {
         prop = 'marginHorizontal';
+      }
+
+      if (prop === 'transform' && typeof value === 'string') {
+        value = transform(value);
       }
 
       // Cast unit: vw
