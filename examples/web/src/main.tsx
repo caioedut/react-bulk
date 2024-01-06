@@ -41,86 +41,6 @@ import {
 export default function Main() {
   const theme = useTheme();
 
-  const from = { width: 40, height: 40 };
-  const to = { width: 200, height: 200 };
-
-  const transition = unstable_useTransition(from);
-
-  // setTimeout(() => {
-  //   const duration = 500;
-  //   const startAt = Date.now();
-  //   const endAt = startAt + duration;
-  //
-  //   console.log({ startAt, endAt });
-  //
-  //   const interval = setInterval(() => {
-  //     if (endAt < Date.now()) {
-  //       return clearInterval(interval);
-  //     }
-  //
-  //     const pos = duration - (endAt - Date.now());
-  //
-  //     console.log(pos);
-  //   }, 10);
-  //
-  //
-  // }, 0);
-
-  // const transform = 'scale(1) rotate(360deg)';
-  //
-  // console.log(
-  //   transform
-  //     .split(/\s/g)
-  //     .filter((item) => item.trim())
-  //     .map((item) => {
-  //       const match = item.match(/(.*)\((.*)\)(\[([^\]]*)\])?/);
-  //       return { [match?.[1]]: match?.[2] };
-  //     }),
-  // );
-
-  // return (
-  //   <Box p={16}>
-  //     <Grid gap>
-  //       <Box>
-  //         <Button onPress={() => transition.start({ to, from, duration: 1000 })}>Forward</Button>
-  //       </Box>
-  //       <Box>
-  //         <Button onPress={() => transition.start({ to: from, from: to, duration: 1000 })}>Backward</Button>
-  //       </Box>
-  //       <Box>
-  //         <Button onPress={() => transition.start({ to, from, iterations: 3 })}>Repeat 3x</Button>
-  //       </Box>
-  //       <Box>
-  //         <Button onPress={() => transition.start({ to, from, boomerang: true })}>Boomerang</Button>
-  //       </Box>
-  //       <Box>
-  //         <Button onPress={() => transition.start({ to, from, iterations: -1 })}>Infinite</Button>
-  //       </Box>
-  //       <Box>
-  //         <Button onPress={() => transition.start({ to, from, boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
-  //       </Box>
-  //       <Box>
-  //         <Button onPress={() => transition.start({ to, from, boomerang: true, iterations: -1 })}>
-  //           Boomerang Infinite
-  //         </Button>
-  //       </Box>
-  //       <Box>
-  //         <Button color="warning" onPress={() => transition.stop()}>
-  //           Stop
-  //         </Button>
-  //       </Box>
-  //       <Box>
-  //         <Button color="error" onPress={() => transition.reset()}>
-  //           Reset
-  //         </Button>
-  //       </Box>
-  //       <Box xs={12}>
-  //         <Box border="1px solid primary" align="start" {...transition.props} />
-  //       </Box>
-  //     </Grid>
-  //   </Box>
-  // );
-
   return (
     <Scrollable bg="background.secondary" contentInset={theme.shape.gap}>
       <Card>
@@ -565,7 +485,7 @@ function ButtonExample() {
       <Text mt={theme.shape.gap} variant="subtitle">
         Group
       </Text>
-      <ButtonGroup mt={theme.shape.gap} p={1} variant="outline">
+      <ButtonGroup mt={theme.shape.gap} variant="outline">
         <Button>Button</Button>
         <Button disabled>Disabled</Button>
         <Button loading={loading} onPress={toggleLoading}>
@@ -919,9 +839,11 @@ function ModalExample() {
 
   return (
     <>
-      <Text variant="title">Modals</Text>
+      <Text variant="title" mb={theme.shape.gap}>
+        Modals
+      </Text>
 
-      <Grid gap mt={theme.shape.gap}>
+      <Grid gap>
         <Box>
           <Button onPress={() => setModal({ visible: true, valign: 'top' })}>Top</Button>
         </Box>
@@ -1031,16 +953,28 @@ function DrawerExample() {
   const theme = useTheme();
 
   const [drawer, setDrawer] = useState(false);
+  const [placement, setPlacement] = useState('right');
+  const [style, setStyle] = useState({});
+
+  const handleOpen = (placement: string) => {
+    setDrawer(true);
+    setPlacement(placement);
+    setStyle(placement === 'top' || placement === 'bottom' ? {} : { w: 320 });
+  };
 
   return (
     <>
       <Text variant="title" mb={theme.shape.gap}>
         Drawer
       </Text>
-      <Box row>
-        <Button onPress={() => setDrawer(true)}>Drawer</Button>
-      </Box>
-      <Drawer visible={drawer} placement="right" maxw={320} onBackdropPress={() => setDrawer(false)}>
+      <Grid gap>
+        {placements.map((item) => (
+          <Box key={item}>
+            <Button onPress={() => handleOpen(item)}>{getLabel(item)}</Button>
+          </Box>
+        ))}
+      </Grid>
+      <Drawer visible={drawer} placement={placement as any} style={style} onBackdropPress={() => setDrawer(false)}>
         <Card>
           <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
           <Text mt={theme.shape.gap}>
@@ -1254,7 +1188,7 @@ function TooltipExample() {
         Hover/press texts below
       </Text>
       <Box row center>
-        {tooltips.map((pos) => (
+        {placements.map((pos) => (
           <Box key={pos} p={theme.shape.gap}>
             <Tooltip title="My tooltip" position={pos}>
               <Text>{getLabel(pos)}</Text>
@@ -1381,10 +1315,10 @@ function AnimationExample() {
       </Text>
       <Grid gap>
         <Box>
-          <Button onPress={() => transition.start({ to, from, duration: 1000 })}>Forward</Button>
+          <Button onPress={() => transition.start({ to, from })}>Forward</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start({ to: from, from: to, duration: 1000 })}>Backward</Button>
+          <Button onPress={() => transition.start({ to: from, from: to })}>Backward</Button>
         </Box>
         <Box>
           <Button onPress={() => transition.start({ to, from, iterations: 3 })}>Repeat 3x</Button>
@@ -1453,7 +1387,7 @@ function AnimationExample() {
 const colors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
 const variants = ['solid', 'outline', 'text'] as const;
 const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
-const tooltips = ['top', 'bottom', 'left', 'right'] as const;
+const placements = ['top', 'bottom', 'left', 'right'] as const;
 const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
 const animations = ['spin', 'fade', 'zoom', { from: { opacity: 0, ml: -4 }, to: { opacity: 1, ml: 0 } }] as const;
 
