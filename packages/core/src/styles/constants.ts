@@ -88,8 +88,8 @@ export const customSpacings = [
   'ml',
   'mr',
   'mh',
-  'mv',
   'mx',
+  'mv',
   'my',
   'p',
   'pt',
@@ -97,8 +97,8 @@ export const customSpacings = [
   'pl',
   'pr',
   'ph',
-  'pv',
   'px',
+  'pv',
   'py',
 ] as const;
 
