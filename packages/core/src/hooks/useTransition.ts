@@ -162,7 +162,7 @@ export default function useTransition(style?: RbkStyleProps, ref?: MutableRefObj
 
         // Reset styles
         Object.keys(to).forEach((attr) => {
-          setStyle(attr, meta[attr].from);
+          setStyle(attr, meta[attr].from, meta[attr].unit);
         });
 
         let startAt = Date.now();
@@ -184,7 +184,7 @@ export default function useTransition(style?: RbkStyleProps, ref?: MutableRefObj
 
             // Set exact target value on last iteration
             Object.keys(to).forEach((attr) => {
-              setStyle(attr, meta[attr].to);
+              setStyle(attr, meta[attr].to, meta[attr].unit);
             });
 
             // Create forward interval for boomerang
@@ -208,7 +208,7 @@ export default function useTransition(style?: RbkStyleProps, ref?: MutableRefObj
 
                   // Set exact target value on last iteration
                   Object.keys(to).forEach((attr) => {
-                    setStyle(attr, meta[attr].from);
+                    setStyle(attr, meta[attr].from, meta[attr].unit);
                   });
 
                   // Loop?
