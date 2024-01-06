@@ -1074,7 +1074,7 @@ export type AvatarProps = PropsWithStyles<{
   corners?: number;
   placeholder?: ReactElement;
   size?: number;
-  source: { uri?: string } | (string & {}) | (number & {});
+  source?: { uri?: string } | (string & {}) | (number & {});
   // Styles
   contentStyle?: RbkStyle;
 }>;
