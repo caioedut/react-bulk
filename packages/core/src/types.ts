@@ -1,6 +1,6 @@
 import { CSSProperties, JSXElementConstructor, ReactNode, Ref, RefObject, SyntheticEvent } from 'react';
 
-import { styleProps } from './styles/constants';
+import { customSpacings, styleProps } from './styles/constants';
 
 /****************************
  * FOR INTERNAL USE (START) *
@@ -67,9 +67,14 @@ type FlexAlignValues =
 
 /** @internal */
 type StyleProps = Overwrite<
-  Partial<{
-    [K in (typeof styleProps)[number]]: any;
-  }>,
+  Overwrite<
+    {
+      [K in (typeof styleProps)[number]]?: any;
+    },
+    {
+      [K in (typeof customSpacings)[number]]?: number | string | true;
+    }
+  >,
   {
     position?: 'relative' | 'absolute' | (string & {});
 
@@ -101,28 +106,6 @@ type StyleProps = Overwrite<
     border?: string | number | boolean;
     corners?: number;
     shadow?: number;
-
-    i?: number | string;
-    t?: number | string;
-    b?: number | string;
-    l?: number | string;
-    r?: number | string;
-    m?: number | string;
-    mt?: number | string;
-    mb?: number | string;
-    ml?: number | string;
-    mr?: number | string;
-    mh?: number | string;
-    mx?: number | string;
-    mv?: number | string;
-    my?: number | string;
-    p?: number | string;
-    pt?: number | string;
-    pb?: number | string;
-    pl?: number | string;
-    pr?: number | string;
-    px?: number | string;
-    py?: number | string;
   }
 >;
 
