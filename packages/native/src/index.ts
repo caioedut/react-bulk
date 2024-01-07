@@ -37,6 +37,7 @@ import ReactBulk, {
   GridFactory,
   ImageFactory,
   InputFactory,
+  InputPinFactory,
   LabelFactory,
   LinkFactory,
   ListFactory,
@@ -161,6 +162,7 @@ export const Form = FormFactory;
 export const Grid = GridFactory;
 export const Image = ImageFactory;
 export const Input = InputFactory;
+export const InputPin = InputPinFactory;
 export const Label = LabelFactory;
 export const Link = LinkFactory;
 export const List = ListFactory;

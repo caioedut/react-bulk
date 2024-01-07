@@ -26,6 +26,7 @@ const InputFactory = React.memo<InputProps>(
 
     // Extends from default props
     let {
+      _internalTriggerChange = false,
       autoCapitalize,
       autoCorrect,
       autoComplete,
@@ -293,6 +294,12 @@ const InputFactory = React.memo<InputProps>(
       if (typeof value === 'undefined') return;
       _setInternal(value);
     }, [value]);
+
+    useEffect(() => {
+      if (_internalTriggerChange) {
+        dispatchEvent('change', value, {}, onChange);
+      }
+    }, [value, _internalTriggerChange]);
 
     useEffect(() => {
       setError(errorProp);

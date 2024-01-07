@@ -121,6 +121,8 @@ export { default as ImageFactory } from './factory/ImageFactory';
 /** @internal */
 export { default as InputFactory } from './factory/InputFactory';
 /** @internal */
+export { default as InputPinFactory } from './factory/InputPinFactory';
+/** @internal */
 export { default as LabelFactory } from './factory/LabelFactory';
 /** @internal */
 export { default as LinkFactory } from './factory/LinkFactory';
