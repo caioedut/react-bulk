@@ -211,7 +211,7 @@ const InputPinFactory = React.memo<InputPinProps>(
                   caretHidden
                   controlled
                   autoCapitalize="none"
-                  autoComplete="off"
+                  autoComplete="one-time-code"
                   autoCorrect={false}
                   autoFocus={autoFocus && index === 0}
                   inputMode={type === 'numeric' ? 'numeric' : 'text'}
