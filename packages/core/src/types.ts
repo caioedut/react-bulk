@@ -956,6 +956,7 @@ export type FormProps = PropsWithStyles<{
 
 export type TooltipProps = PropsWithStyles<{
   color?: 'black' | 'white' | RbkColor;
+  offset?: number | string;
   position?: 'top' | 'bottom' | 'left' | 'right';
   title?: string;
   visible?: boolean;
