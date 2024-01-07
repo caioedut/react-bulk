@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
@@ -18,17 +18,26 @@ const InputPinFactory = React.memo<InputPinProps>(
     // Extends from default props
     let {
       autoFocus,
+
+      color,
+      colorful,
       defaultValue,
+      disabled,
       length = 0,
       name,
+      notNull,
       placeholder,
+      placeholderColor,
+      readOnly,
       returnKeyType,
       secure,
       size,
+      textColor,
       type,
       value,
       // Events
       onChange,
+      onFormChange,
       onSubmit,
       // Styles
       variants,
@@ -144,7 +153,7 @@ const InputPinFactory = React.memo<InputPinProps>(
       }
 
       // Char typed
-      if (key.length === 1) {
+      if (key.length === 1 && !disabled && !readOnly) {
         const resolvedValue = resolveValue(key);
 
         if (resolvedValue) {
@@ -173,6 +182,10 @@ const InputPinFactory = React.memo<InputPinProps>(
         return;
       }
 
+      if (disabled || readOnly) {
+        return;
+      }
+
       const newDigits = resolveValue(event.value).split('');
 
       if (newDigits.length) {
@@ -192,17 +205,19 @@ const InputPinFactory = React.memo<InputPinProps>(
     return (
       <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
         <InputFactory
+          _internalTriggerChange
           hidden
           name={name}
+          notNull={notNull}
           secure={secure}
           value={digits.join('')}
           onChange={onChange}
-          _internalTriggerChange
+          onFormChange={onFormChange}
         />
 
         <GridFactory row noWrap gap>
           {Array.from({ length }).map((_, index) => {
-            const next = inputRefs.current?.[index + 1];
+            const isLast = index === inputRefs.current.length - 1;
 
             return (
               <BoxFactory key={index}>
@@ -214,15 +229,22 @@ const InputPinFactory = React.memo<InputPinProps>(
                   autoComplete="one-time-code"
                   autoCorrect={false}
                   autoFocus={autoFocus && index === 0}
+                  color={color}
+                  colorful={colorful}
+                  disabled={disabled}
                   inputMode={type === 'numeric' ? 'numeric' : 'text'}
                   inputStyle={inputStyle}
                   placeholder={focused === index ? undefined : placeholder?.[index]}
-                  returnKeyType={next ? 'next' : returnKeyType}
+                  placeholderColor={placeholderColor}
+                  readOnly={readOnly}
+                  returnKeyType={isLast ? returnKeyType : 'next'}
                   secure={secure}
+                  selectTextOnFocus={false}
                   size={size}
+                  textColor={textColor}
                   value={digits[index]}
                   onChange={(e) => handleChange(e, index)}
-                  onSubmit={next ? () => next.focus() : onSubmit}
+                  onSubmit={isLast ? onSubmit : () => inputRefs.current[index + 1].focus()}
                   onFocus={() => setFocused(index)}
                   onBlur={() => setFocused(-1)}
                   platform={{
