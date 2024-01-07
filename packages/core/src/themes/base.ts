@@ -533,7 +533,7 @@ const base: ThemeProps = {
       Carousel: {
         name: 'rbk-carousel',
         defaultProps: {
-          chevron: 'visible',
+          chevron: true,
           color: 'primary',
           gap: 0,
           pagingEnabled: true,

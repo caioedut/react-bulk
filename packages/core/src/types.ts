@@ -805,7 +805,11 @@ export type SliderProps = PropsWithStyles<
 export type CardProps = PropsWithStyles<{}>;
 
 export type CarouselProps = PropsWithStyles<{
-  chevron?: 'visible' | 'hidden';
+  chevron?:
+    | boolean
+    | 'visible'
+    | 'hidden'
+    | ((options: { prev: boolean; next: boolean; color: RbkColor; onPress: Function }) => ReactElement);
   color?: RbkColor;
   gap?: number | true;
   pagingEnabled?: boolean;

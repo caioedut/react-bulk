@@ -31,15 +31,54 @@ import { Carousel } from '@react-bulk/web'; // OR @react-bulk/native
 </Carousel>
 ```
 
+### Custom Nav
+
+```jsx live
+<Carousel
+  xs={1} sm={1} md={2} lg={2} xl={3} gap={4}
+  chevron={({ prev, onPress }) => (
+    <Box h="100%" onPress={onPress} center p={2} bg="primary.main.25">
+      <Text variant="caption">{prev ? 'Prev' : 'Next'}</Text>
+    </Box>
+  )}
+>
+  {Array.from({ length: 4 }).map((i, index) => (
+    <Card key={index} bg="background.secondary">
+      <Text bold>
+        Slide Item {index + 1}
+      </Text>
+      <Box aspectRatio="16/9" overflow="hidden" corners={2} my={3}>
+        <Image w="100%" h="100%" source="https://i.imgur.com/HdIl3Ef.png" />
+      </Box>
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      </Text>
+    </Card>
+  ))}
+</Carousel>
+```
+
 ## Props
 
 Extends all [`Box`](/docs/core/box#props) props.
 
 ### **`chevron`**
 
-`auto` is not supported on native.
+- `true` (default): display default nav buttons.
+- `false`: don't display nav buttons.
+- `function`: display returned custom nav buttons.
 
-➤ Type: **`auto` `visible` `hidden`** <br/>
+
+➤ Type: **`boolean` | `(options: object) => ReactElement`** <br/>
+
+```js title="options"
+{
+  prev: boolean
+  next: boolean
+  color: RbkColor
+  onPress: Function
+}
+```
 
 ---
 

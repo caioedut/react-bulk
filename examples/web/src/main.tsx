@@ -1083,21 +1083,6 @@ function TabsExample() {
 function ProgressExample() {
   const theme = useTheme();
 
-  const [percent, setPercent] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPercent((current) => {
-        const newValue = current + 1;
-        return newValue > 100 ? 0 : newValue;
-      });
-    }, 100);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
   return (
     <>
       <Text variant="title">Progress</Text>
@@ -1125,7 +1110,7 @@ function ProgressExample() {
       <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
 
       <Text variant="subtitle">Bar with value</Text>
-      <Progress value={percent} mt={theme.shape.gap} />
+      <Progress value={Math.random() * 100} mt={theme.shape.gap} />
     </>
   );
 }
