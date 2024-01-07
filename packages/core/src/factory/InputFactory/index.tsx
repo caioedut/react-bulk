@@ -39,6 +39,7 @@ const InputFactory = React.memo<InputProps>(
       endAddon,
       endIcon,
       error: errorProp,
+      hidden,
       hint,
       id,
       inputMode,
@@ -401,7 +402,7 @@ const InputFactory = React.memo<InputProps>(
     ];
 
     return (
-      <BoxFactory hidden={type === 'hidden'} style={style} stylist={[variants.root, stylist]}>
+      <BoxFactory hidden={hidden || type === 'hidden'} style={style} stylist={[variants.root, stylist]}>
         {Boolean(label) && (
           <LabelFactory
             numberOfLines={1}

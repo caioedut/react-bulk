@@ -686,6 +686,7 @@ export type InputProps = PropsWithStyles<
     readOnly?: boolean;
     returnKeyType?: 'default' | 'done' | 'go' | 'next' | 'search' | 'send';
     rows?: number;
+    secure?: boolean;
     selectionColor?: RbkColor;
     selectTextOnFocus?: boolean;
     size?: RbkSize;
@@ -1107,7 +1108,19 @@ export type ListProps = PropsWithStyles<
 >;
 
 export type InputPinProps = PropsWithStyles<
-  Pick<InputProps, 'autoFocus' | 'value' | 'inputStyle' | 'returnKeyType' | 'name' | 'onChange' | 'onSubmit'>,
+  Pick<
+    InputProps,
+    | 'autoFocus'
+    | 'defaultValue'
+    | 'value'
+    | 'inputStyle'
+    | 'returnKeyType'
+    | 'name'
+    | 'onChange'
+    | 'onSubmit'
+    | 'placeholder'
+    | 'secure'
+  >,
   {
     length: number;
     type?: 'alphanumeric' | 'alphabetic' | 'numeric';
