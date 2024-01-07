@@ -1110,6 +1110,7 @@ export type InputPinProps = PropsWithStyles<
   Pick<InputProps, 'autoFocus' | 'value' | 'inputStyle' | 'returnKeyType' | 'name' | 'onChange' | 'onSubmit'>,
   {
     length: number;
+    type?: 'alphanumeric' | 'alphabetic' | 'numeric';
   }
 >;
 
