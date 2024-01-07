@@ -56,7 +56,7 @@ const CarouselFactory = React.memo<CarouselProps>(
     const [hasPrev, setHasPrev] = useState(false);
     const [hasNext, setHasNext] = useState(false);
 
-    const showChevron = chevron !== 'hidden';
+    const showChevron = chevron && chevron !== 'hidden';
     gap = gap === true ? theme.shape.gap : gap;
 
     const scrollByCount = useCallback(
@@ -201,17 +201,25 @@ const CarouselFactory = React.memo<CarouselProps>(
 
         {showChevron && hasPrev && (
           <BoxFactory l={0} stylist={[variants.chevron]}>
-            <ButtonFactory variant="outline" color={color} onPress={scrollToPrev} style={chevronStyle}>
-              <ChevronLeft svg={svg} {...chevronProps} />
-            </ButtonFactory>
+            {typeof chevron === 'function' ? (
+              chevron({ prev: true, next: false, color, onPress: scrollToPrev })
+            ) : (
+              <ButtonFactory variant="outline" color={color} onPress={scrollToPrev} style={chevronStyle}>
+                <ChevronLeft svg={svg} {...chevronProps} />
+              </ButtonFactory>
+            )}
           </BoxFactory>
         )}
 
         {showChevron && hasNext && (
           <BoxFactory r={0} stylist={[variants.chevron]}>
-            <ButtonFactory variant="outline" color={color} onPress={scrollToNext} style={chevronStyle}>
-              <ChevronRight svg={svg} {...chevronProps} />
-            </ButtonFactory>
+            {typeof chevron === 'function' ? (
+              chevron({ prev: false, next: true, color, onPress: scrollToNext })
+            ) : (
+              <ButtonFactory variant="outline" color={color} onPress={scrollToNext} style={chevronStyle}>
+                <ChevronRight svg={svg} {...chevronProps} />
+              </ButtonFactory>
+            )}
           </BoxFactory>
         )}
       </BoxFactory>
