@@ -817,6 +817,15 @@ const base: ThemeProps = {
           },
         },
       },
+      InputPin: {
+        name: 'rbk-pin-input',
+        defaultProps: {
+          size: 'medium',
+        },
+        defaultStyles: {
+          root: {},
+        },
+      },
       Label: {
         name: 'rbk-label',
         defaultProps: {},

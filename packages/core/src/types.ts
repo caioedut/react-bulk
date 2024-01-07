@@ -496,6 +496,7 @@ export type ThemeProps = {
     Grid: ThemeComponentProps<GridProps, 'root' | 'item'>;
     Image: ThemeComponentProps<ImageProps, 'root'>;
     Input: ThemeComponentProps<InputProps, 'root' | 'content' | 'label' | 'input' | 'hint' | 'error'>;
+    InputPin: ThemeComponentProps<InputPinProps, 'root'>;
     Label: ThemeComponentProps<LabelProps, 'root'>;
     Link: ThemeComponentProps<LinkProps, 'root'>;
     List: ThemeComponentProps<ListProps, 'root'>;
@@ -1102,6 +1103,13 @@ export type ListProps = PropsWithStyles<
     renderDelay?: number;
     rowHeight?: number;
     rowFallbackComponent?: JSXElementConstructor<any> | string;
+  }
+>;
+
+export type InputPinProps = PropsWithStyles<
+  Pick<InputProps, 'autoFocus' | 'value' | 'inputStyle' | 'returnKeyType' | 'name' | 'onChange' | 'onSubmit'>,
+  {
+    length: number;
   }
 >;
 
