@@ -4,8 +4,8 @@ import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { InputPinProps } from '../../types';
 import defined from '../../utils/defined';
-import global from '../../utils/global';
 import pick from '../../utils/pick';
+import string from '../../utils/string';
 import BoxFactory from '../BoxFactory';
 import GridFactory from '../GridFactory';
 import InputFactory from '../InputFactory';
@@ -14,7 +14,6 @@ const InputPinFactory = React.memo<InputPinProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.InputPin;
-    const { web } = global.mapping;
 
     // Extends from default props
     let {
@@ -23,6 +22,7 @@ const InputPinFactory = React.memo<InputPinProps>(
       name,
       returnKeyType,
       size,
+      type,
       // Events
       onChange,
       onSubmit,
@@ -33,6 +33,7 @@ const InputPinFactory = React.memo<InputPinProps>(
     } = factory2<InputPinProps>(props, options);
 
     const inputRefs = useRef<any>([]);
+    const keydownRef = useRef(false);
 
     const [digits, _setDigits] = useState<string[]>([]);
 
@@ -74,6 +75,23 @@ const InputPinFactory = React.memo<InputPinProps>(
 
       inputStyle,
     ];
+
+    const resolveValue = useCallback(
+      (value) => {
+        value = string(value).replace(/[^0-9a-zA-Z]/g, '');
+
+        if (type === 'alphabetic') {
+          value = value.replace(/[^a-zA-Z]/g, '');
+        }
+
+        if (type === 'numeric') {
+          value = value.replace(/\D/g, '');
+        }
+
+        return value;
+      },
+      [type],
+    );
 
     const handleKey = (event, index: number) => {
       const { key } = event.nativeEvent;
@@ -117,8 +135,12 @@ const InputPinFactory = React.memo<InputPinProps>(
 
       // Char typed
       if (key.length === 1) {
-        digitValue = key;
-        focusInput = inputRefs.current?.[index + 1];
+        const resolvedValue = resolveValue(key);
+
+        if (resolvedValue) {
+          digitValue = resolvedValue;
+          focusInput = inputRefs.current?.[index + 1];
+        }
       }
 
       if (defined(focusInput)) {
@@ -126,6 +148,8 @@ const InputPinFactory = React.memo<InputPinProps>(
       }
 
       if (defined(digitValue)) {
+        keydownRef.current = true;
+
         setDigits((current) => {
           current[index] = digitValue;
           return [...current];
@@ -133,24 +157,25 @@ const InputPinFactory = React.memo<InputPinProps>(
       }
     };
 
-    const handlePaste = (event, index: number) => {
-      console.log(event);
+    const handleChange = (event, index) => {
+      if (keydownRef.current) {
+        keydownRef.current = false;
+        return;
+      }
 
-      if (web) {
-        const newDigits = (event.clipboardData.getData('Text') ?? '').trim().split('');
+      const newDigits = resolveValue(event.value).trim().split('').slice(0, 4);
 
-        if (newDigits.length) {
-          const focusIndex = Math.min(length - 1, index + newDigits.length);
-          inputRefs.current?.[focusIndex]?.focus();
+      if (newDigits.length) {
+        const focusIndex = Math.min(length - 1, index + newDigits.length);
+        inputRefs.current?.[focusIndex]?.focus();
 
-          setDigits((current) => {
-            newDigits.forEach((newDigit, newDigitIndex) => {
-              current[index + newDigitIndex] = newDigit;
-            });
-
-            return [...current];
+        setDigits((current) => {
+          newDigits.forEach((newDigit, newDigitIndex) => {
+            current[index + newDigitIndex] = newDigit;
           });
-        }
+
+          return [...current];
+        });
       }
     };
 
@@ -173,11 +198,10 @@ const InputPinFactory = React.memo<InputPinProps>(
                   autoCorrect={false}
                   autoFocus={autoFocus && index === 0}
                   inputStyle={inputStyle}
-                  maxLength={1}
                   returnKeyType={next ? 'next' : returnKeyType}
                   size={size}
                   value={digits[index]}
-                  onPaste={(e) => handlePaste(e, index)}
+                  onChange={(e) => handleChange(e, index)}
                   onSubmit={next ? () => next.focus() : onSubmit}
                   platform={{
                     web: { onKeyDown: (e) => handleKey(e, index) },

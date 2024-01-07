@@ -821,6 +821,7 @@ const base: ThemeProps = {
         name: 'rbk-pin-input',
         defaultProps: {
           size: 'medium',
+          type: 'alphanumeric',
         },
         defaultStyles: {
           root: {},
