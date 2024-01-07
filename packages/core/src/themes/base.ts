@@ -1234,13 +1234,13 @@ const base: ThemeProps = {
             true: { root: { web: { fontVariant: 'small-caps' }, native: { fontVariant: ['small-caps'] } } },
             false: { root: { web: { fontVariant: 'initial' }, native: { fontVariant: [] } } },
           },
-          numberOfLines: {
-            1: {
+          selectable: {
+            false: {
               root: {
                 web: {
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
+                  '-webkit-user-select': 'none',
+                  '-ms-user-select': 'none',
+                  'user-select': 'none',
                 },
               },
             },
