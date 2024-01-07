@@ -159,8 +159,14 @@ const DatePickerFactory = React.memo<DatePickerProps>(
                 onClose: () => setCalendarVisible(false),
               }
             : variant === 'inline'
-            ? { alignItems: 'end', p: 1 }
-            : { onPress: () => setCalendarVisible(false) })}
+            ? {
+                alignItems: 'end',
+                p: 1,
+              }
+            : {
+                center: true,
+                onPress: () => setCalendarVisible(false),
+              })}
         >
           <CardFactory minw={320} maxw={360} shadow={1} p={0}>
             <BoxFactory h={380}>
