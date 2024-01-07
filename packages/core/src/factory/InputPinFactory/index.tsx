@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
@@ -18,11 +18,15 @@ const InputPinFactory = React.memo<InputPinProps>(
     // Extends from default props
     let {
       autoFocus,
+      defaultValue,
       length = 0,
       name,
+      placeholder,
       returnKeyType,
+      secure,
       size,
       type,
+      value,
       // Events
       onChange,
       onSubmit,
@@ -32,10 +36,28 @@ const InputPinFactory = React.memo<InputPinProps>(
       ...rest
     } = factory2<InputPinProps>(props, options);
 
+    const resolveValue = useCallback(
+      (value) => {
+        value = string(value).replace(/[^0-9a-zA-Z]/g, '');
+
+        if (type === 'alphabetic') {
+          value = value.replace(/[^a-zA-Z]/g, '');
+        }
+
+        if (type === 'numeric') {
+          value = value.replace(/\D/g, '');
+        }
+
+        return value.slice(0, length);
+      },
+      [type, length],
+    );
+
     const inputRefs = useRef<any>([]);
     const keydownRef = useRef(false);
+    const [focused, setFocused] = useState(-1);
 
-    const [digits, _setDigits] = useState<string[]>([]);
+    const [digits, _setDigits] = useState<string[]>(resolveValue(defaultValue ?? value).split(''));
 
     const setDigits: typeof _setDigits = useCallback(
       (value) => {
@@ -76,22 +98,10 @@ const InputPinFactory = React.memo<InputPinProps>(
       inputStyle,
     ];
 
-    const resolveValue = useCallback(
-      (value) => {
-        value = string(value).replace(/[^0-9a-zA-Z]/g, '');
-
-        if (type === 'alphabetic') {
-          value = value.replace(/[^a-zA-Z]/g, '');
-        }
-
-        if (type === 'numeric') {
-          value = value.replace(/\D/g, '');
-        }
-
-        return value;
-      },
-      [type],
-    );
+    useEffect(() => {
+      if (typeof value === 'undefined') return;
+      setDigits(value);
+    }, [value]);
 
     const handleKey = (event, index: number) => {
       const { key } = event.nativeEvent;
@@ -163,7 +173,7 @@ const InputPinFactory = React.memo<InputPinProps>(
         return;
       }
 
-      const newDigits = resolveValue(event.value).trim().split('').slice(0, 4);
+      const newDigits = resolveValue(event.value).split('');
 
       if (newDigits.length) {
         const focusIndex = Math.min(length - 1, index + newDigits.length);
@@ -181,7 +191,14 @@ const InputPinFactory = React.memo<InputPinProps>(
 
     return (
       <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
-        <InputFactory name={name} type="hidden" value={digits.join('')} onChange={onChange} _internalTriggerChange />
+        <InputFactory
+          hidden
+          name={name}
+          secure={secure}
+          value={digits.join('')}
+          onChange={onChange}
+          _internalTriggerChange
+        />
 
         <GridFactory row noWrap gap>
           {Array.from({ length }).map((_, index) => {
@@ -191,18 +208,23 @@ const InputPinFactory = React.memo<InputPinProps>(
               <BoxFactory key={index}>
                 <InputFactory
                   ref={($el) => (inputRefs.current[index] = $el)}
-                  controlled
                   caretHidden
+                  controlled
                   autoCapitalize="none"
                   autoComplete="off"
                   autoCorrect={false}
                   autoFocus={autoFocus && index === 0}
+                  inputMode={type === 'numeric' ? 'numeric' : 'text'}
                   inputStyle={inputStyle}
+                  placeholder={focused === index ? undefined : placeholder?.[index]}
                   returnKeyType={next ? 'next' : returnKeyType}
+                  secure={secure}
                   size={size}
                   value={digits[index]}
                   onChange={(e) => handleChange(e, index)}
                   onSubmit={next ? () => next.focus() : onSubmit}
+                  onFocus={() => setFocused(index)}
+                  onBlur={() => setFocused(-1)}
                   platform={{
                     web: { onKeyDown: (e) => handleKey(e, index) },
                     native: { onKeyPress: (e) => handleKey(e, index) },
