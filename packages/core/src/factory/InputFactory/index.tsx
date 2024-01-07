@@ -1,5 +1,6 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import reference from '../../element/reference';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import ChevronDown from '../../icons/ChevronDown';
@@ -12,6 +13,7 @@ import { AnyObject, InputProps, InputValue, RbkInputEvent, RequiredSome } from '
 import defined from '../../utils/defined';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
+import string from '../../utils/string';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import { useForm } from '../FormFactory';
@@ -88,8 +90,7 @@ const InputFactory = React.memo<InputProps>(
     id = useHtmlId(id);
 
     const form = useForm();
-    const defaultRef: any = useRef(null);
-    const inputRef = ref || defaultRef;
+    const inputRef = useRef<any>(null);
 
     const [initialValue] = useState(defaultValue);
     const [focused, setFocused] = useState(false);
@@ -337,8 +338,13 @@ const InputFactory = React.memo<InputProps>(
     const handleFocus = (event) => {
       setFocused(true);
 
-      if (web && selectTextOnFocus) {
-        inputRef.current?.select();
+      if (web) {
+        if (selectTextOnFocus) {
+          inputRef.current?.select();
+        } else {
+          const end = string(internal).length;
+          inputRef.current?.setSelectionRange(end, end);
+        }
       }
 
       dispatchEvent('focus', internal, event, onFocus);
@@ -436,7 +442,7 @@ const InputFactory = React.memo<InputProps>(
             )}
 
             <BoxFactory
-              ref={inputRef}
+              ref={reference(ref, inputRef)}
               component={multiline ? TextArea : Input}
               style={inputStyle}
               stylist={[variants.input]}

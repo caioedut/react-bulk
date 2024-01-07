@@ -585,6 +585,7 @@ export type TextProps = PropsWithStyles<{
   justify?: boolean;
   bold?: boolean;
   italic?: boolean;
+  selectable?: boolean;
   smallCaps?: boolean;
   weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | (string & {});
   transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
@@ -1111,15 +1112,26 @@ export type InputPinProps = PropsWithStyles<
   Pick<
     InputProps,
     | 'autoFocus'
+    | 'color'
+    | 'colorful'
     | 'defaultValue'
-    | 'value'
-    | 'inputStyle'
-    | 'returnKeyType'
+    | 'disabled'
     | 'name'
+    | 'notNull'
+    | 'placeholder'
+    | 'placeholderColor'
+    | 'readOnly'
+    | 'returnKeyType'
+    | 'secure'
+    | 'size'
+    | 'textColor'
+    | 'value'
+    // Styles
+    | 'inputStyle'
+    // Events
     | 'onChange'
     | 'onSubmit'
-    | 'placeholder'
-    | 'secure'
+    | 'onFormChange'
   >,
   {
     length: number;

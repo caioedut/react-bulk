@@ -316,6 +316,14 @@ The highlight and cursor color of the text input.
 
 ---
 
+### **`selectTextOnFocus`**
+
+If `true`, all text will automatically be selected on focus.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
 ### **`size`**
 
 ➤ Type: **`'xsmall'` `'small'` `'medium'` `'large'` `'xlarge'`** <br/>
