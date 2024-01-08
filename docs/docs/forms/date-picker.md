@@ -24,6 +24,12 @@ import { DatePicker } from '@react-bulk/web'; // OR @react-bulk/native
 <DatePicker variant="modal" />
 ```
 
+#### Dropdown
+
+```jsx live
+<DatePicker variant="dropdown" />
+```
+
 #### Inline
 
 ```jsx live
@@ -96,7 +102,7 @@ Extends all [`Input`](/docs/forms/input#props) props.
 
 ### **`variant`**
 
-➤ Type: **`'modal'` `'inline'`** <br/>
+➤ Type: **`'modal'` `'dropdown'` `'inline'`** <br/>
 
 ---
 
