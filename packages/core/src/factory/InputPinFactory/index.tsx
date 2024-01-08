@@ -2,7 +2,7 @@ import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'rea
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { InputPinProps } from '../../types';
+import { InputPinProps, RequiredSome } from '../../types';
 import defined from '../../utils/defined';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -24,7 +24,7 @@ const InputPinFactory = React.memo<InputPinProps>(
       colorful,
       defaultValue,
       disabled,
-      length = 0,
+      length,
       name,
       notNull,
       placeholder,
@@ -44,7 +44,7 @@ const InputPinFactory = React.memo<InputPinProps>(
       variants,
       inputStyle,
       ...rest
-    } = factory2<InputPinProps>(props, options);
+    } = factory2<RequiredSome<InputPinProps, 'length'>>(props, options);
 
     const resolveValue = useCallback(
       (value) => {

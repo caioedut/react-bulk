@@ -1134,7 +1134,7 @@ export type InputPinProps = PropsWithStyles<
     | 'onFormChange'
   >,
   {
-    length: number;
+    length?: number;
     type?: 'alphanumeric' | 'alphabetic' | 'numeric';
   }
 >;
