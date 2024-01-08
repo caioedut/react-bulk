@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Checkbox
 
 The checkbox is shown as a square box that is ticked (checked) when activated.

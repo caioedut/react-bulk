@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # Input Pin
 
 Used to create a secure and user-friendly input field for entering a pin code, providing features such as masking, validation, and auto-focus.
@@ -21,12 +25,15 @@ import { InputPin } from '@react-bulk/web'; // OR @react-bulk/native
 ```jsx live
 <Grid gap maxw={400}>
     <Box>
+        <Label mb={1}>Alphanumeric</Label>
         <InputPin type="alphanumeric" />
     </Box>
     <Box>
+        <Label mb={1}>Numeric</Label>
         <InputPin type="numeric" />
     </Box>
     <Box>
+        <Label mb={1}>Alphabetic</Label>
         <InputPin type="alphabetic" />
     </Box>
 </Grid>

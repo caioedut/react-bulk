@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Date Picker
 
 Used to display input with calendar.
