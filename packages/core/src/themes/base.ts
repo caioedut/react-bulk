@@ -820,6 +820,7 @@ const base: ThemeProps = {
       InputPin: {
         name: 'rbk-pin-input',
         defaultProps: {
+          length: 4,
           size: 'medium',
           type: 'alphanumeric',
         },
