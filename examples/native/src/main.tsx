@@ -38,7 +38,7 @@ import {
   Text,
   Tooltip,
   useTheme,
-} from '@react-bulk/web';
+} from '@react-bulk/native';
 
 export default function Main() {
   const theme = useTheme();
