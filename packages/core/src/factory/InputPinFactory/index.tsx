@@ -1,9 +1,10 @@
-import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { InputPinProps } from '../../types';
 import defined from '../../utils/defined';
+import global from '../../utils/global';
 import pick from '../../utils/pick';
 import string from '../../utils/string';
 import BoxFactory from '../BoxFactory';
@@ -14,11 +15,11 @@ const InputPinFactory = React.memo<InputPinProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.InputPin;
+    const { web } = global.mapping;
 
     // Extends from default props
     let {
       autoFocus,
-
       color,
       colorful,
       defaultValue,
@@ -63,7 +64,6 @@ const InputPinFactory = React.memo<InputPinProps>(
     );
 
     const inputRefs = useRef<any>([]);
-    const keydownRef = useRef(false);
     const [focused, setFocused] = useState(-1);
 
     const [digits, _setDigits] = useState<string[]>(resolveValue(defaultValue ?? value).split(''));
@@ -101,7 +101,7 @@ const InputPinFactory = React.memo<InputPinProps>(
         px: 0,
         flex: 0,
         h: inputSize,
-        w: inputSize,
+        w: inputSize * 0.9,
       },
 
       inputStyle,
@@ -111,6 +111,27 @@ const InputPinFactory = React.memo<InputPinProps>(
       if (typeof value === 'undefined') return;
       setDigits(value);
     }, [value]);
+
+    const focusOnInput = useCallback(
+      (index: number) => {
+        const input = inputRefs.current?.[index];
+        input?.focus();
+
+        if (web) {
+          input?.setSelectionRange(0, 0);
+        }
+      },
+      [web],
+    );
+
+    const handleFocus = (_, index: number) => {
+      setFocused(index);
+      focusOnInput(index);
+    };
+
+    const handlePress = (_, index: number) => {
+      focusOnInput(index);
+    };
 
     const handleKey = (event, index: number) => {
       const { key } = event.nativeEvent;
@@ -152,14 +173,8 @@ const InputPinFactory = React.memo<InputPinProps>(
         focusInput = inputRefs.current?.[index - 1];
       }
 
-      // Char typed
-      if (key.length === 1 && !disabled && !readOnly) {
-        const resolvedValue = resolveValue(key);
-
-        if (resolvedValue) {
-          digitValue = resolvedValue;
-          focusInput = inputRefs.current?.[index + 1];
-        }
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
+        event.nativeEvent?.preventDefault();
       }
 
       if (defined(focusInput)) {
@@ -167,8 +182,6 @@ const InputPinFactory = React.memo<InputPinProps>(
       }
 
       if (defined(digitValue)) {
-        keydownRef.current = true;
-
         setDigits((current) => {
           current[index] = digitValue;
           return [...current];
@@ -177,21 +190,16 @@ const InputPinFactory = React.memo<InputPinProps>(
     };
 
     const handleChange = (event, index) => {
-      if (keydownRef.current) {
-        keydownRef.current = false;
-        return;
-      }
-
       if (disabled || readOnly) {
         return;
       }
 
-      const newDigits = resolveValue(event.value).split('');
+      let newDigits = resolveValue(event.value).split('');
+      if (newDigits.length < length) {
+        newDigits = newDigits.slice(0, 1);
+      }
 
       if (newDigits.length) {
-        const focusIndex = Math.min(length - 1, index + newDigits.length);
-        inputRefs.current?.[focusIndex]?.focus();
-
         setDigits((current) => {
           newDigits.forEach((newDigit, newDigitIndex) => {
             current[index + newDigitIndex] = newDigit;
@@ -199,6 +207,10 @@ const InputPinFactory = React.memo<InputPinProps>(
 
           return [...current];
         });
+
+        setTimeout(() => {
+          focusOnInput(Math.min(length - 1, index + newDigits.length));
+        }, 10);
       }
     };
 
@@ -245,11 +257,17 @@ const InputPinFactory = React.memo<InputPinProps>(
                   value={digits[index]}
                   onChange={(e) => handleChange(e, index)}
                   onSubmit={isLast ? onSubmit : () => inputRefs.current[index + 1].focus()}
-                  onFocus={() => setFocused(index)}
+                  onFocus={(e) => handleFocus(e, index)}
                   onBlur={() => setFocused(-1)}
+                  onPress={(e) => handlePress(e, index)}
                   platform={{
-                    web: { onKeyDown: (e) => handleKey(e, index) },
-                    native: { onKeyPress: (e) => handleKey(e, index) },
+                    web: {
+                      onKeyDown: (e) => handleKey(e, index),
+                    },
+                    native: {
+                      selection: { start: 0, end: 0 },
+                      onKeyPress: (e) => handleKey(e, index),
+                    },
                   }}
                 />
               </BoxFactory>
