@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useReducer, useRef, useState } from 'react';
 
 import { AnyObject, FormRef, RbkInputEvent, unstable_useTransition, useAnimation, useToaster } from '@react-bulk/core';
 import {
@@ -22,6 +22,8 @@ import {
   Grid,
   Image,
   Input,
+  InputPin,
+  Label,
   List,
   ListItem,
   Loading,
@@ -535,6 +537,27 @@ function FormExample() {
       ))}
 
       <Input mt={theme.shape.gap} label="Multiline" placeholder="Multiline input" multiline />
+
+      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
+
+      <Text mt={theme.shape.gap} variant="subtitle">
+        Input Pin
+      </Text>
+
+      <Grid gap mt={theme.shape.gap}>
+        <Box xs={12}>
+          <Label mb={1}>ALPHANUMERIC</Label>
+          <InputPin length={4} />
+        </Box>
+        <Box xs={12}>
+          <Label mb={1}>ALPHABETIC</Label>
+          <InputPin length={4} type="alphabetic" />
+        </Box>
+        <Box xs={12}>
+          <Label mb={1}>NUMERIC</Label>
+          <InputPin length={4} type="numeric" />
+        </Box>
+      </Grid>
 
       <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
 
