@@ -16,7 +16,6 @@ import {
 } from 'react-native';
 
 import ReactBulk, {
-  ActionSheetFactory,
   AnimationFactory,
   AvatarFactory,
   BackdropFactory,
@@ -141,7 +140,6 @@ global.mapping = {
   },
 } as RbkMap;
 
-export const ActionSheet = ActionSheetFactory;
 export const Avatar = AvatarFactory;
 export const Animation = AnimationFactory;
 export const Backdrop = BackdropFactory;
