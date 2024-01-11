@@ -2,7 +2,6 @@ import React, { useReducer, useRef, useState } from 'react';
 
 import { AnyObject, FormRef, RbkInputEvent, unstable_useTransition, useAnimation, useToaster } from '@react-bulk/core';
 import {
-  ActionSheet,
   Animation,
   Avatar,
   Badge,
@@ -114,10 +113,6 @@ export default function Main() {
 
       <Card mt={theme.shape.gap}>
         <DrawerExample />
-      </Card>
-
-      <Card mt={theme.shape.gap}>
-        <ActionSheetExample />
       </Card>
 
       <Card mt={theme.shape.gap}>
@@ -1009,35 +1004,6 @@ function DrawerExample() {
           </Button>
         </Card>
       </Drawer>
-    </>
-  );
-}
-
-function ActionSheetExample() {
-  const theme = useTheme();
-
-  const [actionSheet, setActionSheet] = useState(false);
-
-  return (
-    <>
-      <Text variant="title" mb={theme.shape.gap}>
-        Action Sheet
-      </Text>
-      <Box row>
-        <Button onPress={() => setActionSheet(true)}>Action Sheet</Button>
-      </Box>
-
-      <ActionSheet visible={actionSheet} maxw={500} onClose={() => setActionSheet(false)}>
-        <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-        <Text mt={theme.shape.gap}>
-          A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae
-          soluta. Incidunt labore laboriosam maiores, praesentium quia tempore!
-        </Text>
-
-        <Button mt={theme.shape.gap}>Option X</Button>
-        <Button mt={theme.shape.gap}>Option Y</Button>
-        <Button mt={theme.shape.gap}>Option Z</Button>
-      </ActionSheet>
     </>
   );
 }

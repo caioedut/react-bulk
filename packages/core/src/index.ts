@@ -79,8 +79,6 @@ export { default as createPortal } from './createPortal';
 
 // Factory
 /** @internal */
-export { default as ActionSheetFactory } from './factory/ActionSheetFactory';
-/** @internal */
 export { default as AvatarFactory } from './factory/AvatarFactory';
 /** @internal */
 export { default as AnimationFactory } from './factory/AnimationFactory';
