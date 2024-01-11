@@ -122,7 +122,7 @@ const ButtonFactory = React.memo<ButtonProps>(
 
     let childrenArray = childrenize(children);
 
-    if (childrenArray.every((child) => ['string', 'number'].includes(typeof child))) {
+    if (childrenArray.length && childrenArray.every((child) => ['string', 'number'].includes(typeof child))) {
       childrenArray = [
         <TextFactory key={0} style={labelStyle} stylist={[variants.label]}>
           {childrenArray.join('')}
