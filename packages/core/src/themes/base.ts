@@ -232,19 +232,6 @@ const base: ThemeProps = {
 
   get components(): ThemeProps['components'] {
     return {
-      ActionSheet: {
-        name: 'rbk-action-sheet',
-        defaultProps: {},
-        defaultStyles: {
-          root: {
-            align: 'center',
-            corners: 3,
-            borderBottomLeftRadius: 0,
-            borderBottomRightRadius: 0,
-            maxh: '100%',
-          },
-        },
-      },
       Avatar: {
         name: 'rbk-avatar',
         defaultProps: {

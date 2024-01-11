@@ -475,7 +475,6 @@ export type ThemeProps = {
   contrast: (color: RbkColor, lightColor?: string | null, darkColor?: string | null) => string;
 
   components: {
-    ActionSheet: ThemeComponentProps<ActionSheetProps, 'root'>;
     Avatar: ThemeComponentProps<AvatarProps, 'root' | 'content'>;
     Animation: ThemeComponentProps<AnimationProps, 'root'>;
     Backdrop: ThemeComponentProps<BackdropProps, 'root'>;
@@ -963,12 +962,6 @@ export type TooltipProps = PropsWithStyles<{
   position?: 'top' | 'bottom' | 'left' | 'right';
   title?: string;
   visible?: boolean;
-}>;
-
-export type ActionSheetProps = PropsWithStyles<{
-  visible?: boolean;
-  // Events
-  onClose?: Function;
 }>;
 
 export type AnimationProps = PropsWithStyles<{
