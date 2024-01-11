@@ -170,52 +170,6 @@ export default function createTheme(options?: ThemeEditProps, extendsTo?: ThemeE
 
       return { inset: value };
     })
-    .parser('padding', (value) => {
-      if (!defined(value)) return;
-
-      if (Platform.native) {
-        const split = `${value ?? ''}`
-          .trim()
-          .split(/\s/g)
-          .filter((item: string) => item.trim());
-
-        if (split.length > 1) {
-          const [v1, v2, v3, v4] = split;
-
-          return {
-            paddingTop: parseUnit(v1),
-            paddingRight: parseUnit(v2 ?? v1),
-            paddingBottom: parseUnit(v3 ?? v1),
-            paddingLeft: parseUnit(v4 ?? v2 ?? v1),
-          };
-        }
-      }
-
-      return { padding: value };
-    })
-    .parser('margin', (value) => {
-      if (!defined(value)) return;
-
-      if (Platform.native) {
-        const split = `${value ?? ''}`
-          .trim()
-          .split(/\s/g)
-          .filter((item: string) => item.trim());
-
-        if (split.length > 1) {
-          const [v1, v2, v3, v4] = split;
-
-          return {
-            marginTop: parseUnit(v1),
-            marginRight: parseUnit(v2 ?? v1),
-            marginBottom: parseUnit(v3 ?? v1),
-            marginLeft: parseUnit(v4 ?? v2 ?? v1),
-          };
-        }
-      }
-
-      return { margin: value };
-    })
     // .parser('boxShadow', (value) => {
     //   const colorIndex = value.search(/(\w+\(|#).+/g);
     //
