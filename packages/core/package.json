@@ -26,6 +26,9 @@
   "files": [
     "dist"
   ],
+  "dependencies": {
+    "cometta": "^0.0.8"
+  },
   "peerDependencies": {
     "react": ">=16.8.0"
   },
