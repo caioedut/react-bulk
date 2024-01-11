@@ -1,6 +1,7 @@
 import React, { forwardRef, useMemo } from 'react';
 
-import createStyle from '../../createStyle';
+import cometta from 'cometta';
+
 import useBreakpoints from '../../hooks/useBreakpoints';
 import useTheme from '../../hooks/useTheme';
 import bindings from '../../props/bindings';
@@ -115,31 +116,54 @@ const BoxFactory = React.memo<BoxProps>(
       },
     ];
 
-    // Apply responsive styles
-    for (const breakpoint of Object.entries(breakpoints)) {
-      const [name, isBkptActive] = breakpoint;
-      const ptStyle = get(name, style);
-
-      if (ptStyle && isBkptActive) {
-        style.push(ptStyle);
-      }
-    }
-
     // #HACK: fix flex overflow
     if (Number(get('flex', style) ?? 0)) {
       style.unshift({ minWidth: 0, minHeight: 0 });
     }
 
-    const styles = [!noRootStyles && variants.root, stylist];
-    const processed = useMemo(() => createStyle({ style, theme }), [style, theme]);
-    styles.push(processed);
+    // TODO: remove bkpt props from style
+    const styles = [...(!noRootStyles ? variants.root : []), stylist];
+
+    if (style) {
+      if (web) {
+        // @ts-expect-error
+        styles.push(cometta.sheet(style));
+      }
+
+      if (native) {
+        // @ts-expect-error
+        styles.push(cometta.jss(style));
+      }
+    }
+
+    // Apply responsive styles
+    for (const breakpoint of Object.entries(breakpoints)) {
+      const [bkptName] = breakpoint;
+      const bkptStyle = get(bkptName, style);
+
+      if (bkptStyle) {
+        const mediaStyle = {
+          [`@media (min-width: ${theme.breakpoints[bkptName]}px)`]: bkptStyle,
+        };
+
+        if (web) {
+          styles.push(cometta.sheet(mediaStyle));
+        }
+
+        if (native) {
+          styles.push(cometta.jss(mediaStyle));
+        }
+      }
+    }
 
     if (native) {
-      rest.style = merge(styles, rawStyle);
+      // @ts-expect-error
+      rest.style = merge(styles, cometta.jss(rawStyle));
     }
 
     if (web) {
-      rest.style = merge(rawStyle);
+      // @ts-expect-error
+      rest.style = cometta.jss(rawStyle);
       rest.className = clsx(styles, className);
     }
 
