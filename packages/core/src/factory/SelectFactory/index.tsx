@@ -10,7 +10,7 @@ import ChevronUp from '../../icons/ChevronUp';
 import MagnifyingGlass from '../../icons/MagnifyingGlass';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
-import { spacings } from '../../styles/jss';
+import { spacings } from '../../styles/constants';
 import { AnyObject, InputValue, RbkInputEvent, RequiredSome, SelectOption, SelectProps } from '../../types';
 import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';

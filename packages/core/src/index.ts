@@ -67,15 +67,14 @@ export { default as string } from './utils/string';
 export { default as uuid } from './utils/uuid';
 
 // Style
-export * from './styles/jss';
+export * from './styles/constants';
 export { default as jss } from './styles/jss';
 export { default as css } from './styles/css';
 
 // Builder
-export { default as createTheme } from './createTheme';
-export { default as createStyle } from './createStyle';
 export { default as createMeta } from './createMeta';
 export { default as createPortal } from './createPortal';
+export { default as createTheme } from './createTheme';
 
 // Factory
 /** @internal */

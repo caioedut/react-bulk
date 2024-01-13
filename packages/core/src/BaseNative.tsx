@@ -1,5 +1,9 @@
+import { memo } from 'react';
+
 import { AnyObject } from './types';
 
-export default function BaseNative({ /* theme, */ children }: AnyObject) {
+function BaseNative({ /* theme, */ children }: AnyObject) {
   return children;
 }
+
+export default memo(BaseNative);
