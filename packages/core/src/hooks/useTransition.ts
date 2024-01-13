@@ -1,7 +1,8 @@
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react';
 
+import cometta from 'cometta';
+
 import { notPxProps, transformProps } from '../styles/constants';
-import jss from '../styles/jss';
 import { IntervalType, RbkStyleProps, RbkTransition, TimeoutType } from '../types';
 import clone from '../utils/clone';
 import defined from '../utils/defined';
@@ -14,7 +15,8 @@ export default function useTransition(style?: RbkStyleProps, ref?: MutableRefObj
   const theme = useTheme();
   const { web, native } = global.mapping;
 
-  const baseStyle = useMemo(() => jss({ theme }, style), [theme, style]);
+  // @ts-expect-error
+  const baseStyle = useMemo(() => cometta.jss(style), [style]);
 
   const defaultRef = useRef();
   const elRef = ref ?? defaultRef;
@@ -124,8 +126,9 @@ export default function useTransition(style?: RbkStyleProps, ref?: MutableRefObj
         stdout.warn('"useTransition" "throttle" must be greater than 0.');
       }
 
-      from = jss({ theme }, from);
-      to = jss({ theme }, to);
+      from = cometta.jss(from);
+      // @ts-expect-error
+      to = cometta.jss(to);
 
       const timingFn =
         {

@@ -1,10 +1,11 @@
 import React, { forwardRef } from 'react';
 
+import cometta from 'cometta';
+
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { flexContainerProps } from '../../styles/constants';
-import jss from '../../styles/jss';
 import { ScrollableProps } from '../../types';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
@@ -82,9 +83,10 @@ const ScrollableFactory = React.memo<ScrollableProps>(
       };
 
       Object.assign(rest, {
-        horizontal: isHorizontal,
-        contentContainerStyle: jss({ theme }, variants.content, contentStyle),
         pagingEnabled,
+        horizontal: isHorizontal,
+        // @ts-expect-error
+        contentContainerStyle: cometta.jss(variants.content, contentStyle),
       });
 
       if (hideScrollBar) {
