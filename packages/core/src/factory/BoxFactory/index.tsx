@@ -157,8 +157,7 @@ const BoxFactory = React.memo<BoxProps>(
     }
 
     if (native) {
-      // @ts-expect-error
-      rest.style = merge(styles, cometta.jss(rawStyle));
+      rest.style = merge(styles, rawStyle);
     }
 
     if (web) {
