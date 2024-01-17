@@ -72,7 +72,7 @@ export default function useTransition(style?: RbkStyleProps, ref?: MutableRefObj
 
       styleRef.current[attr] = value;
     },
-    [native, web],
+    [elRef, native, web],
   );
 
   const resolveValue = useCallback((value) => {
