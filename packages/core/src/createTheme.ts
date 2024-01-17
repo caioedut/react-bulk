@@ -10,15 +10,12 @@ import { ThemeEditProps, ThemeProps } from './types';
 import deepmerge from './utils/deepmerge';
 import global from './utils/global';
 
-export default function createTheme(options?: ThemeEditProps, extendsTo?: ThemeEditProps): ThemeProps | any {
+export default function createTheme(options?: ThemeEditProps): ThemeProps | any {
   options = options || {};
-  extendsTo = extendsTo || {};
 
-  const mode = options?.mode || extendsTo?.mode || 'light';
+  const mode = options?.mode || 'light';
   const reference = mode === 'dark' ? dark : light;
-
-  // @ts-ignore
-  const theme: ThemeProps = deepmerge(base, extendsTo, reference, options, { mode });
+  const theme: ThemeProps = deepmerge(base, reference, options, { mode });
 
   // Parse colors
   if (theme.colors) {
