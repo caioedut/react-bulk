@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 export default function clone(mixin: Object | Array<any>) {
   const result = Array.isArray(mixin) ? [] : {};
 
