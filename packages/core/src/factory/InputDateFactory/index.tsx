@@ -3,7 +3,7 @@ import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } 
 import useTheme from '../../hooks/useTheme';
 import Calendar from '../../icons/Calendar';
 import factory2 from '../../props/factory2';
-import { DatePickerProps } from '../../types';
+import { InputDateProps } from '../../types';
 import { dateify } from '../../utils/date';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -18,10 +18,10 @@ import DropdownFactory from '../DropdownFactory';
 import GridFactory from '../GridFactory';
 import InputFactory from '../InputFactory';
 
-const DatePickerFactory = React.memo<DatePickerProps>(
+const InputDateFactory = React.memo<InputDateProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
-    const options = theme.components.DatePicker;
+    const options = theme.components.InputDate;
     const { svg } = global.mapping;
 
     // Extends from default props
@@ -31,6 +31,7 @@ const DatePickerFactory = React.memo<DatePickerProps>(
       color,
       colorful,
       error,
+      format,
       max,
       min,
       readOnly,
@@ -43,7 +44,7 @@ const DatePickerFactory = React.memo<DatePickerProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<DatePickerProps>(props, options);
+    } = factory2<InputDateProps>(props, options);
 
     const resolveValue = useCallback(
       (value) => {
@@ -238,6 +239,6 @@ const DatePickerFactory = React.memo<DatePickerProps>(
   }),
 );
 
-DatePickerFactory.displayName = 'DatePickerFactory';
+InputDateFactory.displayName = 'InputDateFactory';
 
-export default DatePickerFactory;
+export default InputDateFactory;
