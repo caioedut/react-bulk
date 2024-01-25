@@ -13,7 +13,6 @@ import {
   Carousel,
   Checkbox,
   Collapse,
-  DatePicker,
   Divider,
   Drawer,
   Dropdown,
@@ -21,6 +20,7 @@ import {
   Grid,
   Image,
   Input,
+  InputDate,
   InputPin,
   Label,
   List,
@@ -1126,13 +1126,13 @@ function CalendarExample() {
           <Text variant="subtitle">Date Picker</Text>
         </Box>
         <Box xs={12}>
-          <DatePicker name="calendar" label="Variant Modal (Default)" value={date} />
+          <InputDate name="calendar" label="Variant Modal (Default)" value={date} />
         </Box>
         <Box xs={12}>
-          <DatePicker variant="dropdown" name="calendar" label="Variant Dropdown" value={date} />
+          <InputDate variant="dropdown" name="calendar" label="Variant Dropdown" value={date} />
         </Box>
         <Box xs={12}>
-          <DatePicker variant="inline" name="calendar" label="Variant Inline" value={date} />
+          <InputDate variant="inline" name="calendar" label="Variant Inline" value={date} />
         </Box>
         <Box xs={12}>
           <Button

@@ -28,13 +28,13 @@ import ReactBulk, {
   CarouselFactory,
   CheckboxFactory,
   CollapseFactory,
-  DatePickerFactory,
   DividerFactory,
   DrawerFactory,
   DropdownFactory,
   FormFactory,
   GridFactory,
   ImageFactory,
+  InputDateFactory,
   InputFactory,
   InputPinFactory,
   LabelFactory,
@@ -152,7 +152,6 @@ export const Card = CardFactory;
 export const Carousel = CarouselFactory;
 export const Checkbox = CheckboxFactory;
 export const Collapse = CollapseFactory;
-export const DatePicker = DatePickerFactory;
 export const Divider = DividerFactory;
 export const Drawer = DrawerFactory;
 export const Dropdown = DropdownFactory;
@@ -160,6 +159,7 @@ export const Form = FormFactory;
 export const Grid = GridFactory;
 export const Image = ImageFactory;
 export const Input = InputFactory;
+export const InputDate = InputDateFactory;
 export const InputPin = InputPinFactory;
 export const Label = LabelFactory;
 export const Link = LinkFactory;

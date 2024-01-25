@@ -103,7 +103,7 @@ export { default as CheckboxFactory } from './factory/CheckboxFactory';
 /** @internal */
 export { default as CollapseFactory } from './factory/CollapseFactory';
 /** @internal */
-export { default as DatePickerFactory } from './factory/DatePickerFactory';
+export { default as InputDateFactory } from './factory/InputDateFactory';
 /** @internal */
 export { default as DividerFactory } from './factory/DividerFactory';
 /** @internal */
