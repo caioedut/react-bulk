@@ -1,15 +1,16 @@
 import React, { forwardRef, useMemo } from 'react';
 
-import cometta from 'cometta';
+import cometta, { ComettaStyle } from 'cometta';
 
-import useBreakpoints from '../../hooks/useBreakpoints';
 import useTheme from '../../hooks/useTheme';
 import bindings from '../../props/bindings';
+import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import merge from '../../props/merge';
 import { styleProps } from '../../styles/constants';
 import { BoxProps } from '../../types';
+import clone from '../../utils/clone';
 import clsx from '../../utils/clsx';
 import defined from '../../utils/defined';
 import global from '../../utils/global';
@@ -19,8 +20,6 @@ const BoxFactory = React.memo<BoxProps>(
     const theme = useTheme();
     const options = theme.components.Box;
     const { web, native, Button, Text, View } = global.mapping;
-
-    const breakpoints = useBreakpoints();
 
     // Extends from default props
     props = useMemo(() => factory2<BoxProps>(props, options), [props, options]);
@@ -105,7 +104,7 @@ const BoxFactory = React.memo<BoxProps>(
 
       web && pressable && { cursor: 'pointer' },
 
-      style,
+      clone(style),
 
       stylesFromProps,
 
@@ -121,8 +120,8 @@ const BoxFactory = React.memo<BoxProps>(
       style.unshift({ minWidth: 0, minHeight: 0 });
     }
 
-    // TODO: remove bkpt props from style
     const styles = [...(!noRootStyles ? variants.root : []), stylist];
+    const responsiveStyle = extract(Object.keys(theme.breakpoints), style);
 
     if (style) {
       if (web) {
@@ -137,9 +136,8 @@ const BoxFactory = React.memo<BoxProps>(
     }
 
     // Apply responsive styles
-    for (const breakpoint of Object.entries(breakpoints)) {
-      const [bkptName] = breakpoint;
-      const bkptStyle = get(bkptName, style);
+    for (const breakpoint of Object.entries(responsiveStyle)) {
+      const [bkptName, bkptStyle] = breakpoint as [string, ComettaStyle];
 
       if (bkptStyle) {
         const mediaStyle = {
