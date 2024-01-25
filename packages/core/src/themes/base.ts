@@ -573,21 +573,6 @@ const base: ThemeProps = {
           },
         },
       },
-      DatePicker: {
-        name: 'rbk-date-picker',
-        defaultProps: {
-          color: 'primary',
-          size: 'medium',
-          translate: {
-            cancel: 'Cancel',
-            clear: 'Clear',
-            today: 'Today',
-          },
-        },
-        defaultStyles: {
-          root: {},
-        },
-      },
       Divider: {
         name: 'rbk-divider',
         defaultProps: {
@@ -802,6 +787,21 @@ const base: ThemeProps = {
               },
             },
           },
+        },
+      },
+      InputDate: {
+        name: 'rbk-input-date',
+        defaultProps: {
+          color: 'primary',
+          size: 'medium',
+          translate: {
+            cancel: 'Cancel',
+            clear: 'Clear',
+            today: 'Today',
+          },
+        },
+        defaultStyles: {
+          root: {},
         },
       },
       InputPin: {

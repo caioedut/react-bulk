@@ -487,7 +487,7 @@ export type ThemeProps = {
     Carousel: ThemeComponentProps<CarouselProps, 'root' | 'content' | 'chevron'>;
     Checkbox: ThemeComponentProps<CheckboxProps, 'root' | 'button'>;
     Collapse: ThemeComponentProps<CollapseProps, 'root'>;
-    DatePicker: ThemeComponentProps<DatePickerProps, 'root'>;
+    InputDate: ThemeComponentProps<InputDateProps, 'root'>;
     Divider: ThemeComponentProps<DividerProps, 'root'>;
     Drawer: ThemeComponentProps<DrawerProps, 'root' | 'backdrop'>;
     Dropdown: ThemeComponentProps<DropdownProps, 'root' | 'backdrop'>;
@@ -827,9 +827,10 @@ export type CarouselProps = PropsWithStyles<{
   chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;
 }>;
 
-export type DatePickerProps = PropsWithStyles<
+export type InputDateProps = PropsWithStyles<
   InputProps,
   {
+    // format?: 'Y-M-D' | 'Y/M/D' | 'D-M-Y' | 'D/M/Y' | 'M-D-Y' | 'M/D/Y';
     max?: Date | string | number | null | undefined;
     min?: Date | string | number | null | undefined;
     value?: Date | string | number | null | undefined;
