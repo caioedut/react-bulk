@@ -190,7 +190,6 @@ const CarouselFactory = React.memo<CarouselProps>(
           hideScrollBar
           direction="horizontal"
           onScroll={handleScroll}
-          mx={-gap / 2}
         >
           {contentWidth !== null &&
             childrenize(children).map((child, index) => (
