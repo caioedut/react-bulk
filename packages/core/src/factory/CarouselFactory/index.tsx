@@ -69,7 +69,7 @@ const CarouselFactory = React.memo<CarouselProps>(
 
         scrollTo(contentRef.current, count * size + offsetRef.current);
       },
-      [contentWidth],
+      [contentWidth, web],
     );
 
     const scrollToPrev = useCallback(() => {
@@ -102,13 +102,13 @@ const CarouselFactory = React.memo<CarouselProps>(
         setHasPrev(scrollLeft - 10 > 0);
         setHasNext(scrollOverflowWidth > scrollLeft + 10);
       },
-      [contentRef],
+      [native, web],
     );
 
     useLayoutEffect(() => {
       if (!web || !contentRef.current) return;
       setContentWidth(contentRef.current.clientWidth);
-    }, [dimensions.width]);
+    }, [dimensions.width, web]);
 
     useEffect(() => {
       if (!contentRef.current || !contentWidth) return;
@@ -133,7 +133,7 @@ const CarouselFactory = React.memo<CarouselProps>(
           scrollToPrev();
         }
       });
-    }, [contentRef, hasPrev, hasNext, scrollToNext, scrollToPrev, pointerScroll]);
+    }, [contentRef, hasPrev, hasNext, scrollToNext, scrollToPrev, pointerScroll, web]);
 
     if (native) {
       Object.assign(rest, {
