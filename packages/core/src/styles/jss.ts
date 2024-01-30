@@ -1,3 +1,7 @@
-import cometta from 'cometta';
+import cometta, { ComettaParam } from 'cometta';
 
-export default cometta.jss;
+import { RbkStyle } from '../types';
+
+export default function jss(...mixin: RbkStyle[]) {
+  cometta.jss(...(mixin as ComettaParam[]));
+}
