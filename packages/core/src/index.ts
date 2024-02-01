@@ -38,6 +38,8 @@ export { default as scrollTo } from './element/scrollTo';
 export { default as scrollToEnd } from './element/scrollToEnd';
 /** @internal */
 export { default as scrollToStart } from './element/scrollToStart';
+/** @internal */
+export { default as setNativeStyle } from './element/setNativeStyle';
 
 // Util
 export { default as Platform } from './Platform';
