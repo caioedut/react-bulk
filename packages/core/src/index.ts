@@ -70,8 +70,9 @@ export { default as uuid } from './utils/uuid';
 
 // Style
 export * from './styles/constants';
-export { default as jss } from './styles/jss';
 export { default as css } from './styles/css';
+export { default as jss } from './styles/jss';
+export { default as sheet } from './styles/sheet';
 
 // Builder
 export { default as createMeta } from './createMeta';

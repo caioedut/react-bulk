@@ -1,7 +1,5 @@
 import React, { forwardRef, useMemo } from 'react';
 
-import cometta, { ComettaStyle } from 'cometta';
-
 import useTheme from '../../hooks/useTheme';
 import bindings from '../../props/bindings';
 import extract from '../../props/extract';
@@ -9,6 +7,8 @@ import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import merge from '../../props/merge';
 import { styleProps } from '../../styles/constants';
+import jss from '../../styles/jss';
+import sheet from '../../styles/sheet';
 import { BoxProps } from '../../types';
 import clone from '../../utils/clone';
 import clsx from '../../utils/clsx';
@@ -125,19 +125,17 @@ const BoxFactory = React.memo<BoxProps>(
 
     if (style) {
       if (web) {
-        // @ts-expect-error
-        styles.push(cometta.sheet(style));
+        styles.push(sheet(style));
       }
 
       if (native) {
-        // @ts-expect-error
-        styles.push(cometta.jss(style));
+        styles.push(jss(style));
       }
     }
 
     // Apply responsive styles
     for (const breakpoint of Object.entries(responsiveStyle)) {
-      const [bkptName, bkptStyle] = breakpoint as [string, ComettaStyle];
+      const [bkptName, bkptStyle] = breakpoint;
 
       if (bkptStyle) {
         const mediaStyle = {
@@ -145,22 +143,22 @@ const BoxFactory = React.memo<BoxProps>(
         };
 
         if (web) {
-          styles.push(cometta.sheet(mediaStyle));
+          styles.push(sheet(mediaStyle));
         }
 
         if (native) {
-          styles.push(cometta.jss(mediaStyle));
+          styles.push(jss(mediaStyle));
         }
       }
     }
 
     if (native) {
-      rest.style = merge(styles, rawStyle);
+      styles.push(jss(rawStyle));
+      rest.style = styles;
     }
 
     if (web) {
-      // @ts-expect-error
-      rest.style = cometta.jss(rawStyle);
+      rest.style = jss(rawStyle);
       rest.className = clsx(styles, className);
     }
 

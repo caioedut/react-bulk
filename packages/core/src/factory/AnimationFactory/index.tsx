@@ -6,6 +6,8 @@ import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import get from '../../props/get';
+import css from '../../styles/css';
+import jss from '../../styles/jss';
 import { AnimationProps, RbkStyle, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
@@ -69,10 +71,8 @@ const AnimationFactory = React.memo<AnimationProps>(
       transformTo += spin ? ` rotate(${rotateTo})` : '';
     }
 
-    // @ts-expect-error
-    from = cometta.jss(fade && { opacity: opacityFrom }, { transform: transformFrom }, from);
-    // @ts-expect-error
-    to = cometta.jss(fade && { opacity: opacityTo }, { transform: transformTo }, to);
+    from = jss(fade && { opacity: opacityFrom }, { transform: transformFrom }, from);
+    to = jss(fade && { opacity: opacityTo }, { transform: transformTo }, to);
 
     const name = useHtmlId();
     const iterations = useMemo(() => (loop === true ? -1 : Number(loop ?? 1)), [loop]);
@@ -117,13 +117,10 @@ const AnimationFactory = React.memo<AnimationProps>(
     }, [run, timing, delay, duration, speed, iterations, isBoomerang, initRangeValue]);
 
     if (web) {
-      // @ts-expect-error
-      const fromJSS = cometta.jss(from);
-      const fromCSS = cometta.css(fromJSS);
-
-      // @ts-expect-error
-      const toJSS = cometta.jss(to);
-      const toCSS = cometta.css(toJSS);
+      const fromJSS = jss(from);
+      const fromCSS = css(fromJSS);
+      const toJSS = jss(to);
+      const toCSS = css(toJSS);
 
       cometta.createStyleSheet(
         `
