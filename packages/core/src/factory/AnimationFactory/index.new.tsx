@@ -1,11 +1,10 @@
 import React, { forwardRef, useEffect, useMemo } from 'react';
 
-import cometta from 'cometta';
-
 import useTheme from '../../hooks/useTheme';
 import useTransition from '../../hooks/useTransition';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
+import jss from '../../styles/jss';
 import transform from '../../styles/transform';
 import { AnimationProps, AnyObject, RbkStyleProps, RequiredSome } from '../../types';
 import clone from '../../utils/clone';
@@ -57,19 +56,17 @@ const AnimationFactory = React.memo<AnimationProps>(
       const scaleTo = zoom && Number(zoom) < 0 ? 0 : 1;
       const rotateTo = spin && Number(spin) < 0 ? '0deg' : '360deg';
 
-      const styleFrom = cometta.jss(
+      const styleFrom = jss(
         fade && { opacity: opacityFrom },
         spin && { rotate: rotateFrom },
         zoom && { scale: scaleFrom },
-        // @ts-expect-error
         baseFrom,
       );
 
-      const styleTo = cometta.jss(
+      const styleTo = jss(
         fade && { opacity: opacityTo },
         spin && { rotate: rotateTo },
         zoom && { scale: scaleTo },
-        // @ts-expect-error
         baseTo,
       );
 
@@ -98,7 +95,7 @@ const AnimationFactory = React.memo<AnimationProps>(
       }
 
       return { styleFrom, styleTo };
-    }, [fade, from, spin, theme, to, zoom]);
+    }, [fade, from, spin, to, zoom]);
 
     const transition = useTransition(reverse ? styleTo : styleFrom);
 
