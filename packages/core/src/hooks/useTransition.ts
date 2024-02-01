@@ -3,7 +3,9 @@ import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react
 import cometta from 'cometta';
 
 import { notPxProps, transformProps } from '../styles/constants';
-import { IntervalType, RbkStyleProps, RbkTransition, TimeoutType } from '../types';
+import css from '../styles/css';
+import jss from '../styles/jss';
+import { IntervalType, RbkStyle, RbkTransition, TimeoutType } from '../types';
 import clone from '../utils/clone';
 import defined from '../utils/defined';
 import global from '../utils/global';
@@ -12,11 +14,10 @@ import stdout from '../utils/stdout';
 import uuid from '../utils/uuid';
 import useHtmlId from './useHtmlId';
 
-export default function useTransition(style?: RbkStyleProps, ref?: MutableRefObject<any>) {
+export default function useTransition(style?: RbkStyle, ref?: MutableRefObject<any>) {
   const { web, native } = global.mapping;
 
-  // @ts-expect-error
-  const baseStyle = useMemo(() => cometta.jss(style), [style]);
+  const baseStyle = useMemo(() => jss(style), [style]);
 
   const defaultRef = useRef();
   const elRef = ref ?? defaultRef;
@@ -129,9 +130,8 @@ export default function useTransition(style?: RbkStyleProps, ref?: MutableRefObj
         throttle = 10,
       } = options;
 
-      from = cometta.jss(from);
-      // @ts-expect-error
-      to = cometta.jss(to);
+      from = jss(from);
+      to = jss(to);
 
       const meta = Object.fromEntries(
         Object.keys(to).map((attr) => {
@@ -153,8 +153,8 @@ export default function useTransition(style?: RbkStyleProps, ref?: MutableRefObj
         cometta.createStyleSheet(
           `
              @keyframes ${animationName} {
-               from { ${cometta.css(from as any)} }
-               to { ${cometta.css(to as any)} }
+               from { ${css(from as any)} }
+               to { ${css(to as any)} }
              }
           `,
           { uniqueId: animationName },

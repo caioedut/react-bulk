@@ -116,6 +116,8 @@ export { default as FormFactory } from './factory/FormFactory';
 /** @internal */
 export { default as GridFactory } from './factory/GridFactory';
 /** @internal */
+export { default as GrowBoxFactory } from './factory/GrowBoxFactory';
+/** @internal */
 export { default as ImageFactory } from './factory/ImageFactory';
 /** @internal */
 export { default as InputFactory } from './factory/InputFactory';
