@@ -221,8 +221,8 @@ export interface RbkAnimation {
 }
 
 export interface RbkTransition {
-  to: Omit<RbkStyleProps, 'transform'>;
-  from?: Omit<RbkStyleProps, 'transform'>;
+  to: RbkStyleProps;
+  from?: RbkStyleProps;
 
   boomerang?: boolean;
   delay?: number;

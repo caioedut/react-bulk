@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 
 import { AnyObject, FormRef, RbkInputEvent, unstable_useTransition, useAnimation, useToaster } from '@react-bulk/core';
 import {
@@ -42,6 +42,45 @@ import {
 
 export default function Main() {
   const theme = useTheme();
+
+  const trans = unstable_useTransition({
+    transform: 'translateX(50px)',
+    // transform: { translateX: 50 },
+    // transform: [{ translateX: 50 }, { scale: 1 }],
+    // transform: [{ translateX: 50, scale: 1 }],
+  });
+
+  console.log(trans.props);
+  useEffect(() => {
+    trans.start({
+      iterations: 'infinite',
+      to: {
+        transform: 'translateX(-10px)',
+        // transform: [{ translateX: 0 }],
+      },
+    });
+  }, []);
+
+  return (
+    <Box p={16} center>
+      <Box {...trans.props}>
+        <Text>Anything</Text>
+      </Box>
+      {/*<Animation*/}
+      {/*  loop*/}
+      {/*  in*/}
+      {/*  duration={1000}*/}
+      {/*  from={{*/}
+      {/*    transform: 'translateX(50px)',*/}
+      {/*  }}*/}
+      {/*  to={{*/}
+      {/*    transform: 'translateX(0)',*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <Text>Anything</Text>*/}
+      {/*</Animation>*/}
+    </Box>
+  );
 
   return (
     <Scrollable bg="background.secondary" contentInset={theme.shape.gap}>
@@ -1402,7 +1441,16 @@ const variants = ['solid', 'outline', 'text'] as const;
 const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
 const placements = ['top', 'bottom', 'left', 'right'] as const;
 const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
-const animations = ['spin', 'fade', 'zoom', { from: { opacity: 0, ml: -4 }, to: { opacity: 1, ml: 0 } }] as const;
+const animations = [
+  'spin',
+  'fade',
+  'zoom',
+  { from: { opacity: 0, ml: -4 }, to: { opacity: 1, ml: 0 } },
+  {
+    from: { transform: 'translateX(50px)' },
+    to: { transform: 'translateX(0)' },
+  },
+] as const;
 
 const formData = {
   firstName: 'Richard',
