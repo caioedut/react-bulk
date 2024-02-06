@@ -2,10 +2,12 @@ import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react
 
 import cometta from 'cometta';
 
+import extract from '../props/extract';
 import { notPxProps, transformProps } from '../styles/constants';
 import css from '../styles/css';
 import jss from '../styles/jss';
-import { IntervalType, RbkStyle, RbkTransition, TimeoutType } from '../types';
+import transform from '../styles/transform';
+import { AnyObject, IntervalType, RbkStyle, RbkTransition, TimeoutType } from '../types';
 import clone from '../utils/clone';
 import defined from '../utils/defined';
 import global from '../utils/global';
@@ -23,10 +25,29 @@ export default function useTransition(style?: RbkStyle, ref?: MutableRefObject<a
   const elRef = ref ?? defaultRef;
 
   const animationName = useHtmlId();
-  const styleRef = useRef(clone(baseStyle));
+  const styleRef = useRef<AnyObject>(clone(baseStyle));
   const runIdRef = useRef<string>();
   const timeoutRef = useRef<TimeoutType>();
   const intervalRef = useRef<IntervalType>();
+
+  const jssWithTransform = useCallback((style) => {
+    const resolved = jss(style);
+    const { transform } = extract('transform', resolved);
+
+    const transformStyles: AnyObject = {};
+
+    if (typeof transform === 'string') {
+      transform.split(/\s/g).forEach((item) => {
+        const match = item.trim().match(/(.*)\((.*)\)(\[([^\]]*)\])?/);
+
+        if (match?.[2]) {
+          transformStyles[match?.[1]] = match?.[2];
+        }
+      });
+    }
+
+    return { ...resolved, ...jss(transformStyles) };
+  }, []);
 
   const setStyle = useCallback(
     (attr: string, value: any, unit = null) => {
@@ -130,8 +151,8 @@ export default function useTransition(style?: RbkStyle, ref?: MutableRefObject<a
         throttle = 10,
       } = options;
 
-      from = jss(from);
-      to = jss(to);
+      from = jssWithTransform(from);
+      to = jssWithTransform(to);
 
       const meta = Object.fromEntries(
         Object.keys(to).map((attr) => {
@@ -150,11 +171,14 @@ export default function useTransition(style?: RbkStyle, ref?: MutableRefObject<a
       );
 
       if (web) {
+        const transformFrom = transform(extract([...transformProps], from));
+        const transformTo = transform(extract([...transformProps], to));
+
         cometta.createStyleSheet(
           `
              @keyframes ${animationName} {
-               from { ${css(from as any)} }
-               to { ${css(to as any)} }
+               from { ${css(from, { transform: transformFrom })} }
+               to { ${css(to, { transform: transformTo })} }
              }
           `,
           { uniqueId: animationName },
