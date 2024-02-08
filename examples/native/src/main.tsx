@@ -18,6 +18,7 @@ import {
   Dropdown,
   Form,
   Grid,
+  GrowBox,
   Image,
   Input,
   InputDate,
@@ -137,6 +138,10 @@ export default function Main() {
 
       <Card mt={theme.shape.gap}>
         <CarouselExample />
+      </Card>
+
+      <Card mt={theme.shape.gap}>
+        <GrowBoxExample />
       </Card>
 
       <Card mt={theme.shape.gap}>
@@ -1205,6 +1210,40 @@ function CarouselExample() {
           </Card>
         ))}
       </Carousel>
+    </>
+  );
+}
+
+function GrowBoxExample() {
+  const theme = useTheme();
+
+  const [length, incLength] = useReducer((current, incValue) => {
+    return Math.max(0, current + incValue);
+  }, 0);
+
+  return (
+    <>
+      <Text variant="title" mb={theme.shape.gap}>
+        Grow Box
+      </Text>
+
+      <ButtonGroup>
+        <Button onPress={() => incLength(1)}>+1</Button>
+        <Button onPress={() => incLength(+10)}>+10</Button>
+        <Button onPress={() => incLength(-1)}>-1</Button>
+        <Button onPress={() => incLength(-10)}>-10</Button>
+        <Button onPress={() => incLength(-length)}>Reset</Button>
+      </ButtonGroup>
+
+      <GrowBox row mt={4} align="start" border="1px solid primary">
+        {Array.from({ length }).map((_, index) => (
+          <Box key={index} w={100} p={2}>
+            <Card bg="background.secondary">
+              <Text center>{index + 1}</Text>
+            </Card>
+          </Box>
+        ))}
+      </GrowBox>
     </>
   );
 }

@@ -1,4 +1,4 @@
-export default function clone(mixin: Object | Array<any>) {
+export default function clone(mixin: any) {
   const result = Array.isArray(mixin) ? [] : {};
 
   for (const key in mixin) {

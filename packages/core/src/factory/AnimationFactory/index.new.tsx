@@ -57,7 +57,6 @@ const AnimationFactory = React.memo<AnimationProps>(
       const rotateTo = spin && Number(spin) < 0 ? '0deg' : '360deg';
 
       const styleFrom = jss(
-        { theme },
         fade && { opacity: opacityFrom },
         spin && { rotate: rotateFrom },
         zoom && { scale: scaleFrom },
@@ -65,7 +64,6 @@ const AnimationFactory = React.memo<AnimationProps>(
       );
 
       const styleTo = jss(
-        { theme },
         fade && { opacity: opacityTo },
         spin && { rotate: rotateTo },
         zoom && { scale: scaleTo },
@@ -97,7 +95,7 @@ const AnimationFactory = React.memo<AnimationProps>(
       }
 
       return { styleFrom, styleTo };
-    }, [fade, from, spin, theme, to, zoom]);
+    }, [fade, from, spin, to, zoom]);
 
     const transition = useTransition(reverse ? styleTo : styleFrom);
 

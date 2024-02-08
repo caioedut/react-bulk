@@ -5,7 +5,7 @@ import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
-import { spacings } from '../../styles/jss';
+import { spacings } from '../../styles/constants';
 import { AnyObject, CheckboxProps, RbkCheckboxEvent, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';

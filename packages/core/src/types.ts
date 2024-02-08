@@ -493,6 +493,7 @@ export type ThemeProps = {
     Dropdown: ThemeComponentProps<DropdownProps, 'root' | 'backdrop'>;
     Form: ThemeComponentProps<FormProps, 'root'>;
     Grid: ThemeComponentProps<GridProps, 'root' | 'item'>;
+    GrowBox: ThemeComponentProps<GrowBoxProps, 'root'>;
     Image: ThemeComponentProps<ImageProps, 'root'>;
     Input: ThemeComponentProps<InputProps, 'root' | 'content' | 'label' | 'input' | 'hint' | 'error'>;
     InputPin: ThemeComponentProps<InputPinProps, 'root'>;
@@ -1132,6 +1133,10 @@ export type InputPinProps = PropsWithStyles<
     type?: 'alphanumeric' | 'alphabetic' | 'numeric';
   }
 >;
+
+export type GrowBoxProps = PropsWithStyles<{
+  duration?: number;
+}>;
 
 /************************
  * DEPRECATIONS (START) *

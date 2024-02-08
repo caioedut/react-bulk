@@ -266,3 +266,24 @@ export const styleProps = [
   'textTransform',
   'zIndex',
 ] as const;
+
+export const aliases = {
+  w: 'width',
+  h: 'height',
+  maxw: 'maxWidth',
+  maxh: 'maxHeight',
+  minw: 'minWidth',
+  minh: 'minHeight',
+  lh: 'lineHeight',
+  bg: 'backgroundColor',
+
+  // Flex Container
+  direction: 'flexDirection',
+
+  // Flex Item
+  grow: 'flexGrow',
+  shrink: 'flexShrink',
+  basis: 'flexBasis',
+  align: 'alignSelf',
+  justify: 'justifySelf',
+};

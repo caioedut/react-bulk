@@ -33,6 +33,7 @@ import ReactBulk, {
   DropdownFactory,
   FormFactory,
   GridFactory,
+  GrowBoxFactory,
   ImageFactory,
   InputDateFactory,
   InputFactory,
@@ -158,6 +159,7 @@ export const Drawer = DrawerFactory;
 export const Dropdown = DropdownFactory;
 export const Form = FormFactory;
 export const Grid = GridFactory;
+export const GrowBox = GrowBoxFactory;
 export const Image = ImageFactory;
 export const Input = InputFactory;
 export const InputDate = InputDateFactory;
