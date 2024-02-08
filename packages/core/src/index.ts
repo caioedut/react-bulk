@@ -38,6 +38,8 @@ export { default as scrollTo } from './element/scrollTo';
 export { default as scrollToEnd } from './element/scrollToEnd';
 /** @internal */
 export { default as scrollToStart } from './element/scrollToStart';
+/** @internal */
+export { default as setNativeStyle } from './element/setNativeStyle';
 
 // Util
 export { default as Platform } from './Platform';
@@ -67,15 +69,15 @@ export { default as string } from './utils/string';
 export { default as uuid } from './utils/uuid';
 
 // Style
-export * from './styles/jss';
-export { default as jss } from './styles/jss';
+export * from './styles/constants';
 export { default as css } from './styles/css';
+export { default as jss } from './styles/jss';
+export { default as sheet } from './styles/sheet';
 
 // Builder
-export { default as createTheme } from './createTheme';
-export { default as createStyle } from './createStyle';
 export { default as createMeta } from './createMeta';
 export { default as createPortal } from './createPortal';
+export { default as createTheme } from './createTheme';
 
 // Factory
 /** @internal */
@@ -114,6 +116,8 @@ export { default as DropdownFactory } from './factory/DropdownFactory';
 export { default as FormFactory } from './factory/FormFactory';
 /** @internal */
 export { default as GridFactory } from './factory/GridFactory';
+/** @internal */
+export { default as GrowBoxFactory } from './factory/GrowBoxFactory';
 /** @internal */
 export { default as ImageFactory } from './factory/ImageFactory';
 /** @internal */

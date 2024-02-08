@@ -32,6 +32,9 @@
   "alias": {
     "process": false
   },
+  "dependencies": {
+    "cometta": "^0.2.0"
+  },
   "peerDependencies": {
     "react": ">=16.8.0"
   },
