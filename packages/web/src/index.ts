@@ -49,6 +49,7 @@ global.mapping = {
   ios: false,
   android: false,
 
+  useTheme,
   useDimensions,
 
   dimensions: {

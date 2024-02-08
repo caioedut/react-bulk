@@ -22,7 +22,10 @@
     "ux"
   ],
   "type": "commonjs",
+  "source": "src/index.ts",
   "main": "dist/index.js",
+  "module": "dist/module.js",
+  "types": "dist/types.d.ts",
   "files": [
     "dist"
   ],
