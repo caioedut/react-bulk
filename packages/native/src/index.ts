@@ -87,6 +87,7 @@ global.mapping = {
   ios: Platform.OS === 'ios',
   android: Platform.OS === 'android',
 
+  useTheme,
   useDimensions,
 
   dimensions: {
