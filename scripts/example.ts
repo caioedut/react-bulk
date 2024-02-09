@@ -11,9 +11,16 @@ if (isWeb && isNative) {
 const platform = isNative ? 'native' : 'web';
 const cwd = `./examples/${platform}`;
 
-pmex('yarn build');
+pmex('build');
 
-pmex(`yarn --cwd ${cwd} install`);
+pmex(
+  {
+    npm: `install && npm prune`,
+    pnpm: `install --fix-lockfile`,
+    yarn: `install --check-files`,
+  },
+  { cwd },
+);
 
 rmSync(`${cwd}/node_modules/@react-bulk`, {
   force: true,
@@ -30,14 +37,13 @@ for (const pkg of packages) {
 
   cpSync(`./packages/${pkg}/package.json`, `${cwd}/node_modules/@react-bulk/${pkg}/package.json`, {
     force: true,
-    recursive: true,
   });
 }
 
 if (isWeb) {
-  pmex(`yarn --cwd ${cwd} vite dev --force`);
+  pmex('vite dev --force', { cwd });
 }
 
 if (isNative) {
-  pmex(`yarn --cwd ${cwd} expo start -c`);
+  pmex(`expo start -c`, { cwd });
 }
