@@ -1,7 +1,5 @@
 import React, { forwardRef } from 'react';
 
-import cometta from 'cometta';
-
 import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';

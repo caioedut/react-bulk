@@ -123,6 +123,9 @@ const BoxFactory = React.memo<BoxProps>(
     const styles = [...(!noRootStyles ? variants.root : []), stylist];
     const responsiveStyle = extract(Object.keys(theme.breakpoints), style);
 
+    // TODO: refresh cometta styles when have responsive styles
+    // useDimensions(Object.keys(responsiveStyle).length > 0);
+
     if (style) {
       if (web) {
         styles.push(sheet(style));

@@ -24,7 +24,7 @@
   "type": "commonjs",
   "source": "src/index.ts",
   "main": "dist/index.js",
-  "module": "dist/module.js",
+  "module": "dist/index.mjs",
   "types": "dist/types.d.ts",
   "files": [
     "dist"
@@ -33,7 +33,7 @@
     "process": false
   },
   "dependencies": {
-    "cometta": "^0.2.0"
+    "cometta": "^0.2.1"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
