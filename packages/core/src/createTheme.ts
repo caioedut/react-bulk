@@ -1,4 +1,4 @@
-import cometta from 'cometta';
+import { createStyleSheet } from 'cometta';
 
 import Platform from './Platform';
 import registry from './libs/cometta';
@@ -9,6 +9,9 @@ import light from './themes/light';
 import { ThemeEditProps, ThemeProps } from './types';
 import deepmerge from './utils/deepmerge';
 import global from './utils/global';
+import css from './styles/css';
+import jss from './styles/jss';
+import sheet from './styles/sheet';
 
 export default function createTheme(options?: ThemeEditProps): ThemeProps | any {
   options = options || {};
@@ -64,7 +67,7 @@ export default function createTheme(options?: ThemeEditProps): ThemeProps | any 
   registry(theme);
 
   if (Platform.web) {
-    cometta.createStyleSheet(
+    createStyleSheet(
       `
 *,
 *:before,
@@ -74,7 +77,7 @@ export default function createTheme(options?: ThemeEditProps): ThemeProps | any 
 }
 
 ${Object.entries(theme.mixins.scroll)
-  .map(([selector, styles]) => `${selector.substring(1)} { ${cometta.css(styles)} }`)
+  .map(([selector, styles]) => `${selector.substring(1)} { ${css(styles)} }`)
   .join(`\n`)}
 
 html {
@@ -116,11 +119,11 @@ body {
       const name = componentName + (prop === 'root' ? '' : `-${prop}`);
 
       if (Platform.native) {
-        global.styles[name] = cometta.jss(style);
+        global.styles[name] = jss(style);
       }
 
       if (Platform.web) {
-        global.styles[name] = cometta.sheet({
+        global.styles[name] = sheet({
           __className: name,
           ...style,
         });
@@ -134,11 +137,11 @@ body {
           const name = `${componentName}-${varAttr}-${optionKey}` + (styleId === 'root' ? '' : `-${styleId}`);
 
           if (Platform.native) {
-            global.styles[name] = cometta.jss(style);
+            global.styles[name] = jss(style);
           }
 
           if (Platform.web) {
-            global.styles[name] = cometta.sheet({
+            global.styles[name] = sheet({
               __className: name,
               ...style,
             });
