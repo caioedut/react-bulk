@@ -38,7 +38,7 @@ import ReactBulk, {
   TextFactory,
   TooltipFactory,
   global,
-  useTheme,
+  useTheme as useCoreTheme,
 } from '@react-bulk/core';
 
 import useDimensions from './useDimensions';
@@ -49,7 +49,6 @@ global.mapping = {
   ios: false,
   android: false,
 
-  useTheme,
   useDimensions,
 
   dimensions: {
@@ -148,6 +147,8 @@ export const Terminal = TerminalFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 
-export { useDimensions, useTheme };
+export const useTheme = useCoreTheme;
+
+export { useDimensions };
 
 export default ReactBulk;

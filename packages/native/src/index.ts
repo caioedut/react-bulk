@@ -55,7 +55,7 @@ import ReactBulk, {
   TextFactory,
   TooltipFactory,
   global,
-  useTheme,
+  useTheme as useCoreTheme,
 } from '@react-bulk/core';
 import Svg, {
   Circle,
@@ -87,7 +87,6 @@ global.mapping = {
   ios: Platform.OS === 'ios',
   android: Platform.OS === 'android',
 
-  useTheme,
   useDimensions,
 
   dimensions: {
@@ -179,6 +178,8 @@ export const Tabs = TabsFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 
-export { useDimensions, useTheme };
+export const useTheme = useCoreTheme;
+
+export { useDimensions };
 
 export default ReactBulk;
