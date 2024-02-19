@@ -78,8 +78,8 @@ const InputDateFactory = React.memo<InputDateProps>(
           return null;
         }
 
-        if (format || localeProp) {
-          return dateValue.toLocaleDateString(localeProp ?? locale, {
+        if (format || localeProp || locale) {
+          return dateValue.toLocaleDateString(localeProp || locale, {
             month: '2-digit',
             day: '2-digit',
             year: 'numeric',

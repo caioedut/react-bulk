@@ -2,9 +2,9 @@
 sidebar_position: 6
 ---
 
-# Date Picker
+# Input Date
 
-Used to display input with calendar.
+Used to display input with calendar (date picker).
 
 ## Import
 
