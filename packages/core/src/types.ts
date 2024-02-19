@@ -23,8 +23,8 @@ type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
     ? RecursivePartial<U>[]
     : T[P] extends object | undefined
-    ? RecursivePartial<T[P]>
-    : T[P];
+      ? RecursivePartial<T[P]>
+      : T[P];
 };
 
 /** @internal */
@@ -828,9 +828,15 @@ export type CarouselProps = PropsWithStyles<{
 }>;
 
 export type InputDateProps = PropsWithStyles<
-  InputProps,
+  Omit<InputProps, 'mask' | 'unmask'>,
   {
     // format?: 'Y-M-D' | 'Y/M/D' | 'D-M-Y' | 'D/M/Y' | 'M-D-Y' | 'M/D/Y';
+    locale?: Intl.LocalesArgument;
+    format?: {
+      month?: 'long' | 'narrow' | 'numeric' | 'short' | '2-digit';
+      day?: 'numeric' | '2-digit';
+      year?: 'numeric' | '2-digit';
+    };
     max?: Date | string | number | null | undefined;
     min?: Date | string | number | null | undefined;
     value?: Date | string | number | null | undefined;
