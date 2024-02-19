@@ -2,6 +2,7 @@ import {
   Animated,
   Dimensions,
   Easing,
+  NativeModules,
   Platform,
   Image as RNImage,
   Modal as RNModal,
@@ -13,7 +14,6 @@ import {
   TouchableOpacity,
   View,
   useWindowDimensions as useDimensions,
-  NativeModules,
 } from 'react-native';
 
 import ReactBulk, {
