@@ -50,6 +50,20 @@ import { InputDate } from '@react-bulk/web'; // OR @react-bulk/native
 />
 ```
 
+### Format
+
+#### Default ISO
+
+```jsx live
+<InputDate value={Date.now()} />
+```
+
+#### Locale
+
+```jsx live
+<InputDate locale="en-US" value={Date.now()} />
+```
+
 ### Translation
 
 ```jsx live
@@ -85,6 +99,12 @@ To the label element.
 ## Props
 
 Extends all [`Input`](/docs/forms/input#props) props.
+
+### **`locale`**
+
+➤ Type: **`string`** <br/>
+
+---
 
 ### **`max`**
 
