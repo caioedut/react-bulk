@@ -828,7 +828,7 @@ export type CarouselProps = PropsWithStyles<{
 }>;
 
 export type InputDateProps = PropsWithStyles<
-  Omit<InputProps, 'mask' | 'unmask'>,
+  InputProps,
   {
     // format?: 'Y-M-D' | 'Y/M/D' | 'D-M-Y' | 'D/M/Y' | 'M-D-Y' | 'M/D/Y';
     locale?: Intl.LocalesArgument;
