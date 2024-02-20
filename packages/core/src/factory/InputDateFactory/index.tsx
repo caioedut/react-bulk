@@ -29,12 +29,12 @@ const InputDateFactory = React.memo<InputDateProps>(
       defaultValue,
       disabled,
       color,
-      colorful,
       error,
       format,
       locale: localeProp,
       max,
       min,
+      name,
       readOnly,
       size,
       translate,
@@ -42,6 +42,10 @@ const InputDateFactory = React.memo<InputDateProps>(
       variant,
       // Events
       onChange,
+      onFocus,
+      onBlur,
+      onSubmit,
+      onFormChange,
       // Styles
       variants,
       ...rest
@@ -68,6 +72,13 @@ const InputDateFactory = React.memo<InputDateProps>(
         return dateValue ?? null;
       },
       [max, min],
+    );
+
+    const resolveAsISO = useCallback(
+      (value) => {
+        return resolveAsDate(value)?.toISOString()?.substring(0, 10) ?? null;
+      },
+      [resolveAsDate],
     );
 
     const resolveToFormat = useCallback(
@@ -144,13 +155,23 @@ const InputDateFactory = React.memo<InputDateProps>(
         <InputFactory
           ref={ref}
           readOnly
+          name={name}
+          type="hidden"
+          disabled={disabled}
+          value={resolveAsISO(internal)}
+          onChange={handleChangeInternal}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onSubmit={onSubmit}
+          onFormChange={onFormChange}
+        />
+        <InputFactory
+          {...rest}
+          readOnly
           disabled={disabled}
           error={error}
           color={color}
-          colorful={colorful}
-          {...rest}
           value={resolveToFormat(internal)}
-          onChange={handleChangeInternal}
           endAddon={
             <ButtonFactory
               ref={triggerRef}
