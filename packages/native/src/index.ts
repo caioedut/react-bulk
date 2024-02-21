@@ -2,6 +2,7 @@ import {
   Animated,
   Dimensions,
   Easing,
+  NativeModules,
   Platform,
   Image as RNImage,
   Modal as RNModal,
@@ -86,6 +87,12 @@ global.mapping = {
   native: true,
   ios: Platform.OS === 'ios',
   android: Platform.OS === 'android',
+
+  locale:
+    (Platform.OS === 'ios'
+      ? NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0]
+      : NativeModules.I18nManager.localeIdentifier
+    )?.replace(/_/, '-') || null,
 
   useDimensions,
 

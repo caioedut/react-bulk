@@ -831,6 +831,12 @@ export type InputDateProps = PropsWithStyles<
   InputProps,
   {
     // format?: 'Y-M-D' | 'Y/M/D' | 'D-M-Y' | 'D/M/Y' | 'M-D-Y' | 'M/D/Y';
+    locale?: Intl.LocalesArgument;
+    format?: {
+      month?: 'long' | 'narrow' | 'numeric' | 'short' | '2-digit';
+      day?: 'numeric' | '2-digit';
+      year?: 'numeric' | '2-digit';
+    };
     max?: Date | string | number | null | undefined;
     min?: Date | string | number | null | undefined;
     value?: Date | string | number | null | undefined;
