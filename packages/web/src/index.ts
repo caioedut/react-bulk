@@ -29,6 +29,7 @@ import ReactBulk, {
   OutlineFactory,
   ProgressFactory,
   RbkMap,
+  RbkTheme,
   ScrollableFactory,
   SelectFactory,
   SliderFactory,
@@ -149,7 +150,8 @@ export const Terminal = TerminalFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 
-export const useTheme = useCoreTheme;
+// Fix PARCEL hoisting types
+export const useTheme: () => RbkTheme = useCoreTheme;
 
 export { useDimensions };
 
