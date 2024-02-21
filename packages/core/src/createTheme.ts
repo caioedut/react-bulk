@@ -3,15 +3,15 @@ import { createStyleSheet } from 'cometta';
 import Platform from './Platform';
 import registry from './libs/cometta';
 import extract from './props/extract';
+import css from './styles/css';
+import jss from './styles/jss';
+import sheet from './styles/sheet';
 import base from './themes/base';
 import dark from './themes/dark';
 import light from './themes/light';
 import { ThemeEditProps, ThemeProps } from './types';
 import deepmerge from './utils/deepmerge';
 import global from './utils/global';
-import css from './styles/css';
-import jss from './styles/jss';
-import sheet from './styles/sheet';
 
 export default function createTheme(options?: ThemeEditProps): ThemeProps | any {
   options = options || {};
