@@ -31,8 +31,7 @@
     "test": "tsx scripts/test.ts",
     "example:web": "tsx scripts/example.ts --web",
     "example:native": "tsx scripts/example.ts --native",
-    "bootstrap": "lerna bootstrap",
-    "clean": "lerna exec --parallel -- rimraf dist",
+    "clean": "lerna run --parallel -- rimraf dist",
     "build": "tsx scripts/build.ts",
     "publish:stable": "tsx scripts/publish.ts",
     "fullclean": "npx rimraf **/node_modules **/package-lock.json **/yarn.lock **/pnpm-lock.yaml **/bun.lockb --glob"
@@ -51,7 +50,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "glob": "^10.3.10",
-    "lerna": "^5.1.4",
+    "lerna": "^8.1.2",
     "parcel": "^2.11.0",
     "pmex": "^1.0.0",
     "prettier": "^3.2.5",
