@@ -30,6 +30,7 @@ import ReactBulk, {
   OutlineFactory,
   ProgressFactory,
   RbkMap,
+  RbkTheme,
   ScrollableFactory,
   SelectFactory,
   SliderFactory,
@@ -39,7 +40,7 @@ import ReactBulk, {
   TextFactory,
   TooltipFactory,
   global,
-  useTheme,
+  useTheme as useCoreTheme,
 } from '@react-bulk/core';
 
 import useDimensions from './useDimensions';
@@ -50,7 +51,8 @@ global.mapping = {
   ios: false,
   android: false,
 
-  useTheme,
+  locale: typeof navigator !== 'undefined' ? navigator.languages?.[0] ?? navigator.language : null,
+
   useDimensions,
 
   dimensions: {
@@ -150,6 +152,9 @@ export const Terminal = TerminalFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 
-export { useDimensions, useTheme };
+// Fix PARCEL hoisting types
+export const useTheme: () => RbkTheme = useCoreTheme;
+
+export { useDimensions };
 
 export default ReactBulk;

@@ -22,18 +22,19 @@ const InputDateFactory = React.memo<InputDateProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.InputDate;
-    const { svg } = global.mapping;
+    const { locale, svg } = global.mapping;
 
     // Extends from default props
     let {
       defaultValue,
       disabled,
       color,
-      colorful,
       error,
       format,
+      locale: localeProp,
       max,
       min,
+      name,
       readOnly,
       size,
       translate,
@@ -41,12 +42,16 @@ const InputDateFactory = React.memo<InputDateProps>(
       variant,
       // Events
       onChange,
+      onFocus,
+      onBlur,
+      onSubmit,
+      onFormChange,
       // Styles
       variants,
       ...rest
     } = factory2<InputDateProps>(props, options);
 
-    const resolveValue = useCallback(
+    const resolveAsDate = useCallback(
       (value) => {
         if (!value) {
           return null;
@@ -64,25 +69,55 @@ const InputDateFactory = React.memo<InputDateProps>(
           dateValue = dateMax;
         }
 
-        return dateValue ? dateValue.toISOString().substring(0, 10) : null;
+        return dateValue ?? null;
       },
-      [min, max],
+      [max, min],
+    );
+
+    const resolveAsISO = useCallback(
+      (value) => {
+        return resolveAsDate(value)?.toISOString()?.substring(0, 10) ?? null;
+      },
+      [resolveAsDate],
+    );
+
+    const resolveToFormat = useCallback(
+      (value) => {
+        const dateValue = resolveAsDate(value);
+
+        if (!dateValue) {
+          return null;
+        }
+
+        if (format || localeProp || locale) {
+          return dateValue.toLocaleDateString(localeProp || locale, {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric',
+            ...format,
+          });
+        }
+
+        return dateValue.toISOString().substring(0, 10);
+      },
+      [format, locale, localeProp, resolveAsDate],
     );
 
     const triggerRef = useRef();
 
     const [calendarVisible, setCalendarVisible] = useState(false);
-    const [_internal, _setInternal] = useState(value ?? defaultValue);
+    // const [_internal, _setInternal] = useState(value ?? defaultValue);
+    const [_internal, _setInternal] = useState<Date | null>(resolveAsDate(value ?? defaultValue));
 
     const internal = useMemo(() => {
-      return resolveValue(_internal);
-    }, [_internal, resolveValue]);
+      return resolveAsDate(_internal);
+    }, [_internal, resolveAsDate]);
 
     const setInternal = useCallback(
       (value) => {
-        _setInternal(resolveValue(value));
+        _setInternal(resolveAsDate(value));
       },
-      [_setInternal, resolveValue],
+      [_setInternal, resolveAsDate],
     );
 
     color = theme.color(error ? 'error' : color || 'primary');
@@ -102,23 +137,17 @@ const InputDateFactory = React.memo<InputDateProps>(
 
     useEffect(() => {
       if (typeof value === 'undefined') return;
-      _setInternal(value);
+      _setInternal(resolveAsDate(value));
     }, [value]);
-
-    const handleChangeCalendar = useCallback(
-      (_, date) => {
-        setInternal(date);
-        setCalendarVisible(false);
-      },
-      [setInternal],
-    );
 
     const handleChangeInternal = useCallback(
       (e, date) => {
-        handleChangeCalendar(e, date);
-        onChange?.(e, date);
+        const newDate = resolveAsDate(date);
+        setInternal(newDate);
+        setCalendarVisible(false);
+        onChange?.(e, newDate);
       },
-      [handleChangeCalendar, onChange],
+      [resolveAsDate, setInternal, onChange],
     );
 
     return (
@@ -126,13 +155,23 @@ const InputDateFactory = React.memo<InputDateProps>(
         <InputFactory
           ref={ref}
           readOnly
+          name={name}
+          type="hidden"
+          disabled={disabled}
+          value={resolveAsISO(internal)}
+          onChange={handleChangeInternal}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onSubmit={onSubmit}
+          onFormChange={onFormChange}
+        />
+        <InputFactory
+          {...rest}
+          readOnly
           disabled={disabled}
           error={error}
           color={color}
-          colorful={colorful}
-          {...rest}
-          value={internal}
-          onChange={handleChangeInternal}
+          value={resolveToFormat(internal)}
           endAddon={
             <ButtonFactory
               ref={triggerRef}
@@ -160,14 +199,14 @@ const InputDateFactory = React.memo<InputDateProps>(
                 onClose: () => setCalendarVisible(false),
               }
             : variant === 'inline'
-            ? {
-                alignItems: 'end',
-                p: 1,
-              }
-            : {
-                center: true,
-                onPress: () => setCalendarVisible(false),
-              })}
+              ? {
+                  alignItems: 'end',
+                  p: 1,
+                }
+              : {
+                  center: true,
+                  onPress: () => setCalendarVisible(false),
+                })}
         >
           <CardFactory minw={320} maxw={360} shadow={1} p={0}>
             <BoxFactory h={380}>
@@ -175,7 +214,7 @@ const InputDateFactory = React.memo<InputDateProps>(
                 color={color}
                 date={internal}
                 events={internal ? [internal] : []}
-                onPressDate={handleChangeCalendar}
+                onPressDate={handleChangeInternal}
                 disableds={(date) => {
                   const currentDate = dateify(date);
                   const minDate = min ? dateify(min) : null;
@@ -203,7 +242,7 @@ const InputDateFactory = React.memo<InputDateProps>(
                   color={color}
                   size={size}
                   accessibility={{ label: translate?.clear }}
-                  onPress={(e) => handleChangeCalendar(e, null)}
+                  onPress={(e) => handleChangeInternal(e, null)}
                 >
                   {translate?.clear}
                 </ButtonFactory>
@@ -226,7 +265,7 @@ const InputDateFactory = React.memo<InputDateProps>(
                   color={color}
                   size={size}
                   accessibility={{ label: translate?.today }}
-                  onPress={(e) => handleChangeCalendar(e, dateify())}
+                  onPress={(e) => handleChangeInternal(e, dateify())}
                 >
                   {translate?.today}
                 </ButtonFactory>
