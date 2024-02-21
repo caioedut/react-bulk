@@ -34,7 +34,8 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna exec --parallel -- rimraf dist",
     "build": "tsx scripts/build.ts",
-    "publish:stable": "tsx scripts/publish.ts"
+    "publish:stable": "tsx scripts/publish.ts",
+    "fullclean": "npx rimraf **/node_modules **/package-lock.json **/yarn.lock **/pnpm-lock.yaml **/bun.lockb --glob"
   },
   "devDependencies": {
     "@parcel/packager-ts": "2.11.0",

@@ -1,6 +1,6 @@
 {
   "npmClient": "yarn",
-  "packages": ["packages/*"],
+  "packages": ["packages/core", "packages/web", "packages/native"],
   "registry": "https://registry.npmjs.org",
   "useNx": false,
   "useWorkspaces": true,
