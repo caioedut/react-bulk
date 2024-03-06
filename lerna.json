@@ -1,8 +1,7 @@
 {
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
   "npmClient": "yarn",
-  "packages": ["packages/core", "packages/web", "packages/native"],
-  "registry": "https://registry.npmjs.org",
+  "version": "0.8.2",
   "useNx": false,
-  "useWorkspaces": true,
-  "version": "0.7.5"
+  "packages": ["packages/*"]
 }
