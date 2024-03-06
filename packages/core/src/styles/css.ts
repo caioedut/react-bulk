@@ -22,6 +22,7 @@ export default function css(style: any, selector?: string) {
       if (attr.startsWith('&')) return;
 
       let suffix = '';
+      // @ts-expect-error
       if (val && typeof val === 'number' && !notPxProps.includes(attr)) {
         suffix = 'px';
       }

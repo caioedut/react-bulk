@@ -11,11 +11,11 @@ const CardFactory = React.memo<CardProps>(
     const options = theme.components.Card;
 
     // Extends from default props
-    let {
+    const {
       // Styles
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<CardProps>(props, options);
 
     return <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest} />;
   }),

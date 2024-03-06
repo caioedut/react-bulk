@@ -1,6 +1,7 @@
 import React, { forwardRef, useMemo } from 'react';
 
 import createStyle from '../../createStyle';
+import useBreakpoints from '../../hooks/useBreakpoints';
 import useTheme from '../../hooks/useTheme';
 import bindings from '../../props/bindings';
 import factory2 from '../../props/factory2';
@@ -9,18 +10,19 @@ import merge from '../../props/merge';
 import { styleProps } from '../../styles/constants';
 import { BoxProps } from '../../types';
 import clsx from '../../utils/clsx';
+import defined from '../../utils/defined';
 import global from '../../utils/global';
 
 const BoxFactory = React.memo<BoxProps>(
   forwardRef(({ platform, className, stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Box;
-    const { web, native, useDimensions, Button, Text, View } = global.mapping;
+    const { web, native, Button, Text, View } = global.mapping;
 
-    const dimensions = useDimensions();
+    const breakpoints = useBreakpoints();
 
     // Extends from default props
-    props = useMemo(() => factory2(props, options), [props, options]);
+    props = useMemo(() => factory2<BoxProps>(props, options), [props, options]);
 
     // Platform specific props
     if (platform) {
@@ -40,6 +42,7 @@ const BoxFactory = React.memo<BoxProps>(
       flex,
       hidden,
       invisible,
+      mount,
       noRootStyles,
       noWrap,
       pressable,
@@ -55,7 +58,8 @@ const BoxFactory = React.memo<BoxProps>(
 
     rest = bindings(rest);
 
-    pressable = pressable ?? Boolean(props.onPress || props.onLongPress || props.onPressIn || props.onPressOut || props.onClick);
+    pressable =
+      pressable ?? Boolean(props.onPress || props.onLongPress || props.onPressIn || props.onPressOut || props.onClick);
 
     if (native && pressable && !component) {
       component = Button;
@@ -75,8 +79,14 @@ const BoxFactory = React.memo<BoxProps>(
       typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
 
       // Flex Container
-      row && { flexDirection: reverse ? 'row-reverse' : 'row', flexWrap: 'wrap' },
-      column && { flexDirection: reverse ? 'column-reverse' : 'column' },
+      row && {
+        flexDirection: reverse ? 'row-reverse' : 'row',
+        flexWrap: 'wrap',
+      },
+
+      column && {
+        flexDirection: reverse ? 'column-reverse' : 'column',
+      },
 
       wrap && typeof wrap !== 'boolean' && { flexWrap: wrap },
       typeof wrap === 'boolean' && { flexWrap: wrap ? 'wrap' : 'nowrap' },
@@ -90,7 +100,7 @@ const BoxFactory = React.memo<BoxProps>(
       },
 
       // Flex Item
-      typeof flex === 'boolean' && { flex: Number(flex) },
+      defined(flex) && { flex: Number(flex) },
 
       web && pressable && { cursor: 'pointer' },
 
@@ -106,13 +116,18 @@ const BoxFactory = React.memo<BoxProps>(
     ];
 
     // Apply responsive styles
-    for (const breakpoint of Object.entries(theme.breakpoints)) {
-      const [name, minWidth]: any = breakpoint;
+    for (const breakpoint of Object.entries(breakpoints)) {
+      const [name, isBkptActive] = breakpoint;
       const ptStyle = get(name, style);
 
-      if (ptStyle && dimensions.width >= minWidth) {
+      if (ptStyle && isBkptActive) {
         style.push(ptStyle);
       }
+    }
+
+    // #HACK: fix flex overflow
+    if (Number(get('flex', style) ?? 0)) {
+      style.unshift({ minWidth: 0, minHeight: 0 });
     }
 
     const styles = [!noRootStyles && variants.root, stylist];
@@ -128,6 +143,10 @@ const BoxFactory = React.memo<BoxProps>(
       rest.className = clsx(styles, className);
     }
 
+    if (pressable && !accessibility?.role) {
+      accessibility = { ...Object(accessibility), role: 'button' };
+    }
+
     // Aria / Accessibility
     if (accessibility) {
       if (web) {
@@ -135,16 +154,16 @@ const BoxFactory = React.memo<BoxProps>(
         rest['aria-label'] = accessibility?.label;
         rest['role'] = accessibility?.role;
 
-        rest['aria-checked'] = accessibility?.state?.checked;
-        rest['aria-disabled'] = accessibility?.state?.disabled;
-        rest['aria-expanded'] = accessibility?.state?.expanded;
-        rest['aria-selected'] = accessibility?.state?.selected;
-        rest['aria-busy'] = accessibility?.state?.busy;
+        rest['aria-checked'] = accessibility.state?.checked;
+        rest['aria-disabled'] = accessibility.state?.disabled;
+        rest['aria-expanded'] = accessibility.state?.expanded;
+        rest['aria-selected'] = accessibility.state?.selected;
+        rest['aria-busy'] = accessibility.state?.busy;
 
-        rest['aria-valuemax'] = accessibility?.value?.max;
-        rest['aria-valuemin'] = accessibility?.value?.min;
-        rest['aria-valuenow'] = accessibility?.value?.now;
-        rest['aria-valuetext'] = accessibility?.value?.text;
+        rest['aria-valuemax'] = accessibility.value?.max;
+        rest['aria-valuemin'] = accessibility.value?.min;
+        rest['aria-valuenow'] = accessibility.value?.now;
+        rest['aria-valuetext'] = accessibility.value?.text;
       }
 
       if (native) {
@@ -159,14 +178,20 @@ const BoxFactory = React.memo<BoxProps>(
 
     const Component = component || View;
 
+    if (mount === false) {
+      return null;
+    }
+
     return (
       <Component ref={ref} {...rest} {...componentProps}>
         {React.Children.map(children, (child) => {
-          if (!child && !['string', 'number'].includes(typeof child)) {
+          const isText = ['string', 'number'].includes(typeof child);
+
+          if (!child && !isText) {
             return null;
           }
 
-          if (typeof children === 'string') {
+          if (isText) {
             return <Text>{child}</Text>;
           }
 

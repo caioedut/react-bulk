@@ -1,22 +1,38 @@
-# <p style="color: #673ab7;">React Bulk</p>
-Complete and uniform UI for React Web and Native
+<div align="center">
+  <h1 style="color: #8B5CF6;">
+    <br>
+    React Bulk
+    <br>
+  </h1>
 
-[![npm](https://img.shields.io/npm/v/@react-bulk/core.svg?color=%23673ab7)](https://www.npmjs.com/package/@react-bulk/core)
+  <p>
+    <br>
+    Complete and uniform UI for React Web and Native
+    <br>
+  </p>
 
-<a href="https://www.buymeacoffee.com/caioedut" target="_blank">
-  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" width="180" height="50">
-</a>
+  <a href="https://www.npmjs.com/package/@react-bulk/core">
+   <img src="https://img.shields.io/npm/v/@react-bulk/core.svg" alt="NPM" />
+  </a>
 
----
+  <br>
+  <br>
 
-## Docs
+  <h2>Getting Started</h2>
 
-[Read the full Docs.](https://rbk.caioedut.com/)
+  [Installation](https://rbk.caioedut.com/docs/getting-started/installation)
+  | [Configuration](https://rbk.caioedut.com/docs/getting-started/configuration)
+  | [Components](https://rbk.caioedut.com/docs/category/core)
+  | [Hooks](https://rbk.caioedut.com/docs/category/hooks)
 
-### Getting Started
-- [Installation](https://rbk.caioedut.com/docs/getting-started/installation)
-- [Configuration](https://rbk.caioedut.com/docs/getting-started/configuration)
+  ([📖 Read the full Documentation](https://rbk.caioedut.com/))
 
-### More
-- [Layout](https://rbk.caioedut.com/docs/category/layout)
-- [Components](https://rbk.caioedut.com/docs/category/components)
+  <br>
+  <br>
+
+  <h2>Sponsor</h2>
+
+  <a href="https://www.buymeacoffee.com/caioedut" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" width="180" height="50">
+  </a>
+</div>

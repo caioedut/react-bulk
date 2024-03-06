@@ -13,7 +13,7 @@ const ScrollableFactory = React.memo<ScrollableProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Scrollable;
-    const { native, ios, RefreshControl, ScrollView } = global.mapping;
+    const { web, native, ios, RefreshControl, ScrollView } = global.mapping;
 
     // Extends from default props
     let {
@@ -30,15 +30,25 @@ const ScrollableFactory = React.memo<ScrollableProps>(
       contentStyle,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<ScrollableProps>(props, options);
 
     const isHorizontal = direction === 'horizontal';
     const primaryColor = theme.color('primary');
 
     contentStyle = [
+      // @ts-expect-error
       extract(flexContainerProps, style),
 
-      { p: contentInset ?? 0 },
+      typeof contentInset === 'number' && {
+        p: contentInset,
+      },
+
+      typeof contentInset === 'object' && {
+        pt: contentInset?.top ?? contentInset?.vertical,
+        pb: contentInset?.bottom ?? contentInset?.vertical,
+        pl: contentInset?.left ?? contentInset?.horizontal,
+        pr: contentInset?.right ?? contentInset?.horizontal,
+      },
 
       pagingEnabled && {
         web: {
@@ -50,9 +60,10 @@ const ScrollableFactory = React.memo<ScrollableProps>(
     ];
 
     style = [
-      pagingEnabled && {
-        web: { scrollSnapType: `${isHorizontal ? 'x' : 'y'} mandatory` },
-      },
+      web &&
+        pagingEnabled && {
+          scrollSnapType: `${isHorizontal ? 'x' : 'y'} mandatory`,
+        },
 
       style,
     ];
@@ -101,7 +112,14 @@ const ScrollableFactory = React.memo<ScrollableProps>(
     }
 
     return (
-      <BoxFactory ref={ref} component={ScrollView} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles>
+      <BoxFactory
+        ref={ref}
+        component={ScrollView}
+        style={style}
+        stylist={[variants.root, stylist]}
+        {...rest}
+        noRootStyles
+      >
         {native ? (
           children
         ) : (

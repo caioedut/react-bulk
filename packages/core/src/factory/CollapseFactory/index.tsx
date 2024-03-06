@@ -1,10 +1,10 @@
-import React, { forwardRef, useEffect, useMemo, useRef } from 'react';
+import React, { RefObject, forwardRef, useEffect, useMemo, useRef } from 'react';
 
 import rect from '../../element/rect';
+import useAnimation from '../../hooks/useAnimation';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { CollapseProps } from '../../types';
-import event from '../../utils/event';
 import global from '../../utils/global';
 import sleep from '../../utils/sleep';
 import BoxFactory from '../BoxFactory';
@@ -16,96 +16,65 @@ const CollapseFactory = React.memo<CollapseProps>(
     const { web, native } = global.mapping;
 
     // Extends from default props
-    let {
+    const {
+      visible,
       in: expanded,
       // Styles
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<CollapseProps>(props, options);
 
     const defaultRef: any = useRef(null);
-    ref = ref || defaultRef;
+    const rootRef: RefObject<any> = ref || defaultRef;
 
-    const initialized = useRef(false);
-    const initExpanded = useMemo(() => expanded, []);
-
-    const emptyValue = native ? 'auto' : '';
-
-    useEffect(() => {
-      //@ts-ignore
-      if (!web || !ref?.current) return;
-
-      //@ts-ignore
-      const $el = ref?.current;
-
-      const complete = () => {
-        if ($el.offsetHeight <= 0) return;
-        setStyles($el, { height: emptyValue });
-      };
-
-      const remove = event($el, 'transitionend', complete);
-
-      return () => {
-        remove();
-      };
-    }, [ref]);
+    const emptyValue = 'auto';
+    const isExpanded = useMemo(() => visible ?? expanded ?? false, [visible, expanded]);
+    const heightAnim = useAnimation({ height: isExpanded ? emptyValue : 0 });
 
     useEffect(() => {
-      if (!initialized.current) {
-        initialized.current = true;
-        return;
-      }
-
-      // @ts-ignore
-      const $el = ref.current;
+      if (!rootRef?.current) return;
 
       (async () => {
-        // Reset CSS to get original size
-        setStyles($el, {
-          height: emptyValue,
-          opacity: native ? 0 : '0',
-        });
+        if (native) {
+          // Reset to get original size
+          rootRef.current.setNativeProps({ height: 'auto' });
+          await sleep(1);
+        }
 
-        native && (await sleep(10));
+        const metrics = await rect(rootRef.current);
+        const size = web ? rootRef.current?.scrollHeight : metrics.height;
 
-        const size = web ? $el.offsetHeight : (await rect($el)).height;
+        const curSize = isExpanded ? 0 : size;
+        const newSize = isExpanded ? size : 0;
 
-        let curSize = expanded ? 0 : size;
-        let newSize = expanded ? size : 0;
+        if (newSize === metrics.height) return;
 
-        setStyles($el, {
-          height: curSize,
-          opacity: native ? 1 : '1',
-        });
-
-        if (web) {
-          setStyles($el, theme.mixins.transitions.medium);
+        // Set element height to animate (web doesnt support height auto animations)
+        if (newSize <= 0) {
+          await heightAnim.start({ height: curSize }, { duration: 0 });
           await sleep(10);
         }
 
-        setStyles($el, { height: newSize });
-      })();
-    }, [expanded]);
+        // TODO: check why animation dont work on native
+        await heightAnim.start({ height: newSize });
 
-    function setStyles($el, styles: any = {}) {
-      if (web) {
-        for (let attr in styles) {
-          const value = styles[attr];
-          $el.style[attr] = value && !isNaN(value) ? `${value}px` : value;
+        if (newSize > 0) {
+          await heightAnim.start({ height: emptyValue });
         }
-      }
+      })();
 
-      if (native) {
-        $el.setNativeProps(styles);
-      }
-    }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [rootRef, isExpanded]);
 
     return (
       <BoxFactory
-        ref={ref}
+        ref={rootRef}
+        noRootStyles
+        component={heightAnim.Component}
         platform={{ native: { collapsable: false } }}
+        style={{ height: 0 }}
         stylist={[variants.root, stylist]}
-        rawStyle={!initExpanded && { height: 0 }}
+        rawStyle={heightAnim.style}
       >
         <BoxFactory {...rest} />
       </BoxFactory>

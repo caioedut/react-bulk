@@ -4,7 +4,7 @@ export default function scrollToEnd($el, animated: boolean = true) {
   const { web, native } = Platform;
 
   if (web) {
-    $el.scrollTo({
+    $el?.scrollTo({
       top: $el.scrollHeight,
       left: $el.scrollWidth,
       behavior: animated ? 'smooth' : 'instant',
@@ -12,6 +12,6 @@ export default function scrollToEnd($el, animated: boolean = true) {
   }
 
   if (native) {
-    $el.scrollToEnd({ animated });
+    $el?.scrollToEnd({ animated });
   }
 }

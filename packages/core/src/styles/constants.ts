@@ -14,7 +14,9 @@ export const boxSizeProps = [
   'maxh',
   'minw',
   'minh',
-];
+  'ww',
+  'hh',
+] as const;
 
 /***********
  * Flexbox *
@@ -29,7 +31,7 @@ export const flexContainerAlignProps = [
   'justifyItems',
   // Aliases
   'center',
-];
+] as const;
 
 export const flexChildAlignProps = [
   'placeSelf',
@@ -38,9 +40,9 @@ export const flexChildAlignProps = [
   // Aliases
   'align',
   'justify',
-];
+] as const;
 
-export const flexAlignProps = [...flexContainerAlignProps, ...flexChildAlignProps];
+export const flexAlignProps = [...flexContainerAlignProps, ...flexChildAlignProps] as const;
 
 export const flexContainerProps = [
   'flexDirection',
@@ -54,7 +56,7 @@ export const flexContainerProps = [
   'reverse',
   'wrap',
   'noWrap',
-];
+] as const;
 
 export const flexChildProps = [
   'flex',
@@ -67,7 +69,7 @@ export const flexChildProps = [
   'grow',
   'shrink',
   'basis',
-];
+] as const;
 
 export const flexProps = [...flexAlignProps, ...flexContainerProps, ...flexChildProps];
 
@@ -86,17 +88,19 @@ export const customSpacings = [
   'ml',
   'mr',
   'mh',
-  'mv',
   'mx',
+  'mv',
   'my',
   'p',
   'pt',
   'pb',
   'pl',
   'pr',
+  'ph',
   'px',
+  'pv',
   'py',
-];
+] as const;
 
 export const customStyleProps = [
   'bg',
@@ -108,6 +112,7 @@ export const customStyleProps = [
   'corners',
   'direction',
   'h',
+  'lh',
   'maxh',
   'maxw',
   'minh',
@@ -116,7 +121,7 @@ export const customStyleProps = [
   'shadow',
   'w',
   ...customSpacings,
-];
+] as const;
 
 export const spacings = [
   'position',
@@ -140,31 +145,65 @@ export const spacings = [
   'paddingVertical',
   // Aliases
   ...customSpacings,
-];
+] as const;
+
+export const transformProps = [
+  'matrix',
+  'perspective',
+  'rotate',
+  'rotateX',
+  'rotateY',
+  'rotateZ',
+  'scale',
+  'scaleX',
+  'scaleY',
+  'translateX',
+  'translateY',
+  'skewX',
+  'skewY',
+] as const;
 
 // See https://react-cn.github.io/react/tips/style-props-value-px.html
 export const notPxProps = [
   'animationIterationCount',
+  'aspectRatio',
+  'borderImageOutset',
+  'borderImageSlice',
+  'borderImageWidth',
   'boxFlex',
   'boxFlexGroup',
   'boxOrdinalGroup',
   'columnCount',
+  'columns',
   'fillOpacity',
   'flex',
   'flexGrow',
-  'flexPositive',
-  'flexShrink',
   'flexNegative',
   'flexOrder',
+  'flexPositive',
+  'flexShrink',
+  'floodOpacity',
   'fontWeight',
+  'gridArea',
+  'gridColumn',
+  'gridColumnEnd',
+  'gridColumnSpan',
+  'gridColumnStart',
+  'gridRow',
+  'gridRowEnd',
+  'gridRowSpan',
+  'gridRowStart',
   'lineClamp',
   'lineHeight',
   'opacity',
   'order',
   'orphans',
+  'rotate',
   'scale',
   'stopOpacity',
+  'strokeDasharray',
   'strokeDashoffset',
+  'strokeMiterlimit',
   'strokeOpacity',
   'strokeWidth',
   'tabSize',
@@ -172,7 +211,7 @@ export const notPxProps = [
   'widows',
   'zIndex',
   'zoom',
-];
+] as const;
 
 /************************
  * All Supported Styles *
@@ -182,6 +221,7 @@ export const styleProps = [
   ...flexProps,
   ...spacings,
   ...customStyleProps,
+  'aspectRatio',
   'backfaceVisibility',
   'backgroundColor',
   'borderBottomColor',
@@ -208,6 +248,7 @@ export const styleProps = [
   'borderTopStartRadius',
   'borderTopWidth',
   'borderWidth',
+  'boxShadow',
   'color',
   'direction',
   'display',
@@ -220,7 +261,8 @@ export const styleProps = [
   'lineHeight',
   'opacity',
   'overflow',
+  'pointerEvents',
   'textAlign',
   'textTransform',
   'zIndex',
-];
+] as const;

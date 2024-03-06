@@ -47,6 +47,11 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      colorMode: {
+        defaultMode: 'light',
+        disableSwitch: true,
+        respectPrefersColorScheme: false,
+      },
       navbar: {
         title: 'React Bulk',
         logo: {
@@ -56,7 +61,7 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'index',
             position: 'left',
             label: 'Docs',
           },
@@ -77,6 +82,34 @@ const config = {
       },
       liveCodeBlock: {
         playgroundPosition: 'top',
+      },
+      algolia: {
+        // The application ID provided by Algolia
+        appId: 'GUXWNHI9RO',
+
+        // Public API key: it is safe to commit it
+        apiKey: 'f07eb2348b1a6a09f840070e0c76c325',
+
+        indexName: 'rbk-caioedut',
+
+        insights: true,
+
+        contextualSearch: false,
+
+        // // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+        // externalUrlRegex: 'external\\.com|domain\\.com',
+        //
+        // // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
+        // replaceSearchResultPathname: {
+        //   from: '/docs/', // or as RegExp: /\/docs\//
+        //   to: '/',
+        // },
+        //
+        // // Optional: Algolia search parameters
+        // searchParameters: {},
+        //
+        // // Optional: path for search page that enabled by default (`false` to disable it)
+        // searchPagePath: 'search',
       },
     }),
 };

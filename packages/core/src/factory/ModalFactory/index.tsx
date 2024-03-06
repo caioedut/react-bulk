@@ -4,7 +4,6 @@ import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { ModalProps } from '../../types';
 import BackdropFactory from '../BackdropFactory';
-import BoxFactory from '../BoxFactory';
 import CardFactory from '../CardFactory';
 
 const ModalFactory = React.memo<ModalProps>(
@@ -13,22 +12,23 @@ const ModalFactory = React.memo<ModalProps>(
     const options = theme.components.Modal;
 
     // Extends from default props
-    let {
+    const {
       halign,
       valign,
+      visible,
+      onClose,
       onBackdropPress,
       // Styles
       variants,
+      style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<ModalProps>(props, options);
 
     return (
-      <BackdropFactory ref={ref} stylist={[variants.root, stylist]} {...rest} onPress={onBackdropPress}>
-        <BoxFactory maxh="100%" maxw="100%" p={3}>
-          <CardFactory maxh="100%" maxw="100%">
-            {children}
-          </CardFactory>
-        </BoxFactory>
+      <BackdropFactory visible={visible} stylist={[variants.backdrop]} onPress={onClose ?? onBackdropPress}>
+        <CardFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
+          {children}
+        </CardFactory>
       </BackdropFactory>
     );
   }),

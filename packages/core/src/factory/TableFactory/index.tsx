@@ -20,7 +20,7 @@ const TableFactory = React.memo<TableProps>(
       variants,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<TableProps>(props, options);
 
     const width = `${100 / columns?.length}%`;
 
@@ -35,7 +35,7 @@ const TableFactory = React.memo<TableProps>(
         }
 
         if (['string', 'number'].includes(typeof child)) {
-          child = <TextFactory bold={bold} children={child} />;
+          child = <TextFactory bold={bold}>{child}</TextFactory>;
         }
       }
 
@@ -46,7 +46,7 @@ const TableFactory = React.memo<TableProps>(
       return [
         {
           border,
-          p: 3,
+          p: theme.shape.gap / 2,
           borderBottomWidth: 0,
           borderRightWidth: 0,
           width,

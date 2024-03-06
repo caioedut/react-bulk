@@ -2,21 +2,24 @@ import Platform from '../Platform';
 import extract from '../props/extract';
 import merge from '../props/merge';
 import remove from '../props/remove';
-import { RbkStyles, ThemeProps } from '../types';
+import { RbkStyle, ThemeProps } from '../types';
 import clone from '../utils/clone';
 import global from '../utils/global';
-import { boxSizeProps, customSpacings, customStyleProps, flexAlignProps, spacings } from './constants';
+import { boxSizeProps, customSpacings, customStyleProps, flexAlignProps, notPxProps, spacings } from './constants';
+import transform from './transform';
 
 export { customSpacings, customStyleProps, spacings };
 
-export default function jss(...mixin: (Object | Array<any> | Function)[]) {
+export default function jss(...mixin: any[]) {
   const { web, native } = Platform;
 
   const args = clone(mixin);
   const theme: ThemeProps = extract('theme', args).theme ?? global.theme ?? {};
+  const dimensions = global.mapping.dimensions.window();
 
   // Extract all web styles
-  let webStyle: any = [];
+  const webStyle: any = [];
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const extracted = extract('web', args);
     if (!extracted?.web) break;
@@ -24,7 +27,8 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   }
 
   // Extract all native styles
-  let nativeStyle: any = [];
+  const nativeStyle: any = [];
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const extracted = extract('native', args);
     if (!extracted?.native) break;
@@ -37,11 +41,15 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
   // Merge styles with platform specific
   const merged = merge(args, web && webStyle, native && nativeStyle);
-  const styles: RbkStyles = {};
+  const styles: RbkStyle = {};
 
   for (const attr of Object.keys(merged)) {
     let prop: any = attr;
     let value = merged[attr];
+
+    if (typeof value === 'undefined') {
+      continue;
+    }
 
     // Parse "&" for css. Eg.: '&:hover'
     if (prop.startsWith('&')) {
@@ -85,21 +93,27 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       }
     }
 
+    // Resolve spacings "true" with "spacing" multiplier
+    if (customSpacings.includes(prop) && value === true && theme.spacing) {
+      value = theme.spacing(1);
+    }
+
     if (flexAlignProps.includes(prop) && valueTrim) {
       value = parseFlexAlign(valueTrim);
     }
 
-    // Cast REM
+    // Cast unit: rem
     const remRegex = /([+-]?([0-9]*[.])?[0-9]+)rem/gi;
     if (remRegex.test(valueTrim)) {
       value = valueTrim.replace(remRegex, ($x, $1) => {
         const parsed = $x ? theme.rem($1) : 0;
-        return native ? parsed : `${parsed}px`;
+        return native ? `${parsed}` : `${parsed}px`;
       });
 
       value = parseUnit(value);
     }
 
+    // Resolve aliases
     prop =
       {
         w: 'width',
@@ -108,6 +122,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         maxh: 'maxHeight',
         minw: 'minWidth',
         minh: 'minHeight',
+        lh: 'lineHeight',
         bg: 'backgroundColor',
 
         // Flex Container
@@ -126,17 +141,50 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       value = (theme.shape.borderRadius ?? 0) * value;
     }
 
+    if (prop === 'ww') {
+      prop = null;
+
+      Object.assign(styles, {
+        width: value,
+        minWidth: value,
+        maxWidth: value,
+      });
+    }
+
+    if (prop === 'hh') {
+      prop = null;
+
+      Object.assign(styles, {
+        height: value,
+        minHeight: value,
+        maxHeight: value,
+      });
+    }
+
     if (['border', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].includes(prop)) {
       if (value) {
         const preffix = prop;
-        const types = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset', 'initial', 'inherit'];
-
-        const sizeIndex = valueSplit.findIndex((item: string) => /^\d\w*$/.test(item));
-        // @ts-ignore
-        const borderWidth = sizeIndex >= 0 ? +valueSplit.splice(sizeIndex, 1).shift().replace(/\D/g, '') : 1;
+        const types = [
+          'none',
+          'hidden',
+          'dotted',
+          'dashed',
+          'solid',
+          'double',
+          'groove',
+          'ridge',
+          'inset',
+          'outset',
+          'initial',
+          'inherit',
+        ];
 
         const styleIndex = valueSplit.findIndex((item: string) => types.includes(item));
         const borderStyle = styleIndex >= 0 ? valueSplit.splice(styleIndex, 1).shift() : 'solid';
+
+        const sizeIndex = valueSplit.findIndex((item: string) => /^\d\w*$/.test(item));
+        const borderWidth =
+          sizeIndex >= 0 ? Number(valueSplit.splice(sizeIndex, 1).shift()?.replace(/\D/g, '') ?? 1) : 1;
 
         const color = valueSplit?.shift()?.replace(/undefined|null|false|true/g, '');
         const borderColor = theme.color(color || theme.colors.common.black);
@@ -151,29 +199,49 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
       prop = null;
     }
 
+    if (prop === 'shadow') {
+      prop = null;
+
+      if (value) {
+        const radius = Math.round(value * 1.5 + 2);
+        const offset = Math.round(value / 2);
+
+        if (web) {
+          Object.assign(styles, {
+            boxShadow: `${offset}px ${offset}px ${radius}px rgba(0, 0, 0, 0.15)`,
+          });
+        }
+
+        if (native) {
+          Object.assign(styles, {
+            elevation: offset,
+            shadowColor: 'rgba(0, 0, 0)',
+            shadowOpacity: 0.1,
+            shadowRadius: radius,
+            shadowOffset: {
+              width: offset,
+              height: offset,
+            },
+          });
+        }
+      }
+    }
+
     if (web) {
       if (prop === 'paddingVertical') {
-        prop = null;
-        styles.paddingTop = value;
-        styles.paddingBottom = value;
+        prop = 'paddingBlock';
       }
 
       if (prop === 'paddingHorizontal') {
-        prop = null;
-        styles.paddingLeft = value;
-        styles.paddingRight = value;
+        prop = 'paddingInline';
       }
 
       if (prop === 'marginVertical') {
-        prop = null;
-        styles.marginTop = value;
-        styles.marginBottom = value;
+        prop = 'marginBlock';
       }
 
       if (prop === 'marginHorizontal') {
-        prop = null;
-        styles.marginLeft = value;
-        styles.marginRight = value;
+        prop = 'marginInline';
       }
 
       if (prop === 'transform' && Array.isArray(value)) {
@@ -181,7 +249,13 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
 
         value.forEach((item) => {
           for (const attr in item) {
-            const unit = Array.isArray(item[attr]) ? item[attr].join(', ') : item[attr];
+            let unit = Array.isArray(item[attr]) ? item[attr].join(', ') : item[attr];
+
+            // @ts-expect-error
+            if (unit && typeof unit === 'number' && !notPxProps.includes(attr)) {
+              unit = `${unit}px`;
+            }
+
             values.push(`${attr}(${unit})`);
           }
         });
@@ -191,6 +265,46 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
     }
 
     if (native) {
+      if (prop === 'paddingBlock') {
+        prop = 'paddingVertical';
+      }
+
+      if (prop === 'paddingInline') {
+        prop = 'paddingHorizontal';
+      }
+
+      if (prop === 'marginBlock') {
+        prop = 'marginVertical';
+      }
+
+      if (prop === 'marginInline') {
+        prop = 'marginHorizontal';
+      }
+
+      if (prop === 'transform' && typeof value === 'string') {
+        value = transform(value);
+      }
+
+      // Cast unit: vw
+      const vwRegex = /([+-]?([0-9]*[.])?[0-9]+)vw/gi;
+      if (vwRegex.test(valueTrim)) {
+        value = valueTrim.replace(vwRegex, ($x, $1) => {
+          return `${$x ? (dimensions.width * $1) / 100 : 0}`;
+        });
+
+        value = parseUnit(value);
+      }
+
+      // Cast unit: vh
+      const vhRegex = /([+-]?([0-9]*[.])?[0-9]+)vh/gi;
+      if (vhRegex.test(valueTrim)) {
+        value = valueTrim.replace(vhRegex, ($x, $1) => {
+          return `${$x ? (dimensions.height * $1) / 100 : 0}`;
+        });
+
+        value = parseUnit(value);
+      }
+
       if (prop === 'inset') {
         const [v1, v2, v3, v4] = valueSplit;
 
@@ -235,7 +349,7 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
         }
       });
 
-      if (prop === 'shadow' || prop === 'boxShadow') {
+      if (prop === 'boxShadow') {
         prop = null;
 
         const colorIndex = value.search(/(\w+\(|#).+/g);
@@ -271,11 +385,11 @@ export default function jss(...mixin: (Object | Array<any> | Function)[]) {
   return styles;
 }
 
-const parseUnit = (value) => {
+const parseUnit = (value: any) => {
   return isNaN(value) ? value : Number(value);
 };
 
-const parseFlexAlign = (value) => {
+const parseFlexAlign = (value: string) => {
   return value
     .replace(/^normal$/, 'stretch')
     .replace(/^start$/, 'flex-start')
