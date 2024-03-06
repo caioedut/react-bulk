@@ -18,7 +18,9 @@ const TooltipFactory = React.memo<TooltipProps>(
 
     // Extends from default props
     let {
+      accessibility,
       color,
+      offset = native ? 2 : 1,
       position,
       title,
       visible,
@@ -26,18 +28,18 @@ const TooltipFactory = React.memo<TooltipProps>(
       variants,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<TooltipProps>(props, options);
 
     const timeoutRef = useRef<TimeoutType>(null);
 
-    const [shown, setShown] = usePropState(false, visible);
+    const [shown, setShown] = usePropState(visible, false);
     const [trans, setTrans] = useState(0);
 
     const translate = native ? -(trans / 2) : '-50%';
-    const isHorizontal = ['left', 'right'].includes(position);
+    const isHorizontal = ['left', 'right'].includes(position ?? '');
     const isControlled = typeof visible === 'boolean';
 
-    style = [shown && options.variants.visible.true.root, style];
+    style = [shown && options?.variants?.visible?.true?.root, style];
 
     const handleTooltipShow = () => {
       if (timeoutRef.current) {
@@ -64,6 +66,7 @@ const TooltipFactory = React.memo<TooltipProps>(
     return (
       <BoxFactory
         component={native ? Button : null}
+        accessibility={{ label: title, ...Object(accessibility) }}
         style={{ position: 'relative' }}
         platform={{
           web: {
@@ -91,7 +94,7 @@ const TooltipFactory = React.memo<TooltipProps>(
                 position: 'absolute',
                 backgroundColor: color,
                 borderRadius: theme.shape.borderRadius,
-                color: theme.contrast(color),
+                color: theme.contrast(color as string),
                 fontSize: '0.75rem',
                 overflow: 'hidden',
                 py: 1,
@@ -103,13 +106,13 @@ const TooltipFactory = React.memo<TooltipProps>(
 
               native && !trans && { opacity: 0 },
 
-              isHorizontal && { mx: 1, transform: [{ translateY: translate }] },
-              !isHorizontal && { my: 0.5, transform: [{ translateX: translate }] },
+              isHorizontal && { transform: [{ translateY: translate }] },
+              !isHorizontal && { transform: [{ translateX: translate }] },
 
-              position === 'top' && { bottom: '100%' },
-              position === 'bottom' && { top: '100%' },
-              position === 'left' && { right: '100%' },
-              position === 'right' && { left: '100%' },
+              position === 'top' && { bottom: '100%', mb: offset },
+              position === 'bottom' && { top: '100%', mt: offset },
+              position === 'left' && { right: '100%', mr: offset },
+              position === 'right' && { left: '100%', ml: offset },
             ]}
           >
             {title}

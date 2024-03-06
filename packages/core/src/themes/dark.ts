@@ -2,15 +2,15 @@ const dark = {
   mode: 'dark',
   colors: {
     text: {
-      primary: '#d8d8d8',
+      primary: '#efefef',
       secondary: '#a7a7a7',
       disabled: '#787878',
     },
 
     background: {
-      primary: '#1b1b1b',
-      secondary: '#333333',
-      disabled: '#000000',
+      primary: '#292929',
+      secondary: '#141414',
+      disabled: '#0C0C0C',
     },
   },
 };

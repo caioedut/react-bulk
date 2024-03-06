@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Theme
@@ -31,6 +31,7 @@ export default {
   shape: {
     borderRadius: 4,
     spacing: 4,
+    gap: 4 // gap is generally multiplied by spacing
   },
 };
 ```
@@ -53,23 +54,82 @@ export default {
 export default {
   // other options
   colors: {
-    primary: '#673ab7',
-    secondary: '#009688',
-    info: '#2196f3',
-    success: '#4caf50',
-    warning: '#ff9800',
-    error: '#f44336',
+    primary: '#8b5cf6',
+    secondary: '#f59e0b',
+
+    info: '#3b82f6',
+    success: '#22c55e',
+    warning: '#f59e0b',
+    error: '#ef4444',
 
     customColorToken: '#ff00ff',
+
+    gray: '#6b7280',
+    red: '#ef4444',
+    orange: '#f97316',
+    amber: '#f59e0b',
+    yellow: '#eab308',
+    lime: '#84cc16',
+    green: '#22c55e',
+    teal: '#14b8a6',
+    cyan: '#06b6d4',
+    blue: '#3b82f6',
+    indigo: '#6366f1',
+    violet: '#8b5cf6',
+    purple: '#a855f7',
+    fuchsia: '#d946ef',
+    pink: '#ec4899',
 
     common: {
       trans: 'rgba(0, 0, 0, 0)',
       black: '#000000',
       white: '#ffffff',
-      gray: '#808080',
     },
   },
 };
+```
+
+```jsx live
+function App() {
+  const theme = useTheme();
+
+  const predefined = [
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'error',
+  ];
+
+  const other = [
+    'gray',
+    'red',
+    'orange',
+    'amber',
+    'yellow',
+    'lime',
+    'green',
+    'teal',
+    'cyan',
+    'blue',
+    'indigo',
+    'violet',
+    'purple',
+    'fuchsia',
+    'pink',
+  ];
+
+  return [predefined, other].map((colors, index) => (
+    <Grid key={index} gap={3} mb={6}>
+      {colors.map((color) => (
+        <Box key={color} bg={color}>
+          <Text color={theme.contrast(color)}>{color}</Text>
+        </Box>
+      ))}
+    </Grid>
+  ));
+}
 ```
 
 ### Breakpoints
@@ -79,7 +139,7 @@ export default {
   // other options
   breakpoints: {
     xs: 0,
-    sm: 576,
+    sm: 320,
     md: 768,
     lg: 992,
     xl: 1200,
@@ -99,7 +159,7 @@ export default {
     Button: {
       defaultProps: {
         color: 'secondary',
-        size: 'xl',
+        size: 'xlarge',
       }
     }
   },

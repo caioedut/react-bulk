@@ -4,7 +4,7 @@ import rect from '../../element/rect';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { FocusableProps, RbkRect, SliderProps } from '../../types';
+import { FocusableProps, RbkRect, RequiredSome, SliderProps } from '../../types';
 import event from '../../utils/event';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -33,13 +33,15 @@ const SliderFactory = React.memo<SliderProps>(
       size,
       value,
       // Events
-      onChange,
+      onFocus,
+      onBlur,
       onSlide,
+      onChange,
       onFormChange,
       // Styles
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<SliderProps, 'min' | 'max'>>(props, options);
 
     id = useHtmlId(id);
 
@@ -55,6 +57,7 @@ const SliderFactory = React.memo<SliderProps>(
     const pressIniPosRef = useRef<number | null>(null);
 
     if (typeof size === 'string') {
+      // TODO: standardize with other sizes
       size = pick(size, 'medium', {
         xsmall: 0.75,
         small: 0.875,
@@ -65,12 +68,13 @@ const SliderFactory = React.memo<SliderProps>(
     }
 
     const step = 1;
-    const iconSize = theme.rem(size);
+    const iconSize = theme.rem(size as number);
     const ruleSize = iconSize / 4;
 
-    const ThumbFactory = web ? ButtonFactory : BoxFactory;
+    // const ThumbFactory = web ? ButtonFactory : BoxFactory;
+    const ThumbFactory = ButtonFactory;
 
-    defaultValue = Math.min(max, Math.max(min, defaultValue ?? min));
+    defaultValue = Math.min(max, Math.max(min, defaultValue ?? min ?? 0));
     const [percent, setPercent] = useState(getPercentByValue(defaultValue));
     const [tooltip, setTooltip] = useState<number | null>(null);
     const internal = getValueByPercent(percent);
@@ -108,9 +112,9 @@ const SliderFactory = React.memo<SliderProps>(
       });
 
       return () => {
-        form.unsetField(name);
+        form.unsetField(name as string);
       };
-    }, [name, form, onFormChange, getPercentByValue, getValueByPercent]);
+    }, [name, form, onFormChange, getPercentByValue, getValueByPercent, percent]);
 
     useEffect(() => {
       if (!web) return;
@@ -129,10 +133,15 @@ const SliderFactory = React.memo<SliderProps>(
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
     const clear = useCallback(() => setPercent(getPercentByValue(defaultValue)), []);
-    const isFocused = useCallback(() => buttonRef?.current?.isFocused?.() || buttonRef?.current === document?.activeElement, [buttonRef]);
+    const isFocused = useCallback(
+      () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
+      [buttonRef],
+    );
 
     function dispatchEvent(type: string, value: number, nativeEvent?: any) {
       const callback = {
+        focus: onFocus,
+        blur: onBlur,
         slide: onSlide,
         change: onChange,
       }[type];
@@ -145,7 +154,7 @@ const SliderFactory = React.memo<SliderProps>(
 
     function setStyles($el, styles = {}) {
       if (web) {
-        for (let attr in styles) {
+        for (const attr in styles) {
           const value = styles[attr];
           $el.style[attr] = value && !isNaN(value) ? `${value}px` : value;
         }
@@ -183,6 +192,14 @@ const SliderFactory = React.memo<SliderProps>(
 
       return { percent, value };
     }
+
+    const handleCommonEvent = useCallback(
+      (e) => {
+        const nativeEvent = e?.nativeEvent ?? e;
+        dispatchEvent(e.type, internal, nativeEvent);
+      },
+      [internal],
+    );
 
     async function handlePress(e) {
       e?.preventDefault?.();
@@ -381,6 +398,8 @@ const SliderFactory = React.memo<SliderProps>(
             variant="solid"
             disabled={disabled}
             readOnly={readOnly}
+            onFocus={handleCommonEvent}
+            onBlur={handleCommonEvent}
             platform={
               disabled || readOnly
                 ? {}
@@ -395,7 +414,7 @@ const SliderFactory = React.memo<SliderProps>(
                   }
             }
             style={[
-              disabled && theme.components.Button.variants.disabled.true.styles.root,
+              disabled && theme.components.Button?.variants?.disabled?.true?.root,
               {
                 left: -iconSize / 2,
                 backgroundColor: color,

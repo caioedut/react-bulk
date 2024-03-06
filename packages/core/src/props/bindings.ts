@@ -1,4 +1,3 @@
-// @ts-nocheck
 import Platform from '../Platform';
 
 export default function ({ ...props }: any) {
@@ -43,6 +42,10 @@ export default function ({ ...props }: any) {
   if (props.disabled) {
     delete props.onClick;
     delete props.onPress;
+    delete props.onPressIn;
+    delete props.onPressOut;
+    delete props.onPointerDown;
+    delete props.onPointerUp;
   }
 
   return props;

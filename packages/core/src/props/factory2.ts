@@ -1,10 +1,22 @@
-import { ThemeComponentProps } from '../types';
+import { RbkStyle, ThemeComponentProps } from '../types';
+import deepmerge from '../utils/deepmerge';
 import global from '../utils/global';
 
-export default function factory2(props, options?: ThemeComponentProps) {
-  let newProps = { ...options?.defaultProps, ...props };
+type Variants = {
+  [key: string]: RbkStyle[];
+};
 
-  const variants = {};
+export default function factory2<ComponentProps>(
+  props,
+  options: ThemeComponentProps<ComponentProps, any>,
+): ComponentProps & { variants: Variants } {
+  const fallbackProps = {};
+
+  const variants: Variants = {};
+
+  Object.entries(options?.defaultProps || {}).forEach(([prop, value]) => {
+    fallbackProps[prop] = props?.[prop] ?? value;
+  });
 
   Object.keys(options?.defaultStyles || {}).forEach((styleId: any) => {
     if (!options?.name) return;
@@ -16,7 +28,7 @@ export default function factory2(props, options?: ThemeComponentProps) {
   Object.entries(options?.variants || {}).forEach(([varAttr, varOptions]: any) => {
     if (!options?.name) return;
 
-    const varValue = newProps[varAttr];
+    const varValue = props[varAttr] ?? fallbackProps[varAttr];
 
     if (typeof varValue === 'undefined') return;
 
@@ -25,9 +37,13 @@ export default function factory2(props, options?: ThemeComponentProps) {
     Object.keys(varStyles).forEach((styleId: any) => {
       const name = `${options?.name}-${varAttr}-${varValue}` + (styleId === 'root' ? '' : `-${styleId}`);
       variants[styleId] = variants[styleId] || [];
-      variants[styleId].push(global.styles[name]);
+      variants?.[styleId]?.push(global.styles[name]);
     });
   });
 
-  return { ...newProps, ...props, variants };
+  // Extends accessibility
+  // @ts-expect-error
+  fallbackProps.accessibility = deepmerge(fallbackProps.accessibility, props?.accessibility);
+
+  return { ...props, ...fallbackProps, variants };
 }

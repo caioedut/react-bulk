@@ -31,8 +31,9 @@ const ListItemFactory = React.memo<ListItemProps>(
       variants,
       chevronStyle,
       ...rest
-    } = factory2(props, options);
+    } = factory2<ListItemProps>(props, options);
 
+    gap = gap === true ? theme.shape.gap : gap;
     startAddon = startAddon ?? startIcon;
     endAddon = endAddon ?? endIcon;
 
@@ -43,11 +44,11 @@ const ListItemFactory = React.memo<ListItemProps>(
     chevron =
       chevron === true ? (
         <ChevronRight svg={svg} color={theme.color(chevronColor)} size={theme.rem(chevronSize || 1)} />
-      ) : (
+      ) : chevron ? (
         <TextFactory color={chevronColor} size={chevronSize}>
           {chevron}
         </TextFactory>
-      );
+      ) : null;
 
     return (
       <CardFactory ref={ref} p={gap} stylist={[variants?.root, stylist]} {...rest}>

@@ -1,59 +1,115 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { ProgressProps } from '../../types';
+import { ProgressProps, RequiredSome } from '../../types';
+import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';
+import pick from '../../utils/pick';
+import AnimationFactory from '../AnimationFactory';
 import BoxFactory from '../BoxFactory';
+import TextFactory from '../TextFactory';
 
 const ProgressFactory = React.memo<ProgressProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Progress;
-    const { Svg, Circle } = global.mapping.svg;
+    const { native } = global.mapping;
 
     // Extends from default props
     let {
       color,
+      label,
       size,
+      value,
+      // Events
+      onLayout,
       // Styles
       variants,
       style,
+      barStyle,
+      labelStyle,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<ProgressProps, 'color' | 'label' | 'size'>>(props, options);
 
-    color = theme.color(color);
+    const [containerWidth, setContainerWidth] = useState<number>(0);
 
-    const base = size * theme.typography.fontSize + theme.typography.fontSize;
-    const c = base / 2;
-    const w = c / 4;
-    const r = c - w / 2;
+    if (typeof size === 'string') {
+      size = pick(size, 'medium', {
+        xsmall: 0.25,
+        small: 0.75,
+        medium: 1.25,
+        large: 1.75,
+        xlarge: 1.25,
+      });
+    }
 
-    style = [{ height: base, width: base }, style];
+    const fontSize = theme.rem((size as number) * 0.7);
+    const isIndeterminate = typeof value !== 'number';
+    const height = theme.rem(size as number);
+    const translateX = native ? containerWidth * 0.8 : 'calc(100% - 20%)';
+
+    if (!isIndeterminate) {
+      rest.accessibility = deepmerge({ label: 'percentage' }, rest.accessibility, { value: { now: value } });
+    }
+
+    style = [
+      {
+        corners: (size as number) * 2,
+      },
+
+      style,
+    ];
+
+    barStyle = [
+      {
+        bg: color,
+        height,
+      },
+
+      barStyle,
+    ];
+
+    if (native) {
+      Object.assign(rest, { onLayout: handleLayout });
+    }
+
+    function handleLayout(e: any) {
+      setContainerWidth(e.nativeEvent.layout.width);
+      onLayout?.(e);
+    }
 
     return (
-      <BoxFactory ref={ref} style={style} stylist={[variants.root, stylist]} {...rest}>
-        <Svg viewBox={`0 0 ${base} ${base}`} height="100%" width="100%">
-          <Circle //
-            cx={c}
-            cy={c}
-            fill="none"
-            r={r}
-            stroke={color}
-            strokeWidth={w}
-            strokeOpacity={0.2}
-          />
-          <Circle //
-            cx={c}
-            cy={c}
-            r={r}
-            fill="none"
-            stroke={color}
-            strokeWidth={w}
-            strokeDasharray={base * 2.5}
-            strokeDashoffset={base * 1.875}
-          />
-        </Svg>
+      <BoxFactory ref={ref} {...rest} style={style} stylist={[variants.root, stylist]}>
+        {isIndeterminate ? (
+          <AnimationFactory //
+            in
+            loop
+            duration={500}
+            timing="linear"
+            direction="alternate"
+            from={{ transform: [{ translateX: 0 }] }}
+            to={{ transform: [{ translateX }] }}
+          >
+            <BoxFactory w="20%" style={barStyle} stylist={[variants.bar]} />
+          </AnimationFactory>
+        ) : (
+          <>
+            <BoxFactory style={barStyle} stylist={[variants.bar]} rawStyle={{ width: `${value}%` }} />
+
+            {Boolean(label) && (
+              <BoxFactory position="absolute" i={0} center>
+                {typeof label === 'function' ? (
+                  label?.(value as number)
+                ) : (
+                  <TextFactory style={[{ fontSize }, labelStyle]} stylist={[variants.label]}>
+                    {Math.round(value as number)}%
+                  </TextFactory>
+                )}
+              </BoxFactory>
+            )}
+          </>
+        )}
       </BoxFactory>
     );
   }),

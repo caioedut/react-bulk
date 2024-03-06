@@ -13,12 +13,12 @@ const LinkFactory = React.memo<LinkProps>(
     const { Link } = global.mapping;
 
     // Extends from default props
-    let {
+    const {
       underline,
       // Styles
       variants,
       ...rest
-    } = factory2(props, options);
+    } = factory2<LinkProps>(props, options);
 
     return <TextFactory ref={ref} component={Link} stylist={[variants.root, stylist]} {...rest} />;
   }),

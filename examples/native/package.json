@@ -1,26 +1,20 @@
 {
   "name": "react-bulk-native",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
-  "main": "node_modules/expo/AppEntry.js",
-  "scripts": {
-    "predev": "yarn install --check-files",
-    "dev": "node dev.js"
-  },
+  "main": "index.tsx",
   "dependencies": {
     "@react-bulk/core": "file:../../packages/core",
     "@react-bulk/native": "file:../../packages/native",
-    "expo": "~45.0.0",
-    "expo-updates": "~0.13.4",
-    "react": "17.0.2",
-    "react-native": "0.68.2",
-    "react-native-svg": "12.3.0"
+    "expo": "~49.0.5",
+    "expo-status-bar": "~1.6.0",
+    "react": "18.2.0",
+    "react-native": "0.72.5",
+    "react-native-svg": "13.9.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "@types/react": "~17.0.21",
-    "@types/react-native": "~0.66.13",
-    "fs-extra": "^10.1.0",
-    "typescript": "~4.3.5"
+    "@babel/core": "^7.20.0",
+    "@types/react": "~18.2.14",
+    "typescript": "^5.1.6"
   }
 }

@@ -1,11 +1,13 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import get from '../../props/get';
-import { ImageProps } from '../../types';
+import { ImageProps, RequiredSome } from '../../types';
+import defined from '../../utils/defined';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
+import TextFactory from '../TextFactory';
 
 const ImageFactory = React.memo<ImageProps>(
   forwardRef(({ stylist, ...props }, ref) => {
@@ -17,6 +19,7 @@ const ImageFactory = React.memo<ImageProps>(
     let {
       alt,
       circular,
+      fallback,
       mode,
       source,
       // Sizes
@@ -32,34 +35,40 @@ const ImageFactory = React.memo<ImageProps>(
       variants,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<ImageProps, 'mode'>>(props, options);
 
     const defaultRef: any = useRef(null);
     const imageRef = ref || defaultRef;
-
-    alt = alt ?? '';
-
-    const [status, setStatus] = useState('loading');
-
-    const [imgWidth, setImgWidth] = useState<number | null>(null);
-    const [aspectRatio, setAspectRatio] = useState<number | null>(null);
-
-    const [containerWidth, setContainerWidth] = useState<number | null>(null);
-    const [finalWidth, setFinalWidth] = useState<number | null>(0);
-    const [finalHeight, setFinalHeight] = useState<number | null>(0);
-
-    const loading = [aspectRatio, containerWidth].some((item: any) => [undefined, null].includes(item));
-
-    if (alt) {
-      rest.accessibility = rest.accessibility || {};
-      rest.accessibility.label = rest.accessibility.label ?? alt;
-    }
 
     // Defaults
     width = width ?? w ?? get('width', style) ?? get('w', style);
     height = height ?? h ?? get('height', style) ?? get('h', style);
 
-    let imgProps = {};
+    if (typeof width === 'string' && width.endsWith('px')) {
+      width = Number(width.replace(/px$/g, ''));
+    }
+
+    if (typeof height === 'string' && height.endsWith('px')) {
+      height = Number(height.replace(/px$/g, ''));
+    }
+
+    const [status, setStatus] = useState('loading');
+    const [containerWidth, setContainerWidth] = useState<number>();
+    const [containerHeight, setContainerHeight] = useState<number>();
+    const [imgWidth, setImgWidth] = useState<number | null>(null);
+    const [aspectRatio, setAspectRatio] = useState<number | null>(null);
+
+    const [finalWidth, setFinalWidth] = useState<number | undefined>(typeof width === 'number' ? width : undefined);
+    const [finalHeight, setFinalHeight] = useState<number | undefined>(typeof height === 'number' ? height : undefined);
+
+    const isProcessed =
+      [width, height].every((value) => typeof value === 'number') ||
+      [finalWidth, finalHeight].every((value) => typeof value === 'number');
+
+    if (alt) {
+      rest.accessibility = rest.accessibility || {};
+      rest.accessibility.label = rest.accessibility.label ?? alt;
+    }
 
     Object.assign(rest, {
       onLoad: (e) => handleLoad(e),
@@ -68,16 +77,15 @@ const ImageFactory = React.memo<ImageProps>(
 
     if (web) {
       Object.assign(rest, {
-        alt,
+        alt: alt ?? '',
+        // @ts-expect-error
         src: source?.uri ?? source,
       });
     }
 
     if (native) {
-      source = typeof source === 'string' ? { uri: source } : source;
-
-      Object.assign(imgProps, {
-        source,
+      Object.assign(rest, {
+        source: typeof source === 'string' ? { uri: source } : source,
         resizeMode: mode === 'fill' ? 'stretch' : mode,
         width: finalWidth,
         height: finalHeight,
@@ -86,6 +94,7 @@ const ImageFactory = React.memo<ImageProps>(
 
     const handleLayout = (e: any) => {
       setContainerWidth(e.nativeEvent.layout.width);
+      setContainerHeight(e.nativeEvent.layout.height);
       onLayout?.(e);
     };
 
@@ -94,26 +103,32 @@ const ImageFactory = React.memo<ImageProps>(
       onLoad?.(e);
     };
 
-    const handleError = (e: any) => {
-      setStatus('error');
-      onError?.(e);
-    };
+    const handleError = useCallback(
+      (e: any) => {
+        setStatus('error');
+        onError?.(e);
+      },
+      [onError],
+    );
 
     useEffect(() => {
       setStatus('loading');
     }, [source]);
 
     useEffect(() => {
-      if (!native || !source) return;
+      if (isProcessed || !native || !source) return;
+
+      // @ts-expect-error
+      const asset = source?.uri ?? source;
 
       try {
-        if (typeof source === 'number') {
-          const image = Image.resolveAssetSource(source as any);
+        if (typeof asset === 'number') {
+          const image = Image.resolveAssetSource(asset as any);
           setImgWidth(image.width);
           setAspectRatio(image.height / (image.width || 1));
         } else {
           Image.getSize(
-            source?.uri,
+            asset,
             (width, height) => {
               setImgWidth(width);
               setAspectRatio(height / (width || 1));
@@ -124,61 +139,112 @@ const ImageFactory = React.memo<ImageProps>(
       } catch (err) {
         handleError(err);
       }
-    }, [source, width, height]);
+    }, [source, width, height, isProcessed, Image, handleError]);
 
     useEffect(() => {
-      if (!native || loading) return;
+      if (isProcessed || !native || !defined(aspectRatio) || !defined(containerWidth) || !defined(containerHeight))
+        return;
 
       let widthBase = typeof width === 'number' ? width : null;
       let heightBase = typeof height === 'number' ? height : null;
 
-      let newWidth = (widthBase ?? Math.min(imgWidth ?? 0, containerWidth ?? 0)) as number;
-      let newHeight = (heightBase ?? 0) as number;
+      const widthStr = `${width ?? ''}`.toLowerCase().trim();
+      const heightStr = `${height ?? ''}`.toLowerCase().trim();
 
-      // Calc height
-      if (!heightBase) {
-        newHeight = newWidth * (aspectRatio || 0);
+      if (widthBase === null) {
+        if (widthStr.endsWith('px')) {
+          widthBase = Number(widthStr.replace(/px$/g, ''));
+        }
+
+        if (widthStr.endsWith('%')) {
+          const multiplier = Number(widthStr.replace(/%$/g, '')) / 100;
+          widthBase = (containerWidth ?? 0) * multiplier;
+        }
       }
 
-      // Calc width
-      if (!widthBase) {
-        newWidth = newHeight / (aspectRatio || 1);
+      if (heightBase === null) {
+        if (heightStr.endsWith('px')) {
+          heightBase = Number(heightStr.replace(/px$/g, ''));
+        }
+
+        if (heightStr.endsWith('%')) {
+          const multiplier = Number(heightStr.replace(/%$/g, '')) / 100;
+          heightBase = (containerHeight ?? 0) * multiplier;
+        }
       }
+
+      if (widthBase === null && heightBase === null) {
+        widthBase = containerWidth ?? imgWidth;
+      }
+
+      if (heightBase === null && widthBase !== null) {
+        heightBase = widthBase * (aspectRatio || 0);
+      }
+
+      // TODO: NATIVE: fix CONTAINER WIDTH when have only height value
+      if (widthBase === null && heightBase !== null) {
+        widthBase = heightBase / (aspectRatio || 1);
+      }
+
+      const newWidth = Number(widthBase ?? 0);
+      const newHeight = Number(heightBase ?? 0);
 
       setFinalWidth(newWidth);
       setFinalHeight(newHeight);
-    }, [loading, width, height, containerWidth, imgWidth, aspectRatio]);
+    }, [width, height, containerWidth, containerHeight, imgWidth, aspectRatio, isProcessed, native]);
+
+    const borderRadius = finalWidth ?? finalHeight ?? height ?? width;
 
     style = [
       { overflow: 'hidden' },
 
-      height && { height },
+      web && {
+        objectFit: mode,
+        height: height ?? undefined,
+        width: width ?? undefined,
+      },
 
-      width && { width },
+      native && !isProcessed && { flex: 1 },
 
-      web && { objectFit: mode },
+      native && {
+        height: isProcessed ? finalHeight : undefined,
+        width: isProcessed ? finalWidth : undefined,
+      },
 
       circular && {
         web: { borderRadius: '50%' },
-        native: { borderRadius: ((finalWidth ?? finalHeight ?? height ?? width) as number) / 2 },
+        native: { borderRadius: (typeof borderRadius === 'number' ? borderRadius : 0) / 2 },
       },
 
       style,
     ];
 
     if (status === 'error') {
-      return null;
+      if (defined(fallback)) {
+        return typeof fallback === 'function' ? fallback() : fallback;
+      }
+
+      return defined(alt) ? <TextFactory>{alt}</TextFactory> : null;
     }
 
     if (native) {
       return (
-        <BoxFactory style={style} stylist={[variants.root, stylist]} {...rest} onLayout={handleLayout}>
-          <BoxFactory ref={imageRef} component={Image} {...imgProps} noRootStyles />
+        <BoxFactory style={style} stylist={[variants.root, stylist]} onLayout={!isProcessed ? handleLayout : undefined}>
+          <BoxFactory ref={imageRef} component={Image} {...rest} noRootStyles />
         </BoxFactory>
       );
     }
 
-    return <BoxFactory ref={imageRef} component={Image} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles />;
+    return (
+      <BoxFactory
+        ref={imageRef}
+        component={Image}
+        style={style}
+        stylist={[variants.root, stylist]}
+        {...rest}
+        noRootStyles
+      />
+    );
   }),
 );
 

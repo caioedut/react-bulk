@@ -1,13 +1,16 @@
-import React, { forwardRef } from 'react';
+import React, { cloneElement, forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
+import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
+import get from '../../props/get';
 import { TextProps } from '../../types';
+import defined from '../../utils/defined';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const TextFactory = React.memo<TextProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Text;
     const { web, native, Text } = global.mapping;
@@ -22,8 +25,8 @@ const TextFactory = React.memo<TextProps>(
       justify,
       left,
       numberOfLines,
-      oblique,
       right,
+      selectable,
       size,
       smallCaps,
       transform,
@@ -33,7 +36,7 @@ const TextFactory = React.memo<TextProps>(
       variants,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<TextProps>(props, options);
 
     if (native) {
       rest.includeFontPadding = false;
@@ -41,25 +44,20 @@ const TextFactory = React.memo<TextProps>(
       if (numberOfLines) {
         rest.numberOfLines = numberOfLines;
       }
+
+      if (defined(selectable)) {
+        rest.selectable = selectable;
+      }
     }
 
     style = [
       color && { color },
-
       size && { fontSize: theme.rem(size) },
       weight && { fontWeight: `${weight}` },
-
       transform && { textTransform: transform },
 
       web &&
-        Number(numberOfLines) === 1 && {
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-        },
-
-      web &&
-        numberOfLines > 1 && {
+        defined(numberOfLines) && {
           display: '-webkit-box',
           '-webkit-line-clamp': `${numberOfLines}`,
           '-webkit-box-orient': 'vertical',
@@ -69,7 +67,24 @@ const TextFactory = React.memo<TextProps>(
       style,
     ];
 
-    return <BoxFactory ref={ref} component={Text} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles />;
+    bold = get('bold', style) ?? bold;
+    color = get('color', style) ?? color;
+    weight = get('weight', style) ?? weight;
+    const fontSize = get('fontSize', style, rest);
+    const fontWeight = get('fontWeight', style, rest);
+
+    return (
+      <BoxFactory ref={ref} component={Text} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles>
+        {/* Inherite some styles for each text child  */}
+        {childrenize(children).map((child, key) => {
+          if (child?.type === TextFactory) {
+            child = cloneElement(child, { key, variant, bold, color, weight, fontSize, fontWeight, ...child.props });
+          }
+
+          return child;
+        })}
+      </BoxFactory>
+    );
   }),
 );
 

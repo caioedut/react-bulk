@@ -1,12 +1,12 @@
 import Platform from './Platform';
 import css from './styles/css';
 import jss from './styles/jss';
-import { RbkStyles, ThemeProps } from './types';
+import { RbkStyle, ThemeProps } from './types';
 import crypt from './utils/crypt';
 import global from './utils/global';
 
 export type createStyle = {
-  style: string | RbkStyles;
+  style: string | RbkStyle;
   theme?: ThemeProps;
   name?: string;
   parent?: string;
@@ -22,12 +22,14 @@ export default function createStyle({ name, style, theme, global: isGlobal, prep
 
   const isObject = style && typeof style === 'object';
   const styleX = isObject ? jss({ theme }, style) : style;
+  // @ts-expect-error
   const isEmpty = (isObject ? Object.keys(styleX) : `${styleX || ''}`.trim()).length === 0;
 
   if (isEmpty) {
     return native ? {} : '';
   }
 
+  // @ts-expect-error
   const id = name ?? 'rbk-' + crypt(isObject ? JSON.stringify(styleX) : styleX);
 
   if (web) {

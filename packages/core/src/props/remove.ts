@@ -1,6 +1,4 @@
-// @ts-nocheck
-
-export default function remove(props: string | string[], ...mixin: (Object | Array<any> | Function)[]) {
+export default function remove(props: string | string[], ...mixin: unknown[]) {
   if (!mixin || !props) {
     return;
   }

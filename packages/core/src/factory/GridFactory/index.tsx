@@ -1,8 +1,11 @@
 import React, { forwardRef } from 'react';
 
+import useBreakpoints from '../../hooks/useBreakpoints';
 import useTheme from '../../hooks/useTheme';
+import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
-import { GridProps, RbkStyles } from '../../types';
+import { GridProps, RbkStyle, RequiredSome } from '../../types';
+import stdout from '../../utils/stdout';
 import BoxFactory from '../BoxFactory';
 
 const GridFactory = React.memo<GridProps>(
@@ -12,30 +15,31 @@ const GridFactory = React.memo<GridProps>(
 
     // Extends from default props
     let {
+      breakpoints,
       gap,
       size,
       // Styles
       variants,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<GridProps, 'size'>>(props, options);
 
-    const breakpoints = Object.keys(theme.breakpoints);
-    const spacing = !gap ? 0 : theme.spacing(gap) / 2;
+    gap = gap === true ? theme.shape.gap : gap;
+    const spacing = !gap ? 0 : theme.spacing(gap / 2);
+    const checkBreakpoints = useBreakpoints(breakpoints);
 
     return (
       <BoxFactory ref={ref} style={[{ margin: -spacing }, style]} stylist={[variants.root, stylist]} {...rest}>
-        {React.Children.map(children, (child, index) => {
+        {childrenize(children).map((child, index) => {
           if (!child && !['string', 'number'].includes(typeof child)) {
             return null;
           }
 
-          // @ts-ignore
           const props = { ...Object(child?.props) };
-          const itemStyle: RbkStyles = [props.style, { padding: spacing }];
+          let bkptStyle: RbkStyle = {};
 
-          breakpoints.forEach((breakpoint: string) => {
-            if (breakpoint in props) {
+          Object.entries(checkBreakpoints).forEach(([breakpoint, isBkptActive]) => {
+            if (breakpoint in props && isBkptActive) {
               const value = props[breakpoint];
               const width = (value / size) * 100;
 
@@ -43,30 +47,40 @@ const GridFactory = React.memo<GridProps>(
               const isFlex = value === 'flex' || value === true;
               const isHidden = value === 'hide' || value === 'hidden' || value === false;
 
-              if (!isAuto) {
-                itemStyle.push({ [breakpoint]: { width: `${width}%` } });
-              }
-
               if (isFlex) {
-                itemStyle.push({ [breakpoint]: { flex: 1 } });
-              }
-
-              if (isHidden) {
-                itemStyle.push({
-                  [breakpoint]: {
-                    display: 'none',
-                    opacity: 0,
-                    overflow: 'hidden',
-                  },
-                });
+                bkptStyle = { flex: 1 };
+              } else if (!isAuto) {
+                bkptStyle = { width: `${width}%` };
+              } else if (isHidden) {
+                bkptStyle = {
+                  display: 'none',
+                  opacity: 0,
+                  overflow: 'hidden',
+                };
               }
             }
 
             delete props[breakpoint];
           });
 
-          // @ts-ignore
-          return <BoxFactory key={index} component={child?.type} {...props} style={itemStyle} stylist={[variants.item]} />;
+          if (
+            child?.type !== BoxFactory &&
+            Object.keys(props).filter((prop) => !['ref', 'key', 'children'].includes(prop)).length > 0
+          ) {
+            stdout.warn(
+              'It\'s recommended to wrap the grid child in a "Box" to pass props in addition to breakpoints.',
+            );
+          }
+
+          return (
+            <BoxFactory
+              key={index}
+              component={child?.type}
+              {...props}
+              style={[props.style, { padding: spacing }, bkptStyle]}
+              stylist={[variants.item]}
+            />
+          );
         })}
       </BoxFactory>
     );

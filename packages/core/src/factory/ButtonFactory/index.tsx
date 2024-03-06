@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
+import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
-import { ButtonProps } from '../../types';
+import { ButtonProps, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import BadgeFactory from '../BadgeFactory';
@@ -15,21 +16,21 @@ const ButtonFactory = React.memo<ButtonProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Button;
-    const { web, native, Button } = global.mapping;
+    const { web, Button } = global.mapping;
 
     // Extends from default props
     let {
       badge,
-      block,
       circular,
       color,
+      contrastColor,
       disabled,
       endAddon,
       endIcon,
-      icon,
       label,
       loading,
       transform,
+      type = 'button',
       size,
       startAddon,
       startIcon,
@@ -40,89 +41,93 @@ const ButtonFactory = React.memo<ButtonProps>(
       contentStyle,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<ButtonProps, 'color' | 'size' | 'transform' | 'variant'>>(props, options);
 
     const form = useForm();
     const isBasic = ['outline', 'text'].includes(variant);
 
     children = children ?? label;
+    contrastColor = contrastColor ?? theme.contrast(color);
     badge = typeof badge === 'number' ? { value: badge } : badge;
     startAddon = startAddon ?? startIcon;
     endAddon = endAddon ?? endIcon;
     size = size ?? 'medium';
 
-    if (web && !rest.type) {
-      rest.type = 'button';
-    }
-
     if (form && !props.onPress && !props.onClick) {
-      if (rest.type === 'submit') {
+      if (type === 'submit') {
         rest.onPress = form.submit;
       }
 
-      if (rest.type === 'cancel') {
-        rest.type = 'button';
+      if (type === 'cancel') {
+        type = 'button';
         rest.onPress = form.cancel;
       }
 
-      if (['clear', 'reset'].includes(rest.type)) {
-        rest.type = 'button';
+      if (['clear', 'reset'].includes(type)) {
+        type = 'button';
         rest.onPress = form.clear;
       }
-    }
-
-    if (native) {
-      delete rest.type;
     }
 
     const isSizeNumber = typeof size === 'number';
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
-        xsmall: 0.75,
-        small: 0.875,
-        medium: 1,
-        large: 1.25,
-        xlarge: 1.625,
+        xsmall: 1.25,
+        small: 1.75,
+        medium: 2.25,
+        large: 2.75,
+        xlarge: 3.25,
       });
     }
 
-    const baseSize = theme.rem(size);
-    const halfSize = baseSize / 2;
-    const doubleSize = baseSize * 2;
-    const textColor = isBasic ? color : 'white';
+    const baseSize = theme.rem(size as number);
+    const spacing = (baseSize - theme.rem(0.75)) / 2;
+    const textColor = isBasic ? color : contrastColor;
 
     style = [
       isSizeNumber && {
-        minHeight: doubleSize,
-        minWidth: doubleSize,
-        paddingHorizontal: halfSize,
+        minHeight: baseSize,
+        minWidth: baseSize,
+        paddingHorizontal: spacing,
       },
 
       circular && {
-        borderRadius: doubleSize / 2,
-        paddingHorizontal: halfSize / 2,
+        borderRadius: baseSize / 2,
+        paddingHorizontal: 0,
       },
 
-      color && { borderColor: color },
+      color && variant !== 'text' && { borderColor: color },
 
       color && !isBasic && { backgroundColor: color },
 
-      web && { '&:focus': { boxShadow: `0 0 0 4px ${theme.color(color, 0.3)}` } },
-
-      web && color && { '&:hover': { bg: theme.color(color, isBasic ? 0.1 : 0.8) } },
+      web &&
+        color && {
+          '&:hover': { bg: theme.color(color, isBasic ? 0.2 : 0.8) },
+          '&:focus': { boxShadow: `0 0 0 4px ${theme.color(color, 0.3)}` },
+        },
 
       style,
     ];
 
+    contentStyle = [
+      { maxw: '100%' },
+      startAddon && { ml: 1.5 },
+      endAddon && { mr: 1.5 },
+      loading && { opacity: 0 },
+      contentStyle,
+    ];
+
     labelStyle = [{ color: textColor }, labelStyle];
 
-    if (typeof children === 'string') {
-      children = (
-        <TextFactory style={labelStyle} stylist={[variants.label]}>
-          {children}
-        </TextFactory>
-      );
+    let childrenArray = childrenize(children);
+
+    if (childrenArray.length && childrenArray.every((child) => ['string', 'number'].includes(typeof child))) {
+      childrenArray = [
+        <TextFactory key={0} style={labelStyle} stylist={[variants.label]}>
+          {childrenArray.join('')}
+        </TextFactory>,
+      ];
     }
 
     return (
@@ -132,17 +137,18 @@ const ButtonFactory = React.memo<ButtonProps>(
         style={style}
         stylist={[variants.root, stylist]}
         {...rest}
+        type={type}
         disabled={disabled}
       >
-        {Boolean(startAddon) && <BoxFactory>{startAddon}</BoxFactory>}
+        {Boolean(startAddon) && <BoxFactory style={loading && { opacity: 0 }}>{startAddon}</BoxFactory>}
 
-        {Boolean(children || children?.length) && <BoxFactory style={[contentStyle, loading && { opacity: 0 }]}>{children}</BoxFactory>}
+        {Boolean(childrenArray?.length) && <BoxFactory style={contentStyle}>{childrenArray}</BoxFactory>}
 
-        {Boolean(endAddon) && <BoxFactory>{endAddon}</BoxFactory>}
+        {Boolean(endAddon) && <BoxFactory style={loading && { opacity: 0 }}>{endAddon}</BoxFactory>}
 
         {loading && (
           <BoxFactory position="absolute" i={0} center>
-            <LoadingFactory color={textColor} size={size / 2} />
+            <LoadingFactory color={textColor} size={(size as number) / 2} />
           </BoxFactory>
         )}
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Breakpoints
@@ -10,17 +10,17 @@ Used to create responsive design. Commonly used with [Grid](/docs/layout/grid).
 
 | Alias:     | xs       | sm          | md          | lg          | xl           | xxl         |
 |------------|----------|-------------|-------------|-------------|--------------|-------------|
-| Min Width: | `0` (px) | `576` (px)  | `768` (px)  | `992` (px)  | `1200` (px)  | `1400` (px) |
+| Min Width: | `0` (px) | `320` (px)  | `768` (px)  | `992` (px)  | `1200` (px)  | `1400` (px) |
 
 ## Custom
 
-[Read more about Theme](../layout/theme).
+[Read more about Theme](/docs/layout/theme).
 
 ```jsx
 const theme = {
   breakpoints: {
     xs: 0,
-    sm: 576,
+    sm: 320,
     md: 768,
     lg: 992,
     xl: 1200,
@@ -33,7 +33,7 @@ const theme = {
 
 ### Grid
 
-See [Grid](../layout/grid.md)
+See [Grid](/docs/layout/grid.md)
 
 ### Components
 

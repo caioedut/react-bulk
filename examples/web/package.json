@@ -1,22 +1,19 @@
 {
   "name": "react-bulk-web",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
-  "main": "",
-  "scripts": {
-    "predev": "yarn install --check-files",
-    "dev": "node dev.js"
-  },
+  "main": "index.tsx",
   "dependencies": {
-    "next": "^12.3.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "@react-bulk/core": "file:../../packages/core",
+    "@react-bulk/web": "file:../../packages/web",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.4",
-    "@types/react": "~17.0.21",
-    "@types/react-dom": "^17.0.17",
-    "fs-extra": "^10.1.0",
-    "typescript": "^4.8.4"
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.5"
   }
 }

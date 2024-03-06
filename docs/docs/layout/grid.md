@@ -39,7 +39,7 @@ import { Grid } from '@react-bulk/web'; // OR @react-bulk/native
 ### Spacing
 
 ```jsx live
-<Grid size={3} gap={3}>
+<Grid size={3} gap={4}>
   <Box>
     <Text border>Hello World!</Text>
   </Box>
@@ -64,7 +64,7 @@ import { Grid } from '@react-bulk/web'; // OR @react-bulk/native
 
 ## Breakpoints
 
-It is recommended to use the [`Box`](/docs/components/core/box) as a child.
+It is recommended to use the [`Box`](/docs/core/box) as a child.
 
 All [breakpoints](/docs/layout/breakpoints) are avalilable as prop of the children.
 
@@ -75,43 +75,51 @@ Default breakpoints: **`xs` `sm` `md` `lg` `xl` `xxl`**
 - `'flex'` or `true`: item will grow or shrink to fit the space available in its container.
 - `'hide'` or `false`: hides the item.
 
-➤ Type: **`number` `boolean` `auto` `flex` `hide`** <br/>
+➤ Type: **`number` `boolean` `'auto'` `'flex'` `'hide'`** <br/>
 ➤ Default: **`'auto'`** <br/>
-
----
 
 ## Props
 
-Extends all [`Box`](/docs/components/core/box#props) props.
+Extends all [`Box`](/docs/core/box#props) props.
 
-**`direction`**
+### **`breakpoints`**
+
+An option to override [Layout Breakpoints](/docs/layout/breakpoints/#default) for a single `Grid`.
+
+➤ Type: **`object`** <br/>
+
+```js
+{
+  xs?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
+  xl?: number;
+  xxl?: number;
+}
+```
+
+---
+
+### **`direction`**
 
 ➤ Type: **`'row'` `'column'` `'row-reverse'` `'column-reverse'`** <br/>
 ➤ Default: **`'row'`** <br/>
 
 ---
 
-**`gap`**
+### **`gap`**
 
-Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.typography.fontSize` value.
+Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.shape.spacing` value.
 
 ➤ Type: **`number`** <br/>
+➤ Default: **`theme.shape.gap`** <br/>
 
 ---
 
-**`size`**
+### **`size`**
 
 Number of columns.
 
 ➤ Type: **`number`** <br/>
 ➤ Default: **`12`** <br/>
-
----
-
-## Styles
-
-**`style`** to the main element.
-
-➤ Type: **[`RbkStyles`](/docs/type-reference/rbk-styles)** <br/>
-
----

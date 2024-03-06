@@ -2,8 +2,7 @@ import React, { forwardRef } from 'react';
 
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
-import { BadgeProps } from '../../types';
-import global from '../../utils/global';
+import { BadgeProps, RequiredSome } from '../../types';
 import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
@@ -12,7 +11,6 @@ const BadgeFactory = React.memo<BadgeProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Badge;
-    const { web, native } = global.mapping;
 
     // Extends from default props
     let {
@@ -29,30 +27,26 @@ const BadgeFactory = React.memo<BadgeProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<RequiredSome<BadgeProps, 'color' | 'size'>>(props, options);
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
-        xsmall: 0.75,
-        small: 0.875,
-        medium: 1,
-        large: 1.25,
-        xlarge: 1.625,
+        xsmall: 1.25,
+        small: 1.75,
+        medium: 2.25,
+        large: 2.75,
+        xlarge: 3.25,
       });
     }
 
     const absolute = top || bottom || left || right;
-    const fontSize = theme.rem(size);
-    const baseSize = theme.rem(1.25, fontSize);
+
+    const baseSize = theme.rem(size as number) / 2;
     const halfSize = baseSize / 2;
 
     labelStyle = [
       {
         fontSize: halfSize,
-      },
-
-      web && {
-        lineHeight: native ? halfSize : 1,
       },
 
       labelStyle,
@@ -71,6 +65,8 @@ const BadgeFactory = React.memo<BadgeProps>(
       !dot && {
         minHeight: baseSize,
         minWidth: baseSize,
+        paddingVertical: Math.round(baseSize * 0.222222),
+        paddingHorizontal: Math.round(baseSize * 0.333333),
       },
 
       top && { top: -halfSize },
