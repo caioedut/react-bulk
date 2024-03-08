@@ -19,7 +19,7 @@ const BoxFactory = React.memo<BoxProps>(
   forwardRef(({ platform, className, stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Box;
-    const { web, native, Button, Text, View } = global.mapping;
+    const { web, native, Button, Text, View, useDimensions } = global.mapping;
 
     // Extends from default props
     props = useMemo(() => factory2<BoxProps>(props, options), [props, options]);
@@ -123,8 +123,8 @@ const BoxFactory = React.memo<BoxProps>(
     const styles = [...(!noRootStyles ? variants.root : []), stylist];
     const responsiveStyle = extract(Object.keys(theme.breakpoints), style);
 
-    // TODO: refresh cometta styles when have responsive styles
-    // useDimensions(Object.keys(responsiveStyle).length > 0);
+    // Native only: refresh cometta styles when have responsive styles
+    useDimensions(native && Object.keys(responsiveStyle).length > 0);
 
     if (style) {
       if (web) {
