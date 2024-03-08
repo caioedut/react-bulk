@@ -146,7 +146,6 @@ const AnimationFactory = React.memo<AnimationProps>(
         if (attr === 'transform' && Array.isArray(val)) {
           style.transform = (val as any[]).map((obj) => {
             Object.entries(obj).map(([transfAttr, transfValue]) => {
-              // @ts-expect-error
               const toValue = get(transfAttr, ...(to?.transform || []));
 
               obj[transfAttr] = animationRef.current.interpolate({
