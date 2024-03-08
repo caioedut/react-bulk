@@ -211,6 +211,7 @@ const InputDateFactory = React.memo<InputDateProps>(
           <CardFactory minw={320} maxw={360} shadow={1} p={0}>
             <BoxFactory h={380}>
               <CalendarFactory
+                shadow={0}
                 color={color}
                 date={internal}
                 events={internal ? [internal] : []}
