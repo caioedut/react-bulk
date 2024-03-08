@@ -13,7 +13,6 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  useWindowDimensions as useDimensions,
 } from 'react-native';
 
 import ReactBulk, {
@@ -83,6 +82,8 @@ import Svg, {
   TextPath,
   Use,
 } from 'react-native-svg';
+
+import useDimensions from './useDimensions';
 
 global.mapping = {
   web: false,
