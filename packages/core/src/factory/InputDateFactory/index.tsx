@@ -3,7 +3,7 @@ import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } 
 import useTheme from '../../hooks/useTheme';
 import Calendar from '../../icons/Calendar';
 import factory2 from '../../props/factory2';
-import { InputDateProps } from '../../types';
+import { InputDateProps, InputProps } from '../../types';
 import { dateify } from '../../utils/date';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -29,7 +29,7 @@ const InputDateFactory = React.memo<InputDateProps>(
       defaultValue,
       disabled,
       color,
-      error,
+      error: errorProp,
       format,
       locale: localeProp,
       max,
@@ -106,7 +106,7 @@ const InputDateFactory = React.memo<InputDateProps>(
     const triggerRef = useRef();
 
     const [calendarVisible, setCalendarVisible] = useState(false);
-    // const [_internal, _setInternal] = useState(value ?? defaultValue);
+    const [error, setError] = useState<InputProps['error']>();
     const [_internal, _setInternal] = useState<Date | null>(resolveAsDate(value ?? defaultValue));
 
     const internal = useMemo(() => {
@@ -140,6 +140,10 @@ const InputDateFactory = React.memo<InputDateProps>(
       _setInternal(resolveAsDate(value));
     }, [value]);
 
+    useEffect(() => {
+      setError(errorProp);
+    }, [errorProp]);
+
     const handleChangeInternal = useCallback(
       (e, date) => {
         const newDate = resolveAsDate(date);
@@ -164,6 +168,7 @@ const InputDateFactory = React.memo<InputDateProps>(
           onBlur={onBlur}
           onSubmit={onSubmit}
           onFormChange={onFormChange}
+          onErrorChange={(error) => setError(errorProp ?? error)}
         />
         <InputFactory
           {...rest}
