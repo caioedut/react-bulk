@@ -73,6 +73,7 @@ const InputFactory = React.memo<InputProps>(
       onBlur,
       onFormChange,
       onSubmit,
+      onErrorChange,
       // Styles
       variants,
       contentStyle,
@@ -306,6 +307,10 @@ const InputFactory = React.memo<InputProps>(
     useEffect(() => {
       setError(errorProp);
     }, [errorProp]);
+
+    useEffect(() => {
+      onErrorChange?.(error);
+    }, [error, onErrorChange]);
 
     useEffect(() => {
       if (!name || !form) return;

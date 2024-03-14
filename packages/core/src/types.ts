@@ -702,6 +702,7 @@ export type InputProps = PropsWithStyles<
     onSubmit?: (event: RbkInputEvent, value: InputValue) => any;
     onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue) => any;
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+    onErrorChange?: (error: string | boolean | undefined) => any;
     // Styles
     contentStyle?: RbkStyle;
     hintStyle?: RbkStyle;
