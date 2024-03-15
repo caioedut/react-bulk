@@ -215,7 +215,7 @@ const InputPinFactory = React.memo<InputPinProps>(
     };
 
     return (
-      <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory data-rbk-input={name} ref={ref} stylist={[variants.root, stylist]} {...rest}>
         <InputFactory
           _internalTriggerChange
           hidden

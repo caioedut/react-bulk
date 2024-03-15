@@ -176,7 +176,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     buttonStyle = [{ marginLeft: -theme.rem(0.5, fontSize) }, buttonStyle];
 
     return (
-      <BoxFactory style={style} stylist={[variants.root, stylist]}>
+      <BoxFactory data-rbk-input={name} style={style} stylist={[variants.root, stylist]}>
         <ButtonFactory
           ref={buttonRef}
           style={buttonStyle}
