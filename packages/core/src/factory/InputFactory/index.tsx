@@ -413,7 +413,12 @@ const InputFactory = React.memo<InputProps>(
     ];
 
     return (
-      <BoxFactory hidden={hidden || type === 'hidden'} style={style} stylist={[variants.root, stylist]}>
+      <BoxFactory
+        data-rbk-input={name}
+        hidden={hidden || type === 'hidden'}
+        style={style}
+        stylist={[variants.root, stylist]}
+      >
         {Boolean(label) && (
           <LabelFactory
             numberOfLines={1}

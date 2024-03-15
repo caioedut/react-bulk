@@ -340,7 +340,12 @@ const SelectFactory = React.memo<SelectProps>(
     labelStyle = [error && { color: 'error' }, labelStyle];
 
     return (
-      <BoxFactory style={style} stylist={[variants.root, stylist]} onKeyDown={visible ? handleKeyDown : undefined}>
+      <BoxFactory
+        data-rbk-input={name}
+        style={style}
+        stylist={[variants.root, stylist]}
+        onKeyDown={visible ? handleKeyDown : undefined}
+      >
         {Boolean(label) && (
           <LabelFactory
             numberOfLines={1}
@@ -449,13 +454,10 @@ const SelectFactory = React.memo<SelectProps>(
                           selectedRef.current = el;
                         }
                       }}
-                      platform={{
-                        web: {
-                          accessibility: {
-                            role: 'option',
-                            state: { selected: isSelected },
-                          },
-                        },
+                      accessibility={{
+                        role: 'option',
+                        value: { now: option.value },
+                        state: { selected: isSelected },
                       }}
                     >
                       <TextFactory>{option.label}</TextFactory>

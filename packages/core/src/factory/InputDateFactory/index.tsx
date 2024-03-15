@@ -155,7 +155,7 @@ const InputDateFactory = React.memo<InputDateProps>(
     );
 
     return (
-      <BoxFactory position="relative">
+      <BoxFactory data-rbk-input={name} position="relative">
         <InputFactory
           ref={ref}
           readOnly
