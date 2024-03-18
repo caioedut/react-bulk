@@ -112,6 +112,16 @@ type StyleProps = Overwrite<
 /** @internal */
 type RbkStyleVar = undefined | null | false | AnyObject | (CSSProperties & StyleProps);
 
+export type RbkBreakpoints = {
+  xs: number;
+  sm: number;
+  md: number;
+  lg: number;
+  xl: number;
+  xxl: number;
+  [key: string]: number;
+};
+
 /** @internal */
 export type SelectOption = {
   label: string;
@@ -460,14 +470,7 @@ export type ThemeProps = {
     };
   };
 
-  breakpoints: {
-    xs: number;
-    sm: number;
-    md: number;
-    lg: number;
-    xl: number;
-    xxl: number;
-  };
+  breakpoints: RbkBreakpoints;
 
   rem: (multiplier?: number, base?: number | null) => number;
   spacing: (multiplier?: number) => number;
@@ -542,7 +545,7 @@ export type BoxProps = { [key: string | number]: any } & Overwrite<
       platform?: object;
       accessibility?: AccessibilityProps;
       invisible?: boolean;
-      hidden?: boolean;
+      hidden?: boolean | { [key in keyof RbkBreakpoints]?: boolean };
 
       mount?: boolean;
       component?: any;
@@ -933,7 +936,7 @@ export type LoadingProps = PropsWithStyles<{
 }>;
 
 export type GridProps = PropsWithStyles<{
-  breakpoints?: Partial<ThemeProps['breakpoints']>;
+  breakpoints?: Partial<RbkBreakpoints>;
   gap?: number | true;
   size?: number;
 }>;

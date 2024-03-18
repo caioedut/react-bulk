@@ -75,6 +75,12 @@ const BoxFactory = React.memo<BoxProps>(
       }
     }
 
+    const hiddenStyle = {
+      display: 'none',
+      opacity: 0,
+      overflow: 'hidden',
+    };
+
     style = [
       typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
 
@@ -108,11 +114,7 @@ const BoxFactory = React.memo<BoxProps>(
 
       stylesFromProps,
 
-      hidden && {
-        display: 'none',
-        opacity: 0,
-        overflow: 'hidden',
-      },
+      hidden === true && hiddenStyle,
     ];
 
     // #HACK: fix flex overflow
@@ -134,13 +136,26 @@ const BoxFactory = React.memo<BoxProps>(
     useDimensions(native && Object.keys(responsiveStyle).length > 0);
 
     // Apply responsive styles
-    for (const bkptName of breakpointNames) {
+    for (const bkptIndex in breakpointNames) {
+      const bkptName = breakpointNames[bkptIndex];
       const bkptStyle = responsiveStyle?.[bkptName];
 
       if (bkptStyle) {
         style.push({
           [`@media (min-width: ${theme.breakpoints[bkptName]}px)`]: bkptStyle,
         });
+      }
+
+      // Responsive "HIDDEN"
+      if (hidden?.[bkptName]) {
+        const bkptNext = theme.breakpoints?.[breakpointNames[Number(bkptIndex) + 1]];
+
+        let media = `@media (min-width: ${theme.breakpoints[bkptName]}px)`;
+        if (bkptNext) {
+          media += ` and (max-width: ${bkptNext - 1}px)`;
+        }
+
+        style.push({ [media]: hiddenStyle });
       }
     }
 
