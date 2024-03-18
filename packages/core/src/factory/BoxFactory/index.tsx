@@ -122,37 +122,34 @@ const BoxFactory = React.memo<BoxProps>(
 
     const styles = [...(!noRootStyles ? variants.root : []), stylist];
     const responsiveStyle = extract(Object.keys(theme.breakpoints), style);
+    const breakpointNames = useMemo(
+      () =>
+        Object.entries(theme.breakpoints)
+          .sort((a, b) => a[1] - b[1])
+          .map(([bkptName]) => bkptName),
+      [theme.breakpoints],
+    );
 
     // Native only: refresh cometta styles when have responsive styles
     useDimensions(native && Object.keys(responsiveStyle).length > 0);
 
-    if (style) {
-      if (web) {
-        styles.push(sheet(style));
-      }
+    // Apply responsive styles
+    for (const bkptName of breakpointNames) {
+      const bkptStyle = responsiveStyle?.[bkptName];
 
-      if (native) {
-        styles.push(jss(style));
+      if (bkptStyle) {
+        style.push({
+          [`@media (min-width: ${theme.breakpoints[bkptName]}px)`]: bkptStyle,
+        });
       }
     }
 
-    // Apply responsive styles
-    for (const breakpoint of Object.entries(responsiveStyle)) {
-      const [bkptName, bkptStyle] = breakpoint;
+    if (web) {
+      styles.push(sheet(style));
+    }
 
-      if (bkptStyle) {
-        const mediaStyle = {
-          [`@media (min-width: ${theme.breakpoints[bkptName]}px)`]: bkptStyle,
-        };
-
-        if (web) {
-          styles.push(sheet(mediaStyle));
-        }
-
-        if (native) {
-          styles.push(jss(mediaStyle));
-        }
-      }
+    if (native) {
+      styles.push(jss(style));
     }
 
     if (native) {
