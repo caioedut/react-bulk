@@ -2,6 +2,7 @@ import cometta, { ComettaStyle } from 'cometta';
 
 import Platform from '../Platform';
 import { aliases, boxSizeProps, customSpacings, flexAlignProps, notPxProps } from '../styles/constants';
+import transform from '../styles/transform';
 import { ThemeProps } from '../types';
 import defined from '../utils/defined';
 import global from '../utils/global';
@@ -76,28 +77,27 @@ export default function registry(theme?: ThemeProps) {
   cometta.parser('transform', (value) => {
     if (!defined(value)) return;
 
-    if (Platform.web && Array.isArray(value)) {
-      const values: string[] = [];
+    const parsed = transform(value);
 
-      value.forEach((item) => {
-        for (const attr in item) {
-          let unit = Array.isArray(item[attr]) ? item[attr].join(', ') : item[attr];
-
-          // @ts-expect-error
-          if (unit && typeof unit === 'number' && !notPxProps.includes(attr)) {
-            unit = `${unit}px`;
-          }
-
-          values.push(`${attr}(${unit})`);
-        }
-      });
-
-      if (values.length) {
-        return { transform: values.join(' ') };
-      }
+    // TODO: remove on next versions (RN now supports string transform)
+    if (Platform.native) {
+      // @ts-expect-error
+      return {
+        transform: Object.entries(parsed).map(([attr, value]) => ({ [attr]: value })),
+      } as ComettaStyle;
     }
 
-    return { transform: value };
+    return {
+      transform: Object.entries(parsed)
+        .map(([attr, val]) => {
+          if (typeof val === 'number' && !notPxProps.includes(attr as any)) {
+            val = `${val}px`;
+          }
+
+          return `${attr}(${val})`;
+        })
+        .join(' '),
+    } as ComettaStyle;
   });
 
   cometta.parser('inset', (value) => {

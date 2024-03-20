@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 
 import { AnyObject, FormRef, RbkInputEvent, unstable_useTransition, useAnimation, useToaster } from '@react-bulk/core';
 import {
@@ -42,6 +42,51 @@ import {
 
 export default function Main() {
   const theme = useTheme();
+
+  const trans = unstable_useTransition({
+    translateX: 50,
+    // transform: 'translateX(50px)',
+    // transform: { translateX: 50 },
+    // transform: 'translateX(50px) scale(2)',
+    // transform: [{ translateX: 50 }, { scale: 2 }],
+    // transform: [{ translateX: 50, scale: 2 }],
+  });
+
+  // console.log(trans.props);
+  useEffect(() => {
+    trans.start({
+      iterations: 'infinite',
+      to: {
+        translateX: 0,
+        // transform: 'translateX(0)',
+        // transform: { translateX: 0 },
+        // transform: 'translateX(0) scale(1)',
+        // transform: [{ translateX: 0 }, { scale: 1 }],
+        // transform: [{ translateX: 0, scale: 1 }],
+      },
+    });
+  }, []);
+
+  return (
+    <Box p={16} center>
+      <Box {...trans.props}>
+        <Text>Anything</Text>
+      </Box>
+      {/*<Animation*/}
+      {/*  loop*/}
+      {/*  in*/}
+      {/*  duration={1000}*/}
+      {/*  from={{*/}
+      {/*    transform: 'translateX(50px)',*/}
+      {/*  }}*/}
+      {/*  to={{*/}
+      {/*    transform: 'translateX(0)',*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <Text>Anything</Text>*/}
+      {/*</Animation>*/}
+    </Box>
+  );
 
   return (
     <Scrollable bg="background.secondary" contentInset={theme.shape.gap}>
@@ -1217,7 +1262,7 @@ function CarouselExample() {
 function GrowBoxExample() {
   const theme = useTheme();
 
-  const [length, incLength] = useReducer((current, incValue) => {
+  const [length, incLength] = useReducer((current: number, incValue: number) => {
     return Math.max(0, current + incValue);
   }, 0);
 
@@ -1402,7 +1447,16 @@ const variants = ['solid', 'outline', 'text'] as const;
 const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
 const placements = ['top', 'bottom', 'left', 'right'] as const;
 const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
-const animations = ['spin', 'fade', 'zoom', { from: { opacity: 0, ml: -4 }, to: { opacity: 1, ml: 0 } }] as const;
+const animations = [
+  'spin',
+  'fade',
+  'zoom',
+  { from: { opacity: 0, ml: -4 }, to: { opacity: 1, ml: 0 } },
+  {
+    from: { transform: 'translateX(50px)' },
+    to: { transform: 'translateX(0)' },
+  },
+] as const;
 
 const formData = {
   firstName: 'Richard',

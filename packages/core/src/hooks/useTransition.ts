@@ -7,7 +7,7 @@ import { notPxProps, transformProps } from '../styles/constants';
 import css from '../styles/css';
 import jss from '../styles/jss';
 import transform from '../styles/transform';
-import { AnyObject, IntervalType, RbkStyle, RbkTransition, TimeoutType } from '../types';
+import { AnyObject, IntervalType, RbkTransition, TimeoutType } from '../types';
 import clone from '../utils/clone';
 import defined from '../utils/defined';
 import global from '../utils/global';
@@ -16,7 +16,13 @@ import stdout from '../utils/stdout';
 import uuid from '../utils/uuid';
 import useHtmlId from './useHtmlId';
 
-export default function useTransition(style?: RbkStyle, ref?: MutableRefObject<any>) {
+function jssWithTransform(style) {
+  const resolved = jss(style);
+  const transformStyles = extract([...transformProps], resolved, transform(extract('transform', resolved)?.transform));
+  return { ...resolved, ...transformStyles };
+}
+
+export default function useTransition(style?: RbkTransition['from'], ref?: MutableRefObject<any>) {
   const { web, native } = global.mapping;
 
   const baseStyle = useMemo(() => jss(style), [style]);
@@ -26,31 +32,15 @@ export default function useTransition(style?: RbkStyle, ref?: MutableRefObject<a
 
   const animationName = useHtmlId();
   const styleRef = useRef<AnyObject>(clone(baseStyle));
+  const transformRef = useRef<AnyObject>({});
   const runIdRef = useRef<string>();
   const timeoutRef = useRef<TimeoutType>();
   const intervalRef = useRef<IntervalType>();
 
-  const jssWithTransform = useCallback((style) => {
-    const resolved = jss(style);
-    const { transform } = extract('transform', resolved);
-
-    const transformStyles: AnyObject = {};
-
-    if (typeof transform === 'string') {
-      transform.split(/\s/g).forEach((item) => {
-        const match = item.trim().match(/(.*)\((.*)\)(\[([^\]]*)\])?/);
-
-        if (match?.[2]) {
-          transformStyles[match?.[1]] = match?.[2];
-        }
-      });
-    }
-
-    return { ...resolved, ...jss(transformStyles) };
-  }, []);
-
   const setStyle = useCallback(
     (attr: string, value: any, unit = null) => {
+      let prop = attr;
+
       if (web) {
         if (defined(value)) {
           if (!unit && !notPxProps.includes(attr as any)) {
@@ -61,12 +51,6 @@ export default function useTransition(style?: RbkStyle, ref?: MutableRefObject<a
             value = `${value}${unit}`;
           }
         }
-
-        requestAnimationFrame(() => {
-          if (elRef.current) {
-            elRef.current.style[attr] = value;
-          }
-        });
       }
 
       if (native) {
@@ -79,19 +63,34 @@ export default function useTransition(style?: RbkStyle, ref?: MutableRefObject<a
             value = `${value}${unit}`;
           }
         }
+      }
 
-        // Parse "transform" props
-        if (transformProps.includes(attr as any)) {
-          value = [{ [attr]: value }];
-          attr = 'transform';
+      // Parse "transform" props
+      if (transformProps.includes(attr as any)) {
+        prop = 'transform';
+
+        if (web) {
+          transformRef.current[attr] = `${attr}(${value})`;
+          value = Object.values(transformRef.current).join(' ');
         }
 
-        requestAnimationFrame(() => {
-          if (elRef.current) {
-            elRef.current.setNativeProps({ [attr]: value });
-          }
-        });
+        if (native) {
+          transformRef.current[attr] = { [attr]: value };
+          value = Object.values(transformRef.current);
+        }
       }
+
+      requestAnimationFrame(() => {
+        if (!elRef.current) return;
+
+        if (web) {
+          elRef.current.style[prop] = value;
+        }
+
+        if (native) {
+          elRef.current.setNativeProps({ [prop]: value });
+        }
+      });
 
       styleRef.current[attr] = value;
     },
@@ -171,14 +170,17 @@ export default function useTransition(style?: RbkStyle, ref?: MutableRefObject<a
       );
 
       if (web) {
-        const transformFrom = transform(extract([...transformProps], from));
-        const transformTo = transform(extract([...transformProps], to));
+        const transformFrom = extract([...transformProps], from);
+        const transformTo = extract([...transformProps], to);
+
+        const transformFromStr = Object.entries(transformFrom).map(([attr, value]) => ({ [attr]: value }));
+        const transformToStr = Object.entries(transformTo).map(([attr, value]) => ({ [attr]: value }));
 
         cometta.createStyleSheet(
           `
              @keyframes ${animationName} {
-               from { ${css(from, { transform: transformFrom })} }
-               to { ${css(to, { transform: transformTo })} }
+               from { ${css(from, { transform: transformFromStr })} }
+               to { ${css(to, { transform: transformToStr })} }
              }
           `,
           { uniqueId: animationName },
@@ -277,6 +279,7 @@ export default function useTransition(style?: RbkStyle, ref?: MutableRefObject<a
                 startAt = Date.now();
                 endAt = startAt + duration;
 
+                // TODO: create array of intervals
                 intervalRef.current = setInterval(() => {
                   const pos = duration - (endAt - Date.now());
 
