@@ -2,6 +2,7 @@ import {
   Animated,
   Dimensions,
   Easing,
+  NativeModules,
   Platform,
   Image as RNImage,
   Modal as RNModal,
@@ -12,7 +13,6 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  useWindowDimensions as useDimensions,
 } from 'react-native';
 
 import ReactBulk, {
@@ -47,6 +47,7 @@ import ReactBulk, {
   OutlineFactory,
   ProgressFactory,
   RbkMap,
+  RbkTheme,
   ScrollableFactory,
   SelectFactory,
   SliderFactory,
@@ -56,7 +57,7 @@ import ReactBulk, {
   TextFactory,
   TooltipFactory,
   global,
-  useTheme,
+  useTheme as useCoreTheme,
 } from '@react-bulk/core';
 import Svg, {
   Circle,
@@ -82,11 +83,19 @@ import Svg, {
   Use,
 } from 'react-native-svg';
 
+import useDimensions from './useDimensions';
+
 global.mapping = {
   web: false,
   native: true,
   ios: Platform.OS === 'ios',
   android: Platform.OS === 'android',
+
+  locale:
+    (Platform.OS === 'ios'
+      ? NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0]
+      : NativeModules.I18nManager.localeIdentifier
+    )?.replace(/_/, '-') || null,
 
   useDimensions,
 
@@ -180,6 +189,9 @@ export const Tabs = TabsFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 
-export { useDimensions, useTheme };
+// Fix PARCEL hoisting types
+export const useTheme: () => RbkTheme = useCoreTheme;
+
+export { useDimensions };
 
 export default ReactBulk;

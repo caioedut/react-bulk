@@ -3,7 +3,7 @@
     "owner": "caioedut",
     "name": "react-bulk-native",
     "slug": "react-bulk-native",
-    "orientation": "portrait",
+    "orientation": "default",
     "assetBundlePatterns": [
       "**/*"
     ],

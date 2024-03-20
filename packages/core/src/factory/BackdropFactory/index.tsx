@@ -46,7 +46,19 @@ const BackdropFactory = React.memo<BackdropProps>(
 
     const Child = (
       <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
-        <BoxFactory position="absolute" i={0} zIndex={0} style={{ cursor: 'auto' }} onPress={onPress} />
+        <BoxFactory
+          position="absolute"
+          i={0}
+          zIndex={0}
+          accessibility={{
+            label: 'close',
+          }}
+          style={{
+            cursor: 'auto',
+            web: { '& ~ *': { zIndex: 1 } },
+          }}
+          onPress={onPress}
+        />
         {children}
       </BoxFactory>
     );

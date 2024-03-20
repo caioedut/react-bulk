@@ -19,7 +19,7 @@ const BoxFactory = React.memo<BoxProps>(
   forwardRef(({ platform, className, stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Box;
-    const { web, native, Button, Text, View } = global.mapping;
+    const { web, native, Button, Text, View, useDimensions } = global.mapping;
 
     // Extends from default props
     props = useMemo(() => factory2<BoxProps>(props, options), [props, options]);
@@ -75,6 +75,12 @@ const BoxFactory = React.memo<BoxProps>(
       }
     }
 
+    const hiddenStyle = {
+      display: 'none',
+      opacity: 0,
+      overflow: 'hidden',
+    };
+
     style = [
       typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
 
@@ -108,11 +114,7 @@ const BoxFactory = React.memo<BoxProps>(
 
       stylesFromProps,
 
-      hidden && {
-        display: 'none',
-        opacity: 0,
-        overflow: 'hidden',
-      },
+      hidden === true && hiddenStyle,
     ];
 
     // #HACK: fix flex overflow
@@ -122,34 +124,47 @@ const BoxFactory = React.memo<BoxProps>(
 
     const styles = [...(!noRootStyles ? variants.root : []), stylist];
     const responsiveStyle = extract(Object.keys(theme.breakpoints), style);
+    const breakpointNames = useMemo(
+      () =>
+        Object.entries(theme.breakpoints)
+          .sort((a, b) => a[1] - b[1])
+          .map(([bkptName]) => bkptName),
+      [theme.breakpoints],
+    );
 
-    if (style) {
-      if (web) {
-        styles.push(sheet(style));
+    // Native only: refresh cometta styles when have responsive styles
+    useDimensions(native && Object.keys(responsiveStyle).length > 0);
+
+    // Apply responsive styles
+    for (const bkptIndex in breakpointNames) {
+      const bkptName = breakpointNames[bkptIndex];
+      const bkptStyle = responsiveStyle?.[bkptName];
+
+      if (bkptStyle) {
+        style.push({
+          [`@media (min-width: ${theme.breakpoints[bkptName]}px)`]: bkptStyle,
+        });
       }
 
-      if (native) {
-        styles.push(jss(style));
+      // Responsive "HIDDEN"
+      if (hidden?.[bkptName]) {
+        const bkptNext = theme.breakpoints?.[breakpointNames[Number(bkptIndex) + 1]];
+
+        let media = `@media (min-width: ${theme.breakpoints[bkptName]}px)`;
+        if (bkptNext) {
+          media += ` and (max-width: ${bkptNext - 1}px)`;
+        }
+
+        style.push({ [media]: hiddenStyle });
       }
     }
 
-    // Apply responsive styles
-    for (const breakpoint of Object.entries(responsiveStyle)) {
-      const [bkptName, bkptStyle] = breakpoint;
+    if (web) {
+      styles.push(sheet(style));
+    }
 
-      if (bkptStyle) {
-        const mediaStyle = {
-          [`@media (min-width: ${theme.breakpoints[bkptName]}px)`]: bkptStyle,
-        };
-
-        if (web) {
-          styles.push(sheet(mediaStyle));
-        }
-
-        if (native) {
-          styles.push(jss(mediaStyle));
-        }
-      }
+    if (native) {
+      styles.push(jss(style));
     }
 
     if (native) {

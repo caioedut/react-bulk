@@ -130,9 +130,20 @@ Defines whether the component will be rendered
 
 ### **`hidden`**
 
-Fully hide element
+Fully hide element. May be a object with each breakpoint.
 
-➤ Type: **`boolean`** <br/>
+➤ Type: **`boolean` `object`** <br/>
+
+```js
+{
+  xs?: boolean;
+  sm?: boolean;
+  md?: boolean;
+  lg?: boolean;
+  xl?: boolean;
+  xxl?: boolean;
+}
+```
 
 ---
 

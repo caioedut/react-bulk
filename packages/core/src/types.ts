@@ -23,8 +23,8 @@ type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
     ? RecursivePartial<U>[]
     : T[P] extends object | undefined
-    ? RecursivePartial<T[P]>
-    : T[P];
+      ? RecursivePartial<T[P]>
+      : T[P];
 };
 
 /** @internal */
@@ -111,6 +111,16 @@ type StyleProps = Overwrite<
 
 /** @internal */
 type RbkStyleVar = undefined | null | false | AnyObject | (CSSProperties & StyleProps);
+
+export type RbkBreakpoints = {
+  xs: number;
+  sm: number;
+  md: number;
+  lg: number;
+  xl: number;
+  xxl: number;
+  [key: string]: number;
+};
 
 /** @internal */
 export type SelectOption = {
@@ -460,14 +470,7 @@ export type ThemeProps = {
     };
   };
 
-  breakpoints: {
-    xs: number;
-    sm: number;
-    md: number;
-    lg: number;
-    xl: number;
-    xxl: number;
-  };
+  breakpoints: RbkBreakpoints;
 
   rem: (multiplier?: number, base?: number | null) => number;
   spacing: (multiplier?: number) => number;
@@ -542,7 +545,7 @@ export type BoxProps = { [key: string | number]: any } & Overwrite<
       platform?: object;
       accessibility?: AccessibilityProps;
       invisible?: boolean;
-      hidden?: boolean;
+      hidden?: boolean | { [key in keyof RbkBreakpoints]?: boolean };
 
       mount?: boolean;
       component?: any;
@@ -702,6 +705,7 @@ export type InputProps = PropsWithStyles<
     onSubmit?: (event: RbkInputEvent, value: InputValue) => any;
     onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue) => any;
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+    onErrorChange?: (error: string | boolean | undefined) => any;
     // Styles
     contentStyle?: RbkStyle;
     hintStyle?: RbkStyle;
@@ -832,6 +836,12 @@ export type InputDateProps = PropsWithStyles<
   InputProps,
   {
     // format?: 'Y-M-D' | 'Y/M/D' | 'D-M-Y' | 'D/M/Y' | 'M-D-Y' | 'M/D/Y';
+    locale?: Intl.LocalesArgument;
+    format?: {
+      month?: 'long' | 'narrow' | 'numeric' | 'short' | '2-digit';
+      day?: 'numeric' | '2-digit';
+      year?: 'numeric' | '2-digit';
+    };
     max?: Date | string | number | null | undefined;
     min?: Date | string | number | null | undefined;
     value?: Date | string | number | null | undefined;
@@ -926,7 +936,7 @@ export type LoadingProps = PropsWithStyles<{
 }>;
 
 export type GridProps = PropsWithStyles<{
-  breakpoints?: Partial<ThemeProps['breakpoints']>;
+  breakpoints?: Partial<RbkBreakpoints>;
   gap?: number | true;
   size?: number;
 }>;

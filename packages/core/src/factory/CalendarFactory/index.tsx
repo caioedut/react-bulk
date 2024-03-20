@@ -130,6 +130,7 @@ const CalendarFactory = React.memo<CalendarProps>(
               value={internal.getFullYear()}
               inputStyle={{ textAlign: 'center' }}
               onChange={(_, value) => handleYear(value)}
+              accessibility={{ hint: 'year' }}
             />
           </BoxFactory>
         </GridFactory>
@@ -155,8 +156,8 @@ const CalendarFactory = React.memo<CalendarProps>(
             const isDisabled = Array.isArray(disableds)
               ? disableds.some((disabledDate) => dateify(disabledDate).toISOString().substring(0, 10) === dateISO)
               : disableds instanceof Function
-              ? disableds(date)
-              : false;
+                ? disableds(date)
+                : false;
 
             return (
               <BoxFactory key={date.toISOString()} xs={1}>
@@ -167,6 +168,8 @@ const CalendarFactory = React.memo<CalendarProps>(
                   style={[{ p: 0 }, isToday && !hasEvent && { bg: 'background.secondary' }]}
                   labelStyle={[{ w: 20 }, isMuted && { color: 'text.disabled' }]}
                   onPress={(e) => handleDate(e, date)}
+                  accessibility={{ value: { now: date.getDate() } }}
+                  data-rbk-calendar={date.getDate()}
                 >
                   {date.getDate()}
                 </ButtonFactory>
