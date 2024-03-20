@@ -46,17 +46,21 @@ export default function Main() {
   const trans = unstable_useTransition({
     transform: 'translateX(50px)',
     // transform: { translateX: 50 },
-    // transform: [{ translateX: 50 }, { scale: 1 }],
-    // transform: [{ translateX: 50, scale: 1 }],
+    // transform: 'translateX(50px) scale(2)',
+    // transform: [{ translateX: 50 }, { scale: 2 }],
+    // transform: [{ translateX: 50, scale: 2 }],
   });
 
-  console.log(trans.props);
+  // console.log(trans.props);
   useEffect(() => {
     trans.start({
       iterations: 'infinite',
       to: {
-        transform: 'translateX(-10px)',
-        // transform: [{ translateX: 0 }],
+        transform: 'translateX(0)',
+        // transform: { translateX: 0 },
+        // transform: 'translateX(0) scale(1)',
+        // transform: [{ translateX: 0 }, { scale: 1 }],
+        // transform: [{ translateX: 0, scale: 1 }],
       },
     });
   }, []);
@@ -1256,7 +1260,7 @@ function CarouselExample() {
 function GrowBoxExample() {
   const theme = useTheme();
 
-  const [length, incLength] = useReducer((current, incValue) => {
+  const [length, incLength] = useReducer((current: number, incValue: number) => {
     return Math.max(0, current + incValue);
   }, 0);
 

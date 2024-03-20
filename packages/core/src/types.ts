@@ -1,6 +1,6 @@
 import { CSSProperties, JSXElementConstructor, ReactNode, Ref, RefObject, SyntheticEvent } from 'react';
 
-import { customSpacings, styleProps } from './styles/constants';
+import { customSpacings, styleProps, transformProps } from './styles/constants';
 
 /****************************
  * FOR INTERNAL USE (START) *
@@ -231,8 +231,13 @@ export interface RbkAnimation {
 }
 
 export interface RbkTransition {
-  to: RbkStyleProps;
-  from?: RbkStyleProps;
+  to: RbkStyleProps & {
+    [key in (typeof transformProps)[number]]?: any;
+  };
+
+  from?: RbkStyleProps & {
+    [key in (typeof transformProps)[number]]?: any;
+  };
 
   boomerang?: boolean;
   delay?: number;
