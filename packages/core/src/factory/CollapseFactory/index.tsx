@@ -34,6 +34,12 @@ const CollapseFactory = React.memo<CollapseProps>(
     useEffect(() => {
       if (!rootRef?.current) return;
 
+      // TODO: fix animation on native and remove all "if" block
+      if (native) {
+        rootRef.current.setNativeProps({ height: isExpanded ? 'auto' : 0 });
+        return;
+      }
+
       (async () => {
         if (native) {
           // Reset to get original size

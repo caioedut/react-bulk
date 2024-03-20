@@ -106,6 +106,7 @@ function Toaster({ theme }: any, ref) {
           style={animationStyle}
         >
           <CardFactory
+            data-rbk-toaster={color}
             ref={cardRef}
             accessibility={{ role: 'alert' }}
             platform={{ web: { tabIndex: '-1' } }}

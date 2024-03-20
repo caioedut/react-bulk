@@ -1,10 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "jsx": "react-jsx",
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
+    "target": "es5",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "types": ["node"],
+    "jsx": "react-jsx",
     "baseUrl": "./",
+    "strict": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "@react-bulk/core": [
         "packages/core/src"
@@ -15,12 +26,6 @@
       "@react-bulk/native": [
         "packages/native/src"
       ]
-    },
-    "declaration": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitAny": false,
-    "skipLibCheck": true
+    }
   }
 }

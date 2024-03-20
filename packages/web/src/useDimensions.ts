@@ -14,7 +14,7 @@ const getWindowDimensions = () => {
   return { width, height };
 };
 
-export default function useDimensions() {
+export default function useDimensions(enabled = true) {
   const timeoutRef = useRef<TimeoutType>(null);
 
   const [dimensions, setDimensions] = useState(getWindowDimensions());
@@ -30,10 +30,13 @@ export default function useDimensions() {
   }, [timeoutRef]);
 
   useEffect(() => {
+    if (!enabled) return;
     if (!window) return;
+
     window.addEventListener('resize', handleResize);
+
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [enabled, handleResize]);
 
   return dimensions;
 }

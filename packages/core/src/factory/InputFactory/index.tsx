@@ -73,6 +73,7 @@ const InputFactory = React.memo<InputProps>(
       onBlur,
       onFormChange,
       onSubmit,
+      onErrorChange,
       // Styles
       variants,
       contentStyle,
@@ -308,6 +309,10 @@ const InputFactory = React.memo<InputProps>(
     }, [errorProp]);
 
     useEffect(() => {
+      onErrorChange?.(error);
+    }, [error, onErrorChange]);
+
+    useEffect(() => {
       if (!name || !form) return;
 
       form.setField({
@@ -408,7 +413,12 @@ const InputFactory = React.memo<InputProps>(
     ];
 
     return (
-      <BoxFactory hidden={hidden || type === 'hidden'} style={style} stylist={[variants.root, stylist]}>
+      <BoxFactory
+        data-rbk-input={name}
+        hidden={hidden || type === 'hidden'}
+        style={style}
+        stylist={[variants.root, stylist]}
+      >
         {Boolean(label) && (
           <LabelFactory
             numberOfLines={1}
