@@ -3,7 +3,7 @@ import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } 
 import useTheme from '../../hooks/useTheme';
 import Calendar from '../../icons/Calendar';
 import factory2 from '../../props/factory2';
-import { InputDateProps, InputProps } from '../../types';
+import { InputDateProps, InputProps, RequiredSome } from '../../types';
 import { dateify } from '../../utils/date';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -49,7 +49,7 @@ const InputDateFactory = React.memo<InputDateProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<InputDateProps>(props, options);
+    } = factory2<RequiredSome<InputDateProps, 'size'>>(props, options);
 
     const resolveAsDate = useCallback(
       (value) => {
@@ -189,7 +189,7 @@ const InputDateFactory = React.memo<InputDateProps>(
               accessibility={{ label: 'calendar' }}
               onPress={() => setCalendarVisible((current) => !current)}
             >
-              <Calendar svg={svg} size={Math.round(theme.rem(size / 2))} color={color} />
+              <Calendar svg={svg} size={Math.round(theme.rem((size as number) / 2))} color={color} />
             </ButtonFactory>
           }
         />
