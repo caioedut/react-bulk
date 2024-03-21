@@ -49,6 +49,7 @@ const TerminalFactory = React.memo<TerminalProps>(
     );
 
     if (native) {
+      rest.contentInsetAdjustmentBehavior = 'never';
       rest.onContentSizeChange = () => postScroll(scrollRef.current);
     }
 
@@ -231,7 +232,7 @@ const TerminalFactory = React.memo<TerminalProps>(
     };
 
     return (
-      <ScrollableFactory ref={scrollRef} stylist={[variants.root, stylist]} {...rest} contentStyle={{ minh: '100%' }}>
+      <ScrollableFactory ref={scrollRef} stylist={[variants.root, stylist]} {...rest}>
         <BoxFactory
           flex
           p={2}
