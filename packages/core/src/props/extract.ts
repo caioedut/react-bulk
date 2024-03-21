@@ -1,7 +1,7 @@
 import { AnyObject } from '../types';
 
 // Extract some props from objects returning them and removing it from original
-export default function extract(props: string | string[], ...mixin: Object[]): AnyObject {
+export default function extract(props: string | string[], ...mixin: any[]): AnyObject {
   let extracted = {};
 
   if (!Array.isArray(props)) {

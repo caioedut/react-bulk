@@ -455,7 +455,8 @@ const SelectFactory = React.memo<SelectProps>(
                         }
                       }}
                       accessibility={{
-                        role: 'option',
+                        // @ts-expect-error
+                        role: native ? 'menuitem' : 'option',
                         value: { now: option.value },
                         state: { selected: isSelected },
                       }}
