@@ -16,7 +16,8 @@ type DistributiveOmit<T, K extends PropertyKey> = T extends any ? Omit<T, K> : n
 type Overwrite<T, NewT> = DistributiveOmit<T, keyof NewT> & NewT;
 
 /** @internal */
-type PropsWithStyles<T1, T2 = {}> = Overwrite<BoxProps, Overwrite<StyleProps, Overwrite<T1, T2>>>;
+type PropsWithStyles<ALLOW_ANY, T1, T2 = {}> = Overwrite<BaseProps, Overwrite<T1, T2>> &
+  (ALLOW_ANY extends true ? { [key: string | number]: any } : {});
 
 /** @internal */
 type RecursivePartial<T> = {
@@ -529,7 +530,7 @@ export type RbkTheme = ThemeProps & {
   setTheme: (options: ThemeModeValues | ThemeEditProps) => any;
 };
 
-export type BoxProps = { [key: string | number]: any } & Overwrite<
+export type BaseProps = Overwrite<
   PressableProps,
   Overwrite<
     StyleProps,
@@ -578,32 +579,39 @@ export type BoxProps = { [key: string | number]: any } & Overwrite<
   >
 >;
 
-export type TextProps = PropsWithStyles<{
-  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'primary' | 'secondary' | 'caption';
-  size?: number;
-  color?: RbkColor;
-  center?: boolean;
-  left?: boolean;
-  right?: boolean;
-  justify?: boolean;
-  bold?: boolean;
-  italic?: boolean;
-  selectable?: boolean;
-  smallCaps?: boolean;
-  weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | (string & {});
-  transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
-  numberOfLines?: number;
-}>;
+export type BoxProps<ALLOW_ANY = true> = PropsWithStyles<ALLOW_ANY, {}>;
 
-export type LabelProps = PropsWithStyles<
-  TextProps,
+export type TextProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'title' | 'subtitle' | 'primary' | 'secondary' | 'caption';
+    size?: number;
+    color?: RbkColor;
+    center?: boolean;
+    left?: boolean;
+    right?: boolean;
+    justify?: boolean;
+    bold?: boolean;
+    italic?: boolean;
+    selectable?: boolean;
+    smallCaps?: boolean;
+    weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | (string & {});
+    transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
+    numberOfLines?: number;
+  }
+>;
+
+export type LabelProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  TextProps<false>,
   {
     for?: string;
     forRef?: RefObject<ReactElement>;
   }
 >;
 
-export type ButtonProps = PropsWithStyles<
+export type ButtonProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
   FocusableProps,
   {
     badge?: number | BadgeProps;
@@ -631,17 +639,21 @@ export type ButtonProps = PropsWithStyles<
   }
 >;
 
-export type ButtonGroupProps = PropsWithStyles<{
-  color?: RbkColor;
-  disabled?: boolean;
-  loading?: boolean;
-  size?: RbkSize;
-  variant?: 'solid' | 'outline' | 'text';
-  // Styles
-  contentStyle?: RbkStyle;
-}>;
+export type ButtonGroupProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    color?: RbkColor;
+    disabled?: boolean;
+    loading?: boolean;
+    size?: RbkSize;
+    variant?: 'solid' | 'outline' | 'text';
+    // Styles
+    contentStyle?: RbkStyle;
+  }
+>;
 
-export type InputProps = PropsWithStyles<
+export type InputProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
   FocusableProps,
   {
     autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
@@ -724,7 +736,8 @@ export type InputProps = PropsWithStyles<
   }
 >;
 
-export type SelectProps = PropsWithStyles<
+export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
   FocusableProps,
   {
     color?: RbkColor;
@@ -765,7 +778,8 @@ export type SelectProps = PropsWithStyles<
   }
 >;
 
-export type CheckboxProps = PropsWithStyles<
+export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
   FocusableProps,
   {
     checked?: boolean;
@@ -789,7 +803,8 @@ export type CheckboxProps = PropsWithStyles<
   }
 >;
 
-export type SliderProps = PropsWithStyles<
+export type SliderProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
   FocusableProps,
   {
     defaultValue?: number;
@@ -809,31 +824,35 @@ export type SliderProps = PropsWithStyles<
   }
 >;
 
-export type CardProps = PropsWithStyles<{}>;
+export type CardProps<ALLOW_ANY = true> = PropsWithStyles<ALLOW_ANY, {}>;
 
-export type CarouselProps = PropsWithStyles<{
-  chevron?:
-    | boolean
-    | 'visible'
-    | 'hidden'
-    | ((options: { prev: boolean; next: boolean; color: RbkColor; onPress: Function }) => ReactElement);
-  color?: RbkColor;
-  gap?: number | true;
-  pagingEnabled?: boolean;
-  pointerScroll?: boolean;
-  // Column Count
-  xs?: number | 'auto' | RbkStyle;
-  sm?: number | 'auto' | RbkStyle;
-  md?: number | 'auto' | RbkStyle;
-  lg?: number | 'auto' | RbkStyle;
-  xl?: number | 'auto' | RbkStyle;
-  // Styles
-  itemStyle?: RbkStyle;
-  chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;
-}>;
+export type CarouselProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    chevron?:
+      | boolean
+      | 'visible'
+      | 'hidden'
+      | ((options: { prev: boolean; next: boolean; color: RbkColor; onPress: Function }) => ReactElement);
+    color?: RbkColor;
+    gap?: number | true;
+    pagingEnabled?: boolean;
+    pointerScroll?: boolean;
+    // Column Count
+    xs?: number | 'auto' | RbkStyle;
+    sm?: number | 'auto' | RbkStyle;
+    md?: number | 'auto' | RbkStyle;
+    lg?: number | 'auto' | RbkStyle;
+    xl?: number | 'auto' | RbkStyle;
+    // Styles
+    itemStyle?: RbkStyle;
+    chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;
+  }
+>;
 
-export type InputDateProps = PropsWithStyles<
-  InputProps,
+export type InputDateProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  InputProps<false>,
   {
     // format?: 'Y-M-D' | 'Y/M/D' | 'D-M-Y' | 'D/M/Y' | 'M-D-Y' | 'M/D/Y';
     locale?: Intl.LocalesArgument;
@@ -854,188 +873,240 @@ export type InputDateProps = PropsWithStyles<
   }
 >;
 
-export type ScrollableProps = PropsWithStyles<{
-  contentInset?:
-    | number
-    | {
-        vertical?: number;
-        horizontal?: number;
+export type ScrollableProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    contentInset?:
+      | number
+      | {
+          vertical?: number;
+          horizontal?: number;
 
-        top?: number;
-        bottom?: number;
-        left?: number;
-        right?: number;
-      };
+          top?: number;
+          bottom?: number;
+          left?: number;
+          right?: number;
+        };
 
-  direction?: 'vertical' | 'horizontal';
-  hideScrollBar?: boolean;
+    direction?: 'vertical' | 'horizontal';
+    hideScrollBar?: boolean;
 
-  /** Note: vertical pagination is not supported on Android. **/
-  pagingEnabled?: boolean;
+    /** Note: vertical pagination is not supported on Android. **/
+    pagingEnabled?: boolean;
 
-  // Styles
-  contentStyle?: RbkStyle;
-}>;
+    // Styles
+    contentStyle?: RbkStyle;
+  }
+>;
 
-export type ImageProps = PropsWithStyles<{
-  source: { uri?: string } | (string & {}) | (number & {});
-  alt?: string;
-  circular?: boolean;
-  fallback?: ReactElement;
-  mode?: 'cover' | 'contain' | 'fill';
-  width?: number | string;
-  height?: number | string;
-  // Events
-  onLoad?: Function;
-  onError?: Function;
-}>;
+export type ImageProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    source: { uri?: string } | (string & {}) | (number & {});
+    alt?: string;
+    circular?: boolean;
+    fallback?: ReactElement;
+    mode?: 'cover' | 'contain' | 'fill';
+    width?: number | string;
+    height?: number | string;
+    // Events
+    onLoad?: Function;
+    onError?: Function;
+  }
+>;
 
-export type DividerProps = PropsWithStyles<{
-  color?: RbkColor;
-  opacity?: number;
-  size?: number | string;
-  vertical?: boolean;
-}>;
+export type DividerProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    color?: RbkColor;
+    opacity?: number;
+    size?: number | string;
+    vertical?: boolean;
+  }
+>;
 
-export type BackdropProps = PropsWithStyles<{
-  visible?: boolean;
-}>;
+export type BackdropProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    visible?: boolean;
+  }
+>;
 
-export type ModalProps = PropsWithStyles<{
-  halign?: 'center' | 'left' | 'right';
-  valign?: 'center' | 'top' | 'bottom';
-  visible?: boolean;
-  // Events
-  onClose?: Function;
+export type ModalProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    halign?: 'center' | 'left' | 'right';
+    valign?: 'center' | 'top' | 'bottom';
+    visible?: boolean;
+    // Events
+    onClose?: Function;
 
-  /** @deprecated use onClose instead */
-  onBackdropPress?: Function;
-}>;
+    /** @deprecated use onClose instead */
+    onBackdropPress?: Function;
+  }
+>;
 
-export type CollapseProps = PropsWithStyles<{
-  visible?: boolean;
+export type CollapseProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    visible?: boolean;
 
-  /** @deprecated use visible instead */
-  in?: boolean;
-}>;
+    /** @deprecated use visible instead */
+    in?: boolean;
+  }
+>;
 
-export type DropdownProps = PropsWithStyles<{
-  placement?: 'top' | 'bottom';
-  triggerRef?: RefObject<ReactElement>;
-  visible?: boolean;
-  // Events
-  onClose?: Function;
-}>;
+export type DropdownProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    placement?: 'top' | 'bottom';
+    triggerRef?: RefObject<ReactElement>;
+    visible?: boolean;
+    // Events
+    onClose?: Function;
+  }
+>;
 
-export type LoadingProps = PropsWithStyles<{
-  color?: RbkColor;
-  label?: string;
-  size?: RbkSize;
-  // Styles
-  labelStyle?: RbkStyle;
-}>;
+export type LoadingProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    color?: RbkColor;
+    label?: string;
+    size?: RbkSize;
+    // Styles
+    labelStyle?: RbkStyle;
+  }
+>;
 
-export type GridProps = PropsWithStyles<{
-  breakpoints?: Partial<RbkBreakpoints>;
-  gap?: number | true;
-  size?: number;
-}>;
+export type GridProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    breakpoints?: Partial<RbkBreakpoints>;
+    gap?: number | true;
+    size?: number;
+  }
+>;
 
-export type TableProps = PropsWithStyles<{
-  columns: TableColumn[];
-  rows?: any[] | any;
-}>;
+export type TableProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    columns: TableColumn[];
+    rows?: any[] | any;
+  }
+>;
 
-export type BadgeProps = PropsWithStyles<{
-  value?: number;
-  size?: RbkSize;
-  dot?: boolean;
-  top?: boolean;
-  bottom?: boolean;
-  left?: boolean;
-  right?: boolean;
-  // Styles
-  labelStyle?: RbkStyle;
-}>;
+export type BadgeProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    value?: number;
+    size?: RbkSize;
+    dot?: boolean;
+    top?: boolean;
+    bottom?: boolean;
+    left?: boolean;
+    right?: boolean;
+    // Styles
+    labelStyle?: RbkStyle;
+  }
+>;
 
 // TODO: remove event as "any" in next major release
-export type FormProps = PropsWithStyles<{
-  data?: any;
-  errors?: { [key: string]: string | boolean } | null;
-  onSubmit?: (event: RbkFormEvent | any, data: AnyObject) => any;
-  onCancel?: (event: RbkFormEvent | any, data: AnyObject) => any;
-  onClear?: (event: RbkFormEvent | any, data: AnyObject) => any;
-  onChange?: (event: RbkFormEvent | any, data: AnyObject) => any;
-}>;
+export type FormProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    data?: any;
+    errors?: { [key: string]: string | boolean } | null;
+    onSubmit?: (event: RbkFormEvent | any, data: AnyObject) => any;
+    onCancel?: (event: RbkFormEvent | any, data: AnyObject) => any;
+    onClear?: (event: RbkFormEvent | any, data: AnyObject) => any;
+    onChange?: (event: RbkFormEvent | any, data: AnyObject) => any;
+  }
+>;
 
-export type TooltipProps = PropsWithStyles<{
-  color?: 'black' | 'white' | RbkColor;
-  offset?: number | string;
-  position?: 'top' | 'bottom' | 'left' | 'right';
-  title?: string;
-  visible?: boolean;
-}>;
+export type TooltipProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    color?: 'black' | 'white' | RbkColor;
+    offset?: number | string;
+    position?: 'top' | 'bottom' | 'left' | 'right';
+    title?: string;
+    visible?: boolean;
+  }
+>;
 
-export type AnimationProps = PropsWithStyles<{
-  delay?: number;
-  direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
-  duration?: number;
-  from?: RbkStyle;
-  in?: boolean;
-  loop?: boolean | number;
-  throttle?: number;
-  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
-  to?: RbkStyle;
+export type AnimationProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    delay?: number;
+    direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
+    duration?: number;
+    from?: RbkStyle;
+    in?: boolean;
+    loop?: boolean | number;
+    throttle?: number;
+    timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+    to?: RbkStyle;
 
-  // Pre-defined animations
-  fade?: boolean | 1 | -1;
-  zoom?: boolean | 1 | -1;
-  spin?: boolean | 1 | -1;
+    // Pre-defined animations
+    fade?: boolean | 1 | -1;
+    zoom?: boolean | 1 | -1;
+    spin?: boolean | 1 | -1;
 
-  /** @deprecated use duration instead */
-  speed?: number;
-}>;
+    /** @deprecated use duration instead */
+    speed?: number;
+  }
+>;
 
-export type ProgressProps = PropsWithStyles<{
-  color?: RbkColor;
-  label?: boolean | ((value: number) => ReactElement);
-  size?: RbkSize;
-  value?: number;
-  // Styles
-  barStyle?: RbkStyle;
-  labelStyle?: RbkStyle;
-}>;
+export type ProgressProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    color?: RbkColor;
+    label?: boolean | ((value: number) => ReactElement);
+    size?: RbkSize;
+    value?: number;
+    // Styles
+    barStyle?: RbkStyle;
+    labelStyle?: RbkStyle;
+  }
+>;
 
-export type ListItemProps = PropsWithStyles<{
-  chevron?: boolean | ReactElement;
-  endAddon?: ReactElement;
-  gap?: number | true;
-  startAddon?: ReactElement;
-  // Styles
-  chevronStyle?: Overwrite<RbkStyle, { size?: number; color?: RbkColor }>;
+export type ListItemProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    chevron?: boolean | ReactElement;
+    endAddon?: ReactElement;
+    gap?: number | true;
+    startAddon?: ReactElement;
+    // Styles
+    chevronStyle?: Overwrite<RbkStyle, { size?: number; color?: RbkColor }>;
 
-  /** @deprecated use startAddon instead */
-  startIcon?: ReactElement;
-  /** @deprecated use endAddon instead */
-  endIcon?: ReactElement;
-}>;
+    /** @deprecated use startAddon instead */
+    startIcon?: ReactElement;
+    /** @deprecated use endAddon instead */
+    endIcon?: ReactElement;
+  }
+>;
 
-export type LinkProps = PropsWithStyles<
-  TextProps,
+export type LinkProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  TextProps<false>,
   {
     underline?: boolean;
   }
 >;
 
-export type DrawerProps = PropsWithStyles<{
-  placement?: 'left' | 'right' | 'top' | 'bottom';
+export type DrawerProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    placement?: 'left' | 'right' | 'top' | 'bottom';
 
-  // Styles
-  backdropStyle?: RbkStyle;
-}>;
+    // Styles
+    backdropStyle?: RbkStyle;
+  }
+>;
 
-export type OutlineProps = PropsWithStyles<
-  BoxProps,
+export type OutlineProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
   {
     color?: RbkColor;
     size?: number;
@@ -1043,8 +1114,9 @@ export type OutlineProps = PropsWithStyles<
   }
 >;
 
-export type TabsProps = PropsWithStyles<
-  ScrollableProps,
+export type TabsProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  ScrollableProps<false>,
   {
     color?: RbkColor;
     size?: RbkSize;
@@ -1072,28 +1144,35 @@ export type ToasterProps = {
   onPress?: Function;
 };
 
-export type CalendarProps = PropsWithStyles<{
-  color?: RbkColor;
-  date?: Date | string | number | null | undefined;
-  disableds?: (Date | string | number)[] | ((date: Date) => boolean);
-  events?: (Date | string | number)[];
-  // Events
-  onPressDate?: (event: AnyObject, date: Date) => any;
-}>;
+export type CalendarProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    color?: RbkColor;
+    date?: Date | string | number | null | undefined;
+    disableds?: (Date | string | number)[] | ((date: Date) => boolean);
+    events?: (Date | string | number)[];
+    // Events
+    onPressDate?: (event: AnyObject, date: Date) => any;
+  }
+>;
 
-export type AvatarProps = PropsWithStyles<{
-  alt?: string;
-  color?: RbkColor;
-  corners?: number;
-  placeholder?: ReactElement;
-  size?: number;
-  source?: { uri?: string } | (string & {}) | (number & {});
-  // Styles
-  contentStyle?: RbkStyle;
-}>;
+export type AvatarProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    alt?: string;
+    color?: RbkColor;
+    corners?: number;
+    placeholder?: ReactElement;
+    size?: number;
+    source?: { uri?: string } | (string & {}) | (number & {});
+    // Styles
+    contentStyle?: RbkStyle;
+  }
+>;
 
-export type TerminalProps = PropsWithStyles<
-  ScrollableProps,
+export type TerminalProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  ScrollableProps<false>,
   {
     prompt?: string;
     version?: string;
@@ -1104,8 +1183,9 @@ export type TerminalProps = PropsWithStyles<
   }
 >;
 
-export type ListProps = PropsWithStyles<
-  ScrollableProps,
+export type ListProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  ScrollableProps<false>,
   {
     renderDelay?: number;
     rowHeight?: number;
@@ -1113,9 +1193,10 @@ export type ListProps = PropsWithStyles<
   }
 >;
 
-export type InputPinProps = PropsWithStyles<
+export type InputPinProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
   Pick<
-    InputProps,
+    InputProps<false>,
     | 'autoFocus'
     | 'color'
     | 'colorful'
@@ -1144,9 +1225,12 @@ export type InputPinProps = PropsWithStyles<
   }
 >;
 
-export type GrowBoxProps = PropsWithStyles<{
-  duration?: number;
-}>;
+export type GrowBoxProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    duration?: number;
+  }
+>;
 
 /************************
  * DEPRECATIONS (START) *
