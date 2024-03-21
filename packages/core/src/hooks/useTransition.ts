@@ -1,18 +1,15 @@
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react';
 
-import cometta from 'cometta';
-
 import extract from '../props/extract';
 import { notPxProps, transformProps } from '../styles/constants';
-import css from '../styles/css';
 import jss from '../styles/jss';
 import transform from '../styles/transform';
-import { AnyObject, IntervalType, RbkTransition, TimeoutType } from '../types';
+import { AnyObject, RbkTransition, TimeoutType } from '../types';
 import clone from '../utils/clone';
 import defined from '../utils/defined';
 import global from '../utils/global';
 import pick from '../utils/pick';
-import stdout from '../utils/stdout';
+import sleep from '../utils/sleep';
 import uuid from '../utils/uuid';
 import useHtmlId from './useHtmlId';
 
@@ -35,7 +32,6 @@ export default function useTransition(style?: RbkTransition['from'], ref?: Mutab
   const transformRef = useRef<AnyObject>({});
   const runIdRef = useRef<string>();
   const timeoutRef = useRef<TimeoutType>();
-  const intervalRef = useRef<IntervalType>();
 
   const setStyle = useCallback(
     (attr: string, value: any, unit = null) => {
@@ -107,21 +103,14 @@ export default function useTransition(style?: RbkTransition['from'], ref?: Mutab
       elRef.current.style.animationPlayState = 'paused';
     }
 
-    if (native) {
-      runIdRef.current = undefined;
+    runIdRef.current = undefined;
 
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-
-      timeoutRef.current = null;
-      intervalRef.current = null;
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
     }
-  }, [elRef, native, web]);
+
+    timeoutRef.current = null;
+  }, [elRef, runIdRef, timeoutRef, web]);
 
   const reset = useCallback(() => {
     stop();
@@ -147,7 +136,7 @@ export default function useTransition(style?: RbkTransition['from'], ref?: Mutab
         duration = 350,
         iterations = 1,
         timing = 'linear',
-        throttle = 10,
+        throttle = 0,
       } = options;
 
       from = jssWithTransform(from);
@@ -169,93 +158,94 @@ export default function useTransition(style?: RbkTransition['from'], ref?: Mutab
         }),
       );
 
-      if (web) {
-        const transformFrom = extract([...transformProps], from);
-        const transformTo = extract([...transformProps], to);
+      // if (web) {
+      //   const transformFrom = extract([...transformProps], from);
+      //   const transformTo = extract([...transformProps], to);
+      //
+      //   const transformFromStr = Object.entries(transformFrom).map(([attr, value]) => ({ [attr]: value }));
+      //   const transformToStr = Object.entries(transformTo).map(([attr, value]) => ({ [attr]: value }));
+      //
+      //   cometta.createStyleSheet(
+      //     `
+      //        @keyframes ${animationName} {
+      //          from { ${css(from, { transform: transformFromStr })} }
+      //          to { ${css(to, { transform: transformToStr })} }
+      //        }
+      //     `,
+      //     { uniqueId: animationName },
+      //   );
+      //
+      //   const direction = boomerang ? 'alternate' : 'normal';
+      //   iterations = iterations === -1 ? 'infinite' : iterations;
+      //   iterations = typeof iterations === 'number' && boomerang ? iterations * 2 : iterations;
+      //
+      //   // Reset styles
+      //   Object.keys(to).forEach((attr) => {
+      //     setStyle(attr, meta[attr].from, meta[attr].unit);
+      //   });
+      //
+      //   elRef.current.addEventListener(
+      //     'animationend',
+      //     () => {
+      //       // Set exact target value on last iteration
+      //       Object.keys(to).forEach((attr) => {
+      //         if (boomerang) {
+      //           setStyle(attr, meta[attr].from, meta[attr].unit);
+      //         } else {
+      //           setStyle(attr, meta[attr].to, meta[attr].unit);
+      //         }
+      //       });
+      //
+      //       if (elRef.current) {
+      //         elRef.current.style.animation = '';
+      //       }
+      //     },
+      //     { once: true },
+      //   );
+      //
+      //   if (elRef.current) {
+      //     elRef.current.style.animation = `${animationName} ${duration}ms ${timing} ${
+      //       delay || 0
+      //     }ms ${iterations} ${direction}`;
+      //   }
+      // }
 
-        const transformFromStr = Object.entries(transformFrom).map(([attr, value]) => ({ [attr]: value }));
-        const transformToStr = Object.entries(transformTo).map(([attr, value]) => ({ [attr]: value }));
+      // if (native) {
+      const runId = uuid();
+      runIdRef.current = runId;
 
-        cometta.createStyleSheet(
-          `
-             @keyframes ${animationName} {
-               from { ${css(from, { transform: transformFromStr })} }
-               to { ${css(to, { transform: transformToStr })} }
-             }
-          `,
-          { uniqueId: animationName },
-        );
+      const timingFn = pick(timing, 'ease', {
+        linear: easeLinear,
+        ease: easeInSine,
+        'ease-in': easeInQuad,
+        'ease-out': easeOutQuad,
+        'ease-in-out': easeInOutQuad,
+      });
 
-        const direction = boomerang ? 'alternate' : 'normal';
-        iterations = iterations === -1 ? 'infinite' : iterations;
-        iterations = typeof iterations === 'number' && boomerang ? iterations * 2 : iterations;
+      const animate = async () => {
+        if (!iterations || runId !== runIdRef.current) {
+          return;
+        }
+
+        if (typeof iterations === 'number' && iterations > 0) {
+          iterations--;
+        }
 
         // Reset styles
         Object.keys(to).forEach((attr) => {
           setStyle(attr, meta[attr].from, meta[attr].unit);
         });
 
-        elRef.current.addEventListener(
-          'animationend',
-          () => {
-            // Set exact target value on last iteration
-            Object.keys(to).forEach((attr) => {
-              if (boomerang) {
-                setStyle(attr, meta[attr].from, meta[attr].unit);
-              } else {
-                setStyle(attr, meta[attr].to, meta[attr].unit);
-              }
-            });
+        // Animate forward
+        await new Promise((resolve) => {
+          const startAt = Date.now();
+          const endAt = startAt + duration;
 
-            if (elRef.current) {
-              elRef.current.style.animation = '';
+          const apply = async () => {
+            if (endAt < Date.now() || runId !== runIdRef.current) {
+              return resolve(true);
             }
-          },
-          { once: true },
-        );
 
-        if (elRef.current) {
-          elRef.current.style.animation = `${animationName} ${duration}ms ${timing} ${
-            delay || 0
-          }ms ${iterations} ${direction}`;
-        }
-      }
-
-      if (native) {
-        const runId = uuid();
-        runIdRef.current = runId;
-
-        if (throttle < 1) {
-          throttle = 1;
-          stdout.warn('"useTransition" "throttle" must be greater than 0.');
-        }
-
-        const timingFn = pick(timing, 'ease', {
-          linear: easeLinear,
-          ease: easeInSine,
-          'ease-in': easeInQuad,
-          'ease-out': easeOutQuad,
-          'ease-in-out': easeInOutQuad,
-        });
-
-        const animate = () => {
-          if (!iterations || runId !== runIdRef.current) {
-            return;
-          }
-
-          if (typeof iterations === 'number' && iterations > 0) {
-            iterations--;
-          }
-
-          // Reset styles
-          Object.keys(to).forEach((attr) => {
-            setStyle(attr, meta[attr].from, meta[attr].unit);
-          });
-
-          let startAt = Date.now();
-          let endAt = startAt + duration;
-
-          intervalRef.current = setInterval(() => {
             const pos = duration - (endAt - Date.now());
 
             Object.keys(to).forEach((attr) => {
@@ -265,54 +255,63 @@ export default function useTransition(style?: RbkTransition['from'], ref?: Mutab
               setStyle(attr, newValue, meta[attr].unit);
             });
 
-            if (endAt < Date.now() && intervalRef.current) {
-              clearInterval(intervalRef.current);
-              intervalRef.current = null;
+            if (throttle) {
+              await sleep(throttle);
+            }
 
-              // Set exact target value on last iteration
+            timeoutRef.current = setTimeout(apply, throttle);
+          };
+
+          timeoutRef.current = setTimeout(apply, 0);
+        });
+
+        // Set exact target value on last iteration
+        if (runId === runIdRef.current) {
+          Object.keys(to).forEach((attr) => {
+            setStyle(attr, meta[attr].to, meta[attr].unit);
+          });
+        }
+
+        // Animate backward
+        if (boomerang) {
+          await new Promise((resolve) => {
+            const startAt = Date.now();
+            const endAt = startAt + duration;
+
+            const apply = async () => {
+              if (endAt < Date.now() || runId !== runIdRef.current) {
+                return resolve(true);
+              }
+
+              const pos = duration - (endAt - Date.now());
+
               Object.keys(to).forEach((attr) => {
-                setStyle(attr, meta[attr].to, meta[attr].unit);
+                const [startValue] = resolveValue(to[attr]);
+                const [endValue] = resolveValue(from[attr]);
+                const newValue = timingFn(pos, startValue, endValue - startValue, duration);
+                setStyle(attr, newValue, meta[attr].unit);
               });
 
-              // Create forward interval for boomerang
-              if (boomerang) {
-                startAt = Date.now();
-                endAt = startAt + duration;
+              timeoutRef.current = setTimeout(apply, throttle);
+            };
 
-                // TODO: create array of intervals
-                intervalRef.current = setInterval(() => {
-                  const pos = duration - (endAt - Date.now());
+            timeoutRef.current = setTimeout(apply, 0);
+          });
 
-                  Object.keys(to).forEach((attr) => {
-                    const [startValue] = resolveValue(to[attr]);
-                    const [endValue] = resolveValue(from[attr]);
-                    const newValue = timingFn(pos, startValue, endValue - startValue, duration);
-                    setStyle(attr, newValue, meta[attr].unit);
-                  });
+          // Set exact target value on last iteration
+          if (runId === runIdRef.current) {
+            Object.keys(to).forEach((attr) => {
+              setStyle(attr, meta[attr].from, meta[attr].unit);
+            });
+          }
+        }
 
-                  if (endAt < Date.now() && intervalRef.current) {
-                    clearInterval(intervalRef.current);
-                    intervalRef.current = null;
+        // Loop?
+        await animate();
+      };
 
-                    // Set exact target value on last iteration
-                    Object.keys(to).forEach((attr) => {
-                      setStyle(attr, meta[attr].from, meta[attr].unit);
-                    });
-
-                    // Loop?
-                    animate();
-                  }
-                }, throttle);
-              } else {
-                // Loop?
-                animate();
-              }
-            }
-          }, throttle);
-        };
-
-        timeoutRef.current = setTimeout(animate, Math.max(delay || 0, 0));
-      }
+      timeoutRef.current = setTimeout(animate, Math.max(delay || 0, 0));
+      // }
     },
     [animationName, elRef, native, resolveValue, setStyle, stop, web],
   );
@@ -323,12 +322,15 @@ export default function useTransition(style?: RbkTransition['from'], ref?: Mutab
     };
   }, [stop]);
 
-  return {
-    start,
-    stop,
-    reset,
-    props: { ref: elRef, style },
-  };
+  return useMemo(
+    () => ({
+      start,
+      stop,
+      reset,
+      props: { ref: elRef, style },
+    }),
+    [elRef, reset, start, stop, style],
+  );
 }
 
 /**
