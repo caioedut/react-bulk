@@ -236,44 +236,11 @@ export default function useTransition(style?: RbkTransition['from'], ref?: Mutab
           setStyle(attr, meta[attr].from, meta[attr].unit);
         });
 
-        // Animate forward
-        await new Promise((resolve) => {
-          const startAt = Date.now();
-          const endAt = startAt + duration;
+        const runners = [true, boomerang]?.filter(Boolean);
 
-          const apply = async () => {
-            if (endAt < Date.now() || runId !== runIdRef.current) {
-              return resolve(true);
-            }
+        for (const index in runners) {
+          const isBackward = Number(index) % 2 !== 0;
 
-            const pos = duration - (endAt - Date.now());
-
-            Object.keys(to).forEach((attr) => {
-              const [startValue] = resolveValue(from[attr]);
-              const [endValue] = resolveValue(to[attr]);
-              const newValue = timingFn(pos, startValue, endValue - startValue, duration);
-              setStyle(attr, newValue, meta[attr].unit);
-            });
-
-            if (throttle) {
-              await sleep(throttle);
-            }
-
-            timeoutRef.current = setTimeout(apply, throttle);
-          };
-
-          timeoutRef.current = setTimeout(apply, 0);
-        });
-
-        // Set exact target value on last iteration
-        if (runId === runIdRef.current) {
-          Object.keys(to).forEach((attr) => {
-            setStyle(attr, meta[attr].to, meta[attr].unit);
-          });
-        }
-
-        // Animate backward
-        if (boomerang) {
           await new Promise((resolve) => {
             const startAt = Date.now();
             const endAt = startAt + duration;
@@ -286,8 +253,8 @@ export default function useTransition(style?: RbkTransition['from'], ref?: Mutab
               const pos = duration - (endAt - Date.now());
 
               Object.keys(to).forEach((attr) => {
-                const [startValue] = resolveValue(to[attr]);
-                const [endValue] = resolveValue(from[attr]);
+                const [startValue] = isBackward ? resolveValue(to[attr]) : resolveValue(from[attr]);
+                const [endValue] = isBackward ? resolveValue(from[attr]) : resolveValue(to[attr]);
                 const newValue = timingFn(pos, startValue, endValue - startValue, duration);
                 setStyle(attr, newValue, meta[attr].unit);
               });
@@ -301,7 +268,11 @@ export default function useTransition(style?: RbkTransition['from'], ref?: Mutab
           // Set exact target value on last iteration
           if (runId === runIdRef.current) {
             Object.keys(to).forEach((attr) => {
-              setStyle(attr, meta[attr].from, meta[attr].unit);
+              if (isBackward) {
+                setStyle(attr, meta[attr].from, meta[attr].unit);
+              } else {
+                setStyle(attr, meta[attr].to, meta[attr].unit);
+              }
             });
           }
         }
