@@ -94,7 +94,7 @@ const TerminalFactory = React.memo<TerminalProps>(
 
           messages
             .slice(0, -1)
-            .filter(({ prompt }) => prompt)
+            .filter(({ prompt, body }) => prompt && body?.trim())
             .filter((_, index) => !args || Number(args) === index + 1)
             .forEach(({ body }, index) => {
               addMessage(`${args || index + 1}`.padStart(4, ' ') + ' ' + body);
