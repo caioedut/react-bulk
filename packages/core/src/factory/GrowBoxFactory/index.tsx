@@ -5,6 +5,7 @@ import setNativeStyle from '../../element/setNativeStyle';
 import useTheme from '../../hooks/useTheme';
 import useTransition from '../../hooks/useTransition';
 import factory2 from '../../props/factory2';
+import jss from '../../styles/jss';
 import { GrowBoxProps } from '../../types';
 import global from '../../utils/global';
 import sleep from '../../utils/sleep';
@@ -25,9 +26,10 @@ const GrowBoxFactory = React.memo<GrowBoxProps>(
       ...rest
     } = factory2<GrowBoxProps>(props, options);
 
-    const contentRef = useRef<any>();
+    const defaultRef = useRef();
+    const contentRef: any = ref ?? defaultRef;
 
-    const transition = useTransition([style, { height: 0, width: 0 }], contentRef);
+    const transition = useTransition({ ...jss(style), height: 0, width: 0 }, contentRef);
 
     useEffect(() => {
       requestAnimationFrame(async () => {
@@ -56,7 +58,7 @@ const GrowBoxFactory = React.memo<GrowBoxProps>(
           width: 'auto',
         });
       });
-    }, [contentRef, children, duration, native]);
+    }, [contentRef, children, duration, native, transition]);
 
     return (
       <BoxFactory {...transition.props} stylist={[variants.root, stylist]} {...rest}>
