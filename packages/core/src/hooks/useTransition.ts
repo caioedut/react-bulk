@@ -1,7 +1,10 @@
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react';
 
+import cometta from 'cometta';
+
 import extract from '../props/extract';
 import { notPxProps, transformProps } from '../styles/constants';
+import css from '../styles/css';
 import jss from '../styles/jss';
 import transform from '../styles/transform';
 import { AnyObject, RbkTransition, TimeoutType } from '../types';
@@ -9,7 +12,6 @@ import clone from '../utils/clone';
 import defined from '../utils/defined';
 import global from '../utils/global';
 import pick from '../utils/pick';
-import sleep from '../utils/sleep';
 import uuid from '../utils/uuid';
 import useHtmlId from './useHtmlId';
 
@@ -158,131 +160,121 @@ export default function useTransition(style?: RbkTransition['from'], ref?: Mutab
         }),
       );
 
-      // if (web) {
-      //   const transformFrom = extract([...transformProps], from);
-      //   const transformTo = extract([...transformProps], to);
-      //
-      //   const transformFromStr = Object.entries(transformFrom).map(([attr, value]) => ({ [attr]: value }));
-      //   const transformToStr = Object.entries(transformTo).map(([attr, value]) => ({ [attr]: value }));
-      //
-      //   cometta.createStyleSheet(
-      //     `
-      //        @keyframes ${animationName} {
-      //          from { ${css(from, { transform: transformFromStr })} }
-      //          to { ${css(to, { transform: transformToStr })} }
-      //        }
-      //     `,
-      //     { uniqueId: animationName },
-      //   );
-      //
-      //   const direction = boomerang ? 'alternate' : 'normal';
-      //   iterations = iterations === -1 ? 'infinite' : iterations;
-      //   iterations = typeof iterations === 'number' && boomerang ? iterations * 2 : iterations;
-      //
-      //   // Reset styles
-      //   Object.keys(to).forEach((attr) => {
-      //     setStyle(attr, meta[attr].from, meta[attr].unit);
-      //   });
-      //
-      //   elRef.current.addEventListener(
-      //     'animationend',
-      //     () => {
-      //       // Set exact target value on last iteration
-      //       Object.keys(to).forEach((attr) => {
-      //         if (boomerang) {
-      //           setStyle(attr, meta[attr].from, meta[attr].unit);
-      //         } else {
-      //           setStyle(attr, meta[attr].to, meta[attr].unit);
-      //         }
-      //       });
-      //
-      //       if (elRef.current) {
-      //         elRef.current.style.animation = '';
-      //       }
-      //     },
-      //     { once: true },
-      //   );
-      //
-      //   if (elRef.current) {
-      //     elRef.current.style.animation = `${animationName} ${duration}ms ${timing} ${
-      //       delay || 0
-      //     }ms ${iterations} ${direction}`;
-      //   }
-      // }
+      if (web) {
+        const transformFrom = extract([...transformProps], from);
+        const transformTo = extract([...transformProps], to);
 
-      // if (native) {
-      const runId = uuid();
-      runIdRef.current = runId;
+        const transformFromStr = Object.entries(transformFrom).map(([attr, value]) => ({ [attr]: value }));
+        const transformToStr = Object.entries(transformTo).map(([attr, value]) => ({ [attr]: value }));
 
-      const timingFn = pick(timing, 'ease', {
-        linear: easeLinear,
-        ease: easeInSine,
-        'ease-in': easeInQuad,
-        'ease-out': easeOutQuad,
-        'ease-in-out': easeInOutQuad,
-      });
+        cometta.createStyleSheet(
+          `
+             @keyframes ${animationName} {
+               from { ${css(from, { transform: transformFromStr })} }
+               to { ${css(to, { transform: transformToStr })} }
+             }
+          `,
+          { uniqueId: animationName },
+        );
 
-      const animate = async () => {
-        if (!iterations || runId !== runIdRef.current) {
-          return;
-        }
-
-        if (typeof iterations === 'number' && iterations > 0) {
-          iterations--;
-        }
+        const direction = boomerang ? 'alternate' : 'normal';
+        iterations = iterations === -1 ? 'infinite' : iterations;
+        iterations = typeof iterations === 'number' && boomerang ? iterations * 2 : iterations;
 
         // Reset styles
         Object.keys(to).forEach((attr) => {
           setStyle(attr, meta[attr].from, meta[attr].unit);
         });
 
-        const runners = [true, boomerang]?.filter(Boolean);
-
-        for (const index in runners) {
-          const isBackward = Number(index) % 2 !== 0;
-
-          await new Promise((resolve) => {
-            const startAt = Date.now();
-            const endAt = startAt + duration;
-
-            const apply = async () => {
-              if (endAt < Date.now() || runId !== runIdRef.current) {
-                return resolve(true);
-              }
-
-              const pos = duration - (endAt - Date.now());
-
+        if (elRef.current) {
+          elRef.current.addEventListener(
+            'animationend',
+            () => {
+              // Set exact target value on last iteration
               Object.keys(to).forEach((attr) => {
-                const [startValue] = isBackward ? resolveValue(to[attr]) : resolveValue(from[attr]);
-                const [endValue] = isBackward ? resolveValue(from[attr]) : resolveValue(to[attr]);
-                const newValue = timingFn(pos, startValue, endValue - startValue, duration);
-                setStyle(attr, newValue, meta[attr].unit);
+                if (boomerang) {
+                  setStyle(attr, meta[attr].from, meta[attr].unit);
+                } else {
+                  setStyle(attr, meta[attr].to, meta[attr].unit);
+                }
               });
 
-              timeoutRef.current = setTimeout(apply, throttle);
-            };
-
-            timeoutRef.current = setTimeout(apply, 0);
-          });
-
-          // Set exact target value on last iteration
-          if (runId === runIdRef.current) {
-            Object.keys(to).forEach((attr) => {
-              if (isBackward) {
-                setStyle(attr, meta[attr].from, meta[attr].unit);
-              } else {
-                setStyle(attr, meta[attr].to, meta[attr].unit);
+              if (elRef.current) {
+                elRef.current.style.animation = '';
               }
-            });
-          }
+            },
+            { once: true },
+          );
+
+          elRef.current.style.animation = `${animationName} ${duration}ms ${timing} ${
+            delay || 0
+          }ms ${iterations} ${direction}`;
         }
+      }
 
-        // Loop?
-        await animate();
-      };
+      if (native) {
+        const runId = uuid();
+        runIdRef.current = runId;
 
-      timeoutRef.current = setTimeout(animate, Math.max(delay || 0, 0));
-      // }
+        const timingFn = pick(timing, 'ease', {
+          linear: easeLinear,
+          ease: easeInSine,
+          'ease-in': easeInQuad,
+          'ease-out': easeOutQuad,
+          'ease-in-out': easeInOutQuad,
+        });
+
+        iterations = iterations === -1 ? 'infinite' : iterations;
+        iterations = iterations === 'infinite' ? Number.POSITIVE_INFINITY : Number(iterations) * (boomerang ? 2 : 1);
+
+        timeoutRef.current = setTimeout(
+          async () => {
+            for (let index = 0; index < Number(iterations); index++) {
+              if (runId !== runIdRef.current) {
+                break;
+              }
+
+              const isBackward = boomerang && Number(index) % 2 !== 0;
+
+              await new Promise((resolve) => {
+                const startAt = Date.now();
+                const endAt = startAt + duration;
+
+                const apply = async () => {
+                  if (endAt < Date.now() || runId !== runIdRef.current) {
+                    return resolve(true);
+                  }
+
+                  const pos = duration - (endAt - Date.now());
+
+                  Object.keys(to).forEach((attr) => {
+                    const [startValue] = isBackward ? resolveValue(to[attr]) : resolveValue(from[attr]);
+                    const [endValue] = isBackward ? resolveValue(from[attr]) : resolveValue(to[attr]);
+                    const newValue = timingFn(pos, startValue, endValue - startValue, duration);
+                    setStyle(attr, newValue, meta[attr].unit);
+                  });
+
+                  timeoutRef.current = setTimeout(apply, throttle);
+                };
+
+                timeoutRef.current = setTimeout(apply, 0);
+              });
+
+              // Set exact target value on last iteration
+              if (runId === runIdRef.current) {
+                Object.keys(to).forEach((attr) => {
+                  if (isBackward) {
+                    setStyle(attr, meta[attr].from, meta[attr].unit);
+                  } else {
+                    setStyle(attr, meta[attr].to, meta[attr].unit);
+                  }
+                });
+              }
+            }
+          },
+          Math.max(delay || 0, 0),
+        );
+      }
     },
     [animationName, elRef, native, resolveValue, setStyle, stop, web],
   );
