@@ -44,47 +44,59 @@ export default function Main() {
   const theme = useTheme();
 
   const trans = unstable_useTransition({
-    translateX: 50,
-    // transform: 'translateX(50px)',
-    // transform: { translateX: 50 },
-    // transform: 'translateX(50px) scale(2)',
-    // transform: [{ translateX: 50 }, { scale: 2 }],
-    // transform: [{ translateX: 50, scale: 2 }],
+    transform: 'translateX(80px)',
+    // transform: { translateX: 80 },
+    // transform: 'translateX(80px) scale(2)',
+    // transform: [{ translateX: 80 }, { scale: 2 }],
+    // transform: [{ translateX: 80, scale: 2 }],
   });
 
   // console.log(trans.props);
   useEffect(() => {
     trans.start({
+      boomerang: true,
+      timing: 'linear',
       iterations: 'infinite',
       to: {
-        translateX: 0,
-        // transform: 'translateX(0)',
+        transform: 'translateX(0)',
         // transform: { translateX: 0 },
         // transform: 'translateX(0) scale(1)',
         // transform: [{ translateX: 0 }, { scale: 1 }],
         // transform: [{ translateX: 0, scale: 1 }],
       },
     });
-  }, []);
+  }, [trans]);
 
   return (
     <Box p={16} center>
       <Box {...trans.props}>
-        <Text>Anything</Text>
+        <Text>useTransition Hook</Text>
       </Box>
-      {/*<Animation*/}
-      {/*  loop*/}
-      {/*  in*/}
-      {/*  duration={1000}*/}
-      {/*  from={{*/}
-      {/*    transform: 'translateX(50px)',*/}
-      {/*  }}*/}
-      {/*  to={{*/}
-      {/*    transform: 'translateX(0)',*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <Text>Anything</Text>*/}
-      {/*</Animation>*/}
+      <Box
+        animation={{
+          boomerang: true,
+          timing: 'linear',
+          iterations: 'infinite',
+          from: { translateX: 80 },
+          to: { translateX: 0 },
+        }}
+      >
+        <Text>Box animation prop</Text>
+      </Box>
+      <Animation
+        in
+        loop
+        timing="linear"
+        direction="alternate"
+        from={{
+          translateX: 80,
+        }}
+        to={{
+          translateX: 0,
+        }}
+      >
+        <Text>Animation Component</Text>
+      </Animation>
     </Box>
   );
 

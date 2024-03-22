@@ -256,15 +256,9 @@ const base: ThemeProps = {
       },
       Animation: {
         name: 'rbk-animation',
-        defaultProps: {
-          direction: 'normal',
-          duration: 350,
-          timing: 'ease',
-        },
+        defaultProps: {},
         defaultStyles: {
-          root: {
-            position: 'relative',
-          },
+          root: {},
         },
       },
       Backdrop: {
