@@ -221,17 +221,6 @@ export interface RbkRect {
 }
 
 export interface RbkAnimation {
-  boomerang?: boolean;
-  delay?: number;
-  duration?: number;
-  timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
-  iterations?: number | 'infinite';
-
-  /** @deprecated use duration instead */
-  speed?: number;
-}
-
-export interface RbkTransition {
   to: Overwrite<
     RbkStyleProps,
     {
@@ -577,7 +566,7 @@ export type BaseProps = Overwrite<
       // Styles
       style?: RbkStyle;
       rawStyle?: RbkStyle;
-      animation?: RbkTransition;
+      animation?: RbkAnimation;
 
       // Flexbox container
       row?: boolean;
@@ -970,7 +959,7 @@ export type ModalProps<ALLOW_ANY = true> = PropsWithStyles<
 
 export type CollapseProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
-  Pick<RbkTransition, 'delay' | 'duration' | 'timing'>,
+  Pick<RbkAnimation, 'delay' | 'duration' | 'timing'>,
   {
     visible?: boolean;
 
@@ -1067,7 +1056,7 @@ export type AnimationProps<ALLOW_ANY = true> = PropsWithStyles<
     in?: boolean;
     loop?: boolean | number;
     throttle?: number;
-    timing?: 'ease' | 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+    timing?: 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out';
     to?: RbkStyle;
 
     // Pre-defined animations

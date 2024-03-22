@@ -2,8 +2,8 @@ import React, { forwardRef, useEffect, useRef } from 'react';
 
 import rect from '../../element/rect';
 import setNativeStyle from '../../element/setNativeStyle';
+import useAnimation from '../../hooks/useAnimation';
 import useTheme from '../../hooks/useTheme';
-import useTransition from '../../hooks/useTransition';
 import factory2 from '../../props/factory2';
 import jss from '../../styles/jss';
 import { GrowBoxProps } from '../../types';
@@ -29,7 +29,7 @@ const GrowBoxFactory = React.memo<GrowBoxProps>(
     const defaultRef = useRef();
     const contentRef: any = ref ?? defaultRef;
 
-    const transition = useTransition({ ...jss(style), height: 0, width: 0 }, contentRef);
+    const transition = useAnimation({ ...jss(style), height: 0, width: 0 }, contentRef);
 
     useEffect(() => {
       requestAnimationFrame(async () => {

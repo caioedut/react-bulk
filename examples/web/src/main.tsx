@@ -1,14 +1,6 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useReducer, useRef, useState } from 'react';
 
-import {
-  AnyObject,
-  FormRef,
-  RbkInputEvent,
-  RbkTransition,
-  unstable_useTransition,
-  useAnimation,
-  useToaster,
-} from '@react-bulk/core';
+import { AnyObject, FormRef, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
 import {
   Animation,
   Avatar,
@@ -50,55 +42,6 @@ import {
 
 export default function Main() {
   const theme = useTheme();
-
-  const from: RbkTransition['from'] = {
-    transform: 'translateX(80px)',
-    // transform: { translateX: 80 },
-    // transform: 'translateX(80px) scale(2)',
-    // transform: [{ translateX: 80 }, { scale: 2 }],
-    // transform: [{ translateX: 80, scale: 2 }],
-  };
-
-  const to: RbkTransition['to'] = {
-    transform: 'translateX(0)',
-    // transform: { translateX: 0 },
-    // transform: 'translateX(0) scale(1)',
-    // transform: [{ translateX: 0 }, { scale: 1 }],
-    // transform: [{ translateX: 0, scale: 1 }],
-  };
-
-  const trans = unstable_useTransition(from);
-
-  useEffect(() => {
-    trans.start({
-      boomerang: true,
-      timing: 'ease',
-      iterations: 'infinite',
-      to,
-    });
-  }, [trans, to]);
-
-  return (
-    <Box p={16} center>
-      <Box {...trans.props}>
-        <Text>useTransition Hook</Text>
-      </Box>
-      <Box
-        animation={{
-          boomerang: true,
-          timing: 'ease',
-          iterations: 'infinite',
-          from,
-          to,
-        }}
-      >
-        <Text>Box animation prop</Text>
-      </Box>
-      <Animation in loop timing="ease" direction="alternate" from={from} to={to}>
-        <Text>Animation Component</Text>
-      </Animation>
-    </Box>
-  );
 
   return (
     <Scrollable bg="background.secondary" contentInset={theme.shape.gap}>
@@ -1133,6 +1076,7 @@ function TabsExample() {
 
 function ProgressExample() {
   const theme = useTheme();
+  const [percent, randomPercent] = useReducer(() => Math.random() * 100, 50);
 
   return (
     <>
@@ -1161,7 +1105,11 @@ function ProgressExample() {
       <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
 
       <Text variant="subtitle">Bar with value</Text>
-      <Progress value={Math.random() * 100} mt={theme.shape.gap} />
+      <Progress value={percent} mt={theme.shape.gap} />
+
+      <Button align="start" mt={4} onPress={randomPercent}>
+        Random Percent
+      </Button>
     </>
   );
 }
@@ -1324,65 +1272,18 @@ function AnimationExample() {
   const from = { width: 40, height: 40 };
   const to = { width: 200, height: 200 };
 
-  const sizeAnim = useAnimation(from);
-  const transition = unstable_useTransition(from);
+  const transition = useAnimation(from);
 
   return (
     <>
       <Text variant="title" mb={theme.shape.gap}>
-        Animations (Beta)
+        Animations
       </Text>
 
       <Text variant="subtitle" mb={theme.shape.gap}>
         useAnimation
       </Text>
 
-      <Grid gap>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to)}>Forward</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(from)}>Backward</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to, { iterations: 3 })}>Repeat 3x</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to, { boomerang: true })}>Boomerang</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to, { iterations: 'infinite' })}>Infinite</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 'infinite' })}>
-            Boomerang Infinite
-          </Button>
-        </Box>
-        <Box>
-          <Button color="warning" onPress={() => sizeAnim.stop()}>
-            Stop
-          </Button>
-        </Box>
-        <Box>
-          <Button color="error" onPress={() => sizeAnim.reset()}>
-            Reset
-          </Button>
-        </Box>
-        <Box xs={12}>
-          <Box border="1px solid primary" align="start">
-            <sizeAnim.Component style={sizeAnim.style} />
-          </Box>
-        </Box>
-      </Grid>
-
-      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
-
-      <Text variant="subtitle" mb={theme.shape.gap}>
-        unstable_useTransition
-      </Text>
       <Grid gap>
         <Box>
           <Button onPress={() => transition.start({ to, from })}>Forward</Button>

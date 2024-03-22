@@ -113,8 +113,12 @@ global.mapping = {
   },
 } as RbkMap;
 
-export const Avatar = AvatarFactory;
+/**
+ * @deprecated use Box with "animation" prop instead
+ */
 export const Animation = AnimationFactory;
+
+export const Avatar = AvatarFactory;
 export const Backdrop = BackdropFactory;
 export const Badge = BadgeFactory;
 export const Box = BoxFactory;

@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useMemo } from 'react';
 
+import useAnimation from '../../hooks/useAnimation';
 import useTheme from '../../hooks/useTheme';
-import useTransition from '../../hooks/useTransition';
 import bindings from '../../props/bindings';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
@@ -162,7 +162,7 @@ const BoxFactory = React.memo<BoxProps>(
     }
 
     // Animation
-    const transition = useTransition(animation?.from, ref as any);
+    const transition = useAnimation(animation?.from, ref as any);
     style.push(transition.props.style);
 
     if (web) {

@@ -965,9 +965,6 @@ const base: ThemeProps = {
           bar: {
             bg: 'primary',
             h: '1.25rem',
-            web: {
-              ...this.mixins.transitions.fast,
-            },
           },
           label: {
             textAlign: 'center',
