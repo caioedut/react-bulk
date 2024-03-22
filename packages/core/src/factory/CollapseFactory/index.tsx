@@ -1,5 +1,6 @@
 import React, { RefObject, forwardRef, useEffect, useMemo, useRef } from 'react';
 
+import getFullHeight from '../../element/getFullHeight';
 import rect from '../../element/rect';
 import setNativeStyle from '../../element/setNativeStyle';
 import useTheme from '../../hooks/useTheme';
@@ -17,6 +18,9 @@ const CollapseFactory = React.memo<CollapseProps>(
 
     // Extends from default props
     const {
+      delay,
+      duration,
+      timing,
       visible,
       in: expanded,
       // Styles
@@ -42,15 +46,10 @@ const CollapseFactory = React.memo<CollapseProps>(
     useEffect(() => {
       if (!rootRef?.current) return;
 
-      // // TODO: fix animation on native and remove all "if" block
-      // if (native) {
-      //   rootRef.current.setNativeProps({ height: isExpanded ? 'auto' : 0 });
-      //   return;
-      // }
-
       (async () => {
+        const size = await getFullHeight(rootRef.current);
         const metrics = await rect(rootRef.current);
-        const size = web ? rootRef.current?.scrollHeight : metrics.height;
+        // const size = web ? rootRef.current?.scrollHeight : metrics.height;
 
         const curSize = isExpanded ? 0 : size;
         const newSize = isExpanded ? size : 0;
@@ -63,6 +62,9 @@ const CollapseFactory = React.memo<CollapseProps>(
 
         await transition.start({
           throttle: 0,
+          delay,
+          timing,
+          duration,
           web_useRawStyle: true,
           from: { height: curSize },
           to: { height: newSize },

@@ -560,7 +560,9 @@ const base: ThemeProps = {
       },
       Collapse: {
         name: 'rbk-collapse',
-        defaultProps: {},
+        defaultProps: {
+          timing: 'ease',
+        },
         defaultStyles: {
           root: {
             overflow: 'hidden',

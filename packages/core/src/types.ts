@@ -970,6 +970,7 @@ export type ModalProps<ALLOW_ANY = true> = PropsWithStyles<
 
 export type CollapseProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
+  Pick<RbkTransition, 'delay' | 'duration' | 'timing'>,
   {
     visible?: boolean;
 
