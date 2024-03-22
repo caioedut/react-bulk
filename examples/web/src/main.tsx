@@ -69,11 +69,10 @@ export default function Main() {
 
   const trans = unstable_useTransition(from);
 
-  // console.log(trans.props);
   useEffect(() => {
     trans.start({
       boomerang: true,
-      timing: 'linear',
+      timing: 'ease',
       iterations: 'infinite',
       to,
     });
@@ -87,7 +86,7 @@ export default function Main() {
       <Box
         animation={{
           boomerang: true,
-          timing: 'linear',
+          timing: 'ease',
           iterations: 'infinite',
           from,
           to,
@@ -95,7 +94,7 @@ export default function Main() {
       >
         <Text>Box animation prop</Text>
       </Box>
-      <Animation in loop timing="linear" direction="alternate" from={from} to={to}>
+      <Animation in loop timing="ease" direction="alternate" from={from} to={to}>
         <Text>Animation Component</Text>
       </Animation>
     </Box>

@@ -29,7 +29,11 @@ export { default as remove } from './props/remove';
 
 // Element
 /** @internal */
+export { default as getFullHeight } from './element/getFullHeight';
+/** @internal */
 export { default as rect } from './element/rect';
+/** @internal */
+export { default as reference } from './element/reference';
 /** @internal */
 export { default as scrollIntoView } from './element/scrollIntoView';
 /** @internal */
