@@ -1,6 +1,14 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkInputEvent, unstable_useTransition, useAnimation, useToaster } from '@react-bulk/core';
+import {
+  AnyObject,
+  FormRef,
+  RbkInputEvent,
+  RbkTransition,
+  unstable_useTransition,
+  useAnimation,
+  useToaster,
+} from '@react-bulk/core';
 import {
   Animation,
   Avatar,
@@ -43,46 +51,53 @@ import {
 export default function Main() {
   const theme = useTheme();
 
-  const trans = unstable_useTransition({
-    transform: 'translateX(50px)',
-    // transform: { translateX: 50 },
-    // transform: 'translateX(50px) scale(2)',
-    // transform: [{ translateX: 50 }, { scale: 2 }],
-    // transform: [{ translateX: 50, scale: 2 }],
-  });
+  const from: RbkTransition['from'] = {
+    transform: 'translateX(80px)',
+    // transform: { translateX: 80 },
+    // transform: 'translateX(80px) scale(2)',
+    // transform: [{ translateX: 80 }, { scale: 2 }],
+    // transform: [{ translateX: 80, scale: 2 }],
+  };
+
+  const to: RbkTransition['to'] = {
+    transform: 'translateX(0)',
+    // transform: { translateX: 0 },
+    // transform: 'translateX(0) scale(1)',
+    // transform: [{ translateX: 0 }, { scale: 1 }],
+    // transform: [{ translateX: 0, scale: 1 }],
+  };
+
+  const trans = unstable_useTransition(from);
 
   // console.log(trans.props);
   useEffect(() => {
     trans.start({
+      boomerang: true,
+      timing: 'linear',
       iterations: 'infinite',
-      to: {
-        transform: 'translateX(0)',
-        // transform: { translateX: 0 },
-        // transform: 'translateX(0) scale(1)',
-        // transform: [{ translateX: 0 }, { scale: 1 }],
-        // transform: [{ translateX: 0, scale: 1 }],
-      },
+      to,
     });
-  }, []);
+  }, [trans, to]);
 
   return (
     <Box p={16} center>
       <Box {...trans.props}>
-        <Text>Anything</Text>
+        <Text>useTransition Hook</Text>
       </Box>
-      {/*<Animation*/}
-      {/*  loop*/}
-      {/*  in*/}
-      {/*  duration={1000}*/}
-      {/*  from={{*/}
-      {/*    transform: 'translateX(50px)',*/}
-      {/*  }}*/}
-      {/*  to={{*/}
-      {/*    transform: 'translateX(0)',*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <Text>Anything</Text>*/}
-      {/*</Animation>*/}
+      <Box
+        animation={{
+          boomerang: true,
+          timing: 'linear',
+          iterations: 'infinite',
+          from,
+          to,
+        }}
+      >
+        <Text>Box animation prop</Text>
+      </Box>
+      <Animation in loop timing="linear" direction="alternate" from={from} to={to}>
+        <Text>Animation Component</Text>
+      </Animation>
     </Box>
   );
 

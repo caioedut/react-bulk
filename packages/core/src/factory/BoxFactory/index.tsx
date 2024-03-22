@@ -1,6 +1,7 @@
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef, useEffect, useMemo } from 'react';
 
 import useTheme from '../../hooks/useTheme';
+import useTransition from '../../hooks/useTransition';
 import bindings from '../../props/bindings';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
@@ -35,6 +36,7 @@ const BoxFactory = React.memo<BoxProps>(
 
     let {
       accessibility,
+      animation,
       center,
       column,
       component,
@@ -159,6 +161,10 @@ const BoxFactory = React.memo<BoxProps>(
       }
     }
 
+    // Animation
+    const transition = useTransition(animation?.from, ref as any);
+    style.push(transition.props.style);
+
     if (web) {
       styles.push(sheet(style));
     }
@@ -212,12 +218,13 @@ const BoxFactory = React.memo<BoxProps>(
 
     const Component = component || View;
 
-    if (mount === false) {
-      return null;
-    }
+    useEffect(() => {
+      if (!animation) return;
+      transition.start(animation);
+    }, [animation, transition]);
 
-    return (
-      <Component ref={ref} {...rest} {...componentProps}>
+    return mount === false ? null : (
+      <Component {...transition.props} {...rest} {...componentProps}>
         {React.Children.map(children, (child) => {
           const isText = ['string', 'number'].includes(typeof child);
 

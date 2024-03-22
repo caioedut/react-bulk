@@ -232,13 +232,19 @@ export interface RbkAnimation {
 }
 
 export interface RbkTransition {
-  to: RbkStyleProps & {
-    [key in (typeof transformProps)[number]]?: any;
-  };
+  to: Overwrite<
+    RbkStyleProps,
+    {
+      [key in (typeof transformProps)[number]]?: any;
+    }
+  >;
 
-  from?: RbkStyleProps & {
-    [key in (typeof transformProps)[number]]?: any;
-  };
+  from?: Overwrite<
+    RbkStyleProps,
+    {
+      [key in (typeof transformProps)[number]]?: any;
+    }
+  >;
 
   boomerang?: boolean;
   delay?: number;
@@ -569,6 +575,7 @@ export type BaseProps = Overwrite<
       // Styles
       style?: RbkStyle;
       rawStyle?: RbkStyle;
+      animation?: RbkTransition;
 
       // Flexbox container
       row?: boolean;
