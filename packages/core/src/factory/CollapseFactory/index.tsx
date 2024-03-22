@@ -1,12 +1,12 @@
 import React, { RefObject, forwardRef, useEffect, useMemo, useRef } from 'react';
 
 import rect from '../../element/rect';
-import useAnimation from '../../hooks/useAnimation';
+import setNativeStyle from '../../element/setNativeStyle';
 import useTheme from '../../hooks/useTheme';
+import useTransition from '../../hooks/useTransition';
 import factory2 from '../../props/factory2';
 import { CollapseProps } from '../../types';
 import global from '../../utils/global';
-import sleep from '../../utils/sleep';
 import BoxFactory from '../BoxFactory';
 
 const CollapseFactory = React.memo<CollapseProps>(
@@ -27,26 +27,28 @@ const CollapseFactory = React.memo<CollapseProps>(
     const defaultRef: any = useRef(null);
     const rootRef: RefObject<any> = ref || defaultRef;
 
-    const emptyValue = 'auto';
     const isExpanded = useMemo(() => visible ?? expanded ?? false, [visible, expanded]);
-    const heightAnim = useAnimation({ height: isExpanded ? emptyValue : 0 });
+    const transition = useTransition({}, rootRef);
+
+    const initialStyle = useMemo(
+      () => ({
+        height: isExpanded ? 'auto' : 0,
+        overflow: isExpanded ? 'visible' : 'hidden',
+      }),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [],
+    );
 
     useEffect(() => {
       if (!rootRef?.current) return;
 
-      // TODO: fix animation on native and remove all "if" block
-      if (native) {
-        rootRef.current.setNativeProps({ height: isExpanded ? 'auto' : 0 });
-        return;
-      }
+      // // TODO: fix animation on native and remove all "if" block
+      // if (native) {
+      //   rootRef.current.setNativeProps({ height: isExpanded ? 'auto' : 0 });
+      //   return;
+      // }
 
       (async () => {
-        if (native) {
-          // Reset to get original size
-          rootRef.current.setNativeProps({ height: 'auto' });
-          await sleep(1);
-        }
-
         const metrics = await rect(rootRef.current);
         const size = web ? rootRef.current?.scrollHeight : metrics.height;
 
@@ -55,32 +57,34 @@ const CollapseFactory = React.memo<CollapseProps>(
 
         if (newSize === metrics.height) return;
 
-        // Set element height to animate (web doesnt support height auto animations)
-        if (newSize <= 0) {
-          await heightAnim.start({ height: curSize }, { duration: 0 });
-          await sleep(10);
-        }
+        setNativeStyle(rootRef.current, {
+          overflow: 'hidden',
+        });
 
-        // TODO: check why animation dont work on native
-        await heightAnim.start({ height: newSize });
+        await transition.start({
+          throttle: 0,
+          web_useRawStyle: true,
+          from: { height: curSize },
+          to: { height: newSize },
+        });
 
         if (newSize > 0) {
-          await heightAnim.start({ height: emptyValue });
+          setNativeStyle(rootRef.current, {
+            height: 'auto',
+            overflow: 'visible',
+          });
         }
       })();
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [rootRef, isExpanded]);
+    }, [rootRef, isExpanded, transition, web, native]);
 
     return (
       <BoxFactory
-        ref={rootRef}
         noRootStyles
-        component={heightAnim.Component}
+        {...transition.props}
         platform={{ native: { collapsable: false } }}
-        style={{ height: 0 }}
+        style={initialStyle}
         stylist={[variants.root, stylist]}
-        rawStyle={heightAnim.style}
+        rawStyle={transition.props.style}
       >
         <BoxFactory {...rest} />
       </BoxFactory>

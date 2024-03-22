@@ -252,6 +252,8 @@ export interface RbkTransition {
   iterations?: number | 'infinite';
   throttle?: number;
   timing?: 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out';
+
+  web_useRawStyle?: boolean;
 }
 
 export interface RbkFormEvent {
