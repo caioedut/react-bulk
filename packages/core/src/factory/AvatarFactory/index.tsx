@@ -4,7 +4,6 @@ import useTheme from '../../hooks/useTheme';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import { AvatarProps, RequiredSome } from '../../types';
-import AnimationFactory from '../AnimationFactory';
 import BoxFactory from '../BoxFactory';
 import ImageFactory from '../ImageFactory';
 
@@ -65,15 +64,21 @@ const AvatarFactory = React.memo<AvatarProps>(
         <BoxFactory stylist={[variants.content]} style={contentStyle}>
           <BoxFactory center style={absoluteFill}>
             {Boolean(source) && (
-              <AnimationFactory key={sourceKey} fade in={!isLoadingImage} style={absoluteFill}>
-                <ImageFactory
-                  w={size}
-                  h={size}
-                  alt={alt}
-                  source={source as any}
-                  onLoad={() => setIsLoadingImage(false)}
-                />
-              </AnimationFactory>
+              <ImageFactory
+                key={sourceKey}
+                w={size}
+                h={size}
+                alt={alt}
+                source={source as any}
+                onLoad={() => setIsLoadingImage(false)}
+                animation={{
+                  throttle: 0,
+                  timing: 'linear',
+                  iterations: 1,
+                  from: { opacity: 0 },
+                  to: { opacity: isLoadingImage ? 0 : 1 },
+                }}
+              />
             )}
 
             {placeholder}

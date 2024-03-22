@@ -3,8 +3,8 @@ import React, { RefObject, forwardRef, useEffect, useMemo, useRef } from 'react'
 import getFullHeight from '../../element/getFullHeight';
 import rect from '../../element/rect';
 import setNativeStyle from '../../element/setNativeStyle';
+import useAnimation from '../../hooks/useAnimation';
 import useTheme from '../../hooks/useTheme';
-import useTransition from '../../hooks/useTransition';
 import factory2 from '../../props/factory2';
 import { CollapseProps } from '../../types';
 import global from '../../utils/global';
@@ -32,7 +32,7 @@ const CollapseFactory = React.memo<CollapseProps>(
     const rootRef: RefObject<any> = ref || defaultRef;
 
     const isExpanded = useMemo(() => visible ?? expanded ?? false, [visible, expanded]);
-    const transition = useTransition({}, rootRef);
+    const transition = useAnimation({}, rootRef);
 
     const initialStyle = useMemo(
       () => ({

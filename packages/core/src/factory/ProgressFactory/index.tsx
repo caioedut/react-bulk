@@ -6,7 +6,6 @@ import { ProgressProps, RequiredSome } from '../../types';
 import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
-import AnimationFactory from '../AnimationFactory';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
@@ -82,20 +81,32 @@ const ProgressFactory = React.memo<ProgressProps>(
     return (
       <BoxFactory ref={ref} {...rest} style={style} stylist={[variants.root, stylist]}>
         {isIndeterminate ? (
-          <AnimationFactory //
-            in
-            loop
-            duration={500}
-            timing="linear"
-            direction="alternate"
-            from={{ transform: [{ translateX: 0 }] }}
-            to={{ transform: [{ translateX }] }}
+          <BoxFactory
+            animation={{
+              throttle: 0,
+              duration: 500,
+              timing: 'linear',
+              boomerang: true,
+              iterations: 'infinite',
+              from: { translateX: 0 },
+              to: { translateX },
+            }}
           >
             <BoxFactory w="20%" style={barStyle} stylist={[variants.bar]} />
-          </AnimationFactory>
+          </BoxFactory>
         ) : (
           <>
-            <BoxFactory style={barStyle} stylist={[variants.bar]} rawStyle={{ width: `${value}%` }} />
+            <BoxFactory
+              style={barStyle}
+              stylist={[variants.bar]}
+              animation={{
+                throttle: 0,
+                duration: 100,
+                timing: 'linear',
+                iterations: 1,
+                to: { width: `${value}%` },
+              }}
+            />
 
             {Boolean(label) && (
               <BoxFactory position="absolute" i={0} center>
