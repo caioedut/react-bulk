@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useRef, useState } from 'react';
 
 import usePropState from '../../hooks/usePropState';
 import useTheme from '../../hooks/useTheme';
@@ -20,6 +20,7 @@ const TooltipFactory = React.memo<TooltipProps>(
     let {
       accessibility,
       color,
+      delay,
       offset = native ? 2 : 1,
       position,
       title,
@@ -41,7 +42,7 @@ const TooltipFactory = React.memo<TooltipProps>(
 
     style = [shown && options?.variants?.visible?.true?.root, style];
 
-    const handleTooltipShow = () => {
+    const handleTooltipShow = useCallback(() => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -49,11 +50,11 @@ const TooltipFactory = React.memo<TooltipProps>(
       if (!isControlled) {
         timeoutRef.current = setTimeout(() => {
           setShown(true);
-        }, 50);
+        }, delay);
       }
-    };
+    }, [timeoutRef, delay, isControlled, setShown]);
 
-    const handleTooltipHide = () => {
+    const handleTooltipHide = useCallback(() => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -61,7 +62,7 @@ const TooltipFactory = React.memo<TooltipProps>(
       if (!isControlled) {
         setShown(false);
       }
-    };
+    }, [isControlled, setShown]);
 
     return (
       <BoxFactory
@@ -70,8 +71,8 @@ const TooltipFactory = React.memo<TooltipProps>(
         style={{ position: 'relative' }}
         platform={{
           web: {
-            onPointerOver: handleTooltipShow,
-            onPointerOut: handleTooltipHide,
+            onPointerEnter: handleTooltipShow,
+            onPointerLeave: handleTooltipHide,
           },
           native: {
             activeOpacity: 1,

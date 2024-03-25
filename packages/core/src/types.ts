@@ -1038,6 +1038,7 @@ export type TooltipProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
     color?: 'black' | 'white' | RbkColor;
+    delay?: number;
     offset?: number | string;
     position?: 'top' | 'bottom' | 'left' | 'right';
     title?: string;
