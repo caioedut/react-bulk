@@ -41,6 +41,15 @@ type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'er
 type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker' | 'contrast';
 
 /** @internal */
+type Transform = {
+  [key in (typeof transformProps)[number]]?: any;
+} & {
+  transform?: {
+    [key in (typeof transformProps)[number]]?: any;
+  };
+};
+
+/** @internal */
 type FlexJustifyValues =
   | 'center'
   | 'stretch'
@@ -221,19 +230,9 @@ export interface RbkRect {
 }
 
 export interface RbkAnimation {
-  to: Overwrite<
-    RbkStyleProps,
-    {
-      [key in (typeof transformProps)[number]]?: any;
-    }
-  >;
+  to: Overwrite<RbkStyleProps, Transform>;
 
-  from?: Overwrite<
-    RbkStyleProps,
-    {
-      [key in (typeof transformProps)[number]]?: any;
-    }
-  >;
+  from?: Overwrite<RbkStyleProps, Transform>;
 
   boomerang?: boolean;
   delay?: number;
