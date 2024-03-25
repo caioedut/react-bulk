@@ -1266,6 +1266,7 @@ const base: ThemeProps = {
         defaultProps: {
           position: 'top',
           color: 'black',
+          delay: 200,
         },
         defaultStyles: {
           root: {
