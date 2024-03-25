@@ -162,7 +162,7 @@ const BoxFactory = React.memo<BoxProps>(
     }
 
     // Animation
-    const transition = useAnimation(animation?.from, ref as any);
+    const transition = useAnimation({}, ref as any);
     style.push(transition.props.style);
 
     if (web) {
