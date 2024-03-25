@@ -239,7 +239,6 @@ export interface RbkRect {
 
 export interface RbkAnimation {
   to: Overwrite<RbkStyleProps, Transform>;
-
   from?: Overwrite<RbkStyleProps, Transform>;
 
   boomerang?: boolean;
@@ -573,7 +572,11 @@ export type BaseProps = Overwrite<
       // Styles
       style?: RbkStyle;
       rawStyle?: RbkStyle;
-      animation?: RbkAnimation;
+      animation?: RbkAnimation & {
+        // Events
+        onStart?: () => void;
+        onEnd?: () => void;
+      };
 
       // Flexbox container
       row?: boolean;

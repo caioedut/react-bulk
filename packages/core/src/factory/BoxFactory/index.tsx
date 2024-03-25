@@ -220,7 +220,12 @@ const BoxFactory = React.memo<BoxProps>(
 
     useEffect(() => {
       if (!animation) return;
-      transition.start(animation);
+
+      (async () => {
+        animation?.onStart?.();
+        await transition.start(animation);
+        animation?.onEnd?.();
+      })();
     }, [animation, transition]);
 
     return mount === false ? null : (
