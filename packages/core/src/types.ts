@@ -134,11 +134,19 @@ export type RbkBreakpoints = {
 
 /** @internal */
 export type SelectOption = {
-  label: string;
   value: InputValue;
   disabled?: boolean;
   [key: string]: any;
-};
+} & (
+  | {
+      label: string;
+      searchLabel?: string;
+    }
+  | {
+      label: ReactElement;
+      searchLabel: string;
+    }
+);
 
 /** @internal */
 export type TableColumn = {
