@@ -66,7 +66,6 @@ const CollapseFactory = React.memo<CollapseProps>(
           timing,
           duration,
           web_useRawStyle: true,
-          from: { height: curSize },
           to: { height: newSize },
         });
 
@@ -77,7 +76,7 @@ const CollapseFactory = React.memo<CollapseProps>(
           });
         }
       })();
-    }, [rootRef, isExpanded, transition, web, native]);
+    }, [rootRef, isExpanded, transition, delay, timing, duration, web, native]);
 
     return (
       <BoxFactory
