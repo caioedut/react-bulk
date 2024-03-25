@@ -10,7 +10,7 @@ import merge from '../../props/merge';
 import { styleProps } from '../../styles/constants';
 import jss from '../../styles/jss';
 import sheet from '../../styles/sheet';
-import { BoxProps } from '../../types';
+import { BoxProps, RbkBreakpoints } from '../../types';
 import clone from '../../utils/clone';
 import clsx from '../../utils/clsx';
 import defined from '../../utils/defined';
@@ -37,6 +37,7 @@ const BoxFactory = React.memo<BoxProps>(
     let {
       accessibility,
       animation,
+      breakpoints,
       center,
       column,
       component,
@@ -62,6 +63,11 @@ const BoxFactory = React.memo<BoxProps>(
 
     pressable =
       pressable ?? Boolean(props.onPress || props.onLongPress || props.onPressIn || props.onPressOut || props.onClick);
+
+    const curBreakpoints: RbkBreakpoints = useMemo(
+      () => breakpoints ?? theme.breakpoints,
+      [breakpoints, theme.breakpoints],
+    );
 
     if (native && pressable && !component) {
       component = Button;
@@ -125,13 +131,13 @@ const BoxFactory = React.memo<BoxProps>(
     }
 
     const styles = [...(!noRootStyles ? variants.root : []), stylist];
-    const responsiveStyle = extract(Object.keys(theme.breakpoints), style);
+    const responsiveStyle = extract(Object.keys(curBreakpoints), style);
     const breakpointNames = useMemo(
       () =>
-        Object.entries(theme.breakpoints)
+        Object.entries(curBreakpoints)
           .sort((a, b) => a[1] - b[1])
           .map(([bkptName]) => bkptName),
-      [theme.breakpoints],
+      [curBreakpoints],
     );
 
     // Native only: refresh cometta styles when have responsive styles
@@ -144,15 +150,15 @@ const BoxFactory = React.memo<BoxProps>(
 
       if (bkptStyle) {
         style.push({
-          [`@media (min-width: ${theme.breakpoints[bkptName]}px)`]: bkptStyle,
+          [`@media (min-width: ${curBreakpoints[bkptName]}px)`]: bkptStyle,
         });
       }
 
       // Responsive "HIDDEN"
       if (hidden?.[bkptName]) {
-        const bkptNext = theme.breakpoints?.[breakpointNames[Number(bkptIndex) + 1]];
+        const bkptNext = curBreakpoints?.[breakpointNames[Number(bkptIndex) + 1]];
 
-        let media = `@media (min-width: ${theme.breakpoints[bkptName]}px)`;
+        let media = `@media (min-width: ${curBreakpoints[bkptName]}px)`;
         if (bkptNext) {
           media += ` and (max-width: ${bkptNext - 1}px)`;
         }
