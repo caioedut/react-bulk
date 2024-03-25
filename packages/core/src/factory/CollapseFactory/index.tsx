@@ -49,9 +49,6 @@ const CollapseFactory = React.memo<CollapseProps>(
       (async () => {
         const size = await getFullHeight(rootRef.current);
         const metrics = await rect(rootRef.current);
-        // const size = web ? rootRef.current?.scrollHeight : metrics.height;
-
-        const curSize = isExpanded ? 0 : size;
         const newSize = isExpanded ? size : 0;
 
         if (newSize === metrics.height) return;
@@ -76,7 +73,10 @@ const CollapseFactory = React.memo<CollapseProps>(
           });
         }
       })();
-    }, [rootRef, isExpanded, transition, delay, timing, duration, web, native]);
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // cannot add "transition" to dependencies
+    }, [rootRef, isExpanded, delay, timing, duration, web, native]);
 
     return (
       <BoxFactory
