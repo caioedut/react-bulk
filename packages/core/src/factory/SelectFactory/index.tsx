@@ -15,6 +15,7 @@ import { AnyObject, InputValue, RbkInputEvent, RequiredSome, SelectOption, Selec
 import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
+import string from '../../utils/string';
 import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
@@ -148,7 +149,9 @@ const SelectFactory = React.memo<SelectProps>(
         return true;
       }
 
-      return option.label.toLowerCase().includes(searchValue.toLowerCase());
+      return string(option.searchLabel ?? option.label)
+        .toLowerCase()
+        .includes(searchValue.toLowerCase());
     });
 
     const dispatchEvent = useCallback(
