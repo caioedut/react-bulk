@@ -7,6 +7,7 @@ import React, {
   useContext,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useRef,
 } from 'react';
 
@@ -64,7 +65,7 @@ const FormFactory = React.memo<FormProps>(
         let field = getField(name);
 
         if (field) {
-          Object.getOwnPropertyNames(field).forEach((prop) => delete field?.[prop]);
+          Object.keys(field).forEach((prop) => delete field?.[prop]);
           Object.assign(field, options);
         } else {
           field = options;
@@ -117,6 +118,20 @@ const FormFactory = React.memo<FormProps>(
       [getField],
     );
 
+    const getErrors = useCallback(() => {
+      const errors = {};
+
+      fieldsRef.current.forEach((item) => {
+        const message = item?.getError?.();
+
+        if (message) {
+          errors[item.name] = message;
+        }
+      });
+
+      return Object.keys(errors).length ? errors : null;
+    }, [fieldsRef]);
+
     const setErrors = useCallback(
       (errors: FormProps['errors']) => {
         fieldsRef.current.forEach((item) => {
@@ -136,6 +151,7 @@ const FormFactory = React.memo<FormProps>(
 
       const target = formRef.current;
       const data = getData();
+      const errors = getErrors();
 
       const event: RbkFormEvent = {
         type,
@@ -150,7 +166,7 @@ const FormFactory = React.memo<FormProps>(
       }
 
       if (typeof callback === 'function') {
-        callback(event, data);
+        callback(event, data, errors);
       }
     }
 
@@ -176,20 +192,37 @@ const FormFactory = React.memo<FormProps>(
       dispatchEvent('clear', undefined, nativeEvent);
     }
 
-    const context = {
-      submit,
-      cancel,
-      clear,
-      getData,
-      setData,
-      setErrors,
-      getValue,
-      setValue,
-      getField,
-      setField,
-      unsetField,
-      target: formRef.current,
-    };
+    const context: FormRef = useMemo(
+      () => ({
+        submit,
+        cancel,
+        clear,
+        getData,
+        setData,
+        getErrors,
+        setErrors,
+        getValue,
+        setValue,
+        getField,
+        setField,
+        unsetField,
+        target: formRef.current,
+      }),
+      [
+        cancel,
+        clear,
+        getData,
+        getErrors,
+        getField,
+        getValue,
+        setData,
+        setErrors,
+        setField,
+        setValue,
+        submit,
+        unsetField,
+      ],
+    );
 
     useImperativeHandle(ref, () => context, [context]);
 
@@ -198,13 +231,13 @@ const FormFactory = React.memo<FormProps>(
       Object.assign(ref?.current || {}, { target: formRef.current });
     }, [ref, formRef]);
 
-    useEffect(() => {
-      setData(data || {});
-    }, [data, setData]);
-
-    useEffect(() => {
-      setErrors(errors);
-    }, [errors, setErrors]);
+    // useEffect(() => {
+    //   setData(data || {});
+    // }, [data, setData]);
+    //
+    // useEffect(() => {
+    //   setErrors(errors);
+    // }, [errors, setErrors]);
 
     return (
       <Context.Provider value={context}>
