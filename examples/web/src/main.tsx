@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 
 import { AnyObject, FormRef, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
 import {
@@ -40,8 +40,79 @@ import {
   useTheme,
 } from '@react-bulk/web';
 
+export type UseInputProps<T> = {
+  prop?: string;
+  name?: string;
+  defaultValue?: T;
+  onChange?: (event: any, value: T) => void;
+  getError?: (value: T) => string | false | null | undefined | void;
+  mask?: (value: T) => string;
+  unmask?: (value: string) => T;
+};
+
 export default function Main() {
   const theme = useTheme();
+
+  // const input = useInput({
+  //   name: 'fullName',
+  //   mask: (value) => `${value ?? ''}`.toUpperCase(),
+  //   unmask: (value) => `${value ?? ''}`.toLowerCase(),
+  //   getError: (value) => (!value ? 'Required field' : null),
+  // });
+
+  // console.log({ state: input.state, value: input.props.value });
+
+  const [inputValue, setInputValue] = useState<string>();
+  const [inputError, setInputError] = useState<string>();
+
+  useEffect(() => {
+    // setTimeout(() => {
+    //   console.log('timeout');
+    //   setInputValue(`${Date.now()}`);
+    // }, 1000);
+  }, []);
+
+  return (
+    <Form
+      p={16}
+      onSubmit={(e, data, errors) => {
+        console.log(e);
+        console.log(data);
+        console.log(errors);
+      }}
+    >
+      <Box>
+        {/*<input type="text" {...input.props} />*/}
+        <Input
+          name="thing"
+          defaultValue="1"
+          value={inputValue}
+          error={inputError}
+          onChange={(e, value) => {
+            // console.log(e);
+            console.log(value);
+          }}
+        />
+      </Box>
+      <Box mt={4}>
+        <Input
+          name="age"
+          type="number"
+          onChange={(e, value) => {
+            console.log(value);
+          }}
+        />
+      </Box>
+      <Box row noWrap mt={4} style={{ gap: '16px' }}>
+        <Button onPress={() => setInputValue(`${Date.now()}`)}>Random</Button>
+        <Button onPress={() => setInputError('Ta errado jovem')}>Error</Button>
+        <Button onPress={() => setInputError(undefined)}>No Error</Button>
+      </Box>
+      <Box mt={4}>
+        <Button type="submit">Submit</Button>
+      </Box>
+    </Form>
+  );
 
   return (
     <Scrollable bg="background.secondary" contentInset={theme.shape.gap}>

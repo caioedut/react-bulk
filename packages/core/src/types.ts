@@ -354,7 +354,8 @@ export type FormField = {
   name: string;
   get: () => InputValue | null | undefined;
   set: (value: InputValue) => any;
-  setError?: (error: boolean | string) => any;
+  getError?: () => string | boolean | null;
+  setError?: (error: boolean | string | null) => any;
   onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
 };
 
@@ -363,6 +364,7 @@ export type FormRef = {
   clear: () => any;
   getData: () => AnyObject;
   setData: (data: AnyObject) => any;
+  getErrors: () => null | AnyObject;
   setErrors: (errors: FormProps['errors']) => any;
   getValue: (name: string) => InputValue | undefined;
   setValue: (name: string, value: InputValue) => any;
@@ -1038,10 +1040,10 @@ export type FormProps<ALLOW_ANY = true> = PropsWithStyles<
   {
     data?: any;
     errors?: { [key: string]: string | boolean } | null;
-    onSubmit?: (event: RbkFormEvent | any, data: AnyObject) => any;
-    onCancel?: (event: RbkFormEvent | any, data: AnyObject) => any;
-    onClear?: (event: RbkFormEvent | any, data: AnyObject) => any;
-    onChange?: (event: RbkFormEvent | any, data: AnyObject) => any;
+    onSubmit?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
+    onCancel?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
+    onClear?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
+    onChange?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
   }
 >;
 
