@@ -47,9 +47,6 @@ const InputFactory = React.memo<InputProps>(
       ...rest
     } = factory2<RequiredSome<InputProps, 'color'>>(props, options);
 
-    size = getSize(size);
-    color = theme.color(color);
-
     const inputRef = useRef<any>();
 
     const unmaskValue = useCallback(
@@ -104,6 +101,9 @@ const InputFactory = React.memo<InputProps>(
       onFormChange,
     });
 
+    size = getSize(size);
+    color = theme.color(input.error ? 'error' : color);
+
     const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
     const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
     const clear = useCallback(() => input.clear(), [input]);
@@ -138,8 +138,8 @@ const InputFactory = React.memo<InputProps>(
     }
 
     function handleIncDec(event, signal) {
-      const value = Number(input.state || 0) + (signal || 1);
-      input.setState(value, event);
+      if (disabled || readOnly) return;
+      input.setState(Number(input.state || 0) + (signal || 1), event);
     }
 
     return (

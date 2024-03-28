@@ -1,24 +1,26 @@
-import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useRef } from 'react';
 
+import reference from '../../element/reference';
 import useHtmlId from '../../hooks/useHtmlId';
+import useInput from '../../hooks/useInput';
 import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
+import getSize from '../../props/getSize';
 import { spacings } from '../../styles/constants';
-import { AnyObject, CheckboxProps, RbkCheckboxEvent, RequiredSome } from '../../types';
+import { CheckboxProps, RequiredSome } from '../../types';
 import global from '../../utils/global';
-import pick from '../../utils/pick';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
-import { useForm } from '../FormFactory';
 import LabelFactory from '../LabelFactory';
+import TextFactory from '../TextFactory';
 
 const CheckboxFactory = React.memo<CheckboxProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Checkbox;
-    const { web, native, svg, Input } = global.mapping;
+    const { native, svg } = global.mapping;
 
     // Extends from default props
     let {
@@ -27,6 +29,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       controlled,
       defaultChecked,
       disabled,
+      error,
       id,
       label,
       name,
@@ -42,46 +45,36 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       // Styles
       variants,
       buttonStyle,
+      errorStyle,
       labelStyle,
       style,
       ...rest
     } = factory2<RequiredSome<CheckboxProps, 'color' | 'size'>>(props, options);
 
+    const buttonRef = useRef<any>(null);
+
+    // const setInternal = useCallback(
+    //   (value) => {
+    //     if (controlled) return;
+    //     _setInternal(resolveValue(value));
+    //   },
+    //   [controlled, resolveValue],
+    // );
+
+    const input = useInput({
+      name,
+      value: checked,
+      defaultValue: defaultChecked,
+      error,
+      editable: !disabled && !readOnly,
+      unmask: (state) => (state === true ? value ?? true : false),
+      onChange: (event, value) => dispatchEvent('change', event, onChange, value),
+      onFormChange,
+    });
+
     id = useHtmlId(id);
-    color = theme.color(color);
-
-    const form = useForm();
-    const defaultRef: any = useRef(null);
-    const buttonRef = ref || defaultRef;
-
-    const [initialChecked] = useState(defaultChecked);
-    const [_internal, _setInternal] = useState(checked ?? initialChecked);
-
-    const resolveValue = useCallback((value) => {
-      return Boolean(Number(value));
-    }, []);
-
-    const internal = useMemo(() => {
-      return resolveValue(_internal);
-    }, [_internal, resolveValue]);
-
-    const setInternal = useCallback(
-      (value) => {
-        if (controlled) return;
-        _setInternal(resolveValue(value));
-      },
-      [controlled, resolveValue],
-    );
-
-    if (typeof size === 'string') {
-      size = pick(size, 'medium', {
-        xsmall: 1.25,
-        small: 1.75,
-        medium: 2.25,
-        large: 2.75,
-        xlarge: 3.25,
-      });
-    }
+    size = getSize(size);
+    color = theme.color(input.error ? 'error' : color);
 
     const baseSize = theme.rem(size as number);
     const fontSize = baseSize / 2;
@@ -89,86 +82,37 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
-    const clear = useCallback(() => setInternal(initialChecked), [initialChecked, setInternal]);
+    const clear = useCallback(() => input.clear(), [input]);
+    const reset = useCallback(() => input.reset(), [input]);
     const isFocused = useCallback(
       () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
       [buttonRef],
     );
 
-    const dispatchEvent = useCallback(
-      (
-        type: string,
-        newChecked: boolean,
-        event: AnyObject | null,
-        eventHandler?: (event: RbkCheckboxEvent, checked: boolean) => void,
-      ) => {
-        const nativeEvent = event?.nativeEvent ?? event ?? null;
-        const checked = resolveValue(newChecked) ?? null;
+    function dispatchEvent(type, event, handler?, value?) {
+      if (typeof handler !== 'function') return;
 
-        if (type === 'change') {
-          setInternal(checked);
-        }
+      value = typeof value === 'undefined' ? input.state : value;
 
-        if (eventHandler instanceof Function) {
-          eventHandler(
-            {
-              type,
-              checked,
-              name,
-              target: buttonRef.current,
-              form,
-              focus,
-              blur,
-              clear,
-              isFocused,
-              nativeEvent,
-            },
-            checked,
-          );
-        }
-      },
-      [buttonRef, name, form, focus, blur, clear, isFocused, resolveValue, setInternal],
-    );
+      const form = input.form;
+      const target = buttonRef.current;
+      const nativeEvent = event?.nativeEvent ?? event ?? null;
 
-    useEffect(() => {
-      // TODO (?)
-      // dispatchEvent('change', value, null, onChange);
+      return handler?.({ type, value, name, form, focus, blur, clear, reset, isFocused, target, nativeEvent }, value);
+    }
 
-      if (typeof checked !== 'boolean') return;
-      _setInternal(checked);
-    }, [checked]);
+    function handleFocus(event) {
+      dispatchEvent('focus', event, onFocus);
+    }
 
-    useEffect(() => {
-      if (!name || !form) return;
+    function handleBlur(event) {
+      dispatchEvent('blur', event, onBlur);
+    }
 
-      if (!unique || internal) {
-        form.setField({
-          name,
-          get: () => (internal ? value ?? internal : unique ? null : false),
-          set: (checked) => dispatchEvent('change', checked, null, onChange),
-          onFormChange,
-        });
-      }
-
-      return () => {
-        form.unsetField(name as string);
-      };
-    }, [name, form, value, internal, dispatchEvent, onChange, onFormChange, unique]);
-
-    const handleChange = (event) => {
+    function handleChange(event) {
       if (disabled || readOnly) return;
-
-      const checked = !internal;
-      dispatchEvent('change', checked, event, onChange);
-    };
-
-    const handleFocus = (event) => {
-      dispatchEvent('focus', internal, event, onFocus);
-    };
-
-    const handleBlur = (event) => {
-      dispatchEvent('blur', internal, event, onBlur);
-    };
+      input.setState(!input.state, event);
+    }
 
     // @ts-expect-error
     style = [style, extract(spacings, rest)];
@@ -176,70 +120,66 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     buttonStyle = [{ marginLeft: -theme.rem(0.5, fontSize) }, buttonStyle];
 
     return (
-      <BoxFactory data-rbk-input={name} style={style} stylist={[variants.root, stylist]}>
-        <ButtonFactory
-          ref={buttonRef}
-          style={buttonStyle}
-          stylist={[variants.button]}
-          color={color}
-          size={size}
-          {...rest}
-          id={id}
-          variant="text"
-          circular
-          disabled={disabled}
-          onPress={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          accessibility={{
-            label,
-            role: unique ? 'radio' : 'checkbox',
-            state: { checked: internal },
-          }}
-        >
-          <BoxFactory
-            center
-            h={fontSize}
-            w={fontSize}
-            border={`2px solid ${color}`}
-            borderRadius={unique ? halfSize : theme.shape.borderRadius}
-            bg={internal && !unique ? color : undefined}
+      <BoxFactory data-rbk-input={name}>
+        <BoxFactory style={style} stylist={[variants.root, stylist]}>
+          <ButtonFactory
+            ref={reference(ref, buttonRef)}
+            {...rest}
+            circular
+            id={id}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onPress={handleChange}
+            color={color}
+            disabled={disabled}
+            size={size}
+            variant="text"
+            style={buttonStyle}
+            stylist={[variants.button]}
+            accessibility={{
+              label,
+              role: unique ? 'radio' : 'checkbox',
+              state: { checked: input.state },
+            }}
           >
-            {Boolean(internal) && (
-              <>
-                {unique ? (
-                  <svg.Svg viewBox="0 0 256 256" height="100%" width="100%">
-                    <svg.Circle cx="128" cy="128" r="80" fill={color} />
-                  </svg.Svg>
-                ) : (
-                  <Check svg={svg} size={fontSize} color={theme.contrast(color)} />
-                )}
-              </>
-            )}
-          </BoxFactory>
-        </ButtonFactory>
+            <BoxFactory
+              center
+              h={fontSize}
+              w={fontSize}
+              border={`2px solid ${color}`}
+              borderRadius={unique ? halfSize : theme.shape.borderRadius}
+              bg={input.state && !unique ? color : undefined}
+            >
+              {Boolean(input.state) && (
+                <>
+                  {unique ? (
+                    <svg.Svg viewBox="0 0 256 256" height="100%" width="100%">
+                      <svg.Circle cx="128" cy="128" r="80" fill={color} />
+                    </svg.Svg>
+                  ) : (
+                    <Check svg={svg} size={fontSize} color={theme.contrast(color)} />
+                  )}
+                </>
+              )}
+            </BoxFactory>
+          </ButtonFactory>
 
-        {Boolean(label) && (
-          <LabelFactory
-            for={id}
-            forRef={buttonRef}
-            style={[{ ml: 1 }, labelStyle]}
-            onPress={native ? handleChange : undefined}
-          >
-            {label}
-          </LabelFactory>
-        )}
+          {Boolean(label) && (
+            <LabelFactory
+              for={id}
+              forRef={buttonRef}
+              style={[{ ml: 1 }, labelStyle]}
+              onPress={native ? handleChange : undefined}
+            >
+              {label}
+            </LabelFactory>
+          )}
+        </BoxFactory>
 
-        {web && (
-          <Input //
-            hidden
-            type="checkbox"
-            name={name}
-            readOnly={readOnly}
-            value={`${value ?? 1}`}
-            checked={internal}
-            onChange={handleChange}
-          />
+        {Boolean(input.error) && typeof input.error === 'string' && (
+          <TextFactory variant="caption" style={errorStyle} stylist={[variants.error]}>
+            {input.error}
+          </TextFactory>
         )}
       </BoxFactory>
     );

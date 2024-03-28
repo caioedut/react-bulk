@@ -556,6 +556,11 @@ const base: ThemeProps = {
             minHeight: 0,
             minWidth: 0,
           },
+          error: {
+            color: 'error',
+            mx: 1,
+            mt: 1,
+          },
         },
       },
       Collapse: {
@@ -718,7 +723,9 @@ const base: ThemeProps = {
           type: 'text',
         },
         defaultStyles: {
-          root: {},
+          root: {
+            position: 'relative',
+          },
           content: {
             position: 'relative',
             borderWidth: 1,
