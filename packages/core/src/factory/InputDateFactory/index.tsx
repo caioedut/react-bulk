@@ -1,12 +1,14 @@
-import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useRef, useState } from 'react';
 
+import reference from '../../element/reference';
+import useInput from '../../hooks/useInput';
 import useTheme from '../../hooks/useTheme';
 import Calendar from '../../icons/Calendar';
 import factory2 from '../../props/factory2';
-import { InputDateProps, InputProps, RequiredSome } from '../../types';
+import getSize from '../../props/getSize';
+import { InputDateProps, RequiredSome } from '../../types';
 import { dateify } from '../../utils/date';
 import global from '../../utils/global';
-import pick from '../../utils/pick';
 import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
@@ -16,7 +18,7 @@ import CollapseFactory from '../CollapseFactory';
 import DividerFactory from '../DividerFactory';
 import DropdownFactory from '../DropdownFactory';
 import GridFactory from '../GridFactory';
-import InputFactory from '../InputFactory';
+import InputBaseFactory from '../InputBaseFactory';
 
 const InputDateFactory = React.memo<InputDateProps>(
   forwardRef(({ stylist, ...props }, ref) => {
@@ -26,10 +28,10 @@ const InputDateFactory = React.memo<InputDateProps>(
 
     // Extends from default props
     let {
+      color,
       defaultValue,
       disabled,
-      color,
-      error: errorProp,
+      error,
       format,
       locale: localeProp,
       max,
@@ -49,7 +51,17 @@ const InputDateFactory = React.memo<InputDateProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<RequiredSome<InputDateProps, 'size'>>(props, options);
+    } = factory2<RequiredSome<InputDateProps, 'color'>>(props, options);
+
+    size = getSize(size);
+    color = theme.color(error ? 'error' : color);
+
+    const inputRef = useRef<any>();
+    const triggerRef = useRef();
+    const Component =
+      variant === 'dropdown' ? DropdownFactory : variant === 'inline' ? CollapseFactory : BackdropFactory;
+
+    const [calendarVisible, setCalendarVisible] = useState(false);
 
     const resolveAsDate = useCallback(
       (value) => {
@@ -86,7 +98,7 @@ const InputDateFactory = React.memo<InputDateProps>(
         const dateValue = resolveAsDate(value);
 
         if (!dateValue) {
-          return null;
+          return '';
         }
 
         if (format || localeProp || locale) {
@@ -103,80 +115,74 @@ const InputDateFactory = React.memo<InputDateProps>(
       [format, locale, localeProp, resolveAsDate],
     );
 
-    const triggerRef = useRef();
+    const input = useInput({
+      name,
+      value,
+      defaultValue,
+      error,
+      editable: !disabled && !readOnly,
+      mask: (value) => resolveToFormat(value),
+      unmask: (value) => resolveAsISO(value),
+      onChange: (event, value) => dispatchEvent('change', event, onChange, value),
+      onFormChange,
+    });
 
-    const [calendarVisible, setCalendarVisible] = useState(false);
-    const [error, setError] = useState<InputProps['error']>();
-    const [_internal, _setInternal] = useState<Date | null>(resolveAsDate(value ?? defaultValue));
-
-    const internal = useMemo(() => {
-      return resolveAsDate(_internal);
-    }, [_internal, resolveAsDate]);
-
-    const setInternal = useCallback(
-      (value) => {
-        _setInternal(resolveAsDate(value));
-      },
-      [_setInternal, resolveAsDate],
+    const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
+    const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
+    const clear = useCallback(() => input.clear(), [input]);
+    const reset = useCallback(() => input.reset(), [input]);
+    const isFocused = useCallback(
+      () => Boolean(inputRef?.current?.isFocused?.()) || inputRef?.current === document?.activeElement,
+      [inputRef],
     );
 
-    color = theme.color(error ? 'error' : color || 'primary');
+    function dispatchEvent(type, event, handler?, value?) {
+      if (typeof handler !== 'function') return;
 
-    const Component =
-      variant === 'dropdown' ? DropdownFactory : variant === 'inline' ? CollapseFactory : BackdropFactory;
+      value = typeof value === 'undefined' ? input.state : value;
 
-    if (typeof size === 'string') {
-      size = pick(size, 'medium', {
-        xsmall: 1.25,
-        small: 1.75,
-        medium: 2.25,
-        large: 2.75,
-        xlarge: 3.25,
-      });
+      const form = input.form;
+      const target = inputRef.current;
+      const nativeEvent = event?.nativeEvent ?? event ?? null;
+
+      return handler?.({ type, value, name, form, focus, blur, clear, reset, isFocused, target, nativeEvent }, value);
     }
 
-    useEffect(() => {
-      if (typeof value === 'undefined') return;
-      _setInternal(resolveAsDate(value));
-    }, [value]);
+    function handleFocus(event) {
+      dispatchEvent('focus', event, onFocus);
+    }
 
-    useEffect(() => {
-      setError(errorProp);
-    }, [errorProp]);
+    function handleBlur(event) {
+      dispatchEvent('blur', event, onBlur);
+    }
 
-    const handleChangeInternal = useCallback(
+    function handleSubmit(event) {
+      dispatchEvent('submit', event, onSubmit);
+    }
+
+    const handleChangeDate = useCallback(
       (e, date) => {
         const newDate = resolveAsDate(date);
-        setInternal(newDate);
+        input.setState(newDate);
         setCalendarVisible(false);
-        onChange?.(e, newDate);
       },
-      [resolveAsDate, setInternal, onChange],
+      [input, resolveAsDate],
     );
 
     return (
       <BoxFactory data-rbk-input={name} position="relative">
-        <InputFactory
-          ref={ref}
-          readOnly
-          name={name}
-          type="hidden"
-          disabled={disabled}
-          value={resolveAsISO(internal)}
-          onChange={handleChangeInternal}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onSubmit={onSubmit}
-          onFormChange={onFormChange}
-          onErrorChange={(error) => setError(errorProp ?? error)}
-        />
-        <InputFactory
+        <InputBaseFactory
+          ref={reference(ref, inputRef)}
           {...rest}
           readOnly
-          disabled={disabled}
-          error={error}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onSubmit={handleSubmit}
           color={color}
-          value={resolveToFormat(internal)}
+          disabled={disabled}
+          size={size}
+          error={input.error}
+          {...input.props}
           endAddon={
             <ButtonFactory
               ref={triggerRef}
@@ -189,7 +195,7 @@ const InputDateFactory = React.memo<InputDateProps>(
               accessibility={{ label: 'calendar' }}
               onPress={() => setCalendarVisible((current) => !current)}
             >
-              <Calendar svg={svg} size={Math.round(theme.rem((size as number) / 2))} color={color} />
+              <Calendar svg={svg} size={Math.round(theme.rem(size / 2))} color={color} />
             </ButtonFactory>
           }
         />
@@ -218,9 +224,9 @@ const InputDateFactory = React.memo<InputDateProps>(
               <CalendarFactory
                 shadow={0}
                 color={color}
-                date={internal}
-                events={internal ? [internal] : []}
-                onPressDate={handleChangeInternal}
+                date={input.state}
+                events={input.state ? [input.state] : []}
+                onPressDate={handleChangeDate}
                 disableds={(date) => {
                   const currentDate = dateify(date);
                   const minDate = min ? dateify(min) : null;
@@ -248,7 +254,7 @@ const InputDateFactory = React.memo<InputDateProps>(
                   color={color}
                   size={size}
                   accessibility={{ label: translate?.clear }}
-                  onPress={(e) => handleChangeInternal(e, null)}
+                  onPress={(e) => handleChangeDate(e, null)}
                 >
                   {translate?.clear}
                 </ButtonFactory>
@@ -271,7 +277,7 @@ const InputDateFactory = React.memo<InputDateProps>(
                   color={color}
                   size={size}
                   accessibility={{ label: translate?.today }}
-                  onPress={(e) => handleChangeInternal(e, dateify())}
+                  onPress={(e) => handleChangeDate(e, dateify())}
                 >
                   {translate?.today}
                 </ButtonFactory>
