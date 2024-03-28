@@ -51,7 +51,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       ...rest
     } = factory2<RequiredSome<CheckboxProps, 'color' | 'size'>>(props, options);
 
-    const buttonRef = useRef<any>(null);
+    const buttonRef = useRef<any>();
 
     // const setInternal = useCallback(
     //   (value) => {
