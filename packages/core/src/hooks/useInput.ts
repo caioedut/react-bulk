@@ -9,7 +9,7 @@ export type UseInputProps<T> = {
   value?: T;
   defaultValue?: T;
   editable?: boolean;
-  error?: string | boolean | null;
+  error?: string | boolean | null | undefined;
   mask?: (value: T) => string;
   unmask?: (value: string) => T;
   onChange?: (event: any, value: T, ...rest: any[]) => void;
@@ -31,10 +31,6 @@ export default function useInput<T>({
 }: UseInputProps<T>) {
   const resolveValue = useCallback(
     (value) => {
-      if (mask) {
-        value = mask(value);
-      }
-
       if (unmask) {
         value = unmask(value);
       }
@@ -45,7 +41,7 @@ export default function useInput<T>({
 
       return value ?? null;
     },
-    [mask, unmask],
+    [unmask],
   );
 
   const form = useForm();

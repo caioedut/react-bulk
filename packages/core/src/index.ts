@@ -21,6 +21,8 @@ export { default as extract } from './props/extract';
 /** @internal */
 export { default as get } from './props/get';
 /** @internal */
+export { default as getSize } from './props/getSize';
+/** @internal */
 export { default as merge } from './props/merge';
 /** @internal */
 export { default as only } from './props/only';
@@ -124,6 +126,8 @@ export { default as GridFactory } from './factory/GridFactory';
 export { default as GrowBoxFactory } from './factory/GrowBoxFactory';
 /** @internal */
 export { default as ImageFactory } from './factory/ImageFactory';
+/** @internal */
+export { default as InputBaseFactory } from './factory/InputBaseFactory';
 /** @internal */
 export { default as InputFactory } from './factory/InputFactory';
 /** @internal */

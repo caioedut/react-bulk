@@ -354,8 +354,8 @@ export type FormField = {
   name: string;
   get: () => InputValue | null | undefined;
   set: (value: InputValue) => any;
-  getError?: () => string | boolean | null;
-  setError?: (error: boolean | string | null) => any;
+  getError?: () => string | boolean | null | undefined;
+  setError?: (error: string | boolean | null | undefined) => any;
   onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
 };
 
@@ -709,7 +709,7 @@ export type InputProps<ALLOW_ANY = true> = PropsWithStyles<
     defaultValue?: InputValue;
     disabled?: boolean;
     endAddon?: ReactElement;
-    error?: string | boolean;
+    error?: string | boolean | null | undefined;
     hint?: string;
     inputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url' | (string & {});
     label?: string;
@@ -740,7 +740,6 @@ export type InputProps<ALLOW_ANY = true> = PropsWithStyles<
     onSubmit?: (event: RbkInputEvent, value: InputValue) => any;
     onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue) => any;
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
-    onErrorChange?: (error: string | boolean | undefined) => any;
     // Styles
     contentStyle?: RbkStyle;
     hintStyle?: RbkStyle;
@@ -769,7 +768,7 @@ export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
     defaultValue?: InputValue;
     disabled?: boolean;
     endAddon?: ReactElement;
-    error?: string | boolean;
+    error?: string | boolean | null | undefined;
     label?: string;
     loading?: boolean;
     name?: string;
