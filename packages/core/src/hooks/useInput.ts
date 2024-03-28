@@ -11,7 +11,7 @@ export type UseInputProps<T> = {
   editable?: boolean;
   error?: string | boolean | null | undefined;
   mask?: (value: T) => string;
-  unmask?: (value: string) => T;
+  unmask?: (value: T) => T;
   onChange?: (event: any, value: T, ...rest: any[]) => void;
   onFormChange?: (event: RbkFormEvent, data: AnyObject) => void;
   // getError?: (value: T) => string | false | null | undefined | void;

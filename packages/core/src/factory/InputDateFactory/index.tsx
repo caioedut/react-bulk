@@ -53,9 +53,6 @@ const InputDateFactory = React.memo<InputDateProps>(
       ...rest
     } = factory2<RequiredSome<InputDateProps, 'color'>>(props, options);
 
-    size = getSize(size);
-    color = theme.color(error ? 'error' : color);
-
     const inputRef = useRef<any>();
     const triggerRef = useRef();
     const Component =
@@ -127,6 +124,9 @@ const InputDateFactory = React.memo<InputDateProps>(
       onFormChange,
     });
 
+    size = getSize(size);
+    color = theme.color(input.error ? 'error' : color);
+
     const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
     const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
     const clear = useCallback(() => input.clear(), [input]);
@@ -160,17 +160,14 @@ const InputDateFactory = React.memo<InputDateProps>(
       dispatchEvent('submit', event, onSubmit);
     }
 
-    const handleChangeDate = useCallback(
-      (e, date) => {
-        const newDate = resolveAsDate(date);
-        input.setState(newDate);
-        setCalendarVisible(false);
-      },
-      [input, resolveAsDate],
-    );
+    function handleChange(event, date) {
+      if (disabled || readOnly) return;
+      input.setState(resolveAsDate(date), event);
+      setCalendarVisible(false);
+    }
 
     return (
-      <BoxFactory data-rbk-input={name} position="relative">
+      <>
         <InputBaseFactory
           ref={reference(ref, inputRef)}
           {...rest}
@@ -226,7 +223,7 @@ const InputDateFactory = React.memo<InputDateProps>(
                 color={color}
                 date={input.state}
                 events={input.state ? [input.state] : []}
-                onPressDate={handleChangeDate}
+                onPressDate={handleChange}
                 disableds={(date) => {
                   const currentDate = dateify(date);
                   const minDate = min ? dateify(min) : null;
@@ -254,7 +251,7 @@ const InputDateFactory = React.memo<InputDateProps>(
                   color={color}
                   size={size}
                   accessibility={{ label: translate?.clear }}
-                  onPress={(e) => handleChangeDate(e, null)}
+                  onPress={(e) => handleChange(e, null)}
                 >
                   {translate?.clear}
                 </ButtonFactory>
@@ -277,7 +274,7 @@ const InputDateFactory = React.memo<InputDateProps>(
                   color={color}
                   size={size}
                   accessibility={{ label: translate?.today }}
-                  onPress={(e) => handleChangeDate(e, dateify())}
+                  onPress={(e) => handleChange(e, dateify())}
                 >
                   {translate?.today}
                 </ButtonFactory>
@@ -285,7 +282,7 @@ const InputDateFactory = React.memo<InputDateProps>(
             </GridFactory>
           </CardFactory>
         </Component>
-      </BoxFactory>
+      </>
     );
   }),
 );

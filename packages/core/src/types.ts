@@ -507,7 +507,7 @@ export type ThemeProps = {
     Calendar: ThemeComponentProps<CalendarProps, 'root'>;
     Card: ThemeComponentProps<CardProps, 'root'>;
     Carousel: ThemeComponentProps<CarouselProps, 'root' | 'content' | 'chevron'>;
-    Checkbox: ThemeComponentProps<CheckboxProps, 'root' | 'button'>;
+    Checkbox: ThemeComponentProps<CheckboxProps, 'root' | 'button' | 'error'>;
     Collapse: ThemeComponentProps<CollapseProps, 'root'>;
     InputDate: ThemeComponentProps<InputDateProps, 'root'>;
     Divider: ThemeComponentProps<DividerProps, 'root'>;
@@ -808,6 +808,8 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
     controlled?: boolean;
     defaultChecked?: boolean;
     disabled?: boolean;
+    error?: string | boolean | null | undefined;
+
     label?: string;
     name?: string;
     readOnly?: boolean;
@@ -821,6 +823,7 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
     // Styles
     buttonStyle?: RbkStyle;
+    errorStyle?: RbkStyle;
     labelStyle?: RbkStyle;
   }
 >;
