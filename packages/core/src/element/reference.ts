@@ -1,11 +1,15 @@
 export default function reference(ref, mirrorRef?) {
-  let newRef = ref;
+  let newRef = ref ?? mirrorRef;
 
-  if (mirrorRef && typeof ref === 'function') {
-    newRef = ($scope) => {
-      ref($scope);
-      mirrorRef.current = $scope;
-    };
+  if (ref && mirrorRef) {
+    if (typeof ref === 'function') {
+      newRef = ($scope) => {
+        ref($scope);
+        mirrorRef.current = $scope;
+      };
+    } else {
+      mirrorRef.current = ref.current;
+    }
   }
 
   return newRef;

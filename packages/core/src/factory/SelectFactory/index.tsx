@@ -1,8 +1,10 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import rect from '../../element/rect';
+import reference from '../../element/reference';
 import scrollIntoView from '../../element/scrollIntoView';
 import useHtmlId from '../../hooks/useHtmlId';
+import useInput from '../../hooks/useInput';
 import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
 import ChevronDown from '../../icons/ChevronDown';
@@ -10,17 +12,16 @@ import ChevronUp from '../../icons/ChevronUp';
 import MagnifyingGlass from '../../icons/MagnifyingGlass';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
+import getSize from '../../props/getSize';
 import { spacings } from '../../styles/constants';
-import { AnyObject, InputValue, RbkInputEvent, RequiredSome, SelectOption, SelectProps } from '../../types';
+import { AnyObject, RequiredSome, SelectProps } from '../../types';
 import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';
-import pick from '../../utils/pick';
 import string from '../../utils/string';
 import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
 import CardFactory from '../CardFactory';
-import { useForm } from '../FormFactory';
 import InputFactory from '../InputFactory';
 import LabelFactory from '../LabelFactory';
 import ListFactory from '../ListFactory';
@@ -31,7 +32,7 @@ const SelectFactory = React.memo<SelectProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Select;
-    const { web, native, svg, useDimensions, Input } = global.mapping;
+    const { native, svg, useDimensions } = global.mapping;
 
     const dimensions = useDimensions();
 
@@ -44,7 +45,7 @@ const SelectFactory = React.memo<SelectProps>(
       color,
       colorful,
       controlled,
-      error: errorProp,
+      error,
       label,
       loading,
       name,
@@ -68,38 +69,36 @@ const SelectFactory = React.memo<SelectProps>(
       ...rest
     } = factory2<RequiredSome<SelectProps, 'color' | 'size' | 'searchCount'>>(props, options);
 
-    id = useHtmlId(id);
+    const buttonRef = useRef<any>();
+    const scrollRef = useRef<any>();
+    const selectedRef = useRef<any>();
+    const optionsRef = useRef<any>([]);
 
-    const form = useForm();
-    const defaultRef: any = useRef(null);
-    const buttonRef = ref || defaultRef;
-    const scrollRef: any = useRef(null);
-    const selectedRef: any = useRef(null);
-    const optionsRef: any = useRef([]);
+    const input = useInput({
+      name,
+      value,
+      defaultValue,
+      error,
+      editable: !disabled && !readOnly,
+      onChange: (event, value) => dispatchEvent('change', event, onChange, value),
+      onFormChange,
+    });
 
-    const [initialValue] = useState(defaultValue);
     const [focused, setFocused] = useState(false);
-    const [error, setError] = useState<SelectProps['error']>();
     const [metrics, setMetrics] = useState<AnyObject>({});
     const [visible, _setVisible] = useState(false);
-    const [activeIndex, setActiveIndex] = useState(arrOptions?.findIndex((item) => item.value == initialValue));
+    const [activeIndex, setActiveIndex] = useState(-1);
 
     const [search, setSearch] = useState('');
     const hasSearch = Number(arrOptions?.length ?? 0) >= searchCount;
 
-    const [_internal, _setInternal] = useState(value ?? initialValue);
-
-    const internal = useMemo(() => {
-      return _internal;
-    }, [_internal]);
-
-    const setInternal = useCallback(
-      (value) => {
-        if (controlled) return;
-        _setInternal(value);
-      },
-      [controlled],
-    );
+    // const setInternal = useCallback(
+    //   (value) => {
+    //     if (controlled) return;
+    //     _setInternal(value);
+    //   },
+    //   [controlled],
+    // );
 
     const setVisible = useCallback((value) => {
       _setVisible(value);
@@ -110,21 +109,12 @@ const SelectFactory = React.memo<SelectProps>(
       }
     }, []);
 
-    const selected = useMemo(() => arrOptions?.find((item) => item.value == internal), [arrOptions, internal]);
+    const selected = useMemo(() => arrOptions?.find((item) => item.value == input.state), [arrOptions, input.state]);
 
-    color = theme.color(error ? 'error' : color || 'primary');
-
+    id = useHtmlId(id);
+    size = getSize(size);
+    color = theme.color(input.error ? 'error' : color);
     accessibility = deepmerge({ label: label ?? placeholder }, accessibility, { state: { expanded: visible } });
-
-    if (typeof size === 'string') {
-      size = pick(size, 'medium', {
-        xsmall: 1.25,
-        small: 1.75,
-        medium: 2.25,
-        large: 2.75,
-        xlarge: 3.25,
-      });
-    }
 
     const baseSize = theme.rem(size as number);
     const fontSize = baseSize / 2;
@@ -132,11 +122,29 @@ const SelectFactory = React.memo<SelectProps>(
 
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
-    const clear = useCallback(() => setInternal(initialValue), [initialValue, setInternal]);
+    const clear = useCallback(() => input.clear(), [input]);
+    const reset = useCallback(() => input.reset(), [input]);
     const isFocused = useCallback(
       () => Boolean(buttonRef?.current?.isFocused?.()) || buttonRef?.current === document?.activeElement,
       [buttonRef],
     );
+
+    function dispatchEvent(type, event, handler?, value?) {
+      if (typeof handler !== 'function') return;
+
+      value = typeof value === 'undefined' ? input.state : value;
+
+      const form = input.form;
+      const target = buttonRef.current;
+      const nativeEvent = event?.nativeEvent ?? event ?? null;
+      const option = arrOptions?.find((item) => item.value == value) ?? null;
+
+      return handler?.(
+        { type, value, name, form, focus, blur, clear, reset, isFocused, target, nativeEvent },
+        value,
+        option,
+      );
+    }
 
     const filteredOptions = (arrOptions || []).filter((option) => {
       if (!hasSearch) {
@@ -153,71 +161,6 @@ const SelectFactory = React.memo<SelectProps>(
         .toLowerCase()
         .includes(searchValue.toLowerCase());
     });
-
-    const dispatchEvent = useCallback(
-      (
-        type: string,
-        newValue: InputValue,
-        event: AnyObject | null,
-        eventHandler?: (event: RbkInputEvent, value: InputValue, option: SelectOption | null) => void,
-      ) => {
-        const nativeEvent = event?.nativeEvent ?? event ?? null;
-        const value = newValue ?? null;
-        const option = arrOptions?.find((item) => item.value == value) ?? null;
-
-        if (type === 'change') {
-          setInternal(value);
-        }
-
-        if (eventHandler instanceof Function) {
-          eventHandler(
-            {
-              type,
-              value,
-              name,
-              target: buttonRef.current,
-              form,
-              focus,
-              blur,
-              clear,
-              isFocused,
-              nativeEvent,
-            },
-            value,
-            option,
-          );
-        }
-      },
-      [buttonRef, name, form, focus, blur, clear, isFocused, setInternal, arrOptions],
-    );
-
-    useEffect(() => {
-      // TODO (?)
-      // dispatchEvent('change', value, null, onChange);
-
-      if (typeof value === 'undefined') return;
-      _setInternal(value);
-    }, [value]);
-
-    useEffect(() => {
-      setError(errorProp);
-    }, [errorProp]);
-
-    useEffect(() => {
-      if (!name || !form) return;
-
-      form.setField({
-        name,
-        get: () => internal ?? null,
-        set: (value) => dispatchEvent('change', value, null, onChange),
-        setError,
-        onFormChange,
-      });
-
-      return () => {
-        form.unsetField(name as string);
-      };
-    }, [name, form, internal, dispatchEvent, onChange, onFormChange]);
 
     useEffect(() => {
       if (!visible || !selectedRef.current) return;
@@ -236,10 +179,10 @@ const SelectFactory = React.memo<SelectProps>(
       setActiveIndex(index);
     }
 
-    const handleOpen = async () => {
+    async function handleOpen() {
       if (!buttonRef.current) return;
 
-      optionFocus(arrOptions?.findIndex((item) => item.value == internal));
+      optionFocus(arrOptions?.findIndex((item) => item.value == input.state));
 
       const { pageOffsetX, pageOffsetY, width, height } = await rect(buttonRef.current);
 
@@ -258,38 +201,33 @@ const SelectFactory = React.memo<SelectProps>(
 
       setMetrics(newMetrics);
       setVisible((current: boolean) => (readOnly ? false : !current));
-    };
+    }
 
-    const handleChange = (event, value: InputValue) => {
-      if (readOnly || disabled) return;
+    function handleFocus(event) {
+      setFocused(true);
+      dispatchEvent('focus', event, onFocus);
+    }
 
-      dispatchEvent('change', value, event, onChange);
-    };
+    function handleBlur(event) {
+      setFocused(visible || false);
+      dispatchEvent('blur', event, onBlur);
+    }
 
-    const handleSelect = (event, option: SelectOption) => {
-      handleChange(event, option.value);
+    function handleSelect(event, value) {
+      if (disabled || readOnly) return;
+      input.setState(value, event);
       setVisible(false);
       focus();
-    };
+    }
 
-    const handleFocus = (event) => {
-      setFocused(true);
-      dispatchEvent('focus', internal, event, onFocus);
-    };
-
-    const handleBlur = (event) => {
-      setFocused(visible || false);
-      dispatchEvent('blur', internal, event, onBlur);
-    };
-
-    const handleSearch = (_, value: string) => {
+    function handleSearch(event, value: string) {
       optionsRef.current = [];
       setSearch(value);
       setActiveIndex(0);
-    };
+    }
 
-    const handleKeyDown = (e) => {
-      const { key } = e;
+    function handleKeyDown(event) {
+      const { key } = event;
 
       const hasHandler = ['Escape', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(key);
 
@@ -332,15 +270,15 @@ const SelectFactory = React.memo<SelectProps>(
       }
 
       if (hasHandler) {
-        e?.preventDefault?.();
+        event?.preventDefault?.();
         optionFocus(newIndex);
       }
-    };
+    }
 
     // @ts-expect-error
     style = [extract(spacings, rest), style];
 
-    labelStyle = [error && { color: 'error' }, labelStyle];
+    labelStyle = [input.error && { color: 'error' }, labelStyle];
 
     return (
       <BoxFactory
@@ -363,8 +301,8 @@ const SelectFactory = React.memo<SelectProps>(
         )}
 
         <ButtonFactory
-          ref={buttonRef}
-          color={!error && !focused && !colorful ? 'gray.light' : color}
+          ref={reference(ref, buttonRef)}
+          color={!input.error && !focused && !colorful ? 'gray.light' : color}
           endAddon={
             loading ? (
               <LoadingFactory size={fontSize / theme.rem()} color={color} />
@@ -391,21 +329,10 @@ const SelectFactory = React.memo<SelectProps>(
           </TextFactory>
         </ButtonFactory>
 
-        {Boolean(error) && typeof error === 'string' && (
+        {Boolean(input.error) && typeof input.error === 'string' && (
           <TextFactory variant="caption" style={errorStyle} stylist={[variants.error]}>
-            {error}
+            {input.error}
           </TextFactory>
-        )}
-
-        {web && (
-          <Input //
-            hidden
-            type="text"
-            name={name}
-            readOnly={readOnly}
-            value={`${selected?.value ?? ''}`}
-            onChange={(e) => handleChange(e, e.target.value)}
-          />
         )}
 
         <BackdropFactory visible={visible} style={{ bg: 'rgba(0, 0, 0, 0.2)' }} onPress={() => setVisible(false)}>
@@ -444,7 +371,7 @@ const SelectFactory = React.memo<SelectProps>(
                       bg={isSelected ? theme.color(color, 0.1) : undefined}
                       style={{ paddingHorizontal: spacing }}
                       contentStyle={{ flex: 1, maxWidth: '100%' }}
-                      onPress={(e) => handleSelect(e, option)}
+                      onPress={(e) => handleSelect(e, option.value)}
                       endAddon={
                         <BoxFactory w={fontSize} pl={1}>
                           {isSelected && <Check svg={svg} size={fontSize} color={color} />}
