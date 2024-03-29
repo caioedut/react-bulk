@@ -20,7 +20,7 @@ const DividerFactory = React.memo<DividerProps>(
       variants,
       style,
       ...rest
-    } = factory2<DividerProps>(props, options);
+    } = factory2<DividerProps, typeof options>(props, options);
 
     style = [
       {

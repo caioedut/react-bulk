@@ -39,7 +39,7 @@ const FormFactory = React.memo<FormProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<FormProps>(props, options);
+    } = factory2<FormProps, typeof options>(props, options);
 
     const defaultRef = useRef(null);
     const formRef = useRef<ReactNode>(null);

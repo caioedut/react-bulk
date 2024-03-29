@@ -34,7 +34,7 @@ const TerminalFactory = React.memo<TerminalProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<TerminalProps>(props, options);
+    } = factory2<TerminalProps, typeof options>(props, options);
 
     const defaultRef = useRef();
     const scrollRef = (ref ?? defaultRef) as React.MutableRefObject<any>;

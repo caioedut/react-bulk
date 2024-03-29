@@ -31,7 +31,7 @@ const CalendarFactory = React.memo<CalendarProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<CalendarProps>(props, options);
+    } = factory2<CalendarProps, typeof options>(props, options);
 
     const today = dateify();
     color = theme.color(color || 'primary');

@@ -8,7 +8,7 @@ import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import getSize from '../../props/getSize';
 import { customStyleProps } from '../../styles/constants';
-import { InputProps, RequiredSome } from '../../types';
+import { InputBaseProps, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
 import string from '../../utils/string';
@@ -16,10 +16,10 @@ import BoxFactory from '../BoxFactory';
 import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
-const InputBaseFactory = React.memo<InputProps>(
+const InputBaseFactory = React.memo<InputBaseProps>(
   forwardRef(({ stylist, ...props }, ref) => {
     const theme = useTheme();
-    const options = theme.components.Input;
+    const options = theme.components.InputBase;
     const { web, native, Input, TextArea } = global.mapping;
 
     // Extends from default props
@@ -56,6 +56,7 @@ const InputBaseFactory = React.memo<InputProps>(
       onKeyDown,
       // Styles
       variants,
+      styleMap,
       contentStyle,
       errorStyle,
       hintStyle,
@@ -63,10 +64,10 @@ const InputBaseFactory = React.memo<InputProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<InputProps, 'autoCapitalize' | 'color' | 'returnKeyType' | 'size' | 'type'>>(
-      props,
-      options,
-    );
+    } = factory2<
+      RequiredSome<InputBaseProps, 'autoCapitalize' | 'color' | 'returnKeyType' | 'size' | 'type'>,
+      typeof options
+    >(props, options);
 
     id = useHtmlId(id);
 
@@ -191,7 +192,6 @@ const InputBaseFactory = React.memo<InputProps>(
           }
         }
 
-        // @ts-expect-error
         onFocus?.(event);
       },
       [onFocus, selectTextOnFocus, rest.value, web],
@@ -200,7 +200,6 @@ const InputBaseFactory = React.memo<InputProps>(
     const handleBlur = useCallback(
       (event) => {
         setFocused(false);
-        // @ts-expect-error
         onBlur?.(event);
       },
       [onBlur],
@@ -209,7 +208,6 @@ const InputBaseFactory = React.memo<InputProps>(
     const handleSubmit = useCallback(
       (event) => {
         event?.preventDefault();
-        // @ts-expect-error
         onSubmit?.(event);
       },
       [onSubmit],
@@ -234,7 +232,8 @@ const InputBaseFactory = React.memo<InputProps>(
         data-rbk-input={name}
         hidden={hidden || type === 'hidden'}
         style={style}
-        stylist={[variants.root, stylist]}
+        stylist={stylist}
+        styleMap={{ root: [variants.root, styleMap?.root] }}
       >
         {Boolean(label) && (
           <LabelFactory
@@ -242,14 +241,14 @@ const InputBaseFactory = React.memo<InputProps>(
             for={id}
             forRef={inputRef}
             style={labelStyle}
-            stylist={[variants.label]}
+            styleMap={{ root: [variants.label, styleMap?.label] }}
             onPress={native ? inputRef?.current?.focus?.() : undefined}
           >
             {label}
           </LabelFactory>
         )}
 
-        <BoxFactory style={contentStyle} stylist={[variants.content]}>
+        <BoxFactory style={contentStyle} styleMap={{ root: [variants.content, styleMap?.content] }}>
           {native && focused && (
             <BoxFactory
               position="absolute"
@@ -276,7 +275,7 @@ const InputBaseFactory = React.memo<InputProps>(
               id={id}
               name={name}
               style={inputStyle}
-              stylist={[variants.input]}
+              styleMap={{ root: [variants.input, styleMap?.input] }}
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
@@ -290,13 +289,13 @@ const InputBaseFactory = React.memo<InputProps>(
         </BoxFactory>
 
         {Boolean(hint) && (
-          <TextFactory variant="caption" style={hintStyle} stylist={[variants.hint]}>
+          <TextFactory variant="caption" style={hintStyle} styleMap={{ root: [variants.hint, styleMap?.hint] }}>
             {hint}
           </TextFactory>
         )}
 
         {Boolean(error) && typeof error === 'string' && (
-          <TextFactory variant="caption" style={errorStyle} stylist={[variants.error]}>
+          <TextFactory variant="caption" style={errorStyle} styleMap={{ root: [variants.error, styleMap?.error] }}>
             {error}
           </TextFactory>
         )}

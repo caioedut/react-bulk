@@ -23,7 +23,7 @@ const ButtonGroupFactory = React.memo<ButtonGroupProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<ButtonGroupProps>(props, options);
+    } = factory2<ButtonGroupProps, typeof options>(props, options);
 
     const childrenArray = childrenize(children);
 

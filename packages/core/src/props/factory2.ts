@@ -1,4 +1,4 @@
-import { RbkStyle, ThemeComponentProps } from '../types';
+import { AnyObject, RbkStyle, ThemeComponentProps } from '../types';
 import deepmerge from '../utils/deepmerge';
 import global from '../utils/global';
 
@@ -6,12 +6,14 @@ type Variants = {
   [key: string]: RbkStyle[];
 };
 
-export default function factory2<ComponentProps>(
+export default function factory2<ComponentProps, Options extends AnyObject = {}>(
   props,
   options: ThemeComponentProps<ComponentProps, any>,
-): ComponentProps & { variants: Variants } {
+): ComponentProps & {
+  styleMap: { [key in keyof Options['defaultStyles']]: any };
+  variants: { [key in keyof Options['defaultStyles']]: RbkStyle };
+} {
   const fallbackProps = {};
-
   const variants: Variants = {};
 
   Object.entries(options?.defaultProps || {}).forEach(([prop, value]) => {

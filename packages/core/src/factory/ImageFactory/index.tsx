@@ -35,7 +35,7 @@ const ImageFactory = React.memo<ImageProps>(
       variants,
       style,
       ...rest
-    } = factory2<RequiredSome<ImageProps, 'mode'>>(props, options);
+    } = factory2<RequiredSome<ImageProps, 'mode'>, typeof options>(props, options);
 
     const defaultRef: any = useRef(null);
     const imageRef = ref || defaultRef;

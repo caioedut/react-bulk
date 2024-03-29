@@ -21,7 +21,7 @@ const GridFactory = React.memo<GridProps>(
       variants,
       style,
       ...rest
-    } = factory2<RequiredSome<GridProps, 'size'>>(props, options);
+    } = factory2<RequiredSome<GridProps, 'size'>, typeof options>(props, options);
 
     gap = gap === true ? theme.shape.gap : gap;
     const spacing = !gap ? 0 : theme.spacing(gap / 2);

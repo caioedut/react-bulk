@@ -24,7 +24,7 @@ const GrowBoxFactory = React.memo<GrowBoxProps>(
       variants,
       style,
       ...rest
-    } = factory2<GrowBoxProps>(props, options);
+    } = factory2<GrowBoxProps, typeof options>(props, options);
 
     const defaultRef = useRef();
     const contentRef: any = ref ?? defaultRef;

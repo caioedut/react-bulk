@@ -41,7 +41,7 @@ const ButtonFactory = React.memo<ButtonProps>(
       contentStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<ButtonProps, 'color' | 'size' | 'transform' | 'variant'>>(props, options);
+    } = factory2<RequiredSome<ButtonProps, 'color' | 'size' | 'transform' | 'variant'>, typeof options>(props, options);
 
     const form = useForm();
     const isBasic = ['outline', 'text'].includes(variant);

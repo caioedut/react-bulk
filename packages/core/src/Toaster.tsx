@@ -36,7 +36,10 @@ function Toaster({ theme }: any, ref) {
     onPress,
     // Styles
     variants,
-  } = factory2<RequiredSome<ToasterProps, 'color' | 'duration' | 'halign' | 'valign' | 'offset'>>(props || {}, options);
+  } = factory2<RequiredSome<ToasterProps, 'color' | 'duration' | 'halign' | 'valign' | 'offset'>, typeof options>(
+    props || {},
+    options,
+  );
 
   const translateY = 120 * (valign === 'top' ? -1 : 1);
   const textColor = theme.contrast(color);
