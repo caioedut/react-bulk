@@ -509,7 +509,6 @@ export type ThemeProps = {
     Carousel: ThemeComponentProps<CarouselProps, 'root' | 'content' | 'chevron'>;
     Checkbox: ThemeComponentProps<CheckboxProps, 'root' | 'button' | 'error'>;
     Collapse: ThemeComponentProps<CollapseProps, 'root'>;
-    InputDate: ThemeComponentProps<InputDateProps, 'root'>;
     Divider: ThemeComponentProps<DividerProps, 'root'>;
     Drawer: ThemeComponentProps<DrawerProps, 'root' | 'backdrop'>;
     Dropdown: ThemeComponentProps<DropdownProps, 'root' | 'backdrop'>;
@@ -517,7 +516,9 @@ export type ThemeProps = {
     Grid: ThemeComponentProps<GridProps, 'root' | 'item'>;
     GrowBox: ThemeComponentProps<GrowBoxProps, 'root'>;
     Image: ThemeComponentProps<ImageProps, 'root'>;
+    InputBase: ThemeComponentProps<InputBaseProps, 'root' | 'content' | 'label' | 'input' | 'hint' | 'error'>;
     Input: ThemeComponentProps<InputProps, 'root' | 'content' | 'label' | 'input' | 'hint' | 'error'>;
+    InputDate: ThemeComponentProps<InputDateProps, 'root'>;
     InputPin: ThemeComponentProps<InputPinProps, 'root'>;
     Label: ThemeComponentProps<LabelProps, 'root'>;
     Link: ThemeComponentProps<LinkProps, 'root'>;
@@ -553,8 +554,11 @@ export type BaseProps = Overwrite<
   Overwrite<
     StyleProps,
     {
-      /** @internal */
+      /** @deprecated use styleMap instead */
       stylist?: any[];
+
+      /** @internal */
+      // styleMap?: { [key: string]: any };
 
       ref?: Ref<any>;
       children?: ReactElement | any;
@@ -675,7 +679,7 @@ export type ButtonGroupProps<ALLOW_ANY = true> = PropsWithStyles<
   }
 >;
 
-export type InputProps<ALLOW_ANY = true> = PropsWithStyles<
+export type InputBaseProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   FocusableProps,
   {
@@ -713,13 +717,8 @@ export type InputProps<ALLOW_ANY = true> = PropsWithStyles<
     hint?: string;
     inputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url' | (string & {});
     label?: string;
-    mask?: (value: InputValue) => any;
-    max?: number;
-    maxLength?: number;
-    min?: number;
     multiline?: boolean;
     name?: string;
-    notNull?: boolean;
     placeholder?: string;
     placeholderColor?: RbkColor;
     readOnly?: boolean;
@@ -732,29 +731,35 @@ export type InputProps<ALLOW_ANY = true> = PropsWithStyles<
     startAddon?: ReactElement;
     textColor?: RbkColor;
     type?: 'text' | 'number' | 'password' | 'email' | 'phone' | 'url' | 'hidden' | (string & {});
-    unmask?: (value: InputValue) => any;
     value?: InputValue;
-    // Events
-    onFocus?: (event: RbkInputEvent, value: InputValue) => void;
-    onBlur?: (event: RbkInputEvent, value: InputValue) => void;
-    onSubmit?: (event: RbkInputEvent, value: InputValue) => any;
-    onChange?: (event: RbkInputEvent | RbkChangeEvent | RbkEvent, value: InputValue) => any;
-    onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
     // Styles
     contentStyle?: RbkStyle;
     hintStyle?: RbkStyle;
     errorStyle?: RbkStyle;
     labelStyle?: RbkStyle;
     inputStyle?: RbkStyle;
+    styleMap: { [key in keyof ThemeProps['components']['InputBase']['defaultStyles']]: any };
+  }
+>;
 
-    /** @deprecated use startAddon instead */
-    startIcon?: ReactElement;
-    /** @deprecated use endAddon instead */
-    endIcon?: ReactElement;
-    /** @deprecated use onChange(event, value) instead */
-    onInput?: Function;
-    /** @deprecated use onChange(event, value) instead */
-    onChangeText?: Function;
+export type InputProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  InputBaseProps<false>,
+  {
+    mask?: (value: InputValue) => any;
+    max?: number;
+    maxLength?: number;
+    min?: number;
+    notNull?: boolean;
+    unmask?: (value: InputValue) => any;
+    // Events
+    onFocus?: (event: RbkInputEvent, value: InputValue) => void;
+    onBlur?: (event: RbkInputEvent, value: InputValue) => void;
+    onSubmit?: (event: RbkInputEvent, value: InputValue) => void;
+    onChange?: (event: RbkInputEvent, value: InputValue) => void;
+    onFormChange?: (event: RbkFormEvent, data: AnyObject) => void;
+    // Styles
+    styleMap: { [key in keyof ThemeProps['components']['Input']['defaultStyles']]: any };
   }
 >;
 
@@ -782,11 +787,7 @@ export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
     // Events
     onFocus?: (event: RbkInputEvent, value: InputValue, option?: SelectOption | null) => void;
     onBlur?: (event: RbkInputEvent, value: InputValue, option?: SelectOption | null) => void;
-    onChange?: (
-      event: RbkInputEvent | RbkChangeEvent | RbkEvent,
-      value: InputValue,
-      option?: SelectOption | null,
-    ) => any;
+    onChange?: (event: RbkInputEvent, value: InputValue, option?: SelectOption | null) => any;
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
     // Styles
     buttonStyle?: RbkStyle;
@@ -819,7 +820,7 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
     // Events
     onFocus?: (event: RbkCheckboxEvent, checked: boolean) => void;
     onBlur?: (event: RbkCheckboxEvent, checked: boolean) => void;
-    onChange?: (event: RbkCheckboxEvent | RbkChangeEvent | RbkEvent, checked: boolean) => any;
+    onChange?: (event: RbkCheckboxEvent, checked: boolean) => any;
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
     // Styles
     buttonStyle?: RbkStyle;
@@ -895,6 +896,8 @@ export type InputDateProps<ALLOW_ANY = true> = PropsWithStyles<
       clear?: string;
       today?: string;
     };
+    // Styles
+    styleMap: { [key in keyof ThemeProps['components']['InputDate']['defaultStyles']]: any };
   }
 >;
 
@@ -1249,6 +1252,8 @@ export type InputPinProps<ALLOW_ANY = true> = PropsWithStyles<
   {
     length?: number;
     type?: 'alphanumeric' | 'alphabetic' | 'numeric';
+    // Styles
+    styleMap: { [key in keyof ThemeProps['components']['InputPin']['defaultStyles']]: any };
   }
 >;
 
@@ -1258,29 +1263,3 @@ export type GrowBoxProps<ALLOW_ANY = true> = PropsWithStyles<
     duration?: number;
   }
 >;
-
-/************************
- * DEPRECATIONS (START) *
- ************************/
-
-/** @deprecated use native Event instead */
-export type EventCallback = (event: any) => any;
-
-/** @deprecated use RbkInputEvent instead */
-export interface RbkEvent extends RbkInputEvent {}
-
-/** @deprecated use RbkInputEvent instead */
-export interface RbkChangeEvent extends RbkInputEvent {}
-
-/** @deprecated use RbkFormEvent instead */
-export interface RbkFormChangeEvent extends RbkFormEvent {}
-
-/** @deprecated use RbkSize instead */
-export type SizeValues = RbkSize;
-
-/** @deprecated use RbkStyle instead */
-export type RbkStyles = RbkStyle;
-
-/************************
- * DEPRECATIONS (END) *
- ************************/

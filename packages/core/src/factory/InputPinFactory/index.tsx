@@ -22,9 +22,11 @@ const InputPinFactory = React.memo<InputPinProps>(
       type,
       // Styles
       variants,
+      styleMap,
       inputStyle,
+      style,
       ...rest
-    } = factory2<RequiredSome<InputPinProps, 'length'>>(props, options);
+    } = factory2<RequiredSome<InputPinProps, 'length'>, typeof options>(props, options);
 
     size = getSize(size);
 
@@ -56,13 +58,15 @@ const InputPinFactory = React.memo<InputPinProps>(
     return (
       <InputFactory
         ref={ref}
+        style={style}
+        stylist={stylist}
+        styleMap={{ ...variants, ...styleMap }}
         {...rest}
         size={size}
         mask={resolveValue}
         unmask={resolveValue}
         placeholder={''.padEnd(length, placeholder ?? '_')}
         inputStyle={inputStyle}
-        stylist={[variants.root, stylist]}
       />
     );
   }),

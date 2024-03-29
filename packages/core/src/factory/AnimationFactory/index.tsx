@@ -30,7 +30,7 @@ const AnimationFactory = React.memo<AnimationProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<AnimationProps>(props, options);
+    } = factory2<AnimationProps, typeof options>(props, options);
 
     const iterations = useMemo(() => (loop === true ? -1 : Number(loop ?? 1)), [loop]);
     const boomerang = useMemo(() => direction?.includes('alternate'), [direction]);

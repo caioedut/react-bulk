@@ -7,7 +7,7 @@ import ChevronDown from '../../icons/ChevronDown';
 import ChevronUp from '../../icons/ChevronUp';
 import factory2 from '../../props/factory2';
 import getSize from '../../props/getSize';
-import { InputProps, InputValue, RequiredSome } from '../../types';
+import { InputProps, InputValue, RequiredSome, ThemeProps } from '../../types';
 import defined from '../../utils/defined';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
@@ -44,8 +44,12 @@ const InputFactory = React.memo<InputProps>(
       onBlur,
       onSubmit,
       onFormChange,
+      // Styles
+      variants,
+      styleMap,
+      style,
       ...rest
-    } = factory2<RequiredSome<InputProps, 'color'>>(props, options);
+    } = factory2<InputProps, typeof options>(props, options);
 
     const inputRef = useRef<any>();
 
@@ -102,7 +106,7 @@ const InputFactory = React.memo<InputProps>(
     });
 
     size = getSize(size);
-    color = theme.color(input.error ? 'error' : color);
+    color = theme.color(input.error ? 'error' : color!);
 
     const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
     const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
@@ -145,6 +149,9 @@ const InputFactory = React.memo<InputProps>(
     return (
       <InputBaseFactory
         ref={reference(ref, inputRef)}
+        style={style}
+        stylist={stylist}
+        styleMap={{ ...variants, ...styleMap }}
         {...rest}
         onFocus={handleFocus}
         onBlur={handleBlur}

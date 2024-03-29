@@ -36,7 +36,7 @@ const TextFactory = React.memo<TextProps>(
       variants,
       style,
       ...rest
-    } = factory2<TextProps>(props, options);
+    } = factory2<TextProps, typeof options>(props, options);
 
     if (native) {
       rest.includeFontPadding = false;

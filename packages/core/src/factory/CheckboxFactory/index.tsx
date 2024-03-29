@@ -49,7 +49,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<CheckboxProps, 'color' | 'size'>>(props, options);
+    } = factory2<RequiredSome<CheckboxProps, 'color' | 'size'>, typeof options>(props, options);
 
     const buttonRef = useRef<any>();
 

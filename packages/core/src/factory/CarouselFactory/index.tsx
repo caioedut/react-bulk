@@ -43,10 +43,10 @@ const CarouselFactory = React.memo<CarouselProps>(
       chevronStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<CarouselProps, 'chevron' | 'color' | 'gap' | 'pagingEnabled' | 'pointerScroll' | 'xs'>>(
-      props,
-      options,
-    );
+    } = factory2<
+      RequiredSome<CarouselProps, 'chevron' | 'color' | 'gap' | 'pagingEnabled' | 'pointerScroll' | 'xs'>,
+      typeof options
+    >(props, options);
 
     const contentRef = useRef<any>(null);
     const itemRef = useRef<any>(null);

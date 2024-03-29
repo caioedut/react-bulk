@@ -713,8 +713,8 @@ const base: ThemeProps = {
           },
         },
       },
-      Input: {
-        name: 'rbk-input',
+      InputBase: {
+        name: 'rbk-input-base',
         defaultProps: {
           autoCapitalize: 'none',
           color: 'primary',
@@ -801,6 +801,21 @@ const base: ThemeProps = {
               },
             },
           },
+        },
+      },
+      Input: {
+        name: 'rbk-input',
+        defaultProps: {
+          color: 'primary',
+          size: 'medium',
+        },
+        defaultStyles: {
+          root: {},
+          content: {},
+          label: {},
+          input: {},
+          hint: {},
+          error: {},
         },
       },
       InputDate: {

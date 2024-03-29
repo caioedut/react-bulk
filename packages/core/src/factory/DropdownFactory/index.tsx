@@ -27,7 +27,7 @@ const DropdownFactory = React.memo<DropdownProps>(
       variants,
       style,
       ...rest
-    } = factory2<DropdownProps>(props, options);
+    } = factory2<DropdownProps, typeof options>(props, options);
 
     const boxRef = useRef();
     const parentRef = triggerRef ?? boxRef;

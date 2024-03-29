@@ -17,13 +17,13 @@ import defined from '../../utils/defined';
 import global from '../../utils/global';
 
 const BoxFactory = React.memo<BoxProps>(
-  forwardRef(({ platform, className, stylist, children, ...props }, ref) => {
+  forwardRef(({ platform, className, styleMap = {}, stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Box;
     const { web, native, Button, Text, View, useDimensions } = global.mapping;
 
     // Extends from default props
-    props = useMemo(() => factory2<BoxProps>(props, options), [props, options]);
+    props = useMemo(() => factory2<BoxProps, typeof options>(props, options), [props, options]);
 
     // Platform specific props
     if (platform) {
@@ -130,7 +130,7 @@ const BoxFactory = React.memo<BoxProps>(
       style.unshift({ minWidth: 0, minHeight: 0 });
     }
 
-    const styles = [...(!noRootStyles ? variants.root : []), stylist];
+    const styles = [...(!noRootStyles ? variants.root : []), stylist, styleMap?.root];
     const responsiveStyle = extract(Object.keys(curBreakpoints), style);
     const breakpointNames = useMemo(
       () =>
@@ -173,20 +173,14 @@ const BoxFactory = React.memo<BoxProps>(
 
     if (web) {
       styles.push(sheet(style));
+      rest.style = jss(rawStyle);
+      rest.className = clsx(styles, className);
     }
 
     if (native) {
       styles.push(jss(style));
-    }
-
-    if (native) {
       styles.push(jss(rawStyle));
       rest.style = styles;
-    }
-
-    if (web) {
-      rest.style = jss(rawStyle);
-      rest.className = clsx(styles, className);
     }
 
     if (pressable && !accessibility?.role) {

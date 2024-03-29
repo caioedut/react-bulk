@@ -15,7 +15,7 @@ const CardFactory = React.memo<CardProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<CardProps>(props, options);
+    } = factory2<CardProps, typeof options>(props, options);
 
     return <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest} />;
   }),
