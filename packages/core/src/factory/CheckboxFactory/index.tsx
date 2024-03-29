@@ -192,7 +192,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           onFocus={handleFocus}
           onBlur={handleBlur}
           accessibility={{
-            label,
+            label: typeof label === 'string' ? label : undefined ,
             role: unique ? 'radio' : 'checkbox',
             state: { checked: internal },
           }}
@@ -219,7 +219,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           </BoxFactory>
         </ButtonFactory>
 
-        {Boolean(label) && (
+        {typeof label === 'string' ? (
           <LabelFactory
             for={id}
             forRef={buttonRef}
@@ -228,7 +228,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           >
             {label}
           </LabelFactory>
-        )}
+        ) : label}
 
         {web && (
           <Input //
