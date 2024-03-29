@@ -807,7 +807,7 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
     controlled?: boolean;
     defaultChecked?: boolean;
     disabled?: boolean;
-    label?: string;
+    label?: ReactElement;
     name?: string;
     readOnly?: boolean;
     size?: RbkSize;
