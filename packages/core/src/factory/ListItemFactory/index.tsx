@@ -22,11 +22,9 @@ const ListItemFactory = React.memo<ListItemProps>(
     let {
       chevron,
       endAddon,
-      endIcon,
       gap,
       icon,
       startAddon,
-      startIcon,
       // Styles
       variants,
       chevronStyle,
@@ -34,8 +32,6 @@ const ListItemFactory = React.memo<ListItemProps>(
     } = factory2<ListItemProps>(props, options);
 
     gap = gap === true ? theme.shape.gap : gap;
-    startAddon = startAddon ?? startIcon;
-    endAddon = endAddon ?? endIcon;
 
     const chevronSize = get('size', chevronStyle);
     const chevronColor = get('color', chevronStyle) ?? 'primary';

@@ -22,7 +22,6 @@ const CollapseFactory = React.memo<CollapseProps>(
       duration,
       timing,
       visible,
-      in: expanded,
       // Styles
       variants,
       ...rest
@@ -31,13 +30,12 @@ const CollapseFactory = React.memo<CollapseProps>(
     const defaultRef: any = useRef();
     const rootRef: RefObject<any> = ref || defaultRef;
 
-    const isExpanded = useMemo(() => visible ?? expanded ?? false, [visible, expanded]);
     const transition = useAnimation({}, rootRef);
 
     const initialStyle = useMemo(
       () => ({
-        height: isExpanded ? 'auto' : 0,
-        overflow: isExpanded ? 'visible' : 'hidden',
+        height: visible ? 'auto' : 0,
+        overflow: visible ? 'visible' : 'hidden',
       }),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [],
@@ -47,7 +45,7 @@ const CollapseFactory = React.memo<CollapseProps>(
       if (!rootRef?.current) return;
 
       (async () => {
-        const newSize = isExpanded ? await getFullHeight(rootRef.current) : 0;
+        const newSize = visible ? await getFullHeight(rootRef.current) : 0;
         const metrics = await rect(rootRef.current);
 
         if (newSize === metrics.height) return;
@@ -75,7 +73,7 @@ const CollapseFactory = React.memo<CollapseProps>(
 
       // cannot add "transition" to dependencies
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [rootRef, isExpanded, delay, timing, duration, web, native]);
+    }, [rootRef, visible, delay, timing, duration, web, native]);
 
     return (
       <BoxFactory

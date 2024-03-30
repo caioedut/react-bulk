@@ -26,14 +26,12 @@ const ButtonFactory = React.memo<ButtonProps>(
       contrastColor,
       disabled,
       endAddon,
-      endIcon,
       label,
       loading,
       transform,
       type = 'button',
       size,
       startAddon,
-      startIcon,
       variant,
       // Styles
       variants,
@@ -49,8 +47,6 @@ const ButtonFactory = React.memo<ButtonProps>(
     children = children ?? label;
     contrastColor = contrastColor ?? theme.contrast(color);
     badge = typeof badge === 'number' ? { value: badge } : badge;
-    startAddon = startAddon ?? startIcon;
-    endAddon = endAddon ?? endIcon;
     size = size ?? 'medium';
 
     if (form && !props.onPress && !props.onClick) {
