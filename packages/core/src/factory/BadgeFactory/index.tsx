@@ -27,7 +27,7 @@ const BadgeFactory = React.memo<BadgeProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<BadgeProps, 'color' | 'size'>, typeof options>(props, options);
+    } = factory2<RequiredSome<BadgeProps, 'color' | 'size'>>(props, options);
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {

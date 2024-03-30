@@ -31,7 +31,7 @@ const ListItemFactory = React.memo<ListItemProps>(
       variants,
       chevronStyle,
       ...rest
-    } = factory2<ListItemProps, typeof options>(props, options);
+    } = factory2<ListItemProps>(props, options);
 
     gap = gap === true ? theme.shape.gap : gap;
     startAddon = startAddon ?? startIcon;
@@ -51,7 +51,7 @@ const ListItemFactory = React.memo<ListItemProps>(
       ) : null;
 
     return (
-      <CardFactory ref={ref} p={gap} stylist={[variants?.root, stylist]} {...rest}>
+      <CardFactory ref={ref} p={gap} stylist={[variants.root, stylist]} {...rest}>
         <GridFactory row noWrap alignItems="center" gap={gap}>
           {Boolean(startAddon) && <BoxFactory>{startAddon}</BoxFactory>}
 

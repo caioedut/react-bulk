@@ -6,12 +6,11 @@ type Variants = {
   [key: string]: RbkStyle[];
 };
 
-export default function factory2<ComponentProps, Options extends AnyObject = {}>(
+export default function factory2<ComponentProps>(
   props,
   options: ThemeComponentProps<ComponentProps, any>,
 ): ComponentProps & {
-  styleMap: { [key in keyof Options['defaultStyles']]: any };
-  variants: { [key in keyof Options['defaultStyles']]: RbkStyle };
+  variants: NonNullable<ComponentProps extends AnyObject ? ComponentProps['variants'] : {}>;
 } {
   const fallbackProps = {};
   const variants: Variants = {};
@@ -39,8 +38,13 @@ export default function factory2<ComponentProps, Options extends AnyObject = {}>
     Object.keys(varStyles).forEach((styleId: any) => {
       const name = `${options?.name}-${varAttr}-${varValue}` + (styleId === 'root' ? '' : `-${styleId}`);
       variants[styleId] = variants[styleId] || [];
-      variants?.[styleId]?.push(global.styles[name]);
+      variants[styleId].push(global.styles[name]);
     });
+  });
+
+  Object.entries(props.variants || {}).forEach(([styleId, style]: any) => {
+    variants[styleId] = variants[styleId] || [];
+    variants[styleId].push(style);
   });
 
   // Extends accessibility

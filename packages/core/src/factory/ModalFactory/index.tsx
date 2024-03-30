@@ -22,7 +22,7 @@ const ModalFactory = React.memo<ModalProps>(
       variants,
       style,
       ...rest
-    } = factory2<ModalProps, typeof options>(props, options);
+    } = factory2<ModalProps>(props, options);
 
     return (
       <BackdropFactory visible={visible} stylist={[variants.backdrop]} onPress={onClose ?? onBackdropPress}>

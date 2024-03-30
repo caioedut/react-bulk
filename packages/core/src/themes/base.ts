@@ -253,6 +253,7 @@ const base: ThemeProps = {
             overflow: 'hidden',
           },
         },
+        variants: {},
       },
       Animation: {
         name: 'rbk-animation',
@@ -260,6 +261,7 @@ const base: ThemeProps = {
         defaultStyles: {
           root: {},
         },
+        variants: {},
       },
       Backdrop: {
         name: 'rbk-backdrop',
@@ -279,6 +281,7 @@ const base: ThemeProps = {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
           },
         },
+        variants: {},
       },
       Badge: {
         name: 'rbk-badge',
@@ -340,6 +343,7 @@ const base: ThemeProps = {
             web: { '-webkit-tap-highlight-color': '#00000000' },
           },
         },
+        variants: {},
       },
       Button: {
         name: 'rbk-button',
@@ -490,6 +494,7 @@ const base: ThemeProps = {
             p: 1,
           },
         },
+        variants: {},
       },
       Calendar: {
         name: 'rbk-calendar',
@@ -499,6 +504,7 @@ const base: ThemeProps = {
         defaultStyles: {
           root: {},
         },
+        variants: {},
       },
       Card: {
         name: 'rbk-card',
@@ -510,6 +516,7 @@ const base: ThemeProps = {
             p: this.shape.gap,
           },
         },
+        variants: {},
       },
       Carousel: {
         name: 'rbk-carousel',
@@ -535,6 +542,7 @@ const base: ThemeProps = {
             justifyContent: 'center',
           },
         },
+        variants: {},
       },
       Checkbox: {
         name: 'rbk-checkbox',
@@ -562,6 +570,7 @@ const base: ThemeProps = {
             mt: 1,
           },
         },
+        variants: {},
       },
       Collapse: {
         name: 'rbk-collapse',
@@ -573,6 +582,7 @@ const base: ThemeProps = {
             overflow: 'hidden',
           },
         },
+        variants: {},
       },
       Divider: {
         name: 'rbk-divider',
@@ -651,6 +661,7 @@ const base: ThemeProps = {
             zIndex: (theme) => theme.mixins.zIndex.dropdown,
           },
         },
+        variants: {},
       },
       Form: {
         name: 'rbk-form',
@@ -661,6 +672,7 @@ const base: ThemeProps = {
             padding: 0,
           },
         },
+        variants: {},
       },
       Grid: {
         name: 'rbk-grid',
@@ -700,6 +712,7 @@ const base: ThemeProps = {
             overflow: 'hidden',
           },
         },
+        variants: {},
       },
       Image: {
         name: 'rbk-image',
@@ -712,6 +725,7 @@ const base: ThemeProps = {
             web: { display: 'block' },
           },
         },
+        variants: {},
       },
       InputBase: {
         name: 'rbk-input-base',
@@ -817,6 +831,7 @@ const base: ThemeProps = {
           hint: {},
           error: {},
         },
+        variants: {},
       },
       InputDate: {
         name: 'rbk-input-date',
@@ -831,7 +846,13 @@ const base: ThemeProps = {
         },
         defaultStyles: {
           root: {},
+          content: {},
+          label: {},
+          input: {},
+          hint: {},
+          error: {},
         },
+        variants: {},
       },
       InputPin: {
         name: 'rbk-pin-input',
@@ -842,7 +863,13 @@ const base: ThemeProps = {
         },
         defaultStyles: {
           root: {},
+          content: {},
+          label: {},
+          input: {},
+          hint: {},
+          error: {},
         },
+        variants: {},
       },
       Label: {
         name: 'rbk-label',
@@ -857,6 +884,7 @@ const base: ThemeProps = {
             },
           },
         },
+        variants: {},
       },
       Link: {
         name: 'rbk-link',
@@ -881,6 +909,7 @@ const base: ThemeProps = {
         defaultStyles: {
           root: {},
         },
+        variants: {},
       },
       ListItem: {
         name: 'rbk-list-item',
@@ -890,6 +919,7 @@ const base: ThemeProps = {
         defaultStyles: {
           root: {},
         },
+        variants: {},
       },
       Loading: {
         name: 'rbk-loading',
@@ -910,6 +940,7 @@ const base: ThemeProps = {
             ml: this.shape.gap / 2,
           },
         },
+        variants: {},
       },
       Modal: {
         name: 'rbk-modal',
@@ -968,6 +999,7 @@ const base: ThemeProps = {
             },
           },
         },
+        variants: {},
       },
       Progress: {
         name: 'rbk-progress',
@@ -992,6 +1024,7 @@ const base: ThemeProps = {
             textAlign: 'center',
           },
         },
+        variants: {},
       },
       Scrollable: {
         name: 'rbk-scrollable',
@@ -1062,6 +1095,7 @@ const base: ThemeProps = {
             mt: 1,
           },
         },
+        variants: {},
       },
       Slider: {
         name: 'rbk-slider',
@@ -1117,6 +1151,7 @@ const base: ThemeProps = {
             width: '1rem',
           },
         },
+        variants: {},
       },
       Table: {
         name: 'rbk-table',
@@ -1126,6 +1161,7 @@ const base: ThemeProps = {
             corners: 1,
           },
         },
+        variants: {},
       },
       Tabs: {
         name: 'rbk-tabs',
@@ -1186,6 +1222,7 @@ const base: ThemeProps = {
             cursor: 'text',
           },
         },
+        variants: {},
       },
       Text: {
         name: 'rbk-text',
@@ -1282,6 +1319,7 @@ const base: ThemeProps = {
             overflow: 'hidden',
           },
         },
+        variants: {},
       },
       Tooltip: {
         name: 'rbk-tooltip',

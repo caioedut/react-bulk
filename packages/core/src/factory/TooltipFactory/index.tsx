@@ -29,7 +29,7 @@ const TooltipFactory = React.memo<TooltipProps>(
       variants,
       style,
       ...rest
-    } = factory2<TooltipProps, typeof options>(props, options);
+    } = factory2<TooltipProps>(props, options);
 
     const timeoutRef = useRef<TimeoutType>(null);
 

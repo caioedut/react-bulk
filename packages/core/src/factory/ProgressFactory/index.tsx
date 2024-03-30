@@ -29,7 +29,7 @@ const ProgressFactory = React.memo<ProgressProps>(
       barStyle,
       labelStyle,
       ...rest
-    } = factory2<RequiredSome<ProgressProps, 'color' | 'label' | 'size'>, typeof options>(props, options);
+    } = factory2<RequiredSome<ProgressProps, 'color' | 'label' | 'size'>>(props, options);
 
     const [containerWidth, setContainerWidth] = useState<number>(0);
 

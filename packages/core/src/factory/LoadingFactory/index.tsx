@@ -24,7 +24,7 @@ const LoadingFactory = React.memo<LoadingProps>(
       variants,
       labelStyle,
       ...rest
-    } = factory2<RequiredSome<LoadingProps, 'color' | 'size'>, typeof options>(props, options);
+    } = factory2<RequiredSome<LoadingProps, 'color' | 'size'>>(props, options);
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {

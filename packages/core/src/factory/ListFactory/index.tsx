@@ -34,7 +34,7 @@ const ListFactory = React.memo<ListProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<ListProps, typeof options>(props, options);
+    } = factory2<ListProps>(props, options);
 
     const defaultRef = useRef();
     const scrollRef = (ref ?? defaultRef) as MutableRefObject<ReactElement>;

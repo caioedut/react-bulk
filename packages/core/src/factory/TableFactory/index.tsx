@@ -20,7 +20,7 @@ const TableFactory = React.memo<TableProps>(
       variants,
       style,
       ...rest
-    } = factory2<TableProps, typeof options>(props, options);
+    } = factory2<TableProps>(props, options);
 
     const width = `${100 / columns?.length}%`;
 
