@@ -954,7 +954,7 @@ function ModalExample() {
           <Button onPress={() => setModal({ visible: true, halign: 'right' })}>Right</Button>
         </Box>
       </Grid>
-      <Modal {...modal} onBackdropPress={() => setModal((current) => ({ ...current, visible: false }))}>
+      <Modal {...modal} onClose={() => setModal((current) => ({ ...current, visible: false }))}>
         <Box maxw={300}>
           <Text bold size={1.25}>
             My Modal
@@ -1068,7 +1068,7 @@ function DrawerExample() {
           </Box>
         ))}
       </Grid>
-      <Drawer visible={drawer} placement={placement as any} style={style} onBackdropPress={() => setDrawer(false)}>
+      <Drawer visible={drawer} placement={placement as any} style={style} onClose={() => setDrawer(false)}>
         <Card>
           <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
           <Text mt={theme.shape.gap}>

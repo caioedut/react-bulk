@@ -46,7 +46,7 @@ function Home() {
       <Button onPress={() => setVisible(true)}>
         Open Modal
       </Button>
-      <Modal visible={visible} onBackdropPress={() => setVisible(false)}>
+      <Modal visible={visible} onClose={() => setVisible(false)}>
         <Text variant="title" bold>
           React Bulk
         </Text>
@@ -97,7 +97,7 @@ To the main element.
 
 ## Events
 
-### **`onBackdropPress`**
+### **`onClose`**
 
 ➤ Type: **`Function(Event)`** <br/>
 

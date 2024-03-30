@@ -44,7 +44,7 @@ type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'er
 type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker' | 'contrast';
 
 /** @internal */
-type Transform = {
+type CSSTransform = {
   [key in (typeof transformProps)[number]]?: any;
 } & {
   transform?: {
@@ -53,7 +53,7 @@ type Transform = {
 };
 
 /** @internal */
-type FlexJustifyValues =
+type CSSFlexJustify =
   | 'center'
   | 'stretch'
   | 'flex-start'
@@ -69,7 +69,7 @@ type FlexJustifyValues =
   | 'evenly';
 
 /** @internal */
-type FlexAlignValues =
+type CSSFlexAlign =
   | 'flex-start'
   | 'flex-end'
   | 'center'
@@ -93,18 +93,18 @@ type StyleProps = Overwrite<
 
     // Flexbox container
     direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
-    justifyContent?: FlexJustifyValues;
-    alignContent?: FlexAlignValues;
-    justifyItems?: FlexJustifyValues;
-    alignItems?: FlexAlignValues | 'baseline';
+    justifyContent?: CSSFlexJustify;
+    alignContent?: CSSFlexAlign;
+    justifyItems?: CSSFlexJustify;
+    alignItems?: CSSFlexAlign | 'baseline';
 
     // Flexbox item
     order?: number;
     grow?: number;
     shrink?: number;
     basis?: 'auto' | (string & {}) | (number & {});
-    align?: FlexAlignValues;
-    justify?: FlexJustifyValues;
+    align?: CSSFlexAlign;
+    justify?: CSSFlexJustify;
 
     h?: number | string | true;
     w?: number | string | true;
@@ -241,8 +241,8 @@ export interface RbkRect {
 }
 
 export interface RbkAnimation {
-  to: Overwrite<RbkStyleProps, Transform>;
-  from?: Overwrite<RbkStyleProps, Transform>;
+  to: Overwrite<RbkStyleProps, CSSTransform>;
+  from?: Overwrite<RbkStyleProps, CSSTransform>;
 
   boomerang?: boolean;
   delay?: number;
@@ -682,11 +682,6 @@ export type ButtonProps<ALLOW_ANY = true> = PropsWithStyles<
       root?: any;
       label?: any;
     };
-
-    /** @deprecated use startAddon instead */
-    startIcon?: ReactElement;
-    /** @deprecated use endAddon instead */
-    endIcon?: ReactElement;
   }
 >;
 
@@ -841,11 +836,6 @@ export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
       label?: any;
       error?: any;
     };
-
-    /** @deprecated use startAddon instead */
-    startIcon?: ReactElement;
-    /** @deprecated use endAddon instead */
-    endIcon?: ReactElement;
   }
 >;
 
@@ -1061,9 +1051,6 @@ export type ModalProps<ALLOW_ANY = true> = PropsWithStyles<
       root?: any;
       backdrop?: any;
     };
-
-    /** @deprecated use onClose instead */
-    onBackdropPress?: Function;
   }
 >;
 
@@ -1076,9 +1063,6 @@ export type CollapseProps<ALLOW_ANY = true> = PropsWithStyles<
     variants?: {
       root?: any;
     };
-
-    /** @deprecated use visible instead */
-    in?: boolean;
   }
 >;
 
@@ -1102,6 +1086,7 @@ export type LoadingProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
     color?: RbkColor;
+    duration?: number;
     label?: string;
     size?: RbkSize;
     // Styles
@@ -1211,9 +1196,6 @@ export type AnimationProps<ALLOW_ANY = true> = PropsWithStyles<
     zoom?: boolean | 1 | -1;
     spin?: boolean | 1 | -1;
 
-    /** @deprecated use duration instead */
-    speed?: number;
-
     // Styles
     variants?: {
       root?: any;
@@ -1253,11 +1235,6 @@ export type ListItemProps<ALLOW_ANY = true> = PropsWithStyles<
     variants?: {
       root?: any;
     };
-
-    /** @deprecated use startAddon instead */
-    startIcon?: ReactElement;
-    /** @deprecated use endAddon instead */
-    endIcon?: ReactElement;
   }
 >;
 

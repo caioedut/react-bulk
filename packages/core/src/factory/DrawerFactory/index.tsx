@@ -16,7 +16,7 @@ const DrawerFactory = React.memo<DrawerProps>(
     const {
       placement,
       visible,
-      onBackdropPress,
+      onClose,
       // Styles
       variants,
       style,
@@ -49,12 +49,7 @@ const DrawerFactory = React.memo<DrawerProps>(
     }, [visible, placement, hiddenStyle, visibleStyle, transition.start]);
 
     return (
-      <BackdropFactory
-        visible={visible}
-        onPress={onBackdropPress}
-        style={backdropStyle}
-        variants={{ root: variants.backdrop }}
-      >
+      <BackdropFactory visible={visible} onPress={onClose} style={backdropStyle} variants={{ root: variants.backdrop }}>
         <BoxFactory
           key={placement}
           {...rest}

@@ -16,10 +16,10 @@ const LoadingFactory = React.memo<LoadingProps>(
 
     // Extends from default props
     let {
+      duration,
       color,
       label,
       size,
-      speed,
       // Styles,
       variants,
       labelStyle,
@@ -59,7 +59,7 @@ const LoadingFactory = React.memo<LoadingProps>(
         <BoxFactory
           animation={{
             throttle: 0,
-            duration: 500,
+            duration,
             timing: 'linear',
             iterations: 'infinite',
             from: { rotate: '0deg' },

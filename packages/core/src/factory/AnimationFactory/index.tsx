@@ -19,7 +19,6 @@ const AnimationFactory = React.memo<AnimationProps>(
       from,
       in: run,
       loop,
-      speed,
       to,
       throttle,
       timing,
@@ -65,7 +64,7 @@ const AnimationFactory = React.memo<AnimationProps>(
           iterations,
           throttle,
           timing,
-          duration: duration ?? speed,
+          duration,
           from: reverse ? styleTo : styleFrom,
           to: reverse ? styleFrom : styleTo,
         }}
