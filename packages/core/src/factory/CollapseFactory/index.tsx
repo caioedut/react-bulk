@@ -47,9 +47,8 @@ const CollapseFactory = React.memo<CollapseProps>(
       if (!rootRef?.current) return;
 
       (async () => {
-        const size = await getFullHeight(rootRef.current);
+        const newSize = isExpanded ? await getFullHeight(rootRef.current) : 0;
         const metrics = await rect(rootRef.current);
-        const newSize = isExpanded ? size : 0;
 
         if (newSize === metrics.height) return;
 
