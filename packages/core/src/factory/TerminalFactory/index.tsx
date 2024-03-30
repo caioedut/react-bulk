@@ -1,5 +1,6 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import reference from '../../element/reference';
 import scrollToEnd from '../../element/scrollToEnd';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
@@ -36,8 +37,7 @@ const TerminalFactory = React.memo<TerminalProps>(
       ...rest
     } = factory2<TerminalProps>(props, options);
 
-    const defaultRef = useRef();
-    const scrollRef = (ref ?? defaultRef) as React.MutableRefObject<any>;
+    const scrollRef = useRef<any>();
     const inputRef = useRef<any>();
 
     const [isLocked, setIsLocked] = useState(false);
@@ -232,7 +232,7 @@ const TerminalFactory = React.memo<TerminalProps>(
     };
 
     return (
-      <ScrollableFactory ref={scrollRef} stylist={[variants.root, stylist]} {...rest}>
+      <ScrollableFactory ref={reference(ref, scrollRef)} stylist={[variants.root, stylist]} {...rest}>
         <BoxFactory
           flex
           p={2}
