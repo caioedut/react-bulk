@@ -1,6 +1,7 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import rect from '../../element/rect';
+import reference from '../../element/reference';
 import scrollIntoView from '../../element/scrollIntoView';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
@@ -71,8 +72,7 @@ const SelectFactory = React.memo<SelectProps>(
     id = useHtmlId(id);
 
     const form = useForm();
-    const defaultRef: any = useRef(null);
-    const buttonRef = ref || defaultRef;
+    const buttonRef = useRef<any>();
     const scrollRef: any = useRef(null);
     const selectedRef: any = useRef(null);
     const optionsRef: any = useRef([]);
@@ -363,7 +363,7 @@ const SelectFactory = React.memo<SelectProps>(
         )}
 
         <ButtonFactory
-          ref={buttonRef}
+          ref={reference(ref, buttonRef)}
           color={!error && !focused && !colorful ? 'gray.light' : color}
           endAddon={
             loading ? (

@@ -1,19 +1,11 @@
-import React, {
-  MutableRefObject,
-  cloneElement,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { cloneElement, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import rect from '../../element/rect';
+import reference from '../../element/reference';
 import useTheme from '../../hooks/useTheme';
 import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
-import { ListProps, ReactElement } from '../../types';
+import { ListProps } from '../../types';
 import global from '../../utils/global';
 import sleep from '../../utils/sleep';
 import ScrollableFactory from '../ScrollableFactory';
@@ -36,8 +28,7 @@ const ListFactory = React.memo<ListProps>(
       ...rest
     } = factory2<ListProps>(props, options);
 
-    const defaultRef = useRef();
-    const scrollRef = (ref ?? defaultRef) as MutableRefObject<ReactElement>;
+    const scrollRef = useRef<any>();
     const childrenArray = useMemo(() => childrenize(children), [children]);
     const [visible, setVisible] = useState<number[]>([]);
 
@@ -96,7 +87,12 @@ const ListFactory = React.memo<ListProps>(
     );
 
     return (
-      <ScrollableFactory ref={scrollRef} stylist={[variants.root, stylist]} {...rest} onScroll={handleScroll}>
+      <ScrollableFactory
+        ref={reference(ref, scrollRef)}
+        stylist={[variants.root, stylist]}
+        {...rest}
+        onScroll={handleScroll}
+      >
         {childrenArray.map((child, index) => {
           if (visible.includes(index)) {
             return cloneElement(child, { key: index });

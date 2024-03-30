@@ -1,5 +1,6 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import reference from '../../element/reference';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
@@ -51,8 +52,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     color = theme.color(color);
 
     const form = useForm();
-    const defaultRef: any = useRef(null);
-    const buttonRef = ref || defaultRef;
+    const buttonRef = useRef<any>(null);
 
     const [initialChecked] = useState(defaultChecked);
     const [_internal, _setInternal] = useState(checked ?? initialChecked);
@@ -178,7 +178,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     return (
       <BoxFactory data-rbk-input={name} style={style} stylist={[variants.root, stylist]}>
         <ButtonFactory
-          ref={buttonRef}
+          ref={reference(ref, buttonRef)}
           style={buttonStyle}
           stylist={[variants.button]}
           color={color}
@@ -192,7 +192,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           onFocus={handleFocus}
           onBlur={handleBlur}
           accessibility={{
-            label: typeof label === 'string' ? label : undefined ,
+            label: typeof label === 'string' ? label : undefined,
             role: unique ? 'radio' : 'checkbox',
             state: { checked: internal },
           }}
@@ -228,7 +228,9 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           >
             {label}
           </LabelFactory>
-        ) : label}
+        ) : (
+          label
+        )}
 
         {web && (
           <Input //
