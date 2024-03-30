@@ -10,7 +10,7 @@ import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const TextFactory = React.memo<TextProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Text;
     const { web, native, Text } = global.mapping;
@@ -74,7 +74,7 @@ const TextFactory = React.memo<TextProps>(
     const fontWeight = get('fontWeight', style, rest);
 
     return (
-      <BoxFactory ref={ref} component={Text} style={style} stylist={[variants.root, stylist]} {...rest} noRootStyles>
+      <BoxFactory ref={ref} component={Text} style={style} variants={{ root: variants.root }} {...rest} noRootStyles>
         {/* Inherite some styles for each text child  */}
         {childrenize(children).map((child, key) => {
           if (child?.type === TextFactory) {

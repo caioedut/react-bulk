@@ -21,7 +21,7 @@ import GridFactory from '../GridFactory';
 import InputBaseFactory from '../InputBaseFactory';
 
 const InputDateFactory = React.memo<InputDateProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.InputDate;
     const { locale, svg } = global.mapping;
@@ -172,7 +172,6 @@ const InputDateFactory = React.memo<InputDateProps>(
         <InputBaseFactory
           ref={reference(ref, inputRef)}
           style={style}
-          stylist={stylist}
           variants={variants}
           {...rest}
           readOnly

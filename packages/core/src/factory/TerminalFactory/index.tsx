@@ -20,7 +20,7 @@ function postFocus($el: any) {
 }
 
 const TerminalFactory = React.memo<TerminalProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Terminal;
     const { web, native, ios, Input } = global.mapping;
@@ -232,7 +232,7 @@ const TerminalFactory = React.memo<TerminalProps>(
     };
 
     return (
-      <ScrollableFactory ref={scrollRef} stylist={[variants.root, stylist]} {...rest}>
+      <ScrollableFactory ref={scrollRef} variants={{ root: variants.root }} {...rest}>
         <BoxFactory
           flex
           p={2}

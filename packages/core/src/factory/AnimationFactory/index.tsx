@@ -7,7 +7,7 @@ import { AnimationProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
 const AnimationFactory = React.memo<AnimationProps>(
-  forwardRef(({ stylist, children, component, ...props }, ref) => {
+  forwardRef(({ children, component, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Animation;
 
@@ -57,7 +57,7 @@ const AnimationFactory = React.memo<AnimationProps>(
     return (
       <BoxFactory
         ref={ref}
-        stylist={[variants.root, stylist]}
+        variants={{ root: variants.root }}
         {...rest}
         animation={{
           boomerang,

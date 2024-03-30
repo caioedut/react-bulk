@@ -9,7 +9,7 @@ import string from '../../utils/string';
 import InputFactory from '../InputFactory';
 
 const InputPinFactory = React.memo<InputPinProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.InputPin;
     const { web, ios } = global.mapping;
@@ -58,7 +58,6 @@ const InputPinFactory = React.memo<InputPinProps>(
       <InputFactory
         ref={ref}
         style={style}
-        stylist={stylist}
         variants={variants}
         {...rest}
         size={size}

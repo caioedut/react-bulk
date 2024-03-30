@@ -22,7 +22,7 @@ const Context = createContext<FormRef>(null as any);
 export const useForm = () => useContext<FormRef>(Context);
 
 const FormFactory = React.memo<FormProps>(
-  forwardRef(({ stylist, ...props }, ref: ForwardedRef<FormRef>) => {
+  forwardRef(({ ...props }, ref: ForwardedRef<FormRef>) => {
     const theme = useTheme();
     const options = theme.components.Form;
     const { web, Form } = global.mapping;
@@ -241,7 +241,7 @@ const FormFactory = React.memo<FormProps>(
 
     return (
       <Context.Provider value={context}>
-        <BoxFactory ref={formRef} component={Form} stylist={[variants.root, stylist]} {...rest} onSubmit={submit} />
+        <BoxFactory ref={formRef} component={Form} variants={{ root: variants.root }} {...rest} onSubmit={submit} />
       </Context.Provider>
     );
   }),

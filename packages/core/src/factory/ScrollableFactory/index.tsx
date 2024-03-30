@@ -10,7 +10,7 @@ import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const ScrollableFactory = React.memo<ScrollableProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Scrollable;
     const { web, native, ios, RefreshControl, ScrollView } = global.mapping;
@@ -116,14 +116,14 @@ const ScrollableFactory = React.memo<ScrollableProps>(
         ref={ref}
         component={ScrollView}
         style={style}
-        stylist={[variants.root, stylist]}
+        variants={{ root: variants.root }}
         {...rest}
         noRootStyles
       >
         {native ? (
           children
         ) : (
-          <BoxFactory style={contentStyle} stylist={[variants.content]} noRootStyles>
+          <BoxFactory style={contentStyle} variants={{ root: variants.content }} noRootStyles>
             {children}
           </BoxFactory>
         )}

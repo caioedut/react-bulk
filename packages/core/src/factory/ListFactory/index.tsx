@@ -19,7 +19,7 @@ import sleep from '../../utils/sleep';
 import ScrollableFactory from '../ScrollableFactory';
 
 const ListFactory = React.memo<ListProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.List;
     const { View } = global.mapping;
@@ -96,7 +96,7 @@ const ListFactory = React.memo<ListProps>(
     );
 
     return (
-      <ScrollableFactory ref={scrollRef} stylist={[variants.root, stylist]} {...rest} onScroll={handleScroll}>
+      <ScrollableFactory ref={scrollRef} variants={{ root: variants.root }} {...rest} onScroll={handleScroll}>
         {childrenArray.map((child, index) => {
           if (visible.includes(index)) {
             return cloneElement(child, { key: index });

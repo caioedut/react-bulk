@@ -9,7 +9,7 @@ import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
 const TooltipFactory = React.memo<TooltipProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Tooltip;
     const { native, useDimensions, Button } = global.mapping;
@@ -82,7 +82,7 @@ const TooltipFactory = React.memo<TooltipProps>(
         }}
       >
         {children}
-        <BoxFactory ref={ref} style={style} stylist={[variants.root, stylist]} {...rest}>
+        <BoxFactory ref={ref} style={style} variants={{ root: variants.root }} {...rest}>
           <TextFactory
             numberOfLines={1}
             platform={{

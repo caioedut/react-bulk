@@ -6,7 +6,7 @@ import { DividerProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
 const DividerFactory = React.memo<DividerProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Divider;
 
@@ -35,7 +35,7 @@ const DividerFactory = React.memo<DividerProps>(
       style,
     ];
 
-    return <BoxFactory ref={ref} style={style} stylist={[variants.root, stylist]} {...rest} />;
+    return <BoxFactory ref={ref} style={style} variants={{ root: variants.root }} {...rest} />;
   }),
 );
 

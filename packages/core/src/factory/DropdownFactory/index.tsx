@@ -11,7 +11,7 @@ import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 
 const DropdownFactory = React.memo<DropdownProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Dropdown;
     const { useDimensions } = global.mapping;
@@ -64,10 +64,10 @@ const DropdownFactory = React.memo<DropdownProps>(
 
     return (
       <BoxFactory ref={boxRef}>
-        <BackdropFactory visible={visible} stylist={[variants.backdrop]} onPress={onClose}>
+        <BackdropFactory visible={visible} variants={{ root: variants.backdrop }} onPress={onClose}>
           <BoxFactory ref={ref} position="absolute" style={positions}>
             <BoxFactory
-              stylist={[variants.root, stylist]}
+              variants={{ root: variants.root }}
               {...rest}
               style={[
                 placement === 'top' ? { bottom: '100%' } : { top: '100%' },

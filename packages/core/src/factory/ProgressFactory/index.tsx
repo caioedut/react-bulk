@@ -10,7 +10,7 @@ import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
 const ProgressFactory = React.memo<ProgressProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Progress;
     const { native } = global.mapping;
@@ -79,7 +79,7 @@ const ProgressFactory = React.memo<ProgressProps>(
     }
 
     return (
-      <BoxFactory ref={ref} {...rest} style={style} stylist={[variants.root, stylist]}>
+      <BoxFactory ref={ref} {...rest} style={style} variants={{ root: variants.root }}>
         {isIndeterminate ? (
           <BoxFactory
             animation={{
@@ -92,13 +92,13 @@ const ProgressFactory = React.memo<ProgressProps>(
               to: { translateX },
             }}
           >
-            <BoxFactory w="20%" style={barStyle} stylist={[variants.bar]} />
+            <BoxFactory w="20%" style={barStyle} variants={{ root: variants.bar }} />
           </BoxFactory>
         ) : (
           <>
             <BoxFactory
               style={barStyle}
-              stylist={[variants.bar]}
+              variants={{ root: variants.bar }}
               animation={{
                 throttle: 0,
                 duration: 100,
@@ -113,7 +113,7 @@ const ProgressFactory = React.memo<ProgressProps>(
                 {typeof label === 'function' ? (
                   label?.(value as number)
                 ) : (
-                  <TextFactory style={[{ fontSize }, labelStyle]} stylist={[variants.label]}>
+                  <TextFactory style={[{ fontSize }, labelStyle]} variants={{ root: variants.label }}>
                     {Math.round(value as number)}%
                   </TextFactory>
                 )}

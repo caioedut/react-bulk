@@ -11,7 +11,7 @@ import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const CollapseFactory = React.memo<CollapseProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Collapse;
     const { web, native } = global.mapping;
@@ -84,7 +84,7 @@ const CollapseFactory = React.memo<CollapseProps>(
         {...transition.props}
         platform={{ native: { collapsable: false } }}
         style={initialStyle}
-        stylist={[variants.root, stylist]}
+        variants={{ root: variants.root }}
         rawStyle={transition.props.style}
       >
         <BoxFactory {...rest} />

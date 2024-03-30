@@ -7,7 +7,7 @@ import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const BackdropFactory = React.memo<BackdropProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Backdrop;
     const { web, native, Button, Dialog } = global.mapping;
@@ -45,7 +45,7 @@ const BackdropFactory = React.memo<BackdropProps>(
     }, [ref, visible]);
 
     const Child = (
-      <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory ref={ref} variants={{ root: variants.root }} {...rest}>
         <BoxFactory
           position="absolute"
           i={0}

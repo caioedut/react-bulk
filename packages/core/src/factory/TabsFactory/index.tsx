@@ -10,7 +10,7 @@ import ButtonGroupFactory from '../ButtonGroupFactory';
 import ScrollableFactory from '../ScrollableFactory';
 
 const TabsFactory = React.memo<TabsProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Tabs;
 
@@ -46,7 +46,7 @@ const TabsFactory = React.memo<TabsProps>(
           labelStyle={{ px: 1.5 }}
           {...rest}
           style={[buttonStyle, tabStyle, isActive && activeStyle]}
-          stylist={[variants.button, isActive && variants.active]}
+          variants={{ root: [variants.button, isActive && variants.active] }}
           onPress={(e) => onChange?.(e, tabValue)}
         />
       );
@@ -54,15 +54,15 @@ const TabsFactory = React.memo<TabsProps>(
 
     if (variant === 'nav') {
       return (
-        <BoxFactory component={ButtonGroupFactory} style={contentStyle} stylist={[variants.root, stylist]}>
+        <BoxFactory component={ButtonGroupFactory} style={contentStyle} variants={{ root: variants.root }}>
           {Tabs}
         </BoxFactory>
       );
     }
 
     return (
-      <ScrollableFactory ref={ref} {...rest} direction="horizontal" stylist={[variants.root, stylist]}>
-        <BoxFactory style={contentStyle} stylist={[variants.content]}>
+      <ScrollableFactory ref={ref} {...rest} direction="horizontal" variants={{ root: variants.root }}>
+        <BoxFactory style={contentStyle} variants={{ root: variants.content }}>
           {Tabs}
         </BoxFactory>
       </ScrollableFactory>

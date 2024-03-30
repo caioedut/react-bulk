@@ -17,7 +17,7 @@ import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
 const CheckboxFactory = React.memo<CheckboxProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Checkbox;
     const { native, svg } = global.mapping;
@@ -121,7 +121,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
     return (
       <>
-        <BoxFactory data-rbk-input={name} style={style} stylist={stylist} variants={{ root: variants.root }}>
+        <BoxFactory data-rbk-input={name} style={style} variants={{ root: variants.root }}>
           <ButtonFactory
             ref={reference(ref, buttonRef)}
             {...rest}

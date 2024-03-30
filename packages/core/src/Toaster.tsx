@@ -109,10 +109,10 @@ function Toaster({ theme }: any, ref) {
           <CardFactory
             data-rbk-toaster={color}
             ref={cardRef}
+            variants={{ root: variants.root }}
             accessibility={{ role: 'alert' }}
             platform={{ web: { tabIndex: '-1' } }}
             bg={color}
-            stylist={[variants.root]}
             onPress={onPress}
           >
             <BoxFactory row noWrap alignItems="center">

@@ -12,7 +12,7 @@ import sleep from '../../utils/sleep';
 import BoxFactory from '../BoxFactory';
 
 const GrowBoxFactory = React.memo<GrowBoxProps>(
-  forwardRef(({ children, stylist, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.GrowBox;
     const { native } = global.mapping;
@@ -61,7 +61,7 @@ const GrowBoxFactory = React.memo<GrowBoxProps>(
     }, [contentRef, children, duration, native, transition]);
 
     return (
-      <BoxFactory {...transition.props} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory {...transition.props} variants={{ root: variants.root }} {...rest}>
         {children}
       </BoxFactory>
     );

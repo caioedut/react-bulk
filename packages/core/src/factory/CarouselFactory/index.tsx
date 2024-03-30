@@ -17,7 +17,7 @@ import ButtonFactory from '../ButtonFactory';
 import ScrollableFactory from '../ScrollableFactory';
 
 const CarouselFactory = React.memo<CarouselProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Carousel;
     const { web, native, svg, useDimensions } = global.mapping;
@@ -182,10 +182,10 @@ const CarouselFactory = React.memo<CarouselProps>(
     };
 
     return (
-      <BoxFactory ref={ref} style={style} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory ref={ref} style={style} variants={{ root: variants.root }} {...rest}>
         <ScrollableFactory
           ref={contentRef}
-          stylist={[variants.content]}
+          variants={{ root: variants.content }}
           pagingEnabled={pagingEnabled}
           hideScrollBar
           direction="horizontal"
@@ -200,7 +200,7 @@ const CarouselFactory = React.memo<CarouselProps>(
         </ScrollableFactory>
 
         {showChevron && hasPrev && (
-          <BoxFactory l={0} stylist={[variants.chevron]}>
+          <BoxFactory l={0} variants={{ root: variants.chevron }}>
             {typeof chevron === 'function' ? (
               chevron({ prev: true, next: false, color, onPress: scrollToPrev })
             ) : (
@@ -212,7 +212,7 @@ const CarouselFactory = React.memo<CarouselProps>(
         )}
 
         {showChevron && hasNext && (
-          <BoxFactory r={0} stylist={[variants.chevron]}>
+          <BoxFactory r={0} variants={{ root: variants.chevron }}>
             {typeof chevron === 'function' ? (
               chevron({ prev: false, next: true, color, onPress: scrollToNext })
             ) : (

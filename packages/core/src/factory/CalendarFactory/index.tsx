@@ -15,7 +15,7 @@ import InputFactory from '../InputFactory';
 import TextFactory from '../TextFactory';
 
 const CalendarFactory = React.memo<CalendarProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Calendar;
     const { locale, svg } = global.mapping;
@@ -92,7 +92,7 @@ const CalendarFactory = React.memo<CalendarProps>(
     );
 
     return (
-      <CardFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
+      <CardFactory ref={ref} variants={{ root: variants.root }} {...rest}>
         <GridFactory gap noWrap>
           <BoxFactory>
             <ButtonFactory

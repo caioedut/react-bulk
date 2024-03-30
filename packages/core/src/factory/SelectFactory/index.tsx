@@ -29,7 +29,7 @@ import LoadingFactory from '../LoadingFactory';
 import TextFactory from '../TextFactory';
 
 const SelectFactory = React.memo<SelectProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Select;
     const { native, svg, useDimensions } = global.mapping;
@@ -284,7 +284,7 @@ const SelectFactory = React.memo<SelectProps>(
       <BoxFactory
         data-rbk-input={name}
         style={style}
-        stylist={[variants.root, stylist]}
+        variants={{ root: variants.root }}
         onKeyDown={visible ? handleKeyDown : undefined}
       >
         {Boolean(label) && (
@@ -293,7 +293,7 @@ const SelectFactory = React.memo<SelectProps>(
             for={id}
             forRef={buttonRef}
             style={labelStyle}
-            stylist={[variants.label]}
+            variants={{ root: variants.label }}
             onPress={native ? handleOpen : undefined}
           >
             {label}
@@ -330,7 +330,7 @@ const SelectFactory = React.memo<SelectProps>(
         </ButtonFactory>
 
         {Boolean(input.error) && typeof input.error === 'string' && (
-          <TextFactory variant="caption" style={errorStyle} stylist={[variants.error]}>
+          <TextFactory variant="caption" style={errorStyle} variants={{ root: variants.error }}>
             {input.error}
           </TextFactory>
         )}

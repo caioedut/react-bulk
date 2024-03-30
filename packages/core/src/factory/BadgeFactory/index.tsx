@@ -8,7 +8,7 @@ import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
 const BadgeFactory = React.memo<BadgeProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Badge;
 
@@ -78,9 +78,9 @@ const BadgeFactory = React.memo<BadgeProps>(
     ];
 
     return (
-      <BoxFactory ref={ref} style={style} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory ref={ref} style={style} variants={{ root: variants.root }} {...rest}>
         {!dot && (
-          <TextFactory style={labelStyle} stylist={[variants.label]}>
+          <TextFactory style={labelStyle} variants={{ root: variants.label }}>
             {value ?? children ?? ''}
           </TextFactory>
         )}
