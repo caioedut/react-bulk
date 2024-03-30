@@ -137,7 +137,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
             style={buttonStyle}
             variants={{ root: variants.button }}
             accessibility={{
-              label,
+              label: typeof label === 'string' ? label : undefined,
               role: unique ? 'radio' : 'checkbox',
               state: { checked: input.state },
             }}
@@ -164,7 +164,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
             </BoxFactory>
           </ButtonFactory>
 
-          {Boolean(label) && (
+          {typeof label === 'string' ? (
             <LabelFactory
               for={id}
               forRef={buttonRef}
@@ -173,6 +173,8 @@ const CheckboxFactory = React.memo<CheckboxProps>(
             >
               {label}
             </LabelFactory>
+          ) : (
+            label
           )}
         </BoxFactory>
 

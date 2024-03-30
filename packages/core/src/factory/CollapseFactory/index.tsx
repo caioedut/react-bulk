@@ -28,7 +28,7 @@ const CollapseFactory = React.memo<CollapseProps>(
       ...rest
     } = factory2<CollapseProps>(props, options);
 
-    const defaultRef: any = useRef(null);
+    const defaultRef: any = useRef();
     const rootRef: RefObject<any> = ref || defaultRef;
 
     const isExpanded = useMemo(() => visible ?? expanded ?? false, [visible, expanded]);
@@ -47,9 +47,8 @@ const CollapseFactory = React.memo<CollapseProps>(
       if (!rootRef?.current) return;
 
       (async () => {
-        const size = await getFullHeight(rootRef.current);
+        const newSize = isExpanded ? await getFullHeight(rootRef.current) : 0;
         const metrics = await rect(rootRef.current);
-        const newSize = isExpanded ? size : 0;
 
         if (newSize === metrics.height) return;
 
@@ -74,8 +73,8 @@ const CollapseFactory = React.memo<CollapseProps>(
         }
       })();
 
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       // cannot add "transition" to dependencies
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rootRef, isExpanded, delay, timing, duration, web, native]);
 
     return (
