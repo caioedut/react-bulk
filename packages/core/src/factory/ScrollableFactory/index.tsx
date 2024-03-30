@@ -30,7 +30,7 @@ const ScrollableFactory = React.memo<ScrollableProps>(
       contentStyle,
       style,
       ...rest
-    } = factory2<ScrollableProps, typeof options>(props, options);
+    } = factory2<ScrollableProps>(props, options);
 
     const isHorizontal = direction === 'horizontal';
     const primaryColor = theme.color('primary');

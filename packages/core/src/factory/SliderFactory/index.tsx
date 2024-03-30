@@ -41,7 +41,7 @@ const SliderFactory = React.memo<SliderProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<RequiredSome<SliderProps, 'min' | 'max'>, typeof options>(props, options);
+    } = factory2<RequiredSome<SliderProps, 'min' | 'max'>>(props, options);
 
     id = useHtmlId(id);
 

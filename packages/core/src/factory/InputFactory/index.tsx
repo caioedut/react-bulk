@@ -7,7 +7,7 @@ import ChevronDown from '../../icons/ChevronDown';
 import ChevronUp from '../../icons/ChevronUp';
 import factory2 from '../../props/factory2';
 import getSize from '../../props/getSize';
-import { InputProps, InputValue, RequiredSome, ThemeProps } from '../../types';
+import { InputProps, InputValue } from '../../types';
 import defined from '../../utils/defined';
 import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
@@ -46,10 +46,9 @@ const InputFactory = React.memo<InputProps>(
       onFormChange,
       // Styles
       variants,
-      styleMap,
       style,
       ...rest
-    } = factory2<InputProps, typeof options>(props, options);
+    } = factory2<InputProps>(props, options);
 
     const inputRef = useRef<any>();
 
@@ -146,12 +145,14 @@ const InputFactory = React.memo<InputProps>(
       input.setState(Number(input.state || 0) + (signal || 1), event);
     }
 
+    console.log(variants);
+
     return (
       <InputBaseFactory
         ref={reference(ref, inputRef)}
         style={style}
         stylist={stylist}
-        styleMap={{ ...variants, ...styleMap }}
+        variants={variants}
         {...rest}
         onFocus={handleFocus}
         onBlur={handleBlur}

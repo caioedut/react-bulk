@@ -67,7 +67,7 @@ const SelectFactory = React.memo<SelectProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<SelectProps, 'color' | 'size' | 'searchCount'>, typeof options>(props, options);
+    } = factory2<RequiredSome<SelectProps, 'color' | 'size' | 'searchCount'>>(props, options);
 
     const buttonRef = useRef<any>();
     const scrollRef = useRef<any>();

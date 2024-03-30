@@ -10,6 +10,9 @@ import { customSpacings, styleProps, transformProps } from './styles/constants';
 export type RequiredSome<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>;
 
 /** @internal */
+type Prettify<T> = { [K in keyof T]: T[K] };
+
+/** @internal */
 type DistributiveOmit<T, K extends PropertyKey> = T extends any ? Omit<T, K> : never;
 
 /** @internal */
@@ -406,6 +409,21 @@ export type ThemeComponentProps<Props, Contexts extends keyof any> = {
   };
 };
 
+export type ThemeComponentProps2<Props extends AnyObject> = Prettify<{
+  name: string;
+  defaultProps: Partial<Props>;
+  defaultStyles: { root: RbkStyle } & {
+    [key in keyof NonNullable<Props['variants']>]: RbkStyle;
+  };
+  variants: {
+    [prop: string]: {
+      [value: string]: { root?: RbkStyle } & {
+        [key in keyof NonNullable<Props['variants']>]?: RbkStyle;
+      };
+    };
+  };
+}>;
+
 export type ThemeProps = {
   mode: ThemeModeValues;
 
@@ -497,53 +515,50 @@ export type ThemeProps = {
   contrast: (color: RbkColor, lightColor?: string | null, darkColor?: string | null) => string;
 
   components: {
-    Avatar: ThemeComponentProps<AvatarProps, 'root' | 'content'>;
-    Animation: ThemeComponentProps<AnimationProps, 'root'>;
-    Backdrop: ThemeComponentProps<BackdropProps, 'root'>;
-    Badge: ThemeComponentProps<BadgeProps, 'root' | 'label'>;
-    Box: ThemeComponentProps<BoxProps, 'root'>;
-    Button: ThemeComponentProps<ButtonProps, 'root' | 'label'>;
-    ButtonGroup: ThemeComponentProps<ButtonGroupProps, 'root' | 'content'>;
-    Calendar: ThemeComponentProps<CalendarProps, 'root'>;
-    Card: ThemeComponentProps<CardProps, 'root'>;
-    Carousel: ThemeComponentProps<CarouselProps, 'root' | 'content' | 'chevron'>;
-    Checkbox: ThemeComponentProps<CheckboxProps, 'root' | 'button' | 'error'>;
-    Collapse: ThemeComponentProps<CollapseProps, 'root'>;
-    Divider: ThemeComponentProps<DividerProps, 'root'>;
-    Drawer: ThemeComponentProps<DrawerProps, 'root' | 'backdrop'>;
-    Dropdown: ThemeComponentProps<DropdownProps, 'root' | 'backdrop'>;
-    Form: ThemeComponentProps<FormProps, 'root'>;
-    Grid: ThemeComponentProps<GridProps, 'root' | 'item'>;
-    GrowBox: ThemeComponentProps<GrowBoxProps, 'root'>;
-    Image: ThemeComponentProps<ImageProps, 'root'>;
-    InputBase: ThemeComponentProps<InputBaseProps, 'root' | 'content' | 'label' | 'input' | 'hint' | 'error'>;
-    Input: ThemeComponentProps<InputProps, 'root' | 'content' | 'label' | 'input' | 'hint' | 'error'>;
-    InputDate: ThemeComponentProps<InputDateProps, 'root'>;
-    InputPin: ThemeComponentProps<InputPinProps, 'root'>;
-    Label: ThemeComponentProps<LabelProps, 'root'>;
-    Link: ThemeComponentProps<LinkProps, 'root'>;
-    List: ThemeComponentProps<ListProps, 'root'>;
-    ListItem: ThemeComponentProps<ListItemProps, 'root'>;
-    Loading: ThemeComponentProps<LoadingProps, 'root' | 'label'>;
-    Modal: ThemeComponentProps<ModalProps, 'root' | 'backdrop'>;
-    Outline: ThemeComponentProps<OutlineProps, 'root'>;
-    Progress: ThemeComponentProps<ProgressProps, 'root' | 'bar' | 'label'>;
-    Scrollable: ThemeComponentProps<ScrollableProps, 'root' | 'content'>;
-    Select: ThemeComponentProps<SelectProps, 'root' | 'label' | 'error'>;
-    Slider: ThemeComponentProps<SliderProps, 'root' | 'rule' | 'bar' | 'thumb'>;
-    Table: ThemeComponentProps<TableProps, 'root'>;
-    Tabs: ThemeComponentProps<TabsProps, 'root' | 'content' | 'button' | 'active'>;
-    Terminal: ThemeComponentProps<TabsProps, 'root'>;
-    Text: ThemeComponentProps<TextProps, 'root'>;
-    Toaster: ThemeComponentProps<ToasterProps, 'root'>;
-    Tooltip: ThemeComponentProps<TooltipProps, 'root'>;
+    Avatar: ThemeComponentProps2<AvatarProps>;
+    Animation: ThemeComponentProps2<AnimationProps>;
+    Backdrop: ThemeComponentProps2<BackdropProps>;
+    Badge: ThemeComponentProps2<BadgeProps>;
+    Box: ThemeComponentProps2<BoxProps>;
+    Button: ThemeComponentProps2<ButtonProps>;
+    ButtonGroup: ThemeComponentProps2<ButtonGroupProps>;
+    Calendar: ThemeComponentProps2<CalendarProps>;
+    Card: ThemeComponentProps2<CardProps>;
+    Carousel: ThemeComponentProps2<CarouselProps>;
+    Checkbox: ThemeComponentProps2<CheckboxProps>;
+    Collapse: ThemeComponentProps2<CollapseProps>;
+    Divider: ThemeComponentProps2<DividerProps>;
+    Drawer: ThemeComponentProps2<DrawerProps>;
+    Dropdown: ThemeComponentProps2<DropdownProps>;
+    Form: ThemeComponentProps2<FormProps>;
+    Grid: ThemeComponentProps2<GridProps>;
+    GrowBox: ThemeComponentProps2<GrowBoxProps>;
+    Image: ThemeComponentProps2<ImageProps>;
+    InputBase: ThemeComponentProps2<InputBaseProps>;
+    Input: ThemeComponentProps2<InputProps>;
+    InputDate: ThemeComponentProps2<InputDateProps>;
+    InputPin: ThemeComponentProps2<InputPinProps>;
+    Label: ThemeComponentProps2<LabelProps>;
+    Link: ThemeComponentProps2<LinkProps>;
+    List: ThemeComponentProps2<ListProps>;
+    ListItem: ThemeComponentProps2<ListItemProps>;
+    Loading: ThemeComponentProps2<LoadingProps>;
+    Modal: ThemeComponentProps2<ModalProps>;
+    Outline: ThemeComponentProps2<OutlineProps>;
+    Progress: ThemeComponentProps2<ProgressProps>;
+    Scrollable: ThemeComponentProps2<ScrollableProps>;
+    Select: ThemeComponentProps2<SelectProps>;
+    Slider: ThemeComponentProps2<SliderProps>;
+    Table: ThemeComponentProps2<TableProps>;
+    Tabs: ThemeComponentProps2<TabsProps>;
+    Terminal: ThemeComponentProps2<TerminalProps>;
+    Text: ThemeComponentProps2<TextProps>;
+    Toaster: ThemeComponentProps2<ToasterProps>;
+    Tooltip: ThemeComponentProps2<TooltipProps>;
   };
 };
 
 export type ThemeEditProps = RecursivePartial<ThemeProps>;
-
-/** @deprecated use ThemeEditProps instead */
-export type ThemeOptionalProps = RecursivePartial<ThemeProps>;
 
 export type RbkTheme = ThemeProps & {
   setTheme: (options: ThemeModeValues | ThemeEditProps) => any;
@@ -554,11 +569,10 @@ export type BaseProps = Overwrite<
   Overwrite<
     StyleProps,
     {
-      /** @deprecated use styleMap instead */
+      /** @deprecated use variants instead */
       stylist?: any[];
 
-      /** @internal */
-      // styleMap?: { [key: string]: any };
+      // variants?: { root: any };
 
       ref?: Ref<any>;
       children?: ReactElement | any;
@@ -625,6 +639,10 @@ export type TextProps<ALLOW_ANY = true> = PropsWithStyles<
     weight?: 'normal' | 'bold' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | (string & {});
     transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
     numberOfLines?: number;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -634,6 +652,10 @@ export type LabelProps<ALLOW_ANY = true> = PropsWithStyles<
   {
     for?: string;
     forRef?: RefObject<ReactElement>;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -658,6 +680,10 @@ export type ButtonProps<ALLOW_ANY = true> = PropsWithStyles<
     // Styles
     contentStyle?: RbkStyle;
     labelStyle?: RbkStyle;
+    variants?: {
+      root?: any;
+      label?: any;
+    };
 
     /** @deprecated use startAddon instead */
     startIcon?: ReactElement;
@@ -676,6 +702,10 @@ export type ButtonGroupProps<ALLOW_ANY = true> = PropsWithStyles<
     variant?: 'solid' | 'outline' | 'text';
     // Styles
     contentStyle?: RbkStyle;
+    variants?: {
+      root?: any;
+      content?: any;
+    };
   }
 >;
 
@@ -738,7 +768,14 @@ export type InputBaseProps<ALLOW_ANY = true> = PropsWithStyles<
     errorStyle?: RbkStyle;
     labelStyle?: RbkStyle;
     inputStyle?: RbkStyle;
-    styleMap: { [key in keyof ThemeProps['components']['InputBase']['defaultStyles']]: any };
+    variants?: {
+      root: any;
+      content: any;
+      label: any;
+      input: any;
+      hint: any;
+      error: any;
+    };
   }
 >;
 
@@ -759,7 +796,14 @@ export type InputProps<ALLOW_ANY = true> = PropsWithStyles<
     onChange?: (event: RbkInputEvent, value: InputValue) => void;
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => void;
     // Styles
-    styleMap: { [key in keyof ThemeProps['components']['Input']['defaultStyles']]: any };
+    variants?: {
+      root: any;
+      content: any;
+      label: any;
+      input: any;
+      hint: any;
+      error: any;
+    };
   }
 >;
 
@@ -793,6 +837,12 @@ export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
     buttonStyle?: RbkStyle;
     errorStyle?: RbkStyle;
     labelStyle?: RbkStyle;
+    // Styles
+    variants?: {
+      root?: any;
+      label?: any;
+      error?: any;
+    };
 
     /** @deprecated use startAddon instead */
     startIcon?: ReactElement;
@@ -826,6 +876,11 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
     buttonStyle?: RbkStyle;
     errorStyle?: RbkStyle;
     labelStyle?: RbkStyle;
+    variants?: {
+      root?: any;
+      button?: any;
+      error?: any;
+    };
   }
 >;
 
@@ -847,10 +902,25 @@ export type SliderProps<ALLOW_ANY = true> = PropsWithStyles<
     onSlide?: (event: AnyObject, value: number) => any;
     onChange?: (event: AnyObject, value: number) => any;
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+    // Styles
+    variants?: {
+      root?: any;
+      rule?: any;
+      bar?: any;
+      thumb?: any;
+    };
   }
 >;
 
-export type CardProps<ALLOW_ANY = true> = PropsWithStyles<ALLOW_ANY, {}>;
+export type CardProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    // Styles
+    variants?: {
+      root?: any;
+    };
+  }
+>;
 
 export type CarouselProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
@@ -873,6 +943,12 @@ export type CarouselProps<ALLOW_ANY = true> = PropsWithStyles<
     // Styles
     itemStyle?: RbkStyle;
     chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;
+    // Styles
+    variants?: {
+      root?: any;
+      content?: any;
+      chevron?: any;
+    };
   }
 >;
 
@@ -896,8 +972,6 @@ export type InputDateProps<ALLOW_ANY = true> = PropsWithStyles<
       clear?: string;
       today?: string;
     };
-    // Styles
-    styleMap: { [key in keyof ThemeProps['components']['InputDate']['defaultStyles']]: any };
   }
 >;
 
@@ -924,6 +998,10 @@ export type ScrollableProps<ALLOW_ANY = true> = PropsWithStyles<
 
     // Styles
     contentStyle?: RbkStyle;
+    variants?: {
+      root?: any;
+      content?: any;
+    };
   }
 >;
 
@@ -940,6 +1018,10 @@ export type ImageProps<ALLOW_ANY = true> = PropsWithStyles<
     // Events
     onLoad?: Function;
     onError?: Function;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -950,6 +1032,10 @@ export type DividerProps<ALLOW_ANY = true> = PropsWithStyles<
     opacity?: number;
     size?: number | string;
     vertical?: boolean;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -957,6 +1043,11 @@ export type BackdropProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
     visible?: boolean;
+
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -968,6 +1059,11 @@ export type ModalProps<ALLOW_ANY = true> = PropsWithStyles<
     visible?: boolean;
     // Events
     onClose?: Function;
+    // Styles
+    variants?: {
+      root?: any;
+      backdrop?: any;
+    };
 
     /** @deprecated use onClose instead */
     onBackdropPress?: Function;
@@ -979,6 +1075,10 @@ export type CollapseProps<ALLOW_ANY = true> = PropsWithStyles<
   Pick<RbkAnimation, 'delay' | 'duration' | 'timing'>,
   {
     visible?: boolean;
+    // Styles
+    variants?: {
+      root?: any;
+    };
 
     /** @deprecated use visible instead */
     in?: boolean;
@@ -993,6 +1093,11 @@ export type DropdownProps<ALLOW_ANY = true> = PropsWithStyles<
     visible?: boolean;
     // Events
     onClose?: Function;
+    // Styles
+    variants?: {
+      root?: any;
+      backdrop?: any;
+    };
   }
 >;
 
@@ -1004,6 +1109,11 @@ export type LoadingProps<ALLOW_ANY = true> = PropsWithStyles<
     size?: RbkSize;
     // Styles
     labelStyle?: RbkStyle;
+    // Styles
+    variants?: {
+      root?: any;
+      label?: any;
+    };
   }
 >;
 
@@ -1013,6 +1123,11 @@ export type GridProps<ALLOW_ANY = true> = PropsWithStyles<
     breakpoints?: Partial<RbkBreakpoints>;
     gap?: number | true;
     size?: number;
+    // Styles
+    variants?: {
+      root?: any;
+      item?: any;
+    };
   }
 >;
 
@@ -1021,6 +1136,10 @@ export type TableProps<ALLOW_ANY = true> = PropsWithStyles<
   {
     columns: TableColumn[];
     rows?: any[] | any;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -1036,6 +1155,10 @@ export type BadgeProps<ALLOW_ANY = true> = PropsWithStyles<
     right?: boolean;
     // Styles
     labelStyle?: RbkStyle;
+    variants?: {
+      root?: any;
+      label?: any;
+    };
   }
 >;
 
@@ -1045,10 +1168,15 @@ export type FormProps<ALLOW_ANY = true> = PropsWithStyles<
   {
     data?: any;
     errors?: { [key: string]: string | boolean } | null;
+    // Events
     onSubmit?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
     onCancel?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
     onClear?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
     onChange?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -1061,6 +1189,10 @@ export type TooltipProps<ALLOW_ANY = true> = PropsWithStyles<
     position?: 'top' | 'bottom' | 'left' | 'right';
     title?: string;
     visible?: boolean;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -1084,6 +1216,11 @@ export type AnimationProps<ALLOW_ANY = true> = PropsWithStyles<
 
     /** @deprecated use duration instead */
     speed?: number;
+
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -1097,6 +1234,12 @@ export type ProgressProps<ALLOW_ANY = true> = PropsWithStyles<
     // Styles
     barStyle?: RbkStyle;
     labelStyle?: RbkStyle;
+    // Styles
+    variants?: {
+      root?: any;
+      bar?: any;
+      label?: any;
+    };
   }
 >;
 
@@ -1109,6 +1252,10 @@ export type ListItemProps<ALLOW_ANY = true> = PropsWithStyles<
     startAddon?: ReactElement;
     // Styles
     chevronStyle?: Overwrite<RbkStyle, { size?: number; color?: RbkColor }>;
+    // Styles
+    variants?: {
+      root?: any;
+    };
 
     /** @deprecated use startAddon instead */
     startIcon?: ReactElement;
@@ -1122,6 +1269,10 @@ export type LinkProps<ALLOW_ANY = true> = PropsWithStyles<
   TextProps<false>,
   {
     underline?: boolean;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -1129,9 +1280,12 @@ export type DrawerProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
     placement?: 'left' | 'right' | 'top' | 'bottom';
-
     // Styles
     backdropStyle?: RbkStyle;
+    variants?: {
+      root?: any;
+      backdrop?: any;
+    };
   }
 >;
 
@@ -1141,6 +1295,10 @@ export type OutlineProps<ALLOW_ANY = true> = PropsWithStyles<
     color?: RbkColor;
     size?: number;
     visible?: 'auto' | boolean;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -1159,6 +1317,12 @@ export type TabsProps<ALLOW_ANY = true> = PropsWithStyles<
     contentStyle?: RbkStyle;
     buttonStyle?: RbkStyle;
     activeStyle?: RbkStyle;
+    variants?: {
+      root?: any;
+      content?: any;
+      button?: any;
+      active?: any;
+    };
   }
 >;
 
@@ -1172,6 +1336,10 @@ export type ToasterProps = {
   width?: number | string;
   // Events
   onPress?: Function;
+  // Styles
+  variants?: {
+    root?: any;
+  };
 };
 
 export type CalendarProps<ALLOW_ANY = true> = PropsWithStyles<
@@ -1183,6 +1351,10 @@ export type CalendarProps<ALLOW_ANY = true> = PropsWithStyles<
     events?: (Date | string | number)[];
     // Events
     onPressDate?: (event: AnyObject, date: Date) => any;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -1197,6 +1369,10 @@ export type AvatarProps<ALLOW_ANY = true> = PropsWithStyles<
     source?: { uri?: string } | (string & {}) | (number & {});
     // Styles
     contentStyle?: RbkStyle;
+    variants?: {
+      root?: any;
+      content?: any;
+    };
   }
 >;
 
@@ -1210,6 +1386,10 @@ export type TerminalProps<ALLOW_ANY = true> = PropsWithStyles<
     commands?: {
       [key: string]: string | (() => Promise<string | void>);
     }[];
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -1220,6 +1400,10 @@ export type ListProps<ALLOW_ANY = true> = PropsWithStyles<
     renderDelay?: number;
     rowHeight?: number;
     rowFallbackComponent?: JSXElementConstructor<any> | string;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;
 
@@ -1244,6 +1428,7 @@ export type InputPinProps<ALLOW_ANY = true> = PropsWithStyles<
     | 'value'
     // Styles
     | 'inputStyle'
+    | 'variants'
     // Events
     | 'onChange'
     | 'onSubmit'
@@ -1252,8 +1437,6 @@ export type InputPinProps<ALLOW_ANY = true> = PropsWithStyles<
   {
     length?: number;
     type?: 'alphanumeric' | 'alphabetic' | 'numeric';
-    // Styles
-    styleMap: { [key in keyof ThemeProps['components']['InputPin']['defaultStyles']]: any };
   }
 >;
 
@@ -1261,5 +1444,9 @@ export type GrowBoxProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
     duration?: number;
+    // Styles
+    variants?: {
+      root?: any;
+    };
   }
 >;

@@ -28,7 +28,7 @@ const OutlineFactory = React.memo<OutlineProps>(
       onFocus,
       onBlur,
       ...rest
-    } = factory2<RequiredSome<OutlineProps, 'color' | 'size' | 'visible'>, typeof options>(props, options);
+    } = factory2<RequiredSome<OutlineProps, 'color' | 'size' | 'visible'>>(props, options);
 
     color = theme.color(color, 0.3);
     const boxShadow = `0 0 0 ${size}px ${color}`;

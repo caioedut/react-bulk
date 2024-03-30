@@ -29,7 +29,7 @@ const TabsFactory = React.memo<TabsProps>(
       buttonStyle,
       activeStyle,
       ...rest
-    } = factory2<TabsProps, typeof options>(props, options);
+    } = factory2<TabsProps>(props, options);
 
     const Tabs = tabs?.map((tab, index) => {
       const { value: tabValue = index, style: tabStyle, ...rest } = tab;

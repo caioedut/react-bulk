@@ -56,7 +56,6 @@ const InputBaseFactory = React.memo<InputBaseProps>(
       onKeyDown,
       // Styles
       variants,
-      styleMap,
       contentStyle,
       errorStyle,
       hintStyle,
@@ -64,10 +63,10 @@ const InputBaseFactory = React.memo<InputBaseProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2<
-      RequiredSome<InputBaseProps, 'autoCapitalize' | 'color' | 'returnKeyType' | 'size' | 'type'>,
-      typeof options
-    >(props, options);
+    } = factory2<RequiredSome<InputBaseProps, 'autoCapitalize' | 'color' | 'returnKeyType' | 'size' | 'type'>>(
+      props,
+      options,
+    );
 
     id = useHtmlId(id);
 
@@ -233,7 +232,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
         hidden={hidden || type === 'hidden'}
         style={style}
         stylist={stylist}
-        styleMap={{ root: [variants.root, styleMap?.root] }}
+        variants={{ root: variants.root }}
       >
         {Boolean(label) && (
           <LabelFactory
@@ -241,14 +240,14 @@ const InputBaseFactory = React.memo<InputBaseProps>(
             for={id}
             forRef={inputRef}
             style={labelStyle}
-            styleMap={{ root: [variants.label, styleMap?.label] }}
+            variants={{ root: variants.label }}
             onPress={native ? inputRef?.current?.focus?.() : undefined}
           >
             {label}
           </LabelFactory>
         )}
 
-        <BoxFactory style={contentStyle} styleMap={{ root: [variants.content, styleMap?.content] }}>
+        <BoxFactory style={contentStyle} variants={{ root: variants.content }}>
           {native && focused && (
             <BoxFactory
               position="absolute"
@@ -275,7 +274,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
               id={id}
               name={name}
               style={inputStyle}
-              styleMap={{ root: [variants.input, styleMap?.input] }}
+              variants={{ root: variants.input }}
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
@@ -289,13 +288,13 @@ const InputBaseFactory = React.memo<InputBaseProps>(
         </BoxFactory>
 
         {Boolean(hint) && (
-          <TextFactory variant="caption" style={hintStyle} styleMap={{ root: [variants.hint, styleMap?.hint] }}>
+          <TextFactory variant="caption" style={hintStyle} variants={{ root: variants.hint }}>
             {hint}
           </TextFactory>
         )}
 
         {Boolean(error) && typeof error === 'string' && (
-          <TextFactory variant="caption" style={errorStyle} styleMap={{ root: [variants.error, styleMap?.error] }}>
+          <TextFactory variant="caption" style={errorStyle} variants={{ root: variants.error }}>
             {error}
           </TextFactory>
         )}

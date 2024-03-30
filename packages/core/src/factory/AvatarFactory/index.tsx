@@ -25,7 +25,7 @@ const AvatarFactory = React.memo<AvatarProps>(
       style,
       contentStyle,
       ...rest
-    } = factory2<RequiredSome<AvatarProps, 'size'>, typeof options>(props, options);
+    } = factory2<RequiredSome<AvatarProps, 'size'>>(props, options);
 
     const [isLoadingImage, setIsLoadingImage] = useState(Boolean(source));
 

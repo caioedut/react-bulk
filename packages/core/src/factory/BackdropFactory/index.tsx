@@ -21,7 +21,7 @@ const BackdropFactory = React.memo<BackdropProps>(
       variants,
       containerStyle,
       ...rest
-    } = factory2<BackdropProps, typeof options>(props, options);
+    } = factory2<BackdropProps>(props, options);
 
     const defaultRef = useRef(null);
     ref = ref || defaultRef;

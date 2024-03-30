@@ -22,7 +22,7 @@ const DrawerFactory = React.memo<DrawerProps>(
       style,
       backdropStyle,
       ...rest
-    } = factory2<RequiredSome<DrawerProps, 'placement'>, typeof options>(props, options);
+    } = factory2<RequiredSome<DrawerProps, 'placement'>>(props, options);
 
     const visibleStyle = useMemo(
       () => ({

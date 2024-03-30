@@ -49,7 +49,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<CheckboxProps, 'color' | 'size'>, typeof options>(props, options);
+    } = factory2<RequiredSome<CheckboxProps, 'color' | 'size'>>(props, options);
 
     const buttonRef = useRef<any>();
 
@@ -120,8 +120,8 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     buttonStyle = [{ marginLeft: -theme.rem(0.5, fontSize) }, buttonStyle];
 
     return (
-      <BoxFactory data-rbk-input={name}>
-        <BoxFactory style={style} stylist={[variants.root, stylist]}>
+      <>
+        <BoxFactory data-rbk-input={name} style={style} stylist={stylist} variants={{ root: variants.root }}>
           <ButtonFactory
             ref={reference(ref, buttonRef)}
             {...rest}
@@ -135,7 +135,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
             size={size}
             variant="text"
             style={buttonStyle}
-            stylist={[variants.button]}
+            variants={{ root: variants.button }}
             accessibility={{
               label,
               role: unique ? 'radio' : 'checkbox',
@@ -177,11 +177,11 @@ const CheckboxFactory = React.memo<CheckboxProps>(
         </BoxFactory>
 
         {Boolean(input.error) && typeof input.error === 'string' && (
-          <TextFactory variant="caption" style={errorStyle} stylist={[variants.error]}>
+          <TextFactory variant="caption" style={errorStyle} variants={{ root: variants.error }}>
             {input.error}
           </TextFactory>
         )}
-      </BoxFactory>
+      </>
     );
   }),
 );

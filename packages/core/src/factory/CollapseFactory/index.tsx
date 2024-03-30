@@ -26,7 +26,7 @@ const CollapseFactory = React.memo<CollapseProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<CollapseProps, typeof options>(props, options);
+    } = factory2<CollapseProps>(props, options);
 
     const defaultRef: any = useRef(null);
     const rootRef: RefObject<any> = ref || defaultRef;

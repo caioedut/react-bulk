@@ -22,7 +22,7 @@ const LabelFactory = React.memo<LabelProps>(
       // Events
       onPress,
       ...rest
-    } = factory2<LabelProps, typeof options>(props, options);
+    } = factory2<LabelProps>(props, options);
 
     if (web && forProp) {
       Object.assign(rest, {

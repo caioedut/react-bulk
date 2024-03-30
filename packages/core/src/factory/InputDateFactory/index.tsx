@@ -50,10 +50,9 @@ const InputDateFactory = React.memo<InputDateProps>(
       onFormChange,
       // Styles
       variants,
-      styleMap,
       style,
       ...rest
-    } = factory2<RequiredSome<InputDateProps, 'color'>, typeof options>(props, options);
+    } = factory2<RequiredSome<InputDateProps, 'color'>>(props, options);
 
     const inputRef = useRef<any>();
     const triggerRef = useRef();
@@ -174,7 +173,7 @@ const InputDateFactory = React.memo<InputDateProps>(
           ref={reference(ref, inputRef)}
           style={style}
           stylist={stylist}
-          styleMap={{ ...variants, ...styleMap }}
+          variants={variants}
           {...rest}
           readOnly
           onFocus={handleFocus}

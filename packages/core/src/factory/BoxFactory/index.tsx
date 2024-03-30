@@ -17,13 +17,13 @@ import defined from '../../utils/defined';
 import global from '../../utils/global';
 
 const BoxFactory = React.memo<BoxProps>(
-  forwardRef(({ platform, className, styleMap = {}, stylist, children, ...props }, ref) => {
+  forwardRef(({ platform, className, stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Box;
     const { web, native, Button, Text, View, useDimensions } = global.mapping;
 
     // Extends from default props
-    props = useMemo(() => factory2<BoxProps, typeof options>(props, options), [props, options]);
+    props = useMemo(() => factory2<BoxProps>(props, options), [props, options]);
 
     // Platform specific props
     if (platform) {
@@ -130,7 +130,11 @@ const BoxFactory = React.memo<BoxProps>(
       style.unshift({ minWidth: 0, minHeight: 0 });
     }
 
-    const styles = [...(!noRootStyles ? variants.root : []), stylist, styleMap?.root];
+    if (noRootStyles && variants.root?.length > 1) {
+      variants.root?.shift();
+    }
+
+    const styles = [variants?.root, stylist];
     const responsiveStyle = extract(Object.keys(curBreakpoints), style);
     const breakpointNames = useMemo(
       () =>
