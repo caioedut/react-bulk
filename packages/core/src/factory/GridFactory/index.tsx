@@ -46,6 +46,8 @@ const GridFactory = React.memo<GridProps>(
               const isHidden = bkptPropValue === 'hide' || bkptPropValue === 'hidden' || bkptPropValue === false;
 
               bkptStyle[bkptName] = {
+                minWidth: 0,
+                minHeight: 0,
                 flexBasis: 'auto',
                 flexGrow: Number(isFlex),
                 flexShrink: Number(isFlex),
