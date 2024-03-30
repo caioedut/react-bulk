@@ -7,7 +7,7 @@ import global from '../../utils/global';
 import TextFactory from '../TextFactory';
 
 const LinkFactory = React.memo<LinkProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Link;
     const { Link } = global.mapping;
@@ -20,7 +20,7 @@ const LinkFactory = React.memo<LinkProps>(
       ...rest
     } = factory2<LinkProps>(props, options);
 
-    return <TextFactory ref={ref} component={Link} stylist={[variants.root, stylist]} {...rest} />;
+    return <TextFactory ref={ref} component={Link} variants={{ root: variants.root }} {...rest} />;
   }),
 );
 

@@ -10,7 +10,7 @@ import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
 const ImageFactory = React.memo<ImageProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Image;
     const { web, native, Image } = global.mapping;
@@ -229,7 +229,7 @@ const ImageFactory = React.memo<ImageProps>(
 
     if (native) {
       return (
-        <BoxFactory style={style} stylist={[variants.root, stylist]} onLayout={!isProcessed ? handleLayout : undefined}>
+        <BoxFactory style={style} variants={{ root: variants.root }} onLayout={!isProcessed ? handleLayout : undefined}>
           <BoxFactory ref={imageRef} component={Image} {...rest} noRootStyles />
         </BoxFactory>
       );
@@ -240,7 +240,7 @@ const ImageFactory = React.memo<ImageProps>(
         ref={imageRef}
         component={Image}
         style={style}
-        stylist={[variants.root, stylist]}
+        variants={{ root: variants.root }}
         {...rest}
         noRootStyles
       />

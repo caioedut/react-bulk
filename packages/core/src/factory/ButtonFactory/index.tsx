@@ -13,7 +13,7 @@ import LoadingFactory from '../LoadingFactory';
 import TextFactory from '../TextFactory';
 
 const ButtonFactory = React.memo<ButtonProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Button;
     const { web, Button } = global.mapping;
@@ -124,7 +124,7 @@ const ButtonFactory = React.memo<ButtonProps>(
 
     if (childrenArray.length && childrenArray.every((child) => ['string', 'number'].includes(typeof child))) {
       childrenArray = [
-        <TextFactory key={0} style={labelStyle} stylist={[variants.label]}>
+        <TextFactory key={0} style={labelStyle} variants={{ root: variants.label }}>
           {childrenArray.join('')}
         </TextFactory>,
       ];
@@ -135,7 +135,7 @@ const ButtonFactory = React.memo<ButtonProps>(
         ref={ref}
         component={web && rest.href ? 'a' : Button}
         style={style}
-        stylist={[variants.root, stylist]}
+        variants={{ root: variants.root }}
         {...rest}
         type={type}
         disabled={disabled}

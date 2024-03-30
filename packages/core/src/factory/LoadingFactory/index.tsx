@@ -9,7 +9,7 @@ import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
 const LoadingFactory = React.memo<LoadingProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Loading;
     const { Svg, Circle } = global.mapping.svg;
@@ -55,7 +55,7 @@ const LoadingFactory = React.memo<LoadingProps>(
     ];
 
     return (
-      <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory ref={ref} variants={{ root: variants.root }} {...rest}>
         <BoxFactory
           animation={{
             throttle: 0,
@@ -90,7 +90,7 @@ const LoadingFactory = React.memo<LoadingProps>(
         </BoxFactory>
 
         {Boolean(label) && (
-          <TextFactory style={labelStyle} stylist={[variants.label]}>
+          <TextFactory style={labelStyle} variants={{ root: variants.label }}>
             {label}
           </TextFactory>
         )}

@@ -8,7 +8,7 @@ import stdout from '../../utils/stdout';
 import BoxFactory from '../BoxFactory';
 
 const GridFactory = React.memo<GridProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Grid;
 
@@ -28,7 +28,7 @@ const GridFactory = React.memo<GridProps>(
     const checkBreakpoints = breakpoints ?? theme.breakpoints;
 
     return (
-      <BoxFactory ref={ref} style={[{ margin: -spacing }, style]} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory ref={ref} style={[{ margin: -spacing }, style]} variants={{ root: variants.root }} {...rest}>
         {childrenize(children).map((child, index) => {
           if (!child && !['string', 'number'].includes(typeof child)) {
             return null;
@@ -73,7 +73,7 @@ const GridFactory = React.memo<GridProps>(
               {...props}
               breakpoints={breakpoints}
               style={[props.style, { padding: spacing }, bkptStyle]}
-              stylist={[variants.item]}
+              variants={{ root: variants.item }}
             />
           );
         })}

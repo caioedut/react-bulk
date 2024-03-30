@@ -14,7 +14,7 @@ import { useForm } from '../FormFactory';
 import TooltipFactory from '../TooltipFactory';
 
 const SliderFactory = React.memo<SliderProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Slider;
     const { web, native, Input, View } = global.mapping;
@@ -348,7 +348,7 @@ const SliderFactory = React.memo<SliderProps>(
           height: iconSize,
           marginHorizontal: iconSize / 2,
         }}
-        stylist={[variants.root, stylist]}
+        variants={{ root: variants.root }}
       >
         {/* Full Width Rule */}
         <BoxFactory
@@ -358,7 +358,7 @@ const SliderFactory = React.memo<SliderProps>(
             marginRight: -iconSize / 2,
             height: ruleSize,
           }}
-          stylist={[variants.rule]}
+          variants={{ root: variants.rule }}
         />
 
         {/* Value Bar */}
@@ -376,7 +376,7 @@ const SliderFactory = React.memo<SliderProps>(
             height: ruleSize,
             width: `${percent}%`,
           }}
-          stylist={[variants.bar]}
+          variants={{ root: variants.bar }}
         />
 
         <BoxFactory
@@ -427,7 +427,7 @@ const SliderFactory = React.memo<SliderProps>(
                 width: iconSize,
               },
             ]}
-            stylist={[variants.thumb]}
+            variants={{ root: variants.thumb }}
           />
         </BoxFactory>
 

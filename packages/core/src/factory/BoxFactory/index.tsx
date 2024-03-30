@@ -17,7 +17,7 @@ import defined from '../../utils/defined';
 import global from '../../utils/global';
 
 const BoxFactory = React.memo<BoxProps>(
-  forwardRef(({ platform, className, stylist, children, ...props }, ref) => {
+  forwardRef(({ platform, className, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Box;
     const { web, native, Button, Text, View, useDimensions } = global.mapping;
@@ -134,7 +134,7 @@ const BoxFactory = React.memo<BoxProps>(
       variants.root?.shift();
     }
 
-    const styles = [variants?.root, stylist];
+    const styles = [variants?.root];
     const responsiveStyle = extract(Object.keys(curBreakpoints), style);
     const breakpointNames = useMemo(
       () =>

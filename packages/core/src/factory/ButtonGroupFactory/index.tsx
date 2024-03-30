@@ -8,7 +8,7 @@ import BoxFactory from '../BoxFactory';
 import ScrollableFactory from '../ScrollableFactory';
 
 const ButtonGroupFactory = React.memo<ButtonGroupProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.ButtonGroup;
 
@@ -28,8 +28,8 @@ const ButtonGroupFactory = React.memo<ButtonGroupProps>(
     const childrenArray = childrenize(children);
 
     return (
-      <ScrollableFactory ref={ref} stylist={[variants.root, stylist]} {...rest} direction="horizontal">
-        <BoxFactory style={contentStyle} stylist={[variants.content]}>
+      <ScrollableFactory ref={ref} variants={{ root: variants.root }} {...rest} direction="horizontal">
+        <BoxFactory style={contentStyle} variants={{ root: variants.content }}>
           {childrenArray.map((child, key) => {
             const length = Array.isArray(children) ? children.length : children ? 1 : 0;
 

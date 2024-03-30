@@ -8,7 +8,7 @@ import BoxFactory from '../BoxFactory';
 import ImageFactory from '../ImageFactory';
 
 const AvatarFactory = React.memo<AvatarProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Avatar;
 
@@ -60,8 +60,8 @@ const AvatarFactory = React.memo<AvatarProps>(
     ];
 
     return (
-      <BoxFactory ref={ref} stylist={[variants.root, stylist]} style={style} {...rest}>
-        <BoxFactory stylist={[variants.content]} style={contentStyle}>
+      <BoxFactory ref={ref} variants={{ root: variants.root }} style={style} {...rest}>
+        <BoxFactory variants={{ root: variants.content }} style={contentStyle}>
           <BoxFactory center style={absoluteFill}>
             {Boolean(source) && (
               <ImageFactory

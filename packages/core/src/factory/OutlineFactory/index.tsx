@@ -9,7 +9,7 @@ import global from '../../utils/global';
 import BoxFactory from '../BoxFactory';
 
 const OutlineFactory = React.memo<OutlineProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Outline;
     const { web, native } = global.mapping;
@@ -79,7 +79,7 @@ const OutlineFactory = React.memo<OutlineProps>(
       <BoxFactory
         ref={ref}
         style={style}
-        stylist={[variants.root, stylist]}
+        variants={{ root: variants.root }}
         {...rest}
         onFocus={handleFocus ?? onFocus}
         onBlur={handleBlur ?? onBlur}

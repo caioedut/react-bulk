@@ -7,7 +7,7 @@ import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
 const TableFactory = React.memo<TableProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Table;
 
@@ -64,7 +64,7 @@ const TableFactory = React.memo<TableProps>(
     style = [{ border }, style];
 
     return (
-      <BoxFactory ref={ref} style={style} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory ref={ref} style={style} variants={{ root: variants.root }} {...rest}>
         <BoxFactory row noWrap>
           {columns?.map((column, index) => (
             <BoxFactory key={index} style={buildStyle(column, false, index > 0)}>

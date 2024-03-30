@@ -17,7 +17,7 @@ import LabelFactory from '../LabelFactory';
 import TextFactory from '../TextFactory';
 
 const InputBaseFactory = React.memo<InputBaseProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.InputBase;
     const { web, native, Input, TextArea } = global.mapping;
@@ -231,7 +231,6 @@ const InputBaseFactory = React.memo<InputBaseProps>(
         data-rbk-input={name}
         hidden={hidden || type === 'hidden'}
         style={style}
-        stylist={stylist}
         variants={{ root: variants.root }}
       >
         {Boolean(label) && (

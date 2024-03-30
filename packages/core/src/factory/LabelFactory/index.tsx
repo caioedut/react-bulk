@@ -7,7 +7,7 @@ import global from '../../utils/global';
 import TextFactory from '../TextFactory';
 
 const LabelFactory = React.memo<LabelProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Label;
     const { web, native, Label } = global.mapping;
@@ -36,7 +36,7 @@ const LabelFactory = React.memo<LabelProps>(
       onPress = forRef?.current?.focus;
     }
 
-    return <TextFactory ref={ref} component={Label} stylist={[variants.root, stylist]} {...rest} onPress={onPress} />;
+    return <TextFactory ref={ref} component={Label} variants={{ root: variants.root }} {...rest} onPress={onPress} />;
   }),
 );
 

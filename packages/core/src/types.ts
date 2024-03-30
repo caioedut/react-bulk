@@ -569,9 +569,7 @@ export type BaseProps = Overwrite<
   Overwrite<
     StyleProps,
     {
-      /** @deprecated use variants instead */
-      stylist?: any[];
-
+      // TODO
       // variants?: { root: any };
 
       ref?: Ref<any>;

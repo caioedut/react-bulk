@@ -15,7 +15,7 @@ import ButtonFactory from '../ButtonFactory';
 import InputBaseFactory from '../InputBaseFactory';
 
 const InputFactory = React.memo<InputProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Input;
     const { svg } = global.mapping;
@@ -145,13 +145,10 @@ const InputFactory = React.memo<InputProps>(
       input.setState(Number(input.state || 0) + (signal || 1), event);
     }
 
-    console.log(variants);
-
     return (
       <InputBaseFactory
         ref={reference(ref, inputRef)}
         style={style}
-        stylist={stylist}
         variants={variants}
         {...rest}
         onFocus={handleFocus}

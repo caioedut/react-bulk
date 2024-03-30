@@ -8,7 +8,7 @@ import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 
 const DrawerFactory = React.memo<DrawerProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Drawer;
 
@@ -49,13 +49,18 @@ const DrawerFactory = React.memo<DrawerProps>(
     }, [visible, placement, hiddenStyle, visibleStyle, transition.start]);
 
     return (
-      <BackdropFactory visible={visible} onPress={onBackdropPress} style={backdropStyle} stylist={[variants.backdrop]}>
+      <BackdropFactory
+        visible={visible}
+        onPress={onBackdropPress}
+        style={backdropStyle}
+        variants={{ root: variants.backdrop }}
+      >
         <BoxFactory
           key={placement}
           {...rest}
           {...transition.props}
           style={[transition.props.style, style]}
-          stylist={[variants.root, stylist]}
+          variants={{ root: variants.root }}
         >
           {children}
         </BoxFactory>

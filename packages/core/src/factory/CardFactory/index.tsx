@@ -6,7 +6,7 @@ import { CardProps } from '../../types';
 import BoxFactory from '../BoxFactory';
 
 const CardFactory = React.memo<CardProps>(
-  forwardRef(({ stylist, ...props }, ref) => {
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Card;
 
@@ -17,7 +17,7 @@ const CardFactory = React.memo<CardProps>(
       ...rest
     } = factory2<CardProps>(props, options);
 
-    return <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest} />;
+    return <BoxFactory ref={ref} variants={{ root: variants.root }} {...rest} />;
   }),
 );
 

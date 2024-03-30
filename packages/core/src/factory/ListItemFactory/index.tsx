@@ -13,7 +13,7 @@ import GridFactory from '../GridFactory';
 import TextFactory from '../TextFactory';
 
 const ListItemFactory = React.memo<ListItemProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.ListItem;
     const { svg, View } = global.mapping;
@@ -51,7 +51,7 @@ const ListItemFactory = React.memo<ListItemProps>(
       ) : null;
 
     return (
-      <CardFactory ref={ref} p={gap} stylist={[variants.root, stylist]} {...rest}>
+      <CardFactory ref={ref} p={gap} variants={{ root: variants.root }} {...rest}>
         <GridFactory row noWrap alignItems="center" gap={gap}>
           {Boolean(startAddon) && <BoxFactory>{startAddon}</BoxFactory>}
 

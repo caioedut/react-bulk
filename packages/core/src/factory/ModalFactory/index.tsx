@@ -7,7 +7,7 @@ import BackdropFactory from '../BackdropFactory';
 import CardFactory from '../CardFactory';
 
 const ModalFactory = React.memo<ModalProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Modal;
 
@@ -25,8 +25,8 @@ const ModalFactory = React.memo<ModalProps>(
     } = factory2<ModalProps>(props, options);
 
     return (
-      <BackdropFactory visible={visible} stylist={[variants.backdrop]} onPress={onClose ?? onBackdropPress}>
-        <CardFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
+      <BackdropFactory visible={visible} variants={{ root: variants.backdrop }} onPress={onClose ?? onBackdropPress}>
+        <CardFactory ref={ref} variants={{ root: variants.root }} {...rest}>
           {children}
         </CardFactory>
       </BackdropFactory>
