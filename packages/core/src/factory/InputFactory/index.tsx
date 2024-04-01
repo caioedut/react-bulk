@@ -1,6 +1,6 @@
-import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 
-import reference from '../../element/reference';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import ChevronDown from '../../icons/ChevronDown';
@@ -91,7 +91,7 @@ const InputFactory = React.memo<InputProps>(
     id = useHtmlId(id);
 
     const form = useForm();
-    const inputRef = useRef<any>(null);
+    const inputRef = useDefaultRef<any>(ref);
 
     const [initialValue] = useState(defaultValue);
     const [focused, setFocused] = useState(false);
@@ -452,7 +452,7 @@ const InputFactory = React.memo<InputProps>(
             )}
 
             <BoxFactory
-              ref={reference(ref, inputRef)}
+              ref={inputRef}
               component={multiline ? TextArea : Input}
               style={inputStyle}
               stylist={[variants.input]}
