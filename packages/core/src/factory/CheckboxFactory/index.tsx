@@ -1,6 +1,6 @@
-import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 
-import reference from '../../element/reference';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
@@ -52,7 +52,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     color = theme.color(color);
 
     const form = useForm();
-    const buttonRef = useRef<any>(null);
+    const buttonRef = useDefaultRef<any>(ref);
 
     const [initialChecked] = useState(defaultChecked);
     const [_internal, _setInternal] = useState(checked ?? initialChecked);
@@ -178,7 +178,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     return (
       <BoxFactory data-rbk-input={name} style={style} stylist={[variants.root, stylist]}>
         <ButtonFactory
-          ref={reference(ref, buttonRef)}
+          ref={buttonRef}
           style={buttonStyle}
           stylist={[variants.button]}
           color={color}

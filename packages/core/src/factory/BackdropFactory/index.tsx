@@ -1,6 +1,6 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 
-import reference from '../../element/reference';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { BackdropProps } from '../../types';
@@ -24,7 +24,7 @@ const BackdropFactory = React.memo<BackdropProps>(
       ...rest
     } = factory2<BackdropProps>(props, options);
 
-    const rootRef = useRef<any>();
+    const rootRef = useDefaultRef<any>(ref);
 
     useEffect(() => {
       if (!web) return;
@@ -45,7 +45,7 @@ const BackdropFactory = React.memo<BackdropProps>(
     }, [rootRef, visible, web]);
 
     const Child = (
-      <BoxFactory ref={reference(ref, rootRef)} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory ref={rootRef} stylist={[variants.root, stylist]} {...rest}>
         <BoxFactory
           position="absolute"
           i={0}
