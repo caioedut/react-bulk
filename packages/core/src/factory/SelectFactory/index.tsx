@@ -1,8 +1,8 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import rect from '../../element/rect';
-import reference from '../../element/reference';
 import scrollIntoView from '../../element/scrollIntoView';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
@@ -72,7 +72,7 @@ const SelectFactory = React.memo<SelectProps>(
     id = useHtmlId(id);
 
     const form = useForm();
-    const buttonRef = useRef<any>();
+    const buttonRef = useDefaultRef<any>(ref);
     const scrollRef: any = useRef(null);
     const selectedRef: any = useRef(null);
     const optionsRef: any = useRef([]);
@@ -225,7 +225,7 @@ const SelectFactory = React.memo<SelectProps>(
       setTimeout(() => {
         scrollIntoView(scrollRef.current, selectedRef.current, false);
       }, 100);
-    }, [metrics?.maxHeight, visible]);
+    }, [scrollRef, selectedRef, metrics?.maxHeight, visible]);
 
     function optionFocus(index: number) {
       if (index < 0 || index > filteredOptions.length - 1) {
@@ -363,7 +363,7 @@ const SelectFactory = React.memo<SelectProps>(
         )}
 
         <ButtonFactory
-          ref={reference(ref, buttonRef)}
+          ref={buttonRef}
           color={!error && !focused && !colorful ? 'gray.light' : color}
           endAddon={
             loading ? (
