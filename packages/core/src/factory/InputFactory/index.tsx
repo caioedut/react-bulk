@@ -1,6 +1,6 @@
-import React, { forwardRef, useCallback, useRef } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 
-import reference from '../../element/reference';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useInput from '../../hooks/useInput';
 import useTheme from '../../hooks/useTheme';
 import ChevronDown from '../../icons/ChevronDown';
@@ -50,7 +50,7 @@ const InputFactory = React.memo<InputProps>(
       ...rest
     } = factory2<InputProps>(props, options);
 
-    const inputRef = useRef<any>();
+    const inputRef = useDefaultRef<any>(ref);
 
     const unmaskValue = useCallback(
       (value) => {
@@ -147,7 +147,7 @@ const InputFactory = React.memo<InputProps>(
 
     return (
       <InputBaseFactory
-        ref={reference(ref, inputRef)}
+        ref={inputRef}
         style={style}
         variants={variants}
         {...rest}
