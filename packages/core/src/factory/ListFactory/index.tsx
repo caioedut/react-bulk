@@ -1,7 +1,7 @@
-import React, { cloneElement, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { cloneElement, forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 
 import rect from '../../element/rect';
-import reference from '../../element/reference';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useTheme from '../../hooks/useTheme';
 import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
@@ -28,7 +28,7 @@ const ListFactory = React.memo<ListProps>(
       ...rest
     } = factory2<ListProps>(props, options);
 
-    const scrollRef = useRef<any>();
+    const scrollRef = useDefaultRef<any>(ref);
     const childrenArray = useMemo(() => childrenize(children), [children]);
     const [visible, setVisible] = useState<number[]>([]);
 
@@ -87,12 +87,7 @@ const ListFactory = React.memo<ListProps>(
     );
 
     return (
-      <ScrollableFactory
-        ref={reference(ref, scrollRef)}
-        variants={{ root: variants.root }}
-        {...rest}
-        onScroll={handleScroll}
-      >
+      <ScrollableFactory ref={scrollRef} variants={{ root: variants.root }} {...rest} onScroll={handleScroll}>
         {childrenArray.map((child, index) => {
           if (visible.includes(index)) {
             return cloneElement(child, { key: index });

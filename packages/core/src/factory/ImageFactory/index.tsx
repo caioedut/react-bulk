@@ -1,6 +1,6 @@
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 
-import reference from '../../element/reference';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import get from '../../props/get';
@@ -38,7 +38,7 @@ const ImageFactory = React.memo<ImageProps>(
       ...rest
     } = factory2<RequiredSome<ImageProps, 'mode'>>(props, options);
 
-    const imageRef = useRef<any>();
+    const imageRef = useDefaultRef<any>(ref);
 
     // Defaults
     width = width ?? w ?? get('width', style) ?? get('w', style);
@@ -230,14 +230,14 @@ const ImageFactory = React.memo<ImageProps>(
     if (native) {
       return (
         <BoxFactory style={style} variants={{ root: variants.root }} onLayout={!isProcessed ? handleLayout : undefined}>
-          <BoxFactory ref={reference(ref, imageRef)} component={Image} {...rest} noRootStyles />
+          <BoxFactory ref={imageRef} component={Image} {...rest} noRootStyles />
         </BoxFactory>
       );
     }
 
     return (
       <BoxFactory
-        ref={reference(ref, imageRef)}
+        ref={imageRef}
         component={Image}
         style={style}
         variants={{ root: variants.root }}

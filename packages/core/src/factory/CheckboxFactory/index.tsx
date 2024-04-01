@@ -1,6 +1,6 @@
-import React, { forwardRef, useCallback, useRef } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 
-import reference from '../../element/reference';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useHtmlId from '../../hooks/useHtmlId';
 import useInput from '../../hooks/useInput';
 import useTheme from '../../hooks/useTheme';
@@ -51,7 +51,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       ...rest
     } = factory2<RequiredSome<CheckboxProps, 'color' | 'size'>>(props, options);
 
-    const buttonRef = useRef<any>();
+    const buttonRef = useDefaultRef<any>(ref);
 
     // const setInternal = useCallback(
     //   (value) => {
@@ -123,7 +123,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       <>
         <BoxFactory data-rbk-input={name} style={style} variants={{ root: variants.root }}>
           <ButtonFactory
-            ref={reference(ref, buttonRef)}
+            ref={buttonRef}
             {...rest}
             circular
             id={id}
