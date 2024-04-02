@@ -48,7 +48,7 @@ const GridFactory = React.memo<GridProps>(
               bkptStyle[bkptName] = {
                 minWidth: 0,
                 minHeight: 0,
-                flexBasis: 'auto',
+                flexBasis: 0,
                 flexGrow: Number(isFlex),
                 flexShrink: Number(isFlex),
                 display: isHidden ? 'none' : 'flex',
