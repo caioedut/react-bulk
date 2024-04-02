@@ -343,13 +343,8 @@ const InputFactory = React.memo<InputProps>(
     const handleFocus = (event) => {
       setFocused(true);
 
-      if (web) {
-        if (selectTextOnFocus) {
-          inputRef.current?.select();
-        } else {
-          const end = string(internal).length;
-          inputRef.current?.setSelectionRange(end, end);
-        }
+      if (web && selectTextOnFocus) {
+        inputRef.current.select();
       }
 
       dispatchEvent('focus', internal, event, onFocus);
