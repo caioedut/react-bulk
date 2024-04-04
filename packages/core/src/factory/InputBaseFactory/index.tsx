@@ -182,18 +182,13 @@ const InputBaseFactory = React.memo<InputBaseProps>(
       (event) => {
         setFocused(true);
 
-        if (web) {
-          if (selectTextOnFocus) {
-            inputRef.current?.select();
-          } else {
-            const end = string(rest.value).length;
-            inputRef.current?.setSelectionRange(end, end);
-          }
+        if (web && selectTextOnFocus) {
+          inputRef.current?.select();
         }
 
         onFocus?.(event);
       },
-      [onFocus, selectTextOnFocus, rest.value, web],
+      [inputRef, selectTextOnFocus, onFocus, web],
     );
 
     const handleBlur = useCallback(
