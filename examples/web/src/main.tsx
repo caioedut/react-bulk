@@ -72,47 +72,47 @@ export default function Main() {
     // }, 1000);
   }, []);
 
-  return (
-    <Form
-      p={16}
-      onSubmit={(e, data, errors) => {
-        console.log(e);
-        console.log(data);
-        console.log(errors);
-      }}
-    >
-      <Box>
-        {/*<input type="text" {...input.props} />*/}
-        <Input
-          name="thing"
-          defaultValue="1"
-          value={inputValue}
-          error={inputError}
-          onChange={(e, value) => {
-            // console.log(e);
-            console.log(value);
-          }}
-        />
-      </Box>
-      <Box mt={4}>
-        <Input
-          name="age"
-          type="number"
-          onChange={(e, value) => {
-            console.log(value);
-          }}
-        />
-      </Box>
-      <Box row noWrap mt={4} style={{ gap: '16px' }}>
-        <Button onPress={() => setInputValue(`${Date.now()}`)}>Random</Button>
-        <Button onPress={() => setInputError('Ta errado jovem')}>Error</Button>
-        <Button onPress={() => setInputError(undefined)}>No Error</Button>
-      </Box>
-      <Box mt={4}>
-        <Button type="submit">Submit</Button>
-      </Box>
-    </Form>
-  );
+  // return (
+  //   <Form
+  //     p={16}
+  //     onSubmit={(e, data, errors) => {
+  //       console.log(e);
+  //       console.log(data);
+  //       console.log(errors);
+  //     }}
+  //   >
+  //     <Box>
+  //       {/*<input type="text" {...input.props} />*/}
+  //       <Input
+  //         name="thing"
+  //         defaultValue="1"
+  //         value={inputValue}
+  //         error={inputError}
+  //         onChange={(e, value) => {
+  //           // console.log(e);
+  //           console.log(value);
+  //         }}
+  //       />
+  //     </Box>
+  //     <Box mt={4}>
+  //       <Input
+  //         name="age"
+  //         type="number"
+  //         onChange={(e, value) => {
+  //           console.log(value);
+  //         }}
+  //       />
+  //     </Box>
+  //     <Box row noWrap mt={4} style={{ gap: '16px' }}>
+  //       <Button onPress={() => setInputValue(`${Date.now()}`)}>Random</Button>
+  //       <Button onPress={() => setInputError('Ta errado jovem')}>Error</Button>
+  //       <Button onPress={() => setInputError(undefined)}>No Error</Button>
+  //     </Box>
+  //     <Box mt={4}>
+  //       <Button type="submit">Submit</Button>
+  //     </Box>
+  //   </Form>
+  // );
 
   return (
     <Scrollable bg="background.secondary" contentInset={theme.shape.gap}>
