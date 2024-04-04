@@ -34,6 +34,8 @@ export { default as remove } from './props/remove';
 /** @internal */
 export { default as getFullHeight } from './element/getFullHeight';
 /** @internal */
+export { default as getFullSize } from './element/getFullSize';
+/** @internal */
 export { default as rect } from './element/rect';
 /** @internal */
 export { default as reference } from './element/reference';
