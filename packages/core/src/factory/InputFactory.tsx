@@ -165,7 +165,7 @@ const InputFactory = React.memo<InputProps>(
         endAddon={
           <BoxFactory row noWrap center>
             {type === 'number' && (
-              <BoxFactory mr={endAddon ? 1 : -1}>
+              <BoxFactory h={theme.rem(size)} mr={endAddon ? 1 : -1}>
                 {[+1, -1].map((item) => {
                   const isInc = item > 0;
                   const Icon = isInc ? ChevronUp : ChevronDown;

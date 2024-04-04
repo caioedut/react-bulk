@@ -83,7 +83,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
     );
 
     const shadowColor = theme.color(color, 0.3);
-    const baseSize = theme.rem(size as number);
+    const baseSize = theme.rem(size);
     const spacing = (baseSize - theme.rem()) / 2;
     const height = multiline ? theme.rem() * (rows ?? 6) + spacing * 2 : baseSize;
 
@@ -234,7 +234,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
             forRef={inputRef}
             style={labelStyle}
             variants={{ root: variants.label }}
-            onPress={native ? inputRef?.current?.focus?.() : undefined}
+            onPress={native ? () => inputRef?.current?.focus?.() : undefined}
           >
             {label}
           </LabelFactory>
@@ -254,7 +254,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
 
           <BoxFactory row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
             {Boolean(startAddon) && (
-              <BoxFactory style={{ marginLeft: spacing }} onPress={() => inputRef?.current?.focus?.()}>
+              <BoxFactory ml={`${spacing}px`} onPress={() => inputRef?.current?.focus?.()}>
                 {startAddon}
               </BoxFactory>
             )}
@@ -273,7 +273,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
             />
 
             {Boolean(endAddon) && (
-              <BoxFactory style={{ marginRight: spacing }} onPress={() => inputRef?.current?.focus?.()}>
+              <BoxFactory mr={`${spacing}px`} onPress={() => inputRef?.current?.focus?.()}>
                 {endAddon}
               </BoxFactory>
             )}
