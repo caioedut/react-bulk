@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
 
-import rect from '../element/rect';
+import getFullSize from '../element/getFullSize';
 import setNativeStyle from '../element/setNativeStyle';
 import useAnimation from '../hooks/useAnimation';
 import useTheme from '../hooks/useTheme';
@@ -8,7 +8,6 @@ import factory2 from '../props/factory2';
 import jss from '../styles/jss';
 import { GrowBoxProps } from '../types';
 import global from '../utils/global';
-import sleep from '../utils/sleep';
 import BoxFactory from './BoxFactory';
 
 const GrowBoxFactory = React.memo<GrowBoxProps>(
@@ -32,32 +31,21 @@ const GrowBoxFactory = React.memo<GrowBoxProps>(
     const transition = useAnimation({ ...jss(style), height: 0, width: 0 }, contentRef);
 
     useEffect(() => {
-      requestAnimationFrame(async () => {
-        if (!contentRef.current) return;
+      if (!contentRef.current) return;
 
-        setNativeStyle(contentRef.current, {
-          height: 'auto',
-          width: 'auto',
-        });
+      (async () => {
+        const { height, width } = await getFullSize(contentRef.current);
 
-        if (native) {
-          await sleep(0);
-        }
-
-        const { height, width } = await rect(contentRef.current);
-
-        transition.start({
+        await transition.start({
           duration,
           to: { height, width },
         });
 
-        await sleep(duration);
-
         setNativeStyle(contentRef.current, {
           height: 'auto',
           width: 'auto',
         });
-      });
+      })();
     }, [contentRef, children, duration, native, transition]);
 
     return (

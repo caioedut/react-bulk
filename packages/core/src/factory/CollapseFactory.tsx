@@ -42,7 +42,7 @@ const CollapseFactory = React.memo<CollapseProps>(
     );
 
     useEffect(() => {
-      if (!rootRef?.current) return;
+      if (!rootRef.current) return;
 
       (async () => {
         const newSize = visible ? await getFullHeight(rootRef.current) : 0;
