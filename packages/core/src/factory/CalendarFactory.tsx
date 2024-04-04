@@ -7,6 +7,7 @@ import factory2 from '../props/factory2';
 import { AnyObject, CalendarProps } from '../types';
 import { dateify } from '../utils/date';
 import global from '../utils/global';
+import string from '../utils/string';
 import BoxFactory from './BoxFactory';
 import ButtonFactory from './ButtonFactory';
 import CardFactory from './CardFactory';
@@ -68,6 +69,8 @@ const CalendarFactory = React.memo<CalendarProps>(
     }, [date]);
 
     const handleYear = useCallback((year: number) => {
+      if (string(year).length !== 4) return;
+
       setInternal((current) => {
         const newDate = dateify(current.getTime());
         newDate.setFullYear(year);
@@ -120,11 +123,11 @@ const CalendarFactory = React.memo<CalendarProps>(
               <ChevronRight svg={svg} color={color} />
             </ButtonFactory>
           </BoxFactory>
-          <BoxFactory w={110}>
+          <BoxFactory w={112}>
             <InputFactory
-              readOnly
               colorful
               type="number"
+              min={1000}
               color={color}
               value={internal.getFullYear()}
               inputStyle={{ textAlign: 'center' }}
