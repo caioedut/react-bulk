@@ -6,29 +6,39 @@ import Platform from './Platform';
 import Portal from './Portal';
 import Toaster, { ToasterRef } from './Toaster';
 import createTheme from './createTheme';
+import BoxFactory from './factory/BoxFactory';
 import { RbkTheme, ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
 import global from './utils/global';
+
+export type Responder = {
+  onStartShouldSetResponder?: () => boolean;
+  onMoveShouldSetResponder?: () => boolean;
+  onResponderGrant?: ({ nativeEvent }) => void;
+  onResponderMove?: ({ nativeEvent }) => void;
+  onResponderRelease?: ({ nativeEvent }) => void;
+  onResponderTerminate?: ({ nativeEvent }) => void;
+};
 
 const toasterRef = createRef<any>();
 
 export const Context = createContext<{
   theme: RbkTheme;
+  setResponder: (value: Responder | undefined) => void;
   toasterRef: MutableRefObject<ToasterRef>;
-}>({
-  theme: {} as RbkTheme,
-  toasterRef,
-});
+}>(null as any);
 
 function ReactBulk({ theme, children }: any) {
   const { web, native } = Platform;
 
-  const [themeState, setThemeState] = useState<ThemeProps>();
+  const [responder, setResponder] = useState<Responder>();
 
-  global.theme = themeState;
+  const [themeState, setThemeState] = useState<ThemeProps>();
 
   const setTheme = useCallback((theme: ThemeModeValues | ThemeEditProps) => {
     setThemeState(createTheme(typeof theme === 'string' ? { mode: theme } : theme));
   }, []);
+
+  global.theme = themeState;
 
   useEffect(() => {
     setTheme(theme);
@@ -42,12 +52,17 @@ function ReactBulk({ theme, children }: any) {
     <Context.Provider
       value={{
         theme: { ...themeState, setTheme },
+        setResponder,
         toasterRef,
       }}
     >
       {web && <BaseWeb theme={themeState}>{children}</BaseWeb>}
 
-      {native && <BaseNative theme={themeState}>{children}</BaseNative>}
+      {native && (
+        <BoxFactory flex minh="100%" minw="100%" {...responder}>
+          <BaseNative theme={themeState}>{children}</BaseNative>
+        </BoxFactory>
+      )}
 
       <Toaster ref={toasterRef} theme={themeState} />
 

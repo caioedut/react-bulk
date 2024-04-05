@@ -29,6 +29,7 @@ import {
   Loading,
   Modal,
   Progress,
+  Resizable,
   Scrollable,
   Select,
   Slider,
@@ -86,6 +87,10 @@ export default function Main() {
 
       <Card mt={theme.shape.gap}>
         <ListExample />
+      </Card>
+
+      <Card mt={theme.shape.gap}>
+        <ResizableExample />
       </Card>
 
       <Card mt={theme.shape.gap}>
@@ -753,6 +758,22 @@ function ListExample() {
           </Text>
         ))}
       </List>
+    </>
+  );
+}
+
+function ResizableExample() {
+  const theme = useTheme();
+
+  return (
+    <>
+      <Text variant="title" mb={theme.shape.gap}>
+        Resizable
+      </Text>
+
+      <Resizable w={100} h={100}>
+        <Box flex border bg="background.secondary" w="100%" h="100%" />
+      </Resizable>
     </>
   );
 }
