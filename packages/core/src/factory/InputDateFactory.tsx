@@ -29,6 +29,7 @@ const InputDateFactory = React.memo<InputDateProps>(
     // Extends from default props
     let {
       color,
+      controlled,
       defaultValue,
       disabled,
       error,
@@ -118,6 +119,7 @@ const InputDateFactory = React.memo<InputDateProps>(
       value,
       defaultValue,
       error,
+      controlled,
       editable: !disabled && !readOnly,
       mask: (value) => resolveToFormat(value),
       unmask: (value) => resolveAsISO(value),

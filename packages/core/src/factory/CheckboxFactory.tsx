@@ -53,19 +53,12 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
     const buttonRef = useDefaultRef<any>(ref);
 
-    // const setInternal = useCallback(
-    //   (value) => {
-    //     if (controlled) return;
-    //     _setInternal(resolveValue(value));
-    //   },
-    //   [controlled, resolveValue],
-    // );
-
     const input = useInput({
       name,
       value: checked,
       defaultValue: defaultChecked,
       error,
+      controlled,
       editable: !disabled && !readOnly,
       unmask: (state) => (state === true ? value ?? true : false),
       onChange: (event, value) => dispatchEvent('change', event, onChange, value),
