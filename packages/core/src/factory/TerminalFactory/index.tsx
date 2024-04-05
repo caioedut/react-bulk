@@ -1,6 +1,7 @@
 import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import scrollToEnd from '../../element/scrollToEnd';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { AnyObject, RbkColor, TerminalProps } from '../../types';
@@ -36,8 +37,7 @@ const TerminalFactory = React.memo<TerminalProps>(
       ...rest
     } = factory2<TerminalProps>(props, options);
 
-    const defaultRef = useRef();
-    const scrollRef = (ref ?? defaultRef) as React.MutableRefObject<any>;
+    const scrollRef = useDefaultRef<any>(ref);
     const inputRef = useRef<any>();
 
     const [isLocked, setIsLocked] = useState(false);
@@ -49,6 +49,7 @@ const TerminalFactory = React.memo<TerminalProps>(
     );
 
     if (native) {
+      rest.contentInsetAdjustmentBehavior = 'never';
       rest.onContentSizeChange = () => postScroll(scrollRef.current);
     }
 
@@ -93,7 +94,7 @@ const TerminalFactory = React.memo<TerminalProps>(
 
           messages
             .slice(0, -1)
-            .filter(({ prompt }) => prompt)
+            .filter(({ prompt, body }) => prompt && body?.trim())
             .filter((_, index) => !args || Number(args) === index + 1)
             .forEach(({ body }, index) => {
               addMessage(`${args || index + 1}`.padStart(4, ' ') + ' ' + body);
@@ -231,7 +232,7 @@ const TerminalFactory = React.memo<TerminalProps>(
     };
 
     return (
-      <ScrollableFactory ref={scrollRef} stylist={[variants.root, stylist]} {...rest} contentStyle={{ minh: '100%' }}>
+      <ScrollableFactory ref={scrollRef} stylist={[variants.root, stylist]} {...rest}>
         <BoxFactory
           flex
           p={2}

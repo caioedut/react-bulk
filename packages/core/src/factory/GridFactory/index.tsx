@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 
-import useBreakpoints from '../../hooks/useBreakpoints';
 import useTheme from '../../hooks/useTheme';
 import childrenize from '../../props/childrenize';
 import factory2 from '../../props/factory2';
@@ -26,7 +25,7 @@ const GridFactory = React.memo<GridProps>(
 
     gap = gap === true ? theme.shape.gap : gap;
     const spacing = !gap ? 0 : theme.spacing(gap / 2);
-    const checkBreakpoints = useBreakpoints(breakpoints);
+    const checkBreakpoints = breakpoints ?? theme.breakpoints;
 
     return (
       <BoxFactory ref={ref} style={[{ margin: -spacing }, style]} stylist={[variants.root, stylist]} {...rest}>
@@ -36,31 +35,28 @@ const GridFactory = React.memo<GridProps>(
           }
 
           const props = { ...Object(child?.props) };
-          let bkptStyle: RbkStyle = {};
+          const bkptStyle: NonNullable<RbkStyle> = {};
 
-          Object.entries(checkBreakpoints).forEach(([breakpoint, isBkptActive]) => {
-            if (breakpoint in props && isBkptActive) {
-              const value = props[breakpoint];
-              const width = (value / size) * 100;
+          Object.keys(checkBreakpoints).forEach((bkptName) => {
+            if (bkptName in props) {
+              const bkptPropValue = props[bkptName];
 
-              const isAuto = value === 'auto';
-              const isFlex = value === 'flex' || value === true;
-              const isHidden = value === 'hide' || value === 'hidden' || value === false;
+              const isSize = typeof bkptPropValue === 'number';
+              const isFlex = bkptPropValue === 'flex' || bkptPropValue === true;
+              const isHidden = bkptPropValue === 'hide' || bkptPropValue === 'hidden' || bkptPropValue === false;
 
-              if (isFlex) {
-                bkptStyle = { flex: 1 };
-              } else if (!isAuto) {
-                bkptStyle = { width: `${width}%` };
-              } else if (isHidden) {
-                bkptStyle = {
-                  display: 'none',
-                  opacity: 0,
-                  overflow: 'hidden',
-                };
-              }
+              bkptStyle[bkptName] = {
+                minWidth: 0,
+                minHeight: 0,
+                flexBasis: isFlex ? 0 : 'auto',
+                flexGrow: Number(isFlex),
+                flexShrink: Number(isFlex),
+                display: isHidden ? 'none' : 'flex',
+                width: isSize ? `${(bkptPropValue / size) * 100}%` : 'auto',
+              };
             }
 
-            delete props[breakpoint];
+            delete props[bkptName];
           });
 
           if (
@@ -77,6 +73,7 @@ const GridFactory = React.memo<GridProps>(
               key={index}
               component={child?.type}
               {...props}
+              breakpoints={breakpoints}
               style={[props.style, { padding: spacing }, bkptStyle]}
               stylist={[variants.item]}
             />

@@ -1,6 +1,6 @@
-import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 
-import reference from '../../element/reference';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import ChevronDown from '../../icons/ChevronDown';
@@ -73,6 +73,7 @@ const InputFactory = React.memo<InputProps>(
       onBlur,
       onFormChange,
       onSubmit,
+      onErrorChange,
       // Styles
       variants,
       contentStyle,
@@ -90,7 +91,7 @@ const InputFactory = React.memo<InputProps>(
     id = useHtmlId(id);
 
     const form = useForm();
-    const inputRef = useRef<any>(null);
+    const inputRef = useDefaultRef<any>(ref);
 
     const [initialValue] = useState(defaultValue);
     const [focused, setFocused] = useState(false);
@@ -308,6 +309,10 @@ const InputFactory = React.memo<InputProps>(
     }, [errorProp]);
 
     useEffect(() => {
+      onErrorChange?.(error);
+    }, [error, onErrorChange]);
+
+    useEffect(() => {
       if (!name || !form) return;
 
       form.setField({
@@ -338,13 +343,8 @@ const InputFactory = React.memo<InputProps>(
     const handleFocus = (event) => {
       setFocused(true);
 
-      if (web) {
-        if (selectTextOnFocus) {
-          inputRef.current?.select();
-        } else {
-          const end = string(internal).length;
-          inputRef.current?.setSelectionRange(end, end);
-        }
+      if (web && selectTextOnFocus) {
+        inputRef.current.select();
       }
 
       dispatchEvent('focus', internal, event, onFocus);
@@ -408,7 +408,12 @@ const InputFactory = React.memo<InputProps>(
     ];
 
     return (
-      <BoxFactory hidden={hidden || type === 'hidden'} style={style} stylist={[variants.root, stylist]}>
+      <BoxFactory
+        data-rbk-input={name}
+        hidden={hidden || type === 'hidden'}
+        style={style}
+        stylist={[variants.root, stylist]}
+      >
         {Boolean(label) && (
           <LabelFactory
             numberOfLines={1}
@@ -442,7 +447,7 @@ const InputFactory = React.memo<InputProps>(
             )}
 
             <BoxFactory
-              ref={reference(ref, inputRef)}
+              ref={inputRef}
               component={multiline ? TextArea : Input}
               style={inputStyle}
               stylist={[variants.input]}

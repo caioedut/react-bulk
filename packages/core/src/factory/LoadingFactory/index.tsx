@@ -5,7 +5,6 @@ import factory2 from '../../props/factory2';
 import { LoadingProps, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
-import AnimationFactory from '../AnimationFactory';
 import BoxFactory from '../BoxFactory';
 import TextFactory from '../TextFactory';
 
@@ -57,13 +56,15 @@ const LoadingFactory = React.memo<LoadingProps>(
 
     return (
       <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
-        <AnimationFactory
-          in
-          loop
-          duration={500}
-          timing="linear"
-          from={{ transform: [{ rotate: '0deg' }] }}
-          to={{ transform: [{ rotate: '360deg' }] }}
+        <BoxFactory
+          animation={{
+            throttle: 0,
+            duration: 500,
+            timing: 'linear',
+            iterations: 'infinite',
+            from: { rotate: '0deg' },
+            to: { rotate: '360deg' },
+          }}
         >
           <Svg viewBox={`0 0 ${base} ${base}`} height={base} width={base}>
             <Circle //
@@ -86,7 +87,7 @@ const LoadingFactory = React.memo<LoadingProps>(
               strokeDashoffset={base * 1.875}
             />
           </Svg>
-        </AnimationFactory>
+        </BoxFactory>
 
         {Boolean(label) && (
           <TextFactory style={labelStyle} stylist={[variants.label]}>

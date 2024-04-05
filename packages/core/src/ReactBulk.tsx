@@ -27,8 +27,7 @@ function ReactBulk({ theme, children }: any) {
   global.theme = themeState;
 
   const setTheme = useCallback((theme: ThemeModeValues | ThemeEditProps) => {
-    theme = typeof theme === 'string' ? { mode: theme } : theme;
-    setThemeState((current) => createTheme(theme as ThemeProps, current));
+    setThemeState(createTheme(typeof theme === 'string' ? { mode: theme } : theme));
   }, []);
 
   useEffect(() => {

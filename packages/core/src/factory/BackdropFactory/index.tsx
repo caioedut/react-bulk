@@ -1,5 +1,6 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import { BackdropProps } from '../../types';
@@ -10,7 +11,7 @@ const BackdropFactory = React.memo<BackdropProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Backdrop;
-    const { web, native, Button, Dialog } = global.mapping;
+    const { web, native, Dialog } = global.mapping;
 
     // Extends from default props
     const {
@@ -23,15 +24,14 @@ const BackdropFactory = React.memo<BackdropProps>(
       ...rest
     } = factory2<BackdropProps>(props, options);
 
-    const defaultRef = useRef(null);
-    ref = ref || defaultRef;
+    const rootRef = useDefaultRef<any>(ref);
 
     useEffect(() => {
       if (!web) return;
 
       if (visible) {
         // @ts-ignore
-        setTimeout(() => ref?.current?.focus?.(), 10);
+        setTimeout(() => rootRef.current?.focus?.(), 10);
 
         const top = document.documentElement.scrollTop;
         const left = document.documentElement.scrollLeft;
@@ -42,11 +42,23 @@ const BackdropFactory = React.memo<BackdropProps>(
       return () => {
         window.onscroll = null;
       };
-    }, [ref, visible]);
+    }, [rootRef, visible, web]);
 
     const Child = (
-      <BoxFactory ref={ref} stylist={[variants.root, stylist]} {...rest}>
-        <BoxFactory position="absolute" i={0} zIndex={-1} style={{ cursor: 'auto' }} onPress={onPress} />
+      <BoxFactory ref={rootRef} stylist={[variants.root, stylist]} {...rest}>
+        <BoxFactory
+          position="absolute"
+          i={0}
+          zIndex={0}
+          accessibility={{
+            label: 'close',
+          }}
+          style={{
+            cursor: 'auto',
+            web: { '& ~ *': { zIndex: 1 } },
+          }}
+          onPress={onPress}
+        />
         {children}
       </BoxFactory>
     );

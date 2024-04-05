@@ -3,7 +3,7 @@ import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } 
 import useTheme from '../../hooks/useTheme';
 import Calendar from '../../icons/Calendar';
 import factory2 from '../../props/factory2';
-import { InputDateProps } from '../../types';
+import { InputDateProps, InputProps, RequiredSome } from '../../types';
 import { dateify } from '../../utils/date';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -29,7 +29,7 @@ const InputDateFactory = React.memo<InputDateProps>(
       defaultValue,
       disabled,
       color,
-      error,
+      error: errorProp,
       format,
       locale: localeProp,
       max,
@@ -49,7 +49,7 @@ const InputDateFactory = React.memo<InputDateProps>(
       // Styles
       variants,
       ...rest
-    } = factory2<InputDateProps>(props, options);
+    } = factory2<RequiredSome<InputDateProps, 'size'>>(props, options);
 
     const resolveAsDate = useCallback(
       (value) => {
@@ -106,7 +106,7 @@ const InputDateFactory = React.memo<InputDateProps>(
     const triggerRef = useRef();
 
     const [calendarVisible, setCalendarVisible] = useState(false);
-    // const [_internal, _setInternal] = useState(value ?? defaultValue);
+    const [error, setError] = useState<InputProps['error']>();
     const [_internal, _setInternal] = useState<Date | null>(resolveAsDate(value ?? defaultValue));
 
     const internal = useMemo(() => {
@@ -140,6 +140,10 @@ const InputDateFactory = React.memo<InputDateProps>(
       _setInternal(resolveAsDate(value));
     }, [value]);
 
+    useEffect(() => {
+      setError(errorProp);
+    }, [errorProp]);
+
     const handleChangeInternal = useCallback(
       (e, date) => {
         const newDate = resolveAsDate(date);
@@ -151,7 +155,7 @@ const InputDateFactory = React.memo<InputDateProps>(
     );
 
     return (
-      <BoxFactory position="relative">
+      <BoxFactory data-rbk-input={name} position="relative">
         <InputFactory
           ref={ref}
           readOnly
@@ -164,6 +168,7 @@ const InputDateFactory = React.memo<InputDateProps>(
           onBlur={onBlur}
           onSubmit={onSubmit}
           onFormChange={onFormChange}
+          onErrorChange={(error) => setError(errorProp ?? error)}
         />
         <InputFactory
           {...rest}
@@ -184,7 +189,7 @@ const InputDateFactory = React.memo<InputDateProps>(
               accessibility={{ label: 'calendar' }}
               onPress={() => setCalendarVisible((current) => !current)}
             >
-              <Calendar svg={svg} size={Math.round(theme.rem(size / 2))} color={color} />
+              <Calendar svg={svg} size={Math.round(theme.rem((size as number) / 2))} color={color} />
             </ButtonFactory>
           }
         />
@@ -211,6 +216,7 @@ const InputDateFactory = React.memo<InputDateProps>(
           <CardFactory minw={320} maxw={360} shadow={1} p={0}>
             <BoxFactory h={380}>
               <CalendarFactory
+                shadow={0}
                 color={color}
                 date={internal}
                 events={internal ? [internal] : []}

@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import Platform from './Platform';
-import AnimationFactory from './factory/AnimationFactory';
 import BoxFactory from './factory/BoxFactory';
 import CardFactory from './factory/CardFactory';
 import TextFactory from './factory/TextFactory';
@@ -90,22 +89,25 @@ function Toaster({ theme }: any, ref) {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [duration, props]);
+  }, [duration, props, web]);
 
   return (
     <BoxFactory row center style={containerStyle}>
       {Boolean(props) && (
-        <AnimationFactory
+        <BoxFactory
           key={idRef.current}
-          in
           px={offset?.x}
           py={offset?.y}
-          duration={200}
-          from={{ transform: [{ translateY }] }}
-          to={{ transform: [{ translateY: 0 }] }}
           style={animationStyle}
+          animation={{
+            throttle: 0,
+            duration: 200,
+            from: { translateY },
+            to: { translateY: 0 },
+          }}
         >
           <CardFactory
+            data-rbk-toaster={color}
             ref={cardRef}
             accessibility={{ role: 'alert' }}
             platform={{ web: { tabIndex: '-1' } }}
@@ -124,12 +126,21 @@ function Toaster({ theme }: any, ref) {
             </BoxFactory>
 
             <BoxFactory position="absolute" b={0} l={0} r={0}>
-              <AnimationFactory in timing="linear" duration={duration} from={{ w: '0%' }} to={{ w: '100%' }}>
+              <BoxFactory
+                animation={{
+                  throttle: 0,
+                  duration,
+                  timing: 'linear',
+                  iterations: 1,
+                  from: { width: '0%' },
+                  to: { width: '100%' },
+                }}
+              >
                 <BoxFactory h={2} bg={theme.color(textColor, 0.5)} />
-              </AnimationFactory>
+              </BoxFactory>
             </BoxFactory>
           </CardFactory>
-        </AnimationFactory>
+        </BoxFactory>
       )}
     </BoxFactory>
   );

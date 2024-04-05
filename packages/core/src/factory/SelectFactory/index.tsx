@@ -2,6 +2,7 @@ import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } 
 
 import rect from '../../element/rect';
 import scrollIntoView from '../../element/scrollIntoView';
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
@@ -10,11 +11,12 @@ import ChevronUp from '../../icons/ChevronUp';
 import MagnifyingGlass from '../../icons/MagnifyingGlass';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
-import { spacings } from '../../styles/jss';
+import { spacings } from '../../styles/constants';
 import { AnyObject, InputValue, RbkInputEvent, RequiredSome, SelectOption, SelectProps } from '../../types';
 import deepmerge from '../../utils/deepmerge';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
+import string from '../../utils/string';
 import BackdropFactory from '../BackdropFactory';
 import BoxFactory from '../BoxFactory';
 import ButtonFactory from '../ButtonFactory';
@@ -70,8 +72,7 @@ const SelectFactory = React.memo<SelectProps>(
     id = useHtmlId(id);
 
     const form = useForm();
-    const defaultRef: any = useRef(null);
-    const buttonRef = ref || defaultRef;
+    const buttonRef = useDefaultRef<any>(ref);
     const scrollRef: any = useRef(null);
     const selectedRef: any = useRef(null);
     const optionsRef: any = useRef([]);
@@ -148,7 +149,9 @@ const SelectFactory = React.memo<SelectProps>(
         return true;
       }
 
-      return option.label.toLowerCase().includes(searchValue.toLowerCase());
+      return string(option.searchLabel ?? option.label)
+        .toLowerCase()
+        .includes(searchValue.toLowerCase());
     });
 
     const dispatchEvent = useCallback(
@@ -222,7 +225,7 @@ const SelectFactory = React.memo<SelectProps>(
       setTimeout(() => {
         scrollIntoView(scrollRef.current, selectedRef.current, false);
       }, 100);
-    }, [metrics?.maxHeight, visible]);
+    }, [scrollRef, selectedRef, metrics?.maxHeight, visible]);
 
     function optionFocus(index: number) {
       if (index < 0 || index > filteredOptions.length - 1) {
@@ -340,7 +343,12 @@ const SelectFactory = React.memo<SelectProps>(
     labelStyle = [error && { color: 'error' }, labelStyle];
 
     return (
-      <BoxFactory style={style} stylist={[variants.root, stylist]} onKeyDown={visible ? handleKeyDown : undefined}>
+      <BoxFactory
+        data-rbk-input={name}
+        style={style}
+        stylist={[variants.root, stylist]}
+        onKeyDown={visible ? handleKeyDown : undefined}
+      >
         {Boolean(label) && (
           <LabelFactory
             numberOfLines={1}
@@ -449,13 +457,11 @@ const SelectFactory = React.memo<SelectProps>(
                           selectedRef.current = el;
                         }
                       }}
-                      platform={{
-                        web: {
-                          accessibility: {
-                            role: 'option',
-                            state: { selected: isSelected },
-                          },
-                        },
+                      accessibility={{
+                        // @ts-expect-error
+                        role: native ? 'menuitem' : 'option',
+                        value: { now: option.value },
+                        state: { selected: isSelected },
                       }}
                     >
                       <TextFactory>{option.label}</TextFactory>
