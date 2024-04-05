@@ -79,6 +79,7 @@ const SelectFactory = React.memo<SelectProps>(
       value,
       defaultValue,
       error,
+      controlled,
       editable: !disabled && !readOnly,
       onChange: (event, value) => dispatchEvent('change', event, onChange, value),
       onFormChange,
@@ -91,14 +92,6 @@ const SelectFactory = React.memo<SelectProps>(
 
     const [search, setSearch] = useState('');
     const hasSearch = Number(arrOptions?.length ?? 0) >= searchCount;
-
-    // const setInternal = useCallback(
-    //   (value) => {
-    //     if (controlled) return;
-    //     _setInternal(value);
-    //   },
-    //   [controlled],
-    // );
 
     const setVisible = useCallback((value) => {
       _setVisible(value);

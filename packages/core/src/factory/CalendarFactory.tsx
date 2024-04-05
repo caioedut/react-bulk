@@ -126,6 +126,7 @@ const CalendarFactory = React.memo<CalendarProps>(
           <BoxFactory w={112}>
             <InputFactory
               colorful
+              controlled
               type="number"
               min={1000}
               color={color}

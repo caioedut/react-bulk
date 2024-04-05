@@ -23,6 +23,7 @@ const InputFactory = React.memo<InputProps>(
     // Extends from default props
     let {
       color,
+      controlled,
       defaultValue,
       disabled,
       endAddon,
@@ -97,6 +98,7 @@ const InputFactory = React.memo<InputProps>(
       value,
       defaultValue,
       error,
+      controlled,
       editable: !disabled && !readOnly,
       mask,
       unmask: unmaskValue,

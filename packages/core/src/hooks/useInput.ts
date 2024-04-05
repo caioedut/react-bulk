@@ -8,6 +8,7 @@ export type UseInputProps<T> = {
   name?: string;
   value?: T;
   defaultValue?: T;
+  controlled?: boolean;
   editable?: boolean;
   error?: string | boolean | null | undefined;
   mask?: (value: T) => string;
@@ -22,6 +23,7 @@ export default function useInput<T>({
   name,
   value,
   defaultValue,
+  controlled,
   editable = true,
   error: errorProp,
   mask,
@@ -47,9 +49,14 @@ export default function useInput<T>({
   const form = useForm();
 
   const [initialValue] = useState(resolveValue(value ?? defaultValue));
-  const [internal, _setInternal] = useState(initialValue);
+  const [_internal, _setInternal] = useState(initialValue);
   const [prevInternal, setPrevInternal] = useState();
   const [error, setError] = useState(errorProp);
+
+  const internal = useMemo(
+    () => resolveValue(controlled ? value : _internal),
+    [_internal, controlled, resolveValue, value],
+  );
 
   const setInternal = useCallback(
     (value, event?: Event, ...rest: any[]) => {
@@ -61,7 +68,7 @@ export default function useInput<T>({
         onChange?.(event, newValue, ...rest);
       }
     },
-    [internal, onChange, resolveValue],
+    [resolveValue, internal, onChange],
   );
 
   useMemo(() => {
