@@ -1,7 +1,7 @@
 import React, { MutableRefObject, forwardRef, useEffect, useMemo } from 'react';
 
+import useAnimation from '../../hooks/useAnimation';
 import useTheme from '../../hooks/useTheme';
-import useTransition from '../../hooks/useTransition';
 import factory2 from '../../props/factory2';
 import { DrawerProps, RequiredSome } from '../../types';
 import BackdropFactory from '../BackdropFactory';
@@ -38,7 +38,7 @@ const DrawerFactory = React.memo<DrawerProps>(
       [placement],
     );
 
-    const transition = useTransition(hiddenStyle, ref as MutableRefObject<any>);
+    const transition = useAnimation(hiddenStyle, ref as MutableRefObject<any>);
 
     useEffect(() => {
       transition.start({

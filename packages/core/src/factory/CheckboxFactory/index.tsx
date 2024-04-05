@@ -1,11 +1,12 @@
-import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useHtmlId from '../../hooks/useHtmlId';
 import useTheme from '../../hooks/useTheme';
 import Check from '../../icons/Check';
 import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
-import { spacings } from '../../styles/jss';
+import { spacings } from '../../styles/constants';
 import { AnyObject, CheckboxProps, RbkCheckboxEvent, RequiredSome } from '../../types';
 import global from '../../utils/global';
 import pick from '../../utils/pick';
@@ -51,8 +52,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     color = theme.color(color);
 
     const form = useForm();
-    const defaultRef: any = useRef(null);
-    const buttonRef = ref || defaultRef;
+    const buttonRef = useDefaultRef<any>(ref);
 
     const [initialChecked] = useState(defaultChecked);
     const [_internal, _setInternal] = useState(checked ?? initialChecked);
@@ -176,7 +176,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     buttonStyle = [{ marginLeft: -theme.rem(0.5, fontSize) }, buttonStyle];
 
     return (
-      <BoxFactory style={style} stylist={[variants.root, stylist]}>
+      <BoxFactory data-rbk-input={name} style={style} stylist={[variants.root, stylist]}>
         <ButtonFactory
           ref={buttonRef}
           style={buttonStyle}
@@ -192,7 +192,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           onFocus={handleFocus}
           onBlur={handleBlur}
           accessibility={{
-            label,
+            label: typeof label === 'string' ? label : undefined,
             role: unique ? 'radio' : 'checkbox',
             state: { checked: internal },
           }}
@@ -219,7 +219,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           </BoxFactory>
         </ButtonFactory>
 
-        {Boolean(label) && (
+        {typeof label === 'string' ? (
           <LabelFactory
             for={id}
             forRef={buttonRef}
@@ -228,6 +228,8 @@ const CheckboxFactory = React.memo<CheckboxProps>(
           >
             {label}
           </LabelFactory>
+        ) : (
+          label
         )}
 
         {web && (

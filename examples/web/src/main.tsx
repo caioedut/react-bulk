@@ -1,6 +1,6 @@
 import React, { useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkInputEvent, unstable_useTransition, useAnimation, useToaster } from '@react-bulk/core';
+import { AnyObject, FormRef, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
 import {
   Animation,
   Avatar,
@@ -18,6 +18,7 @@ import {
   Dropdown,
   Form,
   Grid,
+  GrowBox,
   Image,
   Input,
   InputDate,
@@ -137,6 +138,10 @@ export default function Main() {
 
       <Card mt={theme.shape.gap}>
         <CarouselExample />
+      </Card>
+
+      <Card mt={theme.shape.gap}>
+        <GrowBoxExample />
       </Card>
 
       <Card mt={theme.shape.gap}>
@@ -1071,6 +1076,7 @@ function TabsExample() {
 
 function ProgressExample() {
   const theme = useTheme();
+  const [percent, randomPercent] = useReducer(() => Math.random() * 100, 50);
 
   return (
     <>
@@ -1099,7 +1105,11 @@ function ProgressExample() {
       <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
 
       <Text variant="subtitle">Bar with value</Text>
-      <Progress value={Math.random() * 100} mt={theme.shape.gap} />
+      <Progress value={percent} mt={theme.shape.gap} />
+
+      <Button align="start" mt={4} onPress={randomPercent}>
+        Random Percent
+      </Button>
     </>
   );
 }
@@ -1209,6 +1219,40 @@ function CarouselExample() {
   );
 }
 
+function GrowBoxExample() {
+  const theme = useTheme();
+
+  const [length, incLength] = useReducer((current: number, incValue: number) => {
+    return Math.max(0, current + incValue);
+  }, 0);
+
+  return (
+    <>
+      <Text variant="title" mb={theme.shape.gap}>
+        Grow Box
+      </Text>
+
+      <ButtonGroup>
+        <Button onPress={() => incLength(1)}>+1</Button>
+        <Button onPress={() => incLength(+10)}>+10</Button>
+        <Button onPress={() => incLength(-1)}>-1</Button>
+        <Button onPress={() => incLength(-10)}>-10</Button>
+        <Button onPress={() => incLength(-length)}>Reset</Button>
+      </ButtonGroup>
+
+      <GrowBox row mt={4} align="start" border="1px solid primary">
+        {Array.from({ length }).map((_, index) => (
+          <Box key={index} w={100} p={2}>
+            <Card bg="background.secondary">
+              <Text center>{index + 1}</Text>
+            </Card>
+          </Box>
+        ))}
+      </GrowBox>
+    </>
+  );
+}
+
 function TerminalExample() {
   const theme = useTheme();
 
@@ -1228,65 +1272,18 @@ function AnimationExample() {
   const from = { width: 40, height: 40 };
   const to = { width: 200, height: 200 };
 
-  const sizeAnim = useAnimation(from);
-  const transition = unstable_useTransition(from);
+  const transition = useAnimation(from);
 
   return (
     <>
       <Text variant="title" mb={theme.shape.gap}>
-        Animations (Beta)
+        Animations
       </Text>
 
       <Text variant="subtitle" mb={theme.shape.gap}>
         useAnimation
       </Text>
 
-      <Grid gap>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to)}>Forward</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(from)}>Backward</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to, { iterations: 3 })}>Repeat 3x</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to, { boomerang: true })}>Boomerang</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to, { iterations: 'infinite' })}>Infinite</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 'infinite' })}>
-            Boomerang Infinite
-          </Button>
-        </Box>
-        <Box>
-          <Button color="warning" onPress={() => sizeAnim.stop()}>
-            Stop
-          </Button>
-        </Box>
-        <Box>
-          <Button color="error" onPress={() => sizeAnim.reset()}>
-            Reset
-          </Button>
-        </Box>
-        <Box xs={12}>
-          <Box border="1px solid primary" align="start">
-            <sizeAnim.Component style={sizeAnim.style} />
-          </Box>
-        </Box>
-      </Grid>
-
-      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
-
-      <Text variant="subtitle" mb={theme.shape.gap}>
-        unstable_useTransition
-      </Text>
       <Grid gap>
         <Box>
           <Button onPress={() => transition.start({ to, from })}>Forward</Button>
@@ -1363,7 +1360,16 @@ const variants = ['solid', 'outline', 'text'] as const;
 const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
 const placements = ['top', 'bottom', 'left', 'right'] as const;
 const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
-const animations = ['spin', 'fade', 'zoom', { from: { opacity: 0, ml: -4 }, to: { opacity: 1, ml: 0 } }] as const;
+const animations = [
+  'spin',
+  'fade',
+  'zoom',
+  { from: { opacity: 0, ml: -4 }, to: { opacity: 1, ml: 0 } },
+  {
+    from: { transform: 'translateX(50px)' },
+    to: { transform: 'translateX(0)' },
+  },
+] as const;
 
 const formData = {
   firstName: 'Richard',

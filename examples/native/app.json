@@ -3,14 +3,24 @@
     "owner": "caioedut",
     "name": "react-bulk-native",
     "slug": "react-bulk-native",
-    "orientation": "portrait",
+    "orientation": "default",
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true
     },
-    "android": {
+    "android": {},
+    "extra": {
+      "eas": {
+        "projectId": "a0e217fb-9586-4ca1-ae09-6fa4d1bd5a8b"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a0e217fb-9586-4ca1-ae09-6fa4d1bd5a8b"
     }
   }
 }

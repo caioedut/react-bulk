@@ -256,15 +256,9 @@ const base: ThemeProps = {
       },
       Animation: {
         name: 'rbk-animation',
-        defaultProps: {
-          direction: 'normal',
-          duration: 350,
-          timing: 'ease',
-        },
+        defaultProps: {},
         defaultStyles: {
-          root: {
-            position: 'relative',
-          },
+          root: {},
         },
       },
       Backdrop: {
@@ -566,7 +560,9 @@ const base: ThemeProps = {
       },
       Collapse: {
         name: 'rbk-collapse',
-        defaultProps: {},
+        defaultProps: {
+          timing: 'ease',
+        },
         defaultStyles: {
           root: {
             overflow: 'hidden',
@@ -686,6 +682,17 @@ const base: ThemeProps = {
             vertical: {
               root: { flexDirection: 'column' },
             },
+          },
+        },
+      },
+      GrowBox: {
+        name: 'rbk-grow-box',
+        defaultProps: {
+          duration: 200,
+        },
+        defaultStyles: {
+          root: {
+            overflow: 'hidden',
           },
         },
       },
@@ -958,9 +965,6 @@ const base: ThemeProps = {
           bar: {
             bg: 'primary',
             h: '1.25rem',
-            web: {
-              ...this.mixins.transitions.fast,
-            },
           },
           label: {
             textAlign: 'center',
@@ -1275,6 +1279,7 @@ const base: ThemeProps = {
         defaultProps: {
           position: 'top',
           color: 'black',
+          delay: 200,
         },
         defaultStyles: {
           root: {

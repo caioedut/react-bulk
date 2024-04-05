@@ -1,14 +1,17 @@
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef, useEffect, useMemo } from 'react';
 
-import createStyle from '../../createStyle';
-import useBreakpoints from '../../hooks/useBreakpoints';
+import useAnimation from '../../hooks/useAnimation';
 import useTheme from '../../hooks/useTheme';
 import bindings from '../../props/bindings';
+import extract from '../../props/extract';
 import factory2 from '../../props/factory2';
 import get from '../../props/get';
 import merge from '../../props/merge';
 import { styleProps } from '../../styles/constants';
-import { BoxProps } from '../../types';
+import jss from '../../styles/jss';
+import sheet from '../../styles/sheet';
+import { BoxProps, RbkBreakpoints } from '../../types';
+import clone from '../../utils/clone';
 import clsx from '../../utils/clsx';
 import defined from '../../utils/defined';
 import global from '../../utils/global';
@@ -17,9 +20,7 @@ const BoxFactory = React.memo<BoxProps>(
   forwardRef(({ platform, className, stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Box;
-    const { web, native, Button, Text, View } = global.mapping;
-
-    const breakpoints = useBreakpoints();
+    const { web, native, Button, Text, View, useDimensions } = global.mapping;
 
     // Extends from default props
     props = useMemo(() => factory2<BoxProps>(props, options), [props, options]);
@@ -35,6 +36,8 @@ const BoxFactory = React.memo<BoxProps>(
 
     let {
       accessibility,
+      animation,
+      breakpoints,
       center,
       column,
       component,
@@ -61,6 +64,11 @@ const BoxFactory = React.memo<BoxProps>(
     pressable =
       pressable ?? Boolean(props.onPress || props.onLongPress || props.onPressIn || props.onPressOut || props.onClick);
 
+    const curBreakpoints: RbkBreakpoints = useMemo(
+      () => breakpoints ?? theme.breakpoints,
+      [breakpoints, theme.breakpoints],
+    );
+
     if (native && pressable && !component) {
       component = Button;
       rest.activeOpacity = rest.activeOpacity ?? 0.75;
@@ -74,6 +82,12 @@ const BoxFactory = React.memo<BoxProps>(
         delete rest[prop];
       }
     }
+
+    const hiddenStyle = {
+      display: 'none',
+      opacity: 0,
+      overflow: 'hidden',
+    };
 
     style = [
       typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
@@ -104,42 +118,74 @@ const BoxFactory = React.memo<BoxProps>(
 
       web && pressable && { cursor: 'pointer' },
 
-      style,
+      clone(style),
 
       stylesFromProps,
 
-      hidden && {
-        display: 'none',
-        opacity: 0,
-        overflow: 'hidden',
-      },
+      hidden === true && hiddenStyle,
     ];
-
-    // Apply responsive styles
-    for (const breakpoint of Object.entries(breakpoints)) {
-      const [name, isBkptActive] = breakpoint;
-      const ptStyle = get(name, style);
-
-      if (ptStyle && isBkptActive) {
-        style.push(ptStyle);
-      }
-    }
 
     // #HACK: fix flex overflow
     if (Number(get('flex', style) ?? 0)) {
       style.unshift({ minWidth: 0, minHeight: 0 });
     }
 
-    const styles = [!noRootStyles && variants.root, stylist];
-    const processed = useMemo(() => createStyle({ style, theme }), [style, theme]);
-    styles.push(processed);
+    const styles = [...(!noRootStyles ? variants.root : []), stylist];
+    const responsiveStyle = extract(Object.keys(curBreakpoints), style);
+    const breakpointNames = useMemo(
+      () =>
+        Object.entries(curBreakpoints)
+          .sort((a, b) => a[1] - b[1])
+          .map(([bkptName]) => bkptName),
+      [curBreakpoints],
+    );
+
+    // Native only: refresh cometta styles when have responsive styles
+    useDimensions(native && Object.keys(responsiveStyle).length > 0);
+
+    // Apply responsive styles
+    for (const bkptIndex in breakpointNames) {
+      const bkptName = breakpointNames[bkptIndex];
+      const bkptStyle = responsiveStyle?.[bkptName];
+
+      if (bkptStyle) {
+        style.push({
+          [`@media (min-width: ${curBreakpoints[bkptName]}px)`]: bkptStyle,
+        });
+      }
+
+      // Responsive "HIDDEN"
+      if (hidden?.[bkptName]) {
+        const bkptNext = curBreakpoints?.[breakpointNames[Number(bkptIndex) + 1]];
+
+        let media = `@media (min-width: ${curBreakpoints[bkptName]}px)`;
+        if (bkptNext) {
+          media += ` and (max-width: ${bkptNext - 1}px)`;
+        }
+
+        style.push({ [media]: hiddenStyle });
+      }
+    }
+
+    // Animation
+    const transition = useAnimation({}, ref as any);
+    style.push(transition.props.style);
+
+    if (web) {
+      styles.push(sheet(style));
+    }
 
     if (native) {
-      rest.style = merge(styles, rawStyle);
+      styles.push(jss(style));
+    }
+
+    if (native) {
+      styles.push(jss(rawStyle));
+      rest.style = styles;
     }
 
     if (web) {
-      rest.style = merge(rawStyle);
+      rest.style = jss(rawStyle);
       rest.className = clsx(styles, className);
     }
 
@@ -178,12 +224,18 @@ const BoxFactory = React.memo<BoxProps>(
 
     const Component = component || View;
 
-    if (mount === false) {
-      return null;
-    }
+    useEffect(() => {
+      if (!animation) return;
 
-    return (
-      <Component ref={ref} {...rest} {...componentProps}>
+      (async () => {
+        animation?.onStart?.();
+        await transition.start(animation);
+        animation?.onEnd?.();
+      })();
+    }, [animation, transition]);
+
+    return mount === false ? null : (
+      <Component {...transition.props} {...rest} {...componentProps}>
         {React.Children.map(children, (child) => {
           const isText = ['string', 'number'].includes(typeof child);
 

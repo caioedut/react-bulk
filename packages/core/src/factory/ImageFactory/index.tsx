@@ -1,5 +1,6 @@
-import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 
+import useDefaultRef from '../../hooks/useDefaultRef';
 import useTheme from '../../hooks/useTheme';
 import factory2 from '../../props/factory2';
 import get from '../../props/get';
@@ -37,8 +38,7 @@ const ImageFactory = React.memo<ImageProps>(
       ...rest
     } = factory2<RequiredSome<ImageProps, 'mode'>>(props, options);
 
-    const defaultRef: any = useRef(null);
-    const imageRef = ref || defaultRef;
+    const imageRef = useDefaultRef<any>(ref);
 
     // Defaults
     width = width ?? w ?? get('width', style) ?? get('w', style);
@@ -139,7 +139,7 @@ const ImageFactory = React.memo<ImageProps>(
       } catch (err) {
         handleError(err);
       }
-    }, [source, width, height, isProcessed, Image, handleError]);
+    }, [source, width, height, isProcessed, Image, handleError, native]);
 
     useEffect(() => {
       if (isProcessed || !native || !defined(aspectRatio) || !defined(containerWidth) || !defined(containerHeight))

@@ -12,30 +12,50 @@ import { useAnimation } from '@react-bulk/core'; // OR @react-bulk/native
 
 ```jsx live
 function App() {
-  const sizeAnim = useAnimation({ width: 10, height: 10 });
-
   const from = { width: 40, height: 40 };
   const to = { width: 200, height: 200 };
+
+  const sizeAnim = useAnimation(from);
 
   return (
     <Grid gap>
       <Box>
-        <Button onPress={() => sizeAnim.start(to)}>Forward</Button>
+        <Button onPress={() => sizeAnim.start({
+          from,
+          to,
+        })}>Forward</Button>
       </Box>
       <Box>
-        <Button onPress={() => sizeAnim.start(from)}>Backward</Button>
+        <Button onPress={() => sizeAnim.start({
+          from: to,
+          to: from,
+        })}>Backward</Button>
       </Box>
       <Box>
-        <Button onPress={() => sizeAnim.start(to, { iterations: 3 })}>Repeat 3x</Button>
+        <Button onPress={() => sizeAnim.start({
+          to,
+          iterations: 3,
+        })}>Repeat 3x</Button>
       </Box>
       <Box>
-        <Button onPress={() => sizeAnim.start(to, { boomerang: true })}>Boomerang</Button>
+        <Button onPress={() => sizeAnim.start({
+          to,
+          boomerang: true
+        })}>Boomerang</Button>
       </Box>
       <Box>
-        <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 3 })}>3x Boomerang</Button>
+        <Button onPress={() => sizeAnim.start({
+          to,
+          iterations: 3,
+          boomerang: true,
+        })}>3x Boomerang</Button>
       </Box>
       <Box>
-        <Button onPress={() => sizeAnim.start(to, { boomerang: true, iterations: 'infinite' })}>Infinite</Button>
+        <Button onPress={() => sizeAnim.start({
+          to,
+          iterations: 'infinite',
+          boomerang: true,
+        })}>Infinite</Button>
       </Box>
       <Box>
         <Button color="warning" onPress={() => sizeAnim.stop()}>
@@ -48,9 +68,7 @@ function App() {
         </Button>
       </Box>
       <Box xs={12}>
-        <Box border="1px solid primary" align="start">
-          <sizeAnim.Component style={sizeAnim.style} />
-        </Box>
+        <Box border="1px solid primary" align="start" {...sizeAnim.props} />
       </Box>
     </Grid>
   );
@@ -61,9 +79,8 @@ function App() {
 
 **`boomerang`**
 
-For web only. <br/>
-
 ➤ Type: **`boolean`** <br/>
+➤ Default: **`false`** <br/>
 
 ---
 
@@ -72,6 +89,7 @@ For web only. <br/>
 Delay in milliseconds to start the animation.
 
 ➤ Type: **`number`** <br/>
+➤ Default: **`0`** <br/>
 
 ---
 
@@ -80,17 +98,54 @@ Delay in milliseconds to start the animation.
 Animation duration in milliseconds.
 
 ➤ Type: **`number`** <br/>
+➤ Default: **`350`** <br/>
 
 ---
 
-**`timing`**
+**`from`**
 
-➤ Type: **`'ease'` `'linear'` `'ease-in'` `'ease-out'` `'ease-in-out'`** <br/>
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 
 **`iterations`**
 
 ➤ Type: **`number` `'infinite'`** <br/>
+➤ Default: **`1`** <br/>
+
+---
+
+**`throttle`**
+
+For native only.
+
+Used to prevent animation frames from being triggered too frequently.
+
+➤ Type: **`number`** <br/>
+➤ Default: **`0`** <br/>
+
+---
+
+**`timing`**
+
+➤ Type: **`'linear'` `'ease'` `'ease-in'` `'ease-out'` `'ease-in-out'`** <br/>
+➤ Default: **`'linear'`** <br/>
+
+---
+
+**`to`**
+
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
+
+---
+
+**`web_useRawStyle`**
+
+For web only.
+
+Use `style` attribute instead of CSS `animation` API.
+
+➤ Type: **`boolean`** <br/>
+➤ Default: **`false`** <br/>
 
 ---

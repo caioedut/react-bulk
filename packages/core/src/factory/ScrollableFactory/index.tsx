@@ -82,9 +82,9 @@ const ScrollableFactory = React.memo<ScrollableProps>(
       };
 
       Object.assign(rest, {
-        horizontal: isHorizontal,
-        contentContainerStyle: jss({ theme }, variants.content, contentStyle),
         pagingEnabled,
+        horizontal: isHorizontal,
+        contentContainerStyle: jss(variants.content, contentStyle),
       });
 
       if (hideScrollBar) {

@@ -4,12 +4,12 @@ import ReactBulk from './ReactBulk';
 export { useForm } from './factory/FormFactory';
 export { default as useAnimation } from './hooks/useAnimation';
 export { default as useBreakpoints } from './hooks/useBreakpoints';
+export { default as useDefaultRef } from './hooks/useDefaultRef';
 export { default as useDeferredValue } from './hooks/useDeferredValue';
 export { default as useHtmlId } from './hooks/useHtmlId';
 export { default as usePropState } from './hooks/usePropState';
 export { default as useTheme } from './hooks/useTheme';
 export { default as useToaster } from './hooks/useToaster';
-export { default as unstable_useTransition } from './hooks/useTransition';
 
 // Prop
 /** @internal */
@@ -29,7 +29,11 @@ export { default as remove } from './props/remove';
 
 // Element
 /** @internal */
+export { default as getFullHeight } from './element/getFullHeight';
+/** @internal */
 export { default as rect } from './element/rect';
+/** @internal */
+export { default as reference } from './element/reference';
 /** @internal */
 export { default as scrollIntoView } from './element/scrollIntoView';
 /** @internal */
@@ -38,6 +42,8 @@ export { default as scrollTo } from './element/scrollTo';
 export { default as scrollToEnd } from './element/scrollToEnd';
 /** @internal */
 export { default as scrollToStart } from './element/scrollToStart';
+/** @internal */
+export { default as setNativeStyle } from './element/setNativeStyle';
 
 // Util
 export { default as Platform } from './Platform';
@@ -67,15 +73,15 @@ export { default as string } from './utils/string';
 export { default as uuid } from './utils/uuid';
 
 // Style
-export * from './styles/jss';
-export { default as jss } from './styles/jss';
+export * from './styles/constants';
 export { default as css } from './styles/css';
+export { default as jss } from './styles/jss';
+export { default as sheet } from './styles/sheet';
 
 // Builder
-export { default as createTheme } from './createTheme';
-export { default as createStyle } from './createStyle';
 export { default as createMeta } from './createMeta';
 export { default as createPortal } from './createPortal';
+export { default as createTheme } from './createTheme';
 
 // Factory
 /** @internal */
@@ -114,6 +120,8 @@ export { default as DropdownFactory } from './factory/DropdownFactory';
 export { default as FormFactory } from './factory/FormFactory';
 /** @internal */
 export { default as GridFactory } from './factory/GridFactory';
+/** @internal */
+export { default as GrowBoxFactory } from './factory/GrowBoxFactory';
 /** @internal */
 export { default as ImageFactory } from './factory/ImageFactory';
 /** @internal */

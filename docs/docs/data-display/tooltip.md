@@ -91,6 +91,15 @@ Extends all [`Text`](/docs/core/text#props) props.
 
 ---
 
+### **`delay`**
+
+Delay in milliseconds to show the tooltip.
+
+➤ Type: **`number`** <br/>
+➤ Default: **`200`** <br/>
+
+---
+
 ### **`offset`**
 
 ➤ Type: **`number` `string`** <br/>
