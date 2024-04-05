@@ -1,6 +1,11 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 
+import rect from '../../element/rect';
+import setNativeStyle from '../../element/setNativeStyle';
+import useDefaultRef from '../../hooks/useDefaultRef';
+import useResponder from '../../hooks/useResponder';
 import useTheme from '../../hooks/useTheme';
+import Resize from '../../icons/Resize';
 import factory2 from '../../props/factory2';
 import { ResizableProps } from '../../types';
 import global from '../../utils/global';
@@ -10,7 +15,7 @@ const ResizableFactory = React.memo<ResizableProps>(
   forwardRef(({ stylist, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Resizable;
-    const { web } = global.mapping;
+    const { web, svg } = global.mapping;
 
     // Extends from default props
     let {
@@ -22,7 +27,15 @@ const ResizableFactory = React.memo<ResizableProps>(
       ...rest
     } = factory2(props, options);
 
-    const both = horizontal && vertical;
+    const both = (horizontal && vertical) || (typeof horizontal === 'undefined' && typeof vertical === 'undefined');
+    horizontal = horizontal ?? both;
+    vertical = vertical ?? both;
+
+    const { setResponder, releaseResponder } = useResponder();
+
+    const rootRef = useDefaultRef<any>(ref);
+    const metricsRef = useRef<any>();
+    const initEventRef = useRef<any>();
 
     style = [
       web && horizontal && { resize: 'horizontal' },
@@ -33,18 +46,59 @@ const ResizableFactory = React.memo<ResizableProps>(
     ];
 
     return (
-      <BoxFactory ref={ref} style={style} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory ref={rootRef} style={style} stylist={[variants.root, stylist]} {...rest}>
         {children}
+
         <BoxFactory
           position="absolute"
+          alignItems="end"
+          justifyContent="end"
           r={0}
           b={0}
-          style={{
-            transform: [{ rotate: '-45deg' }],
+          h={24}
+          w={24}
+          platform={{
+            native: {
+              onStartShouldSetResponder: () => true,
+              onResponderGrant: () => {
+                setResponder({
+                  onStartShouldSetResponder: () => true,
+                  onMoveShouldSetResponder: () => true,
+                  onResponderGrant: async ({ nativeEvent }) => {
+                    initEventRef.current = nativeEvent;
+                    metricsRef.current = await rect(rootRef.current);
+                  },
+                  onResponderMove: ({ nativeEvent }) => {
+                    if (!metricsRef.current) return;
+
+                    if (horizontal) {
+                      setNativeStyle(rootRef.current, {
+                        width: metricsRef.current.width + (nativeEvent.pageX - initEventRef.current.pageX),
+                      });
+                    }
+
+                    if (vertical) {
+                      setNativeStyle(rootRef.current, {
+                        height: metricsRef.current.height + (nativeEvent.pageY - initEventRef.current.pageY),
+                      });
+                    }
+                  },
+                  onResponderRelease: () => {
+                    metricsRef.current = null;
+                    initEventRef.current = null;
+                    releaseResponder();
+                  },
+                  onResponderTerminate: () => {
+                    metricsRef.current = null;
+                    initEventRef.current = null;
+                    releaseResponder();
+                  },
+                });
+              },
+            },
           }}
         >
-          <BoxFactory borderBottom="1px solid text" w={theme.spacing(3)} />
-          <BoxFactory borderBottom="1px solid text" w={theme.spacing(1.5)} mt={0.5} mx="auto" />
+          <Resize svg={svg} color={theme.color('text')} />
         </BoxFactory>
       </BoxFactory>
     );

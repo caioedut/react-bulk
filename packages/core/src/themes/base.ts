@@ -973,14 +973,14 @@ const base: ThemeProps = {
       },
       Resizable: {
         name: 'rbk-resizable',
-        defaultProps: {
-          horizontal: true,
-          vertical: true,
-        },
+        defaultProps: {},
         defaultStyles: {
           root: {
             position: 'relative',
             overflow: 'hidden',
+            web: {
+              '&::-webkit-resizer': { opacity: 0 },
+            },
           },
         },
       },
