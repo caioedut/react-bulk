@@ -214,6 +214,16 @@ export interface RbkMap {
   [key: string]: ReactElement | any;
 }
 
+export type RbkUnit =
+  | `${number}px`
+  | `${number}%`
+  | `${number}rem`
+  | `${number}vw`
+  | `${number}vh`
+  | `${number}gap`
+  | (number & {})
+  | (string & {});
+
 export type RbkSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | (number & {});
 
 export type RbkColor =
@@ -958,15 +968,14 @@ export type ScrollableProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
     contentInset?:
-      | number
+      | RbkUnit
       | {
-          vertical?: number;
-          horizontal?: number;
-
-          top?: number;
-          bottom?: number;
-          left?: number;
-          right?: number;
+          vertical?: RbkUnit;
+          horizontal?: RbkUnit;
+          top?: RbkUnit;
+          bottom?: RbkUnit;
+          left?: RbkUnit;
+          right?: RbkUnit;
         };
 
     direction?: 'vertical' | 'horizontal';

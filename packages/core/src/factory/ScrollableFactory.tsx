@@ -36,19 +36,16 @@ const ScrollableFactory = React.memo<ScrollableProps>(
     const primaryColor = theme.color('primary');
 
     contentStyle = [
-      // @ts-expect-error
-      extract(flexContainerProps, style),
+      extract([...flexContainerProps], style),
 
-      typeof contentInset === 'number' && {
-        p: contentInset,
-      },
-
-      typeof contentInset === 'object' && {
-        pt: contentInset?.top ?? contentInset?.vertical,
-        pb: contentInset?.bottom ?? contentInset?.vertical,
-        pl: contentInset?.left ?? contentInset?.horizontal,
-        pr: contentInset?.right ?? contentInset?.horizontal,
-      },
+      Boolean(contentInset) && !Array.isArray(contentInset) && typeof contentInset === 'object'
+        ? {
+            pt: contentInset?.top ?? contentInset?.vertical,
+            pb: contentInset?.bottom ?? contentInset?.vertical,
+            pl: contentInset?.left ?? contentInset?.horizontal,
+            pr: contentInset?.right ?? contentInset?.horizontal,
+          }
+        : { p: contentInset },
 
       pagingEnabled && {
         web: {
