@@ -8,7 +8,7 @@ type Variants = {
 
 export default function factory2<ComponentProps>(
   props,
-  options: ThemeComponentProps<ComponentProps, any>,
+  options: ThemeComponentProps<any>,
 ): ComponentProps & {
   variants: NonNullable<ComponentProps extends AnyObject ? ComponentProps['variants'] : {}>;
 } {
