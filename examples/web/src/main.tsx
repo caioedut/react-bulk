@@ -44,111 +44,111 @@ export default function Main() {
   const theme = useTheme();
 
   return (
-    <Scrollable bg="background.secondary" contentInset={theme.shape.gap}>
+    <Scrollable bg="background.secondary" contentInset="1gap">
       <Card>
         <Text variant="title">React Bulk</Text>
-        <Text mt={theme.shape.gap}>Open up App.tsx to start working on your app!</Text>
+        <Text mt="1gap">Open up App.tsx to start working on your app!</Text>
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <ThemeExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <BreakpointExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <GridExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <TypographyExample />
       </Card>
 
       <ListItemExample />
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <ButtonExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <FormExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <BadgeExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <TableExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <ListExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <ImageExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <AvatarExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <DividerExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <ModalExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <ToasterExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <CollapseExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <DrawerExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <DropdownExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <TabsExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <ProgressExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <CalendarExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <TooltipExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <CarouselExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <GrowBoxExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <TerminalExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <AnimationExample />
       </Card>
     </Scrollable>
@@ -165,22 +165,12 @@ function ThemeExample() {
     const split = prop.split('.');
     const last = split.pop() as string;
 
-    const data: AnyObject = {};
-    let ref = data;
-
     for (const attr of split) {
-      ref[attr] = {};
-      ref = ref[attr];
-    }
-
-    ref[last] = value;
-
-    if (timeoutRef.current[prop]) {
-      clearTimeout(timeoutRef.current[prop]);
+      theme[attr][last] = value;
     }
 
     timeoutRef.current[prop] = setTimeout(() => {
-      theme.setTheme(data);
+      theme.setTheme(theme);
     }, 500);
   }
 
@@ -188,9 +178,9 @@ function ThemeExample() {
     <>
       <Text variant="title">Theme</Text>
 
-      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider mt="1gap" mx="-1gap" />
 
-      <Text variant="subtitle" my={theme.shape.gap}>
+      <Text variant="subtitle" my="1gap">
         Mode
       </Text>
 
@@ -203,13 +193,13 @@ function ThemeExample() {
         </Button>
       </ButtonGroup>
 
-      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider mt="1gap" mx="-1gap" />
 
-      <Text variant="subtitle" my={theme.shape.gap}>
+      <Text variant="subtitle" my="1gap">
         Shape
       </Text>
       <Grid gap>
-        <Box xs={6} md={theme.shape.gap}>
+        <Box xs={6} md={3}>
           <Input
             type="number"
             min={0}
@@ -221,7 +211,19 @@ function ThemeExample() {
             onChange={handleChangeTheme}
           />
         </Box>
-        <Box xs={6} md={theme.shape.gap}>
+        <Box xs={6} md={3}>
+          <Input
+            type="number"
+            min={0}
+            max={16}
+            name="shape.gap"
+            label="Gap"
+            endAddon="px"
+            value={`${theme.shape.gap}`}
+            onChange={handleChangeTheme}
+          />
+        </Box>
+        <Box xs={6} md={3}>
           <Input
             type="number"
             min={0}
@@ -235,13 +237,13 @@ function ThemeExample() {
         </Box>
       </Grid>
 
-      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider mt="1gap" mx="-1gap" />
 
-      <Text variant="subtitle" my={theme.shape.gap}>
+      <Text variant="subtitle" my="1gap">
         Typography
       </Text>
       <Grid gap>
-        <Box xs={6} md={theme.shape.gap}>
+        <Box xs={6} md={3}>
           <Input
             type="number"
             min={8}
@@ -253,7 +255,7 @@ function ThemeExample() {
             onChange={handleChangeTheme}
           />
         </Box>
-        <Box xs={6} md={theme.shape.gap}>
+        <Box xs={6} md={3}>
           <Input
             type="number"
             min={0}
@@ -267,9 +269,9 @@ function ThemeExample() {
         </Box>
       </Grid>
 
-      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider mt="1gap" mx="-1gap" />
 
-      <Text variant="subtitle" my={theme.shape.gap}>
+      <Text variant="subtitle" my="1gap">
         Colors
       </Text>
 
@@ -311,7 +313,7 @@ function BreakpointExample() {
     <>
       <Text variant="title">Breakpoints</Text>
 
-      <Grid gap mt={theme.shape.gap}>
+      <Grid gap mt="1gap">
         {breakpoints.map((bkp, index) => {
           const bg = theme.color('primary', (index + 1) / breakpoints.length);
           const color = theme.contrast(bg);
@@ -339,10 +341,10 @@ function GridExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Grid
       </Text>
-      <Text variant="subtitle" mb={theme.shape.gap}>
+      <Text variant="subtitle" mb="1gap">
         size={5}
       </Text>
       <Grid size={5}>
@@ -371,7 +373,7 @@ function TypographyExample() {
     <>
       <Text variant="title">Typography</Text>
 
-      <Grid alignItems="baseline" gap mt={theme.shape.gap}>
+      <Grid alignItems="baseline" gap mt="1gap">
         <Box>
           <Text variant="h1">H1</Text>
         </Box>
@@ -411,7 +413,7 @@ function ListItemExample() {
   const theme = useTheme();
 
   return (
-    <ListItem startAddon="❤" endAddon="⚙" chevron mt={theme.shape.gap}>
+    <ListItem startAddon="❤" endAddon="⚙" chevron mt="1gap">
       <Box>
         <Text bold>List Item</Text>
         <Text>Lorem ipsum dolor sit amet</Text>
@@ -431,10 +433,10 @@ function ButtonExample() {
 
       {variants.map((variant) => (
         <Box key={variant}>
-          <Text variant="subtitle" transform="capitalize" mt={theme.shape.gap}>
+          <Text variant="subtitle" transform="capitalize" mt="1gap">
             {variant}
           </Text>
-          <Grid alignItems="center" gap mt={theme.shape.gap}>
+          <Grid alignItems="center" gap mt="1gap">
             <Box>
               <Button variant={variant}>Button</Button>
             </Box>
@@ -449,7 +451,7 @@ function ButtonExample() {
               </Button>
             </Box>
             <Box>
-              <Button variant={variant} circular px={theme.shape.gap}>
+              <Button variant={variant} circular px="1gap">
                 Circular
               </Button>
             </Box>
@@ -480,14 +482,14 @@ function ButtonExample() {
               </Box>
             ))}
           </Grid>
-          <Divider mx={-theme.shape.gap} my={theme.shape.gap} />
+          <Divider mx="-1gap" my="1gap" />
         </Box>
       ))}
 
-      <Text mt={theme.shape.gap} variant="subtitle">
+      <Text mt="1gap" variant="subtitle">
         Group
       </Text>
-      <ButtonGroup mt={theme.shape.gap} variant="outline">
+      <ButtonGroup mt="1gap" variant="outline">
         <Button>Button</Button>
         <Button disabled>Disabled</Button>
         <Button loading={loading} onPress={toggleLoading}>
@@ -515,36 +517,30 @@ function FormExample() {
     <>
       <Text variant="title">Forms</Text>
 
-      <Text mt={theme.shape.gap} variant="subtitle">
+      <Text mt="1gap" variant="subtitle">
         Text Field
       </Text>
 
-      <Input mt={theme.shape.gap} label="Default Input" placeholder="This is the default input" />
-      <Input mt={theme.shape.gap} label="Secure" placeholder="Secure input" secure />
-      <Input mt={theme.shape.gap} label="Read Only" placeholder="Read only input" readOnly />
-      <Input mt={theme.shape.gap} label="Disabled" placeholder="Disabled input" disabled />
-      <Input mt={theme.shape.gap} label="Invalid" placeholder="Input with error" error="Value is invalid!" />
-      <Input mt={theme.shape.gap} label="Icons" placeholder="Input with icons" startAddon="$" endAddon="💳" />
+      <Input mt="1gap" label="Default Input" placeholder="This is the default input" />
+      <Input mt="1gap" label="Secure" placeholder="Secure input" secure />
+      <Input mt="1gap" label="Read Only" placeholder="Read only input" readOnly />
+      <Input mt="1gap" label="Disabled" placeholder="Disabled input" disabled />
+      <Input mt="1gap" label="Invalid" placeholder="Input with error" error="Value is invalid!" />
+      <Input mt="1gap" label="Icons" placeholder="Input with icons" startAddon="$" endAddon="💳" />
 
       {sizes.map((size) => (
-        <Input
-          key={size}
-          mt={theme.shape.gap}
-          size={size}
-          label={getLabel(size)}
-          placeholder={`This is a ${size} input`}
-        />
+        <Input key={size} mt="1gap" size={size} label={getLabel(size)} placeholder={`This is a ${size} input`} />
       ))}
 
-      <Input mt={theme.shape.gap} label="Multiline" placeholder="Multiline input" multiline />
+      <Input mt="1gap" label="Multiline" placeholder="Multiline input" multiline />
 
-      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider mt="1gap" mx="-1gap" />
 
-      <Text mt={theme.shape.gap} variant="subtitle">
+      <Text mt="1gap" variant="subtitle">
         Input Pin
       </Text>
 
-      <Grid gap mt={theme.shape.gap}>
+      <Grid gap mt="1gap">
         <Box xs={12}>
           <Label mb={1}>ALPHANUMERIC</Label>
           <InputPin length={4} />
@@ -559,14 +555,14 @@ function FormExample() {
         </Box>
       </Grid>
 
-      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider mt="1gap" mx="-1gap" />
 
-      <Text mt={theme.shape.gap} variant="subtitle">
+      <Text mt="1gap" variant="subtitle">
         Combobox
       </Text>
 
       <Select
-        mt={theme.shape.gap}
+        mt="1gap"
         label="City"
         placeholder="[Select]"
         options={[
@@ -577,7 +573,7 @@ function FormExample() {
       />
 
       <Select
-        mt={theme.shape.gap}
+        mt="1gap"
         label="Payment"
         placeholder="[Select]"
         startAddon="💳"
@@ -589,9 +585,9 @@ function FormExample() {
         ]}
       />
 
-      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider mt="1gap" mx="-1gap" />
 
-      <Text variant="subtitle" mt={theme.shape.gap}>
+      <Text variant="subtitle" mt="1gap">
         Checkbox / Radio Button
       </Text>
 
@@ -618,23 +614,23 @@ function FormExample() {
         ))}
       </Grid>
 
-      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider mt="1gap" mx="-1gap" />
 
-      <Text variant="subtitle" mt={theme.shape.gap}>
+      <Text variant="subtitle" mt="1gap">
         Slider
       </Text>
-      <Box p={theme.shape.gap}>
+      <Box p="1gap">
         {sizes.map((size) => (
-          <Slider key={size} size={size} defaultValue={Math.random() * 100} mt={theme.shape.gap} />
+          <Slider key={size} size={size} defaultValue={Math.random() * 100} mt="1gap" />
         ))}
       </Box>
 
-      <Divider mt={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider mt="1gap" mx="-1gap" />
 
-      <Text variant="subtitle" mt={theme.shape.gap}>
+      <Text variant="subtitle" mt="1gap">
         Serializable
       </Text>
-      <Form onSubmit={handleSubmitForm} data={formData} mt={theme.shape.gap}>
+      <Form onSubmit={handleSubmitForm} data={formData} mt="1gap">
         <Grid size={6} gap>
           <Box xs={6} md={4}>
             <Input name="firstName" label="First Name" />
@@ -676,7 +672,7 @@ function BadgeExample() {
   return (
     <>
       <Text variant="title">Badge</Text>
-      <Grid alignItems="center" gap mt={theme.shape.gap}>
+      <Grid alignItems="center" gap mt="1gap">
         <Box>
           <Badge dot />
         </Box>
@@ -705,7 +701,7 @@ function TableExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Tables
       </Text>
       <Table
@@ -739,7 +735,7 @@ function ListExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Lists
       </Text>
 
@@ -762,7 +758,7 @@ function ImageExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Images
       </Text>
       <Box row center>
@@ -791,7 +787,7 @@ function AvatarExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Avatar
       </Text>
       <Grid gap>
@@ -834,21 +830,21 @@ function DividerExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Dividers
       </Text>
       <Box row center>
         <Box flex>
           <Text>Horizontal</Text>
-          <Divider mt={theme.shape.gap} />
-          <Divider mt={theme.shape.gap} color="primary" />
-          <Divider mt={theme.shape.gap} color="secondary" />
+          <Divider mt="1gap" />
+          <Divider mt="1gap" color="primary" />
+          <Divider mt="1gap" color="secondary" />
         </Box>
         <Box row center w="50%" h={100}>
-          <Text my={theme.shape.gap}>Vertical</Text>
-          <Divider ml={theme.shape.gap} vertical />
-          <Divider ml={theme.shape.gap} color="primary" vertical />
-          <Divider ml={theme.shape.gap} color="secondary" vertical />
+          <Text my="1gap">Vertical</Text>
+          <Divider ml="1gap" vertical />
+          <Divider ml="1gap" color="primary" vertical />
+          <Divider ml="1gap" color="secondary" vertical />
         </Box>
       </Box>
     </>
@@ -862,7 +858,7 @@ function ModalExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Modals
       </Text>
 
@@ -888,13 +884,13 @@ function ModalExample() {
           <Text bold size={1.25}>
             My Modal
           </Text>
-          <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+          <Divider my="1gap" mx="-1gap" />
           <Text>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consectetur cupiditate deserunt dolorum
             eius et expedita qui repellendus voluptatibus! Accusamus consectetur deleniti fuga iure laborum quam
             quisquam quo ut, velit!
           </Text>
-          <Button mt={theme.shape.gap} onPress={() => setModal((current) => ({ ...current, visible: false }))}>
+          <Button mt="1gap" onPress={() => setModal((current) => ({ ...current, visible: false }))}>
             Close
           </Button>
         </Box>
@@ -910,7 +906,7 @@ function ToasterExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Toaster
       </Text>
       <Grid gap>
@@ -929,7 +925,7 @@ function ToasterExample() {
                 content: (
                   <>
                     <Text>⚠</Text>
-                    <Text color="warning" mx={theme.shape.gap}>
+                    <Text color="warning" mx="1gap">
                       Hello world!
                     </Text>
                     <Button variant="text" size="small">
@@ -955,13 +951,13 @@ function CollapseExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Collapse
       </Text>
       <Box row>
         <Button onPress={toggleCollapse}>Toggle Collapse</Button>
       </Box>
-      <Collapse visible={collpase} mt={theme.shape.gap}>
+      <Collapse visible={collpase} mt="1gap">
         <Text>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis,
           dignissimos distinctio earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam
@@ -987,7 +983,7 @@ function DrawerExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Drawer
       </Text>
       <Grid gap>
@@ -1000,11 +996,11 @@ function DrawerExample() {
       <Drawer visible={drawer} placement={placement as any} style={style} onClose={() => setDrawer(false)}>
         <Card>
           <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
-          <Text mt={theme.shape.gap}>
+          <Text mt="1gap">
             A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae
             soluta. Incidunt labore laboriosam maiores, praesentium quia tempore!
           </Text>
-          <Button mt={theme.shape.gap} onPress={() => setDrawer(false)}>
+          <Button mt="1gap" onPress={() => setDrawer(false)}>
             Close
           </Button>
         </Card>
@@ -1020,7 +1016,7 @@ function DropdownExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Dropdown
       </Text>
       <Box row>
@@ -1044,7 +1040,7 @@ function TabsExample() {
     <>
       <Text variant="title">Tabs</Text>
 
-      <Card bg="background.secondary" mt={theme.shape.gap}>
+      <Card bg="background.secondary" mt="1gap">
         <Tabs
           variant="group"
           value={tab}
@@ -1053,7 +1049,7 @@ function TabsExample() {
         />
       </Card>
 
-      <Card bg="background.secondary" mt={theme.shape.gap}>
+      <Card bg="background.secondary" mt="1gap">
         <Tabs
           variant="card"
           value={tab}
@@ -1062,7 +1058,7 @@ function TabsExample() {
         />
       </Card>
 
-      <Card bg="background.secondary" mt={theme.shape.gap}>
+      <Card bg="background.secondary" mt="1gap">
         <Tabs
           variant="nav"
           value={tab}
@@ -1081,7 +1077,7 @@ function ProgressExample() {
   return (
     <>
       <Text variant="title">Progress</Text>
-      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider my="1gap" mx="-1gap" />
 
       <Box row noWrap>
         <Grid gap>
@@ -1097,15 +1093,15 @@ function ProgressExample() {
         </Grid>
       </Box>
 
-      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider my="1gap" mx="-1gap" />
 
       <Text variant="subtitle">Bar indeterminate</Text>
-      <Progress mt={theme.shape.gap} />
+      <Progress mt="1gap" />
 
-      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider my="1gap" mx="-1gap" />
 
       <Text variant="subtitle">Bar with value</Text>
-      <Progress value={percent} mt={theme.shape.gap} />
+      <Progress value={percent} mt="1gap" />
 
       <Button align="start" mt={4} onPress={randomPercent}>
         Random Percent
@@ -1122,14 +1118,14 @@ function CalendarExample() {
   return (
     <>
       <Text variant="title">Calendar</Text>
-      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider my="1gap" mx="-1gap" />
 
       <Text variant="subtitle">Component</Text>
-      <Box maxw={360} mx={-theme.shape.gap}>
+      <Box maxw={360} mx="-1gap">
         <Calendar />
       </Box>
 
-      <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+      <Divider my="1gap" mx="-1gap" />
 
       <Grid gap maxw={360}>
         <Box xs={12}>
@@ -1165,22 +1161,22 @@ function TooltipExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Tooltip
       </Text>
-      <Text variant="subtitle" mb={theme.shape.gap}>
+      <Text variant="subtitle" mb="1gap">
         Hover/press texts below
       </Text>
       <Box row center>
         {placements.map((pos) => (
-          <Box key={pos} p={theme.shape.gap}>
+          <Box key={pos} p="1gap">
             <Tooltip title="My tooltip" position={pos}>
               <Text>{getLabel(pos)}</Text>
             </Tooltip>
           </Box>
         ))}
         {colors.map((color) => (
-          <Box key={color} p={theme.shape.gap}>
+          <Box key={color} p="1gap">
             <Tooltip title="My tooltip" color={color}>
               <Text>{getLabel(color)}</Text>
             </Tooltip>
@@ -1196,7 +1192,7 @@ function CarouselExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Carousel
       </Text>
       <Carousel xs={1} sm={2} md={3} lg={4} xl={5} gap>
@@ -1206,7 +1202,7 @@ function CarouselExample() {
             <Image
               w="100%"
               corners={3}
-              my={theme.shape.gap}
+              my="1gap"
               source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg"
             />
             <Text>
@@ -1228,7 +1224,7 @@ function GrowBoxExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Grow Box
       </Text>
 
@@ -1258,7 +1254,7 @@ function TerminalExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Terminal
       </Text>
       <Terminal h={240} />
@@ -1276,11 +1272,11 @@ function AnimationExample() {
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Animations
       </Text>
 
-      <Text variant="subtitle" mb={theme.shape.gap}>
+      <Text variant="subtitle" mb="1gap">
         useAnimation
       </Text>
 
@@ -1329,10 +1325,10 @@ function AnimationExample() {
 
         return (
           <React.Fragment key={key}>
-            <Divider my={theme.shape.gap} mx={-theme.shape.gap} />
+            <Divider my="1gap" mx="-1gap" />
 
             <Box>
-              <Text variant="subtitle" mb={theme.shape.gap}>
+              <Text variant="subtitle" mb="1gap">
                 {label}
               </Text>
               <Grid noWrap alignItems="center" gap={6}>
