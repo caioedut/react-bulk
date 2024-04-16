@@ -171,6 +171,8 @@ export type TabItem = Overwrite<
  * FOR INTERNAL USE (END) *
  ****************************/
 
+export type ReactOnlyElement = ReactNode | JSX.Element;
+
 export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[];
 
 export type AnyObject = { [key: string | number]: any };
@@ -258,7 +260,7 @@ export interface RbkFormEvent {
   name?: string;
   type: string;
   form: FormRef;
-  target: ReactElement | any;
+  target: ReactOnlyElement;
   nativeEvent?: Event | SyntheticEvent;
 }
 
@@ -363,6 +365,7 @@ export type FormField = {
 };
 
 export type FormRef = {
+  initialData: AnyObject | undefined;
   cancel: () => any;
   clear: () => any;
   getData: () => AnyObject;
@@ -1148,20 +1151,16 @@ export type BadgeProps<ALLOW_ANY = true> = PropsWithStyles<
 export type FormProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
-    errors?: { [key: string]: string | boolean } | null;
     initialData?: AnyObject;
     // Events
-    onSubmit?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
-    onCancel?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
-    onClear?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
-    onChange?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
+    onSubmit?: (event: RbkFormEvent, data: AnyObject, errors: AnyObject | null) => void;
+    onCancel?: (event: RbkFormEvent, data: AnyObject, errors: AnyObject | null) => void;
+    onClear?: (event: RbkFormEvent, data: AnyObject, errors: AnyObject | null) => void;
+    onChange?: (event: RbkFormEvent, data: AnyObject, errors: AnyObject | null) => void;
     // Styles
     variants?: {
       root?: any;
     };
-
-    /** @deprecated use initialData instead */
-    data?: any;
   }
 >;
 
