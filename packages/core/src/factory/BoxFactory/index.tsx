@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useMemo } from 'react';
+import React, { forwardRef, useEffect, useMemo, useRef } from 'react';
 
 import useAnimation from '../../hooks/useAnimation';
 import useTheme from '../../hooks/useTheme';
@@ -169,6 +169,7 @@ const BoxFactory = React.memo<BoxProps>(
 
     // Animation
     const transition = useAnimation({}, ref as any);
+    const animStrDiffRef = useRef<string>();
     style.push(transition.props.style);
 
     if (web) {
@@ -227,10 +228,16 @@ const BoxFactory = React.memo<BoxProps>(
     useEffect(() => {
       if (!animation) return;
 
+      const { onStart, onEnd, ...rest } = animation;
+
+      const animStr = JSON.stringify(rest);
+      if (animStr === animStrDiffRef.current) return;
+      animStrDiffRef.current = animStr;
+
       (async () => {
-        animation?.onStart?.();
+        onStart?.();
         await transition.start(animation);
-        animation?.onEnd?.();
+        onEnd?.();
       })();
     }, [animation, transition]);
 
