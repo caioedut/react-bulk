@@ -29,8 +29,6 @@ const FormFactory = React.memo<FormProps>(
 
     // Extends from default props
     const {
-      data,
-      errors,
       initialData,
       // Events
       onSubmit,
@@ -46,7 +44,6 @@ const FormFactory = React.memo<FormProps>(
     const formRef = useRef<ReactNode>(null);
     const fieldsRef = useRef<FormField[]>([]);
     const dataRef = useRef<any>({});
-    const initialDataRef = useRef(false);
 
     ref = ref || defaultRef;
 
@@ -196,6 +193,7 @@ const FormFactory = React.memo<FormProps>(
 
     const context: FormRef = useMemo(
       () => ({
+        initialData,
         submit,
         cancel,
         clear,
@@ -211,6 +209,7 @@ const FormFactory = React.memo<FormProps>(
         target: formRef.current,
       }),
       [
+        initialData,
         cancel,
         clear,
         getData,
@@ -228,26 +227,10 @@ const FormFactory = React.memo<FormProps>(
 
     useImperativeHandle(ref, () => context, [context]);
 
-    useMemo(() => {
-      if (!initialData) return;
-      if (initialDataRef.current) return;
-
-      initialDataRef.current = true;
-      setData(initialData);
-    }, [initialData, setData]);
-
     useEffect(() => {
       // @ts-ignore
       Object.assign(ref?.current || {}, { target: formRef.current });
     }, [ref, formRef]);
-
-    // useEffect(() => {
-    //   setData(data || {});
-    // }, [data, setData]);
-    //
-    // useEffect(() => {
-    //   setErrors(errors);
-    // }, [errors, setErrors]);
 
     return (
       <Context.Provider value={context}>

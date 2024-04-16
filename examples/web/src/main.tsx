@@ -1,6 +1,6 @@
 import React, { useReducer, useRef, useState } from 'react';
 
-import { AnyObject, FormRef, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
+import { AnyObject, RbkFormEvent, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
 import {
   Animation,
   Avatar,
@@ -507,7 +507,7 @@ function FormExample() {
   const [radio, setRadio] = useState('medium');
   const [checkbox, toggleCheckbox] = useReducer((state) => !state, true);
 
-  function handleSubmitForm(_: FormRef, data: AnyObject) {
+  function handleSubmitForm(_: RbkFormEvent, data: AnyObject) {
     alert(JSON.stringify(data, null, 2));
   }
 

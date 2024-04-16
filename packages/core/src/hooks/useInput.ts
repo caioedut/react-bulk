@@ -48,7 +48,7 @@ export default function useInput<T>({
 
   const form = useForm();
 
-  const [initialValue] = useState(resolveValue(value ?? defaultValue));
+  const [initialValue] = useState(resolveValue(value ?? defaultValue ?? form?.initialData?.[name!]));
   const [_internal, _setInternal] = useState(initialValue);
   const [prevInternal, setPrevInternal] = useState();
   const [error, setError] = useState(errorProp);
