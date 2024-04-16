@@ -10,17 +10,23 @@ import global from '../utils/global';
 export default function registry(theme?: ThemeProps) {
   theme = theme ?? global.theme ?? {};
 
-  if (Platform.web && theme) {
-    cometta.polyfill({
-      fontSize: theme.rem(1),
-    });
-  }
+  if (theme) {
+    if (Platform.web) {
+      cometta.polyfill({
+        fontSize: theme.rem(1),
+      });
+    }
 
-  if (Platform.native && theme) {
-    cometta.polyfill({
-      fontSize: theme.rem(1),
-      screenWidth: () => global.mapping.dimensions.window().width,
-      screenHeight: () => global.mapping.dimensions.window().height,
+    if (Platform.native) {
+      cometta.polyfill({
+        fontSize: theme.rem(1),
+        screenWidth: () => global.mapping.dimensions.window().width,
+        screenHeight: () => global.mapping.dimensions.window().height,
+      });
+    }
+
+    cometta.unit('gap', (value) => {
+      return value * theme.shape.gap * theme.shape.spacing;
     });
   }
 
