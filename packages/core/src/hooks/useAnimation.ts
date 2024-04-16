@@ -13,6 +13,7 @@ import defined from '../utils/defined';
 import global from '../utils/global';
 import pick from '../utils/pick';
 import uuid from '../utils/uuid';
+import useDefaultRef from './useDefaultRef';
 import useHtmlId from './useHtmlId';
 
 function jssWithTransform(style) {
@@ -26,8 +27,7 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
 
   const baseStyle = useMemo(() => jss(style), [style]);
 
-  const defaultRef = useRef();
-  const elRef = ref ?? defaultRef;
+  const elRef = useDefaultRef<any>(ref);
 
   const animationName = useHtmlId();
   const styleRef = useRef<AnyObject>(clone(baseStyle));
@@ -163,17 +163,19 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
         );
 
         if (web && !web_useRawStyle) {
-          const transformFrom = extract([...transformProps], from);
-          const transformTo = extract([...transformProps], to);
+          const transformFromArr = Object.entries(extract([...transformProps], from)).map(([attr, value]) => ({
+            [attr]: value,
+          }));
 
-          const transformFromStr = Object.entries(transformFrom).map(([attr, value]) => ({ [attr]: value }));
-          const transformToStr = Object.entries(transformTo).map(([attr, value]) => ({ [attr]: value }));
+          const transformToArr = Object.entries(extract([...transformProps], to)).map(([attr, value]) => ({
+            [attr]: value,
+          }));
 
           cometta.createStyleSheet(
             `
              @keyframes ${animationName} {
-               from { ${css(from, { transform: transformFromStr })} }
-               to { ${css(to, { transform: transformToStr })} }
+               from { ${css(from, transformFromArr.length > 0 && { transform: transformFromArr })} }
+               to { ${css(to, transformToArr.length > 0 && { transform: transformToArr })} }
              }
           `,
             { uniqueId: animationName },
