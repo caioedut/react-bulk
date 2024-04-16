@@ -401,18 +401,7 @@ export type ThemeComponentStyleContexts<Contexts extends keyof any> = {
   [context in Contexts | 'root']: RbkStyle;
 };
 
-export type ThemeComponentProps<Props, Contexts extends keyof any> = {
-  name: string;
-  defaultProps: Partial<Props>;
-  defaultStyles: ThemeComponentStyleContexts<Contexts>;
-  variants?: {
-    [prop: string]: {
-      [value: string]: Partial<ThemeComponentStyleContexts<Contexts>>;
-    };
-  };
-};
-
-export type ThemeComponentProps2<Props extends AnyObject> = Prettify<{
+export type ThemeComponentProps<Props extends AnyObject> = Prettify<{
   name: string;
   defaultProps: Partial<Props>;
   defaultStyles: { root: RbkStyle } & {
@@ -518,46 +507,46 @@ export type ThemeProps = {
   contrast: (color: RbkColor, lightColor?: string | null, darkColor?: string | null) => string;
 
   components: {
-    Avatar: ThemeComponentProps2<AvatarProps>;
-    Animation: ThemeComponentProps2<AnimationProps>;
-    Backdrop: ThemeComponentProps2<BackdropProps>;
-    Badge: ThemeComponentProps2<BadgeProps>;
-    Box: ThemeComponentProps2<BoxProps>;
-    Button: ThemeComponentProps2<ButtonProps>;
-    ButtonGroup: ThemeComponentProps2<ButtonGroupProps>;
-    Calendar: ThemeComponentProps2<CalendarProps>;
-    Card: ThemeComponentProps2<CardProps>;
-    Carousel: ThemeComponentProps2<CarouselProps>;
-    Checkbox: ThemeComponentProps2<CheckboxProps>;
-    Collapse: ThemeComponentProps2<CollapseProps>;
-    Divider: ThemeComponentProps2<DividerProps>;
-    Drawer: ThemeComponentProps2<DrawerProps>;
-    Dropdown: ThemeComponentProps2<DropdownProps>;
-    Form: ThemeComponentProps2<FormProps>;
-    Grid: ThemeComponentProps2<GridProps>;
-    GrowBox: ThemeComponentProps2<GrowBoxProps>;
-    Image: ThemeComponentProps2<ImageProps>;
-    InputBase: ThemeComponentProps2<InputBaseProps>;
-    Input: ThemeComponentProps2<InputProps>;
-    InputDate: ThemeComponentProps2<InputDateProps>;
-    InputPin: ThemeComponentProps2<InputPinProps>;
-    Label: ThemeComponentProps2<LabelProps>;
-    Link: ThemeComponentProps2<LinkProps>;
-    List: ThemeComponentProps2<ListProps>;
-    ListItem: ThemeComponentProps2<ListItemProps>;
-    Loading: ThemeComponentProps2<LoadingProps>;
-    Modal: ThemeComponentProps2<ModalProps>;
-    Outline: ThemeComponentProps2<OutlineProps>;
-    Progress: ThemeComponentProps2<ProgressProps>;
-    Scrollable: ThemeComponentProps2<ScrollableProps>;
-    Select: ThemeComponentProps2<SelectProps>;
-    Slider: ThemeComponentProps2<SliderProps>;
-    Table: ThemeComponentProps2<TableProps>;
-    Tabs: ThemeComponentProps2<TabsProps>;
-    Terminal: ThemeComponentProps2<TerminalProps>;
-    Text: ThemeComponentProps2<TextProps>;
-    Toaster: ThemeComponentProps2<ToasterProps>;
-    Tooltip: ThemeComponentProps2<TooltipProps>;
+    Avatar: ThemeComponentProps<AvatarProps>;
+    Animation: ThemeComponentProps<AnimationProps>;
+    Backdrop: ThemeComponentProps<BackdropProps>;
+    Badge: ThemeComponentProps<BadgeProps>;
+    Box: ThemeComponentProps<BoxProps>;
+    Button: ThemeComponentProps<ButtonProps>;
+    ButtonGroup: ThemeComponentProps<ButtonGroupProps>;
+    Calendar: ThemeComponentProps<CalendarProps>;
+    Card: ThemeComponentProps<CardProps>;
+    Carousel: ThemeComponentProps<CarouselProps>;
+    Checkbox: ThemeComponentProps<CheckboxProps>;
+    Collapse: ThemeComponentProps<CollapseProps>;
+    Divider: ThemeComponentProps<DividerProps>;
+    Drawer: ThemeComponentProps<DrawerProps>;
+    Dropdown: ThemeComponentProps<DropdownProps>;
+    Form: ThemeComponentProps<FormProps>;
+    Grid: ThemeComponentProps<GridProps>;
+    GrowBox: ThemeComponentProps<GrowBoxProps>;
+    Image: ThemeComponentProps<ImageProps>;
+    InputBase: ThemeComponentProps<InputBaseProps>;
+    Input: ThemeComponentProps<InputProps>;
+    InputDate: ThemeComponentProps<InputDateProps>;
+    InputPin: ThemeComponentProps<InputPinProps>;
+    Label: ThemeComponentProps<LabelProps>;
+    Link: ThemeComponentProps<LinkProps>;
+    List: ThemeComponentProps<ListProps>;
+    ListItem: ThemeComponentProps<ListItemProps>;
+    Loading: ThemeComponentProps<LoadingProps>;
+    Modal: ThemeComponentProps<ModalProps>;
+    Outline: ThemeComponentProps<OutlineProps>;
+    Progress: ThemeComponentProps<ProgressProps>;
+    Scrollable: ThemeComponentProps<ScrollableProps>;
+    Select: ThemeComponentProps<SelectProps>;
+    Slider: ThemeComponentProps<SliderProps>;
+    Table: ThemeComponentProps<TableProps>;
+    Tabs: ThemeComponentProps<TabsProps>;
+    Terminal: ThemeComponentProps<TerminalProps>;
+    Text: ThemeComponentProps<TextProps>;
+    Toaster: ThemeComponentProps<ToasterProps>;
+    Tooltip: ThemeComponentProps<TooltipProps>;
   };
 };
 
