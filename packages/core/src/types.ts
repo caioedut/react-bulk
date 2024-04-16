@@ -1148,8 +1148,8 @@ export type BadgeProps<ALLOW_ANY = true> = PropsWithStyles<
 export type FormProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
-    data?: any;
     errors?: { [key: string]: string | boolean } | null;
+    initialData?: AnyObject;
     // Events
     onSubmit?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
     onCancel?: (event: RbkFormEvent | any, data: AnyObject, errors: AnyObject | null) => any;
@@ -1159,6 +1159,9 @@ export type FormProps<ALLOW_ANY = true> = PropsWithStyles<
     variants?: {
       root?: any;
     };
+
+    /** @deprecated use initialData instead */
+    data?: any;
   }
 >;
 
