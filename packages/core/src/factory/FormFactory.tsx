@@ -31,6 +31,7 @@ const FormFactory = React.memo<FormProps>(
     const {
       data,
       errors,
+      initialData,
       // Events
       onSubmit,
       onCancel,
@@ -45,6 +46,7 @@ const FormFactory = React.memo<FormProps>(
     const formRef = useRef<ReactNode>(null);
     const fieldsRef = useRef<FormField[]>([]);
     const dataRef = useRef<any>({});
+    const initialDataRef = useRef(false);
 
     ref = ref || defaultRef;
 
@@ -225,6 +227,14 @@ const FormFactory = React.memo<FormProps>(
     );
 
     useImperativeHandle(ref, () => context, [context]);
+
+    useMemo(() => {
+      if (!initialData) return;
+      if (initialDataRef.current) return;
+
+      initialDataRef.current = true;
+      setData(initialData);
+    }, [initialData, setData]);
 
     useEffect(() => {
       // @ts-ignore
