@@ -513,7 +513,7 @@ const base: ThemeProps = {
           root: {
             backgroundColor: 'background.primary',
             corners: 2,
-            p: this.shape.gap,
+            p: '1gap',
           },
         },
         variants: {},
@@ -937,7 +937,7 @@ const base: ThemeProps = {
           label: {
             color: 'primary',
             fontSize: '1rem',
-            ml: this.shape.gap / 2,
+            ml: '0.5gap',
           },
         },
         variants: {},
@@ -954,7 +954,7 @@ const base: ThemeProps = {
             maxw: '100%',
           },
           backdrop: {
-            p: this.shape.gap,
+            p: '1gap',
             zIndex: (theme) => theme.mixins.zIndex.modal,
           },
         },
@@ -1306,15 +1306,15 @@ const base: ThemeProps = {
           halign: 'left',
           valign: 'bottom',
           offset: {
-            x: this.shape.gap,
-            y: this.shape.gap,
+            x: '1gap',
+            y: '1gap',
           },
         },
         defaultStyles: {
           root: {
             position: 'relative',
             corners: 2,
-            p: this.shape.gap,
+            p: '1gap',
             bg: 'gray.dark',
             overflow: 'hidden',
           },
