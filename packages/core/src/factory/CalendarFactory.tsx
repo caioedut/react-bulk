@@ -1,5 +1,6 @@
-import React, { forwardRef, useCallback, useEffect, useState } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 
+import useDependentState from '../hooks/useDependentState';
 import useTheme from '../hooks/useTheme';
 import ChevronLeft from '../icons/ChevronLeft';
 import ChevronRight from '../icons/ChevronRight';
@@ -37,8 +38,7 @@ const CalendarFactory = React.memo<CalendarProps>(
     const today = dateify();
     color = theme.color(color || 'primary');
 
-    // TODO: usePropState
-    const [internal, setInternal] = useState(dateify(date));
+    const [internal, setInternal] = useDependentState(() => dateify(date), [date]);
 
     const eventsDates = events?.filter(Boolean)?.map((value) => dateify(value)) || [];
 
@@ -64,34 +64,36 @@ const CalendarFactory = React.memo<CalendarProps>(
       monthDates.push(date);
     }
 
-    useEffect(() => {
-      setInternal(dateify(date));
-    }, [date]);
+    const handleYear = useCallback(
+      (year: number) => {
+        if (string(year).length !== 4) return;
 
-    const handleYear = useCallback((year: number) => {
-      if (string(year).length !== 4) return;
+        setInternal((current) => {
+          const newDate = dateify(current.getTime());
+          newDate.setFullYear(year);
+          return newDate;
+        });
+      },
+      [setInternal],
+    );
 
-      setInternal((current) => {
-        const newDate = dateify(current.getTime());
-        newDate.setFullYear(year);
-        return newDate;
-      });
-    }, []);
-
-    const handleMonth = useCallback((sum: number) => {
-      setInternal((current) => {
-        const newDate = dateify(current.getTime());
-        newDate.setMonth(newDate.getMonth() + sum);
-        return newDate;
-      });
-    }, []);
+    const handleMonth = useCallback(
+      (sum: number) => {
+        setInternal((current) => {
+          const newDate = dateify(current.getTime());
+          newDate.setMonth(newDate.getMonth() + sum);
+          return newDate;
+        });
+      },
+      [setInternal],
+    );
 
     const handleDate = useCallback(
       (e: AnyObject, date: Date) => {
         setInternal(date);
         onPressDate?.(e, date);
       },
-      [onPressDate],
+      [onPressDate, setInternal],
     );
 
     return (

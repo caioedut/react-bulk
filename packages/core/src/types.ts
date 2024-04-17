@@ -571,9 +571,6 @@ export type BaseProps = Overwrite<
   Overwrite<
     StyleProps,
     {
-      // TODO
-      // variants?: { root: any };
-
       ref?: Ref<any>;
       children?: ReactElement | any;
 
@@ -1145,7 +1142,6 @@ export type BadgeProps<ALLOW_ANY = true> = PropsWithStyles<
   }
 >;
 
-// TODO: remove event as "any" in next major release
 export type FormProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
