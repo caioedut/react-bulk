@@ -6,6 +6,7 @@ export { default as useAnimation } from './hooks/useAnimation';
 export { default as useBreakpoints } from './hooks/useBreakpoints';
 export { default as useDefaultRef } from './hooks/useDefaultRef';
 export { default as useDeferredValue } from './hooks/useDeferredValue';
+export { default as useDependentState } from './hooks/useDependentState';
 export { default as useHtmlId } from './hooks/useHtmlId';
 export { default as useInput } from './hooks/useInput';
 export { default as usePropState } from './hooks/usePropState';
