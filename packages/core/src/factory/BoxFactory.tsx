@@ -62,7 +62,15 @@ const BoxFactory = React.memo<BoxProps>(
     rest = bindings(rest);
 
     pressable =
-      pressable ?? Boolean(props.onPress || props.onLongPress || props.onPressIn || props.onPressOut || props.onClick);
+      pressable ??
+      Boolean(
+        props.onPress ||
+          props.onClick ||
+          props.onPressIn ||
+          props.onMouseDown ||
+          props.onPointerDown ||
+          props.onLongPress,
+      );
 
     const curBreakpoints: RbkBreakpoints = useMemo(
       () => breakpoints ?? theme.breakpoints,

@@ -266,6 +266,40 @@ export interface RbkAnimation {
   web_useRawStyle?: boolean;
 }
 
+export type RbkPressEvent<T = AnyObject, E = string | HTMLElement> = {
+  type: string;
+
+  /**
+   * The X position of the touch, relative to the element
+   */
+  offsetX: number;
+
+  /**
+   * The Y position of the touch, relative to the element
+   */
+  offsetY: number;
+
+  /**
+   * The X position of the touch, relative to the screen
+   */
+  pageX: number;
+
+  /**
+   * The Y position of the touch, relative to the screen
+   */
+  pageY: number;
+
+  target: E;
+
+  timestamp: number;
+
+  nativeEvent: T;
+
+  preventDefault: () => void;
+
+  stopPropagation: () => void;
+};
+
 export interface RbkFormEvent {
   name?: string;
   type: string;
@@ -342,17 +376,17 @@ export interface AccessibilityProps {
 
 export interface PressableProps {
   pressable?: boolean;
-  onPress?: Function;
-  onPressIn?: Function;
-  onPressOut?: Function;
-  onLongPress?: Function;
+  onPress?: (event: RbkPressEvent) => void;
+  onPressIn?: (event: RbkPressEvent) => void;
+  onPressOut?: (event: RbkPressEvent) => void;
+  onLongPress?: (event: RbkPressEvent) => void;
 
   /** @deprecated use onPress(event) instead */
-  onClick?: Function;
+  onClick?: (event: RbkPressEvent) => void;
   /** @deprecated use onPressIn(event) instead */
-  onMouseDown?: Function;
+  onMouseDown?: (event: RbkPressEvent) => void;
   /** @deprecated use onPressOut(event) instead */
-  onMouseUp?: Function;
+  onMouseUp?: (event: RbkPressEvent) => void;
 }
 
 export interface FocusableProps {
@@ -1043,7 +1077,7 @@ export type ModalProps<ALLOW_ANY = true> = PropsWithStyles<
     valign?: 'center' | 'top' | 'bottom';
     visible?: boolean;
     // Events
-    onClose?: Function;
+    onClose?: PressableProps['onPress'];
     // Styles
     variants?: {
       root?: any;
@@ -1071,7 +1105,7 @@ export type DropdownProps<ALLOW_ANY = true> = PropsWithStyles<
     triggerRef?: RefObject<ReactElement>;
     visible?: boolean;
     // Events
-    onClose?: Function;
+    onClose?: PressableProps['onPress'];
     // Styles
     variants?: {
       root?: any;
@@ -1282,7 +1316,7 @@ export type TabsProps<ALLOW_ANY = true> = PropsWithStyles<
     value?: string | number;
     variant?: 'group' | 'card' | 'nav';
     // Events
-    onChange?: (event: Event, value: string | number) => any;
+    onChange?: (event: RbkPressEvent, value: string | number) => any;
     // Styles
     contentStyle?: RbkStyle;
     buttonStyle?: RbkStyle;
@@ -1305,7 +1339,7 @@ export type ToasterProps = {
   valign?: 'top' | 'bottom';
   width?: number | string;
   // Events
-  onPress?: Function;
+  onPress?: PressableProps['onPress'];
   // Styles
   variants?: {
     root?: any;
