@@ -1,5 +1,4 @@
-import { RbkSize } from '@react-bulk/core';
-
+import { RbkSize } from '../types';
 import pick from '../utils/pick';
 
 export default function getSize(value?: RbkSize) {

@@ -4,6 +4,7 @@ import {
   Easing,
   NativeModules,
   Platform,
+  Pressable,
   Image as RNImage,
   Modal as RNModal,
   Text as RNText,
@@ -11,7 +12,6 @@ import {
   SafeAreaView,
   ScrollView,
   TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -105,7 +105,7 @@ global.mapping = {
     },
   },
 
-  Button: TouchableOpacity,
+  Button: Pressable,
   Dialog: RNModal,
   Form: View,
   Image: RNImage,

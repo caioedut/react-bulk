@@ -41,8 +41,6 @@ import {
 } from '@react-bulk/native';
 
 export default function Main() {
-  const theme = useTheme();
-
   return (
     <Scrollable bg="background.secondary" contentInset="1gap">
       <Card>
@@ -166,6 +164,7 @@ function ThemeExample() {
     const last = split.pop() as string;
 
     for (const attr of split) {
+      // @ts-ignore
       theme[attr][last] = value;
     }
 
@@ -337,8 +336,6 @@ function BreakpointExample() {
 }
 
 function GridExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title" mb="1gap">
@@ -367,8 +364,6 @@ function GridExample() {
 }
 
 function TypographyExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title">Typography</Text>
@@ -410,8 +405,6 @@ function TypographyExample() {
 }
 
 function ListItemExample() {
-  const theme = useTheme();
-
   return (
     <ListItem startAddon="❤" endAddon="⚙" chevron mt="1gap">
       <Box>
@@ -423,8 +416,6 @@ function ListItemExample() {
 }
 
 function ButtonExample() {
-  const theme = useTheme();
-
   const [loading, toggleLoading] = useReducer((state) => !state, true);
 
   return (
@@ -504,8 +495,6 @@ function ButtonExample() {
 }
 
 function FormExample() {
-  const theme = useTheme();
-
   const [radio, setRadio] = useState('medium');
   const [checkbox, toggleCheckbox] = useReducer((state) => !state, true);
 
@@ -667,8 +656,6 @@ function FormExample() {
 }
 
 function BadgeExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title">Badge</Text>
@@ -697,8 +684,6 @@ function BadgeExample() {
 }
 
 function TableExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title" mb="1gap">
@@ -731,8 +716,6 @@ function TableExample() {
 }
 
 function ListExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title" mb="1gap">
@@ -754,8 +737,6 @@ function ListExample() {
 }
 
 function ImageExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title" mb="1gap">
@@ -783,8 +764,6 @@ function ImageExample() {
 }
 
 function AvatarExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title" mb="1gap">
@@ -826,8 +805,6 @@ function AvatarExample() {
 }
 
 function DividerExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title" mb="1gap">
@@ -852,8 +829,6 @@ function DividerExample() {
 }
 
 function ModalExample() {
-  const theme = useTheme();
-
   const [modal, setModal] = useState({});
 
   return (
@@ -900,8 +875,6 @@ function ModalExample() {
 }
 
 function ToasterExample() {
-  const theme = useTheme();
-
   const toaster = useToaster();
 
   return (
@@ -945,8 +918,6 @@ function ToasterExample() {
 }
 
 function CollapseExample() {
-  const theme = useTheme();
-
   const [collpase, toggleCollapse] = useReducer((state) => !state, false);
 
   return (
@@ -969,8 +940,6 @@ function CollapseExample() {
 }
 
 function DrawerExample() {
-  const theme = useTheme();
-
   const [drawer, setDrawer] = useState(false);
   const [placement, setPlacement] = useState('right');
   const [style, setStyle] = useState({});
@@ -1010,8 +979,6 @@ function DrawerExample() {
 }
 
 function DropdownExample() {
-  const theme = useTheme();
-
   const [dropdown, toggleDropdown] = useReducer((state) => !state, false);
 
   return (
@@ -1032,8 +999,6 @@ function DropdownExample() {
 }
 
 function TabsExample() {
-  const theme = useTheme();
-
   const [tab, setTab] = useState<number | string>(1);
 
   return (
@@ -1071,7 +1036,6 @@ function TabsExample() {
 }
 
 function ProgressExample() {
-  const theme = useTheme();
   const [percent, randomPercent] = useReducer(() => Math.random() * 100, 50);
 
   return (
@@ -1111,8 +1075,6 @@ function ProgressExample() {
 }
 
 function CalendarExample() {
-  const theme = useTheme();
-
   const [date, setDate] = useState(new Date());
 
   return (
@@ -1157,8 +1119,6 @@ function CalendarExample() {
 }
 
 function TooltipExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title" mb="1gap">
@@ -1188,8 +1148,6 @@ function TooltipExample() {
 }
 
 function CarouselExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title" mb="1gap">
@@ -1216,8 +1174,6 @@ function CarouselExample() {
 }
 
 function GrowBoxExample() {
-  const theme = useTheme();
-
   const [length, incLength] = useReducer((current: number, incValue: number) => {
     return Math.max(0, current + incValue);
   }, 0);
@@ -1250,8 +1206,6 @@ function GrowBoxExample() {
 }
 
 function TerminalExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title" mb="1gap">
@@ -1263,8 +1217,6 @@ function TerminalExample() {
 }
 
 function AnimationExample() {
-  const theme = useTheme();
-
   const from = { width: 40, height: 40 };
   const to = { width: 200, height: 200 };
 

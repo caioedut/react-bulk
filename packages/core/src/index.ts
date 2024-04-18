@@ -27,6 +27,8 @@ export { default as getSize } from './props/getSize';
 /** @internal */
 export { default as merge } from './props/merge';
 /** @internal */
+export { default as omit } from './props/omit';
+/** @internal */
 export { default as only } from './props/only';
 /** @internal */
 export { default as remove } from './props/remove';
