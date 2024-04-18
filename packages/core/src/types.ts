@@ -1073,6 +1073,7 @@ export type BackdropProps<ALLOW_ANY = true> = PropsWithStyles<
 export type ModalProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
+    animation?: 'fade' | 'zoom-in' | 'zoom-out' | 'slide-bottom' | 'slide-top' | 'slide-left' | 'slide-right';
     halign?: 'center' | 'left' | 'right';
     valign?: 'center' | 'top' | 'bottom';
     visible?: boolean;

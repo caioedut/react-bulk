@@ -13,6 +13,7 @@ const ModalFactory = React.memo<ModalProps>(
 
     // Extends from default props
     const {
+      animation,
       halign,
       valign,
       visible,
@@ -23,9 +24,50 @@ const ModalFactory = React.memo<ModalProps>(
       ...rest
     } = factory2<ModalProps>(props, options);
 
+    const animStyle = {
+      fade: {
+        from: { opacity: 0.5 },
+        to: { opacity: 1 },
+      },
+      'zoom-in': {
+        from: { scale: 0.5 },
+        to: { scale: 1 },
+      },
+      'zoom-out': {
+        from: { scale: 1.5 },
+        to: { scale: 1 },
+      },
+      'slide-top': {
+        from: { translateY: 80 },
+        to: { translateY: 0 },
+      },
+      'slide-bottom': {
+        from: { translateY: -80 },
+        to: { translateY: 0 },
+      },
+      'slide-left': {
+        from: { translateX: 80 },
+        to: { translateX: 0 },
+      },
+      'slide-right': {
+        from: { translateX: -80 },
+        to: { translateX: 0 },
+      },
+    }[animation ?? 'fade'];
+
     return (
       <BackdropFactory visible={visible} variants={{ root: variants.backdrop }} onPress={onClose}>
-        <CardFactory ref={ref} variants={{ root: variants.root }} {...rest}>
+        <CardFactory
+          ref={ref}
+          variants={{ root: variants.root }}
+          {...rest}
+          animation={{
+            duration: 200,
+            timing: visible ? 'ease-out' : 'ease-in',
+            from: visible ? animStyle.from : animStyle.to,
+            to: visible ? animStyle.to : animStyle.from,
+          }}
+        >
           {children}
         </CardFactory>
       </BackdropFactory>

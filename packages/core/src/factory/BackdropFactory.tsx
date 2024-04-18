@@ -86,7 +86,7 @@ const BackdropFactory = React.memo<BackdropProps>(
             opacity: 0,
             visibility: 'hidden',
             zIndex: -1,
-            ...theme.mixins.transitions.medium,
+            ...theme.mixins.transitions.fast,
             transitionProperty: 'all',
           },
           visible && {
