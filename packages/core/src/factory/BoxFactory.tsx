@@ -232,13 +232,13 @@ const BoxFactory = React.memo<BoxProps>(
     const Component = component || View;
 
     useEffect(() => {
-      if (!animation) return;
-
-      const { onStart, onEnd, ...rest } = animation;
+      const { onStart, onEnd, ...rest } = animation || {};
 
       const animStr = JSON.stringify(rest);
       if (animStr === animStrDiffRef.current) return;
       animStrDiffRef.current = animStr;
+
+      if (!animation) return;
 
       (async () => {
         onStart?.();
