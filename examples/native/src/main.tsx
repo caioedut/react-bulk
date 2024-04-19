@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useReducer, useRef, useState } from 'react';
 
 import { AnyObject, RbkFormEvent, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
 import {
@@ -42,16 +42,6 @@ import {
 } from '@react-bulk/native';
 
 export default function Main() {
-  const formRef = useRef();
-
-  useEffect(() => {
-    console.log(formRef);
-
-    setTimeout(() => {
-      console.log(formRef);
-    }, 2000);
-  }, [formRef]);
-
   return (
     <Scrollable bg="background.secondary" contentInset="1gap">
       <Card>
