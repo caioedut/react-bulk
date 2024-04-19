@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 
 import { AnyObject, RbkFormEvent, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
 import {
@@ -32,6 +32,7 @@ import {
   Scrollable,
   Select,
   Slider,
+  Switch,
   Table,
   Tabs,
   Terminal,
@@ -41,6 +42,16 @@ import {
 } from '@react-bulk/web';
 
 export default function Main() {
+  const formRef = useRef();
+
+  useEffect(() => {
+    console.log(formRef);
+
+    setTimeout(() => {
+      console.log(formRef);
+    }, 2000);
+  }, [formRef]);
+
   return (
     <Scrollable bg="background.secondary" contentInset="1gap">
       <Card>
@@ -497,6 +508,7 @@ function ButtonExample() {
 function FormExample() {
   const [radio, setRadio] = useState('medium');
   const [checkbox, toggleCheckbox] = useReducer((state) => !state, true);
+  const [switx, toggleSwitx] = useReducer((state) => !state, true);
 
   function handleSubmitForm(_: RbkFormEvent, data: AnyObject) {
     alert(JSON.stringify(data, null, 2));
@@ -577,7 +589,7 @@ function FormExample() {
       <Divider mt="1gap" mx="-1gap" />
 
       <Text variant="subtitle" mt="1gap">
-        Checkbox / Radio Button
+        Checkbox / Radio Button / Switch
       </Text>
 
       <Grid alignItems="center" gap>
@@ -599,6 +611,14 @@ function FormExample() {
               checked={radio === size}
               onChange={() => setRadio(size)}
             />
+          </Box>
+        ))}
+      </Grid>
+
+      <Grid alignItems="center" gap>
+        {sizes.map((size) => (
+          <Box key={size}>
+            <Switch size={size} label={getLabel(size)} checked={switx === true} onChange={toggleSwitx} />
           </Box>
         ))}
       </Grid>
@@ -645,6 +665,9 @@ function FormExample() {
           </Box>
           <Box xs={6} md={4}>
             <Checkbox name="acceptTerms" label="I accept the terms of use." />
+          </Box>
+          <Box xs={6} md={4}>
+            <Switch name="sendReport" label="Send report." />
           </Box>
           <Box xs={6} md={4}>
             <Button type="submit">Submit</Button>

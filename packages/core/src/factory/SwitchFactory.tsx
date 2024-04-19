@@ -4,28 +4,26 @@ import useDefaultRef from '../hooks/useDefaultRef';
 import useHtmlId from '../hooks/useHtmlId';
 import useInput from '../hooks/useInput';
 import useTheme from '../hooks/useTheme';
-import Check from '../icons/Check';
-import extract from '../props/extract';
 import factory2 from '../props/factory2';
 import getSize from '../props/getSize';
-import { spacings } from '../styles/constants';
-import { CheckboxProps, RequiredSome } from '../types';
+import { RequiredSome, SwitchProps } from '../types';
+import deepmerge from '../utils/deepmerge';
 import global from '../utils/global';
 import BoxFactory from './BoxFactory';
 import ButtonFactory from './ButtonFactory';
 import LabelFactory from './LabelFactory';
 import TextFactory from './TextFactory';
 
-const CheckboxFactory = React.memo<CheckboxProps>(
+const SwitchFactory = React.memo<SwitchProps>(
   forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
-    const options = theme.components.Checkbox;
-    const { native, svg } = global.mapping;
+    const options = theme.components.Switch;
+    const { native } = global.mapping;
 
     // Extends from default props
     let {
+      accessibility,
       checked,
-      color,
       controlled,
       defaultChecked,
       disabled,
@@ -35,8 +33,11 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       name,
       readOnly,
       size,
-      unique,
-      value,
+      // Colors
+      onColor,
+      offColor,
+      onThumbColor,
+      offThumbColor,
       // Events
       onFocus,
       onBlur,
@@ -45,11 +46,15 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       // Styles
       variants,
       buttonStyle,
+      thumbStyle,
       errorStyle,
       labelStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<CheckboxProps, 'color' | 'size'>>(props, options);
+    } = factory2<RequiredSome<SwitchProps, 'size' | 'onColor' | 'offColor' | 'onThumbColor' | 'offThumbColor'>>(
+      props,
+      options,
+    );
 
     const buttonRef = useDefaultRef<any>(ref);
 
@@ -60,18 +65,17 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       error,
       controlled,
       editable: !disabled && !readOnly,
-      unmask: (state) => (state === true ? value ?? true : false),
+      unmask: (state) => Boolean(state),
       onChange: (event, value) => dispatchEvent('change', event, onChange, value),
       onFormChange,
     });
 
     id = useHtmlId(id);
-    size = getSize(size);
-    color = theme.color(input.error ? 'error' : color);
+    size = getSize(size) - 0.375;
 
-    const baseSize = theme.rem(size as number);
-    const fontSize = baseSize / 2;
-    const halfSize = fontSize / 2;
+    const baseSize = theme.rem(size);
+    const spacing = baseSize * 0.1;
+    const thumbSize = baseSize - spacing * 2;
 
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
@@ -107,10 +111,23 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       input.setState(!input.state, event);
     }
 
-    // @ts-expect-error
-    style = [style, extract(spacings, rest)];
+    buttonStyle = [
+      {
+        h: baseSize,
+        w: (thumbSize + spacing) * 2,
+      },
+      buttonStyle,
+    ];
 
-    buttonStyle = [{ marginLeft: -theme.rem(0.5, fontSize) }, buttonStyle];
+    thumbStyle = [
+      {
+        h: thumbSize,
+        w: thumbSize,
+        borderRadius: thumbSize / 2,
+        bg: input.state ? onThumbColor : offThumbColor,
+      },
+      thumbStyle,
+    ];
 
     return (
       <>
@@ -123,45 +140,39 @@ const CheckboxFactory = React.memo<CheckboxProps>(
             onFocus={handleFocus}
             onBlur={handleBlur}
             onPress={handleChange}
-            color={color}
+            color={input.state ? onColor : offColor}
             disabled={disabled}
             size={size}
-            variant="text"
+            variant="solid"
             style={buttonStyle}
             variants={{ root: variants.button }}
-            accessibility={{
-              label: typeof label === 'string' ? label : undefined,
-              role: unique ? 'radio' : 'checkbox',
-              state: { checked: input.state },
+            contentStyle={{
+              justifyContent: 'center',
+              padding: spacing,
+              w: '100%',
+              h: '100%',
             }}
+            accessibility={deepmerge(accessibility, {
+              state: { checked: input.state },
+            })}
           >
             <BoxFactory
-              center
-              h={fontSize}
-              w={fontSize}
-              border={`2px solid ${color}`}
-              borderRadius={unique ? halfSize : theme.shape.borderRadius}
-              bg={input.state && !unique ? color : undefined}
-            >
-              {Boolean(input.state) && (
-                <>
-                  {unique ? (
-                    <svg.Svg viewBox="0 0 256 256" height="100%" width="100%">
-                      <svg.Circle cx="128" cy="128" r="80" fill={color} />
-                    </svg.Svg>
-                  ) : (
-                    <Check svg={svg} size={fontSize} color={theme.contrast(color)} />
-                  )}
-                </>
-              )}
-            </BoxFactory>
+              style={thumbStyle}
+              variants={{ root: variants.thumb }}
+              animation={{
+                duration: 100,
+                timing: 'ease-out',
+                from: { marginLeft: input.state ? 0 : thumbSize },
+                to: { marginLeft: input.state ? thumbSize : 0 },
+              }}
+            />
           </ButtonFactory>
 
           {typeof label === 'string' ? (
             <LabelFactory
               for={id}
               forRef={buttonRef}
-              style={[{ ml: 1 }, labelStyle]}
+              style={labelStyle}
               variants={{ root: variants.label }}
               onPress={native ? handleChange : undefined}
             >
@@ -182,6 +193,6 @@ const CheckboxFactory = React.memo<CheckboxProps>(
   }),
 );
 
-CheckboxFactory.displayName = 'CheckboxFactory';
+SwitchFactory.displayName = 'SwitchFactory';
 
-export default CheckboxFactory;
+export default SwitchFactory;

@@ -585,6 +585,7 @@ export type ThemeProps = {
     Scrollable: ThemeComponentProps<ScrollableProps>;
     Select: ThemeComponentProps<SelectProps>;
     Slider: ThemeComponentProps<SliderProps>;
+    Switch: ThemeComponentProps<SwitchProps>;
     Table: ThemeComponentProps<TableProps>;
     Tabs: ThemeComponentProps<TabsProps>;
     Terminal: ThemeComponentProps<TerminalProps>;
@@ -877,6 +878,7 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
   FocusableProps,
   {
     checked?: boolean;
+    color?: RbkColor;
     controlled?: boolean;
     defaultChecked?: boolean;
     disabled?: boolean;
@@ -899,6 +901,45 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
     variants?: {
       root?: any;
       button?: any;
+      label?: any;
+      error?: any;
+    };
+  }
+>;
+
+export type SwitchProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  FocusableProps,
+  {
+    checked?: boolean;
+    controlled?: boolean;
+    defaultChecked?: boolean;
+    disabled?: boolean;
+    error?: string | boolean | null | undefined;
+    label?: ReactElement;
+    name?: string;
+    readOnly?: boolean;
+    size?: RbkSize;
+    // Colors
+    onColor?: RbkColor;
+    offColor?: RbkColor;
+    onThumbColor?: RbkColor;
+    offThumbColor?: RbkColor;
+    // Events
+    onFocus?: (event: RbkCheckboxEvent, checked: boolean) => void;
+    onBlur?: (event: RbkCheckboxEvent, checked: boolean) => void;
+    onChange?: (event: RbkCheckboxEvent, checked: boolean) => any;
+    onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+    // Styles
+    buttonStyle?: RbkStyle;
+    thumbStyle?: RbkStyle;
+    errorStyle?: RbkStyle;
+    labelStyle?: RbkStyle;
+    variants?: {
+      root?: any;
+      button?: any;
+      label?: any;
+      thumb?: any;
       error?: any;
     };
   }

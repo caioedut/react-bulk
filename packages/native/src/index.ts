@@ -51,6 +51,7 @@ import ReactBulk, {
   ScrollableFactory,
   SelectFactory,
   SliderFactory,
+  SwitchFactory,
   TableFactory,
   TabsFactory,
   TerminalFactory,
@@ -187,6 +188,7 @@ export const Progress = ProgressFactory;
 export const Scrollable = ScrollableFactory;
 export const Select = SelectFactory;
 export const Slider = SliderFactory;
+export const Switch = SwitchFactory;
 export const Table = TableFactory;
 export const Terminal = TerminalFactory;
 export const Tabs = TabsFactory;
