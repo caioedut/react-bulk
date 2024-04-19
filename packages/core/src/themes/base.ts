@@ -1153,6 +1153,47 @@ const base: ThemeProps = {
         },
         variants: {},
       },
+      Switch: {
+        name: 'rbk-switch',
+        defaultProps: {
+          accessibility: { role: 'switch' },
+          size: 'medium',
+          onColor: 'primary',
+          offColor: 'gray.lighter',
+          onThumbColor: 'white',
+          offThumbColor: 'white',
+        },
+        defaultStyles: {
+          root: {
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            alignItems: 'center',
+          },
+          button: {
+            p: 0,
+            h: '1.875rem',
+            w: '3.375rem',
+            minh: 0,
+            minw: 0,
+          },
+          label: {
+            ml: '1gap',
+          },
+          thumb: {
+            bg: 'white',
+            borderRadius: '0.75rem',
+            h: '1.5rem',
+            w: '1.5rem',
+          },
+          error: {
+            color: 'error',
+            mx: 1,
+            mt: 1,
+          },
+        },
+        variants: {},
+      },
       Table: {
         name: 'rbk-table',
         defaultProps: {},

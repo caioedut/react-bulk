@@ -40,12 +40,9 @@ const FormFactory = React.memo<FormProps>(
       ...rest
     } = factory2<FormProps>(props, options);
 
-    const defaultRef = useRef(null);
-    const formRef = useRef<ReactNode>(null);
+    const rootRef = useRef<ReactNode>(null);
     const fieldsRef = useRef<FormField[]>([]);
     const dataRef = useRef<any>({});
-
-    ref = ref || defaultRef;
 
     if (web) {
       rest.noValidate = true;
@@ -148,7 +145,7 @@ const FormFactory = React.memo<FormProps>(
         clear: onClear,
       }[type];
 
-      const target = formRef.current;
+      const target = rootRef.current;
       const data = getData();
       const errors = getErrors();
 
@@ -206,9 +203,10 @@ const FormFactory = React.memo<FormProps>(
         getField,
         setField,
         unsetField,
-        target: formRef.current,
+        target: rootRef.current,
       }),
       [
+        rootRef.current,
         initialData,
         cancel,
         clear,
@@ -229,12 +227,12 @@ const FormFactory = React.memo<FormProps>(
 
     useEffect(() => {
       // @ts-ignore
-      Object.assign(ref?.current || {}, { target: formRef.current });
-    }, [ref, formRef]);
+      Object.assign(ref?.current || {}, { target: rootRef.current });
+    }, [ref, rootRef]);
 
     return (
       <Context.Provider value={context}>
-        <BoxFactory ref={formRef} component={Form} variants={{ root: variants.root }} {...rest} onSubmit={submit} />
+        <BoxFactory ref={rootRef} component={Form} variants={{ root: variants.root }} {...rest} onSubmit={submit} />
       </Context.Provider>
     );
   }),

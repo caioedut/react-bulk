@@ -161,6 +161,8 @@ export { default as SelectFactory } from './factory/SelectFactory';
 /** @internal */
 export { default as SliderFactory } from './factory/SliderFactory';
 /** @internal */
+export { default as SwitchFactory } from './factory/SwitchFactory';
+/** @internal */
 export { default as TableFactory } from './factory/TableFactory';
 /** @internal */
 export { default as TabsFactory } from './factory/TabsFactory';

@@ -3,6 +3,7 @@ import React, { forwardRef, useEffect, useRef } from 'react';
 import getFullSize from '../element/getFullSize';
 import setNativeStyle from '../element/setNativeStyle';
 import useAnimation from '../hooks/useAnimation';
+import useDefaultRef from '../hooks/useDefaultRef';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import jss from '../styles/jss';
@@ -25,28 +26,34 @@ const GrowBoxFactory = React.memo<GrowBoxProps>(
       ...rest
     } = factory2<GrowBoxProps>(props, options);
 
-    const defaultRef = useRef();
-    const contentRef: any = ref ?? defaultRef;
+    const rootRef = useDefaultRef(ref);
 
-    const transition = useAnimation({ ...jss(style), height: 0, width: 0 }, contentRef);
+    const transition = useAnimation(
+      {
+        ...jss(style),
+        height: 0,
+        width: 0,
+      },
+      rootRef,
+    );
 
     useEffect(() => {
-      if (!contentRef.current) return;
+      if (!rootRef.current) return;
 
       (async () => {
-        const { height, width } = await getFullSize(contentRef.current);
+        const { height, width } = await getFullSize(rootRef.current);
 
         await transition.start({
           duration,
           to: { height, width },
         });
 
-        setNativeStyle(contentRef.current, {
+        setNativeStyle(rootRef.current, {
           height: 'auto',
           width: 'auto',
         });
       })();
-    }, [contentRef, children, duration, native, transition]);
+    }, [rootRef, children, duration, native, transition]);
 
     return (
       <BoxFactory {...transition.props} variants={{ root: variants.root }} {...rest}>
