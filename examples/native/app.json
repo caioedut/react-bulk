@@ -3,20 +3,37 @@
     "owner": "caioedut",
     "name": "react-bulk-native",
     "slug": "react-bulk-native",
+    "version": "1.0.0",
     "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true
     },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a0e217fb-9586-4ca1-ae09-6fa4d1bd5a8b"
+    },
     "extra": {
       "eas": {
         "projectId": "a0e217fb-9586-4ca1-ae09-6fa4d1bd5a8b"
       }
-    },
-    "updates": {
-      "url": "https://u.expo.dev/a0e217fb-9586-4ca1-ae09-6fa4d1bd5a8b"
     }
   }
 }
