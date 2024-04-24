@@ -15,10 +15,10 @@ pmex('build');
 
 pmex(
   {
-    bun: `install`,
-    npm: `install && npm prune`,
-    pnpm: `install --fix-lockfile`,
-    yarn: `install --check-files`,
+    bun: 'install',
+    npm: 'install && npm prune',
+    pnpm: 'install --fix-lockfile',
+    yarn: 'install --check-files',
   },
   { cwd },
 );
