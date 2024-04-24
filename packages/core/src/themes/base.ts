@@ -857,7 +857,9 @@ const base: ThemeProps = {
         name: 'rbk-list',
         defaultProps: {},
         defaultStyles: {
-          root: {},
+          root: {
+            position: 'relative',
+          },
         },
       },
       ListItem: {
