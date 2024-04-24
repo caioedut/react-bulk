@@ -15,6 +15,7 @@ pmex('build');
 
 pmex(
   {
+    bun: `install`,
     npm: `install && npm prune`,
     pnpm: `install --fix-lockfile`,
     yarn: `install --check-files`,
