@@ -87,11 +87,6 @@ const ListFactory = React.memo<ListProps>(
 
         const { height } = await rect(scrollRef.current);
 
-        console.log({
-          clientHeight: height,
-          offsetTop: offsetTopRef.current,
-        });
-
         render({
           clientHeight: height,
           offsetTop: offsetTopRef.current,
