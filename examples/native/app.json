@@ -10,14 +10,10 @@
     "ios": {
       "supportsTablet": true
     },
-    "android": {},
     "extra": {
       "eas": {
         "projectId": "a0e217fb-9586-4ca1-ae09-6fa4d1bd5a8b"
       }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
     },
     "updates": {
       "url": "https://u.expo.dev/a0e217fb-9586-4ca1-ae09-6fa4d1bd5a8b"
