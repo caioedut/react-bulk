@@ -292,6 +292,7 @@ function ThemeExample() {
           .map((color) => (
             <Box key={color} xs={12} sm={4} xxl={2}>
               <Input
+                colorful
                 color={color}
                 label={getLabel(color)}
                 labelStyle={{ color }}
@@ -736,7 +737,7 @@ function ListExample() {
       </Text>
 
       <List h={240} border="primary">
-        <Text height={36} bg="background.secondary">
+        <Text sticky height={36} bg="background.secondary">
           Header
         </Text>
         {Array.from({ length: 1000 }).map((_, index) => (
