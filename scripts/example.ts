@@ -23,11 +23,6 @@ pmex(
   { cwd },
 );
 
-rmSync(`${cwd}/node_modules/@react-bulk`, {
-  force: true,
-  recursive: true,
-});
-
 const packages = ['core', platform];
 
 for (const pkg of packages) {
