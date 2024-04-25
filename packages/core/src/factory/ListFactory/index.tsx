@@ -29,6 +29,7 @@ const ListFactory = React.memo<ListProps>(
     // Extends from default props
     const {
       renderDelay,
+      renderOffset,
       rowHeight,
       rowFallbackComponent = View,
       // Events
@@ -61,8 +62,8 @@ const ListFactory = React.memo<ListProps>(
           const height = child?.props?.height ?? rowHeight ?? 0;
 
           curPosY += height;
-          const minPosY = offsetTop - height;
-          const maxPosY = clientHeight + offsetTop + height;
+          const minPosY = offsetTop - height - (renderOffset ?? 0);
+          const maxPosY = clientHeight + offsetTop + height + (renderOffset ?? 0);
 
           if (curPosY >= minPosY && curPosY <= maxPosY) {
             newVisible.push(Number(index));
@@ -76,7 +77,7 @@ const ListFactory = React.memo<ListProps>(
         setVisible(newVisible);
         setSticky(newSticky);
       },
-      [childrenArray, rowHeight],
+      [childrenArray, rowHeight, renderOffset],
     );
 
     useEffect(() => {

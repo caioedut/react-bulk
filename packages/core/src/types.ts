@@ -1214,6 +1214,7 @@ export type ListProps<ALLOW_ANY = true> = PropsWithStyles<
   ScrollableProps<false>,
   {
     renderDelay?: number;
+    renderOffset?: number;
     rowHeight?: number;
     rowFallbackComponent?: JSXElementConstructor<any> | string;
   }

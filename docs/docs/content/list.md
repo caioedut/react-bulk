@@ -49,6 +49,15 @@ Delay in milliseconds for rendering children after component mounting.
 
 ---
 
+### **`renderOffset`**
+
+Determines the size rendered ahead of and behind the visible portion of the list.
+
+➤ Type: **`number`** <br/>
+➤ Default: **`200`** <br/>
+
+---
+
 ### **`rowHeight`**
 
 ➤ Type: **`number`** <br/>
