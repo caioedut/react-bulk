@@ -909,7 +909,9 @@ const base: ThemeProps = {
       },
       List: {
         name: 'rbk-list',
-        defaultProps: {},
+        defaultProps: {
+          renderOffset: 200,
+        },
         defaultStyles: {
           root: {
             position: 'relative',
