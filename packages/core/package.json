@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/core",
   "description": "React Bulk Core",
-  "version": "0.9.13",
+  "version": "0.9.16",
   "license": "MIT",
   "homepage": "https://rbk.caioedut.com",
   "repository": "https://github.com/caioedut/react-bulk",
@@ -33,7 +33,7 @@
     "process": false
   },
   "dependencies": {
-    "cometta": "^0.2.2"
+    "cometta": "^0.2.3"
   },
   "peerDependencies": {
     "react": ">=17.0.0"
