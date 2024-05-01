@@ -1,5 +1,5 @@
 import Platform from '../Platform';
-import press from '../events/press';
+import pointer from '../events/pointer';
 
 export default function ({ ...props }: any) {
   const { web, native } = Platform;
@@ -18,41 +18,41 @@ export default function ({ ...props }: any) {
 
   if (web) {
     if (onPress) {
-      props.onClick = (event) => onPress(press(event));
+      props.onClick = (event) => onPress(pointer(event));
     }
 
     if (onPressIn) {
       if (props.onPointerDown) {
-        props.onMouseDown = (event) => onPressIn(press(event));
+        props.onMouseDown = (event) => onPressIn(pointer(event));
       } else {
-        props.onPointerDown = (event) => onPressIn(press(event));
+        props.onPointerDown = (event) => onPressIn(pointer(event));
       }
     }
 
     if (onPressOut) {
       if (props.onPointerUp) {
-        props.onMouseUp = (event) => onPressOut(press(event));
+        props.onMouseUp = (event) => onPressOut(pointer(event));
       } else {
-        props.onPointerUp = (event) => onPressOut(press(event));
+        props.onPointerUp = (event) => onPressOut(pointer(event));
       }
     }
   }
 
   if (native) {
     if (onPress) {
-      props.onPress = (event) => onPress(press(event));
+      props.onPress = (event) => onPress(pointer(event));
     }
 
     if (onPressIn) {
-      props.onPressIn = (event) => onPressIn(press(event));
+      props.onPressIn = (event) => onPressIn(pointer(event));
     }
 
     if (onPressOut) {
-      props.onPressOut = (event) => onPressOut(press(event));
+      props.onPressOut = (event) => onPressOut(pointer(event));
     }
 
     if (onLongPress) {
-      props.onLongPress = (event) => onLongPress(press(event));
+      props.onLongPress = (event) => onLongPress(pointer(event));
     }
   }
 

@@ -40,9 +40,12 @@ const ImageFactory = React.memo<ImageProps>(
 
     const imageRef = useDefaultRef<any>(ref);
 
+    const widthFound = width ?? w ?? get('width', style) ?? get('w', style);
+    const heightFound = height ?? h ?? get('height', style) ?? get('h', style);
+
     // Defaults
-    width = width ?? w ?? get('width', style) ?? get('w', style);
-    height = height ?? h ?? get('height', style) ?? get('h', style);
+    width = widthFound === true ? '100%' : widthFound;
+    height = heightFound === true ? '100%' : heightFound;
 
     if (typeof width === 'string' && width.endsWith('px')) {
       width = Number(width.replace(/px$/g, ''));

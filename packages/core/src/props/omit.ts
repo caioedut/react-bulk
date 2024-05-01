@@ -1,7 +1,7 @@
 import { AnyObject } from '../types';
 
 export default function omit(props: string | string[], ...mixin: AnyObject[]) {
-  let result = {};
+  let result: AnyObject = {};
 
   if (!Array.isArray(props)) {
     props = [props];
