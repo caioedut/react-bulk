@@ -2,10 +2,6 @@ import { CSSProperties, JSXElementConstructor, ReactNode, Ref, RefObject, Synthe
 
 import { customSpacings, styleProps, transformProps } from './styles/constants';
 
-/****************************
- * FOR INTERNAL USE (START) *
- ****************************/
-
 /** @internal */
 export type RequiredSome<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>;
 
@@ -167,10 +163,6 @@ export type TabItem = Overwrite<
   }
 >;
 
-/****************************
- * FOR INTERNAL USE (END) *
- ****************************/
-
 export type ReactOnlyElement = ReactNode | JSX.Element;
 
 export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[];
@@ -266,8 +258,30 @@ export interface RbkAnimation {
   web_useRawStyle?: boolean;
 }
 
-export type RbkPressEvent<T = AnyObject, E = string | HTMLElement> = {
+export type RbkEvent<EventType = Event, TargetType = unknown> = {
   type: string;
+  handler: 'RbkEvent';
+  target: TargetType;
+  currentTarget: TargetType;
+  timestamp: number;
+  nativeEvent: EventType;
+  preventDefault: () => void;
+  stopPropagation: () => void;
+};
+
+export type RbkKeyboardEvent<EventType = Event, TargetType = unknown> = RbkEvent<EventType, TargetType> & {
+  handler: 'RbkKeyboardEvent';
+  key: string;
+  code: string;
+  keyCode: number;
+  altKey: boolean;
+  ctrlKey: boolean;
+  metaKey: boolean;
+  shiftKey: boolean;
+};
+
+export type RbkPointerEvent<EventType = Event, TargetType = unknown> = RbkEvent<EventType, TargetType> & {
+  handler: 'RbkPointerEvent';
 
   /**
    * The X position of the touch, relative to the element
@@ -288,16 +302,6 @@ export type RbkPressEvent<T = AnyObject, E = string | HTMLElement> = {
    * The Y position of the touch, relative to the screen
    */
   pageY: number;
-
-  target: E;
-
-  timestamp: number;
-
-  nativeEvent: T;
-
-  preventDefault: () => void;
-
-  stopPropagation: () => void;
 };
 
 export interface RbkFormEvent {
@@ -376,17 +380,17 @@ export interface AccessibilityProps {
 
 export interface PressableProps {
   pressable?: boolean;
-  onPress?: (event: RbkPressEvent) => void;
-  onPressIn?: (event: RbkPressEvent) => void;
-  onPressOut?: (event: RbkPressEvent) => void;
-  onLongPress?: (event: RbkPressEvent) => void;
+  onPress?: (event: RbkPointerEvent) => void;
+  onPressIn?: (event: RbkPointerEvent) => void;
+  onPressOut?: (event: RbkPointerEvent) => void;
+  onLongPress?: (event: RbkPointerEvent) => void;
 
   /** @deprecated use onPress(event) instead */
-  onClick?: (event: RbkPressEvent) => void;
+  onClick?: (event: RbkPointerEvent) => void;
   /** @deprecated use onPressIn(event) instead */
-  onMouseDown?: (event: RbkPressEvent) => void;
+  onMouseDown?: (event: RbkPointerEvent) => void;
   /** @deprecated use onPressOut(event) instead */
-  onMouseUp?: (event: RbkPressEvent) => void;
+  onMouseUp?: (event: RbkPointerEvent) => void;
 }
 
 export interface FocusableProps {
@@ -990,7 +994,7 @@ export type CarouselProps<ALLOW_ANY = true> = PropsWithStyles<
       | boolean
       | 'visible'
       | 'hidden'
-      | ((options: { prev: boolean; next: boolean; color: RbkColor; onPress: Function }) => ReactElement);
+      | ((options: { prev: boolean; next: boolean; color: RbkColor; onPress: () => void }) => ReactElement);
     color?: RbkColor;
     gap?: number | true;
     pagingEnabled?: boolean;
@@ -1325,6 +1329,7 @@ export type LinkProps<ALLOW_ANY = true> = PropsWithStyles<
 export type DrawerProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
+    visible?: boolean;
     placement?: 'left' | 'right' | 'top' | 'bottom';
     // Styles
     backdropStyle?: RbkStyle;
@@ -1358,7 +1363,7 @@ export type TabsProps<ALLOW_ANY = true> = PropsWithStyles<
     value?: string | number;
     variant?: 'group' | 'card' | 'nav';
     // Events
-    onChange?: (event: RbkPressEvent, value: string | number) => any;
+    onChange?: (event: RbkPointerEvent, value: string | number) => any;
     // Styles
     contentStyle?: RbkStyle;
     buttonStyle?: RbkStyle;

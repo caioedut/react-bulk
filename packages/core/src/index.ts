@@ -53,6 +53,14 @@ export { default as scrollToStart } from './element/scrollToStart';
 /** @internal */
 export { default as setNativeStyle } from './element/setNativeStyle';
 
+// Event
+/** @internal */
+export { default as baseEvent } from './events/base';
+/** @internal */
+export { default as keyboardEvent } from './events/keyboard';
+/** @internal */
+export { default as pointerEvent } from './events/pointer';
+
 // Util
 export { default as Platform } from './Platform';
 /** @internal */
