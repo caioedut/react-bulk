@@ -196,26 +196,29 @@ const FormFactory = React.memo<FormProps>(
 
     useImperativeHandle(ref, () => context, [context]);
 
-    useMemo(() => {
-      if (!initialData) return;
-      if (initialDataRef.current) return;
-
-      initialDataRef.current = true;
-      setData(initialData);
-    }, [initialData, setData]);
-
     useEffect(() => {
       // @ts-ignore
       Object.assign(ref?.current || {}, { target: formRef.current });
     }, [ref, formRef]);
 
     useEffect(() => {
-      setData(data || {});
-    }, [data, setData]);
+      if (!formRef.current) return;
+      if (!initialData) return;
+      if (initialDataRef.current) return;
+
+      initialDataRef.current = true;
+      setData(initialData);
+    }, [formRef, initialData, setData]);
 
     useEffect(() => {
+      if (!formRef.current) return;
+      setData(data || {});
+    }, [formRef, data, setData]);
+
+    useEffect(() => {
+      if (!formRef.current) return;
       setErrors(errors);
-    }, [errors, setErrors]);
+    }, [formRef, errors, setErrors]);
 
     return (
       <Context.Provider value={context}>
