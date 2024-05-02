@@ -70,6 +70,7 @@ export default function createTheme(options?: ThemeEditProps): ThemeProps | any 
     // Normalize CSS
     normalize();
 
+    // Global RBK Styles
     createStyleSheet(
       `
 html {
