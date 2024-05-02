@@ -1,4 +1,4 @@
-import { createStyleSheet } from 'cometta';
+import { createStyleSheet, normalize } from 'cometta';
 
 import Platform from './Platform';
 import registry from './libs/cometta';
@@ -67,21 +67,12 @@ export default function createTheme(options?: ThemeEditProps): ThemeProps | any 
   registry(theme);
 
   if (Platform.web) {
+    // Normalize CSS
+    normalize();
+
     createStyleSheet(
       `
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  font-family: inherit;
-}
-
-${Object.entries(theme.mixins.scroll)
-  .map(([selector, styles]) => `${selector.substring(1)} { ${css(styles)} }`)
-  .join(`\n`)}
-
 html {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: ${theme.typography.fontSize}px;
   line-height: ${theme.typography.lineHeight};
   height: 100%;
@@ -94,7 +85,12 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
-}`,
+}
+
+${Object.entries(theme.mixins.scroll)
+  .map(([selector, styles]) => `${selector.substring(1)} { ${css(styles)} }`)
+  .join(`\n`)}
+`,
       { uniqueId: 'rbk-global', prepend: true },
     );
   }
