@@ -170,7 +170,7 @@ export type TabItem = Overwrite<
 
 export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[];
 
-export type AnyObject = { [key: string | number]: any };
+export type AnyObject = { [key: PropertyKey]: any };
 
 export type AnyCallback = (...args: any[]) => any;
 
