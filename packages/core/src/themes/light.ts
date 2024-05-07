@@ -8,8 +8,8 @@ const light = {
     },
 
     background: {
-      primary: '#ffffff',
-      secondary: '#e3e3e3',
+      primary: '#FFFFFF',
+      secondary: '#EFEFEF',
       disabled: '#616161',
     },
   },

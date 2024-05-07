@@ -2,6 +2,7 @@ import { ThemeProps } from '../types';
 import defined from '../utils/defined';
 import stdout from '../utils/stdout';
 import string from '../utils/string';
+import light from './light';
 
 const base: ThemeProps = {
   custom: {},
@@ -46,20 +47,12 @@ const base: ThemeProps = {
       transparent: '#00000000',
       trans: '#00000000',
       black: '#000000',
-      white: '#ffffff',
+      white: '#FFFFFF',
     },
 
-    text: {
-      primary: '#232323',
-      secondary: '#666666',
-      disabled: '#999999',
-    },
+    text: light.colors.text,
 
-    background: {
-      primary: '#ffffff',
-      secondary: '#e3e3e3',
-      disabled: '#616161',
-    },
+    background: light.colors.background,
   },
 
   breakpoints: {
