@@ -43,7 +43,7 @@ import {
 
 export default function Main() {
   return (
-    <Scrollable bg="background.secondary" contentInset="1gap">
+    <Scrollable contentInset="1gap">
       <Card>
         <Text variant="title">React Bulk</Text>
         <Text mt="1gap">Open up App.tsx to start working on your app!</Text>
