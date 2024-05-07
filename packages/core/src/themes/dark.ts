@@ -2,8 +2,8 @@ const dark = {
   mode: 'dark',
   colors: {
     text: {
-      primary: '#efefef',
-      secondary: '#a7a7a7',
+      primary: '#EFEFEF',
+      secondary: '#A7A7A7',
       disabled: '#787878',
     },
 
