@@ -96,12 +96,13 @@ export default function useInput<T>({
       getError: () => error ?? null,
       setError,
       onFormChange,
+      initialValue,
     });
 
     return () => {
       form.unsetField(name);
     };
-  }, [name, form, error, internal, setInternal, onFormChange]);
+  }, [name, form, error, internal, initialValue, setInternal, onFormChange]);
 
   const reset = useCallback(() => {
     _setInternal(initialValue);
@@ -126,8 +127,8 @@ export default function useInput<T>({
     [prop, editable, setInternal],
   );
 
-  return useMemo(() => {
-    return {
+  return useMemo(
+    () => ({
       state: internal,
       setState: setInternal,
       prevState: prevInternal,
@@ -140,6 +141,7 @@ export default function useInput<T>({
         value: `${(typeof mask === 'function' ? mask(internal) : internal) ?? ''}`,
         onChange: handleChange,
       },
-    };
-  }, [internal, setInternal, prevInternal, error, clear, reset, name, mask, form, handleChange]);
+    }),
+    [internal, setInternal, prevInternal, error, clear, reset, name, mask, form, handleChange],
+  );
 }
