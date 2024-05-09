@@ -67,7 +67,7 @@ const ScrollableFactory = React.memo<ScrollableProps>(
 
     if (native) {
       rest = {
-        contentInsetAdjustmentBehavior: 'scrollableAxes',
+        contentInsetAdjustmentBehavior: 'never',
         indicatorStyle: theme.mode === 'dark' ? 'white' : 'black',
         keyboardDismissMode: ios ? 'interactive' : 'on-drag',
         keyboardShouldPersistTaps: 'always',
@@ -76,13 +76,10 @@ const ScrollableFactory = React.memo<ScrollableProps>(
         scrollEventThrottle: theme.rem(),
         scrollIndicatorInsets: isHorizontal ? { bottom: 1, left: 1 } : { top: 1, right: 1 },
         ...rest,
-      };
-
-      Object.assign(rest, {
         pagingEnabled,
         horizontal: isHorizontal,
         contentContainerStyle: jss(variants.content, contentStyle),
-      });
+      };
 
       if (hideScrollBar) {
         Object.assign(rest, {
