@@ -6,16 +6,16 @@
   "dependencies": {
     "@react-bulk/core": "latest",
     "@react-bulk/web": "latest",
-    "expo": "~50.0.14",
-    "expo-status-bar": "~1.11.1",
-    "expo-updates": "~0.24.12",
+    "expo": "~51.0.2",
+    "expo-status-bar": "~1.12.1",
+    "expo-updates": "~0.25.11",
     "react": "18.2.0",
-    "react-native": "0.73.6",
-    "react-native-svg": "14.1.0"
+    "react-native": "0.74.1",
+    "react-native-svg": "15.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.79",
-    "typescript": "^5.4.5"
+    "typescript": "~5.3.3"
   }
 }
