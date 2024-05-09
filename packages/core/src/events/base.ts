@@ -3,8 +3,11 @@ import get from '../props/get';
 import omit from '../props/omit';
 
 export default function base(event, extra?: Record<PropertyKey, unknown>) {
+  const { native } = Platform;
+
   const nativeEvent = event.nativeEvent ?? event;
-  const target = get('target', nativeEvent, event) ?? null;
+  const originalTarget = get('target', nativeEvent, event) ?? null;
+  const target = native ? { ...originalTarget, value: nativeEvent?.text } : originalTarget;
 
   return {
     type: get<string>('type', nativeEvent, event) ?? 'custom',
