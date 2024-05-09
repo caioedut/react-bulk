@@ -258,7 +258,7 @@ export interface RbkAnimation {
   web_useRawStyle?: boolean;
 }
 
-export type RbkEvent<EventType = Event, TargetType = unknown> = {
+export type RbkEvent<EventType = Event, TargetType = ReactOnlyElement> = {
   type: string;
   handler: 'RbkEvent';
   target: TargetType;
@@ -269,64 +269,68 @@ export type RbkEvent<EventType = Event, TargetType = unknown> = {
   stopPropagation: () => void;
 };
 
-export type RbkKeyboardEvent<EventType = Event, TargetType = unknown> = RbkEvent<EventType, TargetType> & {
-  handler: 'RbkKeyboardEvent';
-  key: string;
-  code: string;
-  keyCode: number;
-  altKey: boolean;
-  ctrlKey: boolean;
-  metaKey: boolean;
-  shiftKey: boolean;
-};
+export type RbkKeyboardEvent<EventType = Event, TargetType = ReactOnlyElement> = Overwrite<
+  RbkEvent<EventType, TargetType>,
+  {
+    handler: 'RbkKeyboardEvent';
+    key: string;
+    code: string;
+    keyCode: number;
+    altKey: boolean;
+    ctrlKey: boolean;
+    metaKey: boolean;
+    shiftKey: boolean;
+  }
+>;
 
-export type RbkPointerEvent<EventType = Event, TargetType = unknown> = RbkEvent<EventType, TargetType> & {
-  handler: 'RbkPointerEvent';
+export type RbkPointerEvent<EventType = Event, TargetType = ReactOnlyElement> = Overwrite<
+  RbkEvent<EventType, TargetType>,
+  {
+    handler: 'RbkPointerEvent';
 
-  /**
-   * The X position of the touch, relative to the element
-   */
-  offsetX: number;
+    /**
+     * The X position of the touch, relative to the element
+     */
+    offsetX: number;
 
-  /**
-   * The Y position of the touch, relative to the element
-   */
-  offsetY: number;
+    /**
+     * The Y position of the touch, relative to the element
+     */
+    offsetY: number;
 
-  /**
-   * The X position of the touch, relative to the screen
-   */
-  pageX: number;
+    /**
+     * The X position of the touch, relative to the screen
+     */
+    pageX: number;
 
-  /**
-   * The Y position of the touch, relative to the screen
-   */
-  pageY: number;
-};
+    /**
+     * The Y position of the touch, relative to the screen
+     */
+    pageY: number;
+  }
+>;
+
+export type RbkInputEvent = Overwrite<
+  RbkEvent,
+  {
+    handler: 'RbkInputEvent';
+    value: InputValue;
+    name?: string;
+    form?: FormRef;
+    focus: () => void;
+    blur: () => void;
+    clear: () => void;
+    reset: () => void;
+    isFocused: () => boolean;
+  }
+>;
 
 export interface RbkFormEvent {
-  name?: string;
   type: string;
+  name?: string;
   form: FormRef;
   target: ReactOnlyElement;
   nativeEvent?: Event | SyntheticEvent;
-}
-
-export interface RbkInputEvent {
-  type: string;
-  value: InputValue;
-  name?: string;
-  target: ReactElement | any;
-  form?: FormRef;
-  focus: () => any;
-  blur: () => any;
-  clear: () => any;
-  isFocused: () => any;
-  nativeEvent?: Event | SyntheticEvent;
-}
-
-export interface RbkCheckboxEvent extends Omit<RbkInputEvent, 'value'> {
-  checked: boolean;
 }
 
 export interface AccessibilityProps {
@@ -399,12 +403,16 @@ export interface FocusableProps {
   focus?: () => void;
   isFocused?: () => boolean;
   // Events
-  onBlur?: Function;
-  onFocus?: Function;
+  onBlur?: (event: RbkEvent) => void;
+  onFocus?: (event: RbkEvent) => void;
+  onKeyPress?: (event: RbkKeyboardEvent) => void;
+  onKeyDown?: (event: RbkKeyboardEvent) => void;
+  onKeyUp?: (event: RbkKeyboardEvent) => void;
 }
 
 export type FormField = {
   name: string;
+  initialValue?: any;
   get: () => InputValue | null | undefined;
   set: (value: InputValue) => any;
   getError?: () => string | boolean | null | undefined;
@@ -415,6 +423,7 @@ export type FormField = {
 export type FormRef = {
   initialData: AnyObject | undefined;
   cancel: () => any;
+  reset: () => any;
   clear: () => any;
   getData: () => AnyObject;
   setData: (data: AnyObject) => any;
@@ -711,7 +720,7 @@ export type ButtonProps<ALLOW_ANY = true> = PropsWithStyles<
     size?: RbkSize;
     startAddon?: ReactElement;
     transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
-    type?: 'button' | 'submit' | 'cancel' | 'clear';
+    type?: 'button' | 'submit' | 'cancel' | 'reset' | 'clear';
     variant?: 'solid' | 'outline' | 'text';
     // Styles
     contentStyle?: RbkStyle;
@@ -894,9 +903,9 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
     unique?: boolean;
     value?: InputValue;
     // Events
-    onFocus?: (event: RbkCheckboxEvent, checked: boolean) => void;
-    onBlur?: (event: RbkCheckboxEvent, checked: boolean) => void;
-    onChange?: (event: RbkCheckboxEvent, checked: boolean) => any;
+    onFocus?: (event: RbkInputEvent, checked: boolean) => void;
+    onBlur?: (event: RbkInputEvent, checked: boolean) => void;
+    onChange?: (event: RbkInputEvent, checked: boolean) => any;
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
     // Styles
     buttonStyle?: RbkStyle;
@@ -930,9 +939,9 @@ export type SwitchProps<ALLOW_ANY = true> = PropsWithStyles<
     onThumbColor?: RbkColor;
     offThumbColor?: RbkColor;
     // Events
-    onFocus?: (event: RbkCheckboxEvent, checked: boolean) => void;
-    onBlur?: (event: RbkCheckboxEvent, checked: boolean) => void;
-    onChange?: (event: RbkCheckboxEvent, checked: boolean) => any;
+    onFocus?: (event: RbkInputEvent, checked: boolean) => void;
+    onBlur?: (event: RbkInputEvent, checked: boolean) => void;
+    onChange?: (event: RbkInputEvent, checked: boolean) => any;
     onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
     // Styles
     buttonStyle?: RbkStyle;
@@ -1059,6 +1068,9 @@ export type ScrollableProps<ALLOW_ANY = true> = PropsWithStyles<
 
     /** Note: vertical pagination is not supported on Android. **/
     pagingEnabled?: boolean;
+
+    // Events
+    onScroll?: (event: RbkEvent) => void;
 
     // Styles
     contentStyle?: RbkStyle;
@@ -1229,6 +1241,7 @@ export type FormProps<ALLOW_ANY = true> = PropsWithStyles<
     // Events
     onSubmit?: (event: RbkFormEvent, data: AnyObject, errors: AnyObject | null) => void;
     onCancel?: (event: RbkFormEvent, data: AnyObject, errors: AnyObject | null) => void;
+    onReset?: (event: RbkFormEvent, data: AnyObject, errors: AnyObject | null) => void;
     onClear?: (event: RbkFormEvent, data: AnyObject, errors: AnyObject | null) => void;
     onChange?: (event: RbkFormEvent, data: AnyObject, errors: AnyObject | null) => void;
     // Styles

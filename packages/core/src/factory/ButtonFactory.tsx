@@ -59,7 +59,12 @@ const ButtonFactory = React.memo<ButtonProps>(
         rest.onPress = form.cancel;
       }
 
-      if (['clear', 'reset'].includes(type)) {
+      if (type === 'reset') {
+        type = 'button';
+        rest.onPress = form.reset;
+      }
+
+      if (type === 'clear') {
         type = 'button';
         rest.onPress = form.clear;
       }

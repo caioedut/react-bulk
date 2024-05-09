@@ -129,11 +129,23 @@ const SelectFactory = React.memo<SelectProps>(
 
       const form = input.form;
       const target = buttonRef.current;
-      const nativeEvent = event?.nativeEvent ?? event ?? null;
       const option = arrOptions?.find((item) => item.value == value) ?? null;
 
       return handler?.(
-        { type, value, name, form, focus, blur, clear, reset, isFocused, target, nativeEvent },
+        {
+          ...event,
+          handler: 'RbkInputEvent',
+          type,
+          value,
+          name,
+          form,
+          focus,
+          blur,
+          clear,
+          reset,
+          isFocused,
+          target,
+        },
         value,
         option,
       );

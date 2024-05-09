@@ -89,9 +89,24 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
       const form = input.form;
       const target = buttonRef.current;
-      const nativeEvent = event?.nativeEvent ?? event ?? null;
 
-      return handler?.({ type, value, name, form, focus, blur, clear, reset, isFocused, target, nativeEvent }, value);
+      return handler?.(
+        {
+          ...event,
+          handler: 'RbkInputEvent',
+          type,
+          value,
+          name,
+          form,
+          focus,
+          blur,
+          clear,
+          reset,
+          isFocused,
+          target,
+        },
+        value,
+      );
     }
 
     function handleFocus(event) {

@@ -33,6 +33,7 @@ const FormFactory = React.memo<FormProps>(
       // Events
       onSubmit,
       onCancel,
+      onReset,
       onClear,
       onChange,
       // Styles
@@ -142,6 +143,7 @@ const FormFactory = React.memo<FormProps>(
         change: onChange,
         submit: onSubmit,
         cancel: onCancel,
+        reset: onReset,
         clear: onClear,
       }[type];
 
@@ -152,8 +154,8 @@ const FormFactory = React.memo<FormProps>(
       const event: RbkFormEvent = {
         type,
         name: field?.name,
-        target,
         form: context,
+        target,
         nativeEvent,
       };
 
@@ -178,6 +180,16 @@ const FormFactory = React.memo<FormProps>(
       dispatchEvent('cancel', undefined, nativeEvent);
     }
 
+    function reset(e?: any) {
+      e?.preventDefault?.();
+      const nativeEvent = e?.nativeEvent ?? e;
+
+      fieldsRef.current.forEach(({ set, initialValue }) => set(initialValue ?? null));
+      setErrors(null);
+
+      dispatchEvent('reset', undefined, nativeEvent);
+    }
+
     function clear(e?: any) {
       e?.preventDefault?.();
       const nativeEvent = e?.nativeEvent ?? e;
@@ -193,6 +205,7 @@ const FormFactory = React.memo<FormProps>(
         initialData,
         submit,
         cancel,
+        reset,
         clear,
         getData,
         setData,
@@ -208,7 +221,9 @@ const FormFactory = React.memo<FormProps>(
       [
         rootRef.current,
         initialData,
+        submit,
         cancel,
+        reset,
         clear,
         getData,
         getErrors,
@@ -218,7 +233,6 @@ const FormFactory = React.memo<FormProps>(
         setErrors,
         setField,
         setValue,
-        submit,
         unsetField,
       ],
     );
