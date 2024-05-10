@@ -259,6 +259,14 @@ export interface RbkAnimation {
   web_useRawStyle?: boolean;
 }
 
+export type RbkTouch = {
+  identifier: number;
+  offsetX: number;
+  offsetY: number;
+  pageX: number;
+  pageY: number;
+};
+
 export type RbkEvent<EventType = Event, TargetType = ReactOnlyElement> = {
   type: string;
   handler: 'RbkEvent';
@@ -308,6 +316,8 @@ export type RbkPointerEvent<EventType = Event, TargetType = ReactOnlyElement> = 
      * The Y position of the touch, relative to the screen
      */
     pageY: number;
+
+    touches: RbkTouch[];
   }
 >;
 
