@@ -233,14 +233,7 @@ const TerminalFactory = React.memo<TerminalProps>(
 
     return (
       <ScrollableFactory ref={scrollRef} variants={{ root: variants.root }} {...rest}>
-        <BoxFactory
-          flex
-          p={2}
-          onPress={() => postFocus(inputRef.current)}
-          platform={{
-            native: { activeOpacity: 1 },
-          }}
-        >
+        <BoxFactory flex p={2} onPress={() => postFocus(inputRef.current)}>
           {messages.map((message, index) => (
             <BoxFactory key={index} mb={1}>
               <TextFactory color={message.color ?? 'text'} style={textStyle}>
