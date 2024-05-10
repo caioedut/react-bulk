@@ -85,14 +85,6 @@ export default function registry(theme?: ThemeProps) {
 
     const parsed = transform(value);
 
-    // TODO: remove on next versions (RN now supports string transform)
-    if (Platform.native) {
-      // @ts-expect-error
-      return {
-        transform: Object.entries(parsed).map(([attr, value]) => ({ [attr]: value })),
-      } as ComettaStyle;
-    }
-
     return {
       transform: Object.entries(parsed)
         .map(([attr, val]) => {
