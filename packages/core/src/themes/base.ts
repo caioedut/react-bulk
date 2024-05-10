@@ -1369,6 +1369,7 @@ const base: ThemeProps = {
           position: 'top',
           color: 'black',
           delay: 200,
+          offset: 1,
         },
         defaultStyles: {
           root: {
@@ -1387,6 +1388,16 @@ const base: ThemeProps = {
               display: 'none',
             },
           },
+          label: {
+            backgroundColor: 'black',
+            borderRadius: (theme) => theme.shape.borderRadius,
+            color: 'white',
+            fontSize: '0.75rem',
+            overflow: 'hidden',
+            py: 1,
+            px: 1.5,
+            textAlign: 'center',
+          },
         },
         variants: {
           visible: {
@@ -1402,20 +1413,6 @@ const base: ThemeProps = {
                   display: 'flex',
                 },
               },
-            },
-          },
-          position: {
-            top: {
-              root: { top: 0, left: '50%' },
-            },
-            bottom: {
-              root: { bottom: 0, left: '50%' },
-            },
-            left: {
-              root: { left: 0, top: '50%' },
-            },
-            right: {
-              root: { right: 0, top: '50%' },
             },
           },
         },

@@ -79,7 +79,6 @@ const BoxFactory = React.memo<BoxProps>(
 
     if (native && pressable && !component) {
       component = Button;
-      rest.activeOpacity = rest.activeOpacity ?? 0.75;
     }
 
     // Extract styles from props

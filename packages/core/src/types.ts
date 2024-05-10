@@ -1261,8 +1261,10 @@ export type TooltipProps<ALLOW_ANY = true> = PropsWithStyles<
     title?: string;
     visible?: boolean;
     // Styles
+    labelStyle?: RbkStyle;
     variants?: {
       root?: any;
+      label?: any;
     };
   }
 >;
