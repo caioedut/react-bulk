@@ -86,6 +86,7 @@ type StyleProps = Overwrite<
   >,
   {
     position?: 'relative' | 'absolute' | (string & {});
+    transform?: CSSTransform['transform'] | string;
 
     // Flexbox container
     direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';

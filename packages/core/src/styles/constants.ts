@@ -264,6 +264,7 @@ export const styleProps = [
   'pointerEvents',
   'textAlign',
   'textTransform',
+  'transform',
   'zIndex',
 ] as const;
 
