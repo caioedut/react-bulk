@@ -1,7 +1,8 @@
 import Platform from '../Platform';
 import get from '../props/get';
+import { RbkEvent } from '../types';
 
-export default function base(event, extra?: Record<PropertyKey, unknown>) {
+export default function base(event, extra?: Record<PropertyKey, unknown>): RbkEvent {
   const { native } = Platform;
 
   const nativeEvent = event.nativeEvent ?? event;
@@ -9,7 +10,7 @@ export default function base(event, extra?: Record<PropertyKey, unknown>) {
   const target = native ? { ...originalTarget, value: nativeEvent?.text } : originalTarget;
 
   return {
-    type: get<string>('type', nativeEvent, event) ?? 'custom',
+    type: get<string>('type', nativeEvent, event) ?? 'unknown',
     handler: 'RbkEvent',
 
     // Extra

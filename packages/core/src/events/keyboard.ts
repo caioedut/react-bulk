@@ -1,7 +1,8 @@
 import get from '../props/get';
+import { RbkKeyboardEvent } from '../types';
 import base from './base';
 
-export default function keyboard(event, extra?: Record<PropertyKey, unknown>) {
+export default function keyboard(event, extra?: Record<PropertyKey, unknown>): RbkKeyboardEvent {
   const nativeEvent = event.nativeEvent ?? event;
 
   const props = {
@@ -18,5 +19,6 @@ export default function keyboard(event, extra?: Record<PropertyKey, unknown>) {
     ...(extra ?? {}),
   };
 
+  // @ts-expect-error
   return base(event, props);
 }
