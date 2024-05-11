@@ -1373,10 +1373,10 @@ const base: ThemeProps = {
         },
         defaultStyles: {
           root: {
-            position: 'absolute',
             zIndex: (theme) => theme.mixins.zIndex.tooltip,
 
             web: {
+              position: 'fixed',
               opacity: 0,
               pointerEvents: 'none',
               visibility: 'hidden',
@@ -1385,6 +1385,7 @@ const base: ThemeProps = {
             },
 
             native: {
+              position: 'absolute',
               display: 'none',
             },
           },

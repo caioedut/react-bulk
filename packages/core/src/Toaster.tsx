@@ -61,6 +61,7 @@ function Toaster({ theme }: any, ref) {
       position: 'absolute',
       maxw: '100%',
       width,
+      transform: { translateY },
     },
 
     valign === 'top' && { t: 0 },
@@ -102,8 +103,8 @@ function Toaster({ theme }: any, ref) {
           animation={{
             throttle: 0,
             duration: 200,
-            from: { translateY },
-            to: { translateY: 0 },
+            from: { transform: { translateY } },
+            to: { transform: { translateY: 0 } },
           }}
         >
           <CardFactory
