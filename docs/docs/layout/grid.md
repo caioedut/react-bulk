@@ -39,7 +39,7 @@ import { Grid } from '@react-bulk/web'; // OR @react-bulk/native
 ### Spacing
 
 ```jsx live
-<Grid size={3} gap={4}>
+<Grid size={3} gap={1}>
   <Box>
     <Text border>Hello World!</Text>
   </Box>
@@ -110,10 +110,9 @@ An option to override [Layout Breakpoints](/docs/layout/breakpoints/#default) fo
 
 ### **`gap`**
 
-Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.shape.spacing` value.
+Spacing (horizontal and vertical) between children. The final value will be `value * theme.shape.gap * theme.shape.spacing`.
 
-➤ Type: **`number`** <br/>
-➤ Default: **`theme.shape.gap`** <br/>
+➤ Type: **`number` `true`** <br/>
 
 ---
 

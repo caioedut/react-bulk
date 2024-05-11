@@ -132,7 +132,7 @@ function App() {
   ];
 
   return [predefined, other].map((colors, index) => (
-    <Grid key={index} gap={3} mb={6}>
+    <Grid key={index} gap mb={6}>
       {colors.map((color) => (
         <Box key={color} bg={color} p={2}>
           <Text color={theme.contrast(color)}>{color}</Text>

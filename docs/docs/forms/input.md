@@ -42,7 +42,7 @@ import { Input } from '@react-bulk/web'; // OR @react-bulk/native
 ### Sizes
 
 ```jsx live
-<Grid column gap={3} maxw={400}>
+<Grid column gap maxw={400}>
   <Box>
     <Input size="xsmall" placeholder="Input (xsmall)" />
   </Box>
@@ -77,7 +77,7 @@ function Home () {
   const CustomIcon = () => <Text>👁</Text>
 
   return (
-    <Grid column gap={3} maxw={400}>
+    <Grid column gap maxw={400}>
       <Box>
         <Input placeholder="Username" startAddon="👤" />
       </Box>

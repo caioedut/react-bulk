@@ -1297,7 +1297,7 @@ function AnimationExample() {
               <Text variant="subtitle" mb="1gap">
                 {label}
               </Text>
-              <Grid noWrap alignItems="center" gap={6}>
+              <Grid gap noWrap alignItems="center">
                 <Box>
                   <Animation loop in {...props} duration={1000}>
                     <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />

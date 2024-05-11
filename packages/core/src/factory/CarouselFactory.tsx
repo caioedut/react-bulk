@@ -57,7 +57,7 @@ const CarouselFactory = React.memo<CarouselProps>(
     const [hasNext, setHasNext] = useState(false);
 
     const showChevron = chevron && chevron !== 'hidden';
-    gap = gap === true ? theme.shape.gap : gap;
+    gap = gap === true ? 1 : gap ?? 0;
 
     const scrollByCount = useCallback(
       async (count) => {
@@ -193,7 +193,7 @@ const CarouselFactory = React.memo<CarouselProps>(
         >
           {contentWidth !== null &&
             childrenize(children).map((child, index) => (
-              <BoxFactory key={index} ref={itemRef} style={itemStyle} px={(gap as number) / 2}>
+              <BoxFactory key={index} ref={itemRef} style={itemStyle} px={theme.spacing(gap / 2)}>
                 {child}
               </BoxFactory>
             ))}

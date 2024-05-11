@@ -180,8 +180,10 @@ const InputFactory = React.memo<InputProps>(
         error={input.error}
         {...input.props}
         endAddon={
-          <BoxFactory row noWrap center>
-            {type === 'number' && (
+          type !== 'number' ? (
+            endAddon
+          ) : (
+            <BoxFactory row noWrap center>
               <BoxFactory h={theme.rem(size)} mr={endAddon ? 1 : -1}>
                 {[+1, -1].map((item) => {
                   const isInc = item > 0;
@@ -205,10 +207,10 @@ const InputFactory = React.memo<InputProps>(
                   );
                 })}
               </BoxFactory>
-            )}
 
-            {endAddon}
-          </BoxFactory>
+              {endAddon}
+            </BoxFactory>
+          )
         }
       />
     );

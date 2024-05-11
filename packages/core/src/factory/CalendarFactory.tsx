@@ -142,7 +142,7 @@ const CalendarFactory = React.memo<CalendarProps>(
 
         <BoxFactory mt={theme.shape.gap * 2} />
 
-        <GridFactory gap={theme.shape.gap / 2} size={7}>
+        <GridFactory gap={0.5} size={7}>
           {monthDates.slice(0, 7).map((date) => (
             <BoxFactory key={date.toISOString()} xs={1}>
               <TextFactory variant="secondary" color="text.disabled" bold center>
@@ -170,7 +170,7 @@ const CalendarFactory = React.memo<CalendarProps>(
                   disabled={isDisabled}
                   variant={!isMuted && hasEvent ? 'solid' : 'text'}
                   color={!isMuted && hasEvent ? color : 'text.primary'}
-                  style={[{ p: 0 }, isToday && !hasEvent && { bg: 'background.secondary' }]}
+                  style={[{ px: 0, py: 0 }, isToday && !hasEvent && { bg: 'background.secondary' }]}
                   labelStyle={[{ w: 20 }, isMuted && { color: 'text.disabled' }]}
                   onPress={(e) => handleDate(e, date)}
                   accessibility={{ value: { now: date.getDate() } }}

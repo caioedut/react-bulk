@@ -157,6 +157,18 @@ export default function registry(theme?: ThemeProps) {
       value = '100%';
     }
 
+    if (['g', 'gx', 'gy'].includes(prop)) {
+      prop = prop === 'gy' ? 'rowGap' : prop === 'gx' ? 'columnGap' : 'gap';
+
+      if (value === true) {
+        value = 1;
+      }
+
+      if (typeof value === 'number' && theme) {
+        value = `${value}gap`;
+      }
+    }
+
     if (customSpacings.includes(prop as any)) {
       prop = prop
         .replace(/^i$/, 'inset')
