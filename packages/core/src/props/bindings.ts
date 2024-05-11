@@ -18,12 +18,12 @@ export default function ({ ...props }: any) {
       const nativeEventName = events[1] ?? events[0];
 
       for (const eventName of events) {
-        if (!props[eventName]) {
-          continue;
-        }
-
         const callback = props[eventName];
         delete props[eventName];
+
+        if (!callback) {
+          continue;
+        }
 
         const callbackHandled = (event) =>
           handler === 'pointer'
