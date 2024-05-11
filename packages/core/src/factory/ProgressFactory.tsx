@@ -78,8 +78,6 @@ const ProgressFactory = React.memo<ProgressProps>(
       onLayout?.(e);
     }
 
-    console.log({ translateX });
-
     return (
       <BoxFactory ref={ref} {...rest} style={style} variants={{ root: variants.root }}>
         {isIndeterminate ? (
