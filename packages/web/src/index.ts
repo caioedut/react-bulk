@@ -83,10 +83,6 @@ global.mapping = {
   TextArea: 'textarea',
   View: 'div',
 
-  Animated: {
-    View: 'div',
-  },
-
   // Svg
   svg: {
     Svg: 'svg',

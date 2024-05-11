@@ -46,7 +46,7 @@ const ProgressFactory = React.memo<ProgressProps>(
     const fontSize = theme.rem((size as number) * 0.7);
     const isIndeterminate = typeof value !== 'number';
     const height = theme.rem(size as number);
-    const translateX = native ? containerWidth * 0.8 : 'calc(100% - 20%)';
+    const translateX = native ? containerWidth * 0.8 : '80%';
 
     if (!isIndeterminate) {
       rest.accessibility = deepmerge({ label: 'percentage' }, rest.accessibility, { value: { now: value } });
@@ -78,6 +78,8 @@ const ProgressFactory = React.memo<ProgressProps>(
       onLayout?.(e);
     }
 
+    console.log({ translateX });
+
     return (
       <BoxFactory ref={ref} {...rest} style={style} variants={{ root: variants.root }}>
         {isIndeterminate ? (
@@ -88,8 +90,8 @@ const ProgressFactory = React.memo<ProgressProps>(
               timing: 'linear',
               boomerang: true,
               iterations: 'infinite',
-              from: { translateX: 0 },
-              to: { translateX },
+              from: { transform: { translateX: 0 } },
+              to: { transform: { translateX } },
             }}
           >
             <BoxFactory w="20%" style={barStyle} variants={{ root: variants.bar }} />
