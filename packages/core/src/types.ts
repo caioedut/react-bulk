@@ -2,30 +2,41 @@ import { CSSProperties, JSXElementConstructor, ReactNode, Ref, RefObject, Synthe
 
 import { customSpacings, styleProps, transformProps } from './styles/constants';
 
-/** @internal */
-export type RequiredSome<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>;
+export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[];
 
-/** @internal */
-type Prettify<T> = { [K in keyof T]: T[K] };
+export type ReactOnlyElement = ReactNode | JSX.Element;
 
-/** @internal */
-type DistributiveOmit<T, K extends PropertyKey> = T extends any ? Omit<T, K> : never;
+export type AnyObject = { [key: PropertyKey]: any };
 
-/** @internal */
-type Overwrite<T, NewT> = DistributiveOmit<T, keyof NewT> & NewT;
+export type TimeoutType = ReturnType<typeof setTimeout> | null;
 
-/** @internal */
-type PropsWithStyles<ALLOW_ANY, T1, T2 = {}> = Overwrite<BaseProps, Overwrite<T1, T2>> &
-  (ALLOW_ANY extends true ? { [key: string | number]: any } : {});
+export type IntervalType = ReturnType<typeof setInterval> | null;
 
-/** @internal */
-type RecursivePartial<T> = {
+export type InputValue = any;
+
+export type Prettify<T> = { [K in keyof T]: T[K] };
+
+export type DistributiveOmit<T, K extends PropertyKey> = T extends any ? Omit<T, K> : never;
+
+export type Overwrite<T, NewT> = DistributiveOmit<T, keyof NewT> & NewT;
+
+export type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
     ? RecursivePartial<U>[]
     : T[P] extends object | undefined
       ? RecursivePartial<T[P]>
       : T[P];
 };
+
+/** @internal */
+type StyleValue = undefined | null | false | AnyObject | (CSSProperties & StyleProps);
+
+/** @internal */
+export type RequiredSome<T, K extends keyof T> = Partial<T> & Required<Pick<T, K>>;
+
+/** @internal */
+type PropsWithStyles<ALLOW_ANY, T1, T2 = {}> = Overwrite<BaseProps, Overwrite<T1, T2>> &
+  (ALLOW_ANY extends true ? { [key: string | number]: any } : {});
 
 /** @internal */
 type ColorTypographyToken = 'text' | 'background';
@@ -38,15 +49,6 @@ type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'er
 
 /** @internal */
 type ColorTone = 'main' | 'light' | 'lighter' | 'dark' | 'darker' | 'contrast';
-
-/** @internal */
-type CSSTransform = {
-  [key in (typeof transformProps)[number]]?: any;
-} & {
-  transform?: {
-    [key in (typeof transformProps)[number]]?: any;
-  };
-};
 
 /** @internal */
 type CSSFlexJustify =
@@ -86,7 +88,11 @@ type StyleProps = Overwrite<
   >,
   {
     position?: 'relative' | 'absolute' | (string & {});
-    transform?: CSSTransform['transform'] | string;
+
+    // Transform
+    transform?: {
+      [key in (typeof transformProps)[number]]?: any;
+    };
 
     // Flexbox container
     direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
@@ -120,19 +126,6 @@ type StyleProps = Overwrite<
 >;
 
 /** @internal */
-type RbkStyleVar = undefined | null | false | AnyObject | (CSSProperties & StyleProps);
-
-export type RbkBreakpoints = {
-  xs: number;
-  sm: number;
-  md: number;
-  lg: number;
-  xl: number;
-  xxl: number;
-  [key: string]: number;
-};
-
-/** @internal */
 export type SelectOption = {
   value: InputValue;
   disabled?: boolean;
@@ -149,9 +142,9 @@ export type SelectOption = {
 );
 
 /** @internal */
-export type TableColumn = {
-  header?: ReactElement | AnyCallback | string;
-  content?: ReactElement | AnyCallback | string;
+export type TableColumn<RowData = any> = {
+  header?: ReactElement | ((column: TableColumn<RowData>) => ReactElement);
+  content?: ReactElement | ((row: RowData) => ReactElement);
   style?: RbkStyle;
 };
 
@@ -164,21 +157,36 @@ export type TabItem = Overwrite<
   }
 >;
 
-export type ReactOnlyElement = ReactNode | JSX.Element;
+/** @internal */
+export type FormField = {
+  name: string;
+  initialValue?: any;
+  get: () => InputValue | null | undefined;
+  set: (value: InputValue) => any;
+  getError?: () => string | boolean | null | undefined;
+  setError?: (error: string | boolean | null | undefined) => any;
+  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
+};
 
-export type ReactElement = ReactNode | ReactNode[] | JSX.Element | JSX.Element[];
+export type FormRef = {
+  initialData: AnyObject | undefined;
+  cancel: () => any;
+  reset: () => any;
+  clear: () => any;
+  getData: () => AnyObject;
+  setData: (data: AnyObject) => any;
+  getErrors: () => null | AnyObject;
+  setErrors: (errors: FormProps['errors']) => any;
+  getValue: (name: string) => InputValue | undefined;
+  setValue: (name: string, value: InputValue) => any;
+  submit: () => any;
+  target: ReactElement;
+  getField: (name: string) => FormField | null | undefined;
+  setField: (options: FormField) => any;
+  unsetField: (name: string) => any;
+};
 
-export type AnyObject = { [key: PropertyKey]: any };
-
-export type AnyCallback = (...args: any[]) => any;
-
-export type TimeoutType = ReturnType<typeof setTimeout> | null;
-
-export type IntervalType = ReturnType<typeof setInterval> | null;
-
-export type InputValue = any;
-
-export interface RbkMap {
+export type RbkMap = {
   web: boolean;
   native: boolean;
   ios: boolean;
@@ -196,16 +204,22 @@ export interface RbkMap {
     };
   };
 
-  Animated: {
-    View: ReactElement;
-  };
-
   svg: {
     [key: string]: ReactElement;
   };
 
   [key: string]: ReactElement | any;
-}
+};
+
+export type RbkBreakpoints = {
+  xs: number;
+  sm: number;
+  md: number;
+  lg: number;
+  xl: number;
+  xxl: number;
+  [key: string]: number;
+};
 
 export type RbkUnit =
   | `${number}px`
@@ -228,7 +242,7 @@ export type RbkColor =
   | `${ColorToken}.${ColorTone}.${number}`
   | (string & {});
 
-export interface RbkRect {
+export type RbkRect = {
   width: number;
   height: number;
 
@@ -243,11 +257,11 @@ export interface RbkRect {
 
   /** Top offset relative to the Window */
   pageOffsetY: number;
-}
+};
 
-export interface RbkAnimation {
-  to: Overwrite<RbkStyleProps, CSSTransform>;
-  from?: Overwrite<RbkStyleProps, CSSTransform>;
+export type RbkAnimation = {
+  to: RbkStyleProps;
+  from?: RbkStyleProps;
 
   boomerang?: boolean;
   delay?: number;
@@ -257,7 +271,7 @@ export interface RbkAnimation {
   timing?: 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out';
 
   web_useRawStyle?: boolean;
-}
+};
 
 export type RbkTouch = {
   identifier: number;
@@ -336,122 +350,17 @@ export type RbkInputEvent = Overwrite<
   }
 >;
 
-export interface RbkFormEvent {
+export type RbkFormEvent = {
   type: string;
   name?: string;
   form: FormRef;
   target: ReactOnlyElement;
   nativeEvent?: Event | SyntheticEvent;
-}
-
-export interface AccessibilityProps {
-  accessible?: boolean;
-  hint?: string;
-  label?: string;
-  role?:
-    | 'adjustable'
-    | 'alert'
-    | 'button'
-    | 'checkbox'
-    | 'combobox'
-    | 'grid'
-    | 'header'
-    | 'image'
-    | 'imagebutton'
-    | 'keyboardkey'
-    | 'link'
-    | 'menu'
-    | 'menubar'
-    | 'menuitem'
-    | 'none'
-    | 'progressbar'
-    | 'radio'
-    | 'radiogroup'
-    | 'scrollbar'
-    | 'search'
-    | 'spinbutton'
-    | 'summary'
-    | 'switch'
-    | 'tab'
-    | 'tablist'
-    | 'text'
-    | 'timer'
-    | 'togglebutton'
-    | 'toolbar';
-  state?: {
-    checked?: boolean | any;
-    disabled?: boolean;
-    expanded?: boolean;
-    selected?: boolean;
-    busy?: boolean;
-  };
-  value?: {
-    max?: number;
-    min?: number;
-    now?: number;
-    text?: string;
-  };
-}
-
-export interface PressableProps {
-  pressable?: boolean;
-  onPress?: (event: RbkPointerEvent) => void;
-  onPressIn?: (event: RbkPointerEvent) => void;
-  onPressOut?: (event: RbkPointerEvent) => void;
-  onLongPress?: (event: RbkPointerEvent) => void;
-
-  /** @deprecated use onPress(event) instead */
-  onClick?: (event: RbkPointerEvent) => void;
-  /** @deprecated use onPressIn(event) instead */
-  onMouseDown?: (event: RbkPointerEvent) => void;
-  /** @deprecated use onPressOut(event) instead */
-  onMouseUp?: (event: RbkPointerEvent) => void;
-}
-
-export interface FocusableProps {
-  autoFocus?: boolean;
-  blur?: () => void;
-  focus?: () => void;
-  isFocused?: () => boolean;
-  // Events
-  onBlur?: (event: RbkEvent) => void;
-  onFocus?: (event: RbkEvent) => void;
-  onKeyPress?: (event: RbkKeyboardEvent) => void;
-  onKeyDown?: (event: RbkKeyboardEvent) => void;
-  onKeyUp?: (event: RbkKeyboardEvent) => void;
-}
-
-export type FormField = {
-  name: string;
-  initialValue?: any;
-  get: () => InputValue | null | undefined;
-  set: (value: InputValue) => any;
-  getError?: () => string | boolean | null | undefined;
-  setError?: (error: string | boolean | null | undefined) => any;
-  onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
 };
 
-export type FormRef = {
-  initialData: AnyObject | undefined;
-  cancel: () => any;
-  reset: () => any;
-  clear: () => any;
-  getData: () => AnyObject;
-  setData: (data: AnyObject) => any;
-  getErrors: () => null | AnyObject;
-  setErrors: (errors: FormProps['errors']) => any;
-  getValue: (name: string) => InputValue | undefined;
-  setValue: (name: string, value: InputValue) => any;
-  submit: () => any;
-  target: ReactElement;
-  getField: (name: string) => FormField | null | undefined;
-  setField: (options: FormField) => any;
-  unsetField: (name: string) => any;
-};
+export type RbkStyle = StyleValue | StyleValue[];
 
-export type RbkStyle = RbkStyleVar | RbkStyleVar[];
-
-export type RbkStyleProps = CSSProperties & StyleProps;
+export type RbkStyleProps = Overwrite<CSSProperties, StyleProps>;
 
 export type ThemeModeValues = 'light' | 'dark';
 
@@ -464,10 +373,6 @@ export type ThemeColorsProps =
       darker?: string;
     }
   | (string & {});
-
-export type ThemeComponentStyleContexts<Contexts extends keyof any> = {
-  [context in Contexts | 'root']: RbkStyle;
-};
 
 export type ThemeComponentProps<Props extends AnyObject> = Prettify<{
   name: string;
@@ -623,6 +528,83 @@ export type ThemeEditProps = RecursivePartial<ThemeProps>;
 
 export type RbkTheme = ThemeProps & {
   setTheme: (options: ThemeModeValues | ThemeEditProps) => any;
+};
+
+export type AccessibilityProps = {
+  accessible?: boolean;
+  hint?: string;
+  label?: string;
+  role?:
+    | 'adjustable'
+    | 'alert'
+    | 'button'
+    | 'checkbox'
+    | 'combobox'
+    | 'grid'
+    | 'header'
+    | 'image'
+    | 'imagebutton'
+    | 'keyboardkey'
+    | 'link'
+    | 'menu'
+    | 'menubar'
+    | 'menuitem'
+    | 'none'
+    | 'progressbar'
+    | 'radio'
+    | 'radiogroup'
+    | 'scrollbar'
+    | 'search'
+    | 'spinbutton'
+    | 'summary'
+    | 'switch'
+    | 'tab'
+    | 'tablist'
+    | 'text'
+    | 'timer'
+    | 'togglebutton'
+    | 'toolbar';
+  state?: {
+    checked?: boolean | any;
+    disabled?: boolean;
+    expanded?: boolean;
+    selected?: boolean;
+    busy?: boolean;
+  };
+  value?: {
+    max?: number;
+    min?: number;
+    now?: number;
+    text?: string;
+  };
+};
+
+export type PressableProps = {
+  pressable?: boolean;
+  onPress?: (event: RbkPointerEvent) => void;
+  onPressIn?: (event: RbkPointerEvent) => void;
+  onPressOut?: (event: RbkPointerEvent) => void;
+  onLongPress?: (event: RbkPointerEvent) => void;
+
+  /** @deprecated use onPress(event) instead */
+  onClick?: (event: RbkPointerEvent) => void;
+  /** @deprecated use onPressIn(event) instead */
+  onMouseDown?: (event: RbkPointerEvent) => void;
+  /** @deprecated use onPressOut(event) instead */
+  onMouseUp?: (event: RbkPointerEvent) => void;
+};
+
+export type FocusableProps = {
+  autoFocus?: boolean;
+  blur?: () => void;
+  focus?: () => void;
+  isFocused?: () => boolean;
+  // Events
+  onBlur?: (event: RbkEvent) => void;
+  onFocus?: (event: RbkEvent) => void;
+  onKeyPress?: (event: RbkKeyboardEvent) => void;
+  onKeyDown?: (event: RbkKeyboardEvent) => void;
+  onKeyUp?: (event: RbkKeyboardEvent) => void;
 };
 
 export type BaseProps = Overwrite<

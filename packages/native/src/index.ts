@@ -1,7 +1,5 @@
 import {
-  Animated,
   Dimensions,
-  Easing,
   NativeModules,
   Platform,
   Pressable,
@@ -47,7 +45,6 @@ import ReactBulk, {
   OutlineFactory,
   ProgressFactory,
   RbkMap,
-  RbkTheme,
   ScrollableFactory,
   SelectFactory,
   SliderFactory,
@@ -119,10 +116,6 @@ global.mapping = {
   Text: RNText,
   TextArea: TextInput,
   View,
-
-  // Animated
-  Animated,
-  Easing,
 
   // Svg
   svg: {
