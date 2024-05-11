@@ -860,7 +860,7 @@ export type InputProps<ALLOW_ANY = true> = PropsWithStyles<
 
 export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
-  FocusableProps,
+  ButtonProps<false>,
   {
     color?: RbkColor;
     colorful?: boolean;
@@ -899,7 +899,7 @@ export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
 
 export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
-  FocusableProps,
+  ButtonProps<false>,
   {
     checked?: boolean;
     color?: RbkColor;
@@ -933,7 +933,7 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
 
 export type SwitchProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
-  FocusableProps,
+  ButtonProps<false>,
   {
     checked?: boolean;
     controlled?: boolean;
