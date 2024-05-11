@@ -18,7 +18,7 @@ import { Image } from '@react-bulk/web'; // OR @react-bulk/native
 ### Sizes
 
 ```jsx live
-<Grid center gap={3}>
+<Grid center gap>
   <Box>
     <Image source="https://i.imgur.com/HdIl3Ef.png" w={100} />
   </Box>
@@ -34,7 +34,7 @@ import { Image } from '@react-bulk/web'; // OR @react-bulk/native
 ### Border Radius
 
 ```jsx live
-<Grid center gap={3}>
+<Grid center gap>
   <Box>
     <Image source="https://i.imgur.com/HdIl3Ef.png" w={100} h={100} corners={2} />
   </Box>

@@ -998,7 +998,7 @@ export type CarouselProps<ALLOW_ANY = true> = PropsWithStyles<
       | 'hidden'
       | ((options: { prev: boolean; next: boolean; color: RbkColor; onPress: () => void }) => ReactElement);
     color?: RbkColor;
-    gap?: number | true;
+    gap?: GridProps<false>['gap'];
     pagingEnabled?: boolean;
     pointerScroll?: boolean;
     // Column Count
@@ -1311,7 +1311,7 @@ export type ListItemProps<ALLOW_ANY = true> = PropsWithStyles<
   {
     chevron?: boolean | ReactElement;
     endAddon?: ReactElement;
-    gap?: number | true;
+    gap?: GridProps<false>['gap'];
     startAddon?: ReactElement;
     // Styles
     chevronStyle?: Overwrite<RbkStyle, { size?: number; color?: RbkColor }>;

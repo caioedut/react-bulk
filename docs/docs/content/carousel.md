@@ -14,7 +14,7 @@ import { Carousel } from '@react-bulk/web'; // OR @react-bulk/native
 ### Basic
 
 ```jsx live
-<Carousel xs={1} sm={1} md={2} lg={2} xl={3} gap={4}>
+<Carousel xs={1} sm={1} md={2} lg={2} xl={3} gap>
   {Array.from({ length: 4 }).map((i, index) => (
     <Card key={index} bg="background.secondary">
       <Text bold>
@@ -35,7 +35,8 @@ import { Carousel } from '@react-bulk/web'; // OR @react-bulk/native
 
 ```jsx live
 <Carousel
-  xs={1} sm={1} md={2} lg={2} xl={3} gap={4}
+  gap
+  xs={1} sm={1} md={2} lg={2} xl={3}
   chevron={({ prev, onPress }) => (
     <Box h="100%" onPress={onPress} center p={2} bg="primary.main.25">
       <Text variant="caption">{prev ? 'Prev' : 'Next'}</Text>
@@ -91,9 +92,9 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 ### **`gap`**
 
-Spacing (horizontal and vertical) between children. The set value will be multiplied by the `theme.typography.spacing` value.
+Spacing between children. The final value will be `value * theme.shape.gap * theme.shape.spacing`.
 
-➤ Type: **`number`** <br/>
+➤ Type: **`number` `true`** <br/>
 
 ---
 

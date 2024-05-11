@@ -24,7 +24,7 @@ import { Tooltip } from '@react-bulk/web'; // OR @react-bulk/native
 ### Position
 
 ```jsx live
-<Grid center gap={12}>
+<Grid center gap>
   <Box>
     <Tooltip title="Add to cart" position="top">
       <Text>Top</Text>
@@ -51,7 +51,7 @@ import { Tooltip } from '@react-bulk/web'; // OR @react-bulk/native
 ### Colors
 
 ```jsx live
-<Grid center gap={12}>
+<Grid center gap={4}>
   <Box>
     <Tooltip title="Add to cart" color="primary">
       <Text>Primary</Text>

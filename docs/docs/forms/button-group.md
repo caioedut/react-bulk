@@ -27,7 +27,7 @@ import { ButtonGroup } from '@react-bulk/web'; // OR @react-bulk/native
 ### Variants
 
 ```jsx live
-<Grid column center gap={3}>
+<Grid column center gap>
   <Box>
     <ButtonGroup variant="solid">
       <Button>One</Button>
@@ -55,7 +55,7 @@ import { ButtonGroup } from '@react-bulk/web'; // OR @react-bulk/native
 ### Sizes
 
 ```jsx live
-<Grid column center gap={3}>
+<Grid column center gap>
   <Box>
     <ButtonGroup size="xsmall">
       <Button>One</Button>

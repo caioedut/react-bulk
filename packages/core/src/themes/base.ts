@@ -524,6 +524,7 @@ const base: ThemeProps = {
           pagingEnabled: true,
           pointerScroll: true,
           xs: 1,
+          // TODO: move to defaultStyles
           chevronStyle: { px: 0 },
         },
         defaultStyles: {
@@ -915,7 +916,7 @@ const base: ThemeProps = {
       ListItem: {
         name: 'rbk-list-item',
         defaultProps: {
-          gap: this.shape.gap,
+          gap: 1,
         },
         defaultStyles: {
           root: {},
