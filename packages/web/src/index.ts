@@ -1,4 +1,4 @@
-import ReactBulk, {
+import {
   AnimationFactory,
   AvatarFactory,
   BackdropFactory,
@@ -30,7 +30,7 @@ import ReactBulk, {
   OutlineFactory,
   ProgressFactory,
   RbkMap,
-  RbkTheme,
+  ReactBulk,
   ScrollableFactory,
   SelectFactory,
   SliderFactory,
@@ -154,6 +154,4 @@ export const Terminal = TerminalFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 
-export { useDimensions, useTheme };
-
-export default ReactBulk;
+export { ReactBulk, useDimensions, useTheme };
