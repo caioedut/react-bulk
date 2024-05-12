@@ -1,4 +1,8 @@
-import ReactBulk from './ReactBulk';
+// Global Context
+export { default as ReactBulk } from './ReactBulk';
+
+// Type
+export * from './types';
 
 // Hook
 export { useForm } from './factory/FormFactory';
@@ -180,9 +184,3 @@ export { default as TerminalFactory } from './factory/TerminalFactory';
 export { default as TextFactory } from './factory/TextFactory';
 /** @internal */
 export { default as TooltipFactory } from './factory/TooltipFactory';
-
-// Type
-export * from './types';
-
-// Global Context
-export default ReactBulk;
