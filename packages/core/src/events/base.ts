@@ -22,7 +22,13 @@ export default function base(event, extra?: Record<PropertyKey, unknown>): RbkEv
     // TODO: check why
     // nativeEvent: Platform.native ? omit('nativeEvent', event) : nativeEvent,
     nativeEvent,
-    preventDefault: get<() => void>('preventDefault', nativeEvent, event) ?? (() => void 0),
-    stopPropagation: get<() => void>('stopPropagation', nativeEvent, event) ?? (() => void 0),
+    preventDefault: () => {
+      event?.preventDefault?.();
+      nativeEvent?.preventDefault?.();
+    },
+    stopPropagation: () => {
+      event?.stopPropagation?.();
+      nativeEvent?.stopPropagation?.();
+    },
   };
 }
