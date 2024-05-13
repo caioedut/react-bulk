@@ -60,7 +60,7 @@ const DropdownFactory = React.memo<DropdownProps>(
           width: metrics.width,
         });
       })();
-    }, [parentRef, visible, placement, dimensions.height]);
+    }, [parentRef, visible, placement, dimensions]);
 
     return (
       <BoxFactory ref={boxRef}>
