@@ -145,6 +145,7 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
 
         from = jssWithTransform(from);
         to = jssWithTransform(to);
+        const lastState = { ...to };
 
         const meta = Object.fromEntries(
           Object.keys(to).map((attr) => {
@@ -194,8 +195,8 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
             elRef.current.addEventListener(
               'animationend',
               () => {
-                // Set exact target value on last iteration
-                Object.keys(to).forEach((attr) => {
+                // Set exact styles for last state
+                Object.keys(lastState).forEach((attr) => {
                   if (boomerang) {
                     setStyle(attr, meta[attr].from, meta[attr].unit);
                   } else {
@@ -212,7 +213,7 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
 
             elRef.current.style.animation = `${animationName} ${duration}ms ${timing} ${
               delay || 0
-            }ms ${iterations} ${direction}`;
+            }ms ${iterations} ${direction} forwards`;
           }
         }
 
@@ -264,9 +265,9 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
                   timeoutRef.current = setTimeout(apply, 0);
                 });
 
-                // Set exact target value on last iteration
+                // Set exact styles for last state
                 if (runId === runIdRef.current) {
-                  Object.keys(to).forEach((attr) => {
+                  Object.keys(lastState).forEach((attr) => {
                     if (isBackward) {
                       setStyle(attr, meta[attr].from, meta[attr].unit);
                     } else {
