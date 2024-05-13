@@ -281,7 +281,7 @@ export type RbkTouch = {
   pageY: number;
 };
 
-export type RbkEvent<EventType = Event, TargetType = ReactOnlyElement> = {
+export type RbkEvent<EventType = any, TargetType = any> = {
   type: string;
   handler: 'RbkEvent';
   target: TargetType;
@@ -292,7 +292,7 @@ export type RbkEvent<EventType = Event, TargetType = ReactOnlyElement> = {
   stopPropagation: () => void;
 };
 
-export type RbkKeyboardEvent<EventType = Event, TargetType = ReactOnlyElement> = Overwrite<
+export type RbkKeyboardEvent<EventType = any, TargetType = any> = Overwrite<
   RbkEvent<EventType, TargetType>,
   {
     handler: 'RbkKeyboardEvent';
@@ -306,7 +306,7 @@ export type RbkKeyboardEvent<EventType = Event, TargetType = ReactOnlyElement> =
   }
 >;
 
-export type RbkPointerEvent<EventType = Event, TargetType = ReactOnlyElement> = Overwrite<
+export type RbkPointerEvent<EventType = any, TargetType = any> = Overwrite<
   RbkEvent<EventType, TargetType>,
   {
     handler: 'RbkPointerEvent';
