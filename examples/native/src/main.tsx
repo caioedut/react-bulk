@@ -2,7 +2,6 @@ import React, { useReducer, useRef, useState } from 'react';
 
 import { AnyObject, RbkFormEvent, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
 import {
-  Animation,
   Avatar,
   Badge,
   Box,
@@ -1284,35 +1283,6 @@ function AnimationExample() {
           <Box border="1px solid primary" align="start" {...transition.props} />
         </Box>
       </Grid>
-
-      {animations.map((animation, key) => {
-        const label = typeof animation === 'string' ? getLabel(animation) : 'Custom';
-        const props = typeof animation === 'string' ? { [animation]: true } : animation;
-
-        return (
-          <React.Fragment key={key}>
-            <Divider my="1gap" mx="-1gap" />
-
-            <Box>
-              <Text variant="subtitle" mb="1gap">
-                {label}
-              </Text>
-              <Grid gap noWrap alignItems="center">
-                <Box>
-                  <Animation loop in {...props} duration={1000}>
-                    <Image w={40} source="https://lirp.cdn-website.com/dbd26f15/dms3rep/multi/opt/fdd-640w.jpg" />
-                  </Animation>
-                </Box>
-                <Box>
-                  <Animation loop in {...props} duration={1000}>
-                    <Text>Anything</Text>
-                  </Animation>
-                </Box>
-              </Grid>
-            </Box>
-          </React.Fragment>
-        );
-      })}
     </>
   );
 }
@@ -1322,16 +1292,6 @@ const variants = ['solid', 'outline', 'text'] as const;
 const sizes = ['xsmall', 'small', 'medium', 'large', 'xlarge'] as const;
 const placements = ['top', 'bottom', 'left', 'right'] as const;
 const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
-const animations = [
-  'spin',
-  'fade',
-  'zoom',
-  { from: { opacity: 0, ml: -4 }, to: { opacity: 1, ml: 0 } },
-  {
-    from: { transform: 'translateX(50px)' },
-    to: { transform: 'translateX(0)' },
-  },
-] as const;
 
 const formData = {
   firstName: 'Richard',

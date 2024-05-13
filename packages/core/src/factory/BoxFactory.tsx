@@ -179,7 +179,7 @@ const BoxFactory = React.memo<BoxProps>(
     }
 
     // Animation
-    const transition = useAnimation(undefined, ref as any);
+    const transition = useAnimation(animation?.from, ref as any);
     const animStrDiffRef = useRef<string>();
     style.push(transition.props.style);
 

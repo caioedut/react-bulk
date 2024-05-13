@@ -213,7 +213,7 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
 
             elRef.current.style.animation = `${animationName} ${duration}ms ${timing} ${
               delay || 0
-            }ms ${iterations} ${direction} forwards`;
+            }ms ${iterations} ${direction}`;
           }
         }
 
