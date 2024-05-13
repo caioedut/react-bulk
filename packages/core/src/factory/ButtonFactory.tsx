@@ -84,7 +84,7 @@ const ButtonFactory = React.memo<ButtonProps>(
 
     const baseSize = theme.rem(size as number);
     const spacing = (baseSize - theme.rem(0.75)) / 2;
-    const textColor = isBasic ? color : contrastColor;
+    const textColor = theme.color(isBasic ? color : contrastColor);
 
     style = [
       isSizeNumber && {
@@ -141,11 +141,19 @@ const ButtonFactory = React.memo<ButtonProps>(
         type={type}
         disabled={disabled}
       >
-        {Boolean(startAddon) && <BoxFactory style={loading && { opacity: 0 }}>{startAddon}</BoxFactory>}
+        {Boolean(startAddon) && (
+          <BoxFactory style={loading && { opacity: 0 }}>
+            {typeof startAddon === 'function' ? startAddon({ color: textColor }) : startAddon}
+          </BoxFactory>
+        )}
 
         {Boolean(childrenArray?.length) && <BoxFactory style={contentStyle}>{childrenArray}</BoxFactory>}
 
-        {Boolean(endAddon) && <BoxFactory style={loading && { opacity: 0 }}>{endAddon}</BoxFactory>}
+        {Boolean(endAddon) && (
+          <BoxFactory style={loading && { opacity: 0 }}>
+            {typeof endAddon === 'function' ? endAddon({ color: textColor }) : endAddon}
+          </BoxFactory>
+        )}
 
         {loading && (
           <BoxFactory position="absolute" i={0} center>
