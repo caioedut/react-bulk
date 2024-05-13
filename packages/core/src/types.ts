@@ -481,7 +481,6 @@ export type ThemeProps = {
 
   components: {
     Avatar: ThemeComponentProps<AvatarProps>;
-    Animation: ThemeComponentProps<AnimationProps>;
     Backdrop: ThemeComponentProps<BackdropProps>;
     Badge: ThemeComponentProps<BadgeProps>;
     Box: ThemeComponentProps<BoxProps>;
@@ -513,7 +512,6 @@ export type ThemeProps = {
     Progress: ThemeComponentProps<ProgressProps>;
     Scrollable: ThemeComponentProps<ScrollableProps>;
     Select: ThemeComponentProps<SelectProps>;
-    Slider: ThemeComponentProps<SliderProps>;
     Switch: ThemeComponentProps<SwitchProps>;
     Table: ThemeComponentProps<TableProps>;
     Tabs: ThemeComponentProps<TabsProps>;
@@ -941,34 +939,6 @@ export type SwitchProps<ALLOW_ANY = true> = PropsWithStyles<
       label?: any;
       thumb?: any;
       error?: any;
-    };
-  }
->;
-
-export type SliderProps<ALLOW_ANY = true> = PropsWithStyles<
-  ALLOW_ANY,
-  FocusableProps,
-  {
-    defaultValue?: number;
-    disabled?: boolean;
-    max?: number;
-    min?: number;
-    name?: string;
-    readOnly?: boolean;
-    size?: RbkSize;
-    value?: number;
-    // Events
-    onFocus?: (event: AnyObject, value: number) => any;
-    onBlur?: (event: AnyObject, value: number) => any;
-    onSlide?: (event: AnyObject, value: number) => any;
-    onChange?: (event: AnyObject, value: number) => any;
-    onFormChange?: (event: RbkFormEvent, data: AnyObject) => any;
-    // Styles
-    variants?: {
-      root?: any;
-      rule?: any;
-      bar?: any;
-      thumb?: any;
     };
   }
 >;

@@ -30,7 +30,6 @@ import {
   Progress,
   Scrollable,
   Select,
-  Slider,
   Switch,
   Table,
   Tabs,
@@ -616,17 +615,6 @@ function FormExample() {
       <Divider mt="1gap" mx="-1gap" />
 
       <Text variant="subtitle" mt="1gap">
-        Slider
-      </Text>
-      <Box p="1gap">
-        {sizes.map((size) => (
-          <Slider key={size} size={size} defaultValue={Math.random() * 100} mt="1gap" />
-        ))}
-      </Box>
-
-      <Divider mt="1gap" mx="-1gap" />
-
-      <Text variant="subtitle" mt="1gap">
         Serializable
       </Text>
       <Form onSubmit={handleSubmitForm} data={formData} mt="1gap">
@@ -648,10 +636,6 @@ function FormExample() {
                 { value: 'large', label: 'Large' },
               ]}
             />
-          </Box>
-          <Box xs={6} md={4}>
-            <Text>Rating</Text>
-            <Slider name="rating" min={1} max={5} />
           </Box>
           <Box xs={6} md={4}>
             <Checkbox name="acceptTerms" label="I accept the terms of use." />
