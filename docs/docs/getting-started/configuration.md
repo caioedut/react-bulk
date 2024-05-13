@@ -3,7 +3,7 @@
 On your root JSX file, include the React Bulk context as first parent.
 
 ```jsx
-import { ReactBulk } from '@react-bulk/web'; // OR @react-bulk/native
+import ReactBulk from '@react-bulk/web'; // OR @react-bulk/native
 
 export default function App() {
   return (

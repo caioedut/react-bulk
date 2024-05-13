@@ -1,5 +1,5 @@
 import { ThemeEditProps } from '@react-bulk/core';
-import { ReactBulk } from '@react-bulk/native';
+import ReactBulk from '@react-bulk/native';
 import { registerRootComponent } from 'expo';
 
 import Main from './src/main';

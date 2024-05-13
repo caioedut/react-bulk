@@ -9,7 +9,7 @@ Allow you to customize all components and its defaults using theme. You own your
 ## Usage
 
 ```jsx title="src/index.js"
-import { ReactBulk } from '@react-bulk/web'; // OR @react-bulk/native
+import ReactBulk from '@react-bulk/web'; // OR @react-bulk/native
 import theme from './src/themes/main.js'
 
 export default function App() {

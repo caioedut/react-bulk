@@ -4,7 +4,7 @@ import pmex from 'pmex';
 
 pmex('clean');
 
-pmex('lerna exec --parallel -- pkgroll');
+pmex('lerna exec --parallel -- parcel build --no-cache --no-optimize --no-scope-hoist');
 
 const packages = readdirSync('packages', { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
