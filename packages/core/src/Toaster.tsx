@@ -61,7 +61,6 @@ function Toaster({ theme }: any, ref) {
       position: 'absolute',
       maxw: '100%',
       width,
-      transform: { translateY },
     },
 
     valign === 'top' && { t: 0 },

@@ -6,7 +6,7 @@
   "dependencies": {
     "@react-bulk/core": "latest",
     "@react-bulk/web": "latest",
-    "expo": "~51.0.2",
+    "expo": "~51.0.4",
     "expo-status-bar": "~1.12.1",
     "expo-updates": "~0.25.11",
     "react": "18.2.0",
