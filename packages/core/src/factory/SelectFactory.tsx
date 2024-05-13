@@ -95,11 +95,8 @@ const SelectFactory = React.memo<SelectProps>(
 
     const setVisible = useCallback((value) => {
       _setVisible(value);
+      setFocused(value);
       setSearch('');
-
-      if (!value) {
-        setFocused(false);
-      }
     }, []);
 
     const selected = useMemo(() => arrOptions?.find((item) => item.value == input.state), [arrOptions, input.state]);
@@ -209,12 +206,10 @@ const SelectFactory = React.memo<SelectProps>(
     }
 
     function handleFocus(event) {
-      setFocused(true);
       dispatchEvent('focus', event, onFocus);
     }
 
     function handleBlur(event) {
-      setFocused(visible || false);
       dispatchEvent('blur', event, onBlur);
     }
 
