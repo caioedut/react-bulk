@@ -1,5 +1,4 @@
 import {
-  AnimationFactory,
   AvatarFactory,
   BackdropFactory,
   BadgeFactory,
@@ -109,11 +108,6 @@ global.mapping = {
     Mask: 'mask',
   },
 } as RbkMap;
-
-/**
- * @deprecated use Box with "animation" prop instead
- */
-export const Animation = AnimationFactory;
 
 export const Avatar = AvatarFactory;
 export const Backdrop = BackdropFactory;

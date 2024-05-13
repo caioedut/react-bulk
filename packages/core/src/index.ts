@@ -107,8 +107,6 @@ export { default as createTheme } from './createTheme';
 /** @internal */
 export { default as AvatarFactory } from './factory/AvatarFactory';
 /** @internal */
-export { default as AnimationFactory } from './factory/AnimationFactory';
-/** @internal */
 export { default as BackdropFactory } from './factory/BackdropFactory';
 /** @internal */
 export { default as BadgeFactory } from './factory/BadgeFactory';
