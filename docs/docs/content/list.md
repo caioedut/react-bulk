@@ -22,10 +22,22 @@ import { List } from '@react-bulk/web'; // OR @react-bulk/native
 </List>
 ```
 
+### Sticky
+
+```jsx live
+<List height={240} rowHeight={18}>
+    {Array.from({ length: 100 }).map((_, index) => (
+        <Text key={index} height={18} sticky={index % 10 === 0}>
+          Item Child {index + 1}{index % 10 === 0 && ' / STICKY!'}
+        </Text>
+    ))}
+</List>
+```
+
 ### Composition
 
 ```jsx live
-<List height={240} rowHeight={18} border="primary">
+<List height={240} border="primary">
     <Text height={36} bg="background.secondary">
         Custom Item Height
     </Text>

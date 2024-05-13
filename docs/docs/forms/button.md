@@ -159,7 +159,7 @@ Indicates whether the button is disabled.
 
 A React element that is added to the end of the button.
 
-➤ Type: **`string` | `ReactElement`** <br/>
+➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
 
 ---
 
@@ -199,7 +199,7 @@ Indicates whether the button is loading.
 
 A React element that is added to the start of the button.
 
-➤ Type: **`string` `ReactElement`** <br/>
+➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
 
 ---
 

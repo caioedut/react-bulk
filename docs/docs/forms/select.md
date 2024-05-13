@@ -142,7 +142,7 @@ events and updating the value prop to keep the controlled state in sync.
 
 ### **`endAddon`**
 
-➤ Type: **`string` `ReactNode`** <br/>
+➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
 
 ---
 
@@ -216,7 +216,7 @@ Minimum number of options to appear the search input
 
 ### **`startAddon`**
 
-➤ Type: **`string` `ReactNode`** <br/>
+➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
 
 ---
 
