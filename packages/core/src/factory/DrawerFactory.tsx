@@ -37,7 +37,7 @@ const DrawerFactory = React.memo<DrawerProps>(
           ref={ref}
           key={placement}
           {...rest}
-          style={[hiddenStyle, style]}
+          style={style}
           variants={{ root: variants.root }}
           animation={{
             duration: 200,
