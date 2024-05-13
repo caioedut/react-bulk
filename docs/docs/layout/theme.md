@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Theme
 
-Allow you to customize all components and its defaults using theme. You own your design!
+Allows you to customize all components and their defaults using the theme. You own your design!
 
 ## Usage
 
@@ -91,6 +91,18 @@ export default {
       trans: 'rgba(0, 0, 0, 0)',
       black: '#000000',
       white: '#ffffff',
+    },
+
+    text: {
+      primary: '#232323',
+      secondary: '#666666',
+      disabled: '#999999',
+    },
+
+    background: {
+      primary: '#FFFFFF',
+      secondary: '#EFEFEF',
+      disabled: '#616161',
     },
   },
 };
@@ -199,6 +211,8 @@ export default {
 ```
 
 ### Variants
+
+Create and override variants from theme.
 
 #### Example
 ```jsx title="src/themes/main.js"

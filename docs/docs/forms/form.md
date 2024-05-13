@@ -69,6 +69,12 @@ Fill inputs with these values.
 
 ➤ Type: **`Function(FormRef, data)`** <br/>
 
+---
+
+### **`onReset`**
+
+➤ Type: **`Function(FormRef, data)`** <br/>
+
 ## Reference
 
 ### **target : `ReactNode`**
@@ -95,9 +101,17 @@ Dispatch `onCancel` handler.
 
 ### **clear()**
 
-Reset fields and dispatch `onClear` handler.
+Clear all fields and dispatch `onClear` handler.
 
 `ref.current.clear()`
+
+---
+
+### **reset()**
+
+Reset fields to their default values and dispatch `onReset` handler.
+
+`ref.current.reset()`
 
 ---
 
@@ -133,7 +147,7 @@ Update input value and dispatch `onChange` event.
 
 ---
 
-### **getField(name: `string`) : `{ name: string, get: Function, set: Function }`**
+### **getField(name: `string`) : `FormField`**
 
 Commonly used by libraries that implements some components. Maybe you are looking for [`getValue`](#getValue).
 
@@ -141,17 +155,20 @@ Commonly used by libraries that implements some components. Maybe you are lookin
 
 ---
 
-### **setField(data: `object`)**
+### **setField(data: `FormField`)**
 
 Commonly used by libraries that implements some components. Maybe you are looking for [`setValue`](#setValue).
 
 ```jsx
 const [age, setAge] = useState('');
+const [error, setError] = useState(null);
 
 ref.current.setField({
   name: 'age',
+  initialValue: '21',
   get: () => age,
   set: (value) => setAge(value),
+  getError: () => error,
   setError: (error) => setError(error),
   onFormChange: (event, data) => handleFormChange(event, data)
 })
@@ -164,5 +181,3 @@ ref.current.setField({
 Commonly used by libraries that implements some components. Remove the field from `Form` track.
 
 `ref.current.unsetField('age')`
-
----

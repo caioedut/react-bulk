@@ -193,7 +193,7 @@ events and updating the value prop to keep the controlled state in sync.
 
 ### **`endAddon`**
 
-➤ Type: **`string` `ReactNode`** <br/>
+➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
 
 ---
 
@@ -337,7 +337,7 @@ If `true`, all text will automatically be selected on focus.
 
 ### **`startAddon`**
 
-➤ Type: **`string` `ReactNode`** <br/>
+➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
 
 ---
 
