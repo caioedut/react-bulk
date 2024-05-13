@@ -31,7 +31,7 @@ const BackdropFactory = React.memo<BackdropProps>(
 
       if (visible) {
         // @ts-ignore
-        setTimeout(() => rootRef.current?.focus?.(), 10);
+        setTimeout(() => rootRef.current?.focus?.(), 100);
 
         const top = document.documentElement.scrollTop;
         const left = document.documentElement.scrollLeft;
@@ -45,7 +45,7 @@ const BackdropFactory = React.memo<BackdropProps>(
     }, [rootRef, visible, web]);
 
     const Child = (
-      <BoxFactory ref={rootRef} variants={{ root: variants.root }} {...rest}>
+      <BoxFactory ref={rootRef} variants={{ root: variants.root }} tabIndex="-1" {...rest}>
         <BoxFactory
           position="absolute"
           i={0}
@@ -77,7 +77,6 @@ const BackdropFactory = React.memo<BackdropProps>(
       <BoxFactory
         noRootStyles
         component={Dialog}
-        tabIndex="-1"
         style={[
           {
             position: 'fixed',
