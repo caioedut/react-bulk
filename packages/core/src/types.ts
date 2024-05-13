@@ -706,12 +706,12 @@ export type ButtonProps<ALLOW_ANY = true> = PropsWithStyles<
     color?: RbkColor;
     contrastColor?: RbkColor;
     disabled?: boolean;
-    endAddon?: ReactElement;
+    endAddon?: ReactElement | ((options: { color: RbkColor }) => ReactElement);
     href?: string;
     label?: string;
     loading?: boolean;
     size?: RbkSize;
-    startAddon?: ReactElement;
+    startAddon?: ReactElement | ((options: { color: RbkColor }) => ReactElement);
     transform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase' | 'full-width';
     type?: 'button' | 'submit' | 'cancel' | 'reset' | 'clear';
     variant?: 'solid' | 'outline' | 'text';
@@ -775,7 +775,7 @@ export type InputBaseProps<ALLOW_ANY = true> = PropsWithStyles<
     controlled?: boolean;
     defaultValue?: InputValue;
     disabled?: boolean;
-    endAddon?: ReactElement;
+    endAddon?: ReactElement | ((options: { color: RbkColor }) => ReactElement);
     error?: string | boolean | null | undefined;
     hint?: string;
     inputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url' | (string & {});
@@ -791,7 +791,7 @@ export type InputBaseProps<ALLOW_ANY = true> = PropsWithStyles<
     selectionColor?: RbkColor;
     selectTextOnFocus?: boolean;
     size?: RbkSize;
-    startAddon?: ReactElement;
+    startAddon?: ReactElement | ((options: { color: RbkColor }) => ReactElement);
     textColor?: RbkColor;
     type?: 'text' | 'number' | 'password' | 'email' | 'phone' | 'url' | 'hidden' | (string & {});
     value?: InputValue;
@@ -844,22 +844,16 @@ export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   ButtonProps<false>,
   {
-    color?: RbkColor;
     colorful?: boolean;
     controlled?: boolean;
     defaultValue?: InputValue;
-    disabled?: boolean;
-    endAddon?: ReactElement;
     error?: string | boolean | null | undefined;
     label?: string;
-    loading?: boolean;
     name?: string;
     options?: SelectOption[];
     placeholder?: string;
     readOnly?: boolean;
     searchCount?: number;
-    size?: RbkSize;
-    startAddon?: ReactElement;
     value?: InputValue;
     // Events
     onFocus?: (event: RbkInputEvent, value: InputValue, option?: SelectOption | null) => void;

@@ -106,7 +106,7 @@ const SelectFactory = React.memo<SelectProps>(
 
     id = useHtmlId(id);
     size = getSize(size);
-    color = theme.color(input.error ? 'error' : color);
+    color = theme.color(input.error ? 'error' : !focused && !colorful ? 'gray.light' : color || 'primary');
     accessibility = deepmerge({ label: label ?? placeholder }, accessibility, { state: { expanded: visible } });
 
     const baseSize = theme.rem(size as number);
@@ -307,7 +307,7 @@ const SelectFactory = React.memo<SelectProps>(
 
         <ButtonFactory
           ref={buttonRef}
-          color={!input.error && !focused && !colorful ? 'gray.light' : color}
+          color={color}
           endAddon={
             loading ? (
               <LoadingFactory size={fontSize / theme.rem()} color={color} />

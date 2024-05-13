@@ -67,13 +67,12 @@ const InputBaseFactory = React.memo<InputBaseProps>(
       options,
     );
 
-    id = useHtmlId(id);
-
     const inputRef = useRef<any>(null);
     const [focused, setFocused] = useState(false);
 
+    id = useHtmlId(id);
     size = getSize(size);
-    color = theme.color(error ? 'error' : color || 'primary');
+    color = theme.color(error ? 'error' : !focused && !colorful ? 'gray.light' : color || 'primary');
     selectionColor = theme.color(selectionColor ?? color);
     autoCapitalize = !autoCapitalize ? 'none' : autoCapitalize;
     placeholderColor = theme.color(
@@ -139,7 +138,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
 
     contentStyle = [
       !disabled && {
-        borderColor: !error && !focused && !colorful ? 'gray.light' : color,
+        borderColor: color,
       },
 
       web &&
@@ -255,7 +254,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
           <BoxFactory row noWrap alignItems="center" justifyContent="space-between" style={{ marginVertical: -1 }}>
             {Boolean(startAddon) && (
               <BoxFactory ml={`${spacing}px`} onPress={() => inputRef?.current?.focus?.()}>
-                {startAddon}
+                {typeof startAddon === 'function' ? startAddon({ color }) : startAddon}
               </BoxFactory>
             )}
 
@@ -274,7 +273,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
 
             {Boolean(endAddon) && (
               <BoxFactory mr={`${spacing}px`} onPress={() => inputRef?.current?.focus?.()}>
-                {endAddon}
+                {typeof endAddon === 'function' ? endAddon({ color }) : endAddon}
               </BoxFactory>
             )}
           </BoxFactory>
