@@ -181,6 +181,7 @@ See all of them below:
 `right`<br/>
 `textAlign`<br/>
 `textTransform`<br/>
+`transform`<br/>
 `top`<br/>
 `width`<br/>
 `zIndex`<br/>
