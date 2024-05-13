@@ -44,6 +44,7 @@ import {
   OutlineFactory,
   ProgressFactory,
   RbkMap,
+  RbkTheme,
   ReactBulk,
   ScrollableFactory,
   SelectFactory,
@@ -55,7 +56,7 @@ import {
   TextFactory,
   TooltipFactory,
   global,
-  useTheme,
+  useTheme as useCoreTheme,
 } from '@react-bulk/core';
 import Svg, {
   Circle,
@@ -183,4 +184,9 @@ export const Tabs = TabsFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
 
-export { ReactBulk, useDimensions, useTheme };
+// Fix PARCEL hoisting types
+export const useTheme: () => RbkTheme = useCoreTheme;
+
+export { useDimensions };
+
+export default ReactBulk;
