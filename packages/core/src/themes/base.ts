@@ -406,6 +406,16 @@ const base: ThemeProps = {
               },
             },
           },
+          loading: {
+            true: {
+              root: {
+                web: {
+                  cursor: 'wait',
+                  '& *': { cursor: 'wait !important' },
+                },
+              },
+            },
+          },
           size: {
             xsmall: {
               root: {

@@ -139,7 +139,7 @@ const ButtonFactory = React.memo<ButtonProps>(
         variants={{ root: variants.root }}
         {...rest}
         type={type}
-        disabled={disabled}
+        disabled={disabled || loading}
       >
         {Boolean(startAddon) && (
           <BoxFactory style={loading && { opacity: 0 }}>
