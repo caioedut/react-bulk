@@ -137,8 +137,8 @@ const BoxFactory = React.memo<BoxProps>(
       style.unshift({ minWidth: 0, minHeight: 0 });
     }
 
-    if (noRootStyles && variants.root?.length > 1) {
-      variants.root?.shift();
+    if (noRootStyles && variants.root?.length) {
+      variants.root.shift();
     }
 
     const styles = [variants?.root];
