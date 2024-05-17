@@ -206,10 +206,12 @@ const SelectFactory = React.memo<SelectProps>(
     }
 
     function handleFocus(event) {
+      setFocused(true);
       dispatchEvent('focus', event, onFocus);
     }
 
     function handleBlur(event) {
+      setFocused(visible || false);
       dispatchEvent('blur', event, onBlur);
     }
 
