@@ -154,7 +154,7 @@ const InputFactory = React.memo<InputProps>(
     }
 
     function handleSubmit(event) {
-      dispatchEvent('submit', event, onSubmit);
+      dispatchEvent('submit', event, onSubmit ?? input.form?.submit);
     }
 
     function handleIncDec(event, signal) {
