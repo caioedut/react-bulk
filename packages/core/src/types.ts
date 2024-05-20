@@ -704,6 +704,7 @@ export type ButtonProps<ALLOW_ANY = true> = PropsWithStyles<
     color?: RbkColor;
     contrastColor?: RbkColor;
     disabled?: boolean;
+    disabledColor?: RbkColor;
     endAddon?: ReactElement | ((options: { color: RbkColor }) => ReactElement);
     href?: string;
     label?: string;

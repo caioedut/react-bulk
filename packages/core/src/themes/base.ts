@@ -339,6 +339,7 @@ const base: ThemeProps = {
         defaultProps: {
           accessibility: { role: 'button' },
           color: 'primary',
+          disabledColor: 'gray.lighter',
           size: 'medium',
           transform: 'uppercase',
           variant: 'solid',
