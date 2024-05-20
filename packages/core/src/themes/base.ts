@@ -802,6 +802,8 @@ const base: ThemeProps = {
               content: {
                 backgroundColor: (theme) => theme.color('background.disabled', 0.125),
                 borderColor: (theme) => theme.color('background.disabled', 0.25),
+              },
+              input: {
                 web: {
                   cursor: 'not-allowed !important',
                   '& *': { cursor: 'not-allowed !important' },
