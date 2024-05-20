@@ -25,6 +25,7 @@ const ButtonFactory = React.memo<ButtonProps>(
       color,
       contrastColor,
       disabled,
+      disabledColor,
       endAddon,
       label,
       loading,
@@ -39,13 +40,17 @@ const ButtonFactory = React.memo<ButtonProps>(
       contentStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<ButtonProps, 'color' | 'size' | 'transform' | 'variant'>>(props, options);
+    } = factory2<RequiredSome<ButtonProps, 'color' | 'disabledColor' | 'size' | 'transform' | 'variant'>>(
+      props,
+      options,
+    );
 
     const form = useForm();
     const isBasic = ['outline', 'text'].includes(variant);
 
     children = children ?? label;
-    contrastColor = contrastColor ?? theme.contrast(color);
+    color = disabled ? disabledColor : color;
+    contrastColor = contrastColor ?? theme.color(theme.contrast(color), disabled ? 0.5 : 1);
     badge = typeof badge === 'number' ? { value: badge } : badge;
     size = size ?? 'medium';
 
