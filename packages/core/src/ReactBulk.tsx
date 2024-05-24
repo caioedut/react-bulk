@@ -1,4 +1,4 @@
-import { MutableRefObject, createContext, createRef, useCallback, useEffect, useState } from 'react';
+import { MutableRefObject, createContext, createRef, useCallback, useMemo, useState } from 'react';
 
 import BaseNative from './BaseNative';
 import BaseWeb from './BaseWeb';
@@ -26,11 +26,13 @@ function ReactBulk({ theme, children }: any) {
 
   global.theme = themeState;
 
-  const setTheme = useCallback((theme: ThemeModeValues | ThemeEditProps) => {
-    setThemeState(createTheme(typeof theme === 'string' ? { mode: theme } : theme));
+  const setTheme = useCallback((theme: ThemeModeValues | ThemeEditProps | ((theme: ThemeProps) => ThemeEditProps)) => {
+    setThemeState((current) =>
+      createTheme(theme instanceof Function ? theme(current!) : typeof theme === 'string' ? { mode: theme } : theme),
+    );
   }, []);
 
-  useEffect(() => {
+  useMemo(() => {
     setTheme(theme);
   }, [theme, setTheme]);
 

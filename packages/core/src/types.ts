@@ -525,7 +525,7 @@ export type ThemeProps = {
 export type ThemeEditProps = RecursivePartial<ThemeProps>;
 
 export type RbkTheme = ThemeProps & {
-  setTheme: (options: ThemeModeValues | ThemeEditProps) => any;
+  setTheme: (value: ThemeModeValues | ThemeEditProps | ((theme: ThemeProps) => ThemeEditProps)) => any;
 };
 
 export type AccessibilityProps = {
