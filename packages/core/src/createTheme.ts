@@ -13,7 +13,7 @@ import { ThemeEditProps, ThemeProps } from './types';
 import deepmerge from './utils/deepmerge';
 import global from './utils/global';
 
-export default function createTheme(options?: ThemeEditProps): ThemeProps | any {
+export default function createTheme(options?: ThemeEditProps): ThemeProps {
   options = options || {};
 
   const mode = options?.mode || 'light';
