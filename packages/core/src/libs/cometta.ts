@@ -28,6 +28,28 @@ export default function registry(theme?: ThemeProps) {
     cometta.unit('gap', (value) => {
       return value * theme.shape.gap * theme.shape.spacing;
     });
+
+    // Create Vars
+    const vars = Object.assign(
+      {},
+      ...Object.entries(theme.colors)
+        .map(([name, variants]) =>
+          Object.entries(variants).map(([variant, color]) => {
+            const result = {
+              [`${name}-${variant}`]: color,
+            };
+
+            if (variant === 'main') {
+              result[`${name}`] = color;
+            }
+
+            return result;
+          }),
+        )
+        .flat(),
+    );
+
+    cometta.variables(vars);
   }
 
   cometta.parser('web', (value) => (Platform.web ? value : {}));
