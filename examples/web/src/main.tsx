@@ -86,7 +86,7 @@ export default function Main() {
         <ListExample />
       </Card>
 
-      <Card mt={theme.shape.gap}>
+      <Card mt="1gap">
         <ResizableExample />
       </Card>
 
