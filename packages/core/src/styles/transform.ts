@@ -1,6 +1,5 @@
-import { AnyObject } from '@react-bulk/core';
-
 import jss from '../styles/jss';
+import { AnyObject } from '../types';
 
 function isObject(item: object) {
   return typeof item === 'object' && Boolean(item) && !Array.isArray(item);

@@ -2,6 +2,7 @@ import { ThemeProps } from '../types';
 import defined from '../utils/defined';
 import stdout from '../utils/stdout';
 import string from '../utils/string';
+import light from './light';
 
 const base: ThemeProps = {
   custom: {},
@@ -24,42 +25,38 @@ const base: ThemeProps = {
     info: '#0099CC',
     success: '#1C8A35',
     warning: '#B0620E',
-    error: '#FF4444',
+    error: '#EF4444',
 
-    gray: '#6B7280',
-    red: '#EF4444',
-    orange: '#F97316',
-    amber: '#F59E0B',
-    yellow: '#EAB308',
-    lime: '#84CC16',
-    green: '#22C55E',
-    teal: '#14B8A6',
-    cyan: '#06B6D4',
-    blue: '#3B82F6',
-    indigo: '#6366F1',
-    violet: '#8B5CF6',
-    purple: '#A855F7',
+    amber: '#FFAB00',
+    blue: '#2962FF',
+    blueGray: '#455A64',
+    brown: '#5D4037',
+    cyan: '#00B8D4',
+    deepOrange: '#DD2C00',
+    deepPurple: '#6200EA',
     fuchsia: '#D946EF',
-    pink: '#EC4899',
+    gray: '#616161',
+    green: '#00C853',
+    indigo: '#304FFE',
+    lime: '#AEEA00',
+    orange: '#FF6D00',
+    pink: '#C51162',
+    purple: '#AA00FF',
+    red: '#D50000',
+    teal: '#00BFA5',
+    violet: '#8B5CF6',
+    yellow: '#FFD600',
 
     common: {
       transparent: '#00000000',
       trans: '#00000000',
       black: '#000000',
-      white: '#ffffff',
+      white: '#FFFFFF',
     },
 
-    text: {
-      primary: '#232323',
-      secondary: '#666666',
-      disabled: '#999999',
-    },
+    text: light.colors.text,
 
-    background: {
-      primary: '#ffffff',
-      secondary: '#e3e3e3',
-      disabled: '#616161',
-    },
+    background: light.colors.background,
   },
 
   breakpoints: {
@@ -253,13 +250,7 @@ const base: ThemeProps = {
             overflow: 'hidden',
           },
         },
-      },
-      Animation: {
-        name: 'rbk-animation',
-        defaultProps: {},
-        defaultStyles: {
-          root: {},
-        },
+        variants: {},
       },
       Backdrop: {
         name: 'rbk-backdrop',
@@ -279,6 +270,7 @@ const base: ThemeProps = {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
           },
         },
+        variants: {},
       },
       Badge: {
         name: 'rbk-badge',
@@ -340,12 +332,14 @@ const base: ThemeProps = {
             web: { '-webkit-tap-highlight-color': '#00000000' },
           },
         },
+        variants: {},
       },
       Button: {
         name: 'rbk-button',
         defaultProps: {
           accessibility: { role: 'button' },
           color: 'primary',
+          disabledColor: 'gray.lighter',
           size: 'medium',
           transform: 'uppercase',
           variant: 'solid',
@@ -409,6 +403,16 @@ const base: ThemeProps = {
                 web: {
                   cursor: 'not-allowed !important',
                   '& *': { cursor: 'not-allowed !important' },
+                },
+              },
+            },
+          },
+          loading: {
+            true: {
+              root: {
+                web: {
+                  cursor: 'wait',
+                  '& *': { cursor: 'wait !important' },
                 },
               },
             },
@@ -490,6 +494,7 @@ const base: ThemeProps = {
             p: 1,
           },
         },
+        variants: {},
       },
       Calendar: {
         name: 'rbk-calendar',
@@ -499,6 +504,7 @@ const base: ThemeProps = {
         defaultStyles: {
           root: {},
         },
+        variants: {},
       },
       Card: {
         name: 'rbk-card',
@@ -507,9 +513,10 @@ const base: ThemeProps = {
           root: {
             backgroundColor: 'background.primary',
             corners: 2,
-            p: this.shape.gap,
+            p: '1gap',
           },
         },
+        variants: {},
       },
       Carousel: {
         name: 'rbk-carousel',
@@ -520,6 +527,7 @@ const base: ThemeProps = {
           pagingEnabled: true,
           pointerScroll: true,
           xs: 1,
+          // TODO: move to defaultStyles
           chevronStyle: { px: 0 },
         },
         defaultStyles: {
@@ -535,6 +543,7 @@ const base: ThemeProps = {
             justifyContent: 'center',
           },
         },
+        variants: {},
       },
       Checkbox: {
         name: 'rbk-checkbox',
@@ -556,7 +565,13 @@ const base: ThemeProps = {
             minHeight: 0,
             minWidth: 0,
           },
+          error: {
+            color: 'error',
+            mx: 1,
+            mt: 1,
+          },
         },
+        variants: {},
       },
       Collapse: {
         name: 'rbk-collapse',
@@ -568,6 +583,7 @@ const base: ThemeProps = {
             overflow: 'hidden',
           },
         },
+        variants: {},
       },
       Divider: {
         name: 'rbk-divider',
@@ -646,6 +662,7 @@ const base: ThemeProps = {
             zIndex: (theme) => theme.mixins.zIndex.dropdown,
           },
         },
+        variants: {},
       },
       Form: {
         name: 'rbk-form',
@@ -656,6 +673,7 @@ const base: ThemeProps = {
             padding: 0,
           },
         },
+        variants: {},
       },
       Grid: {
         name: 'rbk-grid',
@@ -695,6 +713,7 @@ const base: ThemeProps = {
             overflow: 'hidden',
           },
         },
+        variants: {},
       },
       Image: {
         name: 'rbk-image',
@@ -707,9 +726,10 @@ const base: ThemeProps = {
             web: { display: 'block' },
           },
         },
+        variants: {},
       },
-      Input: {
-        name: 'rbk-input',
+      InputBase: {
+        name: 'rbk-input-base',
         defaultProps: {
           autoCapitalize: 'none',
           color: 'primary',
@@ -718,7 +738,9 @@ const base: ThemeProps = {
           type: 'text',
         },
         defaultStyles: {
-          root: {},
+          root: {
+            position: 'relative',
+          },
           content: {
             position: 'relative',
             borderWidth: 1,
@@ -780,6 +802,8 @@ const base: ThemeProps = {
               content: {
                 backgroundColor: (theme) => theme.color('background.disabled', 0.125),
                 borderColor: (theme) => theme.color('background.disabled', 0.25),
+              },
+              input: {
                 web: {
                   cursor: 'not-allowed !important',
                   '& *': { cursor: 'not-allowed !important' },
@@ -796,6 +820,22 @@ const base: ThemeProps = {
           },
         },
       },
+      Input: {
+        name: 'rbk-input',
+        defaultProps: {
+          color: 'primary',
+          size: 'medium',
+        },
+        defaultStyles: {
+          root: {},
+          content: {},
+          label: {},
+          input: {},
+          hint: {},
+          error: {},
+        },
+        variants: {},
+      },
       InputDate: {
         name: 'rbk-input-date',
         defaultProps: {
@@ -809,7 +849,13 @@ const base: ThemeProps = {
         },
         defaultStyles: {
           root: {},
+          content: {},
+          label: {},
+          input: {},
+          hint: {},
+          error: {},
         },
+        variants: {},
       },
       InputPin: {
         name: 'rbk-pin-input',
@@ -820,7 +866,13 @@ const base: ThemeProps = {
         },
         defaultStyles: {
           root: {},
+          content: {},
+          label: {},
+          input: {},
+          hint: {},
+          error: {},
         },
+        variants: {},
       },
       Label: {
         name: 'rbk-label',
@@ -835,6 +887,7 @@ const base: ThemeProps = {
             },
           },
         },
+        variants: {},
       },
       Link: {
         name: 'rbk-link',
@@ -855,19 +908,25 @@ const base: ThemeProps = {
       },
       List: {
         name: 'rbk-list',
-        defaultProps: {},
-        defaultStyles: {
-          root: {},
+        defaultProps: {
+          renderOffset: 200,
         },
+        defaultStyles: {
+          root: {
+            position: 'relative',
+          },
+        },
+        variants: {},
       },
       ListItem: {
         name: 'rbk-list-item',
         defaultProps: {
-          gap: this.shape.gap,
+          gap: 1,
         },
         defaultStyles: {
           root: {},
         },
+        variants: {},
       },
       Loading: {
         name: 'rbk-loading',
@@ -885,9 +944,10 @@ const base: ThemeProps = {
           label: {
             color: 'primary',
             fontSize: '1rem',
-            ml: this.shape.gap / 2,
+            ml: '0.5gap',
           },
         },
+        variants: {},
       },
       Modal: {
         name: 'rbk-modal',
@@ -901,7 +961,7 @@ const base: ThemeProps = {
             maxw: '100%',
           },
           backdrop: {
-            p: this.shape.gap,
+            p: '1gap',
             zIndex: (theme) => theme.mixins.zIndex.modal,
           },
         },
@@ -946,6 +1006,7 @@ const base: ThemeProps = {
             },
           },
         },
+        variants: {},
       },
       Progress: {
         name: 'rbk-progress',
@@ -970,6 +1031,7 @@ const base: ThemeProps = {
             textAlign: 'center',
           },
         },
+        variants: {},
       },
       Resizable: {
         name: 'rbk-resizable',
@@ -1053,61 +1115,48 @@ const base: ThemeProps = {
             mt: 1,
           },
         },
+        variants: {},
       },
-      Slider: {
-        name: 'rbk-slider',
+      Switch: {
+        name: 'rbk-switch',
         defaultProps: {
-          color: 'primary',
-          min: 0,
-          max: 100,
+          accessibility: { role: 'switch' },
           size: 'medium',
+          onColor: 'primary',
+          offColor: 'gray.lighter',
+          onThumbColor: 'white',
+          offThumbColor: 'white',
         },
         defaultStyles: {
           root: {
-            position: 'relative',
-            height: '1rem',
-            marginHorizontal: '0.5rem',
-            web: {
-              cursor: 'pointer',
-            },
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            alignItems: 'center',
           },
-          rule: {
-            position: 'absolute',
-            top: '50%',
-            left: 0,
-            right: 0,
-            marginTop: '-0.125rem',
-            marginRight: '-0.5rem',
-            backgroundColor: 'background.secondary',
-            borderRadius: '0.125rem',
-            height: '0.25rem',
+          button: {
+            p: 0,
+            h: '1.875rem',
+            w: '3.375rem',
+            minh: 0,
+            minw: 0,
           },
-          bar: {
-            position: 'absolute',
-            top: '50%',
-            left: 0,
-            marginTop: '-0.125rem',
-            marginLeft: '-0.5rem',
-            backgroundColor: 'primary',
-            borderTopLeftRadius: '0.125rem',
-            borderBottomLeftRadius: '0.125rem',
-            height: '0.25rem',
-            width: 0,
+          label: {
+            ml: '1gap',
           },
           thumb: {
-            position: 'absolute',
-            top: 0,
-            left: '-0.5rem',
-            backgroundColor: 'primary',
-            borderRadius: '0.5rem',
-            paddingVertical: 0,
-            paddingHorizontal: 0,
-            minHeight: 0,
-            minWidth: 0,
-            height: '1rem',
-            width: '1rem',
+            bg: 'white',
+            borderRadius: '0.75rem',
+            h: '1.5rem',
+            w: '1.5rem',
+          },
+          error: {
+            color: 'error',
+            mx: 1,
+            mt: 1,
           },
         },
+        variants: {},
       },
       Table: {
         name: 'rbk-table',
@@ -1117,6 +1166,7 @@ const base: ThemeProps = {
             corners: 1,
           },
         },
+        variants: {},
       },
       Tabs: {
         name: 'rbk-tabs',
@@ -1177,6 +1227,7 @@ const base: ThemeProps = {
             cursor: 'text',
           },
         },
+        variants: {},
       },
       Text: {
         name: 'rbk-text',
@@ -1260,19 +1311,20 @@ const base: ThemeProps = {
           halign: 'left',
           valign: 'bottom',
           offset: {
-            x: this.shape.gap,
-            y: this.shape.gap,
+            x: '1gap',
+            y: '1gap',
           },
         },
         defaultStyles: {
           root: {
             position: 'relative',
             corners: 2,
-            p: this.shape.gap,
+            p: '1gap',
             bg: 'gray.dark',
             overflow: 'hidden',
           },
         },
+        variants: {},
       },
       Tooltip: {
         name: 'rbk-tooltip',
@@ -1280,13 +1332,14 @@ const base: ThemeProps = {
           position: 'top',
           color: 'black',
           delay: 200,
+          offset: 1,
         },
         defaultStyles: {
           root: {
-            position: 'absolute',
             zIndex: (theme) => theme.mixins.zIndex.tooltip,
 
             web: {
+              position: 'fixed',
               opacity: 0,
               pointerEvents: 'none',
               visibility: 'hidden',
@@ -1295,8 +1348,19 @@ const base: ThemeProps = {
             },
 
             native: {
+              position: 'absolute',
               display: 'none',
             },
+          },
+          label: {
+            backgroundColor: 'black',
+            borderRadius: (theme) => theme.shape.borderRadius,
+            color: 'white',
+            fontSize: '0.75rem',
+            overflow: 'hidden',
+            py: 1,
+            px: 1.5,
+            textAlign: 'center',
           },
         },
         variants: {
@@ -1313,20 +1377,6 @@ const base: ThemeProps = {
                   display: 'flex',
                 },
               },
-            },
-          },
-          position: {
-            top: {
-              root: { top: 0, left: '50%' },
-            },
-            bottom: {
-              root: { bottom: 0, left: '50%' },
-            },
-            left: {
-              root: { left: 0, top: '50%' },
-            },
-            right: {
-              root: { right: 0, top: '50%' },
             },
           },
         },

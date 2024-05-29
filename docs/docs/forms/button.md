@@ -23,7 +23,7 @@ import { Button } from '@react-bulk/web'; // OR @react-bulk/native
 ### Variants
 
 ```jsx live
-<Grid column center gap={3}>
+<Grid column center gap>
   <Box>
     <Button variant="solid">Solid</Button>
   </Box>
@@ -39,7 +39,7 @@ import { Button } from '@react-bulk/web'; // OR @react-bulk/native
 ### Sizes
 
 ```jsx live
-<Grid column center gap={3}>
+<Grid column center gap>
   <Box>
     <Button size="xsmall">Button</Button>
   </Box>
@@ -69,7 +69,7 @@ function Home () {
   const handleToggleLoading = () => setLoading(!loading);
 
   return (
-    <Grid center gap={3}>
+    <Grid center gap>
       <Box>
         <Button loading={loading} onPress={handleToggleLoading}>
           🡢
@@ -159,7 +159,7 @@ Indicates whether the button is disabled.
 
 A React element that is added to the end of the button.
 
-➤ Type: **`string` | `ReactElement`** <br/>
+➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
 
 ---
 
@@ -199,7 +199,7 @@ Indicates whether the button is loading.
 
 A React element that is added to the start of the button.
 
-➤ Type: **`string` `ReactElement`** <br/>
+➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
 
 ---
 

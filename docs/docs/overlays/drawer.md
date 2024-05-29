@@ -66,7 +66,7 @@ To the backdrop element.
 
 ## Events
 
-### **`onBackdropPress`**
+### **`onClose`**
 
 ➤ Type: **`Function(Event)`** <br/>
 

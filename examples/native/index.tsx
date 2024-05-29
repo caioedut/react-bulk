@@ -10,7 +10,7 @@ const theme: ThemeEditProps = {
   },
 };
 
-export default function Index() {
+function App() {
   return (
     <ReactBulk theme={theme}>
       <Main />
@@ -18,4 +18,4 @@ export default function Index() {
   );
 }
 
-registerRootComponent(Index);
+registerRootComponent(App);

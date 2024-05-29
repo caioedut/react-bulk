@@ -1,4 +1,4 @@
-import { RbkStyle, ThemeComponentProps } from '../types';
+import { AnyObject, RbkStyle, ThemeComponentProps } from '../types';
 import deepmerge from '../utils/deepmerge';
 import global from '../utils/global';
 
@@ -8,10 +8,11 @@ type Variants = {
 
 export default function factory2<ComponentProps>(
   props,
-  options: ThemeComponentProps<ComponentProps, any>,
-): ComponentProps & { variants: Variants } {
+  options: ThemeComponentProps<any>,
+): ComponentProps & {
+  variants: NonNullable<ComponentProps extends AnyObject ? ComponentProps['variants'] : {}>;
+} {
   const fallbackProps = {};
-
   const variants: Variants = {};
 
   Object.entries(options?.defaultProps || {}).forEach(([prop, value]) => {
@@ -37,8 +38,13 @@ export default function factory2<ComponentProps>(
     Object.keys(varStyles).forEach((styleId: any) => {
       const name = `${options?.name}-${varAttr}-${varValue}` + (styleId === 'root' ? '' : `-${styleId}`);
       variants[styleId] = variants[styleId] || [];
-      variants?.[styleId]?.push(global.styles[name]);
+      variants[styleId].push(global.styles[name]);
     });
+  });
+
+  Object.entries(props.variants || {}).forEach(([styleId, style]: any) => {
+    variants[styleId] = variants[styleId] || [];
+    variants[styleId].push(style);
   });
 
   // Extends accessibility

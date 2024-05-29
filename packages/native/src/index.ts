@@ -1,9 +1,8 @@
 import {
-  Animated,
   Dimensions,
-  Easing,
   NativeModules,
   Platform,
+  Pressable,
   Image as RNImage,
   Modal as RNModal,
   Text as RNText,
@@ -11,12 +10,10 @@ import {
   SafeAreaView,
   ScrollView,
   TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
 
-import ReactBulk, {
-  AnimationFactory,
+import {
   AvatarFactory,
   BackdropFactory,
   BadgeFactory,
@@ -48,10 +45,11 @@ import ReactBulk, {
   ProgressFactory,
   RbkMap,
   RbkTheme,
+  ReactBulk,
   ResizableFactory,
   ScrollableFactory,
   SelectFactory,
-  SliderFactory,
+  SwitchFactory,
   TableFactory,
   TabsFactory,
   TerminalFactory,
@@ -106,7 +104,7 @@ global.mapping = {
     },
   },
 
-  Button: TouchableOpacity,
+  Button: Pressable,
   Dialog: RNModal,
   Form: View,
   Image: RNImage,
@@ -119,10 +117,6 @@ global.mapping = {
   Text: RNText,
   TextArea: TextInput,
   View,
-
-  // Animated
-  Animated,
-  Easing,
 
   // Svg
   svg: {
@@ -150,11 +144,6 @@ global.mapping = {
     Mask,
   },
 } as RbkMap;
-
-/**
- * @deprecated use Box with "animation" prop instead
- */
-export const Animation = AnimationFactory;
 
 export const Avatar = AvatarFactory;
 export const Backdrop = BackdropFactory;
@@ -188,7 +177,7 @@ export const Progress = ProgressFactory;
 export const Resizable = ResizableFactory;
 export const Scrollable = ScrollableFactory;
 export const Select = SelectFactory;
-export const Slider = SliderFactory;
+export const Switch = SwitchFactory;
 export const Table = TableFactory;
 export const Terminal = TerminalFactory;
 export const Tabs = TabsFactory;

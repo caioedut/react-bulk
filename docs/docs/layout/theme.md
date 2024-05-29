@@ -4,12 +4,12 @@ sidebar_position: 3
 
 # Theme
 
-Allow you to customize all components and its defaults using theme. You own your design!
+Allows you to customize all components and their defaults using the theme. You own your design!
 
 ## Usage
 
 ```jsx title="src/index.js"
-import ReactBulk from '@react-bulk/core';
+import ReactBulk from '@react-bulk/web'; // OR @react-bulk/native
 import theme from './src/themes/main.js'
 
 export default function App() {
@@ -52,38 +52,57 @@ export default {
 
 ```jsx title="src/themes/main.js"
 export default {
-  // other options
+  // ...other options
+
   colors: {
-    primary: '#8b5cf6',
-    secondary: '#f59e0b',
+    primary: '#8B5CF6',
+    secondary: '#0D542D',
 
-    info: '#3b82f6',
-    success: '#22c55e',
-    warning: '#f59e0b',
-    error: '#ef4444',
+    info: '#0099CC',
+    success: '#1C8A35',
+    warning: '#B0620E',
+    error: '#EF4444',
 
+    // Create custom tokens
     customColorToken: '#ff00ff',
 
-    gray: '#6b7280',
-    red: '#ef4444',
-    orange: '#f97316',
-    amber: '#f59e0b',
-    yellow: '#eab308',
-    lime: '#84cc16',
-    green: '#22c55e',
-    teal: '#14b8a6',
-    cyan: '#06b6d4',
-    blue: '#3b82f6',
-    indigo: '#6366f1',
-    violet: '#8b5cf6',
-    purple: '#a855f7',
-    fuchsia: '#d946ef',
-    pink: '#ec4899',
+    amber: '#FFAB00',
+    blue: '#2962FF',
+    blueGray: '#455A64',
+    brown: '#5D4037',
+    cyan: '#00B8D4',
+    deepOrange: '#DD2C00',
+    deepPurple: '#6200EA',
+    fuchsia: '#D946EF',
+    gray: '#616161',
+    green: '#00C853',
+    indigo: '#304FFE',
+    lime: '#AEEA00',
+    orange: '#FF6D00',
+    pink: '#C51162',
+    purple: '#AA00FF',
+    red: '#D50000',
+    teal: '#00BFA5',
+    violet: '#8B5CF6',
+    yellow: '#FFD600',
 
     common: {
+      transparent: 'rgba(0, 0, 0, 0)',
       trans: 'rgba(0, 0, 0, 0)',
       black: '#000000',
       white: '#ffffff',
+    },
+
+    text: {
+      primary: '#232323',
+      secondary: '#666666',
+      disabled: '#999999',
+    },
+
+    background: {
+      primary: '#FFFFFF',
+      secondary: '#EFEFEF',
+      disabled: '#616161',
     },
   },
 };
@@ -103,27 +122,31 @@ function App() {
   ];
 
   const other = [
-    'gray',
-    'red',
-    'orange',
     'amber',
-    'yellow',
-    'lime',
-    'green',
-    'teal',
-    'cyan',
     'blue',
-    'indigo',
-    'violet',
-    'purple',
+    'blueGray',
+    'brown',
+    'cyan',
+    'deepOrange',
+    'deepPurple',
     'fuchsia',
+    'gray',
+    'green',
+    'indigo',
+    'lime',
+    'orange',
     'pink',
+    'purple',
+    'red',
+    'teal',
+    'violet',
+    'yellow',
   ];
 
   return [predefined, other].map((colors, index) => (
-    <Grid key={index} gap={3} mb={6}>
+    <Grid key={index} gap mb={6}>
       {colors.map((color) => (
-        <Box key={color} bg={color}>
+        <Box key={color} bg={color} p={2}>
           <Text color={theme.contrast(color)}>{color}</Text>
         </Box>
       ))}
@@ -136,7 +159,8 @@ function App() {
 
 ```jsx title="src/themes/main.js"
 export default {
-  // other options
+  // ...other options
+
   breakpoints: {
     xs: 0,
     sm: 320,
@@ -154,7 +178,8 @@ export default {
 
 ```jsx title="src/themes/main.js"
 export default {
-  // other options
+  // ...other options
+
   components: {
     Button: {
       defaultProps: {
@@ -170,7 +195,8 @@ export default {
 
 ```jsx title="src/themes/main.js"
 export default {
-  // other options
+  // ...other options
+
   components: {
     Button: {
       defaultStyles: {
@@ -185,4 +211,56 @@ export default {
 ```
 
 ### Variants
-Coming soon...
+
+Create and override variants from theme.
+
+#### Example
+```jsx title="src/themes/main.js"
+export default {
+  // ...other options
+
+  components: {
+    Text: {
+      variants: {
+        marked: {
+          true: {
+            root: { bg: 'yellow.main.25' }
+          }
+        },
+        heading: {
+          h1: {
+            root: { fontSize: '3.5rem' }
+          },
+          h2: {
+            root: { fontSize: '3rem' },
+          },
+          h3: {
+            root: { fontSize: '2.5rem' },
+          },
+          h4: {
+            root: { fontSize: '2rem' },
+          },
+          h5: {
+            root: { fontSize: '1.5rem' },
+          },
+          h6: {
+            root: { fontSize: '1rem' },
+          },
+        }
+      }
+    }
+  },
+};
+```
+
+#### Usage
+```jsx
+<Text marked>Marked Text!</Text>
+<Text heading="h1">My H1!</Text>
+<Text heading="h2">My H2!</Text>
+<Text heading="h3">My H3!</Text>
+<Text heading="h4">My H4!</Text>
+<Text heading="h5">My H5!</Text>
+<Text heading="h6">My H6!</Text>
+```
+

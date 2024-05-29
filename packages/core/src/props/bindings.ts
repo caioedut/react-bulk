@@ -1,51 +1,52 @@
 import Platform from '../Platform';
+import base from '../events/base';
+import keyboard from '../events/keyboard';
+import pointer from '../events/pointer';
 
 export default function ({ ...props }: any) {
   const { web, native } = Platform;
 
-  if (web) {
-    if (props.onPress) {
-      props.onClick = props.onPress;
+  const mapping = {
+    common: [['onFocus'], ['onBlur'], ['onChange'], ['onScroll']],
+    keyboard: [['onKeyPress'], ['onKeyDown'], ['onKeyUp']],
+    pointer: [['onClick', 'onPress'], ['onMouseDown', 'onPressIn'], ['onMouseUp', 'onPressOut'], ['onLongPress']],
+  } as const;
+
+  for (const handler in mapping) {
+    for (const events of mapping[handler]) {
+      const webEventName = events[0];
+      const nativeEventName = events[1] ?? events[0];
+
+      for (const eventName of events) {
+        const callback = props[eventName];
+        delete props[eventName];
+
+        if (!callback) {
+          continue;
+        }
+
+        const callbackHandled = (event) =>
+          handler === 'pointer'
+            ? callback(pointer(event))
+            : handler === 'keyboard'
+              ? callback(keyboard(event))
+              : callback(base(event));
+
+        if (web) {
+          props[webEventName] = callbackHandled;
+        }
+
+        if (native) {
+          props[nativeEventName] = callbackHandled;
+        }
+      }
     }
-
-    if (props.onPressIn) {
-      props.onPointerDown = props.onPressIn;
-    }
-
-    if (props.onPressOut) {
-      props.onPointerUp = props.onPressOut;
-    }
-
-    // if (props.onChange) {
-    //   const onChangeProp = props.onChange;
-    //   props.onChange = (e: any) => onChangeProp(e, e?.target?.value ?? e?.target?.checked);
-    // }
-
-    delete props.onPress;
-    delete props.onPressIn;
-    delete props.onPressOut;
-  }
-
-  if (native) {
-    if (props.onClick) {
-      props.onPress = props.onClick;
-    }
-
-    // if (props.onChange) {
-    //   const onChangeProp = props.onChange;
-    //   props.onChange = (e: any) => onChangeProp(e, e?.nativeEvent?.text);
-    // }
-
-    delete props.onClick;
   }
 
   if (props.disabled) {
-    delete props.onClick;
-    delete props.onPress;
-    delete props.onPressIn;
-    delete props.onPressOut;
-    delete props.onPointerDown;
-    delete props.onPointerUp;
+    [...mapping.keyboard, ...mapping.pointer].flat().forEach((eventName) => {
+      delete props[eventName];
+    });
   }
 
   return props;

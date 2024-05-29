@@ -13,7 +13,7 @@ yarn add react-dom @react-bulk/core @react-bulk/web
 ```
 
 :::note
-Make sure you have `react` and `react-dom` correctly installed as dependencies with versions `>= 16.8.0`.
+Make sure you have `react` and `react-dom` correctly installed as dependencies with versions `>= 17.0.0`.
 :::
 
 ## React Native
@@ -23,5 +23,5 @@ yarn add react-native-svg @react-bulk/core @react-bulk/native
 ```
 
 :::note
-Make sure you have `react >= 16.8.0`, `react-native >= 0.63.0` and `react-native-svg` correctly installed as dependencies.
+Make sure you have `react >= 17.0.0`, `react-native >= 0.71.0` and `react-native-svg` correctly installed as dependencies.
 :::

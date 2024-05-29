@@ -42,7 +42,7 @@ import { Input } from '@react-bulk/web'; // OR @react-bulk/native
 ### Sizes
 
 ```jsx live
-<Grid column gap={3} maxw={400}>
+<Grid column gap maxw={400}>
   <Box>
     <Input size="xsmall" placeholder="Input (xsmall)" />
   </Box>
@@ -77,7 +77,7 @@ function Home () {
   const CustomIcon = () => <Text>👁</Text>
 
   return (
-    <Grid column gap={3} maxw={400}>
+    <Grid column gap maxw={400}>
       <Box>
         <Input placeholder="Username" startAddon="👤" />
       </Box>
@@ -193,7 +193,7 @@ events and updating the value prop to keep the controlled state in sync.
 
 ### **`endAddon`**
 
-➤ Type: **`string` `ReactNode`** <br/>
+➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
 
 ---
 
@@ -337,7 +337,7 @@ If `true`, all text will automatically be selected on focus.
 
 ### **`startAddon`**
 
-➤ Type: **`string` `ReactNode`** <br/>
+➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
 
 ---
 

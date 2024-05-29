@@ -10,18 +10,46 @@ import global from '../utils/global';
 export default function registry(theme?: ThemeProps) {
   theme = theme ?? global.theme ?? {};
 
-  if (Platform.web && theme) {
-    cometta.polyfill({
-      fontSize: theme.rem(1),
-    });
-  }
+  if (theme) {
+    if (Platform.web) {
+      cometta.polyfill({
+        fontSize: theme.rem(1),
+      });
+    }
 
-  if (Platform.native && theme) {
-    cometta.polyfill({
-      fontSize: theme.rem(1),
-      screenWidth: () => global.mapping.dimensions.window().width,
-      screenHeight: () => global.mapping.dimensions.window().height,
+    if (Platform.native) {
+      cometta.polyfill({
+        fontSize: theme.rem(1),
+        screenWidth: () => global.mapping.dimensions.window().width,
+        screenHeight: () => global.mapping.dimensions.window().height,
+      });
+    }
+
+    cometta.unit('gap', (value) => {
+      return value * theme.shape.gap * theme.shape.spacing;
     });
+
+    // Create Vars
+    const vars = Object.assign(
+      {},
+      ...Object.entries(theme.colors)
+        .map(([name, variants]) =>
+          Object.entries(variants).map(([variant, color]) => {
+            const result = {
+              [`${name}-${variant}`]: color,
+            };
+
+            if (variant === 'main') {
+              result[`${name}`] = color;
+            }
+
+            return result;
+          }),
+        )
+        .flat(),
+    );
+
+    cometta.variables(vars);
   }
 
   cometta.parser('web', (value) => (Platform.web ? value : {}));
@@ -78,14 +106,6 @@ export default function registry(theme?: ThemeProps) {
     if (!defined(value)) return;
 
     const parsed = transform(value);
-
-    // TODO: remove on next versions (RN now supports string transform)
-    if (Platform.native) {
-      // @ts-expect-error
-      return {
-        transform: Object.entries(parsed).map(([attr, value]) => ({ [attr]: value })),
-      } as ComettaStyle;
-    }
 
     return {
       transform: Object.entries(parsed)
@@ -157,6 +177,18 @@ export default function registry(theme?: ThemeProps) {
 
     if (boxSizeProps.includes(prop as any) && value === true) {
       value = '100%';
+    }
+
+    if (['g', 'gx', 'gy'].includes(prop)) {
+      prop = prop === 'gy' ? 'rowGap' : prop === 'gx' ? 'columnGap' : 'gap';
+
+      if (value === true) {
+        value = 1;
+      }
+
+      if (typeof value === 'number' && theme) {
+        value = `${value}gap`;
+      }
     }
 
     if (customSpacings.includes(prop as any)) {
