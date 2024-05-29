@@ -55,6 +55,6 @@ To the main element.
 
 When the backdrop is pressed directly. Children do not fire it.
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkPointerEvent)`](/docs/type-reference/rbk-pointer-event)** <br/>
 
 ---

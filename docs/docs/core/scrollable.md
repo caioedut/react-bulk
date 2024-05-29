@@ -96,6 +96,6 @@ Vertical pagination is not supported on Android.
 
 ### **`onScroll`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkEvent)`](/docs/type-reference/rbk-event)** <br/>
 
 ---

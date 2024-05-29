@@ -76,7 +76,7 @@ Vertical alignment.
 
 **`onPress`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkPointerEvent)`](/docs/type-reference/rbk-pointer-event)** <br/>
 
 ---
 
