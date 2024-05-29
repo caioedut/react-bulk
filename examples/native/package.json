@@ -4,8 +4,8 @@
   "private": true,
   "main": "index.tsx",
   "dependencies": {
-    "@react-bulk/core": "latest",
-    "@react-bulk/web": "latest",
+    "@react-bulk/core": "file:./../../packages/core",
+    "@react-bulk/web": "file:./../../packages/web",
     "expo": "~51.0.4",
     "expo-status-bar": "~1.12.1",
     "expo-updates": "~0.25.11",

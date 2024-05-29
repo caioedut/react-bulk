@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@react-bulk/core": "latest",
-    "@react-bulk/web": "latest",
+    "@react-bulk/core": "file:./../../packages/core",
+    "@react-bulk/web": "file:./../../packages/web",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

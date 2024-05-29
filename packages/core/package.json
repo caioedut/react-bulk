@@ -33,7 +33,7 @@
     "process": false
   },
   "dependencies": {
-    "cometta": "^0.2.4"
+    "cometta": "^0.2.5"
   },
   "peerDependencies": {
     "react": ">=17.0.0"
