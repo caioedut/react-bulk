@@ -17,7 +17,7 @@ import { Box } from '@react-bulk/web'; // OR @react-bulk/native
 ### Basic
 
 ```jsx live
-<Grid column center gap={3}>
+<Grid column center>
   <Box>
     <Box border p={3}>Styled Box</Box>
   </Box>
@@ -86,6 +86,40 @@ Examples:
 <Box pr="16px" /> // paddingRight: '16px'
 <Box pv="16px" /> // paddingVertical: '16px' (on web, sets paddingTop and paddingBottom)
 <Box ph="16px" /> // paddingHorizontal: '16px' (on web, sets paddingLeft and paddingRight)
+```
+
+➤ Type: **`number` `string`** <br/>
+
+## Gap
+
+### Raw
+
+Sets the spacing between children. The value is defined as described below:
+
+The values of `gap`, `rowGap` and `columnGap` are used as raw:
+
+Examples:
+
+```jsx
+<Box gap={16} /> // gap value is 16px
+<Box gap="16px" /> // gap value is 16px
+<Box gap="2rem" /> // gap value is 2rem (= 32px with default theme)
+```
+
+### Alias
+
+Alias props can be used to multiply by the value defined on `theme.shape.gap`:
+
+`g` for `gap`<br/>
+`gx` for `columnGap`<br/>
+`gy` for `rowGap`<br/>
+
+Examples:
+
+```jsx
+<Box g={1} /> // gap value is 16px (value * theme.shape.gap * theme.shape.spacing)
+<Box g="16px" /> // gap value is 16px
+<Box g="2rem" /> // gap value is 2rem (= 32px with default theme)
 ```
 
 ➤ Type: **`number` `string`** <br/>

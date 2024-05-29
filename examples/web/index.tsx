@@ -12,8 +12,12 @@ const theme: ThemeEditProps = {
   },
 };
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <ReactBulk theme={theme}>
-    <Main />
-  </ReactBulk>,
-);
+function App() {
+  return (
+    <ReactBulk theme={theme}>
+      <Main />
+    </ReactBulk>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')!).render(<App />);

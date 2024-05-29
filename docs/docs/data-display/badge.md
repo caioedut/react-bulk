@@ -14,7 +14,7 @@ import { Badge } from '@react-bulk/web'; // OR @react-bulk/native
 ### Basic
 
 ```jsx live
-<Grid center gap={3}>
+<Grid center>
   <Box>
     <Badge dot />
   </Box>
@@ -36,7 +36,7 @@ import { Badge } from '@react-bulk/web'; // OR @react-bulk/native
 ### Composition
 
 ```jsx live
-<Grid center gap={12}>
+<Grid center gap={4}>
   <Box position="relative" border>
     <Badge top left>2</Badge>
   </Box>

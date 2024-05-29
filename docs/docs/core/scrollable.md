@@ -17,7 +17,7 @@ import { Scrollable } from '@react-bulk/web'; // OR @react-bulk/native
 ### Basic
 
 ```jsx live
-<Grid row center gap={3}>
+<Grid row center>
   <Box>
     <Text>Vertical</Text>
     <Scrollable h={160} w={160}>

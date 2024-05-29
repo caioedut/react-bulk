@@ -1,4 +1,4 @@
-export default function get(prop: string, ...mixin: unknown[]) {
+export default function get<T = any>(prop: string, ...mixin: unknown[]) {
   let result: any;
 
   for (const item of mixin) {
@@ -11,5 +11,5 @@ export default function get(prop: string, ...mixin: unknown[]) {
     result = item?.[prop] ?? result;
   }
 
-  return result;
+  return result as T | undefined;
 }

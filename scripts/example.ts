@@ -15,21 +15,22 @@ pmex('build');
 
 pmex(
   {
-    npm: `install && npm prune`,
-    pnpm: `install --fix-lockfile`,
-    yarn: `install --check-files`,
+    bun: 'install',
+    npm: 'install && npm prune',
+    pnpm: 'install --fix-lockfile',
+    yarn: 'install --check-files',
   },
   { cwd },
 );
 
-rmSync(`${cwd}/node_modules/@react-bulk`, {
-  force: true,
-  recursive: true,
-});
-
 const packages = ['core', platform];
 
 for (const pkg of packages) {
+  rmSync(`${cwd}/node_modules/@react-bulk/${pkg}`, {
+    force: true,
+    recursive: true,
+  });
+
   cpSync(`./packages/${pkg}/dist`, `${cwd}/node_modules/@react-bulk/${pkg}/dist`, {
     force: true,
     recursive: true,
@@ -45,5 +46,5 @@ if (isWeb) {
 }
 
 if (isNative) {
-  pmex(`expo start -c`, { cwd });
+  pmex(`npx expo start -c`, { cwd });
 }

@@ -1,5 +1,4 @@
-import ReactBulk, {
-  AnimationFactory,
+import {
   AvatarFactory,
   BackdropFactory,
   BadgeFactory,
@@ -31,10 +30,11 @@ import ReactBulk, {
   ProgressFactory,
   RbkMap,
   RbkTheme,
+  ReactBulk,
   ResizableFactory,
   ScrollableFactory,
   SelectFactory,
-  SliderFactory,
+  SwitchFactory,
   TableFactory,
   TabsFactory,
   TerminalFactory,
@@ -83,10 +83,6 @@ global.mapping = {
   TextArea: 'textarea',
   View: 'div',
 
-  Animated: {
-    View: 'div',
-  },
-
   // Svg
   svg: {
     Svg: 'svg',
@@ -113,11 +109,6 @@ global.mapping = {
     Mask: 'mask',
   },
 } as RbkMap;
-
-/**
- * @deprecated use Box with "animation" prop instead
- */
-export const Animation = AnimationFactory;
 
 export const Avatar = AvatarFactory;
 export const Backdrop = BackdropFactory;
@@ -151,7 +142,7 @@ export const Progress = ProgressFactory;
 export const Resizable = ResizableFactory;
 export const Scrollable = ScrollableFactory;
 export const Select = SelectFactory;
-export const Slider = SliderFactory;
+export const Switch = SwitchFactory;
 export const Table = TableFactory;
 export const Tabs = TabsFactory;
 export const Terminal = TerminalFactory;

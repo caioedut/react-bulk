@@ -100,6 +100,9 @@ export const customSpacings = [
   'px',
   'pv',
   'py',
+  'g',
+  'gx',
+  'gy',
 ] as const;
 
 export const customStyleProps = [
@@ -123,6 +126,8 @@ export const customStyleProps = [
   ...customSpacings,
 ] as const;
 
+export const gapSpacings = ['gap', 'rowGap', 'columnGap'] as const;
+
 export const spacings = [
   'position',
   'top',
@@ -143,6 +148,8 @@ export const spacings = [
   'paddingRight',
   'paddingHorizontal',
   'paddingVertical',
+  // Gaps
+  ...gapSpacings,
   // Aliases
   ...customSpacings,
 ] as const;
@@ -264,6 +271,7 @@ export const styleProps = [
   'pointerEvents',
   'textAlign',
   'textTransform',
+  'transform',
   'zIndex',
 ] as const;
 

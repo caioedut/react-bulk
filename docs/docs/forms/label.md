@@ -27,7 +27,7 @@ function Home () {
   const inputRef = useRef();
 
   return (
-    <Grid column gap={3} maxw={400}>
+    <Grid column gap maxw={400}>
       <Box>
         <Input ref={inputRef} />
       </Box>
@@ -43,7 +43,7 @@ function Home () {
 ### Composition
 
 ```jsx live
-<Grid column gap={3} maxw={400}>
+<Grid column gap maxw={400}>
   <Box>
     <Input label="Full name" />
   </Box>

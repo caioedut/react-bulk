@@ -1,17 +1,10 @@
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import usePortals from './hooks/usePortals';
 import { ReactElement } from './types';
 
 function PortalItem({ portalKey, children }) {
   const [, setPortals] = usePortals();
-
-  // #hack first render
-  useMemo(() => {
-    setPortals((current) => ({ ...current, [portalKey]: children }));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     setPortals((current) => ({ ...current, [portalKey]: children }));
