@@ -1045,6 +1045,7 @@ const base: ThemeProps = {
             },
           },
         },
+        variants: {},
       },
       Scrollable: {
         name: 'rbk-scrollable',

@@ -1,18 +1,18 @@
 import React, { forwardRef, useRef } from 'react';
 
-import rect from '../../element/rect';
-import setNativeStyle from '../../element/setNativeStyle';
-import useDefaultRef from '../../hooks/useDefaultRef';
-import useResponder from '../../hooks/useResponder';
-import useTheme from '../../hooks/useTheme';
-import Resize from '../../icons/Resize';
-import factory2 from '../../props/factory2';
-import { ResizableProps } from '../../types';
-import global from '../../utils/global';
-import BoxFactory from '../BoxFactory';
+import rect from '../element/rect';
+import setNativeStyle from '../element/setNativeStyle';
+import useDefaultRef from '../hooks/useDefaultRef';
+import useResponder from '../hooks/useResponder';
+import useTheme from '../hooks/useTheme';
+import Resize from '../icons/Resize';
+import factory2 from '../props/factory2';
+import { ResizableProps } from '../types';
+import global from '../utils/global';
+import BoxFactory from './BoxFactory';
 
 const ResizableFactory = React.memo<ResizableProps>(
-  forwardRef(({ stylist, children, ...props }, ref) => {
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Resizable;
     const { web, svg } = global.mapping;
@@ -25,7 +25,7 @@ const ResizableFactory = React.memo<ResizableProps>(
       variants,
       style,
       ...rest
-    } = factory2(props, options);
+    } = factory2<ResizableProps>(props, options);
 
     const both = (horizontal && vertical) || (typeof horizontal === 'undefined' && typeof vertical === 'undefined');
     horizontal = horizontal ?? both;
@@ -46,7 +46,7 @@ const ResizableFactory = React.memo<ResizableProps>(
     ];
 
     return (
-      <BoxFactory ref={rootRef} style={style} stylist={[variants.root, stylist]} {...rest}>
+      <BoxFactory ref={rootRef} style={style} variants={{ root: variants.root }} {...rest}>
         {children}
 
         <BoxFactory
