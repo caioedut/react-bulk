@@ -96,4 +96,4 @@ To the inner wrapper.
 
 ### **`onScroll`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **`Function(RbkEvent)`** <br/>

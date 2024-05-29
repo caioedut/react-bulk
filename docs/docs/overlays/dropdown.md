@@ -87,7 +87,7 @@ To the main element.
 
 ### **`onClose`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkPointerEvent)`](/docs/type-reference/rbk-pointer-event)** <br/>
 
 ## Theming
 

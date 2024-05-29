@@ -538,18 +538,18 @@ Sets `width`, `minWidth` and `maxWidth` styles.
 
 ### **`onPress`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkPointerEvent)`](/docs/type-reference/rbk-pointer-event)** <br/>
 
 ---
 
 ### **`onPressIn`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkPointerEvent)`](/docs/type-reference/rbk-pointer-event)** <br/>
 
 ---
 
 ### **`onPressOut`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkPointerEvent)`](/docs/type-reference/rbk-pointer-event)** <br/>
 
 ---

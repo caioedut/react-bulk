@@ -241,30 +241,30 @@ To the label of the button.
 
 ### **`onBlur`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkEvent)`](/docs/type-reference/rbk-event)** <br/>
 
 ---
 
 ### **`onFocus`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkEvent)`](/docs/type-reference/rbk-event)** <br/>
 
 ---
 
 ### **`onPress`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkPointerEvent)`](/docs/type-reference/rbk-pointer-event)** <br/>
 
 ---
 
 ### **`onPressIn`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkPointerEvent)`](/docs/type-reference/rbk-pointer-event)** <br/>
 
 ---
 
 ### **`onPressOut`**
 
-➤ Type: **`Function(Event)`** <br/>
+➤ Type: **[`Function(RbkPointerEvent)`](/docs/type-reference/rbk-pointer-event)** <br/>
 
 ---
