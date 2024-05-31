@@ -84,17 +84,22 @@ import Svg, {
 
 import useDimensions from './useDimensions';
 
+const locales = [
+  typeof navigator !== 'undefined' && (navigator.languages?.[0] ?? navigator.language),
+  typeof NativeModules !== 'undefined' && NativeModules.SettingsManager?.settings?.AppleLocale,
+  typeof NativeModules !== 'undefined' && NativeModules.SettingsManager?.settings?.AppleLanguages?.[0],
+  typeof NativeModules !== 'undefined' && NativeModules.I18nManager?.localeIdentifier,
+].filter(Boolean);
+
+const isWeb = Platform.OS === 'web' || typeof document !== 'undefined';
+
 global.mapping = {
-  web: false,
-  native: true,
+  web: isWeb,
+  native: Platform.OS !== 'web',
   ios: Platform.OS === 'ios',
   android: Platform.OS === 'android',
 
-  locale:
-    (Platform.OS === 'ios'
-      ? NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0]
-      : NativeModules.I18nManager.localeIdentifier
-    )?.replace(/_/, '-') || null,
+  locale: locales?.[0]?.replace(/_/, '-') || null,
 
   useDimensions,
 
