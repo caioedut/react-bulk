@@ -34,6 +34,16 @@ import { List } from '@react-bulk/web'; // OR @react-bulk/native
 </List>
 ```
 
+### Horizontal
+
+```jsx live
+<List direction="horizontal" width={400} rowWidth={24}>
+    {Array.from({ length: 100 }).map((_, index) => (
+        <Box key={index} border="green" width={24} height={24} />
+    ))}
+</List>
+```
+
 ### Composition
 
 ```jsx live

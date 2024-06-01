@@ -1425,6 +1425,7 @@ export type ListProps<ALLOW_ANY = true> = PropsWithStyles<
     renderDelay?: number;
     renderOffset?: number;
     rowHeight?: number;
+    rowWidth?: number;
     rowFallbackComponent?: JSXElementConstructor<any> | string;
     // Styles
     variants?: {
