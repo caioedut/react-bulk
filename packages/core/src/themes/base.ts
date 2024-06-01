@@ -909,6 +909,7 @@ const base: ThemeProps = {
       List: {
         name: 'rbk-list',
         defaultProps: {
+          direction: 'vertical',
           renderOffset: 200,
         },
         defaultStyles: {
