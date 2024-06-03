@@ -203,7 +203,7 @@ const CarouselFactory = React.memo<CarouselProps>(
           hideScrollBar
           direction="horizontal"
           onScroll={handleScroll}
-          snapToInterval={native && typeof snapToInterval === 'number' ? snapToInterval : undefined}
+          {...(native && typeof snapToInterval === 'number' ? { snapToInterval } : {})}
         >
           {contentWidth !== null &&
             childrenize(children).map((child, index) => (
