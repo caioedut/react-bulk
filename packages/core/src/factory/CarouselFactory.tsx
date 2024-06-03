@@ -4,6 +4,7 @@ import rect from '../element/rect';
 import scrollTo from '../element/scrollTo';
 import scrollToEnd from '../element/scrollToEnd';
 import scrollToStart from '../element/scrollToStart';
+import useBreakpoints from '../hooks/useBreakpoints';
 import useTheme from '../hooks/useTheme';
 import ChevronLeft from '../icons/ChevronLeft';
 import ChevronRight from '../icons/ChevronRight';
@@ -23,6 +24,7 @@ const CarouselFactory = React.memo<CarouselProps>(
     const { web, native, svg, useDimensions } = global.mapping;
 
     const dimensions = useDimensions();
+    const breakpoints = useBreakpoints();
 
     // Extends from default props
     let {
@@ -59,14 +61,59 @@ const CarouselFactory = React.memo<CarouselProps>(
     const showChevron = chevron && chevron !== 'hidden';
     gap = gap === true ? 1 : gap ?? 0;
 
+    const base = contentWidth ?? 100;
+
+    const xsValue = typeof xs === 'number' || xs === 'auto' ? xs : 'auto';
+    const smValue = typeof sm === 'number' || sm === 'auto' ? sm : xsValue;
+    const mdValue = typeof md === 'number' || md === 'auto' ? md : smValue;
+    const lgValue = typeof lg === 'number' || lg === 'auto' ? lg : mdValue;
+    const xlValue = typeof xl === 'number' || xl === 'auto' ? xl : lgValue;
+
+    const xsWidth = typeof xsValue === 'number' ? base / Number(xsValue) : 'auto';
+    const smWidth = typeof smValue === 'number' ? base / Number(smValue) : 'auto';
+    const mdWidth = typeof mdValue === 'number' ? base / Number(mdValue) : 'auto';
+    const lgWidth = typeof lgValue === 'number' ? base / Number(lgValue) : 'auto';
+    const xlWidth = typeof xlValue === 'number' ? base / Number(xlValue) : 'auto';
+
+    itemStyle = [
+      itemStyle,
+      {
+        xs: {
+          width: xsWidth,
+          ...(xs && typeof xs === 'object' ? xs : {}),
+        },
+        sm: {
+          width: smWidth,
+          ...(sm && typeof sm === 'object' ? sm : {}),
+        },
+        md: {
+          width: mdWidth,
+          ...(md && typeof md === 'object' ? md : {}),
+        },
+        lg: {
+          width: lgWidth,
+          ...(lg && typeof lg === 'object' ? lg : {}),
+        },
+        xl: {
+          width: xlWidth,
+          ...(xl && typeof xl === 'object' ? xl : {}),
+        },
+      },
+    ];
+
+    const snapToInterval = breakpoints.xl
+      ? xlWidth
+      : breakpoints.lg
+        ? lgWidth
+        : breakpoints.md
+          ? mdWidth
+          : breakpoints.sm
+            ? smWidth
+            : xsWidth;
+
     const scrollByCount = useCallback(
       async (count) => {
-        let size = contentWidth ?? 0;
-
-        if (web) {
-          size = (await rect(itemRef.current)).width;
-        }
-
+        const size = (await rect(itemRef.current)).width;
         scrollTo(contentRef.current, count * size + offsetRef.current);
       },
       [contentWidth, web],
@@ -142,40 +189,6 @@ const CarouselFactory = React.memo<CarouselProps>(
       });
     }
 
-    const base = contentWidth ?? 100;
-
-    const xsValue = typeof xs === 'number' || xs === 'auto' ? xs : 'auto';
-    const smValue = typeof sm === 'number' || sm === 'auto' ? sm : xsValue;
-    const mdValue = typeof md === 'number' || md === 'auto' ? md : smValue;
-    const lgValue = typeof lg === 'number' || lg === 'auto' ? lg : mdValue;
-    const xlValue = typeof xl === 'number' || xl === 'auto' ? xl : lgValue;
-
-    itemStyle = [
-      itemStyle,
-      {
-        xs: {
-          width: typeof xsValue === 'number' ? base / Number(xsValue) : 'auto',
-          ...(xs && typeof xs === 'object' ? xs : {}),
-        },
-        sm: {
-          width: typeof smValue === 'number' ? base / Number(smValue) : 'auto',
-          ...(sm && typeof sm === 'object' ? sm : {}),
-        },
-        md: {
-          width: typeof mdValue === 'number' ? base / Number(mdValue) : 'auto',
-          ...(md && typeof md === 'object' ? md : {}),
-        },
-        lg: {
-          width: typeof lgValue === 'number' ? base / Number(lgValue) : 'auto',
-          ...(lg && typeof lg === 'object' ? lg : {}),
-        },
-        xl: {
-          width: typeof xlValue === 'number' ? base / Number(xlValue) : 'auto',
-          ...(xl && typeof xl === 'object' ? xl : {}),
-        },
-      },
-    ];
-
     const chevronProps = {
       color: theme.color(color),
       size: theme.rem(),
@@ -190,6 +203,7 @@ const CarouselFactory = React.memo<CarouselProps>(
           hideScrollBar
           direction="horizontal"
           onScroll={handleScroll}
+          snapToInterval={native && typeof snapToInterval === 'number' ? snapToInterval : undefined}
         >
           {contentWidth !== null &&
             childrenize(children).map((child, index) => (
