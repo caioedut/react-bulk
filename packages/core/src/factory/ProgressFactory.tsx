@@ -64,6 +64,7 @@ const ProgressFactory = React.memo<ProgressProps>(
       {
         bg: color,
         height,
+        width: 0,
       },
 
       barStyle,
