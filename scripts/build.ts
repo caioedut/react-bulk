@@ -2,9 +2,7 @@ import { cpSync, readdirSync } from 'fs';
 import { globSync } from 'glob';
 import pmex from 'pmex';
 
-pmex('clean');
-
-pmex('lerna exec --parallel -- parcel build --no-cache --no-optimize --no-scope-hoist');
+pmex('lerna exec --parallel -- pkgroll --clean-dist');
 
 const packages = readdirSync('packages', { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
