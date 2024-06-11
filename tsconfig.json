@@ -1,12 +1,9 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "moduleResolution": "node",
-    "target": "ES2015",
-    "lib": [
-      "DOM",
-      "ESNext"
-    ],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "target": "ESNext",
+    "lib": ["DOM"],
     "types": ["node"],
     "jsx": "react-jsx",
     "baseUrl": "./",
