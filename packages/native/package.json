@@ -19,7 +19,8 @@
     "ios",
     "cross-platform",
     "ui",
-    "ux"
+    "ux",
+    "expo"
   ],
   "type": "commonjs",
   "source": "./src/index.ts",
@@ -29,6 +30,9 @@
   "files": [
     "dist"
   ],
+  "scripts": {
+    "build": "parcel build --no-cache --no-optimize --no-scope-hoist"
+  },
   "dependencies": {
     "@react-bulk/core": "^1.1.5"
   },

@@ -3,5 +3,10 @@
   "npmClient": "yarn",
   "version": "1.1.5",
   "useNx": false,
-  "packages": ["packages/*"]
+  "packages": [
+    "packages/core",
+    "packages/web",
+    "packages/native",
+    "packages/expo"
+  ]
 }
