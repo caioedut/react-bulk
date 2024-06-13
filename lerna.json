@@ -6,7 +6,6 @@
   "packages": [
     "packages/core",
     "packages/web",
-    "packages/native",
-    "packages/expo"
+    "packages/native"
   ]
 }
