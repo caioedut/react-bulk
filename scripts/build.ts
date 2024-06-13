@@ -4,7 +4,7 @@ import pmex from 'pmex';
 
 pmex('clean');
 
-pmex('lerna exec -- pmex build');
+pmex('lerna exec --parallel -- pmex build');
 
 const packages = readdirSync('packages', { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
