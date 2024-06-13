@@ -1,11 +1,7 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
   "npmClient": "yarn",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "useNx": false,
-  "packages": [
-    "packages/core",
-    "packages/web",
-    "packages/native"
-  ]
+  "packages": ["packages/core", "packages/web", "packages/native"]
 }
