@@ -1329,8 +1329,9 @@ export type OutlineProps<ALLOW_ANY = true> = PropsWithStyles<
 
 export type TabsProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
-  ScrollableProps<false>,
+  BoxProps<false>,
   {
+    alignment?: 'start' | 'center' | 'end';
     color?: RbkColor;
     size?: RbkSize;
     tabs: TabItem[];

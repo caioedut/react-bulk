@@ -1174,6 +1174,7 @@ const base: ThemeProps = {
         name: 'rbk-tabs',
         defaultProps: {
           accessibility: { role: 'tablist' },
+          alignment: 'start',
           variant: 'group',
         },
         defaultStyles: {
@@ -1184,7 +1185,7 @@ const base: ThemeProps = {
             flexDirection: 'row',
             flexWrap: 'nowrap',
             alignItems: 'stretch',
-            justifyContent: 'start',
+            minw: '100%',
             p: 1,
           },
           button: {
@@ -1193,6 +1194,17 @@ const base: ThemeProps = {
           active: {},
         },
         variants: {
+          alignment: {
+            start: {
+              content: { justifyContent: 'start' },
+            },
+            center: {
+              content: { justifyContent: 'center' },
+            },
+            end: {
+              content: { justifyContent: 'end' },
+            },
+          },
           variant: {
             group: {
               button: {
