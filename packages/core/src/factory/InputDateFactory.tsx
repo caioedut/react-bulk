@@ -19,6 +19,7 @@ import DividerFactory from './DividerFactory';
 import DropdownFactory from './DropdownFactory';
 import GridFactory from './GridFactory';
 import InputBaseFactory from './InputBaseFactory';
+import TextFactory from './TextFactory';
 
 const InputDateFactory = React.memo<InputDateProps>(
   forwardRef(({ ...props }, ref) => {
@@ -34,6 +35,7 @@ const InputDateFactory = React.memo<InputDateProps>(
       disabled,
       error,
       format,
+      label,
       locale: localeProp,
       max,
       min,
@@ -54,6 +56,8 @@ const InputDateFactory = React.memo<InputDateProps>(
       style,
       ...rest
     } = factory2<RequiredSome<InputDateProps, 'color'>>(props, options);
+
+    variant = variant || 'modal';
 
     const inputRef = useRef<any>();
     const triggerRef = useRef();
@@ -168,6 +172,10 @@ const InputDateFactory = React.memo<InputDateProps>(
 
     function handleFocus(event) {
       dispatchEvent('focus', event, onFocus);
+
+      if (!disabled && !readOnly) {
+        setCalendarVisible(true);
+      }
     }
 
     function handleBlur(event) {
@@ -199,6 +207,7 @@ const InputDateFactory = React.memo<InputDateProps>(
           disabled={disabled}
           size={size}
           error={input.error}
+          label={label}
           {...input.props}
           endAddon={
             <ButtonFactory
@@ -237,6 +246,11 @@ const InputDateFactory = React.memo<InputDateProps>(
                 })}
         >
           <CardFactory minw={320} maxw={360} shadow={1} p={0}>
+            {variant === 'modal' && Boolean(label) && (
+              <TextFactory bold p="1gap" pb={0}>
+                {label}
+              </TextFactory>
+            )}
             <BoxFactory h={380}>
               <CalendarFactory
                 shadow={0}
