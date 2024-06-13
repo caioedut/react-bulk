@@ -66,6 +66,7 @@ const TooltipFactory = React.memo<TooltipProps>(
       {
         backgroundColor: color,
         color: theme.contrast(color),
+        shadow: 1,
       },
 
       labelStyle,
@@ -111,6 +112,9 @@ const TooltipFactory = React.memo<TooltipProps>(
           native: {
             onPressIn: handleTooltipShow,
             onPressOut: handleTooltipHide,
+
+            // TODO: tooltip on nested pressable child
+            // onStartShouldSetResponderCapture
           },
         }}
       >
@@ -178,7 +182,7 @@ const TooltipFactory = React.memo<TooltipProps>(
                   </BoxFactory>
                 )}
 
-                <TextFactory numberOfLines={1} style={labelStyle} variants={{ root: variants.label }}>
+                <TextFactory style={labelStyle} variants={{ root: variants.label }}>
                   {title}
                 </TextFactory>
 
