@@ -396,7 +396,7 @@ const SelectFactory = React.memo<SelectProps>(
                         state: { selected: isSelected },
                       }}
                     >
-                      <TextFactory>{option.label}</TextFactory>
+                      {typeof option.label === 'string' ? <TextFactory>{option.label}</TextFactory> : option.label}
                     </ButtonFactory>
                   );
                 })}
