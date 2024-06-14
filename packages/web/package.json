@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/web",
   "description": "React Bulk for React Web",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "license": "MIT",
   "homepage": "https://rbk.caioedut.com",
   "repository": "https://github.com/caioedut/react-bulk",
@@ -34,7 +34,7 @@
     "build": "parcel build --no-cache --no-optimize --no-scope-hoist"
   },
   "dependencies": {
-    "@react-bulk/core": "^1.1.7"
+    "@react-bulk/core": "^1.2.0"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
