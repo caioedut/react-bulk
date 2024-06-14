@@ -335,6 +335,25 @@ export type RbkPointerEvent<EventType = any, TargetType = any> = Overwrite<
   }
 >;
 
+export type RbkScrollEvent<EventType = any, TargetType = any> = Overwrite<
+  RbkEvent<EventType, TargetType>,
+  {
+    handler: 'RbkScrollEvent';
+    width: number;
+    height: number;
+    contentWidth: number;
+    contentHeight: number;
+    offsetX: number;
+    offsetY: number;
+    contentInset?: {
+      top: RbkUnit;
+      bottom: RbkUnit;
+      left: RbkUnit;
+      right: RbkUnit;
+    };
+  }
+>;
+
 export type RbkInputEvent = Overwrite<
   RbkEvent,
   {
@@ -1029,7 +1048,7 @@ export type ScrollableProps<ALLOW_ANY = true> = PropsWithStyles<
     pagingEnabled?: boolean;
 
     // Events
-    onScroll?: (event: RbkEvent) => void;
+    onScroll?: (event: RbkScrollEvent) => void;
 
     // Styles
     contentStyle?: RbkStyle;

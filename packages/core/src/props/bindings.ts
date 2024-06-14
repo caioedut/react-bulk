@@ -2,14 +2,16 @@ import Platform from '../Platform';
 import base from '../events/base';
 import keyboard from '../events/keyboard';
 import pointer from '../events/pointer';
+import scroll from '../events/scroll';
 
 export default function ({ ...props }: any) {
   const { web, native } = Platform;
 
   const mapping = {
-    common: [['onFocus'], ['onBlur'], ['onChange'], ['onScroll']],
+    common: [['onFocus'], ['onBlur'], ['onChange']],
     keyboard: [['onKeyPress'], ['onKeyDown'], ['onKeyUp']],
     pointer: [['onClick', 'onPress'], ['onMouseDown', 'onPressIn'], ['onMouseUp', 'onPressOut'], ['onLongPress']],
+    scroll: [['onScroll']],
   } as const;
 
   for (const handler in mapping) {
@@ -30,7 +32,9 @@ export default function ({ ...props }: any) {
             ? callback(pointer(event))
             : handler === 'keyboard'
               ? callback(keyboard(event))
-              : callback(base(event));
+              : handler === 'scroll'
+                ? callback(scroll(event))
+                : callback(base(event));
 
         if (web) {
           props[webEventName] = callbackHandled;
@@ -43,6 +47,7 @@ export default function ({ ...props }: any) {
     }
   }
 
+  // Disables interaction with Keyboard and Pointer events
   if (props.disabled) {
     [...mapping.keyboard, ...mapping.pointer].flat().forEach((eventName) => {
       delete props[eventName];
