@@ -62,6 +62,7 @@ const SelectFactory = React.memo<SelectProps>(
       onFormChange,
       // Styles
       variants,
+      contentStyle,
       buttonStyle,
       errorStyle,
       labelStyle,
@@ -282,6 +283,8 @@ const SelectFactory = React.memo<SelectProps>(
 
     labelStyle = [input.error && { color: 'error' }, labelStyle];
 
+    contentStyle = [{ flex: 1 }, contentStyle];
+
     return (
       <BoxFactory
         data-rbk-input={name}
@@ -321,7 +324,7 @@ const SelectFactory = React.memo<SelectProps>(
           disabled={disabled}
           variant="outline"
           style={buttonStyle}
-          contentStyle={{ flex: 1, maxWidth: '100%' }}
+          contentStyle={contentStyle}
           onPress={handleOpen}
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -372,7 +375,7 @@ const SelectFactory = React.memo<SelectProps>(
                       color={color}
                       bg={isSelected ? theme.color(color, 0.1) : undefined}
                       style={{ paddingHorizontal: spacing }}
-                      contentStyle={{ flex: 1, maxWidth: '100%' }}
+                      contentStyle={contentStyle}
                       onPress={(e) => handleSelect(e, option.value)}
                       endAddon={
                         <BoxFactory w={fontSize} pl={1}>
@@ -393,7 +396,7 @@ const SelectFactory = React.memo<SelectProps>(
                         state: { selected: isSelected },
                       }}
                     >
-                      <TextFactory>{option.label}</TextFactory>
+                      {typeof option.label === 'string' ? <TextFactory>{option.label}</TextFactory> : option.label}
                     </ButtonFactory>
                   );
                 })}

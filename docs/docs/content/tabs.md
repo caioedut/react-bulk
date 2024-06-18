@@ -91,6 +91,13 @@ function App() {
 
 Extends all [`Scrollable`](/docs/core/scrollable#props) props.
 
+### **`alignment`**
+
+➤ Type: **`'start'` `'center'` `'end'`** <br/>
+➤ Default: **`start`**
+
+---
+
 ### **`color`**
 
 ➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>

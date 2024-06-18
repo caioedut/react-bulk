@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 
 import useTheme from '../hooks/useTheme';
 import extract from '../props/extract';
@@ -17,7 +17,7 @@ const ScrollableFactory = React.memo<ScrollableProps>(
 
     // Extends from default props
     let {
-      contentInset,
+      contentInset: contentInsetProp,
       direction,
       hideScrollBar,
       pagingEnabled,
@@ -35,17 +35,29 @@ const ScrollableFactory = React.memo<ScrollableProps>(
     const isHorizontal = direction === 'horizontal';
     const primaryColor = theme.color('primary');
 
+    const contentInset = useMemo(
+      () => ({
+        // @ts-expect-error
+        top: contentInsetProp?.top ?? contentInsetProp?.vertical ?? contentInsetProp ?? 0,
+        // @ts-expect-error
+        bottom: contentInsetProp?.bottom ?? contentInsetProp?.vertical ?? contentInsetProp ?? 0,
+        // @ts-expect-error
+        left: contentInsetProp?.left ?? contentInsetProp?.horizontal ?? contentInsetProp ?? 0,
+        // @ts-expect-error
+        right: contentInsetProp?.right ?? contentInsetProp?.horizontal ?? contentInsetProp ?? 0,
+      }),
+      [contentInsetProp],
+    );
+
     contentStyle = [
       extract([...flexContainerProps], style),
 
-      Boolean(contentInset) && !Array.isArray(contentInset) && typeof contentInset === 'object'
-        ? {
-            pt: contentInset?.top ?? contentInset?.vertical,
-            pb: contentInset?.bottom ?? contentInset?.vertical,
-            pl: contentInset?.left ?? contentInset?.horizontal,
-            pr: contentInset?.right ?? contentInset?.horizontal,
-          }
-        : { p: contentInset },
+      {
+        pt: contentInset?.top,
+        pb: contentInset?.bottom,
+        pl: contentInset?.left,
+        pr: contentInset?.right,
+      },
 
       pagingEnabled && {
         web: {
