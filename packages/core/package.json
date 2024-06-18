@@ -1,6 +1,6 @@
 {
   "name": "@react-bulk/core",
-  "description": "React Bulk Core",
+  "description": "React Bulk Core for Web and Native",
   "version": "1.2.0",
   "license": "MIT",
   "homepage": "https://rbk.caioedut.com",
@@ -30,9 +30,6 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "parcel build --no-cache --no-optimize --no-scope-hoist"
-  },
   "alias": {
     "process": false
   },
