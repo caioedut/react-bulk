@@ -16,6 +16,7 @@ const TabsFactory = React.memo<TabsProps>(
 
     // Extends from default props
     const {
+      alignment,
       color,
       size,
       tabs,
@@ -52,20 +53,20 @@ const TabsFactory = React.memo<TabsProps>(
       );
     });
 
-    if (variant === 'nav') {
-      return (
-        <BoxFactory component={ButtonGroupFactory} style={contentStyle} variants={{ root: variants.root }}>
-          {Tabs}
-        </BoxFactory>
-      );
-    }
-
     return (
-      <ScrollableFactory ref={ref} {...rest} direction="horizontal" variants={{ root: variants.root }}>
-        <BoxFactory style={contentStyle} variants={{ root: variants.content }}>
-          {Tabs}
-        </BoxFactory>
-      </ScrollableFactory>
+      <BoxFactory ref={ref} {...rest} variants={{ root: variants.root }}>
+        {variant === 'nav' ? (
+          <ButtonGroupFactory contentStyle={contentStyle} variants={{ content: variants.content }}>
+            {Tabs}
+          </ButtonGroupFactory>
+        ) : (
+          <ScrollableFactory direction="horizontal">
+            <BoxFactory style={contentStyle} variants={{ root: variants.content }}>
+              {Tabs}
+            </BoxFactory>
+          </ScrollableFactory>
+        )}
+      </BoxFactory>
     );
   }),
 );
