@@ -1,10 +1,10 @@
 import { useCallback, useContext } from 'react';
 
-import { Context } from '../ReactBulk';
+import RbkContext from '../RbkContext';
 import { RbkColor, ToasterProps } from '../types';
 
 export default function useToaster() {
-  const { toasterRef } = useContext(Context);
+  const { toasterRef } = useContext(RbkContext);
 
   const _open = useCallback(
     (options: string | ToasterProps, color?: RbkColor) => {

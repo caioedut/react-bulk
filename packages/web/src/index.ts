@@ -109,6 +109,8 @@ global.mapping = {
   },
 } as RbkMap;
 
+export { ReactBulk, useDimensions, useTheme };
+
 export const Avatar = AvatarFactory;
 export const Backdrop = BackdropFactory;
 export const Badge = BadgeFactory;
@@ -147,7 +149,3 @@ export const Tabs = TabsFactory;
 export const Terminal = TerminalFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
-
-export { useDimensions, useTheme };
-
-export default ReactBulk;

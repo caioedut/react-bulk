@@ -40,9 +40,6 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "parcel build --no-cache --no-optimize --no-scope-hoist"
-  },
   "dependencies": {
     "@react-bulk/core": "^1.2.0"
   },
