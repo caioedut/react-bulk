@@ -1,9 +1,9 @@
 import { useCallback, useContext } from 'react';
 
-import { Context } from '../ReactBulk';
+import RbkContext from '../RbkContext';
 
 export default function useResponder() {
-  const { setResponder } = useContext(Context);
+  const { setResponder } = useContext(RbkContext);
 
   const releaseResponder = useCallback(() => {
     setResponder(undefined);

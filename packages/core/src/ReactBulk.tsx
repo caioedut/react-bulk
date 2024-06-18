@@ -1,13 +1,14 @@
-import { MutableRefObject, createContext, createRef, useCallback, useMemo, useState } from 'react';
+import { createRef, useCallback, useMemo, useState } from 'react';
 
 import BaseNative from './BaseNative';
 import BaseWeb from './BaseWeb';
 import Platform from './Platform';
 import Portal from './Portal';
-import Toaster, { ToasterRef } from './Toaster';
+import RbkContext from './RbkContext';
+import Toaster from './Toaster';
 import createTheme from './createTheme';
 import BoxFactory from './factory/BoxFactory';
-import { RbkTheme, ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
+import { ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
 import global from './utils/global';
 
 export type Responder = {
@@ -20,12 +21,6 @@ export type Responder = {
 };
 
 const toasterRef = createRef<any>();
-
-export const Context = createContext<{
-  theme: RbkTheme;
-  setResponder: (value: Responder | undefined) => void;
-  toasterRef: MutableRefObject<ToasterRef>;
-}>(null as any);
 
 function ReactBulk({ theme, children }: any) {
   const { web, native } = Platform;
@@ -51,7 +46,7 @@ function ReactBulk({ theme, children }: any) {
   }
 
   return (
-    <Context.Provider
+    <RbkContext.Provider
       value={{
         theme: { ...themeState, setTheme },
         setResponder,
@@ -69,7 +64,7 @@ function ReactBulk({ theme, children }: any) {
       <Toaster ref={toasterRef} theme={themeState} />
 
       <Portal />
-    </Context.Provider>
+    </RbkContext.Provider>
   );
 }
 

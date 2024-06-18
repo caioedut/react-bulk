@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 
-import { Context } from '../ReactBulk';
+import RbkContext from '../RbkContext';
 import createTheme from '../createTheme';
 import { RbkTheme } from '../types';
 import global from '../utils/global';
 
 export default function useTheme(): RbkTheme {
-  const theme = useContext(Context)?.theme;
+  const theme = useContext(RbkContext)?.theme;
 
   if (!theme && !Object.keys(global.theme).length) {
     createTheme();

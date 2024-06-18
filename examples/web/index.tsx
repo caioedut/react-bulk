@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ThemeEditProps } from '@react-bulk/core';
-import ReactBulk from '@react-bulk/web';
+import { ReactBulk } from '@react-bulk/web';
 import ReactDOM from 'react-dom/client';
 
 import Main from './src/main';
