@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ReactBulk from '@react-bulk/web';
+import { ReactBulk } from '@react-bulk/web';
 
 export default function Root({ children }) {
   let theme = 'light';

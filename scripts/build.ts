@@ -4,7 +4,7 @@ import pmex from 'pmex';
 
 pmex('clean');
 
-pmex('lerna exec --parallel -- pmex build');
+pmex('lerna exec --parallel -- tsup src/index.ts --dts --sourcemap --format esm');
 
 const packages = readdirSync('packages', { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())

@@ -6,15 +6,15 @@
   "dependencies": {
     "@react-bulk/core": "file:./../../packages/core",
     "@react-bulk/web": "file:./../../packages/web",
-    "expo": "~51.0.4",
+    "expo": "~51.0.14",
     "expo-status-bar": "~1.12.1",
-    "expo-updates": "~0.25.11",
+    "expo-updates": "~0.25.17",
     "react": "18.2.0",
-    "react-native": "0.74.1",
+    "react-native": "0.74.2",
     "react-native-svg": "15.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.24.7",
     "@types/react": "~18.2.79",
     "typescript": "~5.3.3"
   }

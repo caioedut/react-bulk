@@ -22,22 +22,14 @@
     "ux",
     "expo"
   ],
-  "type": "commonjs",
-  "source": "./src/index.ts",
+  "type": "module",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/types.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "parcel build --no-cache --no-optimize --no-scope-hoist"
-  },
-  "alias": {
-    "process": false
-  },
   "dependencies": {
-    "cometta": "^0.2.5"
+    "cometta": "^0.2.8"
   },
   "peerDependencies": {
     "react": ">=17.0.0"

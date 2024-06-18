@@ -1,9 +1,9 @@
-import { AnyObject } from '../types';
+if (!globalThis.__RBK) {
+  globalThis.__RBK = {
+    theme: {},
+    mapping: {},
+    styles: {},
+  };
+}
 
-const global: AnyObject = {
-  theme: {},
-  mapping: {},
-  styles: {},
-};
-
-export default global;
+export default globalThis.__RBK;
