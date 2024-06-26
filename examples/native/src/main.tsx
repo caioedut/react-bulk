@@ -1212,10 +1212,10 @@ function TerminalExample() {
 }
 
 function AnimationExample() {
-  const from = { width: 40, height: 40 };
-  const to = { width: 200, height: 200 };
+  const small = { width: 40, height: 40 };
+  const big = { width: 200, height: 200 };
 
-  const transition = useAnimation(from);
+  const transition = useAnimation(small);
 
   return (
     <>
@@ -1229,25 +1229,25 @@ function AnimationExample() {
 
       <Grid gap>
         <Box>
-          <Button onPress={() => transition.start({ to, from })}>Forward</Button>
+          <Button onPress={() => transition.start({ to: big })}>Forward</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start({ to: from, from: to })}>Backward</Button>
+          <Button onPress={() => transition.start({ to: small })}>Backward</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start({ to, from, iterations: 3 })}>Repeat 3x</Button>
+          <Button onPress={() => transition.start({ to: big, iterations: 3 })}>Repeat 3x</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start({ to, from, boomerang: true })}>Boomerang</Button>
+          <Button onPress={() => transition.start({ to: big, boomerang: true })}>Boomerang</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start({ to, from, iterations: -1 })}>Infinite</Button>
+          <Button onPress={() => transition.start({ to: big, iterations: -1 })}>Infinite</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start({ to, from, boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
+          <Button onPress={() => transition.start({ to: big, boomerang: true, iterations: 3 })}>Boomerang 3x</Button>
         </Box>
         <Box>
-          <Button onPress={() => transition.start({ to, from, boomerang: true, iterations: -1 })}>
+          <Button onPress={() => transition.start({ to: big, boomerang: true, iterations: -1 })}>
             Boomerang Infinite
           </Button>
         </Box>
