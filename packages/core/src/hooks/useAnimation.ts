@@ -142,7 +142,7 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
           from = styleRef.current,
           boomerang = false,
           delay = 0,
-          duration = 350,
+          duration = 250,
           iterations = 1,
           throttle = 0,
           timing = 'linear',

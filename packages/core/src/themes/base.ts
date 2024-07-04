@@ -705,9 +705,7 @@ const base: ThemeProps = {
       },
       GrowBox: {
         name: 'rbk-grow-box',
-        defaultProps: {
-          duration: 200,
-        },
+        defaultProps: {},
         defaultStyles: {
           root: {
             overflow: 'hidden',

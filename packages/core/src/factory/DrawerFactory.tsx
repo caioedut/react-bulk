@@ -40,7 +40,6 @@ const DrawerFactory = React.memo<DrawerProps>(
           style={style}
           variants={{ root: variants.root }}
           animation={{
-            duration: 200,
             from: visible ? hiddenStyle : visibleStyle,
             to: visible ? visibleStyle : hiddenStyle,
           }}
