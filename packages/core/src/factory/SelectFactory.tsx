@@ -107,9 +107,11 @@ const SelectFactory = React.memo<SelectProps>(
     color = theme.color(input.error ? 'error' : !focused && !colorful ? 'gray.light' : color || 'primary');
     accessibility = deepmerge({ label: label ?? placeholder }, accessibility, { state: { expanded: visible } });
 
-    const baseSize = theme.rem(size as number);
+    const baseSize = theme.rem(size);
     const fontSize = baseSize / 2;
     const spacing = (baseSize - theme.rem(0.75)) / 2;
+
+    const displayLabel = selected?.label ?? selected?.value ?? placeholder ?? '';
 
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
@@ -329,9 +331,13 @@ const SelectFactory = React.memo<SelectProps>(
           onFocus={handleFocus}
           onBlur={handleBlur}
         >
-          <TextFactory numberOfLines={1} w="100%">
-            {selected?.label ?? selected?.value ?? placeholder ?? ''}
-          </TextFactory>
+          {typeof displayLabel === 'string' ? (
+            <TextFactory numberOfLines={1} w="100%">
+              {displayLabel}
+            </TextFactory>
+          ) : (
+            displayLabel
+          )}
         </ButtonFactory>
 
         {Boolean(input.error) && typeof input.error === 'string' && (
@@ -357,7 +363,7 @@ const SelectFactory = React.memo<SelectProps>(
             {visible && (
               <ListFactory
                 ref={scrollRef}
-                rowHeight={baseSize}
+                rowHeight={baseSize + theme.spacing(2)}
                 renderDelay={10}
                 contentInset={1}
                 maxh={metrics?.maxHeight ?? 0}
@@ -368,6 +374,7 @@ const SelectFactory = React.memo<SelectProps>(
 
                   return (
                     <ButtonFactory
+                      my={1}
                       key={option.value}
                       size={size}
                       variant="text"
