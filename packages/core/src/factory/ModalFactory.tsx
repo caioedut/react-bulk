@@ -62,7 +62,6 @@ const ModalFactory = React.memo<ModalProps>(
           variants={{ root: variants.root }}
           {...rest}
           animation={{
-            duration: 200,
             timing: visible ? 'ease-out' : 'ease-in',
             from: visible ? animStyle.from : animStyle.to,
             to: visible ? animStyle.to : animStyle.from,

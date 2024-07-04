@@ -32,7 +32,7 @@ const SelectFactory = React.memo<SelectProps>(
   forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Select;
-    const { native, svg, useDimensions } = global.mapping;
+    const { web, native, svg, useDimensions } = global.mapping;
 
     const dimensions = useDimensions();
 
@@ -180,7 +180,11 @@ const SelectFactory = React.memo<SelectProps>(
         index = 0;
       }
 
-      optionsRef?.current?.[index]?.focus?.();
+      // TODO: wait for RN Pressable compatibility with focus
+      if (web) {
+        optionsRef?.current?.[index]?.focus?.();
+      }
+
       setActiveIndex(index);
     }
 
@@ -222,7 +226,11 @@ const SelectFactory = React.memo<SelectProps>(
       if (disabled || readOnly) return;
       input.setState(value, event);
       setVisible(false);
-      focus();
+
+      // TODO: wait for RN Pressable compatibility with focus
+      if (web) {
+        focus();
+      }
     }
 
     function handleSearch(event, value: string) {
@@ -363,7 +371,7 @@ const SelectFactory = React.memo<SelectProps>(
             {visible && (
               <ListFactory
                 ref={scrollRef}
-                rowHeight={baseSize + theme.spacing(2)}
+                rowHeight={baseSize + theme.spacing(1)}
                 renderDelay={10}
                 contentInset={1}
                 maxh={metrics?.maxHeight ?? 0}
@@ -374,7 +382,7 @@ const SelectFactory = React.memo<SelectProps>(
 
                   return (
                     <ButtonFactory
-                      my={1}
+                      my={0.5}
                       key={option.value}
                       size={size}
                       variant="text"
