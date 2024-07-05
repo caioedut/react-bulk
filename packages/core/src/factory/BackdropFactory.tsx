@@ -1,9 +1,6 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 
-import createPortal from '../createPortal';
-import setNativeStyle from '../element/setNativeStyle';
 import useDefaultRef from '../hooks/useDefaultRef';
-import useHtmlId from '../hooks/useHtmlId';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { BackdropProps } from '../types';
@@ -14,9 +11,7 @@ const BackdropFactory = React.memo<BackdropProps>(
   forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Backdrop;
-    const { web, native, BackHandler } = global.mapping;
-
-    const portalId = useHtmlId();
+    const { web, native, Dialog } = global.mapping;
 
     // Extends from default props
     const {
@@ -30,7 +25,6 @@ const BackdropFactory = React.memo<BackdropProps>(
     } = factory2<BackdropProps>(props, options);
 
     const rootRef = useDefaultRef<any>(ref);
-    const dialogRef = useRef<any>();
 
     useEffect(() => {
       if (!web) return;
@@ -50,76 +44,59 @@ const BackdropFactory = React.memo<BackdropProps>(
       };
     }, [rootRef, visible, web]);
 
-    useEffect(() => {
-      if (!native) return;
-      if (!visible) return;
-      if (typeof onPress !== 'function') return;
+    const Child = (
+      <BoxFactory ref={rootRef} variants={{ root: variants.root }} tabIndex="-1" {...rest}>
+        <BoxFactory
+          position="absolute"
+          i={0}
+          zIndex={0}
+          accessibility={{
+            label: 'close',
+          }}
+          style={{
+            cursor: 'auto',
+            web: { '& ~ *': { zIndex: 1 } },
+          }}
+          onPress={onPress}
+        />
+        {children}
+      </BoxFactory>
+    );
 
-      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-        // @ts-expect-error
-        onPress?.();
-        return true;
-      });
-
-      return () => {
-        backHandler.remove();
-      };
-    }, [native, visible, onPress]);
-
-    return createPortal(
-      portalId,
-
+    return native ? (
+      <Dialog
+        transparent
+        statusBarTranslucent
+        visible={Boolean(visible)}
+        animationType="fade"
+        presentationStyle="overFullScreen"
+      >
+        {Child}
+      </Dialog>
+    ) : (
       <BoxFactory
         noRootStyles
-        ref={dialogRef}
-        animation={{
-          to: { opacity: visible ? 1 : 0 },
-          onStart: () => {
-            if (visible) {
-              setNativeStyle(dialogRef.current, { zIndex: theme.mixins.zIndex.backdrop });
-            }
-          },
-          onEnd: () => {
-            if (!visible) {
-              setNativeStyle(dialogRef.current, { zIndex: -1 });
-            }
-          },
-        }}
+        component={Dialog}
         style={[
           {
+            position: 'fixed',
             inset: 0,
+            cursor: 'auto !important',
             opacity: 0,
+            visibility: 'hidden',
             zIndex: -1,
-            pointerEvents: visible ? 'auto' : 'none',
-
-            web: {
-              position: 'fixed',
-              cursor: 'auto !important',
-            },
-
-            native: {
-              position: 'absolute',
-            },
+            ...theme.mixins.transitions.fast,
+            transitionProperty: 'all',
+          },
+          visible && {
+            opacity: 1,
+            visibility: 'visible',
+            zIndex: theme.mixins.zIndex.backdrop,
           },
         ]}
       >
-        <BoxFactory ref={rootRef} variants={{ root: variants.root }} tabIndex={visible ? '1' : '-1'} {...rest}>
-          <BoxFactory
-            position="absolute"
-            i={0}
-            zIndex={0}
-            accessibility={{
-              label: 'close',
-            }}
-            style={{
-              cursor: 'auto',
-              web: { '& ~ *': { zIndex: 1 } },
-            }}
-            onPress={onPress}
-          />
-          {children}
-        </BoxFactory>
-      </BoxFactory>,
+        {Child}
+      </BoxFactory>
     );
   }),
 );
