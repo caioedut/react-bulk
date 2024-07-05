@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 
+import useDeferredValue from '../hooks/useDeferredValue';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { DrawerProps, RequiredSome } from '../types';
@@ -14,7 +15,7 @@ const DrawerFactory = React.memo<DrawerProps>(
     // Extends from default props
     const {
       placement,
-      visible,
+      visible: drawerVisible,
       onClose,
       // Styles
       variants,
@@ -22,6 +23,8 @@ const DrawerFactory = React.memo<DrawerProps>(
       backdropStyle,
       ...rest
     } = factory2<RequiredSome<DrawerProps, 'placement'>>(props, options);
+
+    const backdropVisible = useDeferredValue(drawerVisible, drawerVisible ? 0 : 250);
 
     const hiddenStyle = {
       [placement]: '-50%',
@@ -32,7 +35,12 @@ const DrawerFactory = React.memo<DrawerProps>(
     };
 
     return (
-      <BackdropFactory visible={visible} onPress={onClose} style={backdropStyle} variants={{ root: variants.backdrop }}>
+      <BackdropFactory
+        visible={backdropVisible}
+        onPress={onClose}
+        style={backdropStyle}
+        variants={{ root: variants.backdrop }}
+      >
         <BoxFactory
           ref={ref}
           key={placement}
@@ -40,8 +48,8 @@ const DrawerFactory = React.memo<DrawerProps>(
           style={style}
           variants={{ root: variants.root }}
           animation={{
-            from: visible ? hiddenStyle : visibleStyle,
-            to: visible ? visibleStyle : hiddenStyle,
+            from: drawerVisible ? hiddenStyle : visibleStyle,
+            to: drawerVisible ? visibleStyle : hiddenStyle,
           }}
         >
           {children}

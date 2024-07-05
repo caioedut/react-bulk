@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect } from 'react';
 
+import pointer from '../events/pointer';
 import useDefaultRef from '../hooks/useDefaultRef';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
@@ -70,6 +71,7 @@ const BackdropFactory = React.memo<BackdropProps>(
         visible={Boolean(visible)}
         animationType="fade"
         presentationStyle="overFullScreen"
+        onRequestClose={(e) => onPress?.(pointer(e))}
       >
         {Child}
       </Dialog>
