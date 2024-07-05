@@ -30,28 +30,28 @@ const ModalFactory = React.memo<ModalProps>(
         to: { opacity: 1 },
       },
       'zoom-in': {
-        from: { scale: 0.5 },
-        to: { scale: 1 },
+        from: { transform: { scale: 0.5 } },
+        to: { transform: { scale: 1 } },
       },
       'zoom-out': {
-        from: { scale: 1.5 },
-        to: { scale: 1 },
+        from: { transform: { scale: 1.5 } },
+        to: { transform: { scale: 1 } },
       },
       'slide-top': {
-        from: { translateY: 80 },
-        to: { translateY: 0 },
+        from: { transform: { translateY: 80 } },
+        to: { transform: { translateY: 0 } },
       },
       'slide-bottom': {
-        from: { translateY: -80 },
-        to: { translateY: 0 },
+        from: { transform: { translateY: -80 } },
+        to: { transform: { translateY: 0 } },
       },
       'slide-left': {
-        from: { translateX: 80 },
-        to: { translateX: 0 },
+        from: { transform: { translateX: 80 } },
+        to: { transform: { translateX: 0 } },
       },
       'slide-right': {
-        from: { translateX: -80 },
-        to: { translateX: 0 },
+        from: { transform: { translateX: -80 } },
+        to: { transform: { translateX: 0 } },
       },
     }[animation ?? 'fade'];
 
