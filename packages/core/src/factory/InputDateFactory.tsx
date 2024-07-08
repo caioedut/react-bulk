@@ -143,54 +143,69 @@ const InputDateFactory = React.memo<InputDateProps>(
       [inputRef],
     );
 
-    function dispatchEvent(type, event, handler?, value?) {
-      if (typeof handler !== 'function') return;
+    const dispatchEvent = useCallback(
+      (type, event, handler?, value?) => {
+        if (typeof handler !== 'function') return;
 
-      value = typeof value === 'undefined' ? input.state : value;
+        value = typeof value === 'undefined' ? input.state : value;
 
-      const form = input.form;
-      const target = inputRef.current;
+        const form = input.form;
+        const target = inputRef.current;
 
-      return handler?.(
-        {
-          ...event,
-          handler: 'RbkInputEvent',
-          type,
+        return handler?.(
+          {
+            ...event,
+            handler: 'RbkInputEvent',
+            type,
+            value,
+            name,
+            form,
+            focus,
+            blur,
+            clear,
+            reset,
+            isFocused,
+            target,
+          },
           value,
-          name,
-          form,
-          focus,
-          blur,
-          clear,
-          reset,
-          isFocused,
-          target,
-        },
-        value,
-      );
-    }
+        );
+      },
+      [blur, clear, focus, input.form, input.state, isFocused, name, reset],
+    );
 
-    function handleFocus(event) {
-      dispatchEvent('focus', event, onFocus);
+    const handleFocus = useCallback(
+      (event) => {
+        dispatchEvent('focus', event, onFocus);
 
-      if (!disabled && !readOnly) {
-        setCalendarVisible(true);
-      }
-    }
+        if (!disabled && !readOnly) {
+          setCalendarVisible(true);
+        }
+      },
+      [disabled, dispatchEvent, onFocus, readOnly],
+    );
 
-    function handleBlur(event) {
-      dispatchEvent('blur', event, onBlur);
-    }
+    const handleBlur = useCallback(
+      (event) => {
+        dispatchEvent('blur', event, onBlur);
+      },
+      [dispatchEvent, onBlur],
+    );
 
-    function handleSubmit(event) {
-      dispatchEvent('submit', event, onSubmit);
-    }
+    const handleSubmit = useCallback(
+      (event) => {
+        dispatchEvent('submit', event, onSubmit);
+      },
+      [dispatchEvent, onSubmit],
+    );
 
-    function handleChange(event, date) {
-      if (disabled || readOnly) return;
-      input.setState(resolveAsDate(date), event);
-      setCalendarVisible(false);
-    }
+    const handleChange = useCallback(
+      (event, date) => {
+        if (disabled || readOnly) return;
+        input.setState(resolveAsDate(date), event);
+        setCalendarVisible(false);
+      },
+      [disabled, input, readOnly, resolveAsDate],
+    );
 
     return (
       <>
