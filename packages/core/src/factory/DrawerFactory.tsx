@@ -24,7 +24,7 @@ const DrawerFactory = React.memo<DrawerProps>(
       ...rest
     } = factory2<RequiredSome<DrawerProps, 'placement'>>(props, options);
 
-    const backdropVisible = useDeferredValue(drawerVisible, drawerVisible ? 0 : 250);
+    const backdropVisible = useDeferredValue(drawerVisible, drawerVisible, drawerVisible ? 0 : 250);
 
     const hiddenStyle = {
       [placement]: '-50%',

@@ -6,11 +6,11 @@ import usePortals from './hooks/usePortals';
 export default function Portal() {
   const [portals] = usePortals();
 
-  const portalsDeferred = useDeferredValue(portals, 0);
+  const portalsDeferred = useDeferredValue(portals, {}, 0);
 
   return (
     <Fragment>
-      {Object.entries(portalsDeferred).map(([key, children]) => (
+      {Object.entries(portalsDeferred!).map(([key, children]) => (
         <Fragment key={key}>{children}</Fragment>
       ))}
     </Fragment>
