@@ -134,6 +134,25 @@ const InputDateFactory = React.memo<InputDateProps>(
     size = getSize(size);
     color = theme.color(input.error ? 'error' : color);
 
+    const getDisabledDates = useCallback(
+      (date) => {
+        const currentDate = dateify(date);
+        const minDate = min ? dateify(min) : null;
+        const maxDate = max ? dateify(max) : null;
+
+        if (minDate && currentDate < minDate) {
+          return true;
+        }
+
+        if (maxDate && currentDate > maxDate) {
+          return true;
+        }
+
+        return false;
+      },
+      [max, min],
+    );
+
     const focus = useCallback(() => inputRef?.current?.focus?.(), [inputRef]);
     const blur = useCallback(() => inputRef?.current?.blur?.(), [inputRef]);
     const clear = useCallback(() => input.clear(), [input]);
@@ -267,28 +286,16 @@ const InputDateFactory = React.memo<InputDateProps>(
               </TextFactory>
             )}
             <BoxFactory h={380}>
-              <CalendarFactory
-                shadow={0}
-                color={color}
-                date={input.state}
-                events={input.state ? [input.state] : []}
-                onPressDate={handleChange}
-                disableds={(date) => {
-                  const currentDate = dateify(date);
-                  const minDate = min ? dateify(min) : null;
-                  const maxDate = max ? dateify(max) : null;
-
-                  if (minDate && currentDate < minDate) {
-                    return true;
-                  }
-
-                  if (maxDate && currentDate > maxDate) {
-                    return true;
-                  }
-
-                  return false;
-                }}
-              />
+              {calendarVisible && (
+                <CalendarFactory
+                  shadow={0}
+                  color={color}
+                  date={input.state}
+                  events={input.state ? [input.state] : []}
+                  onPressDate={handleChange}
+                  disableds={getDisabledDates}
+                />
+              )}
             </BoxFactory>
 
             <DividerFactory />
