@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 
-import useDeferredValue from '../hooks/useDeferredValue';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { DrawerProps, RequiredSome } from '../types';
@@ -14,6 +13,7 @@ const DrawerFactory = React.memo<DrawerProps>(
 
     // Extends from default props
     const {
+      keepMounted,
       placement,
       visible: drawerVisible,
       onClose,
@@ -24,10 +24,8 @@ const DrawerFactory = React.memo<DrawerProps>(
       ...rest
     } = factory2<RequiredSome<DrawerProps, 'placement'>>(props, options);
 
-    const backdropVisible = useDeferredValue(drawerVisible, drawerVisible, drawerVisible ? 0 : 250);
-
     const hiddenStyle = {
-      [placement]: '-50%',
+      [placement]: '-100%',
     };
 
     const visibleStyle = {
@@ -36,7 +34,8 @@ const DrawerFactory = React.memo<DrawerProps>(
 
     return (
       <BackdropFactory
-        visible={backdropVisible}
+        visible={drawerVisible}
+        keepMounted={keepMounted}
         onPress={onClose}
         style={backdropStyle}
         variants={{ root: variants.backdrop }}

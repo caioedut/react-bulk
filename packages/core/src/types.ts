@@ -1096,6 +1096,7 @@ export type DividerProps<ALLOW_ANY = true> = PropsWithStyles<
 export type BackdropProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
+    keepMounted?: boolean;
     visible?: boolean;
 
     // Styles
@@ -1108,6 +1109,7 @@ export type BackdropProps<ALLOW_ANY = true> = PropsWithStyles<
 export type ModalProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
+    keepMounted?: boolean;
     animation?: 'fade' | 'zoom-in' | 'zoom-out' | 'slide-bottom' | 'slide-top' | 'slide-left' | 'slide-right';
     halign?: 'center' | 'left' | 'right';
     valign?: 'center' | 'top' | 'bottom';
@@ -1137,6 +1139,7 @@ export type CollapseProps<ALLOW_ANY = true> = PropsWithStyles<
 export type DropdownProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
+    keepMounted?: boolean;
     placement?: 'top' | 'bottom';
     triggerRef?: RefObject<ReactElement>;
     visible?: boolean;
@@ -1322,8 +1325,9 @@ export type LinkProps<ALLOW_ANY = true> = PropsWithStyles<
 export type DrawerProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
-    visible?: boolean;
+    keepMounted?: boolean;
     placement?: 'left' | 'right' | 'top' | 'bottom';
+    visible?: boolean;
     // Styles
     backdropStyle?: RbkStyle;
     variants?: {

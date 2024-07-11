@@ -1,6 +1,14 @@
 import React, { useReducer, useRef, useState } from 'react';
 
-import { AnyObject, RbkFormEvent, RbkInputEvent, useAnimation, useToaster } from '@react-bulk/core';
+import {
+  AnyObject,
+  DrawerProps,
+  ModalProps,
+  RbkFormEvent,
+  RbkInputEvent,
+  useAnimation,
+  useToaster,
+} from '@react-bulk/core';
 import {
   Avatar,
   Badge,
@@ -103,7 +111,7 @@ export default function Main() {
       </Card>
 
       <Card mt="1gap">
-        <ModalExample />
+        <TabsExample />
       </Card>
 
       <Card mt="1gap">
@@ -115,15 +123,15 @@ export default function Main() {
       </Card>
 
       <Card mt="1gap">
-        <DrawerExample />
-      </Card>
-
-      <Card mt="1gap">
         <DropdownExample />
       </Card>
 
       <Card mt="1gap">
-        <TabsExample />
+        <ModalExample />
+      </Card>
+
+      <Card mt="1gap">
+        <DrawerExample />
       </Card>
 
       <Card mt="1gap">
@@ -824,32 +832,75 @@ function DividerExample() {
 }
 
 function ModalExample() {
-  const [modal, setModal] = useState({});
+  const [isVisible, setIsVisible] = useState(false);
+  const [valign, setValign] = useState<ModalProps['valign']>('center');
+  const [halign, setHalign] = useState<ModalProps['halign']>('center');
+  const [animation, setAnimation] = useState<ModalProps['animation']>('fade');
 
   return (
     <>
       <Text variant="title" mb="1gap">
-        Modals
+        Modal
       </Text>
 
       <Grid gap>
         <Box>
-          <Button onPress={() => setModal({ visible: true, valign: 'top' })}>Top</Button>
+          <Select
+            minw={160}
+            label="Animation"
+            value={animation}
+            onChange={(_, value: any) => setAnimation(value)}
+            options={[
+              { value: 'fade', label: 'Fade' },
+              { value: 'zoom-in', label: 'Zoom In' },
+              { value: 'zoom-out', label: 'Zoom Out' },
+              { value: 'slide-bottom', label: 'Slide Bottom' },
+              { value: 'slide-top', label: 'Slide Top' },
+              { value: 'slide-left', label: 'Slide Left' },
+              { value: 'slide-right', label: 'Slide Right' },
+            ]}
+          />
         </Box>
         <Box>
-          <Button onPress={() => setModal({ visible: true, valign: 'bottom' })}>Bottom</Button>
+          <Select
+            minw={160}
+            label="Vertical Align"
+            value={valign}
+            onChange={(_, value: any) => setValign(value)}
+            options={[
+              { value: 'center', label: 'Center' },
+              { value: 'top', label: 'Top' },
+              { value: 'bottom', label: 'Bottom' },
+            ]}
+          />
         </Box>
         <Box>
-          <Button onPress={() => setModal({ visible: true, valign: 'center' })}>Center</Button>
+          <Select
+            minw={160}
+            label="Horizontal Align"
+            value={halign}
+            onChange={(_, value: any) => setHalign(value)}
+            options={[
+              { value: 'center', label: 'Center' },
+              { value: 'left', label: 'Left' },
+              { value: 'right', label: 'Right' },
+            ]}
+          />
         </Box>
-        <Box>
-          <Button onPress={() => setModal({ visible: true, halign: 'left' })}>Left</Button>
-        </Box>
-        <Box>
-          <Button onPress={() => setModal({ visible: true, halign: 'right' })}>Right</Button>
+        <Box xs={12}>
+          <Button align="start" onPress={() => setIsVisible(true)}>
+            Show Modal
+          </Button>
         </Box>
       </Grid>
-      <Modal {...modal} onClose={() => setModal((current) => ({ ...current, visible: false }))}>
+
+      <Modal
+        visible={isVisible}
+        animation={animation}
+        valign={valign}
+        halign={halign}
+        onClose={() => setIsVisible(false)}
+      >
         <Box maxw={300}>
           <Text bold size={1.25}>
             My Modal
@@ -860,7 +911,7 @@ function ModalExample() {
             eius et expedita qui repellendus voluptatibus! Accusamus consectetur deleniti fuga iure laborum quam
             quisquam quo ut, velit!
           </Text>
-          <Button mt="1gap" onPress={() => setModal((current) => ({ ...current, visible: false }))}>
+          <Button mt="1gap" onPress={() => setIsVisible(false)}>
             Close
           </Button>
         </Box>
@@ -935,36 +986,48 @@ function CollapseExample() {
 }
 
 function DrawerExample() {
-  const [drawer, setDrawer] = useState(false);
-  const [placement, setPlacement] = useState('right');
-  const [style, setStyle] = useState({});
-
-  const handleOpen = (placement: string) => {
-    setDrawer(true);
-    setPlacement(placement);
-    setStyle(placement === 'top' || placement === 'bottom' ? {} : { w: 320 });
-  };
+  const [isVisible, setIsVisible] = useState(false);
+  const [placement, setPlacement] = useState<DrawerProps['placement']>('right');
 
   return (
     <>
       <Text variant="title" mb="1gap">
         Drawer
       </Text>
+
       <Grid gap>
-        {placements.map((item) => (
-          <Box key={item}>
-            <Button onPress={() => handleOpen(item)}>{getLabel(item)}</Button>
-          </Box>
-        ))}
+        <Box>
+          <Select
+            minw={160}
+            label="Placement"
+            value={placement}
+            onChange={(_, value: any) => setPlacement(value)}
+            options={placements.map((placement) => ({
+              value: placement,
+              label: getLabel(placement),
+            }))}
+          />
+        </Box>
+        <Box xs={12}>
+          <Button align="start" onPress={() => setIsVisible(true)}>
+            Show Drawer
+          </Button>
+        </Box>
       </Grid>
-      <Drawer visible={drawer} placement={placement as any} style={style} onClose={() => setDrawer(false)}>
+
+      <Drawer
+        visible={isVisible}
+        placement={placement as any}
+        onClose={() => setIsVisible(false)}
+        style={placement === 'top' || placement === 'bottom' ? {} : { w: 320 }}
+      >
         <Card>
           <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</Text>
           <Text mt="1gap">
             A adipisci aliquid aspernatur, at autem deleniti dolorum, maiores nihil numquam officia omnis recusandae
             soluta. Incidunt labore laboriosam maiores, praesentium quia tempore!
           </Text>
-          <Button mt="1gap" onPress={() => setDrawer(false)}>
+          <Button mt="1gap" onPress={() => setIsVisible(false)}>
             Close
           </Button>
         </Card>
