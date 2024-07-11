@@ -13,6 +13,7 @@ const ModalFactory = React.memo<ModalProps>(
 
     // Extends from default props
     const {
+      keepMounted,
       animation,
       halign,
       valign,
@@ -56,7 +57,12 @@ const ModalFactory = React.memo<ModalProps>(
     }[animation ?? 'fade'];
 
     return (
-      <BackdropFactory visible={visible} variants={{ root: variants.backdrop }} onPress={onClose}>
+      <BackdropFactory
+        visible={visible}
+        keepMounted={keepMounted}
+        variants={{ root: variants.backdrop }}
+        onPress={onClose}
+      >
         <CardFactory
           ref={ref}
           variants={{ root: variants.root }}
