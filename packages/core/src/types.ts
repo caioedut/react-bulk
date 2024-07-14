@@ -1355,6 +1355,7 @@ export type TabsProps<ALLOW_ANY = true> = PropsWithStyles<
   BoxProps<false>,
   {
     alignment?: 'start' | 'center' | 'end';
+    circular?: boolean;
     color?: RbkColor;
     size?: RbkSize;
     tabs: TabItem[];

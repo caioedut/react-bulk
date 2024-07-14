@@ -17,6 +17,7 @@ const TabsFactory = React.memo<TabsProps>(
     // Extends from default props
     const {
       alignment,
+      circular,
       color,
       size,
       tabs,
@@ -32,7 +33,7 @@ const TabsFactory = React.memo<TabsProps>(
       ...rest
     } = factory2<TabsProps>(props, options);
 
-    const Tabs = tabs?.map((tab, index) => {
+    const $tabs = tabs?.map((tab, index) => {
       const { value: tabValue = index, style: tabStyle, ...rest } = tab;
 
       const isActive = value === tabValue;
@@ -44,6 +45,7 @@ const TabsFactory = React.memo<TabsProps>(
           variant={isActive ? 'solid' : variant === 'card' ? 'text' : 'outline'}
           color={color}
           size={size}
+          circular={circular}
           labelStyle={{ px: 1.5 }}
           {...rest}
           style={[buttonStyle, tabStyle, isActive && activeStyle]}
@@ -57,12 +59,12 @@ const TabsFactory = React.memo<TabsProps>(
       <BoxFactory ref={ref} {...rest} variants={{ root: variants.root }}>
         {variant === 'nav' ? (
           <ButtonGroupFactory contentStyle={contentStyle} variants={{ content: variants.content }}>
-            {Tabs}
+            {$tabs}
           </ButtonGroupFactory>
         ) : (
           <ScrollableFactory direction="horizontal">
             <BoxFactory style={contentStyle} variants={{ root: variants.content }}>
-              {Tabs}
+              {$tabs}
             </BoxFactory>
           </ScrollableFactory>
         )}
