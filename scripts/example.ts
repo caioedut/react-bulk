@@ -46,5 +46,5 @@ if (isWeb) {
 }
 
 if (isNative) {
-  pmex(`npx expo start -c`, { cwd });
+  pmex('dlx expo start -c', { cwd });
 }
