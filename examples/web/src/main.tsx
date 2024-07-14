@@ -290,7 +290,8 @@ function ThemeExample() {
         {colors.map((color) => (
           <Box key={color}>
             <Card bg={color}>
-              <Text color={theme.contrast(color)}>Color: {color}</Text>
+              <Text color={theme.contrast(color)}>Name: {color}</Text>
+              <Text color={theme.contrast(color)}>Color: {theme.color(color)}</Text>
               <Text color={theme.contrast(color)}>Contrast: {theme.contrast(color)}</Text>
             </Card>
           </Box>
