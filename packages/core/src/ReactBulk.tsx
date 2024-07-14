@@ -22,7 +22,7 @@ export type Responder = {
 
 const toasterRef = createRef<any>();
 
-function ReactBulk({ theme, children }: any) {
+export default function ReactBulk({ theme, children }: any) {
   const { web, native } = Platform;
 
   const [responder, setResponder] = useState<Responder>();
