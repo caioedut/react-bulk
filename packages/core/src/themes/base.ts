@@ -24,7 +24,7 @@ const base: ThemeProps = {
 
     info: '#1E88E5',
     success: '#43A047',
-    warning: '#FFB300',
+    warning: '#F39C12',
     error: '#E53935',
 
     amber: '#FFAB00',
