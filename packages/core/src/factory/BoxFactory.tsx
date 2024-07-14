@@ -255,7 +255,7 @@ const BoxFactory = React.memo<BoxProps>(
             return null;
           }
 
-          if (isText) {
+          if (native && isText) {
             return <Text>{child}</Text>;
           }
 
