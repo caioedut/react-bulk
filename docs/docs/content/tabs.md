@@ -98,6 +98,14 @@ Extends all [`Scrollable`](/docs/core/scrollable#props) props.
 
 ---
 
+### **`circular`**
+
+Indicates whether the buttons are circular.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
 ### **`color`**
 
 ➤ Type: **`string` [`RbkColor`](/docs/type-reference/rbk-color)** <br/>
