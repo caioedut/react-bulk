@@ -67,5 +67,3 @@ function ReactBulk({ theme, children }: any) {
     </RbkContext.Provider>
   );
 }
-
-export default ReactBulk;

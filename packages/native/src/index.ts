@@ -1,4 +1,5 @@
 import {
+  BackHandler,
   Dimensions,
   NativeModules,
   Platform,
@@ -108,6 +109,7 @@ global.mapping = {
     },
   },
 
+  BackHandler,
   Button: Pressable,
   Dialog: RNModal,
   Form: View,
