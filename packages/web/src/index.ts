@@ -149,3 +149,8 @@ export const Tabs = TabsFactory;
 export const Terminal = TerminalFactory;
 export const Text = TextFactory;
 export const Tooltip = TooltipFactory;
+
+/**
+ * @deprecated use import { ReactBulk } instead
+ */
+export default ReactBulk;
