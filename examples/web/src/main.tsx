@@ -598,7 +598,7 @@ function FormExample() {
       <Grid alignItems="center" gap>
         {sizes.map((size) => (
           <Box key={size}>
-            <Switch size={size} label={getLabel(size)} checked={switx === true} onChange={toggleSwitx} />
+            <Switch size={size} label={getLabel(size)} checked={switx} onChange={toggleSwitx} />
           </Box>
         ))}
       </Grid>
@@ -848,23 +848,6 @@ function ModalExample() {
         <Box>
           <Select
             minw={160}
-            label="Animation"
-            value={animation}
-            onChange={(_, value: any) => setAnimation(value)}
-            options={[
-              { value: 'fade', label: 'Fade' },
-              { value: 'zoom-in', label: 'Zoom In' },
-              { value: 'zoom-out', label: 'Zoom Out' },
-              { value: 'slide-bottom', label: 'Slide Bottom' },
-              { value: 'slide-top', label: 'Slide Top' },
-              { value: 'slide-left', label: 'Slide Left' },
-              { value: 'slide-right', label: 'Slide Right' },
-            ]}
-          />
-        </Box>
-        <Box>
-          <Select
-            minw={160}
             label="Vertical Align"
             value={valign}
             onChange={(_, value: any) => setValign(value)}
@@ -885,6 +868,23 @@ function ModalExample() {
               { value: 'center', label: 'Center' },
               { value: 'left', label: 'Left' },
               { value: 'right', label: 'Right' },
+            ]}
+          />
+        </Box>
+        <Box>
+          <Select
+            minw={160}
+            label="Animation"
+            value={animation}
+            onChange={(_, value: any) => setAnimation(value)}
+            options={[
+              { value: 'fade', label: 'Fade' },
+              { value: 'zoom-in', label: 'Zoom In' },
+              { value: 'zoom-out', label: 'Zoom Out' },
+              { value: 'slide-bottom', label: 'Slide Bottom' },
+              { value: 'slide-top', label: 'Slide Top' },
+              { value: 'slide-left', label: 'Slide Left' },
+              { value: 'slide-right', label: 'Slide Right' },
             ]}
           />
         </Box>

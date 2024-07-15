@@ -90,6 +90,9 @@ Used to accurately calculate the `Dropdown` position.
 A dynamic portal is created and rendered at the root of the `ReactBulk` provider when the value is `true`. Be mindful of organizing your React Contexts.
 :::
 
+➤ Type: **`boolean`** <br/>
+➤ Default: **`false`** <br/>
+
 ## Styles
 
 ### **`style`**
