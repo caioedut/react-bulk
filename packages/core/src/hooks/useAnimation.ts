@@ -25,7 +25,7 @@ function jssWithTransform(style) {
 export default function useAnimation(style?: RbkAnimation['from'], ref?: MutableRefObject<any>) {
   const { web, native } = global.mapping;
 
-  const baseStyle = useMemo(() => jssWithTransform(style), [style]);
+  const baseStyle = useMemo(() => (style ? jssWithTransform(style) : {}), [style]);
 
   const elRef = useDefaultRef<any>(ref);
 

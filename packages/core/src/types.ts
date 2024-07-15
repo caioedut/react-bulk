@@ -1250,31 +1250,6 @@ export type TooltipProps<ALLOW_ANY = true> = PropsWithStyles<
   }
 >;
 
-export type AnimationProps<ALLOW_ANY = true> = PropsWithStyles<
-  ALLOW_ANY,
-  {
-    delay?: number;
-    direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
-    duration?: number;
-    from?: RbkStyle;
-    in?: boolean;
-    loop?: boolean | number;
-    throttle?: number;
-    timing?: 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out';
-    to?: RbkStyle;
-
-    // Pre-defined animations
-    fade?: boolean | 1 | -1;
-    zoom?: boolean | 1 | -1;
-    spin?: boolean | 1 | -1;
-
-    // Styles
-    variants?: {
-      root?: any;
-    };
-  }
->;
-
 export type ProgressProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
@@ -1355,6 +1330,7 @@ export type TabsProps<ALLOW_ANY = true> = PropsWithStyles<
   BoxProps<false>,
   {
     alignment?: 'start' | 'center' | 'end';
+    circular?: boolean;
     color?: RbkColor;
     size?: RbkSize;
     tabs: TabItem[];
