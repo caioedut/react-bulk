@@ -31,7 +31,7 @@ const ListItemFactory = React.memo<ListItemProps>(
       ...rest
     } = factory2<ListItemProps>(props, options);
 
-    gap = gap === true ? 1 : gap ?? 0;
+    gap = gap === true ? 1 : (gap ?? 0);
 
     const chevronSize = get('size', chevronStyle);
     const chevronColor = get('color', chevronStyle) ?? 'primary';
