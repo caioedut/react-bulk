@@ -59,7 +59,7 @@ const CarouselFactory = React.memo<CarouselProps>(
     const [hasNext, setHasNext] = useState(false);
 
     const showChevron = chevron && chevron !== 'hidden';
-    gap = gap === true ? 1 : gap ?? 0;
+    gap = gap === true ? 1 : (gap ?? 0);
 
     const base = contentWidth ?? 100;
 

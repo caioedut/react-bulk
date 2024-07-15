@@ -23,7 +23,7 @@ const GridFactory = React.memo<GridProps>(
       ...rest
     } = factory2<RequiredSome<GridProps, 'size'>>(props, options);
 
-    gap = (gap === true ? 1 : gap ?? 0) * theme.shape.gap;
+    gap = (gap === true ? 1 : (gap ?? 0)) * theme.shape.gap;
     const spacing = theme.spacing(gap / 2);
     const checkBreakpoints = breakpoints ?? theme.breakpoints;
 

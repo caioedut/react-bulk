@@ -51,7 +51,7 @@ global.mapping = {
   ios: false,
   android: false,
 
-  locale: typeof navigator !== 'undefined' ? navigator.languages?.[0] ?? navigator.language : null,
+  locale: typeof navigator !== 'undefined' ? (navigator.languages?.[0] ?? navigator.language) : null,
 
   useDimensions,
 

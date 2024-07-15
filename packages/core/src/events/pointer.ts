@@ -12,10 +12,10 @@ export default function pointer(event, extra?: Record<PropertyKey, unknown>): Rb
     identifier: touch?.identifier ?? 0,
     offsetX: targetRect
       ? touch.pageX - targetRect.left
-      : get<number>('offsetX', touch)! ?? get<number>('locationX', touch)!,
+      : (get<number>('offsetX', touch)! ?? get<number>('locationX', touch)!),
     offsetY: targetRect
       ? touch.pageY - targetRect.top
-      : get<number>('offsetY', touch)! ?? get<number>('locationY', touch)!,
+      : (get<number>('offsetY', touch)! ?? get<number>('locationY', touch)!),
     pageX: get<number>('pageX', touch)!,
     pageY: get<number>('pageY', touch)!,
   }));

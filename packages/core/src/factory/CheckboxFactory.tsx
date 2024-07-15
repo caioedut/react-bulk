@@ -55,8 +55,8 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
     const input = useInput({
       name,
-      value: checked ? value ?? true : false,
-      defaultValue: defaultChecked ? value ?? true : false,
+      value: checked ? (value ?? true) : false,
+      defaultValue: defaultChecked ? (value ?? true) : false,
       error,
       controlled,
       editable: !disabled && !readOnly,
