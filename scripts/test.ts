@@ -7,5 +7,7 @@ for (const cwd of dirs) {
 
   // pmex('eslint "./src/**/*.{js,jsx,ts,tsx}" --max-warnings=0', { cwd });
 
+  pmex('dlx publint', { cwd });
+
   pmex('tsc --noEmit --skipLibCheck', { cwd });
 }
