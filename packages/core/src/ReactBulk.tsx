@@ -8,7 +8,7 @@ import RbkContext from './RbkContext';
 import Toaster from './Toaster';
 import createTheme from './createTheme';
 import BoxFactory from './factory/BoxFactory';
-import { ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
+import { AnyObject, ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
 import global from './utils/global';
 
 export type Responder = {
@@ -24,6 +24,9 @@ const toasterRef = createRef<any>();
 
 export default function ReactBulk({ theme, children }: any) {
   const { web, native } = Platform;
+
+  // Handled by useDraggable
+  const [draggable, setDraggable] = useState<AnyObject>();
 
   const [responder, setResponder] = useState<Responder>();
 
@@ -50,16 +53,14 @@ export default function ReactBulk({ theme, children }: any) {
       value={{
         theme: { ...themeState, setTheme },
         setResponder,
+        setDraggable,
         toasterRef,
       }}
     >
-      {web && <BaseWeb theme={themeState}>{children}</BaseWeb>}
-
-      {native && (
-        <BoxFactory flex minh="100%" minw="100%" {...responder}>
-          <BaseNative theme={themeState}>{children}</BaseNative>
-        </BoxFactory>
-      )}
+      <BoxFactory flex minh="100%" minw="100%" {...responder} {...draggable}>
+        {web && <BaseWeb theme={themeState}>{children}</BaseWeb>}
+        {native && <BaseNative theme={themeState}>{children}</BaseNative>}
+      </BoxFactory>
 
       <Toaster ref={toasterRef} theme={themeState} />
 

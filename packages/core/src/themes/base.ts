@@ -1118,6 +1118,30 @@ const base: ThemeProps = {
         },
         variants: {},
       },
+      Splitter: {
+        name: 'rbk-splitter',
+        defaultProps: {},
+        defaultStyles: {
+          root: {
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+          },
+          item: {
+            flexGrow: 1,
+            flexShrink: 1,
+            flexBasis: 'auto',
+          },
+        },
+        variants: {
+          direction: {
+            vertical: {
+              root: {
+                flexDirection: 'column',
+              },
+            },
+          },
+        },
+      },
       Switch: {
         name: 'rbk-switch',
         defaultProps: {

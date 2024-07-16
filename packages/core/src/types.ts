@@ -533,6 +533,7 @@ export type ThemeProps = {
     Scrollable: ThemeComponentProps<ScrollableProps>;
     Select: ThemeComponentProps<SelectProps>;
     Switch: ThemeComponentProps<SwitchProps>;
+    Splitter: ThemeComponentProps<SplitterProps>;
     Table: ThemeComponentProps<TableProps>;
     Tabs: ThemeComponentProps<TabsProps>;
     Terminal: ThemeComponentProps<TerminalProps>;
@@ -1486,6 +1487,19 @@ export type ResizableProps<ALLOW_ANY = true> = PropsWithStyles<
     // Styles
     variants?: {
       root?: any;
+    };
+  }
+>;
+
+export type SplitterProps<ALLOW_ANY = true> = PropsWithStyles<
+  ALLOW_ANY,
+  {
+    direction?: 'vertical' | 'horizontal';
+    // separator?: ReactElement | (() => ReactElement);
+    // Styles
+    variants?: {
+      root?: any;
+      item?: any;
     };
   }
 >;

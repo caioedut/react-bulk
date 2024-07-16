@@ -39,6 +39,7 @@ import {
   Resizable,
   Scrollable,
   Select,
+  Splitter,
   Switch,
   Table,
   Tabs,
@@ -92,6 +93,10 @@ export default function Main() {
 
       <Card mt="1gap">
         <ListExample />
+      </Card>
+
+      <Card mt="1gap">
+        <SplitterExample />
       </Card>
 
       <Card mt="1gap">
@@ -724,12 +729,54 @@ function ListExample() {
   );
 }
 
+function SplitterExample() {
+  return (
+    <>
+      <Text variant="title" mb="1gap">
+        Splitter
+      </Text>
+
+      <Text variant="subtitle" mb="1gap">
+        Horizontal
+      </Text>
+
+      <Splitter bg="background">
+        <Box center bg="orange.lighter" w="20%" minw={80} h={100}>
+          <Text>One</Text>
+        </Box>
+        <Box center bg="orange.light" h={100}>
+          <Text>Two</Text>
+        </Box>
+        <Box center bg="orange.main" w={80} h={100}>
+          <Text>Three</Text>
+        </Box>
+      </Splitter>
+
+      <Text variant="subtitle" my="1gap">
+        Vertical
+      </Text>
+
+      <Splitter direction="vertical" bg="background" h="50vh">
+        <Box center bg="orange.lighter" h={80}>
+          <Text>One</Text>
+        </Box>
+        <Box center bg="orange.light">
+          <Text>Two</Text>
+        </Box>
+        <Box center bg="orange.main" h={80}>
+          <Text>Three</Text>
+        </Box>
+      </Splitter>
+    </>
+  );
+}
+
 function ResizableExample() {
   const theme = useTheme();
 
   return (
     <>
-      <Text variant="title" mb={theme.shape.gap}>
+      <Text variant="title" mb="1gap">
         Resizable
       </Text>
 

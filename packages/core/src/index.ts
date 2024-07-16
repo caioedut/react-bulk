@@ -11,6 +11,7 @@ export { default as useBreakpoints } from './hooks/useBreakpoints';
 export { default as useDefaultRef } from './hooks/useDefaultRef';
 export { default as useDeferredValue } from './hooks/useDeferredValue';
 export { default as useDependentState } from './hooks/useDependentState';
+export { default as useDraggable } from './hooks/useDraggable';
 export { default as useHtmlId } from './hooks/useHtmlId';
 export { default as useInput } from './hooks/useInput';
 export { default as usePropState } from './hooks/usePropState';
@@ -171,6 +172,8 @@ export { default as ResizableFactory } from './factory/ResizableFactory';
 export { default as ScrollableFactory } from './factory/ScrollableFactory';
 /** @internal */
 export { default as SelectFactory } from './factory/SelectFactory';
+/** @internal */
+export { default as SplitterFactory } from './factory/SplitterFactory';
 /** @internal */
 export { default as SwitchFactory } from './factory/SwitchFactory';
 /** @internal */

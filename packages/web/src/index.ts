@@ -33,6 +33,7 @@ import {
   ResizableFactory,
   ScrollableFactory,
   SelectFactory,
+  SplitterFactory,
   SwitchFactory,
   TableFactory,
   TabsFactory,
@@ -143,6 +144,7 @@ export const Progress = ProgressFactory;
 export const Resizable = ResizableFactory;
 export const Scrollable = ScrollableFactory;
 export const Select = SelectFactory;
+export const Splitter = SplitterFactory;
 export const Switch = SwitchFactory;
 export const Table = TableFactory;
 export const Tabs = TabsFactory;
