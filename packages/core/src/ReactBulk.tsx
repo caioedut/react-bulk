@@ -11,15 +11,6 @@ import BoxFactory from './factory/BoxFactory';
 import { AnyObject, ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
 import global from './utils/global';
 
-export type Responder = {
-  onStartShouldSetResponder?: () => boolean;
-  onMoveShouldSetResponder?: () => boolean;
-  onResponderGrant?: ({ nativeEvent }) => void;
-  onResponderMove?: ({ nativeEvent }) => void;
-  onResponderRelease?: ({ nativeEvent }) => void;
-  onResponderTerminate?: ({ nativeEvent }) => void;
-};
-
 const toasterRef = createRef<any>();
 
 export default function ReactBulk({ theme, children }: any) {
@@ -27,8 +18,6 @@ export default function ReactBulk({ theme, children }: any) {
 
   // Handled by useDraggable
   const [draggable, setDraggable] = useState<AnyObject>();
-
-  const [responder, setResponder] = useState<Responder>();
 
   const [themeState, setThemeState] = useState<ThemeProps>();
 
@@ -52,12 +41,11 @@ export default function ReactBulk({ theme, children }: any) {
     <RbkContext.Provider
       value={{
         theme: { ...themeState, setTheme },
-        setResponder,
         setDraggable,
         toasterRef,
       }}
     >
-      <BoxFactory flex minh="100%" minw="100%" {...responder} {...draggable}>
+      <BoxFactory flex minh="100%" minw="100%" {...draggable}>
         {web && <BaseWeb theme={themeState}>{children}</BaseWeb>}
         {native && <BaseNative theme={themeState}>{children}</BaseNative>}
       </BoxFactory>

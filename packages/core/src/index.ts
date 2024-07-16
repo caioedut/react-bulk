@@ -15,7 +15,6 @@ export { default as useDraggable } from './hooks/useDraggable';
 export { default as useHtmlId } from './hooks/useHtmlId';
 export { default as useInput } from './hooks/useInput';
 export { default as usePropState } from './hooks/usePropState';
-export { default as useResponder } from './hooks/useResponder';
 export { default as useTheme } from './hooks/useTheme';
 export { default as useToaster } from './hooks/useToaster';
 

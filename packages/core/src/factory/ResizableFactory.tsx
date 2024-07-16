@@ -1,13 +1,13 @@
-import React, { forwardRef, useRef } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef } from 'react';
 
 import rect from '../element/rect';
 import setNativeStyle from '../element/setNativeStyle';
 import useDefaultRef from '../hooks/useDefaultRef';
-import useResponder from '../hooks/useResponder';
+import useDraggable from '../hooks/useDraggable';
 import useTheme from '../hooks/useTheme';
 import Resize from '../icons/Resize';
 import factory2 from '../props/factory2';
-import { ResizableProps } from '../types';
+import { RbkPointerEvent, ResizableProps } from '../types';
 import global from '../utils/global';
 import BoxFactory from './BoxFactory';
 
@@ -23,7 +23,6 @@ const ResizableFactory = React.memo<ResizableProps>(
       vertical,
       // Styles
       variants,
-      style,
       ...rest
     } = factory2<ResizableProps>(props, options);
 
@@ -31,23 +30,48 @@ const ResizableFactory = React.memo<ResizableProps>(
     horizontal = horizontal ?? both;
     vertical = vertical ?? both;
 
-    const { setResponder, releaseResponder } = useResponder();
-
     const rootRef = useDefaultRef<any>(ref);
     const metricsRef = useRef<any>();
     const initEventRef = useRef<any>();
-    const maskRef = useRef<any>();
 
-    style = [
-      web && horizontal && { resize: 'horizontal' },
-      web && vertical && { resize: 'vertical' },
-      web && both && { resize: 'both' },
+    const { capture, release, isCapturing } = useDraggable({
+      onDragMove: (event) => {
+        if (horizontal) {
+          setNativeStyle(rootRef.current, {
+            width: metricsRef.current.width + (event.pageX - initEventRef.current.pageX),
+          });
+        }
 
-      style,
-    ];
+        if (vertical) {
+          setNativeStyle(rootRef.current, {
+            height: metricsRef.current.height + (event.pageY - initEventRef.current.pageY),
+          });
+        }
+      },
+      onDragEnd: () => {
+        release();
+      },
+    });
+
+    useEffect(() => {
+      if (!isCapturing) return;
+
+      return () => {
+        release();
+      };
+    }, [isCapturing, release]);
+
+    const handleCapture = useCallback(
+      async (event: RbkPointerEvent) => {
+        initEventRef.current = event;
+        metricsRef.current = await rect(rootRef.current);
+        capture();
+      },
+      [rootRef, capture],
+    );
 
     return (
-      <BoxFactory ref={rootRef} style={style} variants={{ root: variants.root }} {...rest}>
+      <BoxFactory ref={rootRef} variants={{ root: variants.root }} {...rest}>
         {children}
 
         <BoxFactory
@@ -58,55 +82,15 @@ const ResizableFactory = React.memo<ResizableProps>(
           b={0}
           h={24}
           w={24}
-          platform={{
-            native: {
-              onStartShouldSetResponder: () => true,
-              onResponderGrant: () => {
-                setNativeStyle(maskRef.current, { opacity: 1 });
-
-                setResponder({
-                  onStartShouldSetResponder: () => true,
-                  onMoveShouldSetResponder: () => true,
-                  onResponderGrant: async ({ nativeEvent }) => {
-                    initEventRef.current = nativeEvent;
-                    metricsRef.current = await rect(rootRef.current);
-                  },
-                  onResponderMove: ({ nativeEvent }) => {
-                    if (!metricsRef.current) return;
-
-                    if (horizontal) {
-                      setNativeStyle(rootRef.current, {
-                        width: metricsRef.current.width + (nativeEvent.pageX - initEventRef.current.pageX),
-                      });
-                    }
-
-                    if (vertical) {
-                      setNativeStyle(rootRef.current, {
-                        height: metricsRef.current.height + (nativeEvent.pageY - initEventRef.current.pageY),
-                      });
-                    }
-                  },
-                  onResponderRelease: () => {
-                    setNativeStyle(maskRef.current, { opacity: 0 });
-                    metricsRef.current = null;
-                    initEventRef.current = null;
-                    releaseResponder();
-                  },
-                  onResponderTerminate: () => {
-                    setNativeStyle(maskRef.current, { opacity: 0 });
-                    metricsRef.current = null;
-                    initEventRef.current = null;
-                    releaseResponder();
-                  },
-                });
-              },
-            },
-          }}
+          onPressIn={handleCapture}
+          style={[
+            web && horizontal && { cursor: 'e-resize' },
+            web && vertical && { cursor: 's-resize' },
+            web && both && { cursor: 'se-resize' },
+          ]}
         >
-          <Resize svg={svg} color={theme.color('text')} />
+          <Resize svg={svg} color={theme.color(isCapturing ? 'info' : 'text')} />
         </BoxFactory>
-
-        <BoxFactory ref={maskRef} position="absolute" bg="blue.main.15" i={0} opacity={0} pointerEvents="none" />
       </BoxFactory>
     );
   }),
