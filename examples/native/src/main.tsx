@@ -772,8 +772,6 @@ function SplitterExample() {
 }
 
 function ResizableExample() {
-  const theme = useTheme();
-
   return (
     <>
       <Text variant="title" mb="1gap">

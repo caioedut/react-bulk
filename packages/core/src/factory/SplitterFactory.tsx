@@ -1,4 +1,4 @@
-import React, { Fragment, forwardRef, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Fragment, forwardRef, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import rect from '../element/rect';
 import setNativeStyle from '../element/setNativeStyle';
@@ -39,8 +39,6 @@ const SplitterFactory = React.memo<SplitterProps>(
       $child: null,
     });
 
-    const [isResizing, setIsResizing] = useState(false);
-
     const isVertical = useMemo(() => direction === 'vertical', [direction]);
 
     const { childArr, sizes } = useMemo(() => {
@@ -62,7 +60,7 @@ const SplitterFactory = React.memo<SplitterProps>(
       return { childArr, sizes };
     }, [children, isVertical]);
 
-    const { release, capture } = useDraggable({
+    const { release, capture, isCapturing } = useDraggable({
       onDragMove: (event) => {
         event.preventDefault();
 
@@ -76,43 +74,44 @@ const SplitterFactory = React.memo<SplitterProps>(
         });
       },
       onDragEnd: () => {
-        setIsResizing(false);
         release();
       },
     });
 
     useEffect(() => {
-      if (!isResizing) return;
+      if (!isCapturing) return;
 
       return () => {
         release();
       };
-    }, [isResizing, release]);
+    }, [isCapturing, release]);
 
-    const handleInit = async (event: RbkPointerEvent, index: number) => {
-      let mult = 1;
-      let $child = childrenRefs.current[index];
+    const handleInit = useCallback(
+      async (event: RbkPointerEvent, index: number) => {
+        let mult = 1;
+        let $child = childrenRefs.current[index];
 
-      if (sizes[index] === 'auto' && sizes[index + 1] !== 'auto') {
-        mult = -1;
-        $child = childrenRefs.current[index + 1];
-      }
+        if (sizes[index] === 'auto' && sizes[index + 1] !== 'auto') {
+          mult = -1;
+          $child = childrenRefs.current[index + 1];
+        }
 
-      const containerMetrics = await rect(rootRef.current);
-      const childMetrics = await rect($child);
+        const containerMetrics = await rect(rootRef.current);
+        const childMetrics = await rect($child);
 
-      currentChildRef.current = {
-        mult,
-        containerSize: isVertical ? containerMetrics.height : containerMetrics.width,
-        childSize: isVertical ? childMetrics.height : childMetrics.width,
-        x: event.pageX,
-        y: event.pageY,
-        $child,
-      };
+        currentChildRef.current = {
+          mult,
+          containerSize: isVertical ? containerMetrics.height : containerMetrics.width,
+          childSize: isVertical ? childMetrics.height : childMetrics.width,
+          x: event.pageX,
+          y: event.pageY,
+          $child,
+        };
 
-      setIsResizing(true);
-      capture();
-    };
+        capture();
+      },
+      [rootRef, isVertical, capture, sizes],
+    );
 
     return (
       <BoxFactory ref={rootRef} variants={{ root: variants.root }} {...rest}>
@@ -127,9 +126,9 @@ const SplitterFactory = React.memo<SplitterProps>(
             <Fragment key={child.key ?? index}>
               {index > 0 && (
                 <DividerFactory
-                  size={isResizing ? 4 : 2}
-                  color={isResizing ? 'info' : undefined}
-                  opacity={isResizing ? 0.75 : undefined}
+                  size={isCapturing ? 4 : 2}
+                  color={isCapturing ? 'info' : undefined}
+                  opacity={isCapturing ? 0.75 : undefined}
                   vertical={!isVertical}
                   onPressIn={(e) => handleInit(e, index - 1)}
                   platform={{
@@ -139,9 +138,9 @@ const SplitterFactory = React.memo<SplitterProps>(
                   }}
                   style={[
                     web && { cursor: isVertical ? 'row-resize' : 'col-resize' },
-                    isResizing && isVertical && { my: '-1px' },
-                    isResizing && !isVertical && { mx: '-1px' },
-                    isResizing && { zIndex: 2 },
+                    isCapturing && isVertical && { my: '-1px' },
+                    isCapturing && !isVertical && { mx: '-1px' },
+                    isCapturing && { zIndex: 2 },
                   ]}
                 />
               )}
