@@ -4,6 +4,7 @@ import Platform from '../Platform';
 import RbkContext from '../RbkContext';
 import pointer from '../events/pointer';
 import { RbkPointerEvent } from '../types';
+import event from '../utils/event';
 
 export type UseDraggableProps = {
   onDragStart?: (event: RbkPointerEvent) => void;
@@ -29,36 +30,42 @@ export default function useDraggable({ onDragStart, onDragMove, onDragEnd }: Use
     if (!Platform.web) return;
     if (!isCapturing) return;
 
-    let startEventDispatched = false;
-
-    setDraggable({
-      onPointerMove: (e) => {
+    const removePointerStart = event(
+      document,
+      'pointermove',
+      (e) => {
         e.preventDefault();
         e.stopPropagation();
-
-        if (startEventDispatched) {
-          onDragMove?.(e);
-        } else {
-          startEventDispatched = true;
-          onDragStart?.(e);
-        }
+        onDragStart?.(pointer(e));
       },
-      onPointerUp: (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      { once: true },
+    );
 
-        startEventDispatched = false;
-        onDragEnd?.(pointer(e));
-      },
-      onPointerCancel: (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        startEventDispatched = false;
-        onDragEnd?.(pointer(e));
-      },
+    const removePointerMove = event(document, 'pointermove', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onDragMove?.(pointer(e));
     });
-  }, [isCapturing, setDraggable]);
+
+    const removePointerUp = event(document, 'pointerup', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onDragEnd?.(pointer(e));
+    });
+
+    const removePointerCancel = event(document, 'pointercancel', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onDragEnd?.(pointer(e));
+    });
+
+    return () => {
+      removePointerStart();
+      removePointerMove();
+      removePointerUp();
+      removePointerCancel();
+    };
+  }, [isCapturing]);
 
   useEffect(() => {
     if (!Platform.native) return;
@@ -70,25 +77,21 @@ export default function useDraggable({ onDragStart, onDragMove, onDragEnd }: Use
       onResponderGrant: (e) => {
         e.preventDefault();
         e.stopPropagation();
-
         onDragStart?.(pointer(e));
       },
       onResponderMove: (e) => {
         e.preventDefault();
         e.stopPropagation();
-
         onDragMove?.(pointer(e));
       },
       onResponderRelease: (e) => {
         e.preventDefault();
         e.stopPropagation();
-
         onDragEnd?.(pointer(e));
       },
       onResponderTerminate: (e) => {
         e.preventDefault();
         e.stopPropagation();
-
         onDragEnd?.(pointer(e));
       },
     });
