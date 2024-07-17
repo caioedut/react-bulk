@@ -45,10 +45,12 @@ export default function ReactBulk({ theme, children }: any) {
         toasterRef,
       }}
     >
-      <BoxFactory flex minh="100%" minw="100%" {...draggable}>
-        {web && <BaseWeb theme={themeState}>{children}</BaseWeb>}
-        {native && <BaseNative theme={themeState}>{children}</BaseNative>}
-      </BoxFactory>
+      {web && <BaseWeb theme={themeState}>{children}</BaseWeb>}
+      {native && (
+        <BoxFactory flex minh="100%" minw="100%" {...draggable}>
+          <BaseNative theme={themeState}>{children}</BaseNative>
+        </BoxFactory>
+      )}
 
       <Toaster ref={toasterRef} theme={themeState} />
 
