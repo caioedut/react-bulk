@@ -1,4 +1,4 @@
-import { createRef, useCallback, useMemo, useState } from 'react';
+import { createRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import BaseNative from './BaseNative';
 import BaseWeb from './BaseWeb';
@@ -13,46 +13,57 @@ import global from './utils/global';
 
 const toasterRef = createRef<any>();
 
-export default function ReactBulk({ theme, children }: any) {
+export default function ReactBulk({ theme: themeProp, children }: any) {
   const { web, native } = Platform;
+
+  const mountedRef = useRef(false);
 
   // Handled by useDraggable
   const [draggable, setDraggable] = useState<AnyObject>();
 
-  const [themeState, setThemeState] = useState<ThemeProps>();
+  const [theme, _setTheme] = useState<ThemeProps>(() => {
+    return createTheme(typeof themeProp === 'string' ? { mode: themeProp } : themeProp);
+  });
 
-  global.theme = themeState;
+  global.theme = theme;
 
   const setTheme = useCallback((theme: ThemeModeValues | ThemeEditProps | ((theme: ThemeProps) => ThemeEditProps)) => {
-    setThemeState((current) =>
-      createTheme(theme instanceof Function ? theme(current!) : typeof theme === 'string' ? { mode: theme } : theme),
-    );
+    _setTheme((current) => {
+      return createTheme(
+        theme instanceof Function ? theme(current) : typeof theme === 'string' ? { mode: theme } : theme,
+      );
+    });
   }, []);
 
-  useMemo(() => {
-    setTheme(theme);
-  }, [theme, setTheme]);
+  useEffect(() => {
+    // Avoid double render with initial theme
+    if (mountedRef.current) {
+      setTheme(themeProp);
+    }
 
-  if (!themeState) {
-    return null;
-  }
+    mountedRef.current = true;
+  }, [mountedRef, themeProp, setTheme]);
+
+  const context = useMemo(
+    () => ({
+      theme: { ...theme, setTheme },
+      setDraggable,
+      toasterRef,
+    }),
+    [theme, setTheme],
+  );
 
   return (
-    <RbkContext.Provider
-      value={{
-        theme: { ...themeState, setTheme },
-        setDraggable,
-        toasterRef,
-      }}
-    >
-      {web && <BaseWeb theme={themeState}>{children}</BaseWeb>}
+    <RbkContext.Provider value={context}>
+      {web && <BaseWeb theme={theme}>{children}</BaseWeb>}
+
       {native && (
         <BoxFactory flex minh="100%" minw="100%" {...draggable}>
-          <BaseNative theme={themeState}>{children}</BaseNative>
+          <BaseNative theme={theme}>{children}</BaseNative>
         </BoxFactory>
       )}
 
-      <Toaster ref={toasterRef} theme={themeState} />
+      <Toaster ref={toasterRef} theme={theme} />
 
       <Portal />
     </RbkContext.Provider>

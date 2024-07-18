@@ -125,24 +125,29 @@ const SplitterFactory = React.memo<SplitterProps>(
           return (
             <Fragment key={child.key ?? index}>
               {index > 0 && (
-                <DividerFactory
-                  size={isCapturing ? 4 : 2}
-                  color={isCapturing ? 'info' : undefined}
-                  opacity={isCapturing ? 0.75 : undefined}
-                  vertical={!isVertical}
+                <BoxFactory
+                  direction={isVertical ? 'column' : 'row'}
                   onPressIn={(e) => handleInit(e, index - 1)}
                   platform={{
                     native: {
-                      hitSlop: { top: 8, bottom: 8, left: 8, right: 8 },
+                      hitSlop: { top: 16, bottom: 16, left: 16, right: 16 },
                     },
                   }}
-                  style={[
-                    web && { cursor: isVertical ? 'row-resize' : 'col-resize' },
-                    isCapturing && isVertical && { my: '-1px' },
-                    isCapturing && !isVertical && { mx: '-1px' },
-                    isCapturing && { zIndex: 2 },
-                  ]}
-                />
+                  style={
+                    web && {
+                      cursor: isVertical ? 'row-resize' : 'col-resize',
+                      // #hack for hitSlop-like
+                      margin: -4,
+                      padding: 4,
+                    }
+                  }
+                >
+                  <DividerFactory
+                    color={isCapturing ? 'info' : undefined}
+                    opacity={isCapturing ? 1 : undefined}
+                    vertical={!isVertical}
+                  />
+                </BoxFactory>
               )}
 
               <BoxFactory
