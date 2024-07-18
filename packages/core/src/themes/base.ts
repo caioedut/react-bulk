@@ -1120,7 +1120,9 @@ const base: ThemeProps = {
       },
       Splitter: {
         name: 'rbk-splitter',
-        defaultProps: {},
+        defaultProps: {
+          direction: 'horizontal',
+        },
         defaultStyles: {
           root: {
             flexDirection: 'row',

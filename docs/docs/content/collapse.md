@@ -38,13 +38,9 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 ➤ Type: **`boolean`** <br/>
 
----
-
 ## Styles
 
 ### **`style`**
 To the main element.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
-
----
