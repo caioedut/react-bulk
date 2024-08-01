@@ -616,10 +616,10 @@ function FormExample() {
       <Form onSubmit={handleSubmitForm} data={formData} mt="1gap">
         <Grid size={6} gap>
           <Box xs={6} md={4}>
-            <Input name="firstName" label="First Name" />
+            <Input name="user.firstName" label="First Name" />
           </Box>
           <Box xs={6} md={4}>
-            <Input name="lastName" label="Last Name" />
+            <Input name="user.lastName" label="Last Name" />
           </Box>
           <Box xs={6} md={4}>
             <Select

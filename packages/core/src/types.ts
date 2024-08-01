@@ -1219,6 +1219,7 @@ export type BadgeProps<ALLOW_ANY = true> = PropsWithStyles<
 export type FormProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
+    disableObjectParser?: boolean;
     initialData?: AnyObject;
     // Events
     onSubmit?: (event: RbkFormEvent, data: AnyObject, errors: AnyObject | null) => void;
