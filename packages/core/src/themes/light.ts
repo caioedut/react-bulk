@@ -9,7 +9,7 @@ const light = {
 
     background: {
       primary: '#FFFFFF',
-      secondary: '#EFEFEF',
+      secondary: '#F5F5F5',
       disabled: '#616161',
     },
   },

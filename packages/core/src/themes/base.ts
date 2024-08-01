@@ -35,7 +35,7 @@ const base: ThemeProps = {
     deepOrange: '#DD2C00',
     deepPurple: '#6200EA',
     fuchsia: '#D946EF',
-    gray: '#616161',
+    gray: '#6b7280',
     green: '#00C853',
     indigo: '#304FFE',
     lime: '#AEEA00',
