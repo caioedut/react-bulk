@@ -112,17 +112,18 @@ export const customStyleProps = [
   'borderLeft',
   'borderRight',
   'borderTop',
-  'corners',
+  'corners', // borderRadius * spacing
   'direction',
-  'h',
-  'lh',
+  'h', // height
+  'lh', // line height
+  'ls', // line spacing
   'maxh',
   'maxw',
   'minh',
   'minw',
   'position',
-  'shadow',
-  'w',
+  'shadow', // box-shadow
+  'w', // width
   ...customSpacings,
 ] as const;
 
@@ -283,6 +284,7 @@ export const aliases = {
   minw: 'minWidth',
   minh: 'minHeight',
   lh: 'lineHeight',
+  ls: 'letterSpacing',
   bg: 'backgroundColor',
 
   // Flex Container

@@ -21,6 +21,7 @@ The value can be a **single object** or an **array of** these types:
   maxh: number | string;
 
   lh: number | string;
+  ls: number | string;
 
   bg: string;
   border: string | number | boolean | RbkColor;

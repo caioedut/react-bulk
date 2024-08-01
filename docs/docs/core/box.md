@@ -478,6 +478,14 @@ Sets `lineHeight` style.
 
 ---
 
+### **`ls`**
+
+Sets `letterSpacing` style.
+
+➤ Type: **`number` `string`** <br/>
+
+---
+
 ### **`maxh`**
 
 Sets `maxHeight` style.
