@@ -154,7 +154,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
               h={fontSize}
               w={fontSize}
               border={`2px solid ${color}`}
-              borderRadius={unique ? halfSize : theme.shape.borderRadius}
+              borderRadius={unique ? halfSize : theme.shape.borderRadius / 2}
               bg={input.state && !unique ? color : undefined}
             >
               {Boolean(input.state) && (
