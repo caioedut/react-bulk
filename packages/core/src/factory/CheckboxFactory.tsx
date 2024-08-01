@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useMemo } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 
 import useDefaultRef from '../hooks/useDefaultRef';
 import useHtmlId from '../hooks/useHtmlId';
@@ -13,7 +13,6 @@ import { CheckboxProps, RequiredSome } from '../types';
 import global from '../utils/global';
 import BoxFactory from './BoxFactory';
 import ButtonFactory from './ButtonFactory';
-import { useForm } from './FormFactory';
 import LabelFactory from './LabelFactory';
 import TextFactory from './TextFactory';
 
@@ -52,17 +51,14 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       ...rest
     } = factory2<RequiredSome<CheckboxProps, 'color' | 'size'>>(props, options);
 
-    const form = useForm();
     const buttonRef = useDefaultRef<any>(ref);
-
-    // #hack to get initial CHECKED instead of value from prop
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const initialCheckedFromFromInitialValue = useMemo(() => form?.initialData?.[name!], []);
 
     const input = useInput({
       name,
-      value: (initialCheckedFromFromInitialValue ?? checked) ? (valueProp ?? true) : false,
-      defaultValue: defaultChecked ? (valueProp ?? true) : false,
+      value: checked,
+      defaultValue: defaultChecked,
+      mask: (value) => (value ? (valueProp ?? true) : false),
+      unmask: (value) => (value ? (valueProp ?? true) : false),
       error,
       controlled,
       editable: !disabled && !readOnly,
