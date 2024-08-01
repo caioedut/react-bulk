@@ -118,8 +118,8 @@ type StyleProps = Overwrite<
     hh?: number | string | true;
     ww?: number | string | true;
 
-    bg?: string;
-    border?: string | number | boolean;
+    bg?: RbkColor;
+    border?: RbkColor | string | number | boolean;
     corners?: number;
     shadow?: number;
   }
