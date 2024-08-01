@@ -43,9 +43,17 @@ function Home() {
 
 Extends all [`Box`](/docs/core/box#props) props.
 
-### **`data`**
+### **`disableObjectParser`**
 
-Fill inputs with these values.
+Disables serialization with [dot-object](https://www.npmjs.com/package/dot-object)-like
+
+➤ Type: **`object`** <br/>
+
+---
+
+### **`initialData`**
+
+Fill inputs with these values ONLY on FIRST RENDER.
 
 ➤ Type: **`object`** <br/>
 

@@ -14,6 +14,7 @@ import React, {
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { FormField, FormProps, FormRef, RbkFormEvent } from '../types';
+import dotObject from '../utils/dotObject';
 import global from '../utils/global';
 import BoxFactory from './BoxFactory';
 
@@ -29,6 +30,7 @@ const FormFactory = React.memo<FormProps>(
 
     // Extends from default props
     const {
+      disableObjectParser,
       initialData,
       // Events
       onSubmit,
@@ -95,8 +97,8 @@ const FormFactory = React.memo<FormProps>(
 
       fieldsRef.current.forEach(({ name, get }) => (data[name] = get()));
 
-      return data;
-    }, [fieldsRef]);
+      return disableObjectParser ? data : dotObject(data);
+    }, [fieldsRef, disableObjectParser]);
 
     const setData = useCallback(
       (data: any = {}) => {
