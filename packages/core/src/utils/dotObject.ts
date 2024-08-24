@@ -31,10 +31,12 @@ function resolve(items) {
   if (!Array.isArray(items)) {
     const keys = Object.keys(items);
 
-    keys.sort();
+    if (keys.length) {
+      keys.sort();
 
-    if (keys.every((key, index) => Number(key) === index)) {
-      newValue = Object.values(items);
+      if (keys.every((key, index) => Number(key) === index)) {
+        newValue = Object.values(items);
+      }
     }
   }
 
