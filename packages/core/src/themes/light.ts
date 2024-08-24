@@ -4,12 +4,14 @@ const light = {
     text: {
       primary: '#232323',
       secondary: '#666666',
-      disabled: '#999999',
+      tertiary: '#999999',
+      disabled: '#CCCCCC',
     },
 
     background: {
       primary: '#FFFFFF',
-      secondary: '#F5F5F5',
+      secondary: '#F2F2F2',
+      tertiary: '#FAFAFA',
       disabled: '#616161',
     },
   },

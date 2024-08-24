@@ -42,7 +42,7 @@ type PropsWithStyles<ALLOW_ANY, T1, T2 = {}> = Overwrite<BaseProps, Overwrite<T1
 type ColorTypographyToken = 'text' | 'background';
 
 /** @internal */
-type ColorTypographyTone = 'primary' | 'secondary' | 'disabled';
+type ColorTypographyTone = 'primary' | 'secondary' | 'tertiary' | 'disabled';
 
 /** @internal */
 type ColorToken = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
