@@ -4,7 +4,11 @@
   "version": "1.4.1",
   "license": "MIT",
   "homepage": "https://rbk.caioedut.com",
-  "repository": "https://github.com/caioedut/react-bulk",
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/caioedut/react-bulk.git",
+      "directory": "packages/web"
+    },
   "author": {
     "name": "Caio Teixeira",
     "email": "caioedut@gmail.com"
