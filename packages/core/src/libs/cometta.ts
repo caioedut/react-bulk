@@ -79,7 +79,7 @@ export default function registry(theme?: ThemeProps) {
   cometta.parser('shadow', (value) => {
     if (!defined(value)) return;
 
-    const radius = Math.round(value * 1.5 + (value ? 2 : 0));
+    const radius = Math.round(value + (value ? 2 : 0));
     const offset = Math.round(value / 2);
 
     if (Platform.web) {
@@ -90,7 +90,7 @@ export default function registry(theme?: ThemeProps) {
 
     if (Platform.native) {
       return {
-        elevation: offset,
+        elevation: Math.round(value),
         shadowColor: 'rgba(0, 0, 0)',
         shadowOpacity: 0.1,
         shadowRadius: radius,
