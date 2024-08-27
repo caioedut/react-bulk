@@ -26,31 +26,20 @@ export default function useInput<T>({
   controlled,
   editable = true,
   error: errorProp,
-  mask,
-  unmask,
+  mask = (value) => `${value ?? ''}`,
+  unmask = (value) => value,
   onChange,
   onFormChange,
 }: UseInputProps<T>) {
-  const resolveValue = useCallback(
-    (value) => {
-      if (unmask) {
-        value = unmask(value);
-      }
-
-      if (value === '') {
-        value = null;
-      }
-
-      return value ?? null;
-    },
-    [unmask],
-  );
+  const resolveValue = useCallback((value) => {
+    return value === '' ? null : (value ?? null);
+  }, []);
 
   const form = useForm();
 
-  const [initialValue] = useState(resolveValue(value ?? defaultValue ?? form?.initialData?.[name!]));
-  const [_internal, _setInternal] = useState(initialValue);
-  const [prevInternal, setPrevInternal] = useState();
+  const [initialValue] = useState(value ?? defaultValue ?? form?.initialData?.[name!]);
+  const [_internal, _setInternal] = useState<string | undefined>(initialValue);
+  const [prevInternal, setPrevInternal] = useState<any>();
   const [error, setError] = useState(errorProp);
 
   const internal = useMemo(
@@ -91,7 +80,7 @@ export default function useInput<T>({
 
     form.setField({
       name,
-      get: () => internal,
+      get: () => unmask(internal),
       set: setInternal,
       getError: () => error ?? null,
       setError,
@@ -102,7 +91,7 @@ export default function useInput<T>({
     return () => {
       form.unsetField(name);
     };
-  }, [name, form, error, internal, initialValue, setInternal, onFormChange]);
+  }, [name, form, error, internal, initialValue, setInternal, onFormChange, unmask]);
 
   const reset = useCallback(() => {
     _setInternal(initialValue);
@@ -138,10 +127,10 @@ export default function useInput<T>({
       form,
       props: {
         name,
-        value: `${(typeof mask === 'function' ? mask(internal) : internal) ?? ''}`,
+        value: mask(internal ?? ''),
         onChange: handleChange,
       },
     }),
-    [internal, setInternal, prevInternal, error, clear, reset, name, mask, form, handleChange],
+    [internal, setInternal, prevInternal, error, clear, reset, form, name, mask, handleChange],
   );
 }
