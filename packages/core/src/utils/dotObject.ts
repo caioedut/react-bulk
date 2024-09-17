@@ -26,6 +26,11 @@ function resolve(items) {
     return items;
   }
 
+  // dont parse classes instances (like File or FileList)
+  if (!Array.isArray(items) && items?.constructor?.name !== 'Object') {
+    return items;
+  }
+
   let newValue = items;
 
   if (!Array.isArray(items)) {
