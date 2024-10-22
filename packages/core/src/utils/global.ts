@@ -1,9 +1,9 @@
 import { AnyObject } from '../types';
 
-const global: AnyObject = {
+const rbkGlobal: AnyObject = {
   theme: {},
   mapping: {},
   styles: {},
 };
 
-export default global;
+export default rbkGlobal;
