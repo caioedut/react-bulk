@@ -12,6 +12,7 @@ import light from './themes/light';
 import { ThemeEditProps, ThemeProps } from './types';
 import deepmerge from './utils/deepmerge';
 import global from './utils/global';
+import string from './utils/string';
 
 export default function createTheme(options?: ThemeEditProps): ThemeProps {
   options = options || {};
@@ -70,7 +71,7 @@ export default function createTheme(options?: ThemeEditProps): ThemeProps {
     // Normalize CSS
     normalize();
 
-    // Global RBK Styles
+    // Global Default RBK Styles
     createStyleSheet(
       `
 html {
@@ -88,12 +89,22 @@ body {
   width: 100%;
 }
 
+a {
+  text-decoration: none;
+}
+
 ${Object.entries(theme.mixins.scroll)
   .map(([selector, styles]) => `${selector.substring(1)} { ${css(styles)} }`)
   .join(`\n`)}
 `,
       { uniqueId: 'rbk-global', prepend: true },
     );
+
+    // Global THEME RBK Styles
+    createStyleSheet(string(theme.mixins.globalCSS), {
+      uniqueId: 'rbk-global-from-theme',
+      prepend: true,
+    });
   }
 
   const components = { ...theme.components };

@@ -482,6 +482,9 @@ export type ThemeProps = {
 
     scroll: AnyObject;
 
+    /** Global CSS for WEB only */
+    globalCSS: string;
+
     zIndex: {
       backdrop: number;
       modal: number;
