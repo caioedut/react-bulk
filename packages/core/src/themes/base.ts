@@ -94,6 +94,9 @@ const base: ThemeProps = {
       '&::-webkit-scrollbar-thumb': { bg: 'text.disabled', borderRadius: '0.1875rem' },
     },
 
+    // Global CSS (for WEB only)
+    globalCSS: '',
+
     zIndex: {
       backdrop: 900,
       modal: 901,
@@ -745,7 +748,7 @@ const base: ThemeProps = {
             borderStyle: 'solid',
             borderColor: 'gray.light',
             borderRadius: (theme) => theme.shape.borderRadius,
-            backgroundColor: (theme) => theme.color('trans'),
+            backgroundColor: 'text.primary.05',
             web: {
               ...this.mixins.transitions.fast,
               transitionProperty: 'box-shadow',
