@@ -748,7 +748,7 @@ const base: ThemeProps = {
             borderStyle: 'solid',
             borderColor: 'gray.light',
             borderRadius: (theme) => theme.shape.borderRadius,
-            backgroundColor: 'text.primary.05',
+            backgroundColor: 'text.primary.03',
             web: {
               ...this.mixins.transitions.fast,
               transitionProperty: 'box-shadow',
