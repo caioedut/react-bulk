@@ -31,9 +31,13 @@ export default function useInput<T>({
   onChange,
   onFormChange,
 }: UseInputProps<T>) {
-  const resolveValue = useCallback((value) => {
-    return value === '' ? null : (value ?? null);
-  }, []);
+  const resolveValue = useCallback(
+    (value): any => {
+      const newValue = value === '' ? null : (value ?? null);
+      return ['string', 'number'].includes(typeof newValue) ? mask(newValue) : newValue;
+    },
+    [mask],
+  );
 
   const form = useForm();
 
