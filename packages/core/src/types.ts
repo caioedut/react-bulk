@@ -1,4 +1,4 @@
-import { CSSProperties, JSXElementConstructor, ReactNode, Ref, RefObject, SyntheticEvent } from 'react';
+import { CSSProperties, JSX, JSXElementConstructor, ReactNode, Ref, RefObject, SyntheticEvent } from 'react';
 
 import { customSpacings, styleProps, transformProps } from './styles/constants';
 
