@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useForm } from '../factory/FormFactory';
+import useForm from '../hooks/useForm';
 import { AnyObject, RbkFormEvent } from '../types';
 
 export type UseInputProps<T> = {

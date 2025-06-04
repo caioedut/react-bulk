@@ -11,16 +11,13 @@ import React, {
   useRef,
 } from 'react';
 
+import { FormContext } from '../hooks/useForm';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { FormField, FormProps, FormRef, RbkFormEvent } from '../types';
 import dotObject from '../utils/dotObject';
 import global from '../utils/global';
 import BoxFactory from './BoxFactory';
-
-const Context = createContext<FormRef>(null as any);
-
-export const useForm = () => useContext<FormRef>(Context);
 
 const FormFactory = React.memo<FormProps>(
   forwardRef(({ ...props }, ref: ForwardedRef<FormRef>) => {
@@ -247,9 +244,9 @@ const FormFactory = React.memo<FormProps>(
     }, [ref, rootRef]);
 
     return (
-      <Context.Provider value={context}>
+      <FormContext.Provider value={context}>
         <BoxFactory ref={rootRef} component={Form} variants={{ root: variants.root }} {...rest} onSubmit={submit} />
-      </Context.Provider>
+      </FormContext.Provider>
     );
   }),
 );

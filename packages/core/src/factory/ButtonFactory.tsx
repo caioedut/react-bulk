@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 
+import useForm from '../hooks/useForm';
 import useTheme from '../hooks/useTheme';
 import childrenize from '../props/childrenize';
 import factory2 from '../props/factory2';
@@ -8,7 +9,6 @@ import global from '../utils/global';
 import pick from '../utils/pick';
 import BadgeFactory from './BadgeFactory';
 import BoxFactory from './BoxFactory';
-import { useForm } from './FormFactory';
 import LoadingFactory from './LoadingFactory';
 import TextFactory from './TextFactory';
 

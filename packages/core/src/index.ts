@@ -5,13 +5,13 @@ export { default as ReactBulk } from './ReactBulk';
 export * from './types';
 
 // Hook
-export { useForm } from './factory/FormFactory';
 export { default as useAnimation } from './hooks/useAnimation';
 export { default as useBreakpoints } from './hooks/useBreakpoints';
 export { default as useDefaultRef } from './hooks/useDefaultRef';
 export { default as useDeferredValue } from './hooks/useDeferredValue';
 export { default as useDependentState } from './hooks/useDependentState';
 export { default as useDraggable } from './hooks/useDraggable';
+export { default as useForm } from './hooks/useForm';
 export { default as useHtmlId } from './hooks/useHtmlId';
 export { default as useInput } from './hooks/useInput';
 export { default as usePropState } from './hooks/usePropState';

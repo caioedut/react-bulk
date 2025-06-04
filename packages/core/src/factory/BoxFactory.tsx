@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useMemo, useRef } from 'react';
 
 import useAnimation from '../hooks/useAnimation';
+import useForm from '../hooks/useForm';
 import useTheme from '../hooks/useTheme';
 import bindings from '../props/bindings';
 import extract from '../props/extract';
@@ -15,7 +16,6 @@ import clone from '../utils/clone';
 import clsx from '../utils/clsx';
 import defined from '../utils/defined';
 import global from '../utils/global';
-import { useForm } from './FormFactory';
 
 const BoxFactory = React.memo<BoxProps>(
   forwardRef(({ platform, className, children, ...props }, ref) => {
