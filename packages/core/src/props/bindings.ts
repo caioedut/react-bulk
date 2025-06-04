@@ -4,7 +4,7 @@ import keyboard from '../events/keyboard';
 import pointer from '../events/pointer';
 import scroll from '../events/scroll';
 
-export default function ({ ...props }: any) {
+export default function ({ ...props }: any, eventExtraData: any = {}) {
   const { web, native } = Platform;
 
   const mapping = {
@@ -29,12 +29,12 @@ export default function ({ ...props }: any) {
 
         const callbackHandled = (event) =>
           handler === 'pointer'
-            ? callback(pointer(event))
+            ? callback(pointer(event, eventExtraData))
             : handler === 'keyboard'
-              ? callback(keyboard(event))
+              ? callback(keyboard(event, eventExtraData))
               : handler === 'scroll'
-                ? callback(scroll(event))
-                : callback(base(event));
+                ? callback(scroll(event, eventExtraData))
+                : callback(base(event, eventExtraData));
 
         if (web) {
           props[webEventName] = callbackHandled;

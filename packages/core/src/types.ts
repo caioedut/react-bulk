@@ -283,6 +283,7 @@ export type RbkTouch = {
 
 export type RbkEvent<EventType = any, TargetType = any> = {
   type: string;
+  form: FormRef | null;
   handler: 'RbkEvent';
   target: TargetType;
   currentTarget: TargetType;

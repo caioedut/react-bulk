@@ -12,6 +12,7 @@ export default function base(event, extra?: Record<PropertyKey, unknown>): RbkEv
   return {
     type: get<string>('type', nativeEvent, event) ?? 'unknown',
     handler: 'RbkEvent',
+    form: null,
 
     // Extra
     ...(extra ?? {}),

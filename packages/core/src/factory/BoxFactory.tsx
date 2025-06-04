@@ -15,6 +15,7 @@ import clone from '../utils/clone';
 import clsx from '../utils/clsx';
 import defined from '../utils/defined';
 import global from '../utils/global';
+import { useForm } from './FormFactory';
 
 const BoxFactory = React.memo<BoxProps>(
   forwardRef(({ platform, className, children, ...props }, ref) => {
@@ -59,7 +60,8 @@ const BoxFactory = React.memo<BoxProps>(
       ...rest
     } = props;
 
-    rest = bindings(rest);
+    const form = useForm();
+    rest = bindings(rest, { form });
 
     pressable =
       pressable ??
