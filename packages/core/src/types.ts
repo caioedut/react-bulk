@@ -16,9 +16,7 @@ export type InputValue = any;
 
 export type Prettify<T> = { [K in keyof T]: T[K] };
 
-export type DistributiveOmit<T, K extends PropertyKey> = T extends any ? Omit<T, K> : never;
-
-export type Overwrite<T, NewT> = DistributiveOmit<T, keyof NewT> & NewT;
+export type Overwrite<T, NewT> = Omit<T, keyof NewT> & NewT;
 
 export type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
@@ -150,7 +148,7 @@ export type TableColumn<RowData = any> = {
 
 /** @internal */
 export type TabItem = Overwrite<
-  DistributiveOmit<ButtonProps, 'children'>,
+  Omit<ButtonProps, 'children'>,
   {
     label: string;
     value?: string | number;
