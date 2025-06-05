@@ -49,6 +49,10 @@ const ProgressFactory = React.memo<ProgressProps>(
     const translateX = native ? containerWidth * 0.8 : '80%';
 
     if (!isIndeterminate) {
+      // fix float precision
+      // Exception in HostFunction: Loss of precision during arithmetic conversion: (long long)
+      value = Math.round(value ?? 0);
+
       rest.accessibility = deepmerge({ label: 'percentage' }, rest.accessibility, { value: { now: value } });
     }
 
