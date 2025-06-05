@@ -198,6 +198,16 @@ The string that will be rendered before text input has been entered.
 
 ---
 
+### **`multiple`**
+
+Allows selection of multiple options instead of just one.
+
+> Tip: combine this with `searchCount`.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
 ### **`searchCount`**
 
 Minimum number of options to appear the search input
