@@ -623,8 +623,9 @@ function FormExample() {
           </Box>
           <Box xs={6} md={4}>
             <Select
+              multiple
               name="size"
-              label="Size"
+              label="Size (multiple)"
               defaultValue="small"
               options={[
                 { value: 'small', label: 'Small' },
