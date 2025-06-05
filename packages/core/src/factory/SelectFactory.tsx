@@ -10,6 +10,7 @@ import Check from '../icons/Check';
 import ChevronDown from '../icons/ChevronDown';
 import ChevronUp from '../icons/ChevronUp';
 import MagnifyingGlass from '../icons/MagnifyingGlass';
+import Times from '../icons/Times';
 import extract from '../props/extract';
 import factory2 from '../props/factory2';
 import getSize from '../props/getSize';
@@ -48,6 +49,7 @@ const SelectFactory = React.memo<SelectProps>(
       error,
       label,
       loading,
+      multiple,
       name,
       options: arrOptions = [],
       placeholder,
@@ -100,18 +102,64 @@ const SelectFactory = React.memo<SelectProps>(
       setSearch('');
     }, []);
 
-    const selected = useMemo(() => arrOptions?.find((item) => item.value == input.state), [arrOptions, input.state]);
+    const selected = useMemo(() => {
+      if (multiple) {
+        const values = Array.isArray(input.state) ? input.state : [];
+        return arrOptions?.filter((item) => values.includes(item.value)) || [];
+      }
+      return arrOptions?.find((item) => item.value == input.state);
+    }, [arrOptions, input.state, multiple]);
 
+    const mainColor = props.color || 'primary';
     id = useHtmlId(id);
     size = getSize(size);
-    color = theme.color(input.error ? 'error' : !focused && !colorful ? 'gray.light' : color || 'primary');
+    color = theme.color(input.error ? 'error' : !focused && !colorful ? 'gray.light' : mainColor);
     accessibility = deepmerge({ label: label ?? placeholder }, accessibility, { state: { expanded: visible } });
 
     const baseSize = theme.rem(size);
     const fontSize = baseSize / 2;
     const spacing = (baseSize - theme.rem(0.75)) / 2;
 
-    const displayLabel = selected?.label ?? selected?.value ?? placeholder ?? '';
+    const displayLabel = useMemo(() => {
+      if (multiple) {
+        if (!selected?.length) return placeholder ?? '';
+        return (
+          <BoxFactory row wrap g={0.25} ml={-2}>
+            {(selected as any[]).map((item) => (
+              <BoxFactory
+                key={item.value}
+                row
+                noWrap
+                center
+                px={2}
+                py={1}
+                corners={1}
+                bg={theme.color(mainColor, 0.2)}
+                maxw="100%"
+              >
+                <TextFactory variant="caption" color={mainColor} numberOfLines={1} bold>
+                  {item.label}
+                </TextFactory>
+                <ButtonFactory
+                  variant="text"
+                  color={mainColor}
+                  size={size / 2}
+                  circular
+                  ml={1}
+                  mr={-0.5}
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    handleSelect(e, item.value);
+                  }}
+                  startAddon={({ color }) => <Times svg={svg} size={fontSize / 2} color={color} />}
+                />
+              </BoxFactory>
+            ))}
+          </BoxFactory>
+        );
+      }
+      return (selected as any)?.label ?? (selected as any)?.value ?? placeholder ?? '';
+    }, [selected, placeholder, multiple, color, size, theme]);
 
     const focus = useCallback(() => buttonRef?.current?.focus?.(), [buttonRef]);
     const blur = useCallback(() => buttonRef?.current?.blur?.(), [buttonRef]);
@@ -224,11 +272,20 @@ const SelectFactory = React.memo<SelectProps>(
 
     function handleSelect(event, value) {
       if (disabled || readOnly) return;
-      input.setState(value, event);
-      setVisible(false);
+
+      if (multiple) {
+        const currentValues = Array.isArray(input.state) ? input.state : [];
+        const newValues = currentValues.includes(value)
+          ? currentValues.filter((v) => v !== value)
+          : [...currentValues, value];
+        input.setState(newValues, event);
+      } else {
+        input.setState(value, event);
+        setVisible(false);
+      }
 
       // TODO: wait for RN Pressable compatibility with focus
-      if (web) {
+      if (web && !multiple) {
         focus();
       }
     }
@@ -378,7 +435,9 @@ const SelectFactory = React.memo<SelectProps>(
                 maxw={metrics?.maxWidth ?? 0}
               >
                 {filteredOptions?.map((option, index) => {
-                  const isSelected = option.value == selected?.value;
+                  const isSelected = multiple
+                    ? (Array.isArray(input.state) ? input.state : []).includes(option.value)
+                    : option.value == (selected as any)?.value;
 
                   return (
                     <ButtonFactory

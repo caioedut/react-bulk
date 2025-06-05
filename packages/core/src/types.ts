@@ -875,6 +875,7 @@ export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
     options?: SelectOption[];
     placeholder?: string;
     readOnly?: boolean;
+    multiple?: boolean;
     searchCount?: number;
     value?: InputValue;
     // Events
