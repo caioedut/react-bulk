@@ -46,13 +46,16 @@ import {
 
 import useDimensions from './useDimensions';
 
+const locale = typeof navigator !== 'undefined' ? (navigator.languages?.[0] ?? navigator.language) : null;
+
 global.mapping = {
   web: true,
   native: false,
   ios: false,
   android: false,
 
-  locale: typeof navigator !== 'undefined' ? (navigator.languages?.[0] ?? navigator.language) : null,
+  hasLocale: Boolean(locale),
+  locale: locale || 'en-US',
 
   useDimensions,
 

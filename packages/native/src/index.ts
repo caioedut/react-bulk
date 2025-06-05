@@ -92,6 +92,8 @@ const locales = [
   typeof NativeModules !== 'undefined' && NativeModules.I18nManager?.localeIdentifier,
 ].filter(Boolean);
 
+const locale = locales?.[0]?.replace(/_/, '-') || null;
+
 const isWeb = Platform.OS === 'web' || typeof document !== 'undefined';
 
 global.mapping = {
@@ -100,7 +102,8 @@ global.mapping = {
   ios: Platform.OS === 'ios',
   android: Platform.OS === 'android',
 
-  locale: locales?.[0]?.replace(/_/, '-') || null,
+  hasLocale: Boolean(locale),
+  locale: locale || 'en-US',
 
   useDimensions,
 
