@@ -20,6 +20,7 @@ jspm_packages/
 bower_components/
 
 # Lockfile
+bun.lock
 bun.lockb
 yarn.lock
 pnpm-lock.yaml

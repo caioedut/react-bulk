@@ -8,12 +8,21 @@ import RbkContext from './RbkContext';
 import Toaster from './Toaster';
 import createTheme from './createTheme';
 import BoxFactory from './factory/BoxFactory';
-import { AnyObject, ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
+import { AnyObject, ReactElement, ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
 import global from './utils/global';
+import stdout from './utils/stdout';
 
 const toasterRef = createRef<any>();
 
-export default function ReactBulk({ theme: themeProp, children }: any) {
+export default function ReactBulk({
+  theme: themeProp,
+  locale,
+  children,
+}: {
+  theme?: ThemeEditProps | ThemeModeValues;
+  locale?: Intl.LocalesArgument;
+  children?: ReactElement;
+}) {
   const { web, native } = Platform;
 
   const mountedRef = useRef(false);
@@ -26,6 +35,12 @@ export default function ReactBulk({ theme: themeProp, children }: any) {
   });
 
   global.theme = theme;
+  global.locale = locale || global.locale;
+  console.log('locale', global.locale);
+
+  if (!global.hasLocale && !locale) {
+    stdout.warn(`missing "locale" in root context. Falling back to "en-US":\n\n  <ReactBulk locale="en-US" (...) >\n`);
+  }
 
   const setTheme = useCallback((theme: ThemeModeValues | ThemeEditProps | ((theme: ThemeProps) => ThemeEditProps)) => {
     _setTheme((current) => {
@@ -38,7 +53,7 @@ export default function ReactBulk({ theme: themeProp, children }: any) {
   useEffect(() => {
     // Avoid double render with initial theme
     if (mountedRef.current) {
-      setTheme(themeProp);
+      setTheme(themeProp || {});
     }
 
     mountedRef.current = true;
