@@ -276,7 +276,7 @@ const SelectFactory = React.memo<SelectProps>(
 
       if (multiple) {
         const currentValues = Array.isArray(input.state) ? input.state : [];
-        
+
         // null/undefined must clear selecion
         if (value === null || value === undefined) {
           input.setState([value], event);
@@ -285,8 +285,8 @@ const SelectFactory = React.memo<SelectProps>(
         }
 
         // selecting value, must remove null/undefined values
-        const filteredValues = currentValues.filter(v => v !== null && v !== undefined);
-        
+        const filteredValues = currentValues.filter((v) => v !== null && v !== undefined);
+
         const newValues = filteredValues.includes(value)
           ? filteredValues.filter((v) => v !== value)
           : [...filteredValues, value];
