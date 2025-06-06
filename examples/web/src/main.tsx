@@ -571,6 +571,19 @@ function FormExample() {
         ]}
       />
 
+      <Select
+        mt="1gap"
+        multiple
+        name="size"
+        label="Size (multiple)"
+        options={[
+          { value: null, label: '[None]' },
+          { value: 'small', label: 'Small' },
+          { value: 'medium', label: 'Medium' },
+          { value: 'large', label: 'Large' },
+        ]}
+      />
+
       <Divider mt="1gap" mx="-1gap" />
 
       <Text variant="subtitle" mt="1gap">
@@ -625,7 +638,7 @@ function FormExample() {
             <Select
               multiple
               name="size"
-              label="Size (multiple)"
+              label="Size"
               defaultValue="small"
               options={[
                 { value: 'small', label: 'Small' },
