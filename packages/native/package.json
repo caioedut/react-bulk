@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/native",
   "description": "React Bulk for React Native",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "license": "MIT",
   "homepage": "https://rbk.caioedut.com",
   "repository": {
@@ -33,7 +33,7 @@
     "dist"
   ],
   "dependencies": {
-    "@react-bulk/core": "^1.6.1"
+    "@react-bulk/core": "^1.6.2"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
