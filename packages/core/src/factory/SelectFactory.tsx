@@ -142,6 +142,7 @@ const SelectFactory = React.memo<SelectProps>(
                 </TextFactory>
                 <ButtonFactory
                   variant="text"
+                  component={web ? 'div' : undefined}
                   color={mainColor}
                   size={size / 2}
                   circular
