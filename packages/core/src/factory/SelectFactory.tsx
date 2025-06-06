@@ -80,7 +80,7 @@ const SelectFactory = React.memo<SelectProps>(
     const input = useInput({
       name,
       value,
-      defaultValue,
+      defaultValue: multiple && !value && !defaultValue ? [null] : defaultValue,
       error,
       controlled,
       editable: !disabled && !readOnly,
@@ -276,9 +276,20 @@ const SelectFactory = React.memo<SelectProps>(
 
       if (multiple) {
         const currentValues = Array.isArray(input.state) ? input.state : [];
-        const newValues = currentValues.includes(value)
-          ? currentValues.filter((v) => v !== value)
-          : [...currentValues, value];
+        
+        // null/undefined must clear selecion
+        if (value === null || value === undefined) {
+          input.setState([value], event);
+          setVisible(false);
+          return;
+        }
+
+        // selecting value, must remove null/undefined values
+        const filteredValues = currentValues.filter(v => v !== null && v !== undefined);
+        
+        const newValues = filteredValues.includes(value)
+          ? filteredValues.filter((v) => v !== value)
+          : [...filteredValues, value];
         input.setState(newValues, event);
       } else {
         input.setState(value, event);
