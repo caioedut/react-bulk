@@ -35,10 +35,9 @@ export default function ReactBulk({
   });
 
   global.theme = theme;
-  global.locale = locale || global.locale;
-  console.log('locale', global.locale);
+  global.mapping.locale = locale || global.mapping.locale;
 
-  if (!global.hasLocale && !locale) {
+  if (!global.mapping.hasLocale && !locale) {
     stdout.warn(`missing "locale" in root context. Falling back to "en-US":\n\n  <ReactBulk locale="en-US" (...) >\n`);
   }
 
