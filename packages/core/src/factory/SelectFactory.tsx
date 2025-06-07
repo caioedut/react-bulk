@@ -80,7 +80,7 @@ const SelectFactory = React.memo<SelectProps>(
     const input = useInput({
       name,
       value,
-      defaultValue: multiple && !value && !defaultValue ? [null] : defaultValue,
+      defaultValue,
       error,
       controlled,
       editable: !disabled && !readOnly,
@@ -105,7 +105,9 @@ const SelectFactory = React.memo<SelectProps>(
     const selected = useMemo(() => {
       if (multiple) {
         const values = Array.isArray(input.state) ? input.state : [];
-        return arrOptions?.filter((item) => values.includes(item.value)) || [];
+        const emptyOption = arrOptions.find((item) => item.value == null);
+        const optionsMatch = arrOptions?.filter((item) => values.some((val) => val == item.value)) || [];
+        return optionsMatch.length ? optionsMatch : emptyOption ? [emptyOption] : [];
       }
       return arrOptions?.find((item) => item.value == input.state);
     }, [arrOptions, input.state, multiple]);
@@ -279,7 +281,7 @@ const SelectFactory = React.memo<SelectProps>(
 
         // null/undefined must clear selecion
         if (value === null || value === undefined) {
-          input.setState([value], event);
+          input.setState(null, event);
           setVisible(false);
           return;
         }
@@ -290,7 +292,7 @@ const SelectFactory = React.memo<SelectProps>(
         const newValues = filteredValues.includes(value)
           ? filteredValues.filter((v) => v !== value)
           : [...filteredValues, value];
-        input.setState(newValues, event);
+        input.setState(newValues?.length ? newValues : null, event);
       } else {
         input.setState(value, event);
         setVisible(false);
