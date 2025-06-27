@@ -372,7 +372,7 @@ const base: ThemeProps = {
               '-webkit-user-select': 'none',
               '-ms-user-select': 'none',
               'user-select': 'none',
-              outline: '0 !important',
+              outline: 0,
               textDecorationLine: 'none !important',
               ...this.mixins.transitions.fast,
               transitionProperty: 'background-color, box-shadow',
