@@ -1210,6 +1210,7 @@ export type BadgeProps<ALLOW_ANY = true> = PropsWithStyles<
     bottom?: boolean;
     left?: boolean;
     right?: boolean;
+    color?: RbkColor;
     // Styles
     labelStyle?: RbkStyle;
     variants?: {
