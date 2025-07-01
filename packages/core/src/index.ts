@@ -65,6 +65,8 @@ export { default as baseEvent } from './events/base';
 export { default as keyboardEvent } from './events/keyboard';
 /** @internal */
 export { default as pointerEvent } from './events/pointer';
+/** @internal */
+export { default as scrollEvent } from './events/scroll';
 
 // Util
 export { default as Platform } from './Platform';
