@@ -86,6 +86,25 @@ import { Select } from '@react-bulk/web'; // OR @react-bulk/native
 </Box>
 ```
 
+### Multiple
+
+```jsx live
+<Box maxw={400}>
+    <Select
+        multiple
+        label="Color"
+        placeholder="Select colors"
+        options={[
+            {value: 1, label: 'Red'},
+            {value: 2, label: 'Green'},
+            {value: 2, label: 'Blue'},
+            {value: 2, label: 'Black'},
+            {value: 2, label: 'White'},
+        ]}
+    />
+</Box>
+```
+
 ## Styles
 
 ### **`style`**
