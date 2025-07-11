@@ -16,7 +16,9 @@ import BoxFactory from './BoxFactory';
 import TextFactory from './TextFactory';
 
 const TooltipFactory = React.memo<TooltipProps>(
-  forwardRef(({ children, ...props }, ref) => {
+  forwardRef(({ ref, children, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Tooltip;
     const { native, svg, Button } = global.mapping;

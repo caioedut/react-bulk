@@ -15,7 +15,9 @@ import LabelFactory from './LabelFactory';
 import TextFactory from './TextFactory';
 
 const SwitchFactory = React.memo<SwitchProps>(
-  forwardRef(({ ...props }, ref) => {
+  forwardRef(({ ref, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Switch;
     const { native } = global.mapping;

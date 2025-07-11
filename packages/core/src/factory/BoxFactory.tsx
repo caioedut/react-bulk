@@ -18,7 +18,9 @@ import defined from '../utils/defined';
 import global from '../utils/global';
 
 const BoxFactory = React.memo<BoxProps>(
-  forwardRef(({ platform, className, children, ...props }, ref) => {
+  forwardRef(({ ref, platform, className, children, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Box;
     const { web, native, Button, Text, View, useDimensions } = global.mapping;

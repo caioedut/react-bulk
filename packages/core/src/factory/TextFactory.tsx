@@ -10,7 +10,9 @@ import global from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const TextFactory = React.memo<TextProps>(
-  forwardRef(({ children, ...props }, ref) => {
+  forwardRef(({ ref, children, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Text;
     const { web, native, Text } = global.mapping;

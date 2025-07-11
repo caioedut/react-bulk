@@ -8,7 +8,9 @@ import stdout from '../utils/stdout';
 import BoxFactory from './BoxFactory';
 
 const GridFactory = React.memo<GridProps>(
-  forwardRef(({ children, ...props }, ref) => {
+  forwardRef(({ ref, children, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Grid;
 

@@ -10,7 +10,9 @@ import ButtonGroupFactory from './ButtonGroupFactory';
 import ScrollableFactory from './ScrollableFactory';
 
 const TabsFactory = React.memo<TabsProps>(
-  forwardRef(({ ...props }, ref) => {
+  forwardRef(({ ref, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Tabs;
 

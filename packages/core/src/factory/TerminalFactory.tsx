@@ -21,7 +21,9 @@ function postFocus($el: any) {
 }
 
 const TerminalFactory = React.memo<TerminalProps>(
-  forwardRef(({ ...props }, ref) => {
+  forwardRef(({ ref, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Terminal;
     const { web, native, ios, Input } = global.mapping;
