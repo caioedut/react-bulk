@@ -14,7 +14,7 @@ const theme: ThemeEditProps = {
 
 function App() {
   return (
-    <ReactBulk theme={theme}>
+    <ReactBulk locale="en-US" theme={theme}>
       <Main />
     </ReactBulk>
   );

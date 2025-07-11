@@ -1,8 +1,7 @@
 import { ThemeEditProps } from '@react-bulk/core';
-import { ReactBulk } from '@react-bulk/native';
-import { registerRootComponent } from 'expo';
-
-import Main from './src/main';
+import { ReactBulk } from '@react-bulk/expo';
+import { Stack } from 'expo-router';
+import 'react-native-reanimated';
 
 const theme: ThemeEditProps = {
   typography: {
@@ -10,12 +9,10 @@ const theme: ThemeEditProps = {
   },
 };
 
-function App() {
+export default function RootLayout() {
   return (
     <ReactBulk locale="en-US" theme={theme}>
-      <Main />
+      <Stack />
     </ReactBulk>
   );
 }
-
-registerRootComponent(App);

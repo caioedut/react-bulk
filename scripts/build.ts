@@ -1,4 +1,4 @@
-import { cpSync, readdirSync } from 'fs';
+import { cpSync, readdirSync, rmSync } from 'fs';
 import { globSync } from 'glob';
 import pmex from 'pmex';
 
@@ -13,3 +13,15 @@ packages.forEach((dir) => {
     cpSync(file, `packages/${dir}/${file}`);
   });
 });
+
+/**
+ * @hack fix build for expo
+ */
+const expoDir = './packages/expo';
+rmSync(`${expoDir}/dist`, { force: true, recursive: true });
+cpSync(`${expoDir}/src/index.ts`, `${expoDir}/dist/index.js`);
+cpSync(`${expoDir}/src/index.ts`, `${expoDir}/dist/index.d.ts`);
+cpSync(`${expoDir}/src/platform/index.ts`, `${expoDir}/dist/platform/index.js`);
+cpSync(`${expoDir}/src/platform/index.ts`, `${expoDir}/dist/platform/index.d.ts`);
+cpSync(`${expoDir}/src/platform/index.web.ts`, `${expoDir}/dist/platform/index.web.js`);
+cpSync(`${expoDir}/src/platform/index.web.ts`, `${expoDir}/dist/platform/index.web.d.ts`);

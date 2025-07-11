@@ -32,28 +32,6 @@
   "files": [
     "dist"
   ],
-  "pkgroll": {
-    "entries": [
-      "src/index.ts",
-      "src/platform/index.ts",
-      "src/platform/index.web.ts"
-    ],
-    "outDir": "dist"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./platform": {
-      "import": "./dist/platform/index.js",
-      "types": "./dist/platform/index.d.ts"
-    },
-    "./platform/index.web": {
-      "import": "./dist/platform/index.web.js",
-      "types": "./dist/platform/index.web.d.ts"
-    }
-  },
   "dependencies": {
     "@react-bulk/core": "^1.6.5",
     "@react-bulk/web": "^1.6.5",
