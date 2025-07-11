@@ -33,6 +33,7 @@
     "test": "tsx scripts/test.ts",
     "example:web": "tsx scripts/example.ts --web",
     "example:native": "tsx scripts/example.ts --native",
+    "example:expo": "tsx scripts/example.ts --expo",
     "clean": "lerna exec --parallel -- rimraf dist",
     "build": "tsx scripts/build.ts",
     "publish:stable": "tsx scripts/publish.ts",

@@ -1,0 +1,72 @@
+{
+  "name": "@react-bulk/expo",
+  "description": "React Bulk for Expo (web+native)",
+  "version": "1.6.5",
+  "license": "MIT",
+  "homepage": "https://rbk.caioedut.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caioedut/react-bulk.git",
+    "directory": "packages/expo"
+  },
+  "author": {
+    "name": "Caio Teixeira",
+    "email": "caioedut@gmail.com"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-component",
+    "web",
+    "native",
+    "android",
+    "ios",
+    "cross-platform",
+    "ui",
+    "ux",
+    "expo"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "pkgroll": {
+    "entries": [
+      "src/index.ts",
+      "src/platform/index.ts",
+      "src/platform/index.web.ts"
+    ],
+    "outDir": "dist"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./platform": {
+      "import": "./dist/platform/index.js",
+      "types": "./dist/platform/index.d.ts"
+    },
+    "./platform/index.web": {
+      "import": "./dist/platform/index.web.js",
+      "types": "./dist/platform/index.web.d.ts"
+    }
+  },
+  "dependencies": {
+    "@react-bulk/core": "^1.6.5",
+    "@react-bulk/web": "^1.6.5",
+    "@react-bulk/native": "^1.6.5"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-native": ">=0.71.0",
+    "react-native-svg": "*",
+    "expo": ">=52.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "398b73c8a58faaeec96d1c1e40de4fb1b1973be1"
+}
