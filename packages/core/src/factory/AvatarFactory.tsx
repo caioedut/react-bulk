@@ -8,7 +8,9 @@ import BoxFactory from './BoxFactory';
 import ImageFactory from './ImageFactory';
 
 const AvatarFactory = React.memo<AvatarProps>(
-  forwardRef(({ children, ...props }, ref) => {
+  forwardRef(({ ref, children, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Avatar;
 

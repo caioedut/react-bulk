@@ -12,7 +12,9 @@ import global from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const GrowBoxFactory = React.memo<GrowBoxProps>(
-  forwardRef(({ children, ...props }, ref) => {
+  forwardRef(({ ref, children, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.GrowBox;
     const { native } = global.mapping;

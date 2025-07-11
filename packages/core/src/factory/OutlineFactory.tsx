@@ -9,7 +9,9 @@ import global from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const OutlineFactory = React.memo<OutlineProps>(
-  forwardRef(({ children, ...props }, ref) => {
+  forwardRef(({ ref, children, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Outline;
     const { web, native } = global.mapping;

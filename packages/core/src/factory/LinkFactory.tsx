@@ -7,7 +7,9 @@ import global from '../utils/global';
 import TextFactory from './TextFactory';
 
 const LinkFactory = React.memo<LinkProps>(
-  forwardRef(({ ...props }, ref) => {
+  forwardRef(({ ref, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Link;
     const { Link } = global.mapping;

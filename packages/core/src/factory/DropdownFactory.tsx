@@ -11,7 +11,9 @@ import BackdropFactory from './BackdropFactory';
 import BoxFactory from './BoxFactory';
 
 const DropdownFactory = React.memo<DropdownProps>(
-  forwardRef(({ children, ...props }, ref) => {
+  forwardRef(({ ref, children, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Dropdown;
     const { useDimensions } = global.mapping;

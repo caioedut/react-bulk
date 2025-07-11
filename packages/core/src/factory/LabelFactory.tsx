@@ -7,7 +7,9 @@ import global from '../utils/global';
 import TextFactory from './TextFactory';
 
 const LabelFactory = React.memo<LabelProps>(
-  forwardRef(({ ...props }, ref) => {
+  forwardRef(({ ref, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Label;
     const { web, native, Label } = global.mapping;

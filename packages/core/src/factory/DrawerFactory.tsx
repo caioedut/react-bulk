@@ -7,7 +7,9 @@ import BackdropFactory from './BackdropFactory';
 import BoxFactory from './BoxFactory';
 
 const DrawerFactory = React.memo<DrawerProps>(
-  forwardRef(({ children, ...props }, ref) => {
+  forwardRef(({ ref, children, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Drawer;
 

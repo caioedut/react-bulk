@@ -11,7 +11,9 @@ import BoxFactory from './BoxFactory';
 import TextFactory from './TextFactory';
 
 const ImageFactory = React.memo<ImageProps>(
-  forwardRef(({ ...props }, ref) => {
+  forwardRef(({ ref, ...props }, legacyRef) => {
+    ref = ref || legacyRef;
+
     const theme = useTheme();
     const options = theme.components.Image;
     const { web, native, Image } = global.mapping;
