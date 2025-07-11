@@ -2,13 +2,14 @@ import { cpSync, rmSync } from 'fs';
 import pmex from 'pmex';
 
 const isNative = process.argv.includes('--native');
-const isWeb = process.argv.includes('--web') || !isNative;
+const isExpo = process.argv.includes('--expo');
+const isWeb = process.argv.includes('--web') || (!isNative && !isExpo);
 
-if (isWeb && isNative) {
-  throw new Error('Choose --web or --native, not both.');
+if ([isWeb, isNative, isExpo].filter(Boolean).length > 1) {
+  throw new Error('Choose --web, --native or --expo, not multiple.');
 }
 
-const platform = isNative ? 'native' : 'web';
+const platform = isExpo ? 'expo' : isNative ? 'native' : 'web';
 const cwd = `./examples/${platform}`;
 
 pmex('build');
@@ -46,5 +47,9 @@ if (isWeb) {
 }
 
 if (isNative) {
+  pmex('dlx expo start -c', { cwd });
+}
+
+if (isExpo) {
   pmex('dlx expo start -c', { cwd });
 }
