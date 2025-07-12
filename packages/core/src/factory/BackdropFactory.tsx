@@ -9,7 +9,7 @@ import useHtmlId from '../hooks/useHtmlId';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { BackdropProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const BackdropFactory = React.memo<BackdropProps>(
@@ -18,7 +18,7 @@ const BackdropFactory = React.memo<BackdropProps>(
 
     const theme = useTheme();
     const options = theme.components.Backdrop;
-    const { web, native, Dialog, BackHandler } = global.mapping;
+    const { web, native, Dialog, BackHandler } = rbkGlobal.mapping;
 
     const portalId = useHtmlId();
 

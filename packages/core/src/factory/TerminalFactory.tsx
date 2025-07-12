@@ -5,7 +5,7 @@ import useDefaultRef from '../hooks/useDefaultRef';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { AnyObject, RbkColor, TerminalProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 import ScrollableFactory from './ScrollableFactory';
 import TextFactory from './TextFactory';
@@ -26,7 +26,7 @@ const TerminalFactory = React.memo<TerminalProps>(
 
     const theme = useTheme();
     const options = theme.components.Terminal;
-    const { web, native, ios, Input } = global.mapping;
+    const { web, native, ios, Input } = rbkGlobal.mapping;
 
     // Extends from default props
     const {

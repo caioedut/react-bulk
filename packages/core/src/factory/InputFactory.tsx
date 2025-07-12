@@ -9,7 +9,7 @@ import factory2 from '../props/factory2';
 import getSize from '../props/getSize';
 import { InputProps, InputValue } from '../types';
 import defined from '../utils/defined';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 import ButtonFactory from './ButtonFactory';
 import InputBaseFactory from './InputBaseFactory';
@@ -20,7 +20,7 @@ const InputFactory = React.memo<InputProps>(
 
     const theme = useTheme();
     const options = theme.components.Input;
-    const { svg } = global.mapping;
+    const { svg } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

@@ -4,7 +4,7 @@ import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import getSize from '../props/getSize';
 import { InputPinProps, RequiredSome } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import string from '../utils/string';
 import InputFactory from './InputFactory';
 
@@ -14,7 +14,7 @@ const InputPinFactory = React.memo<InputPinProps>(
 
     const theme = useTheme();
     const options = theme.components.InputPin;
-    const { web, ios } = global.mapping;
+    const { web, ios } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

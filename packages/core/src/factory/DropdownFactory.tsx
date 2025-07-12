@@ -6,7 +6,7 @@ import extract from '../props/extract';
 import factory2 from '../props/factory2';
 import { DropdownProps } from '../types';
 import defined from '../utils/defined';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BackdropFactory from './BackdropFactory';
 import BoxFactory from './BoxFactory';
 
@@ -16,7 +16,7 @@ const DropdownFactory = React.memo<DropdownProps>(
 
     const theme = useTheme();
     const options = theme.components.Dropdown;
-    const { useDimensions } = global.mapping;
+    const { useDimensions } = rbkGlobal.mapping;
 
     // Extends from default props
     const {

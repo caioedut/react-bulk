@@ -7,7 +7,7 @@ import useAnimation from '../hooks/useAnimation';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { CollapseProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const CollapseFactory = React.memo<CollapseProps>(
@@ -16,7 +16,7 @@ const CollapseFactory = React.memo<CollapseProps>(
 
     const theme = useTheme();
     const options = theme.components.Collapse;
-    const { web, native } = global.mapping;
+    const { web, native } = rbkGlobal.mapping;
 
     // Extends from default props
     const {

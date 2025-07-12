@@ -5,7 +5,7 @@ import extract from '../props/extract';
 import factory2 from '../props/factory2';
 import { OutlineProps, RequiredSome } from '../types';
 import clone from '../utils/clone';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const OutlineFactory = React.memo<OutlineProps>(
@@ -14,7 +14,7 @@ const OutlineFactory = React.memo<OutlineProps>(
 
     const theme = useTheme();
     const options = theme.components.Outline;
-    const { web, native } = global.mapping;
+    const { web, native } = rbkGlobal.mapping;
 
     const [focused, setFocused] = useState(false);
 

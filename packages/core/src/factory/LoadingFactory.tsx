@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { LoadingProps, RequiredSome } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import pick from '../utils/pick';
 import BoxFactory from './BoxFactory';
 import TextFactory from './TextFactory';
@@ -14,7 +14,7 @@ const LoadingFactory = React.memo<LoadingProps>(
 
     const theme = useTheme();
     const options = theme.components.Loading;
-    const { Svg, Circle } = global.mapping.svg;
+    const { Svg, Circle } = rbkGlobal.mapping.svg;
 
     // Extends from default props
     let {

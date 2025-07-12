@@ -12,7 +12,7 @@ import childrenize from '../props/childrenize';
 import factory2 from '../props/factory2';
 import { CarouselProps, RequiredSome } from '../types';
 import event from '../utils/event';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 import ButtonFactory from './ButtonFactory';
 import ScrollableFactory from './ScrollableFactory';
@@ -23,7 +23,7 @@ const CarouselFactory = React.memo<CarouselProps>(
 
     const theme = useTheme();
     const options = theme.components.Carousel;
-    const { web, native, svg, useDimensions } = global.mapping;
+    const { web, native, svg, useDimensions } = rbkGlobal.mapping;
 
     const dimensions = useDimensions();
     const breakpoints = useBreakpoints();

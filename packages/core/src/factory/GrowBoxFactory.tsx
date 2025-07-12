@@ -8,7 +8,7 @@ import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import jss from '../styles/jss';
 import { GrowBoxProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const GrowBoxFactory = React.memo<GrowBoxProps>(
@@ -17,7 +17,7 @@ const GrowBoxFactory = React.memo<GrowBoxProps>(
 
     const theme = useTheme();
     const options = theme.components.GrowBox;
-    const { native } = global.mapping;
+    const { native } = rbkGlobal.mapping;
 
     // Extends from default props
     const {

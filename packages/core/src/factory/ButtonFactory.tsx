@@ -5,7 +5,7 @@ import useTheme from '../hooks/useTheme';
 import childrenize from '../props/childrenize';
 import factory2 from '../props/factory2';
 import { ButtonProps, RequiredSome } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import pick from '../utils/pick';
 import BadgeFactory from './BadgeFactory';
 import BoxFactory from './BoxFactory';
@@ -18,7 +18,7 @@ const ButtonFactory = React.memo<ButtonProps>(
 
     const theme = useTheme();
     const options = theme.components.Button;
-    const { web, Button } = global.mapping;
+    const { web, Button } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

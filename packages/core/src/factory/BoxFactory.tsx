@@ -15,7 +15,7 @@ import { BoxProps, RbkBreakpoints } from '../types';
 import clone from '../utils/clone';
 import clsx from '../utils/clsx';
 import defined from '../utils/defined';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 
 const BoxFactory = React.memo<BoxProps>(
   forwardRef(({ ref, platform, className, children, ...props }, legacyRef) => {
@@ -23,7 +23,7 @@ const BoxFactory = React.memo<BoxProps>(
 
     const theme = useTheme();
     const options = theme.components.Box;
-    const { web, native, Button, Text, View, useDimensions } = global.mapping;
+    const { web, native, Button, Text, View, useDimensions } = rbkGlobal.mapping;
 
     // Extends from default props
     props = useMemo(() => factory2<BoxProps>(props, options), [props, options]);
@@ -31,7 +31,7 @@ const BoxFactory = React.memo<BoxProps>(
     // Platform specific props
     if (platform) {
       Object.keys(platform).forEach((item) => {
-        if (global.mapping[item] || item === '*') {
+        if (rbkGlobal.mapping[item] || item === '*') {
           Object.assign(props, merge({}, platform[item]));
         }
       });

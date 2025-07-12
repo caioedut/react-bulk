@@ -9,7 +9,7 @@ import get from '../props/get';
 import getSize from '../props/getSize';
 import { customStyleProps } from '../styles/constants';
 import { InputBaseProps, RequiredSome } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import pick from '../utils/pick';
 import BoxFactory from './BoxFactory';
 import LabelFactory from './LabelFactory';
@@ -21,7 +21,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
 
     const theme = useTheme();
     const options = theme.components.InputBase;
-    const { web, native, Input, TextArea } = global.mapping;
+    const { web, native, Input, TextArea } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

@@ -4,7 +4,7 @@ import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { ProgressProps, RequiredSome } from '../types';
 import deepmerge from '../utils/deepmerge';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import pick from '../utils/pick';
 import BoxFactory from './BoxFactory';
 import TextFactory from './TextFactory';
@@ -15,7 +15,7 @@ const ProgressFactory = React.memo<ProgressProps>(
 
     const theme = useTheme();
     const options = theme.components.Progress;
-    const { native } = global.mapping;
+    const { native } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

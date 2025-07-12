@@ -40,7 +40,7 @@ import {
   TerminalFactory,
   TextFactory,
   TooltipFactory,
-  global,
+  rbkGlobal,
   useTheme,
 } from '@react-bulk/core';
 
@@ -48,7 +48,7 @@ import useDimensions from './useDimensions';
 
 const locale = typeof navigator !== 'undefined' ? (navigator.languages?.[0] ?? navigator.language) : null;
 
-global.mapping = {
+rbkGlobal.mapping = {
   web: true,
   native: false,
   ios: false,

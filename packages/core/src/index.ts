@@ -83,7 +83,7 @@ export { default as defined } from './utils/defined';
 /** @internal */
 export { default as event } from './utils/event';
 /** @internal */
-export { default as global } from './utils/global';
+export { default as rbkGlobal } from './utils/global';
 /** @internal */
 export { default as pick } from './utils/pick';
 /** @internal */

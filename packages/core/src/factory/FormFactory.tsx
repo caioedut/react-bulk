@@ -16,7 +16,7 @@ import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { FormField, FormProps, FormRef, RbkFormEvent } from '../types';
 import dotObject from '../utils/dotObject';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const FormFactory = React.memo<FormProps>(
@@ -25,7 +25,7 @@ const FormFactory = React.memo<FormProps>(
 
     const theme = useTheme();
     const options = theme.components.Form;
-    const { web, Form } = global.mapping;
+    const { web, Form } = rbkGlobal.mapping;
 
     // Extends from default props
     const {
