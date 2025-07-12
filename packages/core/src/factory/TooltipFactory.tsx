@@ -11,7 +11,7 @@ import CaretRight from '../icons/CaretRight';
 import CaretUp from '../icons/CaretUp';
 import factory2 from '../props/factory2';
 import { RbkRect, RequiredSome, TimeoutType, TooltipProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 import TextFactory from './TextFactory';
 
@@ -21,7 +21,7 @@ const TooltipFactory = React.memo<TooltipProps>(
 
     const theme = useTheme();
     const options = theme.components.Tooltip;
-    const { native, svg, Button } = global.mapping;
+    const { native, svg, Button } = rbkGlobal.mapping;
 
     const portalId = useHtmlId();
 

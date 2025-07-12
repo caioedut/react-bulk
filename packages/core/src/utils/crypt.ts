@@ -1,18 +1,18 @@
-import global from './global';
+import rbkGlobal from './global';
 
 export default function crypt(str: string) {
   return crc32(str).toString(16);
 }
 
 function crc32(str) {
-  if (!global.crcTable) {
-    global.crcTable = makeCRCTable();
+  if (!rbkGlobal.crcTable) {
+    rbkGlobal.crcTable = makeCRCTable();
   }
 
   let crc = 0 ^ -1;
 
   for (let i = 0; i < str.length; i++) {
-    crc = (crc >>> 8) ^ global.crcTable[(crc ^ str.charCodeAt(i)) & 0xff];
+    crc = (crc >>> 8) ^ rbkGlobal.crcTable[(crc ^ str.charCodeAt(i)) & 0xff];
   }
 
   return (crc ^ -1) >>> 0;

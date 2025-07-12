@@ -17,7 +17,7 @@ import getSize from '../props/getSize';
 import { spacings } from '../styles/constants';
 import { AnyObject, RequiredSome, SelectProps } from '../types';
 import deepmerge from '../utils/deepmerge';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import string from '../utils/string';
 import BackdropFactory from './BackdropFactory';
 import BoxFactory from './BoxFactory';
@@ -35,7 +35,7 @@ const SelectFactory = React.memo<SelectProps>(
 
     const theme = useTheme();
     const options = theme.components.Select;
-    const { web, native, svg, useDimensions } = global.mapping;
+    const { web, native, svg, useDimensions } = rbkGlobal.mapping;
 
     const dimensions = useDimensions();
 

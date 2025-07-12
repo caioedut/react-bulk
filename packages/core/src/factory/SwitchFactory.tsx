@@ -8,7 +8,7 @@ import factory2 from '../props/factory2';
 import getSize from '../props/getSize';
 import { RequiredSome, SwitchProps } from '../types';
 import deepmerge from '../utils/deepmerge';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 import ButtonFactory from './ButtonFactory';
 import LabelFactory from './LabelFactory';
@@ -20,7 +20,7 @@ const SwitchFactory = React.memo<SwitchProps>(
 
     const theme = useTheme();
     const options = theme.components.Switch;
-    const { native } = global.mapping;
+    const { native } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

@@ -56,7 +56,7 @@ import {
   TerminalFactory,
   TextFactory,
   TooltipFactory,
-  global,
+  rbkGlobal,
   useTheme,
 } from '@react-bulk/core';
 import Svg, {
@@ -96,7 +96,7 @@ const locale = locales?.[0]?.replace(/_/, '-') || null;
 
 const isWeb = Platform.OS === 'web' || typeof document !== 'undefined';
 
-global.mapping = {
+rbkGlobal.mapping = {
   web: isWeb,
   native: Platform.OS !== 'web',
   ios: Platform.OS === 'ios',

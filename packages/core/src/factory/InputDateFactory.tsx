@@ -8,7 +8,7 @@ import factory2 from '../props/factory2';
 import getSize from '../props/getSize';
 import { InputDateProps, RequiredSome } from '../types';
 import { dateify } from '../utils/date';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BackdropFactory from './BackdropFactory';
 import BoxFactory from './BoxFactory';
 import ButtonFactory from './ButtonFactory';
@@ -27,7 +27,7 @@ const InputDateFactory = React.memo<InputDateProps>(
 
     const theme = useTheme();
     const options = theme.components.InputDate;
-    const { locale, svg } = global.mapping;
+    const { locale, svg } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

@@ -10,7 +10,7 @@ import factory2 from '../props/factory2';
 import getSize from '../props/getSize';
 import { spacings } from '../styles/constants';
 import { CheckboxProps, RequiredSome } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 import ButtonFactory from './ButtonFactory';
 import LabelFactory from './LabelFactory';
@@ -22,7 +22,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
 
     const theme = useTheme();
     const options = theme.components.Checkbox;
-    const { native, svg } = global.mapping;
+    const { native, svg } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

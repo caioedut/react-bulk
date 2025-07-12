@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import { LabelProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import TextFactory from './TextFactory';
 
 const LabelFactory = React.memo<LabelProps>(
@@ -12,7 +12,7 @@ const LabelFactory = React.memo<LabelProps>(
 
     const theme = useTheme();
     const options = theme.components.Label;
-    const { web, native, Label } = global.mapping;
+    const { web, native, Label } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

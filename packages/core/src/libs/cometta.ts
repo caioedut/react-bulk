@@ -5,10 +5,10 @@ import { aliases, boxSizeProps, customSpacings, flexAlignProps, notPxProps } fro
 import transform from '../styles/transform';
 import { ThemeProps } from '../types';
 import defined from '../utils/defined';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 
 export default function registry(theme?: ThemeProps) {
-  theme = theme ?? global.theme ?? {};
+  theme = theme ?? rbkGlobal.theme ?? {};
 
   if (theme) {
     if (Platform.web) {
@@ -20,8 +20,8 @@ export default function registry(theme?: ThemeProps) {
     if (Platform.native) {
       cometta.polyfill({
         fontSize: theme.rem(1),
-        screenWidth: () => global.mapping.dimensions.window().width,
-        screenHeight: () => global.mapping.dimensions.window().height,
+        screenWidth: () => rbkGlobal.mapping.dimensions.window().width,
+        screenHeight: () => rbkGlobal.mapping.dimensions.window().height,
       });
     }
 

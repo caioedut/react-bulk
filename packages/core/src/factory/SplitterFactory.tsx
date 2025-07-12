@@ -10,7 +10,7 @@ import extract from '../props/extract';
 import factory2 from '../props/factory2';
 import get from '../props/get';
 import { AnyObject, RbkPointerEvent, RbkStyle, SplitterProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 import DividerFactory from './DividerFactory';
 
@@ -20,7 +20,7 @@ const SplitterFactory = React.memo<SplitterProps>(
 
     const theme = useTheme();
     const options = theme.components.Splitter;
-    const { web } = global.mapping;
+    const { web } = rbkGlobal.mapping;
 
     // Extends from default props
     const {

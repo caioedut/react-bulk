@@ -11,7 +11,7 @@ import transform from '../styles/transform';
 import { AnyObject, RbkAnimation, TimeoutType } from '../types';
 import clone from '../utils/clone';
 import defined from '../utils/defined';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import pick from '../utils/pick';
 import uuid from '../utils/uuid';
 import useDefaultRef from './useDefaultRef';
@@ -23,7 +23,7 @@ function jssWithTransform(style) {
 }
 
 export default function useAnimation(style?: RbkAnimation['from'], ref?: MutableRefObject<any>) {
-  const { web, native } = global.mapping;
+  const { web, native } = rbkGlobal.mapping;
 
   const baseStyle = useMemo(() => (style ? jssWithTransform(style) : {}), [style]);
 

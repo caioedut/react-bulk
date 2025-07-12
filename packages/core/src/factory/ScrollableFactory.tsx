@@ -6,7 +6,7 @@ import factory2 from '../props/factory2';
 import { flexContainerProps } from '../styles/constants';
 import jss from '../styles/jss';
 import { Overwrite, ScrollableProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 function Component({ ref, children, ...props }: ScrollableProps, legacyRef: Ref<any>) {
@@ -14,7 +14,7 @@ function Component({ ref, children, ...props }: ScrollableProps, legacyRef: Ref<
 
   const theme = useTheme();
   const options = theme.components.Scrollable;
-  const { web, native, ios, RefreshControl, ScrollView } = global.mapping;
+  const { web, native, ios, RefreshControl, ScrollView } = rbkGlobal.mapping;
 
   // Extends from default props
   let {

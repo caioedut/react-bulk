@@ -6,7 +6,7 @@ import factory2 from '../props/factory2';
 import get from '../props/get';
 import { ImageProps, RequiredSome } from '../types';
 import defined from '../utils/defined';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 import TextFactory from './TextFactory';
 
@@ -16,7 +16,7 @@ const ImageFactory = React.memo<ImageProps>(
 
     const theme = useTheme();
     const options = theme.components.Image;
-    const { web, native, Image } = global.mapping;
+    const { web, native, Image } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

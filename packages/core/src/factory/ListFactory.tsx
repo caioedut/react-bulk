@@ -16,7 +16,7 @@ import childrenize from '../props/childrenize';
 import factory2 from '../props/factory2';
 import get from '../props/get';
 import { ListProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import sleep from '../utils/sleep';
 import ScrollableFactory from './ScrollableFactory';
 
@@ -26,7 +26,7 @@ const ListFactory = React.memo<ListProps>(
 
     const theme = useTheme();
     const options = theme.components.List;
-    const { web, native, View } = global.mapping;
+    const { web, native, View } = rbkGlobal.mapping;
 
     // Extends from default props
     const {

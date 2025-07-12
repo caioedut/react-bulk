@@ -6,7 +6,7 @@ import factory2 from '../props/factory2';
 import get from '../props/get';
 import { TextProps } from '../types';
 import defined from '../utils/defined';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const TextFactory = React.memo<TextProps>(
@@ -15,7 +15,7 @@ const TextFactory = React.memo<TextProps>(
 
     const theme = useTheme();
     const options = theme.components.Text;
-    const { web, native, Text } = global.mapping;
+    const { web, native, Text } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

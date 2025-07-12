@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ThemeProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import useTheme from './useTheme';
 
 export default function useBreakpoints(breakpoints?: Partial<ThemeProps['breakpoints']>) {
-  const { useDimensions } = global.mapping;
+  const { useDimensions } = rbkGlobal.mapping;
 
   const theme = useTheme();
   const dimensions = useDimensions();

@@ -11,7 +11,7 @@ import dark from './themes/dark';
 import light from './themes/light';
 import { ThemeEditProps, ThemeProps } from './types';
 import deepmerge from './utils/deepmerge';
-import global from './utils/global';
+import rbkGlobal from './utils/global';
 import string from './utils/string';
 
 export default function createTheme(options?: ThemeEditProps): ThemeProps {
@@ -127,11 +127,11 @@ ${Object.entries(theme.mixins.scroll)
       const name = componentName + (prop === 'root' ? '' : `-${prop}`);
 
       if (Platform.native) {
-        global.styles[name] = jss(style);
+        rbkGlobal.styles[name] = jss(style);
       }
 
       if (Platform.web) {
-        global.styles[name] = sheet({
+        rbkGlobal.styles[name] = sheet({
           __className: name,
           ...style,
         });
@@ -145,11 +145,11 @@ ${Object.entries(theme.mixins.scroll)
           const name = `${componentName}-${varAttr}-${optionKey}` + (styleId === 'root' ? '' : `-${styleId}`);
 
           if (Platform.native) {
-            global.styles[name] = jss(style);
+            rbkGlobal.styles[name] = jss(style);
           }
 
           if (Platform.web) {
-            global.styles[name] = sheet({
+            rbkGlobal.styles[name] = sheet({
               __className: name,
               ...style,
             });
@@ -159,7 +159,7 @@ ${Object.entries(theme.mixins.scroll)
     });
   });
 
-  global.theme = theme;
+  rbkGlobal.theme = theme;
 
   return theme;
 }

@@ -8,7 +8,7 @@ import useTheme from '../hooks/useTheme';
 import Resize from '../icons/Resize';
 import factory2 from '../props/factory2';
 import { RbkPointerEvent, ResizableProps } from '../types';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const ResizableFactory = React.memo<ResizableProps>(
@@ -17,7 +17,7 @@ const ResizableFactory = React.memo<ResizableProps>(
 
     const theme = useTheme();
     const options = theme.components.Resizable;
-    const { web, svg } = global.mapping;
+    const { web, svg } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

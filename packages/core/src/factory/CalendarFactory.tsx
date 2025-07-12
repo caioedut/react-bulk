@@ -7,7 +7,7 @@ import ChevronRight from '../icons/ChevronRight';
 import factory2 from '../props/factory2';
 import { AnyObject, CalendarProps } from '../types';
 import { dateify } from '../utils/date';
-import global from '../utils/global';
+import rbkGlobal from '../utils/global';
 import string from '../utils/string';
 import BoxFactory from './BoxFactory';
 import ButtonFactory from './ButtonFactory';
@@ -22,7 +22,7 @@ const CalendarFactory = React.memo<CalendarProps>(
 
     const theme = useTheme();
     const options = theme.components.Calendar;
-    const { locale, svg } = global.mapping;
+    const { locale, svg } = rbkGlobal.mapping;
 
     // Extends from default props
     let {

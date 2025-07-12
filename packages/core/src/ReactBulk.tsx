@@ -9,7 +9,7 @@ import Toaster from './Toaster';
 import createTheme from './createTheme';
 import BoxFactory from './factory/BoxFactory';
 import { AnyObject, ReactElement, ThemeEditProps, ThemeModeValues, ThemeProps } from './types';
-import global from './utils/global';
+import rbkGlobal from './utils/global';
 import stdout from './utils/stdout';
 
 const toasterRef = createRef<any>();
@@ -34,10 +34,10 @@ export default function ReactBulk({
     return createTheme(typeof themeProp === 'string' ? { mode: themeProp } : themeProp);
   });
 
-  global.theme = theme;
-  global.mapping.locale = locale || global.mapping.locale;
+  rbkGlobal.theme = theme;
+  rbkGlobal.mapping.locale = locale || rbkGlobal.mapping.locale;
 
-  if (!global.mapping.hasLocale && !locale) {
+  if (!rbkGlobal.mapping.hasLocale && !locale) {
     stdout.warn(`missing "locale" in root context. Falling back to "en-US":\n\n  <ReactBulk locale="en-US" (...) >\n`);
   }
 
