@@ -229,6 +229,9 @@ The text transform value of the label.
 ### **`style`**
 To the button element.
 
+### **`pressedStyle`**
+Styles applied to the button while it is being pressed.
+
 ### **`contentStyle`**
 To the inner wrapper of `children` or `label`.
 

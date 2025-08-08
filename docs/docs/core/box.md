@@ -223,13 +223,6 @@ Apply props for a specific platform. For example:
 
 ---
 
-### **`rawStyle`**
-
-**Web:** create inline styles.<br/>
-**Native:** priorize styles.
-
-➤ Type: **`object` `array`** <br/>
-
 ## Flexbox Container Props
 
 ### **`alignContent`**
@@ -421,6 +414,24 @@ Sets `flexShrink` style.
 To the current element.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
+
+---
+
+### **`pressedStyle`**
+
+Styles applied to pressable components, while it is being pressed.
+
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
+➤ Default: **`'{ opacity: 0.7 }'`** <br/>
+
+---
+
+### **`rawStyle`**
+
+**Web:** create inline styles.<br/>
+**Native:** priorize styles.
+
+➤ Type: **`object` `array`** <br/>
 
 ---
 
