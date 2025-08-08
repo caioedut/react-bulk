@@ -1310,6 +1310,8 @@ export type DrawerProps<ALLOW_ANY = true> = PropsWithStyles<
     keepMounted?: boolean;
     placement?: 'left' | 'right' | 'top' | 'bottom';
     visible?: boolean;
+    // Events
+    onClose?: PressableProps['onPress'];
     // Styles
     backdropStyle?: RbkStyle;
     variants?: {
