@@ -650,6 +650,7 @@ export type BaseProps = Overwrite<
 
       // Styles
       style?: RbkStyle;
+      pressedStyle?: RbkStyle;
       rawStyle?: RbkStyle;
       animation?: RbkAnimation & {
         // Events
