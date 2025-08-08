@@ -91,8 +91,8 @@ export default function registry(theme?: ThemeProps) {
     if (Platform.native) {
       return {
         elevation: Math.round(value),
-        shadowColor: 'rgba(0, 0, 0)',
-        shadowOpacity: 0.1,
+        shadowColor: value ? 'rgba(0, 0, 0)' : 'transparent',
+        shadowOpacity: value ? 0.1 : 0,
         shadowRadius: radius,
         shadowOffset: {
           width: offset,
