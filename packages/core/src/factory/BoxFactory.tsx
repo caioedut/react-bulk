@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useMemo, useRef } from 'react';
+import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 
 import useAnimation from '../hooks/useAnimation';
 import useForm from '../hooks/useForm';
@@ -59,8 +59,11 @@ const BoxFactory = React.memo<BoxProps>(
       variants,
       style,
       rawStyle,
+      pressedStyle,
       ...rest
     } = props;
+
+    const [isNativePressed, setIsNativePressed] = useState(false);
 
     const form = useForm();
     rest = bindings(rest, { form });
@@ -133,6 +136,9 @@ const BoxFactory = React.memo<BoxProps>(
 
       stylesFromProps,
 
+      pressable && web && { '&:active': pressedStyle },
+      pressable && native && isNativePressed && pressedStyle,
+
       hidden === true && hiddenStyle,
     ];
 
@@ -197,6 +203,17 @@ const BoxFactory = React.memo<BoxProps>(
       styles.push(jss(style));
       styles.push(jss(rawStyle));
       rest.style = styles;
+
+      if (pressable && pressedStyle) {
+        rest.onPressIn = (...args) => {
+          setIsNativePressed(true);
+          props?.onPressIn?.(...args);
+        };
+        rest.onPressOut = (...args) => {
+          setIsNativePressed(false);
+          props?.onPressOut?.(...args);
+        };
+      }
     }
 
     if (pressable && !accessibility?.role) {

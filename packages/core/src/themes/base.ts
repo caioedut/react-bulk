@@ -346,6 +346,8 @@ const base: ThemeProps = {
           size: 'medium',
           transform: 'uppercase',
           variant: 'solid',
+          pressable: true,
+          pressedStyle: { opacity: 0.7 },
         },
         defaultStyles: {
           root: {
