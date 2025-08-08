@@ -9,6 +9,7 @@ import get from '../props/get';
 import getSize from '../props/getSize';
 import { customStyleProps } from '../styles/constants';
 import { InputBaseProps, RequiredSome } from '../types';
+import defined from '../utils/defined';
 import rbkGlobal from '../utils/global';
 import pick from '../utils/pick';
 import BoxFactory from './BoxFactory';
@@ -131,6 +132,22 @@ const InputBaseFactory = React.memo<InputBaseProps>(
       });
     }
 
+    const borderRadiusStyle = extract(
+      [
+        'corners',
+        'borderRadius',
+        'borderTopEndRadius',
+        'borderTopLeftRadius',
+        'borderTopRightRadius',
+        'borderTopStartRadius',
+        'borderBottomEndRadius',
+        'borderBottomLeftRadius',
+        'borderBottomRightRadius',
+        'borderBottomStartRadius',
+      ],
+      rest,
+    );
+
     // @ts-expect-error
     style = [extract(customStyleProps, rest), style];
 
@@ -139,6 +156,8 @@ const InputBaseFactory = React.memo<InputBaseProps>(
     hintStyle = [error && { color: 'error' }, hintStyle];
 
     contentStyle = [
+      borderRadiusStyle,
+
       !disabled && {
         borderColor: color,
       },
@@ -177,6 +196,11 @@ const InputBaseFactory = React.memo<InputBaseProps>(
 
       inputStyle,
     ];
+
+    if (!defined(borderRadiusStyle.corners) && !defined(borderRadiusStyle.borderRadius)) {
+      borderRadiusStyle.corners = get('corners', options.defaultStyles.content, inputStyle, contentStyle);
+      borderRadiusStyle.borderRadius = get('borderRadius', options.defaultStyles.content, inputStyle, contentStyle);
+    }
 
     const handleFocus = useCallback(
       (event) => {
@@ -247,9 +271,7 @@ const InputBaseFactory = React.memo<InputBaseProps>(
               position="absolute"
               pointerEvents="none"
               border={`4px solid ${shadowColor}`}
-              corners={get('corners', options.defaultStyles.content, contentStyle)}
-              borderRadius={get('borderRadius', options.defaultStyles.content, contentStyle)}
-              style={{ inset: -4 }}
+              style={[{ inset: -4 }, borderRadiusStyle]}
             />
           )}
 
