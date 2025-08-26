@@ -97,9 +97,9 @@ import { Select } from '@react-bulk/web'; // OR @react-bulk/native
         options={[
             {value: 1, label: 'Red'},
             {value: 2, label: 'Green'},
-            {value: 2, label: 'Blue'},
-            {value: 2, label: 'Black'},
-            {value: 2, label: 'White'},
+            {value: 3, label: 'Blue'},
+            {value: 4, label: 'Black'},
+            {value: 5, label: 'White'},
         ]}
     />
 </Box>
