@@ -119,6 +119,9 @@ To the error element when has [`error`](#error) prop.
 ### **`labelStyle`**
 To the label element.
 
+### **`optionStyle`**
+To the option elements.
+
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ## Props
@@ -159,6 +162,22 @@ events and updating the value prop to keep the controlled state in sync.
 
 ---
 
+### **`divider`**
+
+Determines whether a divider line should be rendered between items.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+### **`dividerColor`**
+
+Sets a custom color for the divider. Defaults to the theme’s divider color.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
 ### **`endAddon`**
 
 ➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
@@ -191,13 +210,14 @@ events and updating the value prop to keep the controlled state in sync.
 
 ### **`options`**
 
-➤ Type: **`Array<RbkSelectOption>`** <br/>
+➤ Type: **`Array<SelectOption>`** <br/>
 
-```jsx title="RbkSelectOption"
+```jsx title="SelectOption"
 {
   value: string | number
   label: string
   disabled?: boolean
+  style?: RbkStyle
 }
 ```
 
