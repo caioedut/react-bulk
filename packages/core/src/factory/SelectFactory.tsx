@@ -23,6 +23,7 @@ import BackdropFactory from './BackdropFactory';
 import BoxFactory from './BoxFactory';
 import ButtonFactory from './ButtonFactory';
 import CardFactory from './CardFactory';
+import DividerFactory from './DividerFactory';
 import InputFactory from './InputFactory';
 import LabelFactory from './LabelFactory';
 import ListFactory from './ListFactory';
@@ -44,6 +45,8 @@ const SelectFactory = React.memo<SelectProps>(
       accessibility,
       defaultValue,
       disabled,
+      divider,
+      dividerColor,
       id,
       color,
       colorful,
@@ -459,38 +462,41 @@ const SelectFactory = React.memo<SelectProps>(
                     : option.value == (selected as any)?.value;
 
                   return (
-                    <ButtonFactory
-                      my={0.5}
-                      key={option.value}
-                      size={size}
-                      variant="text"
-                      disabled={option.disabled}
-                      color={color}
-                      bg={isSelected ? theme.color(color, 0.1) : undefined}
-                      style={{ paddingHorizontal: spacing }}
-                      contentStyle={[optionStyle, option.style]}
-                      onPress={(e) => handleSelect(e, option.value)}
-                      endAddon={
-                        <BoxFactory w={fontSize} pl={1}>
-                          {isSelected && <Check svg={svg} size={fontSize} color={color} />}
-                        </BoxFactory>
-                      }
-                      ref={(el) => {
-                        optionsRef.current[index] = el;
+                    <BoxFactory key={option.value}>
+                      {index > 0 && divider ? <DividerFactory color={dividerColor} mx={-1} /> : null}
 
-                        if (isSelected) {
-                          selectedRef.current = el;
+                      <ButtonFactory
+                        my={0.5}
+                        size={size}
+                        variant="text"
+                        disabled={option.disabled}
+                        color={color}
+                        bg={isSelected ? theme.color(color, 0.1) : undefined}
+                        style={{ paddingHorizontal: spacing }}
+                        contentStyle={[optionStyle, option.style]}
+                        onPress={(e) => handleSelect(e, option.value)}
+                        endAddon={
+                          <BoxFactory w={fontSize} pl={1}>
+                            {isSelected && <Check svg={svg} size={fontSize} color={color} />}
+                          </BoxFactory>
                         }
-                      }}
-                      accessibility={{
-                        // @ts-expect-error
-                        role: native ? 'menuitem' : 'option',
-                        value: { now: option.value },
-                        state: { selected: isSelected },
-                      }}
-                    >
-                      {typeof option.label === 'string' ? <TextFactory>{option.label}</TextFactory> : option.label}
-                    </ButtonFactory>
+                        ref={(el) => {
+                          optionsRef.current[index] = el;
+
+                          if (isSelected) {
+                            selectedRef.current = el;
+                          }
+                        }}
+                        accessibility={{
+                          // @ts-expect-error
+                          role: native ? 'menuitem' : 'option',
+                          value: { now: option.value },
+                          state: { selected: isSelected },
+                        }}
+                      >
+                        {typeof option.label === 'string' ? <TextFactory>{option.label}</TextFactory> : option.label}
+                      </ButtonFactory>
+                    </BoxFactory>
                   );
                 })}
               </ListFactory>

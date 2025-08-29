@@ -871,6 +871,8 @@ export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
     colorful?: boolean;
     controlled?: boolean;
     defaultValue?: InputValue;
+    divider?: boolean;
+    dividerColor?: RbkColor;
     error?: string | boolean | null | undefined;
     label?: string;
     name?: string;
