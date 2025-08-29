@@ -556,6 +556,7 @@ const base: ThemeProps = {
           accessibility: { role: 'checkbox' },
           color: 'primary',
           size: 'medium',
+          labelPlacement: 'right',
         },
         defaultStyles: {
           root: {
@@ -566,7 +567,6 @@ const base: ThemeProps = {
           },
           button: {
             padding: 0,
-            marginLeft: '-0.5rem',
             minHeight: 0,
             minWidth: 0,
           },
@@ -1373,7 +1373,7 @@ const base: ThemeProps = {
       Tooltip: {
         name: 'rbk-tooltip',
         defaultProps: {
-          position: 'top',
+          placement: 'top',
           color: 'black',
           delay: 200,
           offset: 1,

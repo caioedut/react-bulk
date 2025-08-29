@@ -912,6 +912,7 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
     disabled?: boolean;
     error?: string | boolean | null | undefined;
     label?: ReactElement;
+    labelPlacement?: 'left' | 'right';
     name?: string;
     readOnly?: boolean;
     size?: RbkSize;
@@ -1249,7 +1250,7 @@ export type TooltipProps<ALLOW_ANY = true> = PropsWithStyles<
     color?: 'black' | 'white' | RbkColor;
     delay?: number;
     offset?: number | string;
-    position?: 'top' | 'bottom' | 'left' | 'right';
+    placement?: 'top' | 'bottom' | 'left' | 'right';
     title?: string;
     visible?: boolean;
     // Styles
@@ -1258,6 +1259,9 @@ export type TooltipProps<ALLOW_ANY = true> = PropsWithStyles<
       root?: any;
       label?: any;
     };
+
+    /** @deprecated use placement instead */
+    position?: 'top' | 'bottom' | 'left' | 'right';
   }
 >;
 
