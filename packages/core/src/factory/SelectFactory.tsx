@@ -70,6 +70,7 @@ const SelectFactory = React.memo<SelectProps>(
       buttonStyle,
       errorStyle,
       labelStyle,
+      optionStyle,
       style,
       ...rest
     } = factory2<RequiredSome<SelectProps, 'color' | 'size' | 'searchCount'>>(props, options);
@@ -368,6 +369,8 @@ const SelectFactory = React.memo<SelectProps>(
 
     contentStyle = [{ flex: 1 }, contentStyle];
 
+    optionStyle = [contentStyle, optionStyle];
+
     return (
       <BoxFactory
         data-rbk-input={name}
@@ -465,7 +468,7 @@ const SelectFactory = React.memo<SelectProps>(
                       color={color}
                       bg={isSelected ? theme.color(color, 0.1) : undefined}
                       style={{ paddingHorizontal: spacing }}
-                      contentStyle={contentStyle}
+                      contentStyle={[optionStyle, option.style]}
                       onPress={(e) => handleSelect(e, option.value)}
                       endAddon={
                         <BoxFactory w={fontSize} pl={1}>
