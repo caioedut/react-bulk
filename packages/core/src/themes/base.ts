@@ -1154,6 +1154,7 @@ const base: ThemeProps = {
         defaultProps: {
           accessibility: { role: 'switch' },
           size: 'medium',
+          labelPlacement: 'right',
           onColor: 'primary',
           offColor: 'gray.lighter',
           onThumbColor: 'white',
@@ -1173,9 +1174,7 @@ const base: ThemeProps = {
             minh: 0,
             minw: 0,
           },
-          label: {
-            ml: '1gap',
-          },
+          label: {},
           thumb: {
             bg: 'white',
             borderRadius: '0.75rem',
