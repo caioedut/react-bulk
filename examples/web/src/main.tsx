@@ -1248,7 +1248,7 @@ function TooltipExample() {
       <Box row center>
         {placements.map((pos) => (
           <Box key={pos} p="1gap">
-            <Tooltip title="My tooltip" position={pos}>
+            <Tooltip title="My tooltip" placement={pos}>
               <Text>{getLabel(pos)}</Text>
             </Tooltip>
           </Box>

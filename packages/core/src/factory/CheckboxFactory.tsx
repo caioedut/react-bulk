@@ -34,6 +34,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
       error,
       id,
       label,
+      labelPlacement,
       name,
       readOnly,
       size,
@@ -128,11 +129,33 @@ const CheckboxFactory = React.memo<CheckboxProps>(
     // @ts-expect-error
     style = [style, extract(spacings, rest)];
 
-    buttonStyle = [{ marginLeft: -theme.rem(0.5, fontSize) }, buttonStyle];
+    buttonStyle = [
+      labelPlacement === 'left'
+        ? { marginRight: -theme.rem(0.5, fontSize) }
+        : { marginLeft: -theme.rem(0.5, fontSize) },
+      buttonStyle,
+    ];
+
+    const displayLabel =
+      typeof label === 'string' ? (
+        <LabelFactory
+          for={id}
+          forRef={buttonRef}
+          style={[labelPlacement === 'left' ? { mr: 1 } : { ml: 1 }, labelStyle]}
+          variants={{ root: variants.label }}
+          onPress={native ? handleChange : undefined}
+        >
+          {label}
+        </LabelFactory>
+      ) : (
+        label
+      );
 
     return (
       <>
         <BoxFactory data-rbk-input={name} style={style} variants={{ root: variants.root }}>
+          {labelPlacement === 'left' ? displayLabel : null}
+
           <ButtonFactory
             ref={buttonRef}
             {...rest}
@@ -175,19 +198,7 @@ const CheckboxFactory = React.memo<CheckboxProps>(
             </BoxFactory>
           </ButtonFactory>
 
-          {typeof label === 'string' ? (
-            <LabelFactory
-              for={id}
-              forRef={buttonRef}
-              style={[{ ml: 1 }, labelStyle]}
-              variants={{ root: variants.label }}
-              onPress={native ? handleChange : undefined}
-            >
-              {label}
-            </LabelFactory>
-          ) : (
-            label
-          )}
+          {labelPlacement === 'right' ? displayLabel : null}
         </BoxFactory>
 
         {Boolean(input.error) && typeof input.error === 'string' && (
