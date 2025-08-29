@@ -97,9 +97,9 @@ import { Select } from '@react-bulk/web'; // OR @react-bulk/native
         options={[
             {value: 1, label: 'Red'},
             {value: 2, label: 'Green'},
-            {value: 2, label: 'Blue'},
-            {value: 2, label: 'Black'},
-            {value: 2, label: 'White'},
+            {value: 3, label: 'Blue'},
+            {value: 4, label: 'Black'},
+            {value: 5, label: 'White'},
         ]}
     />
 </Box>
@@ -118,6 +118,9 @@ To the error element when has [`error`](#error) prop.
 
 ### **`labelStyle`**
 To the label element.
+
+### **`optionStyle`**
+To the option elements.
 
 ➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
@@ -159,6 +162,22 @@ events and updating the value prop to keep the controlled state in sync.
 
 ---
 
+### **`divider`**
+
+Determines whether a divider line should be rendered between items.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
+### **`dividerColor`**
+
+Sets a custom color for the divider. Defaults to the theme’s divider color.
+
+➤ Type: **`boolean`** <br/>
+
+---
+
 ### **`endAddon`**
 
 ➤ Type: **`string` | `ReactElement` | `({ color: string }) => ReactElement`** <br/>
@@ -191,13 +210,14 @@ events and updating the value prop to keep the controlled state in sync.
 
 ### **`options`**
 
-➤ Type: **`Array<RbkSelectOption>`** <br/>
+➤ Type: **`Array<SelectOption>`** <br/>
 
-```jsx title="RbkSelectOption"
+```jsx title="SelectOption"
 {
   value: string | number
   label: string
   disabled?: boolean
+  style?: RbkStyle
 }
 ```
 

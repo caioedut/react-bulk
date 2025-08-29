@@ -127,6 +127,7 @@ type StyleProps = Overwrite<
 export type SelectOption = {
   value: InputValue;
   disabled?: boolean;
+  style?: RbkStyle;
   [key: string]: any;
 } & (
   | {
@@ -870,6 +871,8 @@ export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
     colorful?: boolean;
     controlled?: boolean;
     defaultValue?: InputValue;
+    divider?: boolean;
+    dividerColor?: RbkColor;
     error?: string | boolean | null | undefined;
     label?: string;
     name?: string;
@@ -888,6 +891,7 @@ export type SelectProps<ALLOW_ANY = true> = PropsWithStyles<
     buttonStyle?: RbkStyle;
     errorStyle?: RbkStyle;
     labelStyle?: RbkStyle;
+    optionStyle?: RbkStyle;
     // Styles
     variants?: {
       root?: any;
