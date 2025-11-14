@@ -28,13 +28,12 @@ const ButtonGroupFactory = React.memo<ButtonGroupProps>(
     } = factory2<ButtonGroupProps>(props, options);
 
     const childrenArray = childrenize(children);
+    const length = childrenArray.length;
 
     return (
       <ScrollableFactory ref={ref} variants={{ root: variants.root }} {...rest} direction="horizontal">
         <BoxFactory style={contentStyle} variants={{ root: variants.content }}>
           {childrenArray.map((child, key) => {
-            const length = Array.isArray(children) ? children.length : children ? 1 : 0;
-
             const isFirst = key === 0;
             const isLast = key === length - 1;
             const borderLeftWidth = length > 1 && !isFirst ? 0 : 1;
