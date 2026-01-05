@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/native",
   "description": "React Bulk for React Native",
-  "version": "1.7.7",
+  "version": "1.7.8",
   "license": "MIT",
   "homepage": "https://rbk.caioedut.com",
   "repository": {
@@ -33,7 +33,7 @@
     "dist"
   ],
   "dependencies": {
-    "@react-bulk/core": "^1.7.7"
+    "@react-bulk/core": "^1.7.8"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
@@ -43,5 +43,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "398b73c8a58faaeec96d1c1e40de4fb1b1973be1"
+  "gitHead": "8df443676936b36e47ad9995fbec46ad582102ed"
 }
