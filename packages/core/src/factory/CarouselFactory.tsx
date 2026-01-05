@@ -156,12 +156,7 @@ const CarouselFactory = React.memo<CarouselProps>(
 
     useLayoutEffect(() => {
       if (!web || !contentRef.current) return;
-
-      const width = contentRef.current.clientWidth;
-
-      if (width > 0) {
-        setContentWidth(width);
-      }
+      setContentWidth(contentRef.current.clientWidth);
     }, [dimensions.width, web]);
 
     useEffect(() => {
