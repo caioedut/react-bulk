@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/expo",
   "description": "React Bulk for Expo (web+native)",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "license": "MIT",
   "homepage": "https://rbk.caioedut.com",
   "repository": {
@@ -33,9 +33,9 @@
     "dist"
   ],
   "dependencies": {
-    "@react-bulk/core": "^1.7.6",
-    "@react-bulk/native": "^1.7.6",
-    "@react-bulk/web": "^1.7.6"
+    "@react-bulk/core": "^1.7.7",
+    "@react-bulk/native": "^1.7.7",
+    "@react-bulk/web": "^1.7.7"
   },
   "peerDependencies": {
     "expo": ">=52.0.0",
