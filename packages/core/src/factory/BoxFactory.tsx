@@ -132,8 +132,8 @@ const BoxFactory = React.memo<BoxProps>(
 
       web && pressable && { cursor: 'pointer' },
 
+      // TODO: refactor to apply prop style at last style, being priority
       clone(style),
-
       stylesFromProps,
 
       pressable && web && { '&:active': pressedStyle },
