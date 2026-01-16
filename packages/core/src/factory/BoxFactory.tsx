@@ -8,7 +8,6 @@ import extract from '../props/extract';
 import factory2 from '../props/factory2';
 import get from '../props/get';
 import merge from '../props/merge';
-import omit from '../props/omit';
 import { styleProps } from '../styles/constants';
 import jss from '../styles/jss';
 import sheet from '../styles/sheet';
@@ -57,7 +56,6 @@ const BoxFactory = React.memo<BoxProps>(
       row,
       wrap,
       // Styles
-      _variants,
       variants,
       style,
       rawStyle,
@@ -270,7 +268,7 @@ const BoxFactory = React.memo<BoxProps>(
     }, [animation, transition]);
 
     return mount === false ? null : (
-      <Component {...transition.props} {...omit(_variants, rest)} {...componentProps}>
+      <Component {...transition.props} {...rest} {...componentProps}>
         {React.Children.map(children, (child) => {
           const isText = ['string', 'number'].includes(typeof child);
 
