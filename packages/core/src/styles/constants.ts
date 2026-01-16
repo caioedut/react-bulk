@@ -121,6 +121,7 @@ export const customStyleProps = [
   'maxw',
   'minh',
   'minw',
+  'outline',
   'position',
   'shadow', // box-shadow
   'w', // width
