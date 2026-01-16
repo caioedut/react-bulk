@@ -1252,7 +1252,7 @@ export type TooltipProps<ALLOW_ANY = true> = PropsWithStyles<
     delay?: number;
     offset?: number | string;
     placement?: 'top' | 'bottom' | 'left' | 'right';
-    title?: string;
+    title?: string | null;
     visible?: boolean;
     // Styles
     labelStyle?: RbkStyle;

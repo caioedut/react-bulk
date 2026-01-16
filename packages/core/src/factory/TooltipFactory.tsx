@@ -43,7 +43,7 @@ const TooltipFactory = React.memo<TooltipProps>(
     } = factory2<RequiredSome<TooltipProps, 'placement' | 'color' | 'delay' | 'offset'>>(props, options);
 
     color = theme.color(color);
-    placement = placement ?? position;
+    placement = position ?? placement;
 
     const rootRef = useRef();
     const timeoutRef = useRef<TimeoutType>(null);
@@ -54,7 +54,7 @@ const TooltipFactory = React.memo<TooltipProps>(
     const isControlled = typeof visible === 'boolean';
 
     style = [
-      shown && options?.variants?.visible?.true?.root,
+      shown && title !== null && title !== undefined && title !== '' && options?.variants?.visible?.true?.root,
 
       style,
 
