@@ -7,6 +7,7 @@ import { flexContainerProps } from '../styles/constants';
 import jss from '../styles/jss';
 import { Overwrite, ScrollableProps } from '../types';
 import rbkGlobal from '../utils/global';
+import stdout from '../utils/stdout';
 import BoxFactory from './BoxFactory';
 
 function Component({ ref, children, ...props }: ScrollableProps, legacyRef: Ref<any>) {
@@ -25,6 +26,7 @@ function Component({ ref, children, ...props }: ScrollableProps, legacyRef: Ref<
     // Refresh Control (Native)
     refreshControl,
     refreshing,
+    stickyHeaderIndices,
     onRefresh,
     // Styles
     variants,
@@ -35,6 +37,10 @@ function Component({ ref, children, ...props }: ScrollableProps, legacyRef: Ref<
 
   const isHorizontal = direction === 'horizontal';
   const primaryColor = theme.color('primary');
+
+  if (stickyHeaderIndices && isHorizontal) {
+    stdout.warn('Sticky headers are not supported in horizontal scroll views.');
+  }
 
   const contentInset = useMemo(
     () => ({
@@ -90,6 +96,7 @@ function Component({ ref, children, ...props }: ScrollableProps, legacyRef: Ref<
       scrollIndicatorInsets: isHorizontal ? { bottom: 1, left: 1 } : { top: 1, right: 1 },
       ...rest,
       pagingEnabled,
+      stickyHeaderIndices,
       horizontal: isHorizontal,
       contentContainerStyle: jss(variants.content, contentStyle),
     };
@@ -131,7 +138,19 @@ function Component({ ref, children, ...props }: ScrollableProps, legacyRef: Ref<
         children
       ) : (
         <BoxFactory style={contentStyle} variants={{ root: variants.content }} noRootStyles>
-          {children}
+          {!isHorizontal && stickyHeaderIndices?.length
+            ? React.Children.map(children, (child, index) => {
+                if (!child && !['string', 'number'].includes(typeof child)) {
+                  return null;
+                }
+
+                return (
+                  <BoxFactory variants={stickyHeaderIndices.includes(index) ? { root: variants.stickyHeader } : {}}>
+                    {child}
+                  </BoxFactory>
+                );
+              })
+            : children}
         </BoxFactory>
       )}
     </BoxFactory>

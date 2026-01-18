@@ -1058,6 +1058,8 @@ export type ScrollableProps<ALLOW_ANY = true> = PropsWithStyles<
     /** Note: vertical pagination is not supported on Android. **/
     pagingEnabled?: boolean;
 
+    stickyHeaderIndices?: number[];
+
     // Events
     onScroll?: (event: RbkScrollEvent) => void;
 
@@ -1066,6 +1068,7 @@ export type ScrollableProps<ALLOW_ANY = true> = PropsWithStyles<
     variants?: {
       root?: any;
       content?: any;
+      stickyHeader?: any;
     };
   }
 >;

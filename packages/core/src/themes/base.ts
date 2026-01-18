@@ -1075,6 +1075,13 @@ const base: ThemeProps = {
             flexWrap: 'nowrap',
             flexGrow: 1,
           },
+          stickyHeader: {
+            zIndex: 10,
+            web: {
+              position: 'sticky',
+              top: 0,
+            },
+          },
         },
         variants: {
           direction: {

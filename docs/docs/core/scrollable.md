@@ -20,9 +20,11 @@ import { Scrollable } from '@react-bulk/web'; // OR @react-bulk/native
 <Grid row center>
   <Box>
     <Text>Vertical</Text>
-    <Scrollable h={160} w={160}>
-      <Box bg="secondary" h={150} />
-      <Box bg="primary" h={150} />
+    <Scrollable h={160} w={160} stickyHeaderIndices={[0, 2]}>
+      <Text bg="green">Sticky Header (1st)</Text>
+      <Box bg="secondary" h={110} />
+      <Text bg="blue">Sticky Header (2nd)</Text>
+      <Box bg="primary" h={200} />
     </Scrollable>
   </Box>
   <Box>

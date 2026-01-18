@@ -92,6 +92,10 @@ export default function Main() {
       </Card>
 
       <Card mt="1gap">
+        <ScrollableExample />
+      </Card>
+
+      <Card mt="1gap">
         <ListExample />
       </Card>
 
@@ -718,6 +722,35 @@ function TableExample() {
           },
         ]}
       />
+    </>
+  );
+}
+
+function ScrollableExample() {
+  return (
+    <>
+      <Text variant="title" mb="1gap">
+        Scrollable
+      </Text>
+
+      <Grid row center g={1}>
+        <Box>
+          <Text>Vertical</Text>
+          <Scrollable h={160} w={160} stickyHeaderIndices={[0, 2]}>
+            <Text bg="green">Sticky Header (1st)</Text>
+            <Box bg="secondary" h={110} />
+            <Text bg="blue">Sticky Header (2nd)</Text>
+            <Box bg="primary" h={200} />
+          </Scrollable>
+        </Box>
+        <Box>
+          <Text>Horizontal</Text>
+          <Scrollable h={160} w={160} direction="horizontal">
+            <Box bg="secondary" w={150} />
+            <Box bg="primary" w={150} />
+          </Scrollable>
+        </Box>
+      </Grid>
     </>
   );
 }
