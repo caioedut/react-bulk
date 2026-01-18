@@ -97,6 +97,13 @@ Extends all [`Box`](/docs/core/box#props) props.
 
 ---
 
+### **`labelPlacement`**
+
+➤ Type: **`'right'` `'left'`** <br/>
+➤ Default: **`'right'`** <br/>
+
+---
+
 ### **`name`**
 
 ➤ Type: **`string`** <br/>

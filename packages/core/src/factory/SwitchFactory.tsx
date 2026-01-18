@@ -32,6 +32,7 @@ const SwitchFactory = React.memo<SwitchProps>(
       error,
       id,
       label,
+      labelPlacement,
       name,
       readOnly,
       size,
@@ -128,6 +129,8 @@ const SwitchFactory = React.memo<SwitchProps>(
       input.setState(!input.state, event);
     }
 
+    labelStyle = [labelPlacement === 'left' ? { mr: '1gap' } : { ml: '1gap' }, labelStyle];
+
     buttonStyle = [
       {
         h: baseSize,
@@ -146,9 +149,26 @@ const SwitchFactory = React.memo<SwitchProps>(
       thumbStyle,
     ];
 
+    const displayLabel =
+      typeof label === 'string' ? (
+        <LabelFactory
+          for={id}
+          forRef={buttonRef}
+          style={labelStyle}
+          variants={{ root: variants.label }}
+          onPress={native ? handleChange : undefined}
+        >
+          {label}
+        </LabelFactory>
+      ) : (
+        label
+      );
+
     return (
       <>
         <BoxFactory data-rbk-input={name} style={style} variants={{ root: variants.root }}>
+          {labelPlacement === 'left' ? displayLabel : null}
+
           <ButtonFactory
             ref={buttonRef}
             {...rest}
@@ -185,19 +205,7 @@ const SwitchFactory = React.memo<SwitchProps>(
             />
           </ButtonFactory>
 
-          {typeof label === 'string' ? (
-            <LabelFactory
-              for={id}
-              forRef={buttonRef}
-              style={labelStyle}
-              variants={{ root: variants.label }}
-              onPress={native ? handleChange : undefined}
-            >
-              {label}
-            </LabelFactory>
-          ) : (
-            label
-          )}
+          {labelPlacement === 'right' ? displayLabel : null}
         </BoxFactory>
 
         {Boolean(input.error) && typeof input.error === 'string' && (

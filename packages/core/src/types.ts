@@ -912,6 +912,7 @@ export type CheckboxProps<ALLOW_ANY = true> = PropsWithStyles<
     disabled?: boolean;
     error?: string | boolean | null | undefined;
     label?: ReactElement;
+    labelPlacement?: 'left' | 'right';
     name?: string;
     readOnly?: boolean;
     size?: RbkSize;
@@ -945,6 +946,7 @@ export type SwitchProps<ALLOW_ANY = true> = PropsWithStyles<
     disabled?: boolean;
     error?: string | boolean | null | undefined;
     label?: ReactElement;
+    labelPlacement?: 'left' | 'right';
     name?: string;
     readOnly?: boolean;
     size?: RbkSize;
@@ -1056,6 +1058,8 @@ export type ScrollableProps<ALLOW_ANY = true> = PropsWithStyles<
     /** Note: vertical pagination is not supported on Android. **/
     pagingEnabled?: boolean;
 
+    stickyHeaderIndices?: number[];
+
     // Events
     onScroll?: (event: RbkScrollEvent) => void;
 
@@ -1064,6 +1068,7 @@ export type ScrollableProps<ALLOW_ANY = true> = PropsWithStyles<
     variants?: {
       root?: any;
       content?: any;
+      stickyHeader?: any;
     };
   }
 >;
@@ -1249,8 +1254,8 @@ export type TooltipProps<ALLOW_ANY = true> = PropsWithStyles<
     color?: 'black' | 'white' | RbkColor;
     delay?: number;
     offset?: number | string;
-    position?: 'top' | 'bottom' | 'left' | 'right';
-    title?: string;
+    placement?: 'top' | 'bottom' | 'left' | 'right';
+    title?: string | null;
     visible?: boolean;
     // Styles
     labelStyle?: RbkStyle;
@@ -1258,6 +1263,9 @@ export type TooltipProps<ALLOW_ANY = true> = PropsWithStyles<
       root?: any;
       label?: any;
     };
+
+    /** @deprecated use placement instead */
+    position?: 'top' | 'bottom' | 'left' | 'right';
   }
 >;
 

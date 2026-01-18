@@ -11,5 +11,5 @@ export default function childrenize(children) {
     }
   });
 
-  return items;
+  return Children.toArray(items) as ReactElement[];
 }

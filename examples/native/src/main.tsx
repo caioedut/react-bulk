@@ -3,6 +3,7 @@ import React, { useReducer, useRef, useState } from 'react';
 import {
   AnyObject,
   DrawerProps,
+  DropdownProps,
   ModalProps,
   RbkFormEvent,
   RbkInputEvent,
@@ -89,6 +90,10 @@ export default function Main() {
 
       <Card mt="1gap">
         <TableExample />
+      </Card>
+
+      <Card mt="1gap">
+        <ScrollableExample />
       </Card>
 
       <Card mt="1gap">
@@ -722,6 +727,35 @@ function TableExample() {
   );
 }
 
+function ScrollableExample() {
+  return (
+    <>
+      <Text variant="title" mb="1gap">
+        Scrollable
+      </Text>
+
+      <Grid row center g={1}>
+        <Box>
+          <Text>Vertical</Text>
+          <Scrollable h={160} w={160} stickyHeaderIndices={[0, 2]}>
+            <Text bg="green">Sticky Header (1st)</Text>
+            <Box bg="secondary" h={110} />
+            <Text bg="blue">Sticky Header (2nd)</Text>
+            <Box bg="primary" h={200} />
+          </Scrollable>
+        </Box>
+        <Box>
+          <Text>Horizontal</Text>
+          <Scrollable h={160} w={160} direction="horizontal">
+            <Box bg="secondary" w={150} />
+            <Box bg="primary" w={150} />
+          </Scrollable>
+        </Box>
+      </Grid>
+    </>
+  );
+}
+
 function ListExample() {
   return (
     <>
@@ -1098,16 +1132,29 @@ function DrawerExample() {
 
 function DropdownExample() {
   const [dropdown, toggleDropdown] = useReducer((state) => !state, false);
+  const [placement, setPlacement] = useState<DropdownProps['placement']>('bottom');
 
   return (
     <>
       <Text variant="title" mb="1gap">
         Dropdown
       </Text>
-      <Box row>
+      <Box>
+        <Select
+          minw={160}
+          label="Placement"
+          value={placement}
+          onChange={(_, value: any) => setPlacement(value)}
+          options={[
+            { value: 'top', label: 'Top' },
+            { value: 'bottom', label: 'Bottom' },
+          ]}
+        />
+      </Box>
+      <Box row mt="1gap">
         <Button onPress={toggleDropdown}>Toggle Dropdown</Button>
       </Box>
-      <Dropdown visible={dropdown} onClose={toggleDropdown}>
+      <Dropdown visible={dropdown} placement={placement} onClose={toggleDropdown}>
         <Card>
           <Text>Lorem ipsum dolor sit amet</Text>
         </Card>
@@ -1248,7 +1295,7 @@ function TooltipExample() {
       <Box row center>
         {placements.map((pos) => (
           <Box key={pos} p="1gap">
-            <Tooltip title="My tooltip" position={pos}>
+            <Tooltip title="My tooltip" placement={pos}>
               <Text>{getLabel(pos)}</Text>
             </Tooltip>
           </Box>

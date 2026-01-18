@@ -21,27 +21,27 @@ import { Tooltip } from '@react-bulk/web'; // OR @react-bulk/native
 </Box>
 ```
 
-### Position
+### Placement
 
 ```jsx live
 <Grid center gap>
   <Box>
-    <Tooltip title="Add to cart" position="top">
+    <Tooltip title="Add to cart" placement="top">
       <Text>Top</Text>
     </Tooltip>
   </Box>
   <Box>
-    <Tooltip title="Add to cart" position="bottom">
+    <Tooltip title="Add to cart" placement="bottom">
       <Text>Bottom</Text>
     </Tooltip>
   </Box>
   <Box>
-    <Tooltip title="Add to cart" position="left">
+    <Tooltip title="Add to cart" placement="left">
       <Text>Left</Text>
     </Tooltip>
   </Box>
   <Box>
-    <Tooltip title="Add to cart" position="right">
+    <Tooltip title="Add to cart" placement="right">
       <Text>Right</Text>
     </Tooltip>
   </Box>
@@ -108,9 +108,10 @@ Delay in milliseconds to show the tooltip.
 
 ---
 
-### **`position`**
+### **`placement`** or **~~`position`~~**
 
 ➤ Type: **`'top'` `'bottom'` `'left'` `'right'`** <br/>
+➤ Default: **`'top'`** <br/>
 
 ---
 

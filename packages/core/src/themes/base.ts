@@ -556,6 +556,7 @@ const base: ThemeProps = {
           accessibility: { role: 'checkbox' },
           color: 'primary',
           size: 'medium',
+          labelPlacement: 'right',
         },
         defaultStyles: {
           root: {
@@ -566,7 +567,6 @@ const base: ThemeProps = {
           },
           button: {
             padding: 0,
-            marginLeft: '-0.5rem',
             minHeight: 0,
             minWidth: 0,
           },
@@ -1075,6 +1075,13 @@ const base: ThemeProps = {
             flexWrap: 'nowrap',
             flexGrow: 1,
           },
+          stickyHeader: {
+            zIndex: 10,
+            web: {
+              position: 'sticky',
+              top: 0,
+            },
+          },
         },
         variants: {
           direction: {
@@ -1154,6 +1161,7 @@ const base: ThemeProps = {
         defaultProps: {
           accessibility: { role: 'switch' },
           size: 'medium',
+          labelPlacement: 'right',
           onColor: 'primary',
           offColor: 'gray.lighter',
           onThumbColor: 'white',
@@ -1173,9 +1181,7 @@ const base: ThemeProps = {
             minh: 0,
             minw: 0,
           },
-          label: {
-            ml: '1gap',
-          },
+          label: {},
           thumb: {
             bg: 'white',
             borderRadius: '0.75rem',
@@ -1373,7 +1379,7 @@ const base: ThemeProps = {
       Tooltip: {
         name: 'rbk-tooltip',
         defaultProps: {
-          position: 'top',
+          placement: 'top',
           color: 'black',
           delay: 200,
           offset: 1,

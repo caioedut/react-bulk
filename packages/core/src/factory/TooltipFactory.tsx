@@ -31,6 +31,7 @@ const TooltipFactory = React.memo<TooltipProps>(
       color,
       delay,
       offset,
+      placement,
       position,
       title,
       visible,
@@ -39,9 +40,10 @@ const TooltipFactory = React.memo<TooltipProps>(
       labelStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<TooltipProps, 'position' | 'color' | 'delay' | 'offset'>>(props, options);
+    } = factory2<RequiredSome<TooltipProps, 'placement' | 'color' | 'delay' | 'offset'>>(props, options);
 
     color = theme.color(color);
+    placement = position ?? placement;
 
     const rootRef = useRef();
     const timeoutRef = useRef<TimeoutType>(null);
@@ -52,7 +54,7 @@ const TooltipFactory = React.memo<TooltipProps>(
     const isControlled = typeof visible === 'boolean';
 
     style = [
-      shown && options?.variants?.visible?.true?.root,
+      shown && title !== null && title !== undefined && title !== '' && options?.variants?.visible?.true?.root,
 
       style,
 
@@ -134,7 +136,7 @@ const TooltipFactory = React.memo<TooltipProps>(
                   p: offset,
                 },
 
-                position === 'top' && {
+                placement === 'top' && {
                   bottom: '100%',
                   l: '50%',
                   ml: '-120px',
@@ -142,7 +144,7 @@ const TooltipFactory = React.memo<TooltipProps>(
                   justifyContent: 'end',
                 },
 
-                position === 'bottom' && {
+                placement === 'bottom' && {
                   top: '100%',
                   l: '50%',
                   ml: '-120px',
@@ -150,7 +152,7 @@ const TooltipFactory = React.memo<TooltipProps>(
                   justifyContent: 'start',
                 },
 
-                position === 'left' && {
+                placement === 'left' && {
                   right: '100%',
                   t: '50%',
                   mt: '-40px',
@@ -158,7 +160,7 @@ const TooltipFactory = React.memo<TooltipProps>(
                   justifyContent: 'center',
                 },
 
-                position === 'right' && {
+                placement === 'right' && {
                   left: '100%',
                   t: '50%',
                   mt: '-40px',
@@ -170,15 +172,15 @@ const TooltipFactory = React.memo<TooltipProps>(
               <BoxFactory
                 noWrap
                 position="relative"
-                direction={['left', 'right'].includes(position) ? 'row' : 'column'}
+                direction={['left', 'right'].includes(placement) ? 'row' : 'column'}
               >
-                {position === 'bottom' && (
+                {placement === 'bottom' && (
                   <BoxFactory center mb="-6px">
                     <CaretUp svg={svg} color={color} size={16} />
                   </BoxFactory>
                 )}
 
-                {position === 'right' && (
+                {placement === 'right' && (
                   <BoxFactory center order={0} mr="-6px">
                     <CaretLeft svg={svg} color={color} size={16} />
                   </BoxFactory>
@@ -188,13 +190,13 @@ const TooltipFactory = React.memo<TooltipProps>(
                   {title}
                 </TextFactory>
 
-                {position === 'top' && (
+                {placement === 'top' && (
                   <BoxFactory center mt="-6px">
                     <CaretDown svg={svg} color={color} size={16} />
                   </BoxFactory>
                 )}
 
-                {position === 'left' && (
+                {placement === 'left' && (
                   <BoxFactory center ml="-6px">
                     <CaretRight svg={svg} color={color} size={16} />
                   </BoxFactory>

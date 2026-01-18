@@ -14,7 +14,6 @@ export default function factory2<ComponentProps>(
 } {
   const fallbackProps = {};
   const variants: Variants = {};
-  const _variants = [...(props._variants || []), ...Object.keys(options.variants || {})];
 
   Object.entries(options?.defaultProps || {}).forEach(([prop, value]) => {
     fallbackProps[prop] = props?.[prop] ?? value;
@@ -50,10 +49,7 @@ export default function factory2<ComponentProps>(
 
   // Extends accessibility
   // @ts-expect-error
-  if (fallbackProps.accessibility || props?.accessibility) {
-    // @ts-expect-error
-    fallbackProps.accessibility = deepmerge(fallbackProps.accessibility, props?.accessibility);
-  }
+  fallbackProps.accessibility = deepmerge(fallbackProps.accessibility, props?.accessibility);
 
-  return { ...props, ...fallbackProps, variants, _variants };
+  return { ...props, ...fallbackProps, variants };
 }

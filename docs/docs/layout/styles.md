@@ -165,6 +165,7 @@ See all of them below:
 `maxWidth`<br/>
 `opacity`<br/>
 `order`<br/>
+`outline`<br/>
 `overflow`<br/>
 `padding`<br/>
 `paddingBottom`<br/>
