@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/core",
   "description": "React Bulk Core for Web and Native",
-  "version": "1.7.11",
+  "version": "1.8.1",
   "license": "MIT",
   "homepage": "https://rbk.caioedut.com",
   "repository": {
@@ -41,5 +41,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c8df48205b38d5cd60c0501ee7461a4ae3b651fa"
+  "gitHead": "b249a89794105be19b426a7c1e0810032e97898e"
 }
