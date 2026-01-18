@@ -22,3 +22,4 @@ type RbkEvent<EventType = any, TargetType = any> = {
 
 - [RbkPointerEvent](/docs/type-reference/rbk-pointer-event)
 - [RbkKeyboardEvent](/docs/type-reference/rbk-keyboard-event)
+- [RbkScrollEvent](/docs/type-reference/rbk-scroll-event)

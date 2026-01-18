@@ -3,6 +3,7 @@ import React, { useReducer, useRef, useState } from 'react';
 import {
   AnyObject,
   DrawerProps,
+  DropdownProps,
   ModalProps,
   RbkFormEvent,
   RbkInputEvent,
@@ -1131,16 +1132,29 @@ function DrawerExample() {
 
 function DropdownExample() {
   const [dropdown, toggleDropdown] = useReducer((state) => !state, false);
+  const [placement, setPlacement] = useState<DropdownProps['placement']>('bottom');
 
   return (
     <>
       <Text variant="title" mb="1gap">
         Dropdown
       </Text>
-      <Box row>
+      <Box>
+        <Select
+          minw={160}
+          label="Placement"
+          value={placement}
+          onChange={(_, value: any) => setPlacement(value)}
+          options={[
+            { value: 'top', label: 'Top' },
+            { value: 'bottom', label: 'Bottom' },
+          ]}
+        />
+      </Box>
+      <Box row mt="1gap">
         <Button onPress={toggleDropdown}>Toggle Dropdown</Button>
       </Box>
-      <Dropdown visible={dropdown} onClose={toggleDropdown}>
+      <Dropdown visible={dropdown} placement={placement} onClose={toggleDropdown}>
         <Card>
           <Text>Lorem ipsum dolor sit amet</Text>
         </Card>

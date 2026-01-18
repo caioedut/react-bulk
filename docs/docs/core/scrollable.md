@@ -92,12 +92,29 @@ Vertical pagination is not supported on Android.
 
 ➤ Type: **`boolean`** <br/>
 
----
-
 ## Events
 
 ### **`onScroll`**
 
-➤ Type: **[`Function(RbkEvent)`](/docs/type-reference/rbk-event)** <br/>
+➤ Type: **[`Function(RbkScrollEvent)`](/docs/type-reference/rbk-scroll-event)** <br/>
 
----
+## Theming
+
+See [`Theme`](/docs/layout/theme#props).
+
+```jsx
+const theme = {
+  components: {
+    Scrollable: {
+      defaultProps: {
+        /* ...props */
+      },
+      defaultStyles: {
+        root: { /* ...styles */ },
+        content: { /* ...styles */ },
+        stickyHeader: { /* ...styles */ },
+      }
+    }
+  }
+}
+```

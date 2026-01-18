@@ -31,6 +31,45 @@ function Home() {
 }
 ```
 
+### Placement
+
+You can use placements `top` and `bottom`. Default is `bottom`. Combine with `triggerRef` to position the `Dropdown` relative to the element.
+
+```jsx live
+function Home() {
+  const topTriggerRef = useRef();
+  const [topVisible, setTopVisible] = useState(false);
+
+  const bottomTriggerRef = useRef();
+  const [bottomVisible, setBottomVisible] = useState(false);
+
+  return (
+    <Grid row gap>
+      <Box>
+        <Button ref={bottomTriggerRef} onPress={() => setBottomVisible(true)}>
+          Expand to Bottom (Default)
+        </Button>
+        <Dropdown visible={bottomVisible} placement="bottom" triggerRef={bottomTriggerRef} onClose={() => setBottomVisible(false)}>
+          <Card>
+            <Text>Dropdown is amazing!</Text>
+          </Card>
+        </Dropdown>
+      </Box>
+      <Box>
+        <Button ref={topTriggerRef} onPress={() => setTopVisible(true)}>
+          Expand to Top
+        </Button>
+        <Dropdown visible={topVisible} placement="top" triggerRef={topTriggerRef} onClose={() => setTopVisible(false)}>
+          <Card>
+            <Text>Dropdown is amazing!</Text>
+          </Card>
+        </Dropdown>
+      </Box>
+    </Grid>
+  );
+}
+```
+
 ### Position
 
 You can use styles `top`, `bottom`, `left` and `right` as you want.
