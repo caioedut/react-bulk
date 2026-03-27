@@ -1,3 +1,5 @@
+import { ThemeProps } from '@react-bulk/core';
+
 const dark = {
   mode: 'dark',
   colors: {
@@ -15,6 +17,6 @@ const dark = {
       disabled: '#0C0C0C',
     },
   },
-};
+} as ThemeProps;
 
 export default dark;
