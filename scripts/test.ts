@@ -11,3 +11,5 @@ for (const cwd of dirs) {
 
   pmex('tsc --noEmit --skipLibCheck', { cwd });
 }
+
+pmex('yarn workspace @react-bulk/mcp typecheck');

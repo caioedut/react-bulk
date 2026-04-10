@@ -8,6 +8,7 @@ const CORE_INDEX_PATH = path.resolve(process.cwd(), '../../packages/core/src/ind
 const CORE_TYPES_PATH = path.resolve(process.cwd(), '../../packages/core/src/types.ts');
 const WEB_INDEX_PATH = path.resolve(process.cwd(), '../../packages/web/src/index.ts');
 const NATIVE_INDEX_PATH = path.resolve(process.cwd(), '../../packages/native/src/index.ts');
+const STYLE_CONSTANTS_PATH = path.resolve(process.cwd(), '../../packages/core/src/styles/constants.ts');
 
 function walkFiles(dir: string, ext: string): string[] {
   const out: string[] = [];
@@ -137,10 +138,71 @@ function extractThemeTokens(docs: RbkDocEntry[]): string[] {
   return [...tokenSet].sort();
 }
 
+function parseStringArray(content: string, constName: string): string[] {
+  const regex = new RegExp(`export const ${constName} = \\[([\\s\\S]*?)\\] as const;`, 'm');
+  const block = content.match(regex)?.[1];
+  if (!block) return [];
+  const items = [...block.matchAll(/'([^']+)'/g)].map((m) => m[1]);
+  return items;
+}
+
+function parseAliasesMap(content: string): Record<string, string> {
+  const aliasesBlock = content.match(/export const aliases = \{([\s\S]*?)\};/m)?.[1];
+  if (!aliasesBlock) return {};
+  const map: Record<string, string> = {};
+  for (const m of aliasesBlock.matchAll(/([A-Za-z0-9_]+):\s*'([^']+)'/g)) {
+    map[m[2]] = m[1];
+  }
+  return map;
+}
+
+function buildPropAliases(content: string): Record<string, string> {
+  const aliasMap: Record<string, string> = {};
+  const customSpacings = parseStringArray(content, 'customSpacings');
+  const spacingBase: Record<string, string> = {
+    i: 'inset',
+    t: 'top',
+    b: 'bottom',
+    l: 'left',
+    r: 'right',
+    m: 'margin',
+    mt: 'marginTop',
+    mb: 'marginBottom',
+    ml: 'marginLeft',
+    mr: 'marginRight',
+    mh: 'marginHorizontal',
+    mx: 'marginHorizontal',
+    mv: 'marginVertical',
+    my: 'marginVertical',
+    p: 'padding',
+    pt: 'paddingTop',
+    pb: 'paddingBottom',
+    pl: 'paddingLeft',
+    pr: 'paddingRight',
+    ph: 'paddingHorizontal',
+    px: 'paddingHorizontal',
+    pv: 'paddingVertical',
+    py: 'paddingVertical',
+    g: 'gap',
+    gx: 'columnGap',
+    gy: 'rowGap',
+  };
+  for (const key of customSpacings) {
+    if (spacingBase[key]) aliasMap[spacingBase[key]] = key;
+  }
+  aliasMap.flexDirection = 'direction';
+  aliasMap.flexGrow = 'grow';
+  aliasMap.flexShrink = 'shrink';
+  aliasMap.flexBasis = 'basis';
+  aliasMap.alignSelf = 'align';
+  aliasMap.justifySelf = 'justify';
+  return aliasMap;
+}
+
 let cached: { key: number; index: RbkIndex } | null = null;
 
 function computeKey(): number {
-  const files = [CORE_INDEX_PATH, CORE_TYPES_PATH, WEB_INDEX_PATH, NATIVE_INDEX_PATH, ...walkFiles(DOCS_ROOT, '.md')];
+  const files = [CORE_INDEX_PATH, CORE_TYPES_PATH, WEB_INDEX_PATH, NATIVE_INDEX_PATH, STYLE_CONSTANTS_PATH, ...walkFiles(DOCS_ROOT, '.md')];
   return files.reduce((acc, file) => acc + statSync(file).mtimeMs, 0);
 }
 
@@ -155,6 +217,9 @@ export function buildIndex(): RbkIndex {
   const webComponents = parsePlatformComponents(WEB_INDEX_PATH);
   const nativeComponents = parsePlatformComponents(NATIVE_INDEX_PATH);
   const themeTokens = extractThemeTokens(docs);
+  const styleConstants = readFileSync(STYLE_CONSTANTS_PATH, 'utf8');
+  const styleAliases = parseAliasesMap(styleConstants);
+  const propAliases = buildPropAliases(styleConstants);
   const index: RbkIndex = {
     generatedAt: new Date().toISOString(),
     docs,
@@ -164,6 +229,8 @@ export function buildIndex(): RbkIndex {
     webComponents,
     nativeComponents,
     themeTokens,
+    styleAliases,
+    propAliases,
   };
   cached = { key, index };
   return index;

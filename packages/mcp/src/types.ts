@@ -36,4 +36,6 @@ export type RbkIndex = {
   webComponents: PlatformComponentMap;
   nativeComponents: PlatformComponentMap;
   themeTokens: string[];
+  styleAliases: Record<string, string>;
+  propAliases: Record<string, string>;
 };

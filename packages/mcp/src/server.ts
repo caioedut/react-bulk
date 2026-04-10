@@ -30,9 +30,66 @@ export function createServer() {
   const registerTool = server.registerTool.bind(server) as any;
 
   registerTool(
+    'rbk_get_core_usage_guide',
+    {
+      description: 'Quick usage guide for Box, Text, and Scrollable.',
+      inputSchema: {},
+    },
+    () => {
+      const index = buildIndex();
+      const pickDoc = (slug: string) => index.docs.find((d) => d.slug === slug);
+      const box = pickDoc('core/box');
+      const text = pickDoc('core/text');
+      const scrollable = pickDoc('layout/scrollable') ?? pickDoc('core/scrollable');
+      return asJson({
+        components: [
+          {
+            name: 'Box',
+            role: 'Foundation component. Prefer it for layout structure and Grid item wrappers.',
+            doc: box?.path ?? null,
+            keyProps: ['style', 'platform', 'hidden', 'invisible', 'row/column', 'xs/sm/md/lg/xl/xxl'],
+          },
+          {
+            name: 'Text',
+            role: 'Cross-platform typography component that inherits Box props.',
+            doc: text?.path ?? null,
+            keyProps: ['variant', 'size', 'weight', 'transform', 'color', 'numberOfLines'],
+          },
+          {
+            name: 'Scrollable',
+            role: 'Scrollable container with normalized vertical/horizontal behavior and events.',
+            doc: scrollable?.path ?? null,
+            keyProps: ['direction', 'contentInset', 'pagingEnabled', 'stickyHeaderIndices', 'onScroll'],
+          },
+        ],
+        guidance: [
+          'For Grid, wrap children in Box and define breakpoint props (xs/sm/md/lg/xl/xxl).',
+          'Prefer style aliases for consistent token-based styling.',
+          'Use platform-specific props via platform={{ web: {}, native: {} }} when needed.',
+        ],
+      });
+    },
+  );
+
+  registerTool(
+    'rbk_get_style_aliases',
+    {
+      description: 'Returns official style/prop aliases (e.g. maxWidth -> maxw).',
+      inputSchema: {},
+    },
+    () => {
+      const index = buildIndex();
+      return asJson({
+        styleAliases: index.styleAliases,
+        propAliases: index.propAliases,
+      });
+    },
+  );
+
+  registerTool(
     'rbk_search_docs',
     {
-      description: 'Busca docs da React Bulk por texto e plataforma.',
+      description: 'Search React Bulk docs by text and platform.',
       inputSchema: {
         query: z.string().min(2),
         platform: z.enum(['web', 'native', 'expo']).optional(),
@@ -67,7 +124,7 @@ export function createServer() {
   registerTool(
     'rbk_get_component_api',
     {
-      description: 'Retorna props/eventos/defaults do componente via docs.',
+      description: 'Return component props/events/defaults from docs.',
       inputSchema: {
         name: z.string().min(2),
         platform: z.enum(['web', 'native', 'expo']).optional(),
@@ -81,7 +138,7 @@ export function createServer() {
         index.docs.find((item) => item.title.toLowerCase() === query) ||
         index.docs.find((item) => item.slug.endsWith(`/${query}`));
       if (!doc) {
-        return asJson({ found: false, message: `Componente não encontrado: ${name}` });
+        return asJson({ found: false, message: `Component not found: ${name}` });
       }
       const sections = {
         props: doc.props,
@@ -107,7 +164,7 @@ export function createServer() {
   registerTool(
     'rbk_get_theme_schema',
     {
-      description: 'Retorna schema base de theme esperado pela lib.',
+      description: 'Return the base theme schema expected by React Bulk.',
       inputSchema: {},
     },
     () => {
@@ -146,7 +203,7 @@ export function createServer() {
   registerTool(
     'rbk_generate_component_snippet',
     {
-      description: 'Gera snippet React Bulk por componente/plataforma.',
+      description: 'Generate a React Bulk snippet for a component/platform.',
       inputSchema: {
         component: z.string().min(2),
         platform: z.enum(['web', 'native', 'expo']).optional(),
@@ -163,7 +220,7 @@ export function createServer() {
   registerTool(
     'rbk_generate_theme_patch',
     {
-      description: 'Gera patch de theme com base em intenção.',
+      description: 'Generate a theme patch from a design intent.',
       inputSchema: {
         intent: z.string().min(3),
         baseMode: z.enum(['light', 'dark']).optional(),
@@ -178,7 +235,7 @@ export function createServer() {
   registerTool(
     'rbk_validate_usage',
     {
-      description: 'Valida uso da React Bulk no código ou em um path.',
+      description: 'Validate React Bulk usage in source code or a project path.',
       inputSchema: {
         codeOrProjectPath: z.string().min(1),
         platform: z.enum(['web', 'native', 'expo']).optional(),
@@ -194,7 +251,7 @@ export function createServer() {
   registerTool(
     'rbk_platform_matrix',
     {
-      description: 'Matriz de suporte web/native por componente.',
+      description: 'Return web/native support matrix by component.',
       inputSchema: {
         component: z.string().optional(),
       },
