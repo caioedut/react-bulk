@@ -52,5 +52,9 @@
     "@types/node": "^18.19.39",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "b9b539ce984412ba3df13d650f062a0a9349407c"
 }
