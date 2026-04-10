@@ -13,3 +13,5 @@ for (const cwd of dirs) {
 }
 
 pmex('yarn workspace @react-bulk/mcp typecheck');
+
+pmex('yarn workspace @react-bulk/mcp test');

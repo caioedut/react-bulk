@@ -3,19 +3,41 @@
   "description": "MCP server for React Bulk docs and APIs",
   "version": "0.1.0",
   "license": "MIT",
-  "private": true,
+  "homepage": "https://rbk.caioedut.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caioedut/react-bulk.git",
+    "directory": "packages/expo"
+  },
+  "author": {
+    "name": "Caio Teixeira",
+    "email": "caioedut@gmail.com"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-component",
+    "web",
+    "native",
+    "android",
+    "ios",
+    "cross-platform",
+    "ui",
+    "ux",
+    "expo"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "bin": {
     "react-bulk-mcp": "./dist/index.js"
   },
   "engines": {
     "node": ">=18"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "node --max-old-space-size=8192 ../../node_modules/typescript/bin/tsc -p tsconfig.json",
     "dev": "tsx src/index.ts",
