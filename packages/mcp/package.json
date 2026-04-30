@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/mcp",
   "description": "MCP server for React Bulk docs and APIs",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "license": "MIT",
   "homepage": "https://rbk.caioedut.com",
   "repository": {
