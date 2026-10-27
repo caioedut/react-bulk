@@ -1432,7 +1432,9 @@ function AnimationExample() {
           </Button>
         </Box>
         <Box xs={12}>
-          <Box border="1px solid primary" align="start" {...transition.props} />
+          <Box style={big}>
+            <Box border="1px solid primary" align="start" {...transition.props} />
+          </Box>
         </Box>
       </Grid>
     </>
