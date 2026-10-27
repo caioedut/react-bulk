@@ -54,11 +54,19 @@ const InputPinFactory = React.memo<InputPinProps>(
       inputStyle,
     ];
 
+    const oneTimeCodeProps = web
+      ? { autoComplete: 'one-time-code' }
+      : {
+          autoComplete: 'sms-otp',
+          textContentType: 'oneTimeCode',
+        };
+
     return (
       <InputFactory
         ref={ref}
         style={style}
         variants={variants}
+        {...oneTimeCodeProps}
         {...rest}
         size={size}
         mask={resolveValue}
