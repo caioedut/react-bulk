@@ -32,6 +32,17 @@ test('unstable components are not exposed', () => {
   assert.ok(result.issues[0].message.includes('not ready'));
 });
 
+test('component props are read from TypeScript types too', () => {
+  const index = buildIndex();
+  // After a blank line in a CRLF file (regression).
+  assert.ok(index.componentTypeProps.Scrollable.own.includes('stickyHeaderIndices'));
+  assert.ok(index.componentTypeProps.Checkbox.inherited.ButtonProps.includes('circular'));
+  assert.ok(!index.componentTypeProps.Button.own.includes('max'), 'value types (badge?: BadgeProps) are not extended types');
+  assert.deepEqual(validateUsage('<Scrollable stickyHeaderIndices={[0]} />', 'web', index).issues, []);
+  assert.deepEqual(validateUsage('<Box component={Link} to="/home" />', 'web', index).issues, []);
+  assert.equal(findDoc(index, 'Image')!.styles.find((prop) => prop.name === 'style')?.type, 'RbkStyle');
+});
+
 test('findDoc resolves component names that differ from doc titles', () => {
   const index = buildIndex();
   assert.equal(findDoc(index, 'ButtonGroup')?.slug, 'forms/button-group');

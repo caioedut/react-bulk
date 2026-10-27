@@ -51,6 +51,12 @@ export type RbkDocEntry = {
 
 export type PlatformComponentMap = Record<string, string>;
 
+export type RbkTypeProps = {
+  own: string[];
+  /** Props from extended types, by type name (e.g. `ButtonProps` for Checkbox). */
+  inherited: Record<string, string[]>;
+};
+
 export type RbkThemeInfo = {
   typeSource: string;
   shape: Record<string, number>;
@@ -81,6 +87,8 @@ export type RbkIndex = {
   propAliases: Record<string, string>;
   /** Every short alias -> full style prop (`mh` and `mx` -> `marginHorizontal`). */
   aliasTable: Record<string, string>;
+  /** Prop names declared in each component's `XProps` type (own + extended types, without Box/BaseProps). */
+  componentTypeProps: Record<string, RbkTypeProps>;
   /** Every style-like prop accepted by Box (and so by every component that extends it). */
   styleProps: string[];
 };

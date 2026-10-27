@@ -290,6 +290,12 @@ export function createServer() {
         props: filter(doc.props),
         events: filter(doc.events),
         styles: filter(doc.styles),
+        // Declared in the TypeScript type but missing from the docs page (see `propsType` for their types).
+        undocumentedProps: (index.componentTypeProps[symbol]?.own ?? []).filter(
+          (prop) => ![...doc.props, ...doc.events, ...doc.styles].some((item) => item.name === prop),
+        ),
+        // Props accepted through extended types (e.g. Checkbox also takes ButtonProps).
+        inheritedProps: index.componentTypeProps[symbol]?.inherited ?? {},
         examples: doc.examples.map((example) => example.title),
         propsType: index.typeSources[propsType] ? propsType : null,
         compatibility,

@@ -13,7 +13,22 @@ type ValidationIssue = {
 type JsxTag = { name: string; attrs: string[] };
 
 // Props handled by React itself or accepted by every Box-based component.
-const GENERIC_PROPS = new Set(['children', 'key', 'ref', 'id', 'testID', 'nativeID', 'className', 'style', 'platform']);
+const GENERIC_PROPS = new Set([
+  'children',
+  'key',
+  'ref',
+  'id',
+  'testID',
+  'nativeID',
+  'className',
+  'style',
+  'platform',
+  // Read by List from its children
+  'sticky',
+]);
+
+// Forwarded to the underlying element (e.g. `<Box component="a" href="...">`).
+const PASSTHROUGH_PROPS = new Set(['href', 'target', 'rel', 'download', 'title', 'tabIndex', 'role', 'alt', 'src', 'name', 'type', 'value']);
 
 const SVG_TAGS = /^(Svg|Circle|Ellipse|G|TSpan|TextPath|Path|Polygon|Polyline|Line|Rect|Use|Symbol|Defs|LinearGradient|RadialGradient|Stop|ClipPath|Pattern|Mask)$/;
 
@@ -107,7 +122,17 @@ function allowedProps(index: RbkIndex): Map<string, Set<string>> {
   const map = new Map<string, Set<string>>();
   for (const doc of index.docs) {
     if (doc.kind !== 'component' || !doc.symbol) continue;
-    map.set(doc.symbol, new Set([...shared, ...names(doc.props), ...names(doc.events), ...names(doc.styles)]));
+    map.set(
+      doc.symbol,
+      new Set([
+        ...shared,
+        ...names(doc.props),
+        ...names(doc.events),
+        ...names(doc.styles),
+        ...(index.componentTypeProps[doc.symbol]?.own ?? []),
+        ...Object.values(index.componentTypeProps[doc.symbol]?.inherited ?? {}).flat(),
+      ]),
+    );
   }
   return map;
 }
@@ -156,8 +181,11 @@ function validateSource(source: string, platform: Platform, index: RbkIndex, fil
     if (!name || name === 'ReactBulk' || SVG_TAGS.test(name)) continue;
     const props = allowed.get(name);
     if (!props) continue;
+    // With a custom `component`, unknown props are forwarded to it.
+    const forwards = tag.attrs.includes('component');
     for (const attr of tag.attrs) {
-      if (props.has(attr) || attr.startsWith('data-') || attr.startsWith('aria-')) continue;
+      if (props.has(attr) || PASSTHROUGH_PROPS.has(attr) || forwards) continue;
+      if (attr.startsWith('data-') || attr.startsWith('aria-')) continue;
       issues.push({ kind: 'warning', message: `Possibly invalid prop on ${name}: ${attr}`, file });
     }
     if (platform !== 'web') {

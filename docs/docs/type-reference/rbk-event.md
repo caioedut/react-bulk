@@ -8,6 +8,8 @@ Dispatched by these listeners:
 
 ```ts title="RbkEvent"
 type RbkEvent<EventType = any, TargetType = any> = {
+  type: string;
+  form: FormRef | null;
   handler: 'RbkEvent';
   target: TargetType;
   currentTarget: TargetType;
@@ -23,3 +25,4 @@ type RbkEvent<EventType = any, TargetType = any> = {
 - [RbkPointerEvent](/docs/type-reference/rbk-pointer-event)
 - [RbkKeyboardEvent](/docs/type-reference/rbk-keyboard-event)
 - [RbkScrollEvent](/docs/type-reference/rbk-scroll-event)
+- [FormRef](/docs/forms/form#reference) (the `form` the element belongs to, or `null`)

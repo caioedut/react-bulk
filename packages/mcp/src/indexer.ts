@@ -11,6 +11,7 @@ import {
   RbkExportItem,
   RbkIndex,
   RbkThemeInfo,
+  RbkTypeProps,
 } from './types.js';
 
 // `src/` when running with tsx, `dist/` when running the published build.
@@ -57,6 +58,11 @@ function walkFiles(dir: string, ext: string): string[] {
   return out;
 }
 
+/** Reads a source file with `\n` line endings (the regexes below rely on it). */
+function readText(filePath: string): string {
+  return readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n');
+}
+
 function readPackageVersion(): string {
   try {
     return JSON.parse(readFileSync(path.join(MCP_ROOT, 'package.json'), 'utf8')).version ?? '0.0.0';
@@ -101,7 +107,11 @@ function extractProps(content: string): ParsedProps {
     const nextHeading = headings.find((h) => h.index > start)?.index ?? content.length;
     const end = Math.min(next?.index ?? content.length, nextHeading);
     const block = content.slice(start, end);
-    const typeMatch = block.match(/➤ Type:\s*(.+)$/m);
+    const section = [...headings].reverse().find((h) => h.index < start)?.title ?? '';
+    const isStyle = /^styles?$/i.test(section);
+    // Styles sections often list several props sharing one `➤ Type:` at the end of the section.
+    const typeMatch =
+      block.match(/➤ Type:\s*(.+)$/m) ?? (isStyle ? content.slice(start, nextHeading).match(/➤ Type:\s*(.+)$/m) : null);
     const defaultMatch = block.match(/➤ Default:\s*(.+)$/m);
     const defaults = Object.fromEntries(
       [...block.matchAll(/➤ Default ([A-Za-z]+):\s*(.+)$/gm)].map((m) => [m[1].toLowerCase(), cleanMarkdown(m[2])]),
@@ -117,16 +127,15 @@ function extractProps(content: string): ParsedProps {
       .find((line) => line && !line.startsWith('➤') && !line.startsWith('---') && !line.startsWith('#'));
     const prop: RbkDocProp = {
       name: current[1],
-      type: typeMatch ? cleanMarkdown(typeMatch[1]) : undefined,
+      type: typeMatch ? cleanMarkdown(typeMatch[1]) : isStyle && /style$/i.test(current[1]) ? 'RbkStyle' : undefined,
       defaultValue: defaultMatch ? cleanMarkdown(defaultMatch[1]) : undefined,
       ...(Object.keys(defaults).length && { defaults }),
       platform,
       description: description ? cleanMarkdown(description) : undefined,
       ...(details && { details }),
     };
-    const section = [...headings].reverse().find((h) => h.index < start)?.title ?? '';
     if (/event/i.test(section)) result.events.push(prop);
-    else if (/^styles?$/i.test(section)) result.styles.push(prop);
+    else if (isStyle) result.styles.push(prop);
     else result.props.push(prop);
   }
   return result;
@@ -170,7 +179,7 @@ function summarize(content: string): string {
 type Symbols = { components: Set<string>; hooks: Set<string>; types: Set<string> };
 
 function parseDoc(filePath: string, symbols: Symbols): RbkDocEntry {
-  const content = readFileSync(filePath, 'utf8');
+  const content = readText(filePath);
   const title = content.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? path.basename(filePath, '.md');
   const sections = [...content.matchAll(/^##\s+(.+)$/gm)].map((m) => m[1].trim());
   const rel = path.relative(DOCS_ROOT, filePath).replace(/\\/g, '/');
@@ -208,7 +217,7 @@ function parseDoc(filePath: string, symbols: Symbols): RbkDocEntry {
 }
 
 function parseCoreExports(filePath: string): RbkExportItem[] {
-  const content = readFileSync(filePath, 'utf8');
+  const content = readText(filePath);
   const lines = content.split('\n');
   const exports: RbkExportItem[] = [];
   let pendingInternal = false;
@@ -233,7 +242,7 @@ function parseCoreExports(filePath: string): RbkExportItem[] {
 }
 
 function parseTypeSources(filePath: string): Record<string, string> {
-  const content = readFileSync(filePath, 'utf8');
+  const content = readText(filePath);
   const sources: Record<string, string> = {};
   const unstable = new RegExp(`^(${UNSTABLE_COMPONENTS.join('|')})[A-Z]`);
   const starts = [...content.matchAll(/^export\s+(?:type|interface)\s+([A-Za-z0-9_]+)/gm)];
@@ -249,6 +258,27 @@ function parseTypeSources(filePath: string): Record<string, string> {
       .join('\n');
   }
   return sources;
+}
+
+/** Top-level keys of a props type, following referenced `*Props` types (BaseProps is Box, covered elsewhere). */
+function typePropNames(typeSources: Record<string, string>, name: string): RbkTypeProps {
+  const source = typeSources[name] ?? '';
+  const keys = [...source.matchAll(/^([ \t]+)([A-Za-z_]\w*)\??:/gm)];
+  const indent = Math.min(...keys.map((m) => m[1].length));
+  const own = keys
+    .filter((m) => m[1].length === indent && m[2] !== 'variants')
+    .map((m) => m[2])
+    .sort();
+  // Extended types only (`  FocusableProps,` / `  TextProps<false>,`), not prop value types (`badge?: BadgeProps`).
+  const referenced = [...source.matchAll(/^[ \t]*(?:&[ \t]*)?([A-Z]\w*Props)\b(?:<[^>\n]*>)?[ \t]*[,&]?[ \t]*$/gm)]
+    .map((m) => m[1])
+    .filter((ref) => ref !== name && ref !== 'BaseProps');
+  const inherited: Record<string, string[]> = {};
+  for (const ref of referenced) {
+    const parent = typePropNames(typeSources, ref);
+    inherited[ref] = [...new Set([...parent.own, ...Object.values(parent.inherited).flat()])].sort();
+  }
+  return { own, inherited };
 }
 
 function parsePlatformComponents(content: string): Record<string, string> {
@@ -419,8 +449,8 @@ export function buildIndexFromSources(): RbkIndex {
   const hooks = publicExports.filter((name) => /^use[A-Z]/.test(name));
   const typeSources = parseTypeSources(CORE_TYPES_PATH);
   const typeNames = Object.keys(typeSources).sort();
-  const webSource = readFileSync(WEB_INDEX_PATH, 'utf8');
-  const nativeSource = readFileSync(NATIVE_INDEX_PATH, 'utf8');
+  const webSource = readText(WEB_INDEX_PATH);
+  const nativeSource = readText(NATIVE_INDEX_PATH);
   const webComponents = parsePlatformComponents(webSource);
   const nativeComponents = parsePlatformComponents(nativeSource);
   const webExports = parsePlatformNamedExports(webSource);
@@ -435,8 +465,8 @@ export function buildIndexFromSources(): RbkIndex {
     .filter((file) => !unstableSlugs.includes(path.basename(file, '.md')))
     .map((file) => parseDoc(file, symbols))
     .sort((a, b) => a.slug.localeCompare(b.slug));
-  const styleConstants = readFileSync(STYLE_CONSTANTS_PATH, 'utf8');
-  const theme = parseTheme(readFileSync(BASE_THEME_PATH, 'utf8'), typeSources);
+  const styleConstants = readText(STYLE_CONSTANTS_PATH);
+  const theme = parseTheme(readText(BASE_THEME_PATH), typeSources);
   return {
     generatedAt: new Date().toISOString(),
     version: readPackageVersion(),
@@ -455,6 +485,9 @@ export function buildIndexFromSources(): RbkIndex {
     styleAliases: parseAliasesMap(styleConstants),
     propAliases: buildPropAliases(styleConstants),
     aliasTable: buildAliasTable(styleConstants),
+    componentTypeProps: Object.fromEntries(
+      [...symbols.components].sort().map((name) => [name, typePropNames(typeSources, `${name}Props`)]),
+    ),
     styleProps: parseAllStringArrays(styleConstants),
   };
 }

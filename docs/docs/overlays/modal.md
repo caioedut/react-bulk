@@ -2,7 +2,7 @@
 
 A modal is a dialog box/popup window that is displayed on top of the current page.
 
-`Modal` just wraps a [`Card`](/docs/contents/card) in a [`Backdrop`](/docs/overlays/backdrop).
+`Modal` just wraps a [`Card`](/docs/content/card) in a [`Backdrop`](/docs/overlays/backdrop).
 
 ## Import
 

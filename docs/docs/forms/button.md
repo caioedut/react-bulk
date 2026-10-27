@@ -120,7 +120,7 @@ If `true`, focuses the input on `componentDidMount` or `useEffect`.
 
 A number or object representing the button's badge.
 
-➤ Type: **`number` | [`BadgeProps`](/docs/feedback/badge#props)** <br/>
+➤ Type: **`number` | [`BadgeProps`](/docs/data-display/badge#props)** <br/>
 
 ---
 
