@@ -111,7 +111,7 @@ export function createServer() {
             name: 'Box',
             role: 'Foundation of every component: layout (flex column by default), spacing, styling and rendering control.',
             doc: url('Box'),
-            keyProps: ['m/p/i + t/b/l/r/x/y', 'g/gx/gy', 'w/h/ww/hh', 'row/column/center/flex', 'bg/border/corners/shadow', 'style/rawStyle', 'platform', 'hidden/invisible/mount', 'component'],
+            keyProps: ['m/p/i + t/b/l/r/x/y', 'g/gx/gy', 'w/h/ww/hh', 'row/column/center/flex', 'bg/border/corners/shadow', 'style/rawStyle', 'platform', 'hidden/invisible/mount', 'component', 'onLayout'],
           },
           {
             name: 'Text',

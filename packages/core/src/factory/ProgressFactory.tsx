@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from 'react';
 
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
-import { ProgressProps, RequiredSome } from '../types';
+import { ProgressProps, RbkLayoutEvent, RequiredSome } from '../types';
 import deepmerge from '../utils/deepmerge';
 import rbkGlobal from '../utils/global';
 import pick from '../utils/pick';
@@ -74,12 +74,10 @@ const ProgressFactory = React.memo<ProgressProps>(
       barStyle,
     ];
 
-    if (native) {
-      Object.assign(rest, { onLayout: handleLayout });
-    }
+    Object.assign(rest, { onLayout: native ? handleLayout : onLayout });
 
-    function handleLayout(e: any) {
-      setContainerWidth(e.nativeEvent.layout.width);
+    function handleLayout(e: RbkLayoutEvent) {
+      setContainerWidth(e.width);
       onLayout?.(e);
     }
 

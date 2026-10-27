@@ -10,7 +10,7 @@ import ChevronLeft from '../icons/ChevronLeft';
 import ChevronRight from '../icons/ChevronRight';
 import childrenize from '../props/childrenize';
 import factory2 from '../props/factory2';
-import { CarouselProps, RequiredSome } from '../types';
+import { CarouselProps, RbkLayoutEvent, RequiredSome } from '../types';
 import event from '../utils/event';
 import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
@@ -185,7 +185,7 @@ const CarouselFactory = React.memo<CarouselProps>(
     if (native) {
       Object.assign(rest, {
         decelerationRate: 'fast',
-        onLayout: ({ nativeEvent }) => setContentWidth(nativeEvent.layout.width),
+        onLayout: ({ width }: RbkLayoutEvent) => setContentWidth(width),
       });
     }
 

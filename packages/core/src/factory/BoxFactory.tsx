@@ -2,6 +2,7 @@ import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 
 import useAnimation from '../hooks/useAnimation';
 import useForm from '../hooks/useForm';
+import useLayoutObserver from '../hooks/useLayoutObserver';
 import useTheme from '../hooks/useTheme';
 import bindings from '../props/bindings';
 import extract from '../props/extract';
@@ -251,6 +252,13 @@ const BoxFactory = React.memo<BoxProps>(
     const Component = component || View;
 
     const { ref: transitionRef, ...transitionProps }: AnyObject = transition.props;
+
+    // Web only: there is no "layout" primitive, so emulate it observing the element
+    useLayoutObserver(transitionRef, web ? rest.onLayout : undefined);
+
+    if (web) {
+      delete rest.onLayout;
+    }
 
     if (canReceiveRef(Component)) {
       transitionProps.ref = transitionRef;

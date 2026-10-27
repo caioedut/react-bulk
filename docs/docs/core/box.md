@@ -555,6 +555,14 @@ Sets `width`, `minWidth` and `maxWidth` styles.
 
 ## Events
 
+### **`onLayout`**
+
+Called on mount and whenever the element's position or size changes.
+
+➤ Type: **[`Function(RbkLayoutEvent)`](/docs/type-reference/rbk-layout-event)** <br/>
+
+---
+
 ### **`onPress`**
 
 ➤ Type: **[`Function(RbkPointerEvent)`](/docs/type-reference/rbk-pointer-event)** <br/>

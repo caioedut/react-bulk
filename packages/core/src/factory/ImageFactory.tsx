@@ -4,7 +4,7 @@ import useDefaultRef from '../hooks/useDefaultRef';
 import useTheme from '../hooks/useTheme';
 import factory2 from '../props/factory2';
 import get from '../props/get';
-import { ImageProps, RequiredSome } from '../types';
+import { ImageProps, RbkLayoutEvent, RequiredSome } from '../types';
 import defined from '../utils/defined';
 import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
@@ -95,9 +95,9 @@ const ImageFactory = React.memo<ImageProps>(
       });
     }
 
-    const handleLayout = (e: any) => {
-      setContainerWidth(e.nativeEvent.layout.width);
-      setContainerHeight(e.nativeEvent.layout.height);
+    const handleLayout = (e: RbkLayoutEvent) => {
+      setContainerWidth(e.width);
+      setContainerHeight(e.height);
       onLayout?.(e);
     };
 
@@ -244,6 +244,7 @@ const ImageFactory = React.memo<ImageProps>(
         component={Image}
         style={style}
         variants={{ root: variants.root }}
+        onLayout={onLayout}
         {...rest}
         noRootStyles
       />

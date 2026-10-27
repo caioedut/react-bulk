@@ -354,6 +354,26 @@ export type RbkScrollEvent<EventType = any, TargetType = any> = Overwrite<
   }
 >;
 
+export type RbkLayoutEvent<EventType = any, TargetType = any> = Overwrite<
+  RbkEvent<EventType, TargetType>,
+  {
+    handler: 'RbkLayoutEvent';
+
+    /**
+     * The X position of the element, relative to its parent
+     */
+    x: number;
+
+    /**
+     * The Y position of the element, relative to its parent
+     */
+    y: number;
+
+    width: number;
+    height: number;
+  }
+>;
+
 export type RbkInputEvent = Overwrite<
   RbkEvent,
   {
@@ -650,6 +670,9 @@ export type BaseProps = Overwrite<
       component?: any;
       componentProps?: AnyObject;
       noRootStyles?: boolean;
+
+      // Events
+      onLayout?: (event: RbkLayoutEvent) => void;
 
       // Styles
       style?: RbkStyle;

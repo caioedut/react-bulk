@@ -24,5 +24,6 @@ type RbkEvent<EventType = any, TargetType = any> = {
 
 - [RbkPointerEvent](/docs/type-reference/rbk-pointer-event)
 - [RbkKeyboardEvent](/docs/type-reference/rbk-keyboard-event)
+- [RbkLayoutEvent](/docs/type-reference/rbk-layout-event)
 - [RbkScrollEvent](/docs/type-reference/rbk-scroll-event)
 - [FormRef](/docs/forms/form#reference) (the `form` the element belongs to, or `null`)

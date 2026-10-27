@@ -1,6 +1,7 @@
 import Platform from '../Platform';
 import base from '../events/base';
 import keyboard from '../events/keyboard';
+import layout from '../events/layout';
 import pointer from '../events/pointer';
 import scroll from '../events/scroll';
 
@@ -12,6 +13,7 @@ export default function ({ ...props }: any, eventExtraData: any = {}) {
     keyboard: [['onKeyPress'], ['onKeyDown'], ['onKeyUp']],
     pointer: [['onClick', 'onPress'], ['onMouseDown', 'onPressIn'], ['onMouseUp', 'onPressOut'], ['onLongPress']],
     scroll: [['onScroll']],
+    layout: [['onLayout']],
   } as const;
 
   for (const handler in mapping) {
@@ -34,7 +36,9 @@ export default function ({ ...props }: any, eventExtraData: any = {}) {
               ? callback(keyboard(event, eventExtraData))
               : handler === 'scroll'
                 ? callback(scroll(event, eventExtraData))
-                : callback(base(event, eventExtraData));
+                : handler === 'layout'
+                  ? callback(layout(event, eventExtraData))
+                  : callback(base(event, eventExtraData));
 
         if (web) {
           props[webEventName] = callbackHandled;
