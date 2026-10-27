@@ -167,19 +167,40 @@ Commonly used by libraries that implements some components. Maybe you are lookin
 
 Commonly used by libraries that implements some components. Maybe you are looking for [`setValue`](#setValue).
 
+:::tip
+Prefer [`useInput`](/docs/hooks/use-input), which registers the field for you.
+:::
+
+Register the field once and read the current state through refs, so `get` never returns a stale value.
+Calling `setField` again with the same `name` updates the field in place (keeping its position), and dispatches the form `onChange` when its value changed.
+
 ```jsx
-const [age, setAge] = useState('');
+const form = useForm();
+const [age, setAge] = useState('21');
 const [error, setError] = useState(null);
 
-ref.current.setField({
-  name: 'age',
-  initialValue: '21',
-  get: () => age,
-  set: (value) => setAge(value),
-  getError: () => error,
-  setError: (error) => setError(error),
-  onFormChange: (event, data) => handleFormChange(event, data)
-})
+const ageRef = useRef(age);
+ageRef.current = age;
+
+const errorRef = useRef(error);
+errorRef.current = error;
+
+useEffect(() => {
+  form.setField({
+    name: 'age',
+    initialValue: '21',
+    get: () => ageRef.current,
+    set: (value) => {
+      ageRef.current = value;
+      setAge(value);
+    },
+    getError: () => errorRef.current,
+    setError: (error) => setError(error),
+    onFormChange: (event, data) => handleFormChange(event, data),
+  });
+
+  return () => form.unsetField('age');
+}, [form]);
 ```
 
 ---
