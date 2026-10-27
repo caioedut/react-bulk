@@ -5,7 +5,6 @@ import React, {
   forwardRef,
   useCallback,
   useContext,
-  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -44,6 +43,10 @@ const FormFactory = React.memo<FormProps>(
     const fieldsRef = useRef<FormField[]>([]);
     const dataRef = useRef<any>({});
 
+    // Latest props, read when used so the form context stays stable across renders
+    const propsRef = useRef({ disableObjectParser, initialData, onSubmit, onCancel, onReset, onClear, onChange });
+    propsRef.current = { disableObjectParser, initialData, onSubmit, onCancel, onReset, onClear, onChange };
+
     if (web) {
       rest.noValidate = true;
     }
@@ -53,29 +56,6 @@ const FormFactory = React.memo<FormProps>(
         return fieldsRef.current.find((item) => item?.name === name);
       },
       [fieldsRef],
-    );
-
-    const setField = useCallback(
-      (options: FormField) => {
-        const { name } = options;
-        let field = getField(name);
-
-        if (field) {
-          Object.keys(field).forEach((prop) => delete field?.[prop]);
-          Object.assign(field, options);
-        } else {
-          field = options;
-          fieldsRef.current.push(options);
-        }
-
-        const newValue = field.get();
-
-        if (dataRef.current[name] !== newValue) {
-          dataRef.current[name] = newValue;
-          dispatchEvent('change', field);
-        }
-      },
-      [dataRef, fieldsRef, getField, dispatchEvent],
     );
 
     const unsetField = useCallback(
@@ -94,8 +74,8 @@ const FormFactory = React.memo<FormProps>(
 
       fieldsRef.current.forEach(({ name, get }) => (data[name] = get()));
 
-      return disableObjectParser ? data : dotObject(data);
-    }, [fieldsRef, disableObjectParser]);
+      return propsRef.current.disableObjectParser ? data : dotObject(data);
+    }, [fieldsRef, propsRef]);
 
     const setData = useCallback(
       (data: any = {}) => {
@@ -137,71 +117,118 @@ const FormFactory = React.memo<FormProps>(
       [fieldsRef],
     );
 
-    function dispatchEvent(type: string, field?: FormField, nativeEvent?: any) {
-      const callback = {
-        change: onChange,
-        submit: onSubmit,
-        cancel: onCancel,
-        reset: onReset,
-        clear: onClear,
-      }[type];
+    const contextRef = useRef<FormRef>(null as any);
 
-      const target = rootRef.current;
-      const data = getData();
-      const errors = getErrors();
+    const dispatchEvent = useCallback(
+      (type: string, field?: FormField, nativeEvent?: any) => {
+        const { onChange, onSubmit, onCancel, onReset, onClear } = propsRef.current;
 
-      const event: RbkFormEvent = {
-        type,
-        name: field?.name,
-        form: context,
-        target,
-        nativeEvent,
-      };
+        const callback = {
+          change: onChange,
+          submit: onSubmit,
+          cancel: onCancel,
+          reset: onReset,
+          clear: onClear,
+        }[type];
 
-      if (type === 'change') {
-        fieldsRef.current.forEach(({ onFormChange }) => onFormChange?.(event, data));
-      }
+        const target = rootRef.current;
+        const data = getData();
+        const errors = getErrors();
 
-      if (typeof callback === 'function') {
-        callback(event, data, errors);
-      }
-    }
+        const event: RbkFormEvent = {
+          type,
+          name: field?.name,
+          form: contextRef.current,
+          target,
+          nativeEvent,
+        };
 
-    function submit(e?: any) {
-      e?.preventDefault?.();
-      const nativeEvent = e?.nativeEvent ?? e;
-      dispatchEvent('submit', undefined, nativeEvent);
-    }
+        if (type === 'change') {
+          fieldsRef.current.forEach(({ onFormChange }) => onFormChange?.(event, data));
+        }
 
-    function cancel(e?: any) {
-      e?.preventDefault?.();
-      const nativeEvent = e?.nativeEvent ?? e;
-      dispatchEvent('cancel', undefined, nativeEvent);
-    }
+        if (typeof callback === 'function') {
+          callback(event, data, errors);
+        }
+      },
+      [propsRef, rootRef, fieldsRef, contextRef, getData, getErrors],
+    );
 
-    function reset(e?: any) {
-      e?.preventDefault?.();
-      const nativeEvent = e?.nativeEvent ?? e;
+    const setField = useCallback(
+      (options: FormField) => {
+        const { name } = options;
+        let field = getField(name);
 
-      fieldsRef.current.forEach(({ set, initialValue }) => set(initialValue ?? null));
-      setErrors(null);
+        if (field) {
+          Object.keys(field).forEach((prop) => delete field?.[prop]);
+          Object.assign(field, options);
+        } else {
+          field = options;
+          fieldsRef.current.push(options);
+        }
 
-      dispatchEvent('reset', undefined, nativeEvent);
-    }
+        const newValue = field.get();
 
-    function clear(e?: any) {
-      e?.preventDefault?.();
-      const nativeEvent = e?.nativeEvent ?? e;
+        if (dataRef.current[name] !== newValue) {
+          dataRef.current[name] = newValue;
+          dispatchEvent('change', field);
+        }
+      },
+      [dataRef, fieldsRef, getField, dispatchEvent],
+    );
 
-      fieldsRef.current.forEach(({ set }) => set(null));
-      setErrors(null);
+    const submit = useCallback(
+      (e?: any) => {
+        e?.preventDefault?.();
+        const nativeEvent = e?.nativeEvent ?? e;
+        dispatchEvent('submit', undefined, nativeEvent);
+      },
+      [dispatchEvent],
+    );
 
-      dispatchEvent('clear', undefined, nativeEvent);
-    }
+    const cancel = useCallback(
+      (e?: any) => {
+        e?.preventDefault?.();
+        const nativeEvent = e?.nativeEvent ?? e;
+        dispatchEvent('cancel', undefined, nativeEvent);
+      },
+      [dispatchEvent],
+    );
+
+    const reset = useCallback(
+      (e?: any) => {
+        e?.preventDefault?.();
+        const nativeEvent = e?.nativeEvent ?? e;
+
+        fieldsRef.current.forEach(({ set, initialValue }) => set(initialValue ?? null));
+        setErrors(null);
+
+        dispatchEvent('reset', undefined, nativeEvent);
+      },
+      [fieldsRef, setErrors, dispatchEvent],
+    );
+
+    const clear = useCallback(
+      (e?: any) => {
+        e?.preventDefault?.();
+        const nativeEvent = e?.nativeEvent ?? e;
+
+        fieldsRef.current.forEach(({ set }) => set(null));
+        setErrors(null);
+
+        dispatchEvent('clear', undefined, nativeEvent);
+      },
+      [fieldsRef, setErrors, dispatchEvent],
+    );
 
     const context: FormRef = useMemo(
       () => ({
-        initialData,
+        get initialData() {
+          return propsRef.current.initialData;
+        },
+        get target() {
+          return rootRef.current as any;
+        },
         submit,
         cancel,
         reset,
@@ -215,11 +242,10 @@ const FormFactory = React.memo<FormProps>(
         getField,
         setField,
         unsetField,
-        target: rootRef.current,
       }),
       [
-        rootRef.current,
-        initialData,
+        propsRef,
+        rootRef,
         submit,
         cancel,
         reset,
@@ -236,12 +262,9 @@ const FormFactory = React.memo<FormProps>(
       ],
     );
 
-    useImperativeHandle(ref, () => context, [context]);
+    contextRef.current = context;
 
-    useEffect(() => {
-      // @ts-ignore
-      Object.assign(ref?.current || {}, { target: rootRef.current });
-    }, [ref, rootRef]);
+    useImperativeHandle(ref, () => context, [context]);
 
     return (
       <FormContext.Provider value={context}>
