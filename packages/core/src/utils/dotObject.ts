@@ -2,7 +2,7 @@ export default function dotObject(data: Record<any, any>) {
   const parsed = {};
 
   for (const baseAttr in data) {
-    const attr = baseAttr.replace(/\[(.*)?]/g, (_, $1) => `.${$1 ?? 0}`);
+    const attr = baseAttr.replace(/\[([^\]]*)]/g, (_, $1) => `.${$1 || 0}`);
     const value = data[baseAttr];
     const splitAttrs = attr.split('.');
 
@@ -34,14 +34,11 @@ function resolve(items) {
   let newValue = items;
 
   if (!Array.isArray(items)) {
+    // Integer keys are already listed in ascending numeric order
     const keys = Object.keys(items);
 
-    if (keys.length) {
-      keys.sort();
-
-      if (keys.every((key, index) => Number(key) === index)) {
-        newValue = Object.values(items);
-      }
+    if (keys.length && keys.every((key, index) => key === String(index))) {
+      newValue = Object.values(items);
     }
   }
 
