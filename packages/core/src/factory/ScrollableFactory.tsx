@@ -1,6 +1,7 @@
 import React, { Ref, forwardRef, memo, useMemo } from 'react';
 
 import useTheme from '../hooks/useTheme';
+import childrenize from '../props/childrenize';
 import extract from '../props/extract';
 import factory2 from '../props/factory2';
 import { flexContainerProps } from '../styles/constants';
@@ -139,13 +140,16 @@ function Component({ ref, children, ...props }: ScrollableProps, legacyRef: Ref<
       ) : (
         <BoxFactory style={contentStyle} variants={{ root: variants.content }} noRootStyles>
           {!isHorizontal && stickyHeaderIndices?.length
-            ? React.Children.map(children, (child, index) => {
+            ? childrenize(children).map((child, index) => {
                 if (!child && !['string', 'number'].includes(typeof child)) {
                   return null;
                 }
 
                 return (
-                  <BoxFactory variants={stickyHeaderIndices.includes(index) ? { root: variants.stickyHeader } : {}}>
+                  <BoxFactory
+                    key={child?.key ?? index}
+                    variants={stickyHeaderIndices.includes(index) ? { root: variants.stickyHeader } : {}}
+                  >
                     {child}
                   </BoxFactory>
                 );
