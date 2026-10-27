@@ -18,7 +18,7 @@ const SplitterFactory = React.memo<SplitterProps>(
   forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Splitter;
-    const { web } = rbkGlobal.mapping;
+    const { web, native } = rbkGlobal.mapping;
 
     // Extends from default props
     const {
@@ -68,10 +68,16 @@ const SplitterFactory = React.memo<SplitterProps>(
 
         const diff = isVertical ? (event.pageY - y) * mult : (event.pageX - x) * mult;
 
-        setNativeStyle($child, {
-          flexGrow: 0,
-          flexBasis: Math.max(0, childSize + diff),
-        });
+        const size = Math.max(0, childSize + diff);
+
+        // Native (New Architecture): Yoga caches the computed flex basis and Fabric does not
+        // invalidate it when "flexBasis" changes, so resize by the main axis dimension instead
+        setNativeStyle(
+          $child,
+          native
+            ? { flexGrow: 0, flexBasis: 'auto', [isVertical ? 'height' : 'width']: size }
+            : { flexGrow: 0, flexBasis: size },
+        );
       },
       onDragEnd: () => {
         release();
