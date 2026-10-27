@@ -1,3 +1,4 @@
+import jss from '../styles/jss';
 import { ThemeProps } from '../types';
 import defined from '../utils/defined';
 import stdout from '../utils/stdout';
@@ -222,6 +223,10 @@ const base: ThemeProps = {
 
     // Check contrast
     return yiq >= 128 ? darkColor : lightColor;
+  },
+
+  style(...styles) {
+    return jss(...styles);
   },
 
   // Warn user about ReactBulk context

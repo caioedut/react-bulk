@@ -522,6 +522,7 @@ export type ThemeProps = {
   spacing: (multiplier?: number) => number;
   color: (color: RbkColor, alpha?: `${number}%` | number | null, luminosity?: `${number}%` | number | null) => string;
   contrast: (color: RbkColor, lightColor?: string | null, darkColor?: string | null) => string;
+  style: (...styles: (string | RbkStyle)[]) => AnyObject;
 
   components: {
     Avatar: ThemeComponentProps<AvatarProps>;
