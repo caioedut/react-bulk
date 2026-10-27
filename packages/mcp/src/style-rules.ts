@@ -106,7 +106,7 @@ export const STYLE_RULES: StyleRule[] = [
     id: 'responsive',
     title: 'Breakpoints',
     summary:
-      'Inside `style`, keys `xs`/`sm`/`md`/`lg`/`xl`/`xxl` apply from that breakpoint up (mobile first). `hidden` accepts `true` or an object of breakpoints; there it hides ONLY within that breakpoint range. Inside `Grid`, `xs`…`xxl` props on children define column spans. A component can override thresholds with the `breakpoints` prop.',
+      'Inside `style`, keys `xs`/`sm`/`md`/`lg`/`xl`/`xxl` apply from that breakpoint up (mobile first). `hidden` accepts `true` or an object of breakpoints; there it hides ONLY within that breakpoint range. Inside `Grid`, `xs`…`xxl` props on children define column spans; on `Carousel`, they define how many items are visible. Custom keys added to `theme.breakpoints` work everywhere the built-in ones do. A component can override thresholds with the `breakpoints` prop.',
     appliesTo: ['style', 'hidden', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'breakpoints'],
     platform: 'cross',
     examples: ['<Text style={{ xs: { fontSize: 12 }, md: { fontSize: 16 } }} />', '<Box hidden={{ xs: true, sm: true }} />', '<Grid><Box xs={12} md={6} /></Grid>'],

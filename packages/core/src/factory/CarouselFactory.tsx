@@ -10,7 +10,7 @@ import ChevronLeft from '../icons/ChevronLeft';
 import ChevronRight from '../icons/ChevronRight';
 import childrenize from '../props/childrenize';
 import factory2 from '../props/factory2';
-import { CarouselProps, RbkLayoutEvent, RequiredSome } from '../types';
+import { AnyObject, CarouselProps, RbkLayoutEvent, RequiredSome } from '../types';
 import event from '../utils/event';
 import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
@@ -33,19 +33,13 @@ const CarouselFactory = React.memo<CarouselProps>(
       gap,
       pagingEnabled,
       pointerScroll,
-      // Column Count
-      xs,
-      sm,
-      md,
-      lg,
-      xl,
       // Styles
       variants,
       itemStyle,
       chevronStyle,
       style,
       ...rest
-    } = factory2<RequiredSome<CarouselProps, 'chevron' | 'color' | 'gap' | 'pagingEnabled' | 'pointerScroll' | 'xs'>>(
+    } = factory2<RequiredSome<CarouselProps, 'chevron' | 'color' | 'gap' | 'pagingEnabled' | 'pointerScroll'>>(
       props,
       options,
     );
@@ -63,53 +57,35 @@ const CarouselFactory = React.memo<CarouselProps>(
 
     const base = contentWidth ?? 100;
 
-    const xsValue = typeof xs === 'number' || xs === 'auto' ? xs : 'auto';
-    const smValue = typeof sm === 'number' || sm === 'auto' ? sm : xsValue;
-    const mdValue = typeof md === 'number' || md === 'auto' ? md : smValue;
-    const lgValue = typeof lg === 'number' || lg === 'auto' ? lg : mdValue;
-    const xlValue = typeof xl === 'number' || xl === 'auto' ? xl : lgValue;
+    // Column count (xs…xxl and custom breakpoints) cascades from the smallest breakpoint to the largest
+    const bkptNames = Object.entries(theme.breakpoints)
+      .sort((a, b) => a[1] - b[1])
+      .map(([name]) => name);
 
-    const xsWidth = typeof xsValue === 'number' ? base / Number(xsValue) : 'auto';
-    const smWidth = typeof smValue === 'number' ? base / Number(smValue) : 'auto';
-    const mdWidth = typeof mdValue === 'number' ? base / Number(mdValue) : 'auto';
-    const lgWidth = typeof lgValue === 'number' ? base / Number(lgValue) : 'auto';
-    const xlWidth = typeof xlValue === 'number' ? base / Number(xlValue) : 'auto';
+    const bkptStyle: AnyObject = {};
+    let prevValue: number | 'auto' = 'auto';
+    let snapToInterval: number | 'auto' = 'auto';
 
-    itemStyle = [
-      itemStyle,
-      {
-        xs: {
-          width: xsWidth,
-          ...(xs && typeof xs === 'object' ? xs : {}),
-        },
-        sm: {
-          width: smWidth,
-          ...(sm && typeof sm === 'object' ? sm : {}),
-        },
-        md: {
-          width: mdWidth,
-          ...(md && typeof md === 'object' ? md : {}),
-        },
-        lg: {
-          width: lgWidth,
-          ...(lg && typeof lg === 'object' ? lg : {}),
-        },
-        xl: {
-          width: xlWidth,
-          ...(xl && typeof xl === 'object' ? xl : {}),
-        },
-      },
-    ];
+    for (const bkptName of bkptNames) {
+      const bkptProp = rest[bkptName];
+      delete rest[bkptName];
 
-    const snapToInterval = breakpoints.xl
-      ? xlWidth
-      : breakpoints.lg
-        ? lgWidth
-        : breakpoints.md
-          ? mdWidth
-          : breakpoints.sm
-            ? smWidth
-            : xsWidth;
+      const value = typeof bkptProp === 'number' || bkptProp === 'auto' ? bkptProp : prevValue;
+      const width = typeof value === 'number' ? base / value : 'auto';
+
+      prevValue = value;
+
+      bkptStyle[bkptName] = {
+        width,
+        ...(bkptProp && typeof bkptProp === 'object' ? bkptProp : {}),
+      };
+
+      if (breakpoints[bkptName]) {
+        snapToInterval = width;
+      }
+    }
+
+    itemStyle = [itemStyle, bkptStyle];
 
     const scrollByCount = useCallback(
       async (count) => {
@@ -195,7 +171,7 @@ const CarouselFactory = React.memo<CarouselProps>(
     };
 
     return (
-      <BoxFactory ref={ref} style={style} variants={{ root: variants.root }} {...rest}>
+      <BoxFactory ref={ref} style={style} variants={{ root: variants.root }} {...(rest as AnyObject)}>
         <ScrollableFactory
           ref={contentRef}
           variants={{ root: variants.content }}

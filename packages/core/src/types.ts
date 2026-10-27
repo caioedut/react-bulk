@@ -1028,6 +1028,7 @@ export type CarouselProps<ALLOW_ANY = true> = PropsWithStyles<
     md?: number | 'auto' | RbkStyle;
     lg?: number | 'auto' | RbkStyle;
     xl?: number | 'auto' | RbkStyle;
+    xxl?: number | 'auto' | RbkStyle;
     // Styles
     itemStyle?: RbkStyle;
     chevronStyle?: { color?: RbkColor; size?: number } & RbkStyle;

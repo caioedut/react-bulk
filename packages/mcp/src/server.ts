@@ -100,7 +100,7 @@ export function createServer() {
           'Prefer style props and aliases (`p={2}`, `bg="primary"`, `row center`) over raw `style` objects.',
           `Short spacing aliases multiply numbers by theme.shape.spacing (${shape.spacing}); g/gx/gy by gap * spacing (${shape.gap * shape.spacing}). Full names (padding, gap…) are raw pixels.`,
           'Color props resolve theme tokens (`primary`, `primary.light`, `primary.main.50`, `text.secondary`).',
-          'Responsive: breakpoint keys inside `style` (mobile first) and `xs`…`xxl` spans on Grid children.',
+          'Responsive: breakpoint keys inside `style` (mobile first), `xs`…`xxl` spans on Grid children and visible item counts on Carousel. Custom theme breakpoints are accepted too.',
           'Components come from @react-bulk/web or @react-bulk/native (expo re-exports native); most hooks and helpers only from @react-bulk/core.',
           'Wrap the app once in <ReactBulk theme={...}>.',
         ],

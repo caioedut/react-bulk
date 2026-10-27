@@ -1318,7 +1318,7 @@ function CarouselExample() {
       <Text variant="title" mb="1gap">
         Carousel
       </Text>
-      <Carousel xs={1} sm={2} md={3} lg={4} xl={5} gap>
+      <Carousel xs={1} sm={2} md={3} lg={4} xl={5} xxl={6} gap>
         {Array.from({ length: 11 }).map((_, index) => (
           <Card key={index} corners={3} bg="background.secondary">
             <Text bold>Item {index + 1}</Text>

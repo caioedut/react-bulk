@@ -119,6 +119,16 @@ When `'auto'`, does not calculate the size of items.
 
 When `RbkStyle`, applies the style **ONLY** on respective breakpoint.
 
+Every breakpoint in `theme.breakpoints` is accepted, including custom ones. A breakpoint without a value inherits the column count from the previous (smaller) one.
+
+```jsx
+<ReactBulk theme={{ breakpoints: { xxxl: 1920 } }}>
+  <Carousel xs={1} md={2} xl={3} xxxl={5}>
+    {/* ... */}
+  </Carousel>
+</ReactBulk>
+```
+
 ---
 
 ### **`xs`**
@@ -146,6 +156,12 @@ When `RbkStyle`, applies the style **ONLY** on respective breakpoint.
 ---
 
 ### **`xl`**
+
+➤ Type: **`number` `'auto'` [`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
+
+---
+
+### **`xxl`**
 
 ➤ Type: **`number` `'auto'` [`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
