@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Outline
 
-A box that draws a focus ring around its content. Uses `box-shadow` on web and an absolute bordered box on native.
+A box that draws a focus ring around its content.
 
 ## Import
 

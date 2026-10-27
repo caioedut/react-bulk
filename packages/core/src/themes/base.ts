@@ -904,7 +904,10 @@ const base: ThemeProps = {
         variants: {
           underline: {
             true: {
-              root: { textDecoration: 'underline' },
+              root: {
+                textDecoration: 'underline',
+                web: { textDecoration: 'underline !important' },
+              },
             },
           },
         },

@@ -13,7 +13,7 @@ import { ListItem } from '@react-bulk/web'; // OR @react-bulk/native
 ### Basic
 
 ```jsx live
-<Box>
+<Box g={1}>
   <ListItem>
     <Text>First item</Text>
   </ListItem>
@@ -26,7 +26,7 @@ import { ListItem } from '@react-bulk/web'; // OR @react-bulk/native
 ### Chevron
 
 ```jsx live
-<Box>
+<Box g={1}>
   <ListItem chevron onPress={() => alert('Pressed!')}>
     <Text>Default chevron</Text>
   </ListItem>
@@ -41,7 +41,6 @@ import { ListItem } from '@react-bulk/web'; // OR @react-bulk/native
 ```jsx live
 <ListItem
   chevron
-  gap={2}
   startAddon={<Avatar size={32} />}
   endAddon={<Badge>3</Badge>}
 >
