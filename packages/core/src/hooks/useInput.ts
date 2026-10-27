@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import useForm from '../hooks/useForm';
 import { AnyObject, RbkFormEvent } from '../types';
@@ -47,17 +47,23 @@ export default function useInput<T>({
     [_internal, controlled, resolveValue, value],
   );
 
+  // Latest value, updated before onChange so form.getData() inside handlers is not one change behind
+  const internalRef = useRef(internal);
+  internalRef.current = internal;
+
   const setInternal = useCallback(
     (value, event?: Event, ...rest: any[]) => {
       const newValue = resolveValue(value);
+      const current = internalRef.current;
 
-      if (newValue !== internal) {
-        setPrevInternal(internal);
+      if (newValue !== current) {
+        internalRef.current = newValue;
+        setPrevInternal(current);
         _setInternal(newValue);
         onChange?.(event, newValue, ...rest);
       }
     },
-    [resolveValue, internal, onChange],
+    [resolveValue, onChange],
   );
 
   useMemo(() => {
@@ -80,7 +86,7 @@ export default function useInput<T>({
 
     form.setField({
       name,
-      get: () => unmask(internal),
+      get: () => unmask(internalRef.current),
       set: setInternal,
       getError: () => error ?? null,
       setError,
@@ -94,10 +100,12 @@ export default function useInput<T>({
   }, [name, form, error, internal, initialValue, setInternal, onFormChange, unmask]);
 
   const reset = useCallback(() => {
+    internalRef.current = resolveValue(initialValue);
     _setInternal(initialValue);
-  }, [initialValue]);
+  }, [initialValue, resolveValue]);
 
   const clear = useCallback(() => {
+    internalRef.current = null;
     _setInternal(undefined);
   }, []);
 
