@@ -39,7 +39,7 @@ function App() {
   return (
     <Box h={60} w={260} bg="background.secondary" corners={2} justifyContent="center">
       <Box
-        ml={offset}
+        marginLeft={offset}
         h={40}
         w={60}
         bg="primary"
