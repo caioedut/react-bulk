@@ -7,9 +7,7 @@ import BoxFactory from './BoxFactory';
 import TextFactory from './TextFactory';
 
 const TableFactory = React.memo<TableProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Table;
 

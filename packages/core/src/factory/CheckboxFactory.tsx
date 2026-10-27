@@ -17,9 +17,7 @@ import LabelFactory from './LabelFactory';
 import TextFactory from './TextFactory';
 
 const CheckboxFactory = React.memo<CheckboxProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Checkbox;
     const { native, svg } = rbkGlobal.mapping;

@@ -15,9 +15,7 @@ import BoxFactory from './BoxFactory';
 import DividerFactory from './DividerFactory';
 
 const SplitterFactory = React.memo<SplitterProps>(
-  forwardRef(({ ref, children, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Splitter;
     const { web } = rbkGlobal.mapping;

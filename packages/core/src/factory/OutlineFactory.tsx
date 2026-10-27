@@ -9,9 +9,7 @@ import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const OutlineFactory = React.memo<OutlineProps>(
-  forwardRef(({ ref, children, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Outline;
     const { web, native } = rbkGlobal.mapping;

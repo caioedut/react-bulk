@@ -13,9 +13,7 @@ import LoadingFactory from './LoadingFactory';
 import TextFactory from './TextFactory';
 
 const ButtonFactory = React.memo<ButtonProps>(
-  forwardRef(({ ref, children, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Button;
     const { web, Button } = rbkGlobal.mapping;

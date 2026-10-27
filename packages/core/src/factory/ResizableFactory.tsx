@@ -12,9 +12,7 @@ import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const ResizableFactory = React.memo<ResizableProps>(
-  forwardRef(({ ref, children, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Resizable;
     const { web, svg } = rbkGlobal.mapping;

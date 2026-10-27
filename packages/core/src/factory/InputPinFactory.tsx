@@ -9,9 +9,7 @@ import string from '../utils/string';
 import InputFactory from './InputFactory';
 
 const InputPinFactory = React.memo<InputPinProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.InputPin;
     const { web, ios } = rbkGlobal.mapping;

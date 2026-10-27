@@ -7,9 +7,7 @@ import rbkGlobal from '../utils/global';
 import TextFactory from './TextFactory';
 
 const LinkFactory = React.memo<LinkProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Link;
     const { Link } = rbkGlobal.mapping;

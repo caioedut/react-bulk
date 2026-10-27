@@ -8,9 +8,7 @@ import BoxFactory from './BoxFactory';
 import ScrollableFactory from './ScrollableFactory';
 
 const ButtonGroupFactory = React.memo<ButtonGroupProps>(
-  forwardRef(({ ref, children, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.ButtonGroup;
 

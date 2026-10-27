@@ -17,9 +17,7 @@ import LabelFactory from './LabelFactory';
 import TextFactory from './TextFactory';
 
 const InputBaseFactory = React.memo<InputBaseProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.InputBase;
     const { web, native, Input, TextArea } = rbkGlobal.mapping;

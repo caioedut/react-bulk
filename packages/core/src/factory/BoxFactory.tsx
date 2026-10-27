@@ -11,16 +11,15 @@ import merge from '../props/merge';
 import { styleProps } from '../styles/constants';
 import jss from '../styles/jss';
 import sheet from '../styles/sheet';
-import { BoxProps, RbkBreakpoints } from '../types';
+import { AnyObject, BoxProps, RbkBreakpoints } from '../types';
+import canReceiveRef from '../utils/canReceiveRef';
 import clone from '../utils/clone';
 import clsx from '../utils/clsx';
 import defined from '../utils/defined';
 import rbkGlobal from '../utils/global';
 
 const BoxFactory = React.memo<BoxProps>(
-  forwardRef(({ ref, platform, className, children, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ platform, className, children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Box;
     const { web, native, Button, Text, View, useDimensions } = rbkGlobal.mapping;
@@ -251,6 +250,12 @@ const BoxFactory = React.memo<BoxProps>(
 
     const Component = component || View;
 
+    const { ref: transitionRef, ...transitionProps }: AnyObject = transition.props;
+
+    if (canReceiveRef(Component)) {
+      transitionProps.ref = transitionRef;
+    }
+
     useEffect(() => {
       const { onStart, onEnd, ...rest } = animation || {};
 
@@ -268,7 +273,7 @@ const BoxFactory = React.memo<BoxProps>(
     }, [animation, transition]);
 
     return mount === false ? null : (
-      <Component {...transition.props} {...rest} {...componentProps}>
+      <Component {...transitionProps} {...rest} {...componentProps}>
         {React.Children.map(children, (child) => {
           const isText = ['string', 'number'].includes(typeof child);
 

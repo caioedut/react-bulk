@@ -20,9 +20,7 @@ import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const FormFactory = React.memo<FormProps>(
-  forwardRef(({ ref, ...props }, legacyRef: ForwardedRef<FormRef>) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref: ForwardedRef<FormRef>) => {
     const theme = useTheme();
     const options = theme.components.Form;
     const { web, Form } = rbkGlobal.mapping;

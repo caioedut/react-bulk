@@ -13,9 +13,7 @@ import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const BackdropFactory = React.memo<BackdropProps>(
-  forwardRef(({ ref, children, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Backdrop;
     const { web, native, Dialog, BackHandler } = rbkGlobal.mapping;

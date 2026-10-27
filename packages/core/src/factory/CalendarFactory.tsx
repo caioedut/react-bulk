@@ -17,9 +17,7 @@ import InputFactory from './InputFactory';
 import TextFactory from './TextFactory';
 
 const CalendarFactory = React.memo<CalendarProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Calendar;
     const { locale, svg } = rbkGlobal.mapping;

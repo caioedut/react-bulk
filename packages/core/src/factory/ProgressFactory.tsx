@@ -10,9 +10,7 @@ import BoxFactory from './BoxFactory';
 import TextFactory from './TextFactory';
 
 const ProgressFactory = React.memo<ProgressProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Progress;
     const { native } = rbkGlobal.mapping;

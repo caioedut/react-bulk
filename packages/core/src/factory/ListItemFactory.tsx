@@ -13,9 +13,7 @@ import GridFactory from './GridFactory';
 import TextFactory from './TextFactory';
 
 const ListItemFactory = React.memo<ListItemProps>(
-  forwardRef(({ ref, children, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.ListItem;
     const { svg, View } = rbkGlobal.mapping;

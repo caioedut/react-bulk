@@ -15,9 +15,7 @@ import ButtonFactory from './ButtonFactory';
 import InputBaseFactory from './InputBaseFactory';
 
 const InputFactory = React.memo<InputProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Input;
     const { svg } = rbkGlobal.mapping;

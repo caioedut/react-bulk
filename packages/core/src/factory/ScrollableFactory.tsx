@@ -11,9 +11,7 @@ import rbkGlobal from '../utils/global';
 import stdout from '../utils/stdout';
 import BoxFactory from './BoxFactory';
 
-function Component({ ref, children, ...props }: ScrollableProps, legacyRef: Ref<any>) {
-  ref = ref || legacyRef;
-
+function Component({ children, ...props }: ScrollableProps, ref: Ref<any>) {
   const theme = useTheme();
   const options = theme.components.Scrollable;
   const { web, native, ios, RefreshControl, ScrollView } = rbkGlobal.mapping;

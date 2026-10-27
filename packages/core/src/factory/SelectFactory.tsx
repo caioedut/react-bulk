@@ -31,9 +31,7 @@ import LoadingFactory from './LoadingFactory';
 import TextFactory from './TextFactory';
 
 const SelectFactory = React.memo<SelectProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Select;
     const { web, native, svg, useDimensions } = rbkGlobal.mapping;

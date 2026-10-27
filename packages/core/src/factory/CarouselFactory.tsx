@@ -18,9 +18,7 @@ import ButtonFactory from './ButtonFactory';
 import ScrollableFactory from './ScrollableFactory';
 
 const CarouselFactory = React.memo<CarouselProps>(
-  forwardRef(({ ref, children, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ children, ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Carousel;
     const { web, native, svg, useDimensions } = rbkGlobal.mapping;

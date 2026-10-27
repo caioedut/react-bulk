@@ -22,9 +22,7 @@ import InputBaseFactory from './InputBaseFactory';
 import TextFactory from './TextFactory';
 
 const InputDateFactory = React.memo<InputDateProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.InputDate;
     const { locale, svg } = rbkGlobal.mapping;

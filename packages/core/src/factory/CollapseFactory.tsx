@@ -11,9 +11,7 @@ import rbkGlobal from '../utils/global';
 import BoxFactory from './BoxFactory';
 
 const CollapseFactory = React.memo<CollapseProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Collapse;
     const { web, native } = rbkGlobal.mapping;

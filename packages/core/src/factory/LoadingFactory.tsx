@@ -9,9 +9,7 @@ import BoxFactory from './BoxFactory';
 import TextFactory from './TextFactory';
 
 const LoadingFactory = React.memo<LoadingProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Loading;
     const { Svg, Circle } = rbkGlobal.mapping.svg;

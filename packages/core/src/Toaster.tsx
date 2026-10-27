@@ -13,9 +13,7 @@ export type ToasterRef = {
   setProps: (props?: ToasterProps) => void;
 };
 
-function Toaster({ ref, theme, ...rest }: any, legacyRef) {
-  ref = ref || legacyRef;
-
+function Toaster({ theme, ...rest }: any, ref) {
   const { web, native } = Platform;
   const options = theme.components.Toaster;
 

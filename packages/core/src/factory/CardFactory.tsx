@@ -6,9 +6,7 @@ import { CardProps } from '../types';
 import BoxFactory from './BoxFactory';
 
 const CardFactory = React.memo<CardProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Card;
 

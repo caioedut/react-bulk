@@ -7,9 +7,7 @@ import rbkGlobal from '../utils/global';
 import TextFactory from './TextFactory';
 
 const LabelFactory = React.memo<LabelProps>(
-  forwardRef(({ ref, ...props }, legacyRef) => {
-    ref = ref || legacyRef;
-
+  forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Label;
     const { web, native, Label } = rbkGlobal.mapping;
