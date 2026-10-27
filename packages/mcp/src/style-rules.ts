@@ -141,6 +141,15 @@ export const STYLE_RULES: StyleRule[] = [
     examples: ['<Box style={{ p: 2 }} rawStyle={{ zIndex: 10 }} />'],
   },
   {
+    id: 'theme-style',
+    title: 'Styling non React Bulk components',
+    summary:
+      '`useTheme().style(...styles)` resolves aliases, theme colors, spacing and `(theme) => value` functions into a plain style object, for components outside React Bulk (e.g. a native `View`). Breakpoint keys and `&` nested CSS are not applied.',
+    appliesTo: ['style'],
+    platform: 'cross',
+    examples: ["const theme = useTheme();\n<View style={theme.style({ bg: 'primary', p: 2, corners: 2 })} />"],
+  },
+  {
     id: 'rendering',
     title: 'Rendering control',
     summary:

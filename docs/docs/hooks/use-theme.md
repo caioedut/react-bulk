@@ -43,3 +43,26 @@ theme.setTheme({
 ➤ Type: **[`Theme`](/docs/layout/theme) `'light'` `'dark'`** <br/>
 
 ---
+
+**`style`**
+
+Resolves React Bulk styles (aliases, theme colors, spacing and `(theme) => value` functions) into a plain style object. Useful to style components that are not from React Bulk, like a native `View`.
+
+Responsive keys (`xs`, `md`…) and nested CSS (`&:hover`) are not applied, use a React Bulk component for those.
+
+```jsx
+import { View } from 'react-native';
+
+export default function App() {
+  const theme = useTheme();
+
+  return (
+    <View style={theme.style({ bg: 'primary', p: 2, corners: 2 })} />
+  );
+}
+```
+
+➤ Type: **`...styles: RbkStyle[]`** <br/>
+➤ Returns: **`object`** <br/>
+
+---
