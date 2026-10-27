@@ -24,9 +24,11 @@ pmex(
   { cwd },
 );
 
-const packages = ['core', platform];
+// Expo re-exports native and web, so they must also come from the local build
+const packages = isExpo ? ['core', 'expo', 'native', 'web'] : ['core', platform];
 
 for (const pkg of packages) {
+  // Removing the whole folder also drops nested @react-bulk copies (e.g. native/node_modules/@react-bulk/core)
   rmSync(`${cwd}/node_modules/@react-bulk/${pkg}`, {
     force: true,
     recursive: true,
