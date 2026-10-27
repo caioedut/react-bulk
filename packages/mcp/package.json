@@ -7,7 +7,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/caioedut/react-bulk.git",
-    "directory": "packages/expo"
+    "directory": "packages/mcp"
   },
   "author": {
     "name": "Caio Teixeira",
@@ -39,7 +39,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "node --max-old-space-size=8192 ../../node_modules/typescript/bin/tsc -p tsconfig.json",
+    "build": "node --max-old-space-size=8192 ../../node_modules/typescript/bin/tsc -p tsconfig.json && node dist/build-index.js",
     "dev": "tsx src/index.ts",
     "typecheck": "node --max-old-space-size=8192 ../../node_modules/typescript/bin/tsc --noEmit --skipLibCheck -p tsconfig.json",
     "test": "tsx --test src/**/*.test.ts"
