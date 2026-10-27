@@ -126,7 +126,7 @@ A number or object representing the button's badge.
 
 ### **`circular`**
 
-Indicates whether the button is circular.
+Indicates whether the button is circular. A circular button has no default horizontal padding (`paddingHorizontal: 0`), so it keeps a square footprint for icons or short content; set `px` explicitly if the content needs horizontal space.
 
 ➤ Type: **`boolean`** <br/>
 
