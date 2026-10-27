@@ -211,7 +211,13 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
                   }
                 });
 
-                elRef.current.style.animation = '';
+                // Remove animation on the same frame the final styles are applied (setStyle uses rAF)
+                // "fill-mode: both" keeps the last keyframe until then, avoiding a flash of the initial state
+                requestAnimationFrame(() => {
+                  if (elRef.current) {
+                    elRef.current.style.animation = '';
+                  }
+                });
 
                 setTimeout(resolve, 10);
               },
@@ -220,7 +226,7 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
 
             elRef.current.style.animation = `${animationName} ${duration}ms ${timing} ${
               delay || 0
-            }ms ${iterations} ${direction}`;
+            }ms ${iterations} ${direction} both`;
           }
         }
 
