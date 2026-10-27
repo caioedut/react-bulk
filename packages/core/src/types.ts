@@ -461,12 +461,14 @@ export type ThemeProps = {
     text: {
       primary: string;
       secondary: string;
+      tertiary: string;
       disabled: string;
     };
 
     background: {
       primary: string;
       secondary: string;
+      tertiary: string;
       disabled: string;
     };
 

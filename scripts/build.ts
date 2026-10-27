@@ -2,7 +2,9 @@ import { cpSync, readdirSync, rmSync } from 'fs';
 import { globSync } from 'glob';
 import pmex from 'pmex';
 
-pmex('lerna exec --parallel -- pkgroll --clean-dist');
+for (const cwd of ['packages/core', 'packages/web', 'packages/native']) {
+  pmex('pkgroll --clean-dist', { cwd });
+}
 
 const packages = readdirSync('packages', { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
@@ -25,3 +27,5 @@ cpSync(`${expoDir}/src/platform/index.ts`, `${expoDir}/dist/platform/index.js`);
 cpSync(`${expoDir}/src/platform/index.ts`, `${expoDir}/dist/platform/index.d.ts`);
 cpSync(`${expoDir}/src/platform/index.web.ts`, `${expoDir}/dist/platform/index.web.js`);
 cpSync(`${expoDir}/src/platform/index.web.ts`, `${expoDir}/dist/platform/index.web.d.ts`);
+
+pmex('yarn workspace @react-bulk/mcp build');

@@ -1,3 +1,5 @@
+import { ThemeProps } from '@react-bulk/core';
+
 const light = {
   mode: 'light',
   colors: {
@@ -15,6 +17,6 @@ const light = {
       disabled: '#616161',
     },
   },
-};
+} as ThemeProps;
 
 export default light;

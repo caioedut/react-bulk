@@ -1,0 +1,60 @@
+{
+  "name": "@react-bulk/mcp",
+  "description": "MCP server for React Bulk docs and APIs",
+  "version": "1.9.5",
+  "license": "MIT",
+  "homepage": "https://rbk.caioedut.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caioedut/react-bulk.git",
+    "directory": "packages/expo"
+  },
+  "author": {
+    "name": "Caio Teixeira",
+    "email": "caioedut@gmail.com"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "react-component",
+    "web",
+    "native",
+    "android",
+    "ios",
+    "cross-platform",
+    "ui",
+    "ux",
+    "expo"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "react-bulk-mcp": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node --max-old-space-size=8192 ../../node_modules/typescript/bin/tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts",
+    "typecheck": "node --max-old-space-size=8192 ../../node_modules/typescript/bin/tsc --noEmit --skipLibCheck -p tsconfig.json",
+    "test": "tsx --test src/**/*.test.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.18.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.39",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "439f5345fa2a7ed03cfa1b3e049b0ae254207356"
+}

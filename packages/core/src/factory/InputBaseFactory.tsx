@@ -182,6 +182,11 @@ const InputBaseFactory = React.memo<InputBaseProps>(
 
       web && { caretColor: caretHidden ? theme.colors.common.trans : selectionColor },
 
+      web && {
+        '&:-webkit-autofill': borderRadiusStyle,
+        '&:autofill': borderRadiusStyle,
+      },
+
       web &&
         placeholderColor && {
           '&::-webkit-input-placeholder': { color: placeholderColor },

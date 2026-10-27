@@ -38,7 +38,7 @@ function Component({ ref, children, ...props }: ScrollableProps, legacyRef: Ref<
   const isHorizontal = direction === 'horizontal';
   const primaryColor = theme.color('primary');
 
-  if (stickyHeaderIndices && isHorizontal) {
+  if (stickyHeaderIndices?.length && isHorizontal) {
     stdout.warn('Sticky headers are not supported in horizontal scroll views.');
   }
 

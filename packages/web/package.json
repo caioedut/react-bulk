@@ -1,7 +1,7 @@
 {
   "name": "@react-bulk/web",
   "description": "React Bulk for React Web",
-  "version": "1.8.1",
+  "version": "1.9.5",
   "license": "MIT",
   "homepage": "https://rbk.caioedut.com",
   "repository": {
@@ -33,7 +33,7 @@
     "dist"
   ],
   "dependencies": {
-    "@react-bulk/core": "^1.8.1"
+    "@react-bulk/core": "^1.9.5"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
@@ -42,5 +42,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "b249a89794105be19b426a7c1e0810032e97898e"
+  "gitHead": "439f5345fa2a7ed03cfa1b3e049b0ae254207356"
 }
