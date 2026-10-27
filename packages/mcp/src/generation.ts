@@ -1,4 +1,9 @@
-import { Platform } from './types.js';
+import { Platform, RbkIndex } from './types.js';
+
+// Components that render no children.
+const SELF_CLOSING = new Set(['Divider', 'Image', 'Input', 'InputDate', 'InputPin', 'Loading', 'Progress', 'Checkbox', 'Switch', 'Select']);
+
+const REACT_HOOKS = ['useState', 'useEffect', 'useRef', 'useMemo', 'useCallback', 'useReducer', 'useContext'];
 
 function pkgForPlatform(platform: Platform): string {
   if (platform === 'web') return '@react-bulk/web';
@@ -6,7 +11,48 @@ function pkgForPlatform(platform: Platform): string {
   return '@react-bulk/expo';
 }
 
-export function generateComponentSnippet(component: string, platform: Platform, options?: Record<string, unknown>): string {
+/** Turns a docs `jsx live` example into a standalone module with the imports it needs. */
+function snippetFromExample(code: string, platform: Platform, index: RbkIndex): string {
+  const pkg = pkgForPlatform(platform);
+  const platformExports = new Set([
+    ...Object.keys(platform === 'web' ? index.webComponents : index.nativeComponents),
+    ...(platform === 'web' ? index.webExports : index.nativeExports),
+  ]);
+  const rbk = new Set<string>(['ReactBulk']);
+  const core = new Set<string>();
+  const react = new Set<string>();
+  for (const m of code.matchAll(/<([A-Z][A-Za-z0-9]*)/g)) {
+    if (platformExports.has(m[1])) rbk.add(m[1]);
+  }
+  for (const m of code.matchAll(/\b(use[A-Z][A-Za-z0-9]*)\(/g)) {
+    if (REACT_HOOKS.includes(m[1])) react.add(m[1]);
+    else if (platformExports.has(m[1])) rbk.add(m[1]);
+    else if (index.publicExports.includes(m[1])) core.add(m[1]);
+  }
+  const lines: string[] = [];
+  if (react.size) lines.push(`import { ${[...react].sort().join(', ')} } from 'react';`);
+  if (core.size) lines.push(`import { ${[...core].sort().join(', ')} } from '@react-bulk/core';`);
+  lines.push(`import { ${[...rbk].sort().join(', ')} } from '${pkg}';`, '');
+  const fn = code.match(/^\s*function\s+([A-Za-z0-9_]+)\s*\(/);
+  if (fn) {
+    lines.push(code.replace(/^\s*function\s+[A-Za-z0-9_]+\s*\(/, 'function Example('), '');
+    lines.push('export default function App() {', '  return (', '    <ReactBulk>', '      <Example />', '    </ReactBulk>', '  );', '}');
+    return lines.join('\n');
+  }
+  const body = code
+    .split('\n')
+    .map((line) => `      ${line}`)
+    .join('\n');
+  lines.push('export default function Example() {', '  return (', '    <ReactBulk>', body, '    </ReactBulk>', '  );', '}');
+  return lines.join('\n');
+}
+
+export function generateComponentSnippet(
+  component: string,
+  platform: Platform,
+  options?: Record<string, unknown>,
+  index?: RbkIndex,
+): string {
   const pkg = pkgForPlatform(platform);
   if (component === 'Button') {
     return [
@@ -46,6 +92,10 @@ export function generateComponentSnippet(component: string, platform: Platform, 
       '}',
     ].join('\n');
   }
+  const example = index?.docs.find((doc) => doc.symbol === component)?.examples[0];
+  if (example && !options) {
+    return snippetFromExample(example.code, platform, index!);
+  }
   const propLines = options
     ? Object.entries(options).map(([k, v]) => ` ${k}=${typeof v === 'string' ? `"${v}"` : `{${JSON.stringify(v)}}`}`)
     : [];
@@ -55,9 +105,9 @@ export function generateComponentSnippet(component: string, platform: Platform, 
     'export default function Example() {',
     '  return (',
     '    <ReactBulk>',
-    `      <${component}${propLines.join('')}>`,
-    `        ${component}`,
-    `      </${component}>`,
+    ...(SELF_CLOSING.has(component)
+      ? [`      <${component}${propLines.join('')} />`]
+      : [`      <${component}${propLines.join('')}>`, `        ${component}`, `      </${component}>`]),
     '    </ReactBulk>',
     '  );',
     '}',
