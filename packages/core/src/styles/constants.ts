@@ -125,6 +125,7 @@ export const customStyleProps = [
   'position',
   'shadow', // box-shadow
   'w', // width
+  'z', // z-index
   ...customSpacings,
 ] as const;
 
@@ -287,6 +288,7 @@ export const aliases = {
   lh: 'lineHeight',
   ls: 'letterSpacing',
   bg: 'backgroundColor',
+  z: 'zIndex',
 
   // Flex Container
   direction: 'flexDirection',

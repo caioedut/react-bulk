@@ -37,6 +37,7 @@ test('alias table keeps every alias, including duplicates', () => {
   assert.equal(aliasTable.gx, 'columnGap');
   assert.equal(aliasTable.maxw, 'maxWidth');
   assert.equal(aliasTable.bg, 'backgroundColor');
+  assert.equal(aliasTable.z, 'zIndex');
 });
 
 test('Box doc keeps free sections, value shapes and platform defaults', () => {

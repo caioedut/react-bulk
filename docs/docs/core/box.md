@@ -553,6 +553,14 @@ Sets `width`, `minWidth` and `maxWidth` styles.
 
 ---
 
+### **`z`**
+
+Sets `zIndex` style.
+
+➤ Type: **`number`** <br/>
+
+---
+
 ## Events
 
 ### **`onLayout`**

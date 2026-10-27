@@ -120,6 +120,7 @@ type StyleProps = Overwrite<
     border?: RbkColor | string | number | boolean;
     corners?: number;
     shadow?: number;
+    z?: number;
   }
 >;
 
