@@ -5,7 +5,7 @@ Used to programatically animate an item.
 ## Import
 
 ```jsx
-import { useAnimation } from '@react-bulk/core'; // OR @react-bulk/native
+import { useAnimation } from '@react-bulk/core';
 ```
 
 ## Usage

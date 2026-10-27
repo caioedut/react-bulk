@@ -5,7 +5,7 @@ Used to easily create and manage notifications (toasts)
 ## Import
 
 ```jsx
-import { useToaster } from '@react-bulk/core'; // OR @react-bulk/native
+import { useToaster } from '@react-bulk/core';
 ```
 
 ## Usage

@@ -5,7 +5,7 @@ Used to get all active viewports.
 ## Import
 
 ```jsx
-import { useBreakpoints } from '@react-bulk/web'; // OR @react-bulk/native
+import { useBreakpoints } from '@react-bulk/core';
 ```
 
 ## Usage

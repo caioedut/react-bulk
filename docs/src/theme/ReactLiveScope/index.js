@@ -1,6 +1,18 @@
 import React from 'react';
 
-import { useAnimation, useTheme, useToaster } from '@react-bulk/core';
+import {
+  useAnimation,
+  useDefaultRef,
+  useDeferredValue,
+  useDependentState,
+  useDraggable,
+  useForm,
+  useHtmlId,
+  useInput,
+  usePropState,
+  useTheme,
+  useToaster,
+} from '@react-bulk/core';
 import * as Rbk from '@react-bulk/web';
 
 const ReactBulk = Rbk.default;
@@ -9,6 +21,14 @@ const ReactBulk = Rbk.default;
 const ReactLiveScope = {
   ReactBulk,
   useAnimation,
+  useDefaultRef,
+  useDeferredValue,
+  useDependentState,
+  useDraggable,
+  useForm,
+  useHtmlId,
+  useInput,
+  usePropState,
   useTheme,
   useToaster,
   ...Rbk,
