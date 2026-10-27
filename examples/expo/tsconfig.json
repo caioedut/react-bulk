@@ -5,6 +5,18 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@react-bulk/core": [
+        "../../packages/core/src"
+      ],
+      "@react-bulk/expo": [
+        "../../packages/expo/src"
+      ],
+      "@react-bulk/native": [
+        "../../packages/native/src"
+      ],
+      "@react-bulk/web": [
+        "../../packages/web/src"
       ]
     }
   },

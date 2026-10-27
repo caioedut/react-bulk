@@ -17,7 +17,15 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "paths": {
+      "@react-bulk/core": [
+        "../../packages/core/src"
+      ],
+      "@react-bulk/web": [
+        "../../packages/web/src"
+      ]
+    }
   },
   "include": [
     "next-env.d.ts",

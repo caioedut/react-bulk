@@ -4,8 +4,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@react-bulk/core": "file:./../../packages/core",
-    "@react-bulk/web": "file:./../../packages/web",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

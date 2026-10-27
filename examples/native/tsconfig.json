@@ -1,6 +1,14 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "paths": {
+      "@react-bulk/core": [
+        "../../packages/core/src"
+      ],
+      "@react-bulk/native": [
+        "../../packages/native/src"
+      ]
+    }
   }
 }

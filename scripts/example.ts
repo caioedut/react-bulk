@@ -1,4 +1,4 @@
-import { cpSync, rmSync } from 'fs';
+import { rmSync } from 'fs';
 import pmex from 'pmex';
 
 const isNative = process.argv.includes('--native');
@@ -12,7 +12,12 @@ if ([isWeb, isNative, isExpo].filter(Boolean).length > 1) {
 const platform = isExpo ? 'expo' : isNative ? 'native' : 'web';
 const cwd = `./examples/${platform}`;
 
-pmex('build');
+// Examples resolve @react-bulk/* from packages/*/src (see vite.config.ts and metro.shared.js),
+// so drop any copy left in node_modules by older versions of this script
+rmSync(`${cwd}/node_modules/@react-bulk`, { force: true, recursive: true });
+
+// Regular dependencies of the packages (e.g. cometta) are resolved from the repo root
+pmex('install');
 
 pmex(
   {
@@ -24,34 +29,8 @@ pmex(
   { cwd },
 );
 
-// Expo re-exports native and web, so they must also come from the local build
-const packages = isExpo ? ['core', 'expo', 'native', 'web'] : ['core', platform];
-
-for (const pkg of packages) {
-  // Removing the whole folder also drops nested @react-bulk copies (e.g. native/node_modules/@react-bulk/core)
-  rmSync(`${cwd}/node_modules/@react-bulk/${pkg}`, {
-    force: true,
-    recursive: true,
-  });
-
-  cpSync(`./packages/${pkg}/dist`, `${cwd}/node_modules/@react-bulk/${pkg}/dist`, {
-    force: true,
-    recursive: true,
-  });
-
-  cpSync(`./packages/${pkg}/package.json`, `${cwd}/node_modules/@react-bulk/${pkg}/package.json`, {
-    force: true,
-  });
-}
-
 if (isWeb) {
-  pmex('vite dev --force', { cwd });
-}
-
-if (isNative) {
-  pmex('dlx expo start -c', { cwd });
-}
-
-if (isExpo) {
+  pmex('vite dev', { cwd });
+} else {
   pmex('dlx expo start -c', { cwd });
 }
