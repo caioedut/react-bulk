@@ -60,6 +60,8 @@ const CollapseFactory = React.memo<CollapseProps>(
           timing,
           duration,
           web_useRawStyle: true,
+          // Start from the measured height: after expanding it is "auto" and the content may have changed since
+          from: { height: metrics.height },
           to: { height: newSize },
         });
 
