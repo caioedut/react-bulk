@@ -68,7 +68,8 @@ const ProgressFactory = React.memo<ProgressProps>(
       {
         bg: color,
         height,
-        width: 0,
+        // Render the target width so the bar does not depend only on the animation having run
+        width: isIndeterminate ? 0 : `${value}%`,
       },
 
       barStyle,
