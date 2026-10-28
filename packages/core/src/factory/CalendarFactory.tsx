@@ -71,6 +71,15 @@ const CalendarFactory = React.memo<CalendarProps>(
       return newMonthDates;
     }, [daysInMonth, internal]);
 
+    const weeks = useMemo(
+      () =>
+        Array.from({ length: monthDates.length / 7 }).map((_, index) => monthDates.slice(index * 7, index * 7 + 7)),
+      [monthDates],
+    );
+
+    // Same spacing as a Grid with gap 0.5
+    const spacing = theme.spacing((theme.shape.gap * 0.5) / 2);
+
     const handleYear = useCallback(
       (year: number) => {
         if (string(year).length !== 4) return;
@@ -149,46 +158,55 @@ const CalendarFactory = React.memo<CalendarProps>(
 
         <BoxFactory mt={theme.shape.gap * 2} />
 
-        <GridFactory gap={0.5} size={7}>
-          {monthDates.slice(0, 7).map((date) => (
-            <BoxFactory key={date.toISOString()} xs={1}>
-              <TextFactory variant="secondary" color="text.disabled" bold center>
-                {date.toLocaleDateString(locale, { weekday: 'narrow' }).split(/[,.]/g)?.[0]}
-              </TextFactory>
+        {/* One row per week with flex items: percentage widths in a wrapping row can overflow on native */}
+        <BoxFactory style={{ margin: -spacing }}>
+          <BoxFactory row noWrap>
+            {monthDates.slice(0, 7).map((date) => (
+              <BoxFactory key={date.toISOString()} flex style={{ padding: spacing }}>
+                <TextFactory variant="secondary" color="text.disabled" bold center>
+                  {date.toLocaleDateString(locale, { weekday: 'narrow' }).split(/[,.]/g)?.[0]}
+                </TextFactory>
+              </BoxFactory>
+            ))}
+          </BoxFactory>
+
+          {weeks.map((week) => (
+            <BoxFactory key={week[0].toISOString()} row noWrap>
+              {week.map((date) => {
+                const dateISO = date.toISOString().substring(0, 10);
+                const isMuted = date.getMonth() !== internal.getMonth();
+                const isToday = today.toISOString().substring(0, 10) === dateISO;
+
+                const hasEvent = eventsDates.some(
+                  (event) => dateify(event).toISOString().substring(0, 10) === dateISO,
+                );
+
+                const isDisabled = Array.isArray(disableds)
+                  ? disableds.some((disabledDate) => dateify(disabledDate).toISOString().substring(0, 10) === dateISO)
+                  : disableds instanceof Function
+                    ? disableds(date)
+                    : false;
+
+                return (
+                  <BoxFactory key={date.toISOString()} flex style={{ padding: spacing }}>
+                    <ButtonFactory
+                      disabled={isDisabled}
+                      variant={!isMuted && hasEvent ? 'solid' : 'text'}
+                      color={!isMuted && hasEvent ? color : 'text.primary'}
+                      style={[{ px: 0, py: 0 }, isToday && !hasEvent && { bg: 'background.secondary' }]}
+                      labelStyle={[{ w: 20 }, isMuted && { color: 'text.disabled' }]}
+                      onPress={(e) => handleDate(e, date)}
+                      accessibility={{ value: { now: date.getDate() } }}
+                      data-rbk-calendar={date.getDate()}
+                    >
+                      {date.getDate()}
+                    </ButtonFactory>
+                  </BoxFactory>
+                );
+              })}
             </BoxFactory>
           ))}
-
-          {monthDates.map((date) => {
-            const dateISO = date.toISOString().substring(0, 10);
-            const isMuted = date.getMonth() !== internal.getMonth();
-            const isToday = today.toISOString().substring(0, 10) === dateISO;
-
-            const hasEvent = eventsDates.some((event) => dateify(event).toISOString().substring(0, 10) === dateISO);
-
-            const isDisabled = Array.isArray(disableds)
-              ? disableds.some((disabledDate) => dateify(disabledDate).toISOString().substring(0, 10) === dateISO)
-              : disableds instanceof Function
-                ? disableds(date)
-                : false;
-
-            return (
-              <BoxFactory key={date.toISOString()} xs={1}>
-                <ButtonFactory
-                  disabled={isDisabled}
-                  variant={!isMuted && hasEvent ? 'solid' : 'text'}
-                  color={!isMuted && hasEvent ? color : 'text.primary'}
-                  style={[{ px: 0, py: 0 }, isToday && !hasEvent && { bg: 'background.secondary' }]}
-                  labelStyle={[{ w: 20 }, isMuted && { color: 'text.disabled' }]}
-                  onPress={(e) => handleDate(e, date)}
-                  accessibility={{ value: { now: date.getDate() } }}
-                  data-rbk-calendar={date.getDate()}
-                >
-                  {date.getDate()}
-                </ButtonFactory>
-              </BoxFactory>
-            );
-          })}
-        </GridFactory>
+        </BoxFactory>
       </CardFactory>
     );
   }),
