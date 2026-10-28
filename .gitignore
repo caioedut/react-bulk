@@ -64,3 +64,6 @@ web-build
 *.njsproj
 *.sln
 *.sw?
+
+# Claude Code
+.claude/launch.json
