@@ -264,13 +264,6 @@ const BoxFactory = React.memo<BoxProps>(
       transitionProps.ref = transitionRef;
     }
 
-    // useAnimation stops the animation on unmount, so a remount (e.g. StrictMode) must start it again
-    useEffect(() => {
-      return () => {
-        animStrDiffRef.current = undefined;
-      };
-    }, []);
-
     useEffect(() => {
       const { onStart, onEnd, ...rest } = animation || {};
 
