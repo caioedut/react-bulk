@@ -72,8 +72,7 @@ const CalendarFactory = React.memo<CalendarProps>(
     }, [daysInMonth, internal]);
 
     const weeks = useMemo(
-      () =>
-        Array.from({ length: monthDates.length / 7 }).map((_, index) => monthDates.slice(index * 7, index * 7 + 7)),
+      () => Array.from({ length: monthDates.length / 7 }).map((_, index) => monthDates.slice(index * 7, index * 7 + 7)),
       [monthDates],
     );
 
@@ -177,9 +176,7 @@ const CalendarFactory = React.memo<CalendarProps>(
                 const isMuted = date.getMonth() !== internal.getMonth();
                 const isToday = today.toISOString().substring(0, 10) === dateISO;
 
-                const hasEvent = eventsDates.some(
-                  (event) => dateify(event).toISOString().substring(0, 10) === dateISO,
-                );
+                const hasEvent = eventsDates.some((event) => dateify(event).toISOString().substring(0, 10) === dateISO);
 
                 const isDisabled = Array.isArray(disableds)
                   ? disableds.some((disabledDate) => dateify(disabledDate).toISOString().substring(0, 10) === dateISO)
