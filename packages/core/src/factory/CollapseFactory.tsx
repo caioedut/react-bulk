@@ -48,7 +48,17 @@ const CollapseFactory = React.memo<CollapseProps>(
         const newSize = visible ? await getFullHeight(rootRef.current) : 0;
         const metrics = await rect(rootRef.current);
 
-        if (newSize === metrics.height) return;
+        if (newSize === metrics.height) {
+          // getFullHeight restores the measured height in pixels, so release it back to "auto"
+          if (newSize > 0) {
+            setNativeStyle(rootRef.current, {
+              height: 'auto',
+              overflow: 'visible',
+            });
+          }
+
+          return;
+        }
 
         setNativeStyle(rootRef.current, {
           overflow: 'hidden',
