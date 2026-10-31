@@ -262,6 +262,8 @@ export type RbkRect = {
 export type RbkAnimation = {
   to: RbkStyleProps;
   from?: RbkStyleProps;
+  // Style kept when the animation ends (defaults to "to", or "from" when boomerang)
+  end?: RbkStyleProps;
 
   boomerang?: boolean;
   delay?: number;

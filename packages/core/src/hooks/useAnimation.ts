@@ -1,7 +1,8 @@
-import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react';
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import cometta from 'cometta';
 
+import setNativeStyle from '../element/setNativeStyle';
 import extract from '../props/extract';
 import omit from '../props/omit';
 import { notPxProps, transformProps } from '../styles/constants';
@@ -27,6 +28,10 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
 
   const baseStyle = useMemo(() => (style ? jssWithTransform(style) : {}), [style]);
 
+  // Latest base style, read by reset() so it keeps a stable identity when "style" is a new object every render
+  const baseRef = useRef({ style, baseStyle });
+  baseRef.current = { style, baseStyle };
+
   const elRef = useDefaultRef<any>(ref);
 
   const animationName = useHtmlId();
@@ -34,6 +39,11 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
   const transformRef = useRef<AnyObject>({});
   const runIdRef = useRef<string>();
   const timeoutRef = useRef<TimeoutType>();
+  const activeAttrsRef = useRef<string[]>([]);
+  const cancelRef = useRef<() => void>();
+
+  // Style the element rests at between animations, rendered by React so a re-render never moves it
+  const [restStyle, setRestStyle] = useState(style);
 
   const setStyle = useCallback(
     (attr: string, value: any, unit = null) => {
@@ -109,6 +119,17 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
   const stop = useCallback(() => {
     if (web && elRef.current) {
       elRef.current.style.animationPlayState = 'paused';
+
+      // Keep the values where a running animation was paused, so the next one continues from there
+      // (native and raw style animations already track them frame by frame)
+      if (runIdRef.current) {
+        const computed = getComputedStyle(elRef.current);
+
+        activeAttrsRef.current.forEach((attr) => {
+          if (transformProps.includes(attr as any) || !computed[attr]) return;
+          styleRef.current[attr] = computed[attr];
+        });
+      }
     }
 
     runIdRef.current = undefined;
@@ -118,6 +139,10 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
     }
 
     timeoutRef.current = null;
+
+    // Settle the interrupted animation, its steps will not run anymore
+    cancelRef.current?.();
+    cancelRef.current = undefined;
   }, [elRef, runIdRef, timeoutRef, web]);
 
   const reset = useCallback(() => {
@@ -128,18 +153,23 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
     }
 
     Object.keys(styleRef.current).forEach((attr) => {
-      setStyle(attr, baseStyle?.[attr] ?? undefined);
+      // An empty value removes the inline style on web
+      setStyle(attr, baseRef.current.baseStyle?.[attr] ?? (web ? '' : undefined));
     });
-  }, [baseStyle, elRef, setStyle, stop, web]);
+
+    setRestStyle(baseRef.current.style);
+  }, [elRef, setStyle, stop, web]);
 
   const start = useCallback(
+    // Resolves true when the animation completes, false when it is interrupted
     async (options: RbkAnimation) => {
-      return new Promise((resolve) => {
+      return new Promise<boolean>((resolve) => {
         stop();
 
         let {
           to,
-          from = styleRef.current,
+          // Continue from the current values of the animated props only
+          from = extract(Object.keys(jssWithTransform(options.to)), { ...styleRef.current }),
           boomerang = false,
           delay = 0,
           duration = 250,
@@ -153,6 +183,43 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
         to = jssWithTransform(to);
 
         const lastState = clone(to);
+
+        const runId = uuid();
+        runIdRef.current = runId;
+        activeAttrsRef.current = Object.keys(to);
+
+        cancelRef.current = () => resolve(false);
+
+        // Resolve after the final styles, which setStyle applies on the next frame
+        const finish = () => {
+          requestAnimationFrame(() => {
+            const isCompleted = runId === runIdRef.current;
+
+            if (isCompleted) {
+              cancelRef.current = undefined;
+
+              // Nothing is running anymore, so stop() has no values to capture
+              activeAttrsRef.current = [];
+
+              const end = options.end ?? (boomerang ? options.from : options.to);
+
+              // Styles the animation cannot reach by itself (e.g. height "auto")
+              if (options.end) {
+                setNativeStyle(elRef.current, options.end);
+              }
+
+              if (end) {
+                // Keep the same object when nothing changed, so finishing an animation does not re-render
+                setRestStyle((current) => {
+                  const next = { ...current, ...end };
+                  return JSON.stringify(next) === JSON.stringify(current) ? current : next;
+                });
+              }
+            }
+
+            resolve(isCompleted);
+          });
+        };
 
         const meta = Object.fromEntries(
           Object.keys(to).map((attr) => {
@@ -198,42 +265,53 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
             setStyle(attr, meta[attr].from, meta[attr].unit);
           });
 
-          if (elRef.current) {
-            elRef.current.addEventListener(
-              'animationend',
-              () => {
-                // Set exact styles for last state
-                Object.keys(lastState).forEach((attr) => {
-                  if (boomerang) {
-                    setStyle(attr, meta[attr].from, meta[attr].unit);
-                  } else {
-                    setStyle(attr, meta[attr].to, meta[attr].unit);
-                  }
-                });
+          const $el = elRef.current;
 
-                // Remove animation on the same frame the final styles are applied (setStyle uses rAF)
-                // "fill-mode: both" keeps the last keyframe until then, avoiding a flash of the initial state
-                requestAnimationFrame(() => {
-                  if (elRef.current) {
-                    elRef.current.style.animation = '';
-                  }
-                });
-
-                setTimeout(resolve, 10);
-              },
-              { once: true },
-            );
-
-            elRef.current.style.animation = `${animationName} ${duration}ms ${timing} ${
-              delay || 0
-            }ms ${iterations} ${direction} both`;
+          if (!$el) {
+            return stop();
           }
+
+          const handleEnd = (event: AnimationEvent) => {
+            // "animationend" bubbles, so ignore the animations of children
+            if (event.target !== $el || event.animationName !== animationName) return;
+
+            $el.removeEventListener('animationend', handleEnd);
+
+            // Set exact styles for last state
+            Object.keys(lastState).forEach((attr) => {
+              if (boomerang) {
+                setStyle(attr, meta[attr].from, meta[attr].unit);
+              } else {
+                setStyle(attr, meta[attr].to, meta[attr].unit);
+              }
+            });
+
+            // Remove animation on the same frame the final styles are applied (setStyle uses rAF)
+            // "fill-mode: both" keeps the last keyframe until then, avoiding a flash of the initial state
+            requestAnimationFrame(() => {
+              if (elRef.current) {
+                elRef.current.style.animation = '';
+              }
+            });
+
+            finish();
+          };
+
+          $el.addEventListener('animationend', handleEnd);
+
+          cancelRef.current = () => {
+            $el.removeEventListener('animationend', handleEnd);
+            resolve(false);
+          };
+
+          // Restart the animation even when it is interrupted, since its name does not change
+          $el.style.animation = 'none';
+          void $el.offsetWidth;
+
+          $el.style.animation = `${animationName} ${duration}ms ${timing} ${delay || 0}ms ${iterations} ${direction} both`;
         }
 
         if (native || web_useRawStyle) {
-          const runId = uuid();
-          runIdRef.current = runId;
-
           const timingFn = pick(timing, 'ease', {
             linear: easeLinear,
             ease: easeInSine,
@@ -272,10 +350,20 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
                       setStyle(attr, newValue, meta[attr].unit);
                     });
 
-                    timeoutRef.current = setTimeout(apply, throttle);
+                    next();
                   };
 
-                  timeoutRef.current = setTimeout(apply, 0);
+                  // One step per frame, unless a throttle is given
+                  // (stop() changes the run id, which ends the steps scheduled by frame)
+                  const next = () => {
+                    if (throttle > 0) {
+                      timeoutRef.current = setTimeout(apply, throttle);
+                    } else {
+                      requestAnimationFrame(apply);
+                    }
+                  };
+
+                  next();
                 });
 
                 // Set exact styles for last state
@@ -290,7 +378,7 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
                 }
               }
 
-              setTimeout(resolve, 10);
+              finish();
             },
             Math.max(delay || 0, 0),
           );
@@ -311,9 +399,9 @@ export default function useAnimation(style?: RbkAnimation['from'], ref?: Mutable
       start,
       stop,
       reset,
-      props: { ref: elRef, style },
+      props: { ref: elRef, style: restStyle },
     }),
-    [elRef, reset, start, stop, style],
+    [elRef, reset, restStyle, start, stop],
   );
 }
 

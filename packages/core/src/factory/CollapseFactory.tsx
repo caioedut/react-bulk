@@ -73,14 +73,8 @@ const CollapseFactory = React.memo<CollapseProps>(
           // Start from the measured height: after expanding it is "auto" and the content may have changed since
           from: { height: metrics.height },
           to: { height: newSize },
+          end: newSize > 0 ? { height: 'auto', overflow: 'visible' } : { height: 0, overflow: 'hidden' },
         });
-
-        if (newSize > 0) {
-          setNativeStyle(rootRef.current, {
-            height: 'auto',
-            overflow: 'visible',
-          });
-        }
       })();
 
       // cannot add "transition" to dependencies

@@ -32,7 +32,6 @@ const ProgressFactory = React.memo<ProgressProps>(
     } = factory2<RequiredSome<ProgressProps, 'color' | 'label' | 'size'>>(props, options);
 
     const [containerWidth, setContainerWidth] = useState<number>(0);
-    const [animatedValue, setAnimatedValue] = useState<number>(0);
 
     if (typeof size === 'string') {
       size = pick(size, 'medium', {
@@ -69,8 +68,7 @@ const ProgressFactory = React.memo<ProgressProps>(
       {
         bg: color,
         height,
-        // Render the width the animation last reached, so a new value does not jump ahead of the animation (native)
-        width: isIndeterminate ? 0 : `${animatedValue}%`,
+        width: 0,
       },
 
       barStyle,
@@ -110,7 +108,6 @@ const ProgressFactory = React.memo<ProgressProps>(
                 timing: 'linear',
                 iterations: 1,
                 to: { width: `${value}%` },
-                onEnd: () => setAnimatedValue(value as number),
               }}
             />
 

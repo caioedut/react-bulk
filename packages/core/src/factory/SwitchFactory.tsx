@@ -197,7 +197,6 @@ const SwitchFactory = React.memo<SwitchProps>(
               animation={{
                 duration: 100,
                 timing: 'ease-out',
-                from: { marginLeft: input.state ? 0 : thumbSize },
                 to: { marginLeft: input.state ? thumbSize : 0 },
               }}
             />
