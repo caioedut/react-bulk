@@ -27,7 +27,7 @@ export default async function getFullSize($el) {
     height: metricsINI.height,
     opacity: 1,
     position: 'relative',
-    width: metricsINI.height,
+    width: metricsINI.width,
   });
 
   if (native) {
