@@ -98,7 +98,17 @@ Delay in milliseconds to start the animation.
 Animation duration in milliseconds.
 
 ➤ Type: **`number`** <br/>
-➤ Default: **`350`** <br/>
+➤ Default: **`250`** <br/>
+
+---
+
+**`end`**
+
+Style kept when the animation completes, for values that cannot be animated (e.g. `height: 'auto'` after animating to the measured height).
+
+When omitted, the element keeps the `to` style (or the `from` style when `boomerang`).
+
+➤ Type: **[`RbkStyle`](/docs/type-reference/rbk-style)** <br/>
 
 ---
 
