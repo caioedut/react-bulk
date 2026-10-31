@@ -61,16 +61,34 @@ function aliasTransform(alias: string, shape: Record<string, number>): string {
   return 'raw';
 }
 
+const IMPORT_NOTE =
+  '@react-bulk/web (web-only apps), @react-bulk/native (native-only apps) or @react-bulk/expo (Expo apps: resolves to web or native per platform, since Expo also targets web). Most hooks and helpers only from @react-bulk/core.';
+
 function componentNames(index: RbkIndex): string[] {
   return [...new Set([...Object.keys(index.webComponents), ...Object.keys(index.nativeComponents)])].sort();
 }
 
 export function createServer() {
   const index = buildIndex();
-  const server = new McpServer({
-    name: 'react-bulk-mcp',
-    version: index.version,
-  });
+  const { shape } = index.theme;
+  const server = new McpServer(
+    {
+      name: 'react-bulk-mcp',
+      version: index.version,
+    },
+    {
+      // Sent to the client on connect (usually injected into the system prompt): the gotchas an AI gets wrong by default.
+      instructions: [
+        'React Bulk: call rbk_get_core_usage_guide before writing code and rbk_validate_usage after.',
+        `Short spacing aliases (m/p/i/t/b/l/r + x/y/h/v, e.g. px, mt) multiply numbers by theme.shape.spacing (${shape.spacing}); g/gx/gy by gap * spacing (${shape.gap * shape.spacing}). Full names (padding, margin, gap…) are raw px: p={8} = ${8 * shape.spacing}px, padding={8} = 8px.`,
+        `Size aliases (w/h/minw/maxw/ww/hh) are raw px, true = 100%. corners multiplies theme.shape.borderRadius (${shape.borderRadius}).`,
+        'Box (base of every component) is a flex column by default, also on web, matching React Native layout defaults so both platforms behave the same. align/justify are alignSelf/justifySelf; center centers both axes; flex = flex: 1; values accept between/around/start/end.',
+        'Event handlers receive normalized Rbk*Event objects, the same on web and native (RbkPointerEvent for onPress, RbkInputEvent for field onChange, RbkFormEvent for Form, RbkScrollEvent, RbkLayoutEvent, RbkKeyboardEvent…). The original event is at e.nativeEvent. Value-bearing handlers also pass the value as 2nd arg: Input onChange(e, value), Checkbox/Switch (e, checked), Select (e, value, option), Form onSubmit(e, data, errors). Use onPress, not onClick.',
+        'Breakpoint keys inside style are mobile first; hidden={{ sm: true }} hides only within that range.',
+        `Import components from ${IMPORT_NOTE} Wrap the app in <ReactBulk>.`,
+      ].join('\n'),
+    },
+  );
   const registerTool = server.registerTool.bind(server) as any;
 
   for (const doc of index.docs) {
@@ -101,7 +119,7 @@ export function createServer() {
           `Short spacing aliases multiply numbers by theme.shape.spacing (${shape.spacing}); g/gx/gy by gap * spacing (${shape.gap * shape.spacing}). Full names (padding, gap…) are raw pixels.`,
           'Color props resolve theme tokens (`primary`, `primary.light`, `primary.main.50`, `text.secondary`).',
           'Responsive: breakpoint keys inside `style` (mobile first), `xs`…`xxl` spans on Grid children and visible item counts on Carousel. Custom theme breakpoints are accepted too.',
-          'Components come from @react-bulk/web or @react-bulk/native (expo re-exports native); most hooks and helpers only from @react-bulk/core.',
+          `Components come from ${IMPORT_NOTE}`,
           'Wrap the app once in <ReactBulk theme={...}>.',
         ],
         themeDefaults: { shape, typography, breakpoints },
@@ -283,8 +301,7 @@ export function createServer() {
         ...(symbol === 'Box'
           ? { rules: STYLE_RULES }
           : {
-              inherits:
-                'Every Box prop also works here: spacing aliases (m/p/i/t/b/l/r, g/gx/gy), sizes (w/h/ww/hh), flex shortcuts (row/center/flex…), colors (bg, border), corners, shadow, style/rawStyle, platform, hidden/invisible/mount, component. See rbk_get_component_api("Box") or rbk_get_style_aliases.',
+              inherits: `Every Box prop also works here: spacing aliases (m/p/i/t/b/l/r ×${index.theme.shape.spacing}, g/gx/gy ×${index.theme.shape.gap * index.theme.shape.spacing}; full names like padding are raw px), sizes (w/h/ww/hh, raw px), flex shortcuts (row/center/flex…), colors (bg, border), corners, shadow, style/rawStyle, platform, hidden/invisible/mount, component. See rbk_get_component_api("Box") or rbk_get_style_aliases.`,
             }),
         notes: doc.notes,
         props: filter(doc.props),
