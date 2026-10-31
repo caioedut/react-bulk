@@ -173,6 +173,9 @@ export const Drawer = DrawerFactory;
 export const Dropdown = DropdownFactory;
 export const Form = FormFactory;
 export const Grid = GridFactory;
+/**
+ * @deprecated use Box instead
+ */
 export const GrowBox = GrowBoxFactory;
 export const Image = ImageFactory;
 export const Input = InputFactory;

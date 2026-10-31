@@ -1518,9 +1518,11 @@ export type InputPinProps<ALLOW_ANY = true> = PropsWithStyles<
   }
 >;
 
+/** @deprecated use BoxProps instead */
 export type GrowBoxProps<ALLOW_ANY = true> = PropsWithStyles<
   ALLOW_ANY,
   {
+    /** @deprecated GrowBox no longer animates */
     duration?: number;
     // Styles
     variants?: {

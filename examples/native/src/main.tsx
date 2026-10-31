@@ -161,10 +161,6 @@ export default function Main() {
       </Card>
 
       <Card mt="1gap">
-        <GrowBoxExample />
-      </Card>
-
-      <Card mt="1gap">
         <TerminalExample />
       </Card>
 

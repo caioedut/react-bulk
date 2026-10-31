@@ -717,9 +717,7 @@ const base: ThemeProps = {
         name: 'rbk-grow-box',
         defaultProps: {},
         defaultStyles: {
-          root: {
-            overflow: 'hidden',
-          },
+          root: {},
         },
         variants: {},
       },
