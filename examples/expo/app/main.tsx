@@ -178,12 +178,14 @@ function ThemeExample() {
 
   function handleChangeTheme(e: RbkInputEvent, value: number) {
     const prop = e.name as string;
-    const split = prop.split('.');
-    const last = split.pop() as string;
+    const [k1, k2, k3] = prop.split('.');
 
-    for (const attr of split) {
-      // @ts-ignore
-      theme[attr][last] = value;
+    if (k3) {
+      theme[k1][k2][k3] = value;
+    } else if (k2) {
+      theme[k1][k2] = value;
+    } else {
+      theme[k1] = value;
     }
 
     timeoutRef.current[prop] = setTimeout(() => {
