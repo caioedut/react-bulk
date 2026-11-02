@@ -309,7 +309,7 @@ const base: ThemeProps = {
             fontSize: '0.5625rem',
             fontWeight: 'bold',
 
-            web: { lineHeight: 1 },
+            web: { lineHeight: '1em' },
           },
         },
         variants: {
