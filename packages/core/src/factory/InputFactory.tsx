@@ -184,10 +184,13 @@ const InputFactory = React.memo<InputProps>(
             endAddon
           ) : (
             <BoxFactory row noWrap center>
-              <BoxFactory h={theme.rem(size)} mr={endAddon ? 1 : -1}>
+              <BoxFactory h={theme.rem(size)} w={44} mr={endAddon ? 1 : -1}>
                 {[+1, -1].map((item) => {
                   const isInc = item > 0;
                   const Icon = isInc ? ChevronUp : ChevronDown;
+
+                  // The buttons are stacked, so the slop only grows on the free edges (no overlap)
+                  const hitSlop = { right: 16, ...(isInc ? { top: 8 } : { bottom: 8 }) };
 
                   return (
                     <ButtonFactory
@@ -198,6 +201,7 @@ const InputFactory = React.memo<InputProps>(
                       disabled={disabled}
                       h="50%"
                       p={0}
+                      platform={{ native: { hitSlop } }}
                       accessibility={{ label: isInc ? 'plus' : 'minus' }}
                       contentStyle={{ align: isInc ? 'end' : 'start' }}
                       onPress={(e) => handleIncDec(e, item)}
