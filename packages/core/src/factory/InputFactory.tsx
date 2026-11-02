@@ -18,7 +18,7 @@ const InputFactory = React.memo<InputProps>(
   forwardRef(({ ...props }, ref) => {
     const theme = useTheme();
     const options = theme.components.Input;
-    const { svg } = rbkGlobal.mapping;
+    const { svg, web } = rbkGlobal.mapping;
 
     // Extends from default props
     let {
@@ -184,13 +184,18 @@ const InputFactory = React.memo<InputProps>(
             endAddon
           ) : (
             <BoxFactory row noWrap center>
-              <BoxFactory h={theme.rem(size)} w={44} mr={endAddon ? 1 : -1}>
+              <BoxFactory h={theme.rem(size)} mr={endAddon ? 1 : -1}>
                 {[+1, -1].map((item) => {
                   const isInc = item > 0;
                   const Icon = isInc ? ChevronUp : ChevronDown;
 
                   // The buttons are stacked, so the slop only grows on the free edges (no overlap)
-                  const hitSlop = { right: 16, ...(isInc ? { top: 8 } : { bottom: 8 }) };
+                  const hitSlop = {
+                    top: isInc ? 16 : 0,
+                    bottom: isInc ? 0 : 16,
+                    left: 8,
+                    right: 8,
+                  };
 
                   return (
                     <ButtonFactory
@@ -202,6 +207,20 @@ const InputFactory = React.memo<InputProps>(
                       h="50%"
                       p={0}
                       platform={{ native: { hitSlop } }}
+                      style={
+                        web && {
+                          position: 'relative',
+                          // hitSlop-like: an invisible pseudo-element that is still part of the button
+                          '&::after': {
+                            content: '""',
+                            position: 'absolute',
+                            top: -hitSlop.top,
+                            bottom: -hitSlop.bottom,
+                            right: -hitSlop.right,
+                            left: -hitSlop.left,
+                          },
+                        }
+                      }
                       accessibility={{ label: isInc ? 'plus' : 'minus' }}
                       contentStyle={{ align: isInc ? 'end' : 'start' }}
                       onPress={(e) => handleIncDec(e, item)}
