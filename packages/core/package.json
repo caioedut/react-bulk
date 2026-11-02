@@ -33,7 +33,7 @@
     "dist"
   ],
   "dependencies": {
-    "cometta": "^0.2.9"
+    "cometta": "^1.0.0"
   },
   "peerDependencies": {
     "react": ">=17.0.0"
