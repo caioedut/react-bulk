@@ -84,6 +84,12 @@ const BoxFactory = React.memo<BoxProps>(
       [breakpoints, theme.breakpoints],
     );
 
+    let resetAnchorCSS = false;
+    if (web && rest.href && (!component || component === Text || component === View)) {
+      component = 'a';
+      resetAnchorCSS = true;
+    }
+
     if (native && pressable && !component) {
       component = Button;
     }
@@ -104,6 +110,14 @@ const BoxFactory = React.memo<BoxProps>(
     };
 
     style = [
+      web &&
+        resetAnchorCSS && {
+          color: 'inherit',
+          background: 'none',
+          textDecoration: 'none',
+          '-webkit-tap-highlight-color': 'transparent',
+        },
+
       typeof invisible === 'boolean' && { opacity: invisible ? 0 : 1 },
 
       // Flex Container
