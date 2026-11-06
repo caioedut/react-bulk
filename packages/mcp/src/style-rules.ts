@@ -41,6 +41,17 @@ export const STYLE_RULES: StyleRule[] = [
     ],
   },
   {
+    id: 'position',
+    title: 'Position: relative by default on native, static on web',
+    summary:
+      'On native every View is `position: relative` by default, so an absolute child is placed inside its parent. On web, Box is `position: static` (no default `relative`), so an absolute child is placed relative to the nearest positioned ancestor instead. Any Box with `position="absolute"` (or `i`/`t`/`b`/`l`/`r` insets) needs a parent with `position="relative"` on web to behave the same as native.',
+    appliesTo: ['position', 'i', 't', 'b', 'l', 'r'],
+    platform: 'cross',
+    examples: [
+      '<Box position="relative" w={200} h={200}>\n  <Box position="absolute" b={0} r={0} />\n</Box>',
+    ],
+  },
+  {
     id: 'spacing-raw',
     title: 'Full spacing names are raw',
     summary:

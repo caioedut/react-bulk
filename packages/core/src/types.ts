@@ -74,6 +74,11 @@ type CSSFlexAlign =
   | 'start'
   | 'end';
 
+/** Breakpoint keys accepted inside a style object (mobile first), e.g. `{ xs: { fontSize: 12 }, md: {...} }`. */
+export type RbkResponsiveStyles = {
+  [K in keyof Pick<RbkBreakpoints, 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'>]?: RbkStyle;
+};
+
 /** @internal */
 type StyleProps = Overwrite<
   Overwrite<
@@ -122,7 +127,8 @@ type StyleProps = Overwrite<
     shadow?: number;
     z?: number;
   }
->;
+> &
+  RbkResponsiveStyles;
 
 /** @internal */
 export type SelectOption = {
