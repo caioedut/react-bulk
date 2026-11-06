@@ -1,4 +1,4 @@
-import React, { RefObject, forwardRef, useEffect, useMemo, useRef } from 'react';
+import React, { RefObject, forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 
 import getFullHeight from '../element/getFullHeight';
 import rect from '../element/rect';
@@ -22,10 +22,15 @@ const CollapseFactory = React.memo<CollapseProps>(
       duration,
       timing,
       visible,
+      trigger,
       // Styles
       variants,
       ...rest
     } = factory2<CollapseProps>(props, options);
+
+    // Internal state, only used when "trigger" is provided (uncontrolled mode)
+    const [open, setOpen] = useState(!!visible);
+    const isVisible = trigger ? open : visible;
 
     const defaultRef: any = useRef();
     const rootRef: RefObject<any> = ref || defaultRef;
@@ -34,8 +39,8 @@ const CollapseFactory = React.memo<CollapseProps>(
 
     const initialStyle = useMemo(
       () => ({
-        height: visible ? 'auto' : 0,
-        overflow: visible ? 'visible' : 'hidden',
+        height: isVisible ? 'auto' : 0,
+        overflow: isVisible ? 'visible' : 'hidden',
       }),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [],
@@ -45,7 +50,7 @@ const CollapseFactory = React.memo<CollapseProps>(
       if (!rootRef.current) return;
 
       (async () => {
-        const newSize = visible ? await getFullHeight(rootRef.current) : 0;
+        const newSize = isVisible ? await getFullHeight(rootRef.current) : 0;
         const metrics = await rect(rootRef.current);
 
         if (newSize === metrics.height) {
@@ -79,9 +84,9 @@ const CollapseFactory = React.memo<CollapseProps>(
 
       // cannot add "transition" to dependencies
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [rootRef, visible, delay, timing, duration, web, native]);
+    }, [rootRef, isVisible, delay, timing, duration, web, native]);
 
-    return (
+    const collapse = (
       <BoxFactory
         noRootStyles
         {...transition.props}
@@ -92,6 +97,18 @@ const CollapseFactory = React.memo<CollapseProps>(
       >
         <BoxFactory {...rest} />
       </BoxFactory>
+    );
+
+    if (!trigger) {
+      return collapse;
+    }
+
+    // The trigger receives "onPress" to toggle the content, and decides where and how to use it
+    return (
+      <>
+        {trigger({ onPress: () => setOpen((state) => !state), visible: open })}
+        {collapse}
+      </>
     );
   }),
 );

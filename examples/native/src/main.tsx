@@ -1056,22 +1056,35 @@ function ToasterExample() {
 }
 
 function CollapseExample() {
-  const [collpase, toggleCollapse] = useReducer((state) => !state, false);
+  const [collapse, toggleCollapse] = useReducer((state) => !state, false);
 
   return (
     <>
       <Text variant="title" mb="1gap">
         Collapse
       </Text>
-      <Box row>
-        <Button onPress={toggleCollapse}>Toggle Collapse</Button>
-      </Box>
-      <Collapse visible={collpase} mt="1gap">
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque autem consectetur consequuntur corporis,
-          dignissimos distinctio earum error ex facere hic ipsum nam necessitatibus neque pariatur quasi quibusdam
-          recusandae suscipit, tempora.
-        </Text>
+
+      <Text variant="subtitle" mb="1gap">
+        Controlled with "visible"
+      </Text>
+      <Button align="start" onPress={toggleCollapse}>
+        Toggle Collapse
+      </Button>
+      <Collapse visible={collapse} mt="1gap">
+        <Text>This content is shown or hidden by the "visible" prop, which you control.</Text>
+      </Collapse>
+
+      <Text variant="subtitle" mt="2gap" mb="1gap">
+        Uncontrolled with "trigger"
+      </Text>
+      <Collapse
+        trigger={({ onPress }) => (
+          <Button align="start" onPress={onPress} mb="1gap">
+            Toggle with trigger
+          </Button>
+        )}
+      >
+        <Text>This content is toggled by the trigger button, with no state needed.</Text>
       </Collapse>
     </>
   );

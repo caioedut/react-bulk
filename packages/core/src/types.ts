@@ -1173,6 +1173,8 @@ export type CollapseProps<ALLOW_ANY = true> = PropsWithStyles<
   Pick<RbkAnimation, 'delay' | 'duration' | 'timing'>,
   {
     visible?: boolean;
+    // Renders a trigger element that receives "onPress" to toggle the content. When set, Collapse manages its own open/closed state
+    trigger?: (options: { onPress: () => void; visible: boolean }) => ReactElement;
     // Styles
     variants?: {
       root?: any;
