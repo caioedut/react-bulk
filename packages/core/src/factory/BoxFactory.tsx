@@ -112,8 +112,9 @@ const BoxFactory = React.memo<BoxProps>(
     style = [
       web &&
         resetAnchorCSS && {
-          color: 'inherit',
-          background: 'none',
+          // color & background overrides Card styles
+          // color: 'inherit',
+          // background: 'none',
           textDecoration: 'none',
           '-webkit-tap-highlight-color': 'transparent',
         },
