@@ -82,12 +82,14 @@ export default function registry(theme?: ThemeProps) {
     const radius = Math.round(value + (value ? 2 : 0));
     const offset = Math.round(value / 2);
 
-    if (Platform.web) {
+    // Web, and native when RN supports CSS-like boxShadow (>= 0.76 + New Architecture)
+    if (rbkGlobal.mapping?.supportsBoxShadow) {
       return {
-        boxShadow: `${offset}px ${offset}px ${radius}px rgba(0, 0, 0, ${value ? 0.15 : 0})`,
-      };
+        boxShadow: `${offset}px ${offset}px ${radius}px rgba(0, 0, 0, ${value ? 0.1 : 0})`,
+      } as ComettaStyle;
     }
 
+    // Legacy native fallback
     if (Platform.native) {
       return {
         elevation: Math.round(value),

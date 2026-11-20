@@ -96,11 +96,30 @@ const locale = locales?.[0]?.replace(/_/, '-') || null;
 
 const isWeb = Platform.OS === 'web' || typeof document !== 'undefined';
 
+// CSS-like `boxShadow` requires RN >= 0.76 running on the New Architecture (Fabric).
+// On Android, outset shadows need API 28+ (Android 9).
+const supportsBoxShadow = (() => {
+  if (isWeb) return true;
+
+  const { major = 0, minor = 0 } = (Platform.constants as any)?.reactNativeVersion ?? {};
+  const isFabric = Boolean((globalThis as any)?.nativeFabricUIManager);
+
+  if (!isFabric || (major === 0 && minor < 76)) return false;
+
+  if (Platform.OS === 'android') {
+    return Number(Platform.Version) >= 28;
+  }
+
+  return true;
+})();
+
 rbkGlobal.mapping = {
   web: isWeb,
   native: Platform.OS !== 'web',
   ios: Platform.OS === 'ios',
   android: Platform.OS === 'android',
+
+  supportsBoxShadow,
 
   hasLocale: Boolean(locale),
   locale: locale || 'en-US',

@@ -8,6 +8,13 @@ const theme: ThemeEditProps = {
   typography: {
     fontSize: 16,
   },
+  components: {
+    Card: {
+      defaultProps: {
+        shadow: 4,
+      },
+    },
+  },
 };
 
 function App() {

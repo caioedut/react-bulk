@@ -54,6 +54,8 @@ rbkGlobal.mapping = {
   ios: false,
   android: false,
 
+  supportsBoxShadow: true,
+
   hasLocale: Boolean(locale),
   locale: locale || 'en-US',
 

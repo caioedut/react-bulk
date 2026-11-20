@@ -52,119 +52,119 @@ import {
 
 export default function Main() {
   return (
-    <Scrollable bg="background.secondary" contentInset="1gap">
+    <Scrollable bg="background.secondary" contentInset="1gap" contentStyle={{ g: 1 }}>
       <Card>
         <Text variant="title">React Bulk</Text>
         <Text mt="1gap">Open up App.tsx to start working on your app!</Text>
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <ThemeExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <BreakpointExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <GridExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <TypographyExample />
       </Card>
 
       <ListItemExample />
 
-      <Card mt="1gap">
+      <Card>
         <ButtonExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <FormExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <BadgeExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <TableExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <ScrollableExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <ListExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <SplitterExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <ResizableExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <ImageExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <AvatarExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <DividerExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <TabsExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <ToasterExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <CollapseExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <DropdownExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <ModalExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <DrawerExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <ProgressExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <CalendarExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <TooltipExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <CarouselExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <TerminalExample />
       </Card>
 
-      <Card mt="1gap">
+      <Card>
         <AnimationExample />
       </Card>
     </Scrollable>
